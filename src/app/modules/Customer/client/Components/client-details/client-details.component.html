@@ -1,0 +1,124 @@
+<div>
+    <div class="row">
+        <div class="col-12 col-md-3">
+            <div class="input-control-container p-0">
+                <label class="input-form-label">Title </label><span class="text-danger">*</span>
+                <ng-select class="input-form-select" appendTo="body" [items]="titleList" [(ngModel)]="titleValue" bindValue="Code" bindLabel="CodeDesc">
+                </ng-select>
+            </div>
+        </div>
+        <div class="col-12 col-md-9">
+            <div class="input-control-container">
+                <label class="input-form-label">Client Name </label><span class="text-danger">*</span>
+                <div class="input-form-box">
+                    <input type="text" [(ngModel)]="clientName" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="input-control-container">
+                <label class="input-form-label">Policy Type </label><span class="text-danger">*</span>
+                <ng-select class="input-form-select" appendTo="body" (change)="getPolicyIdTypeList('change')" [items]="policyHolderList" [(ngModel)]="typeValue" bindValue="Code" bindLabel="CodeDesc">
+                </ng-select>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="input-control-container">
+                <label class="input-form-label">Policy Holder ID Type </label><span class="text-danger">*</span>
+                <ng-select class="input-form-select" appendTo="body" [items]="policyHolderTypeList" [(ngModel)]="holderTypeValue" bindValue="Code" bindLabel="CodeDesc">
+                </ng-select>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="input-control-container">
+                <label class="input-form-label">ID Number </label><span class="text-danger">*</span>
+                <div class="input-form-box">
+                    <input type="text" [(ngModel)]="clientID" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 mt-2" *ngIf="typeValue =='1'">
+            <mat-form-field appearance="fill">
+                <mat-label>Date Of birth</mat-label>
+                <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxiDate" [(ngModel)]="dob">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-6 mt-2" *ngIf="typeValue == '2'">
+            <mat-form-field appearance="fill">
+                <mat-label>Registration Date</mat-label>
+                <input matInput [matDatepicker]="picker" [min]="regDate" [max]="maxDate" [(ngModel)]="dob">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="input-control-container">
+                <label class="input-form-label">Client Status </label><span class="text-danger">*</span>
+                <div class="input-form-radio-box">
+                    <div class="radio-toolbar">
+                        <input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="clientStatus" value="P">
+                        <label for="orginwarehouse_Pending" *ngIf="editSection">Pending</label>
+                        <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="clientStatus" value="Y">
+                        <label for="orginwarehouse_Yes">Active</label>
+                        <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="clientStatus" value="N">
+                        <label for="orginwarehouse_No">DeActive</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Appointment Date</mat-label>
+                <input matInput [matDatepicker]="picker" required [min]="currentDate" [(ngModel)]="appointmentDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-2">
+            <div class="input-control-container">
+                <label class="input-form-label">Is Tax Exempted? </label><span class="text-danger">*</span>
+                <div class="input-form-radio-box">
+                    <div class="radio-toolbar">
+                        <input id="tax_yes" type="radio" name="taxYN" [(ngModel)]="taxYN" value="Y">
+                        <label for="tax_yes">Yes</label>
+                        <input id="tax_no" type="radio" name="taxYN" [(ngModel)]="taxYN" value="N">
+                        <label for="tax_no">No</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4" *ngIf="taxYN=='Y'">
+            <div class="input-control-container">
+                <label class="input-form-label">Tax Code</label><span class="text-danger">*</span>
+                <div class="input-form-box">
+                    <input type="text" [(ngModel)]="taxCode" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="input-control-container">
+                <label class="input-form-label">Prefered Notification? </label><span class="text-danger">*</span>
+                <div class="input-form-radio-box">
+                    <div class="radio-toolbar">
+                        <input id="notify_sms" type="radio" name="preferedNotification" [(ngModel)]="preferedNotification" value="Sms">
+                        <label for="notify_sms">SMS</label>
+                        <input id="notify_mail" type="radio" name="preferedNotification" [(ngModel)]="preferedNotification" value="Mail">
+                        <label for="notify_mail">Mail</label>
+                        <input id="notify_whatsapp" type="radio" name="preferedNotification" [(ngModel)]="preferedNotification" value="Whatsapp">
+                        <label for="notify_whatsapp">Whatsapp</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <button class="custom-btn btn-5 mx-2" matRipple [routerLink]="['/Home/customer']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+        <button class="custom-btn btn-6 mx-2" matRipple (click)="onProceed('save')">Save</button>
+        <button class="custom-btn btn-6 mx-2" matRipple (click)="onProceed('submit')">Next</button>
+    </div>
+</div>

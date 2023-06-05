@@ -1,0 +1,209 @@
+<div class="card">
+  <div class="card-header">
+      <div class="d-flex justify-content-between">
+          <div>
+             SMS Details
+          </div>
+          <div *ngIf="Sno">
+              SnoId ~ {{Sno}}
+          </div>
+      </div>
+  </div>
+  <div class="card-body">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="input-control-container">
+              <label class="input-form-label">Branch Code</label>
+              <ng-select class="input-form-select" appendTo="body" [items]="branchList" [(ngModel)]="BranchCode" (change)="getEditSmsDetails()" bindValue="Code" bindLabel="CodeDesc">
+              </ng-select>
+          </div>
+      </div>
+          <div class="col-12 col-md-4 col-lg-4">
+              <div class="input-control-container">
+                  <label class="input-form-label">SmsUserName<span class="text-required">*</span></label>
+                  <div class="input-form-box">
+                      <input type="text" class="input-form-control without-icon" [(ngModel)]="SmsDetails.SmsUserName" maxlength="100">
+                  </div>
+              </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+                <label class="input-form-label">SenderId<span class="text-required">*</span></label>
+                <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon" [(ngModel)]="SmsDetails.SenderId" maxlength="100">
+                </div>
+            </div>
+        </div>
+          <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+                <label class="input-form-label">SmsUserPass<span class="text-required">*</span></label>
+                <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon" [(ngModel)]="SmsDetails.SmsUserPass" maxlength="100">
+                </div>
+            </div>
+        </div>
+
+          <div class="col-12 col-md-4 col-lg-4">
+              <div class="input-control-container">
+                  <label class="input-form-label">SmsPartyUrl<span class="text-required">*</span></label>
+                  <div class="input-form-box">
+                      <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="SmsDetails.SmsPartyUrl">
+                  </div>
+              </div>
+          </div>
+          <!--<div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+                <label class="input-form-label">SmtpPort<span class="text-required">*</span></label>
+                <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="MailDetails.SmtpPort">
+                </div>
+            </div>
+        </div>-->
+          <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Regulatory Code<span class="text-required">*</span></label>
+                <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="SmsDetails.RegulatoryCode">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+              <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
+              <div class="input-form-box">
+                  <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="SmsDetails.CoreAppCode">
+              </div>
+          </div>
+      </div>
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="input-control-container">
+            <label class="input-form-label">Address<span class="text-required">*</span></label>
+            <div class="input-form-box">
+                <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="SmsDetails.Address">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4 col-lg-4">
+      <div class="input-control-container">
+          <label class="input-form-label">SecureYn<span class="text-required">*</span></label>
+          <div class="input-form-radio-box">
+              <div class="radio-toolbar">
+                  <input id="org" type="radio" name="orig" [(ngModel)]="SmsDetails.SecureYn" value="Y">
+                  <label for="org">Yes</label>
+                  <input type="radio" id="Ware" name="origi" [(ngModel)]="SmsDetails.SecureYn" value="N">
+                  <label for="Ware">No</label>
+                  <!--<input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="statusValue" value="R">
+                            <label for="orginwarehouse_Pending" class="customLabel">Referral</label>-->
+              </div>
+          </div>
+      </div>
+    </div>
+
+
+
+          <!-- <div class="col-12 col-md-4 col-lg-4">
+              <div class="input-control-container">
+                  <label class="input-form-label">Core App Code<span class="text-required" >*</span></label>
+                  <div class="input-form-box">
+                      <input type="text" class="input-form-control without-icon" [(ngModel)]="sectionDetails.CoreAppCode" maxlength="20">
+                  </div>
+              </div>
+          </div> -->
+         <!--<div class="col-12 col-md-4 col-lg-4">
+              <div class="input-control-container">
+                  <label class="input-form-label">Status<span class="text-required">*</span></label>
+                  <div class="input-form-radio-box">
+                      <div class="radio-toolbar">
+                          <input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="sectionDetails.Status" value="P">
+                          <label for="orginwarehouse_Pending">Pending</label>
+                          <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="sectionDetails.Status" value="Y">
+                          <label for="orginwarehouse_Yes">Active</label>
+                          <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="sectionDetails.Status" value="N">
+                          <label for="orginwarehouse_No">DeActive</label>
+                      </div>
+                  </div>
+              </div>
+          </div>-->
+
+
+      </div>
+
+            <div class="row">
+
+
+          <div class="col-12 col-md-4 col-lg-4">
+            <mat-form-field appearance="fill">
+                <mat-label>Effective Date</mat-label>
+                <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="onDateFormatInEdit" [(ngModel)]="SmsDetails.EffectiveDateStart">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-4">
+              <div class="input-control-container">
+                  <label class="input-form-label">Remarks<span class="text-required" >*</span></label>
+                  <div class="input-form-box">
+                      <textarea cols="60" ros="3" class="input-form-select" [(ngModel)]="SmsDetails.Remarks"></textarea>
+                  </div>
+              </div>
+          </div>
+
+
+          <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Status<span class="text-required">*</span></label>
+                <div class="input-form-radio-box">
+                    <div class="radio-toolbar">
+                        <input id="orginwarehouse_Yes" type="radio" name="orgin" [(ngModel)]="SmsDetails.Status" value="Y">
+                        <label for="orginwarehouse_Yes">Active</label>
+                        <input type="radio" id="orginwarehouse_No" name="origin" [(ngModel)]="SmsDetails.Status" value="N">
+                        <label for="orginwarehouse_No">DeActive</label>
+                        <!--<input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="statusValue" value="R">
+                                  <label for="orginwarehouse_Pending" class="customLabel">Referral</label>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
+
+              <!-- <div class="input-control-container">
+                  <label class="input-form-label">Effective Date Start<span class="text-required">*</span></label>
+                  <div class="input-form-box">
+                      <input matInput [matDatepicker]="picker" [(ngModel)]="productDetails.EffectiveDateStart">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                  </div>
+              </div> -->
+
+          <!-- <div class="col-12 col-md-4 col-lg-4">
+              <div class="input-control-container">
+                  <mat-form-field appearance="fill">
+                      <mat-label>End Date</mat-label>
+                      <input matInput [matDatepicker]="picker1" [min]="sectionDetails.EffectiveDateStart" [(ngModel)]="sectionDetails.EffectiveDateEnd">
+                      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+              </div>
+          </div> -->
+
+
+      <!--</div>-->
+      <div class="row">
+
+      </div>
+  </div>
+  <div>
+      <div class="d-flex justify-content-end">
+          <div>
+
+          </div>
+          <div>
+              <button class="btn btn-danger" (click)="dismiss()">Cancel</button>
+              <button class="ml-2 btn btn-primary" (click)="onSaveSms()">Save</button>
+          </div>
+      </div>
+  </div>
+</div>

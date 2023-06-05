@@ -1,0 +1,100 @@
+.example-tree-invisible {
+  display: none;
+}
+.container {
+  display: grid !important;
+}
+.tree-container {
+  overflow-y: scroll !important;
+  visibility: visible !important;
+}
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+/* silly UX, they want a border in the full width of the tree between tree nodes */
+.example-tree {
+  position: relative;
+}
+
+.example-tree-node-name {
+  flex: 1 1 auto;
+}
+
+li::before {
+  height: 3rem;
+  position:absolute;
+  left: 0;
+  right: 0;
+  content: ' ';
+}
+.sectionBg{
+  color: white;
+  background-color: rgb(44, 119, 165);
+  border-radius: 5px ;
+  padding: 0px !important;
+  border-bottom: #EEE 1px solid;
+}
+.coverBg{
+  color: white;
+  background-color: rgb(44, 165, 119);
+  border-radius: 5px ;
+  padding: 0px !important;
+  border-bottom: #EEE 1px solid;
+}
+.factorBg{
+  color: white;
+  background-color: #746a4c;
+  border-radius: 5px ;
+  padding: 0px !important;
+  border-bottom: #EEE 1px solid;
+}
+.taxBg{
+  color: white;
+  background-color: #e09a60;
+  border-radius: 5px ;
+  padding: 0px !important;
+  border-bottom: #EEE 1px solid;
+}
+.emiBg{
+  color: white;
+  background-color: #63a2ad;
+  border-radius: 5px ;
+  padding: 0px !important;
+  border-bottom: #EEE 1px solid;
+}
+.payBg{
+  color: white;
+  background-color: #78805b;
+  border-radius: 5px ;
+  padding: 0px !important;
+  border-bottom: #EEE 1px solid;
+}
+.policyBg{
+  color: white;
+  background-color: #7c6049;
+  border-radius: 5px ;
+  padding: 0px !important;
+  border-bottom: #EEE 1px solid;
+}
+.btn-circle {
+  width: 25px;
+  height: 25px;
+  padding: 3px 0px;
+  border-radius: 100%;
+  text-align: center;
+  color: #fff;
+  background-color: #333b85;
+  font-size: 14px;
+  line-height: 1.42857;
+  border-color: #D1D9E6 !important;
+  box-shadow: 0px 0px 1px #b8b9be, 0px 0px 2px #fff !important;
+  width: 25px;
+}
+
+.btn-circle:hover {
+  color: #fff;
+}

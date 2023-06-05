@@ -1,0 +1,15 @@
+<h4 mat-dialog-title>Form Validation</h4>
+<mat-dialog-content>
+
+  <ul class="list-group errorlist">
+    <ng-container *ngFor="let item of data">
+      <li class="list-group-item">
+        <div>Field<span class="mx-2">:</span>{{item?.Field}}</div>
+        <div>Message<span class="mx-2">:</span>{{item?.Message}}</div>
+      </li>
+    </ng-container>
+  </ul>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close color="warn">Fix</button>
+</mat-dialog-actions>

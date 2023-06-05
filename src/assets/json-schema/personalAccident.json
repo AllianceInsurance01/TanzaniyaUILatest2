@@ -1,0 +1,89 @@
+{
+    "schema": {
+        "type": "object",
+        "title": "",
+        "properties": {
+            "CustomerName": {
+                "title": "Name",
+                "type": "input",
+                "required": true
+            },
+            "Dob": {
+                "title": "Date Of Birth(Choose Back Date )",
+                "required": true,
+                "type": "date"
+            },
+            "OccupationType": {
+                "type": "string",
+                "title": "Occupation",
+                "widget": {
+                    "formlyConfig": {
+                        "type": "select",
+                        "templateOptions": {
+                            "options": [{
+                                    "value": null,
+                                    "label": "--"
+                                },
+                                {
+                                    "value": "1",
+                                    "label": "Engineer"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "SalaryPerAnnum": {
+                "type": "number",
+                "title": "Salary/Year"
+            },
+            "BenefitCoverMonth": {
+                "type": "string",
+                "title": "Benefit Period",
+                "widget": {
+                    "formlyConfig": {
+                        "type": "select",
+                        "templateOptions": {
+                            "options": [{
+                                    "value": null,
+                                    "label": "--"
+                                },
+                                {
+                                    "value": "12",
+                                    "label": "12 Months"
+                                },
+                                {
+                                    "value": "24",
+                                    "label": "24 Months"
+                                },
+                                {
+                                    "value": "36",
+                                    "label": "36 Months"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "SumInsured": {
+                "title": "Sum Insured",
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100000000
+            }
+        },
+        "layout": [
+            { "type": "flex", "flex-flow": "row wrap", "items": ["CustomerName", "Dob"] },
+            { "type": "flex", "flex-flow": "row wrap", "items": ["OccupationType", "SalaryPerAnnum"] },
+            { "type": "flex", "flex-flow": "row wrap", "items": ["BenefitCoverMonth", "SumInsured"] }
+        ]
+    },
+    "model": {
+        "CustomerName": "",
+        "Dob": "",
+        "OccupationType": "",
+        "SalaryPerAnnum": "",
+        "BenefitCoverMonth": null,
+        "SumInsured": 0
+    }
+}

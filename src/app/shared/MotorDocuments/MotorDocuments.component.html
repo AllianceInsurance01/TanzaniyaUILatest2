@@ -1,0 +1,2344 @@
+
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div style="font-size:15px;color:white">View Quote Details</div>
+        </div>
+    </div>
+ 
+
+    <div class="card-body mt-2">
+        <mat-tab-group class="fadeInUp">
+            <mat-tab label="CustomerInfo" class="customer"> 
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                          <div class="maan-grid customer-grid maan-grid-column-1">
+                             
+                            <div class="maan-grid-item">
+                
+                                <div class="maan-grid-item-title">
+                
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <span class="mx-1">
+                                                <i class="fas fa-user mx-1"></i>
+                        
+                                            </span> Customer Information
+                                        </div>
+                                        <div>
+                                            <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                                            <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="maan-grid-item-body mt-3" *ngFor="let Cus of customerInfo">
+                                        <div class="row mt-1 ml-4">
+                
+                                            <div class="row ml-4">
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Name</b></label>
+                                                        <div class="input-form-radio-box">
+                                                            {{Cus?.CustomerName}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Mobile Code</b></label>
+                                                        <div class="input-form-radio-box">
+                                                             {{Cus.MobileCode1}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Mobile No</b></label>
+                                                        <div class="input-form-radio-box">
+                                                               {{Cus.MobileNo1}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                         
+                
+                                            <div class="row mt-2 ml-4">
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Login Id</b></label>
+                                                        <div class="input-form-radio-box">
+                                                              {{Cus.LoginId}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Application Id</b></label>
+                                                        <div class="input-form-radio-box">
+                                                             {{Cus.ApplicationId}}                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Email</b></label>
+                                                        <div class="input-form-radio-box">
+                                                              {{Cus.Email1}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                
+                
+                                            
+                                            <div class="row mt-2 ml-4">
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Occupation</b></label>
+                                                        <div class="input-form-radio-box">
+                                                            {{Cus.Occupation}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>City</b></label>
+                                                        <div class="input-form-radio-box">
+                                                               {{Cus.CityName}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Address</b></label>
+                                                        <div class="input-form-radio-box">
+                                                                 {{Cus.Address1}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                
+                
+                                            
+                                            
+                                            <div class="row mt-2 ml-4">
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Nationality</b></label>
+                                                        <div class="input-form-radio-box">
+                                                                {{Cus.Nationality}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Division</b></label>
+                                                        <div class="input-form-radio-box">
+                                                               {{Cus.Division}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Customer Code</b></label>
+                                                        <div class="input-form-radio-box">
+                                                                 {{Cus.CustomerCode}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                
+                
+                                                
+                                            <div class="row mt-2 ml-4">
+                                                <!--<div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>CustomerCodeName</b></label>
+                                                        <div class="input-form-radio-box">
+                                                              {{Cus.CustomerCodeName}}
+                                                        </div>
+                                                    </div>
+                                                </div>-->
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Source Type</b></label>
+                                                        <div class="input-form-radio-box">
+                                                             {{Cus.SourceType}} 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Date Of Birth</b></label>
+                                                        <div class="input-form-radio-box">
+                                                            {{Cus.DobOrRegDate}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Gender</b></label>
+                                                        <div class="input-form-radio-box">
+                                                               {{Cus.Gender}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--<div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Source</b></label>
+                                                        <div class="input-form-radio-box">
+                                                            {{Cus.Source}}
+                                                        </div>
+                                                    </div>
+                                                </div>-->
+                                            </div>
+
+                                            <div class="row mt-2 ml-4">
+                                                 <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>CustomerCodeName</b></label>
+                                                        <div class="input-form-radio-box">
+                                                              {{Cus.CustomerCodeName}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                 <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Source</b></label>
+                                                        <div class="input-form-radio-box">
+                                                            {{Cus.Source}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                               
+                                            <div class="row mt-2 ml-4">
+                                              
+                                             
+
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Whatsapp Code</b></label>
+                                                        <div class="input-form-radio-box">
+                                                            {{Cus.WhatsappcodeDesc}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>WhatsApp No</b></label>
+                                                        <div class="input-form-radio-box">
+                                                                 {{Cus.WhatsappNo}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+
+                                            <div class="row mt-2 ml-4">
+
+                                                
+                                                <!--<div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Gender</b></label>
+                                                        <div class="input-form-radio-box">
+                                                               {{Cus.Gender}}
+                                                        </div>
+                                                    </div>
+                                                </div>-->
+                                                <!--<div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>WhatsApp No</b></label>
+                                                        <div class="input-form-radio-box">
+                                                                 {{Cus.WhatsappNo}}
+                                                        </div>
+                                                    </div>
+                                                </div>-->
+                                            </div>
+                                           
+                                           
+                                        </div>
+                                    </div>
+                
+                
+                                    </div>
+                
+                            </div>
+                
+                            </div>
+                
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="VehicleInfo" *ngIf="productId == '5'">
+                  
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mt-2">
+                            <div class="col-12 col-md-12 col-lg-12">
+                           <ng-container *ngIf="ViewRisk.length!=0">
+                                    <app-commodity-table [cols]="vechileHeader" [data]="ViewRisk" (onAdd)="vechileInnerdata($event)" (onView)="onViews($event)">
+                                    </app-commodity-table>
+
+                                    <div *ngIf="pass">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                  <div class="maan-grid customer-grid maan-grid-column-1">
+                                                     
+                                                    <div class="maan-grid-item">
+                                        
+                                                        <div class="maan-grid-item-title">
+                                        
+                                                            <div class="d-flex justify-content-between">
+                                                                <div>
+                                                                    <span class="mx-1">
+                                                                        <!--<i class="fas fa-user mx-1"></i>-->
+                                                                        <i class='fas fa-motorcycle' style='font-size:24px'></i>
+                                                
+                                                                    </span> Vechile Information
+                                                                </div>
+                                                                <div>
+                                                                    <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                                                                    <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                            <div class="maan-grid-item-body mt-3" *ngFor="let vech of ViewRisk">
+                                                                <div class="row mt-1 ml-4">
+                                        
+                                                                    <div class="row ml-4">
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>ChassisNumber</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                    {{vech.Chassisnumber}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>EngineNumber</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                 {{vech.EngineNumber}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>Registrationnumber</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                   {{vech.Registrationnumber}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                 
+                                        
+                                                                    <div class="row mt-2 ml-4">
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>Sum Insured</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                       {{vech.SumInsured}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>MotorCategoryDesc</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                       {{vech.MotorCategoryDesc}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>Seating Capacity</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                       {{vech.SeatingCapacity}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                        
+                                        
+                                                                    
+                                                                    <div class="row mt-2 ml-4">
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>ManufactureYear
+                                                                                </b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                       {{vech.ManufactureYear
+                                                                                       }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>FuelTypeDesc</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                       {{vech.FuelTypeDesc}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>HavePromoCode</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                       {{vech.HavePromoCode}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row mt-2 ml-4">
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>PromoCode</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                       {{vech.Promocode}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>WindScreenSumInsured</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                       {{vech.WindScreenSumInsured}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>AcccessoriesSumInsured</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                       {{vech.AcccessoriesSumInsured}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    <div class="row mt-2 ml-4">
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>TppdIncreaeLimit</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                       {{vech.TppdIncreaeLimit}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>CollateralYn</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                       {{vech.CollateralYn}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>CollateralName</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                       {{vech.CollateralName}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <div class="row mt-2 ml-4">
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>RenewalOldExpDate</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                       {{vech.RenewalOldExpDate}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>RenewalDateYN</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                       {{vech.RenewalDateYn}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>RenewalStatus</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                       {{vech.RenewalStatus}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row mt-2 ml-4">
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>
+                                                                                    RenewalOldPolicy</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                       {{vech.RenewalOldPolicy}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>Gpstrackinginstalled</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                       {{vech.Gpstrackinginstalled}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--<div class="col-12 col-md-4">
+                                                                            <div class="input-control-container">
+                                                                                <label class="input-form-label"><b>RenewalStatus</b></label>
+                                                                                <div class="input-form-radio-box">
+                                                                                       {{vech.RenewalStatus}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>-->
+                                                                    </div>
+
+                                                                    
+                                                                   
+                                                                   
+                                                                </div>
+                                                            </div>
+                                        
+                                        
+                                                            </div>
+                                        
+                                        
+                                                    </div>
+                                        
+                                                    </div>
+                                        
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <!--<ng-container *ngIf="columnHeader[i]['display']=='After Discount' || columnHeader[i]['display']=='Included Tax'" style="white-space: nowrap;">
+                                    {{ columnHeader[i]["display"] }}&nbsp;({{currencyCode}})
+                                    [innerCols]="VechileColumnHeader" [innerData]="innerTableData"
+                                </ng-container>-->
+                                <ng-container *ngIf="ViewRisk.length==0">
+                                    <div class="text-center spancommon span_font_size">
+                                        No Quote Available
+                                    </div>
+            
+                                </ng-container>
+        
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 
+                
+            </mat-tab>
+            <mat-tab label="TravelInfo" *ngIf="productId == '4'">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                          <div class="maan-grid customer-grid maan-grid-column-1">
+                <div class="maan-grid-item">
+
+                    <div class="maan-grid-item-title">
+    
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="mx-1">
+                                    <!--<i class="fas fa-user mx-1"></i>-->
+                                    <!--<i class='fas fa-motorcycle' style='font-size:24px'></i>-->
+                                    <i class='fas fa-plane' style='font-size:14px'></i>
+            
+                                </span> Travel Details
+                            </div>
+                            <div>
+                                <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                                <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                            </div>
+                        </div>
+                        </div>
+                        <div class="maan-grid-item-body mt-3">
+                            <div class="row mt-1 ml-4">
+    
+                                <div class="row ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Depature Date</b></label>
+                                            <div class="input-form-radio-box">
+                                             11/04/2023
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Arrival Date</b></label>
+                                            <div class="input-form-radio-box">
+                                            14/04/2023
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Number Of Days</b></label>
+                                            <div class="input-form-radio-box">
+                                            4
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+    
+                                <div class="row mt-2 ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Currency</b></label>
+                                            <div class="input-form-radio-box">
+                                               United States Doller
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Have PromoCode</b></label>
+                                            <div class="input-form-radio-box">
+                                               No
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Type of Paln</b></label>
+                                            <div class="input-form-radio-box">
+                                                  Individual
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+    
+                                
+                                <div class="row mt-2 ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Destination Country</b></label>
+                                            <div class="input-form-radio-box">
+                                                  Andorra
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Premium Plan</b></label>
+                                            <div class="input-form-radio-box">
+                                                   Plan Worldwide Basic
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>No Of Persons</b></label>
+                                            <div class="input-form-radio-box">
+                                                   1
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                               
+                            </div>
+                        </div>
+    
+    
+                        </div>
+
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        
+                
+            </mat-tab>
+
+            <mat-tab label="DomesticInfo" *ngIf="productId == '3'">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                          <div class="maan-grid customer-grid maan-grid-column-1">
+                <div class="maan-grid-item">
+
+                    <div class="maan-grid-item-title">
+    
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="mx-1">
+                                    <!--<i class="fas fa-user mx-1"></i>-->
+                                    <!--<i class='fas fa-motorcycle' style='font-size:24px'></i>-->
+                                    <i class='fas fa-plane' style='font-size:14px'></i>
+            
+                                </span> Risk Details
+                            </div>
+                            <div>
+                                <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                                <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                            </div>
+                        </div>
+                        </div>
+                        <div class="maan-grid-item-body mt-3" *ngFor="let dom of ViewRisk">
+                            <div class="row mt-1 ml-4">
+    
+                                <div class="row ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Do You Rent Or Own Home
+                                            </b></label>
+                                            <div class="input-form-radio-box">
+                                             {{dom.BuildingType}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Of What Materials Is The Dwelling Constructed</b></label>
+                                            <div class="input-form-radio-box">
+                                            {{dom.InbuildConstructType}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>How Are The Outbuildings (if any) Constructed</b></label>
+                                            <div class="input-form-radio-box">
+                                            {{dom.OutbuildConstructType}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+    
+                                <div class="row mt-2 ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Occupation</b></label>
+                                            <div class="input-form-radio-box">
+                                               {{dom.OccupationTypeDesc}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Built Year</b></label>
+                                            <div class="input-form-radio-box">
+                                               {{dom.BuildingBuildYear}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>What Is its Height In Storeys</b></label>
+                                            <div class="input-form-radio-box">
+                                                  12
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Buiding Area Sqm
+ 
+                                            </b></label>
+                                            <div class="input-form-radio-box">
+                                             {{dom.BuidingAreaSqm}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Building Condition
+                                            </b></label>
+                                            <div class="input-form-radio-box">
+                                            {{dom.BuildingCondition}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Endorsement Yn</b></label>
+                                            <div class="input-form-radio-box">
+                                            {{dom.EndorsementYn}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+    
+                                
+                                <div class="row mt-2 ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Building Usage</b></label>
+                                            <div class="input-form-radio-box">
+                                                  {{dom.BuildingUsageDesc}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Building Sum Insured (TZS)</b></label>
+                                            <div class="input-form-radio-box">
+                                                  {{dom.BuildingSuminsured}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Personal Intermediary Suminsured</b></label>
+                                            <div class="input-form-radio-box">
+                                                {{dom.PersonalIntermediarySuminsured}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mt-2 ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Pa Total disability SumInsured</b></label>
+                                            <div class="input-form-radio-box">
+                                                 {{dom.PaTotaldisabilitySumInsured}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>All Risk SumInsured</b></label>
+                                            <div class="input-form-radio-box">
+                                                  {{dom.AllriskSumInsured}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>ContentSuminsured</b></label>
+                                            <div class="input-form-radio-box">
+                                                  {{dom.ContentSuminsured}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                
+                                <div class="row mt-2 ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Pa Medical Suminsured</b></label>
+                                            <div class="input-form-radio-box">
+                                                 {{dom.PaMedicalSuminsured}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Pa Death Suminsured</b></label>
+                                            <div class="input-form-radio-box">
+                                                  {{dom.PaDeathSuminsured}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Pa Permanent disablement Suminsured</b></label>
+                                            <div class="input-form-radio-box">
+                                                  {{dom.PaPermanentdisablementSuminsured}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                               
+                            </div>
+                        </div>
+    
+    
+                        </div>
+
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        
+                
+            </mat-tab>
+
+            <mat-tab label="PersonalAccident Info" *ngIf="productId == '13'">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                          <div class="maan-grid customer-grid maan-grid-column-1">
+                <div class="maan-grid-item">
+
+                    <div class="maan-grid-item-title">
+    
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="mx-1">
+                                    <!--<i class="fas fa-user mx-1"></i>-->
+                                    <!--<i class='fas fa-motorcycle' style='font-size:24px'></i>-->
+                                    <!--<i class='fas fa-plane' style='font-size:14px'></i>-->
+            
+                                </span> Personal Accident Details
+                            </div>
+                            <div>
+                                <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                                <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                            </div>
+                        </div>
+                        </div>
+                        <div class="maan-grid-item-body mt-3">
+                            <div class="row mt-1 ml-4">
+    
+                                <div class="row ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Insurer Name 
+                                            </b></label>
+                                            <div class="input-form-radio-box">
+                                             Tanzania
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Date Of Birth</b></label>
+                                            <div class="input-form-radio-box">
+                                          06/06/1999
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Occupation</b></label>
+                                            <div class="input-form-radio-box">
+                                          Engineers
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+    
+                                <div class="row mt-2 ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Salary/Year</b></label>
+                                            <div class="input-form-radio-box">
+                                            9965
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Benefit Period</b></label>
+                                            <div class="input-form-radio-box">
+                                               24 Months
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>SumInsured</b></label>
+                                            <div class="input-form-radio-box">
+                                                  19930
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+                               
+                            </div>
+                        </div>
+    
+    
+                        </div>
+
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        
+                
+            </mat-tab>
+
+            <mat-tab label="WorkmensCompensation" *ngIf="productId == '15'">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                          <div class="maan-grid customer-grid maan-grid-column-1">
+                <div class="maan-grid-item">
+
+                    <div class="maan-grid-item-title">
+    
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="mx-1">
+                                    <!--<i class="fas fa-user mx-1"></i>-->
+                                    <!--<i class='fas fa-motorcycle' style='font-size:24px'></i>-->
+<!--<i class='fas fa-plane' style='font-size:14px'></i>-->
+            
+                                </span> Workmens Compensation
+                            </div>
+                            <div>
+                                <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                                <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                            </div>
+                        </div>
+                        </div>
+                        <div class="maan-grid-item-body mt-3">
+                            <div class="row mt-1 ml-4">
+    
+                                <div class="row ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Insurer Name 
+                                            </b></label>
+                                            <div class="input-form-radio-box">
+                                             Tanzania
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Date Of Birth</b></label>
+                                            <div class="input-form-radio-box">
+                                          06/06/1999
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Occupation</b></label>
+                                            <div class="input-form-radio-box">
+                                          Engineers
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+    
+                                <div class="row mt-2 ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Salary/Year</b></label>
+                                            <div class="input-form-radio-box">
+                                            9965
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Job Joined Year</b></label>
+                                            <div class="input-form-radio-box">
+                                              2006
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>WorkMen's SumInsured </b></label>
+                                            <div class="input-form-radio-box">
+                                                 9876
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+                               
+                            </div>
+                        </div>
+    
+    
+                        </div>
+
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        
+                
+            </mat-tab>
+
+            
+            <mat-tab label="EmployeersLiability" *ngIf="productId == '14'">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                          <div class="maan-grid customer-grid maan-grid-column-1">
+                <div class="maan-grid-item">
+
+                    <div class="maan-grid-item-title">
+    
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="mx-1">
+                                    <!--<i class="fas fa-user mx-1"></i>-->
+                                    <!--<i class='fas fa-motorcycle' style='font-size:24px'></i>-->
+<!--<i class='fas fa-plane' style='font-size:14px'></i>-->
+            
+                                </span> EmployeersLiability
+                            </div>
+                            <div>
+                                <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                                <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                            </div>
+                        </div>
+                        </div>
+                        <div class="maan-grid-item-body mt-3">
+                            <div class="row mt-1 ml-4">
+    
+                                <div class="row ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Insurer Name 
+                                            </b></label>
+                                            <div class="input-form-radio-box">
+                                             Tanzania
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Date Of Birth</b></label>
+                                            <div class="input-form-radio-box">
+                                          06/06/1999
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Occupation</b></label>
+                                            <div class="input-form-radio-box">
+                                          Engineers
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+    
+                                <div class="row mt-2 ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Salary/Year</b></label>
+                                            <div class="input-form-radio-box">
+                                            9965
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Job Joined Year</b></label>
+                                            <div class="input-form-radio-box">
+                                              2006
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Employees SumInsured </b></label>
+                                            <div class="input-form-radio-box">
+                                                 9876
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+                               
+                            </div>
+                        </div>
+    
+    
+                        </div>
+
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        
+                
+            </mat-tab>
+
+            <mat-tab label="SME" *ngIf="productId == '19'">
+                 
+                   
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                          <div class="maan-grid customer-grid maan-grid-column-1">
+                <div class="maan-grid-item">
+
+                    <div class="maan-grid-item-title">
+    
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="mx-1">
+                                    <!--<i class="fas fa-user mx-1"></i>-->
+                                    <!--<i class='fas fa-motorcycle' style='font-size:24px'></i>-->
+                                    <i class='fas fa-plane' style='font-size:14px'></i>
+            
+                                </span> SME Details
+                            </div>
+                            <div>
+                                <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                                <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                            </div>
+                        </div>
+                        </div>
+                        <div class="maan-grid-item-body mt-3">
+                            <div class="row mt-1 ml-4">
+    
+                                <div class="row ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Category
+                                            </b></label>
+                                            <div class="input-form-radio-box">
+                                             Category 1
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Industry</b></label>
+                                            <div class="input-form-radio-box">
+                                            Bank Industry
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Building Value</b></label>
+                                            <div class="input-form-radio-box">
+                                          123
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             
+    
+                                <div class="row mt-2 ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Contents Value</b></label>
+                                            <div class="input-form-radio-box">
+                                              234
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Electronic Equipment Sum insured (TZS)</b></label>
+                                            <div class="input-form-radio-box">
+                                               2367
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Single Carrying Sum insured </b></label>
+                                            <div class="input-form-radio-box">
+                                                  0
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+    
+                                
+                                <div class="row mt-2 ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Annual Carrying Sum insured (TZS)</b></label>
+                                            <div class="input-form-radio-box">
+                                                 0
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Money In Safe Sum insured</b></label>
+                                            <div class="input-form-radio-box">
+                                                  0
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>AnyOne Occurance Sum insured (TZS)</b></label>
+                                            <div class="input-form-radio-box">
+                                                   0
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mt-2 ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Annual Sum insured (TZS)</b></label>
+                                            <div class="input-form-radio-box">
+                                                 0
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>TPL AnyOne Occurence Sum insured (TZS)</b></label>
+                                            <div class="input-form-radio-box">
+                                                  0
+                                            </div>
+                                        </div>
+                                    </div>
+                                 <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Employer's Excess Sum insured (TZS)</b></label>
+                                            <div class="input-form-radio-box">
+                                                   0
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-2 ml-4">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Employer's Annual Sum insured (TZS)</b></label>
+                                            <div class="input-form-radio-box">
+                                                 0
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Goods Single Carry Sum insured (TZS)</b></label>
+                                            <div class="input-form-radio-box">
+                                                  0
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Goods Turn Over Sum insured (TZS)</b></label>
+                                            <div class="input-form-radio-box">
+                                                   0
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                               
+                            </div>
+                        </div>
+    
+    
+                        </div>
+
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                
+            </mat-tab>
+            <mat-tab label="PremiumInfo">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mt-2">
+                            <div class="col-12 col-md-12 col-lg-12">
+                           <ng-container *ngIf="PremiumInfo.length!=0">
+                                    <app-commodity-table [cols]="quoteHeader" [data]="PremiumInfo" [innerCols]="innerColumnHeader" [Currency]="Currency" [innerData]="innerTableData"
+                                    (add)="onInnerpremiumData($event)">
+                                    </app-commodity-table>
+                                    <table class="list-group-item list-seperate" colspan="3">
+                                       
+                                        <tr>
+                                            <td><span class="spancommon span_font_size"><b>Total Premium</b></span></td>
+                                        </tr>
+                                        <div>
+                                            <span class="spancommon span_font_size"><b>{{OverallPremiumFc|commaseparator}}({{Currency}})</b></span>
+                                        </div>
+                                       
+                                    </table>
+                                    <!--<div *ngIf="quoteHeader[i]['display']=='After Discount'" style="white-space: nowrap;">
+                                        {{ quoteHeader[i]["display"] }}&nbsp;({{currencyValue}})
+                                        (onAdd)="onInnerData($event)"
+                                        </div>-->
+                                </ng-container>
+                              
+                                <!--<ng-container *ngFor="let i = index;let col of quoteHeader;">
+
+                                <div *ngIf="quoteHeader[i]['display']=='After Discount'" style="white-space: nowrap;">
+                                    {{ quoteHeader[i]["display"] }}&nbsp;({{currencyValue}})
+                                    </div>
+                                </ng-container>-->
+                                <ng-container *ngIf="PremiumInfo.length==0">
+                                    <div class="text-center spancommon span_font_size">
+                                        No Quote Available
+                                    </div>
+            
+                                </ng-container>
+        
+                              
+            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              
+                
+<!--<table class="table mt-2" id="capture_table">
+                    <thead>
+                        <tr>
+                            <th colspan="4">
+
+                            </th>
+                            <th colspan="5">Premium</th>
+                        </tr>
+                        <tr>
+                            <th scope="col" class="border_radius"><span class="spancommon"></span></th>
+                            <th scope="col"><span class="spancommon">Section Name</span></th>
+                            <th scope="col"><span class="spancommon">Cover Name</span></th>
+                            <th scope="col"><span class="spancommon">Sum Insured (TZS)
+                               </span></th>
+                                <th scope="col"><span class="spancommon">Rate(%)</span></th>
+                                <th scope="col"><span class="spancommon">Excess(%)</span></th>
+                                <th scope="col"><span class="spancommon">ExcessAmount</span></th>
+                                <th scope="col"><span class="spancommon">After Discount(TZS)</span></th>
+                                <th scope="col"><span class="spancommon">Included Tax(TZS)</span></th>
+
+
+                        
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td><span class="spancommon">MOTOR Commercial Vehicle</span></td>
+                            <td>
+                                <span class="spancommon">Wind ScreenCover</span>
+                            </td>
+                            <td>
+                                <span class="spancommon">32,435</span>
+                            </td>
+                            <td>
+                                <span class="spancommon">4</span>
+                            </td>
+                            <td>
+                                <span class="spancommon">1</span>
+                            </td>
+                            <td>
+                                <span class="spancommon">10000</span>
+                            </td>
+                            <td>
+                                <span class="spancommon">1297</span>
+                            </td>
+                            <td>
+                                <span class="spancommon">708057</span>
+                            </td>
+                          
+                        </tr>
+                    </tbody>
+                </table>-->
+
+
+                 <!--<div>
+    
+                        <div style="text-align:center;box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+                      min-width: 100px !important;margin-top:30px;
+                        border-collapse: collapse;
+             margin-left:auto;
+        margin-right:auto;
+        font-size: 0.9em;
+        font-family: sans-serif;  background-color: #009879;
+        color: #ffffff;">
+                              Private Comprehensive
+                          </div>
+                        
+                <table class="styled-table">
+                       
+                        <thead>
+
+                            <tr>
+                                <th>OMR</th>
+                                <th>Price including Taxes</th>
+                                <th>115.40</th>
+                            </tr>
+                            
+                         
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Base Premium</td>
+                                <td>2.16</td>
+                                <td>OMR:86.400 </td>
+                            </tr>
+                            <tr class="active-row">
+                                <td>Medex</td>
+                                <td>0.00</td>
+                                <td>OMR:86.400 </td>
+                            </tr>
+                          
+                        </tbody>
+                    </table>
+             
+           
+             
+              
+                </div>-->
+            </mat-tab>
+            <mat-tab label="Payment">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                          <div class="maan-grid customer-grid maan-grid-column-1">
+                             
+                            <div class="maan-grid-item">
+                
+                                <div class="maan-grid-item-title">
+                
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <span class="mx-1">
+                                                <!--<i class="fas fa-user mx-1"></i>-->
+                                             
+                                                <i class="fa fa-credit-card" style="font-size:24px"></i>
+                        
+                                            </span> Payment
+                                        </div>
+                                        <div>
+                                            <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                                            <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                                        </div>
+                                    </div>
+                                    </div>
+                                   
+                                        <div class="row mt-1" *ngFor="let pay of PaymentInfo">
+                                            <div class="maan-grid-item-body mt-3">
+                
+                                            <div class="row ml-4">
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>CustomerName</b></label>
+                                                        <div class="input-form-radio-box">
+                                                          {{pay.CustomerName}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>QuoteNo</b></label>
+                                                        <div class="input-form-radio-box">
+                                                            {{pay.QuoteNo}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Net Premium &nbsp; ({{Currency}})</b></label>
+                                                        <div class="input-form-radio-box">
+                                                          {{pay.Premium}}&nbsp;
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                         
+                                            <div class="row mt-2 ml-4">
+                                             
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Payment Status </b></label>
+                                                        <div class="input-form-radio-box">
+                                                               {{pay.PaymentStatus}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Merchant ReferenceNo</b></label>
+                                                        <div class="input-form-radio-box">
+                                                               {{pay.MerchantReference}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>EMI Installment</b></label>
+                                                        <div class="input-form-radio-box">
+                                                              {{pay.EmiYn}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                
+                                                
+                                            <div class="row mt-2 ml-4">
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>InstallmentPeriod</b></label>
+                                                        <div class="input-form-radio-box">
+                                                              {{pay.InstallmentPeriod}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>Payment Id</b></label>
+                                                        <div class="input-form-radio-box">
+                                                               {{pay.PaymentId}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>InstallmentMonth</b></label>
+                                                        <div class="input-form-radio-box">
+                                                               {{pay.InstallmentMonth}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-2 ml-4">
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>PaymentDescription</b></label>
+                                                        <div class="input-form-radio-box">
+                                                              {{pay.PaymentTypedesc}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>BankName</b></label>
+                                                        <div class="input-form-radio-box">
+                                                               {{pay.BankName}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>ChequeNo</b></label>
+                                                        <div class="input-form-radio-box">
+                                                               {{pay.ChequeNo}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-2 ml-4">
+                                                <div class="col-12 col-md-4">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label"><b>ChequeDate</b></label>
+                                                        <div class="input-form-radio-box">
+                                                              {{pay.ChequeDate}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           
+                                           
+                                        </div>
+                                    </div>
+                
+                
+                                    </div>
+                
+                            </div>
+                
+                            </div>
+                
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Rating"> 
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mt-2">
+                            <div class="col-12 col-md-11 col-lg-11 ml-5">
+                           <ng-container *ngIf="RatingInfo.length!=0">
+                                    <app-commodity-table [cols]="ColumnHeader" [data]="RatingInfo" [innerCols]="innerColumnHeader" [Currency]="Currency" [innerData]="innerTableData" (onAdd)="onInnerData($event)">
+                                    </app-commodity-table>
+                                   
+                                    <table class="list-group-item list-seperate" colspan="3">
+                                       
+                                        <tr>
+                                            <td><span class="spancommon span_font_size"><b>Total Premium</b></span></td>
+                                        </tr>
+                                        <div>
+                                            <span class="spancommon span_font_size"><b>{{OverallPremiumFc|commaseparator}}({{Currency}})</b></span>
+                                        </div>
+                                       
+                                    </table>
+
+                                    <!--<td mat-footer-cell *matFooterCellDef="let event">
+                                        <ng-container *ngIf="col.key=='CoverName'">
+                                            <b>Total</b>
+                                        </ng-container>
+                                        <ng-container *ngIf="col.key=='PremiumIncludedTax'">
+                                            <div class="d-flex justify-content-between">
+                                                <div></div>
+                                                <div><b>{{getTotalCost(menu)|commaseparator}}</b></div>
+                                            </div>
+                                        </ng-container>
+                                    </td>-->
+                              
+                                </ng-container>
+                                <ng-container *ngIf="RatingInfo.length==0">
+                                    <div class="text-center spancommon span_font_size">
+                                        No Quote Available
+                                    </div>
+            
+                                </ng-container>
+        
+                              
+            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              
+            </mat-tab>
+            <mat-tab label="Integration"> 
+                <app-PolicyIntegration></app-PolicyIntegration>
+            </mat-tab>
+            <!--<mat-tab label="Tira Details">
+                
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-12">
+                          <div class="maan-grid customer-grid maan-grid-column-1">
+
+                            <div class="maan-grid-item">
+
+                                <div class="maan-grid-item-title">
+                
+                                    <div >
+                                        <div class="row">
+                                           
+                                            <div style="display: inline-flex">
+                                                 
+                                                <ul class="nav nav-pills">
+                                                    <li class="active"><a data-toggle="pill" href="#home"
+                                                        style="text-decoration:none">
+                                                      <i class='fas fa-car' style='font-size:14px'></i>
+                                                      <b style="font-weight:500;">Vechile Information</b>
+                                                    </a></li>
+                                                     &nbsp; &nbsp;&nbsp; 
+                                                    <li><a data-toggle="pill" href="#menu1"
+                                                        style="text-decoration:none">
+                                                      <i class='fa fa-id-card' style='font-size:14px'></i>
+                                                      License 
+                                                    
+                                                      Information</a></li>
+                                                      &nbsp; &nbsp;&nbsp;
+                                                    <li><a data-toggle="pill" style="text-decoration:none" href="#menu2"
+                                                        >
+                                                        <i class='fa fa-id-card' style='font-size:14px'></i>
+                                                        Claim Information
+    
+                                                        <br>
+                                                        (Chassis Number)
+                                                    </a></li>
+                                                    &nbsp; &nbsp; &nbsp;
+                                                    <li><a data-toggle="pill" style="text-decoration:none" href="#menu3"
+                                                    >
+                                                        <i class='fa fa-id-card' style='font-size:14px'></i>
+                                                        Claim Information 
+                                                        <br>
+                                                        (License Number)</a></li>
+                                                        &nbsp; &nbsp; &nbsp;
+    
+                                                        <li><a data-toggle="pill" href="#home"
+                                                            style="text-decoration:none">
+                                                          <i class='fas fa-car' style='font-size:14px'></i>
+                                                          Offense Information
+                                                          </a></li>
+                                                          &nbsp; &nbsp; &nbsp;
+    
+                                                          <li><a data-toggle="pill" href="#home"
+                                                            style="text-decoration:none">
+                                                          <i class='fas fa-car' style='font-size:14px'></i>
+                                                          Slavage
+                                                          <br> Information
+                                                          </a></li>
+                                                          &nbsp; &nbsp; &nbsp;
+    
+                                                          <li><a data-toggle="pill" href="#home"
+                                                            style="text-decoration:none">
+                                                          <i class='fas fa-car' style='font-size:14px'></i>
+                                                          Vin Decoder 
+                                                          <br>
+                                                          Information
+                                                          </a></li>
+                                                  </ul>
+                                            </div>
+                                   
+                                        </div>
+                                        <div>
+                                            
+                                        </div>
+                                    </div>
+                                    </div>
+                   
+                  
+                                    <div class="maan-grid-item-body mt-3">
+                <div class="tab-content">
+                    <div id="home" class="tab-pane fade show active">
+                     
+                        <div class="row">
+                            <div class="row ml-4 mt-2">
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Plate Number</b></label>
+                                        <div class="input-form-radio-box">
+                                            D43567
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Chassis Number</b></label>
+                                        <div class="input-form-radio-box">
+                                           LUCREE45677
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Engine Number</b></label>
+                                        <div class="input-form-radio-box">
+                                          K2456V3110
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Registration Type</b></label>
+                                        <div class="input-form-radio-box">
+                                         Private
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="row ml-4 mt-2">
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Vechile BarCode</b></label>
+                                        <div class="input-form-radio-box">
+                                            2716745
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Make Year</b></label>
+                                        <div class="input-form-radio-box">
+                                          2004
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Vechile Type</b></label>
+                                        <div class="input-form-radio-box">
+                                        (Salloon)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Vechile Make/Model</b></label>
+                                        <div class="input-form-radio-box">
+                                        Honda/Accorda
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                            <div class="row ml-4 mt-2">
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Color</b></label>
+                                        <div class="input-form-radio-box">
+                                           Blue
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Registration Issue Date</b></label>
+                                        <div class="input-form-radio-box">
+                                         06/02/2023
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Registration End Date</b></label>
+                                        <div class="input-form-radio-box">
+                                          10/04/2023
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                               
+                            <div class="row ml-4 mt-2">
+                                <div class="input-form-label"> Previous Insurance</div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Insurance Type</b></label>
+                                        <div class="input-form-radio-box">
+                                           Blue
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Insurance Start Date</b></label>
+                                        <div class="input-form-radio-box">
+                                         06/02/2023
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Insurance End Date</b></label>
+                                        <div class="input-form-radio-box">
+                                          10/04/2023
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Insurance Company</b></label>
+                                        <div class="input-form-radio-box">
+                                          10/04/2023
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                 
+                    </div>
+                    <div id="menu1" class="tab-pane fade">
+
+                     
+                        <div class="row">
+                            <div class="row ml-4 mt-2">
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>License Number</b></label>
+                                        <div class="input-form-radio-box">
+                                            912345
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Language</b></label>
+                                        <div class="input-form-radio-box">
+                                          Eng
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Date First Issued</b></label>
+                                        <div class="input-form-radio-box">
+                                         27/01/2023
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Place of Issued</b></label>
+                                        <div class="input-form-radio-box">
+                                             MUSCAT
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="row ml-4 mt-2">
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Date Of Expired</b></label>
+                                        <div class="input-form-radio-box">
+                                           27/01/2023
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Date of Birth</b></label>
+                                        <div class="input-form-radio-box">
+                                            27/01/2023
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>License Suspended Current</b></label>
+                                        <div class="input-form-radio-box">
+                                        (Salloon)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>License Suspended Previous</b></label>
+                                        <div class="input-form-radio-box">
+                                        Honda/Accorda
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                            <div class="row ml-4 mt-2">
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>License Suspended End Date</b></label>
+                                        <div class="input-form-radio-box">
+                                            27/01/2023
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>License Class</b></label>
+                                        <div class="input-form-radio-box">
+                                            [LIGHT]
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>License Sub Class</b></label>
+                                        <div class="input-form-radio-box">
+                                         [NONE]
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id="menu2" class="tab-pane fade">
+                     
+                    </div>
+                    <div id="menu3" class="tab-pane fade">
+                    
+                    </div>
+                  </div>
+                   </div>
+                </div>
+
+
+                </div>
+                </div>
+                </div>
+                </div>
+                
+            </mat-tab>-->
+
+
+<mat-tab label="Tira Details" *ngIf="productId=='5'">
+                  <div class="container" style="margin-top: 10px;">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs">
+                      <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#msg">Vechile Information</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#pro">Driver Details</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#set">Claim Information
+                            (Chassis Number)</a>
+                      </li>
+                      <!--<li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#lic">Claim Information
+                            (License Number)</a>
+                      </li>-->
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#off">Offense Information
+                            </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#slav">Slavage Information
+                            </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#slav">Vin Decorder Information
+                            </a>
+                      </li>
+                      
+                    </ul>
+                    
+                    <!-- Tab panes -->
+                   
+                    <div class="tab-content mt-2 ml-4" style="text-align:justify;">
+                      <div class="tab-pane container active" id="msg">
+
+                <div class="row justify-content-center" *ngFor="let vech of RopVechileDetails">
+                            <div class="maan-grid-item-body mt-3">
+                                <div class="col-md-12">
+                            <div class="row ml-2 mt-2 justify-content-center">
+                                <div class="col-12 col-md-3 col-lg-3 col-sm-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>ChassisNumber</b></label>
+                                        <div class="input-form-radio-box">
+                                         {{vech.ChassisNumber}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>VehicleType</b></label>
+                                        <div class="input-form-radio-box">
+                                          {{vech.VehicleType}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Engine Number</b></label>
+                                        <div class="input-form-radio-box">
+                                          {{vech.EngineNumber}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Registration Type</b></label>
+                                        <div class="input-form-radio-box">
+                                           {{vech.RegistrationNo}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="row ml-2 mt-2">
+                              
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Make Year</b></label>
+                                        <div class="input-form-radio-box">
+                                          {{vech.YearOfManufacture}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Vechile Make/Model</b></label>
+                                        <div class="input-form-radio-box">
+                                        {{vech.Make}}/{{vech.Model}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    
+                      </div>
+                      <div class="tab-pane container fade" id="pro">
+                                
+                          
+                            <div class="row justify-content-center" *ngFor="let Dri of DriverInfo">
+                                <div class="maan-grid-item-body">
+                                    <div class="col-md-12">
+                                <div class="row justify-content-center ml-2 mt-2">
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-6">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>DriverName</b></label>
+                                            <div class="input-form-radio-box">
+                                                {{Dri.DriverName}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-6">
+                                    <div class="input-control-container">
+                                            <label class="input-form-label"><b>LicenseNo</b></label>
+                                            <div class="input-form-radio-box">
+                                             {{Dri.LicenseNo}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-6">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Date of Birth</b></label>
+                                            <div class="input-form-radio-box">
+                                             {{Dri.DriverDob}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3 col-lg-3 col-sm-6">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>DriverType</b></label>
+                                            <div class="input-form-radio-box">
+                                              {{Dri.DriverTypeDesc}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+            
+                               
+    
+                            </div>
+                         </div>
+                      
+                       
+                      </div>
+                      <div class="tab-pane container fade" id="set">This is a setting tab.</div>
+                    </div>
+                    </div>
+                    
+
+            </mat-tab>
+            <mat-tab label="Document">
+
+                <div>
+                    <div class="maan-grid-item-title">
+                      <div class="d-flex justify-content-between">
+                        <div>
+                            <span class="mx-1">
+                                <i class="fas fa-user mx-1"></i>
+        
+                            </span> Documents
+                        </div>
+                        <div>
+                            <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                            <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                        </div>
+                    </div>
+                    </div>
+        
+                    <table class="table mt-2" id="capture_table">
+                      <thead>
+                          <tr>
+                              <th scope="col"><span class="spancommon">S.No</span></th>
+                              <th scope="col"><span class="spancommon">File Name</span></th>
+                              <th scope="col"><span class="spancommon">Document Type</span></th>
+                              <th scope="col"><span class="spancommon">Download</span></th>
+                          </tr>
+                      </thead>
+                      <tbody *ngFor="let doc of DocumentInfo;let i=index">
+                          <tr>
+                              <th scope="row">{{i+1}}</th>
+                              <td>{{doc.DocumentFie}}</td>
+                              <td>
+                                {{doc.DocumentTypeDesc}}
+                              </td>
+
+                              <td>
+                                  <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" ><i
+                                    (click)="onListDocumentDownload(i,doc)" class="fa fa-download"></i></a>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+                   </div>
+
+                   <!--<div class="mt-4">
+                    <div class="maan-grid-item-title mt-4">
+                        <div class="d-flex justify-content-between">
+                          <div>
+                              <span class="mx-1">
+                                  
+                                  <i class='fas fa-motorcycle'></i>
+          
+                              </span> Vechile Documents
+                          </div>
+                          <div>
+                            
+                          </div>
+                      </div>
+                      </div>
+                      
+                <table class="table mt-2" id="capture_table">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                            <th scope="col"><span class="spancommon">Document Type</span></th>
+                            <th scope="col"><span class="spancommon">Document File</span></th>
+                            <th scope="col"><span class="spancommon">Document <br>
+                                Description</span></th>
+                                <th scope="col"><span class="spancommon">Error</span></th>
+                                <th scope="col"><span class="spancommon">Detect(%)</span></th>
+                               <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td><span class="spancommon">Vehicle Registration Details(Back Side)</span></td>
+                            <td>
+                                <span class="spancommon">ABCDE12345.jpg</span>
+                            </td>
+                            <td>
+                                <span class="spancommon"></span>
+                            </td>
+                            <td>
+                                <span class="spancommon"></span>
+                            </td>
+                            <td>
+                                <span class="spancommon"></span>
+                            </td>
+                            <td>
+                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download"><i
+                                        class="fa fa-download"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                   </div>-->
+            </mat-tab>
+
+
+          </mat-tab-group>
+
+          <div style="text-align:center;">
+            <button class="maan-btn-red mx-2 custom-btn btn-5" (click)="back()">
+              Back
+            </button>
+          </div>
+    </div>
+
+</div>

@@ -1,0 +1,30 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div class="spancommon span_font_size">
+                Referral Rejected Quotes
+            </div>
+            <div>
+
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12 ml-5">
+                    <ng-container *ngIf="quoteData.length!=0">
+                        <app-commodity-table [cols]="quoteHeader" [data]="quoteData" [innerCols]="innerColumnHeader" (onAdd)="onInnerData($event)" [innerData]="innerTableData">
+                        </app-commodity-table>
+                    </ng-container>
+                    <ng-container *ngIf="quoteData.length==0">
+                        <div class="text-center spancommon span_font_size">
+                            No Quote Available
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

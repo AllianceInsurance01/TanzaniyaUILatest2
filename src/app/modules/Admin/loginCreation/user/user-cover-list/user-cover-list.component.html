@@ -1,0 +1,59 @@
+<div class="card">
+  <div class="card-header">User Configuration</div>
+    <div class="card p-1">
+        <div class="vision-grid vision-grid-column-2">
+            <div class="vision-grid-item">
+                <div class="radio-toolbar menu-bar">
+                    <input type="radio" id="menu1" name="menu" value="Branch" (click)="onRedirect('Branch')" [(ngModel)]="activeMenu">
+                    <label for="menu1">Branch</label>
+                    <input id="menu7" type="radio" name="menu" value="Product" [(ngModel)]="activeMenu" (click)="onRedirect('Product')">
+                    <label for="menu7">Product</label>
+
+                    <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+                    <label for="menu2">Cover</label>
+                </div>
+            </div>
+            <div class="vision-grid-item">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                Existing Covers
+                            </div>
+                            <div>
+                                <!-- <button class="btn btn-warning" (click)="onAddNewCover()">Add New</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-5 col-lg-5 col-xl-5">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Product</label>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="productList" [(ngModel)]="productValue" (change)="onChangeProduct()" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-lg-5 col-xl-5">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Section</label>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="sectionList" [(ngModel)]="sectionValue" (change)="getBrokerCoverList()" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="tableData.length!=0">
+                            <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onEdit)="onEditCover($event)">
+                            </app-grid-table>
+                        </ng-container>
+                        <ng-container *ngIf="tableData.length==0">
+                            <div class="text-center">
+                                No Data Available
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

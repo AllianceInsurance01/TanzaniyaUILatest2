@@ -1,0 +1,206 @@
+<div class="vision-grid-item">
+    <div class="card">
+        <div class="card-header">Exclusion</div>
+        <div class="card-body">
+            <div class="row mt-2">
+
+                <div class="col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Branch Code<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" disabled appendTo="body" [items]="branchList"
+                            [(ngModel)]="branchValue" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Product<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" appendTo="body" [items]="productList"
+                            [(ngModel)]="productValue" bindValue="ProductId" bindLabel="ProductName">
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Exclusion Description<span
+                                class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <textarea cols="120" rows="2" class="input-form-control without-icon"
+                                [(ngModel)]="ExclusionDetails.ExclusionDescription" maxlength="200"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 col-xl-6" *ngIf="sectionValue!='99999'">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Section</label>
+                        <ng-select class="input-form-select" appendTo="body" [items]="sectionList"
+                            [(ngModel)]="sectionValue" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <input type="text" class="input-form-control without-icon"
+                                [(ngModel)]="ExclusionDetails.CoreAppCode" maxlength="100">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Regulatory Code<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <input type="text" class="input-form-control without-icon"
+                                [(ngModel)]="ExclusionDetails.RegulatoryCode" maxlength="100">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-6">
+                  <div class="input-control-container">
+                      <label class="input-form-label">Type Id<span class="text-required">*</span></label>
+                      <ng-select class="input-form-select" appendTo="body" [(ngModel)]="TypeId" [items]="TypeList" bindValue="Code" bindLabel="CodeDesc">
+                      </ng-select>
+                  </div>
+              </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                      <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                      <!--<label class="input-form-label">Effective Date<span class="text-required">*</span></label>-->
+                        <mat-form-field appearance="fill">
+                            <!--<mat-label>Effective Date<span class="text-danger">*</span></mat-label>-->
+                            <input matInput [matDatepicker]="picker" [min]="minDate"
+                                [(ngModel)]="ExclusionDetails.EffectiveDateStart">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Status<span class="text-required">*</span></label>
+                        <div class="input-form-radio-box">
+                            <div class="radio-toolbar">
+                                <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" value="Y"
+                                    [(ngModel)]="ExclusionDetails.Status">
+                                <label for="orginwarehouse_Yes">Active</label>
+                                <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" value="N"
+                                    [(ngModel)]="ExclusionDetails.Status">
+                                <label for="orginwarehouse_No">DeActive</label>
+                                <input type="radio" id="orginwarehouse_Referral" name="originatingWarehouse" value="R"
+                                    [(ngModel)]="ExclusionDetails.Status">
+                                <label for="orginwarehouse_Referral">Referral</label>
+                                <input type="radio" id="orginwarehouse_Pending" name="originatingWarehouse"  value="P" [(ngModel)]="ExclusionDetails.Status">
+                                <label for="orginwarehouse_Pending">Pending</label>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <textarea cols="120" rows="2" class="input-form-control without-icon"
+                                [(ngModel)]="ExclusionDetails.Remarks" maxlength="200"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <ng-container *ngIf="uploadedDocList.length==0">
+                    <div class="maan-grid-item-body">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 offset-3">
+                                <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct')" #doc>
+                                <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onDragDocument($event,null,'direct')"
+                                    (click)="doc.click()">
+                                    <div>
+                                        <div class="center">
+                                            <b class="text-dark">
+                                                <i class="far fa-images"></i> Drag or Click</b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="uploadDocList.length !=0">
+                            <table class="table table-border-1ed">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">S.No</th>
+                                        <th scope="col">FileName</th>
+                                        <th scope="col">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let document of uploadDocList;let i=index">
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{document.filename}}</td>
+                                        <td>
+                                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top"
+                                                title="Download" (click)="onDeleteDocument(i)"><i class="fa fa-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!--<div class="text-center">
+                                <button class="btn btn-info" (click)="onFileUploadCommonList()">Upload</button>
+                            </div>-->
+                        </ng-container>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="uploadedDocList.length !=0">
+                    <div class="maan-grid-item-title">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="mx-1">
+                                    <i class="fas fa-book mx-1"></i>
+                                </span>Uploaded Documents
+                            </div>
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-border-1ed">
+                        <thead>
+                            <tr>
+                                <th scope="col">S.No</th>
+                                <th scope="col">FileName</th>
+                                <th scope="col">View</th>
+                                <th scope="col">Delete</th>
+                                <th scope="col">Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let document of uploadedDocList;let i=index">
+                                <th scope="row">{{i+1}}</th>
+                                <td>{{document.OrginalFileName}}</td>
+                                <td>
+                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View"
+                                        (click)="onViewCommonDocument(i,document)"><i class="fa fa-eye"></i></a>
+                                </td>
+                                <td>
+                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete"
+                                        (click)="onDeleteCommonDocument(i,document)"><i class="fa fa-trash"></i></a>
+                                </td>
+                                <td>
+                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download"
+                                        (click)="onCommonDocumentDownload(i,document)"><i class="fa fa-download"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ng-container>
+
+            <div class="text-center mt-2">
+                <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>
+                <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+

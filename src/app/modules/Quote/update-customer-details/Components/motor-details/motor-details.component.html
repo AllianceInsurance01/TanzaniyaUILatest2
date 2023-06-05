@@ -1,0 +1,283 @@
+<div>
+    <div class="col-12">
+        <div class="maan-grid customer-grid maan-grid-column-1">
+            <div class="maan-grid-item">
+                <div class="maan-grid-item-title">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <span class="mx-1">
+                                <i class="fas fa-user mx-1"></i>
+                            </span> <span class="spancommon span_font_size">Customer Details</span>
+                        </div>
+                        <div>
+                            <ng-container>
+                                <!-- RefNo - {{customerDetails?.CustomerReferenceNo}} -->
+                            </ng-container>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="maan-grid-item-body">
+                    <div class="row mt-1">
+                        <div class="col-12 col-md-3 ">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Customer Name</label>
+                                <div class="input-form-radio-box">
+                                    <span class="spancommon span_font_size">{{title}} &nbsp; {{clientName}}</span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Customer ID</label>
+                                <div class="input-form-radio-box">
+                                    <span class="spancommon span_font_size">{{idNumber}}</span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Customer Type</label>
+                                <div class="input-form-radio-box">
+                                    <span class="spancommon span_font_size">{{clientType}}</span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Mobile Number</label>
+                                <div class="input-form-radio-box">
+                                    <span class="spancommon span_font_size">{{mobileNo}}</span>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="maan-grid-item">
+                <div class="maan-grid-item-title">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <span class="mx-1">
+                                <i class="fas fa-car mx-1"></i>
+                            </span> <span class="spancommon span_font_size">Motor Details</span>
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="maan-grid-item-body">
+                    <div class="row mt-1">
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Owner Name</label>&nbsp;<span
+                                    class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" [(ngModel)]="ownerName" maxlength="100"
+                                        class="input-form-control without-icon">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 ">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Owner Categry</label>&nbsp;<span
+                                    class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [(ngModel)]="ownerCategory"
+                                    [items]="ownerList" bindValue="CodeDesc" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 ">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Make</label>
+                                <ng-select class="input-form-select" appendTo="body" [items]="makeList"
+                                    (change)="onMakeChange()" [(ngModel)]="makeValue" bindValue="Code"
+                                    bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Model</label>
+                                <ng-select class="input-form-select" appendTo="body" [items]="modelList"
+                                    [(ngModel)]="modelValue" bindValue="CodeDesc" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-1">
+
+                        <div class="col-12 col-md-3 ">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Chassis No</label>&nbsp;<span
+                                    class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" [(ngModel)]="chassisNo" [disabled]="editSection" maxlength="25"
+                                        class="input-form-control without-icon" (keypress)="omit_special_char($event)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3 ">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Registration No</label>&nbsp;<span
+                                    class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" [(ngModel)]="regNo" [disabled]="editSection" maxlength="25"
+                                        class="input-form-control without-icon" (keypress)="omit_special_char($event)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Engine No</label>&nbsp;<span
+                                    class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" [(ngModel)]="engineNo" maxlength="20"
+                                        class="input-form-control without-icon" (keypress)="omit_special_char($event)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Engine Capacity</label>&nbsp;<span
+                                    class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" [(ngModel)]="engineCapacity" maxlength="10"
+                                        class="input-form-control without-icon">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Manufacture Year</label>&nbsp;<span
+                                    class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="years"
+                                    [(ngModel)]="manufactureYear" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Fuel Type</label>&nbsp;<span
+                                    class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="fuelTypeList"
+                                    [(ngModel)]="fuelType" bindValue="CodeDesc" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Color</label>
+                                <ng-select class="input-form-select" appendTo="body" [items]="colorList"
+                                    [(ngModel)]="colorValue" bindValue="CodeDesc" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Motor Category</label>&nbsp;<span
+                                    class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="motorCategoryList"
+                                    [(ngModel)]="motorCategory" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Seating Capacity</label>&nbsp;<span
+                                    class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" [(ngModel)]="seatingCapacity" maxlength="3"
+                                        class="input-form-control without-icon">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Body Type</label>&nbsp;<span
+                                    class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="bodyTypeList"
+                                    [(ngModel)]="bodyTypeValue" bindValue="CodeDesc" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Motor Usage</label>&nbsp;<span
+                                    class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="usageList"
+                                    [(ngModel)]="usageValue" bindValue="CodeDesc" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Tare Weight (Kg)</label>&nbsp;<span
+                                    class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" [(ngModel)]="tareWeight" maxlength="5"
+                                        class="input-form-control without-icon">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Gross Weight (Kg)</label>&nbsp;<span
+                                    class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" [(ngModel)]="grossWeight" maxlength="5"
+                                        class="input-form-control without-icon">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">No.Of.Axle's</label>&nbsp;<span
+                                    class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" digitOnly [(ngModel)]="noOfAxels" maxlength="10"
+                                        class="input-form-control without-icon">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Axle Distance</label>&nbsp;<span
+                                    class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" digitOnly [(ngModel)]="axelDistance" maxlength="50"
+                                        class="input-form-control without-icon">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-2">
+            <button class="custom-btn btn-5 mx-2" matRipple
+                [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/customer-details']"
+                routerLinkActive="router-link-active"><<&nbsp;Back</button>
+
+            <button class="custom-btn btn-6 maan-button-data mx-2" matRipple
+                (click)="onFormSubmit()">Next</button>
+        </div>
+    </div>
+</div>

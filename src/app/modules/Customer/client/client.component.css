@@ -1,0 +1,220 @@
+.maan-grid-column-1 {
+    grid-template-columns: 1fr;
+}
+
+.maan-grid-column-2 {
+    grid-template-columns: 1fr;
+}
+
+.stepper-conatiner-grid-column-2 {
+    grid-template-columns: 1fr;
+}
+
+.stepper-conatiner-grid-column-2 .maan-grid-item {
+    grid-column-start: 1
+}
+
+.bg-banner {
+    background-color: #fff;
+    min-height: 70vh;
+}
+
+.stepper-conatiner {
+    grid-gap: 10px;
+}
+
+.stepper-conatiner .maan-grid-item {
+    padding: 1rem;
+    background-color: transparent;
+    border-radius: .5rem;
+}
+
+.list-group .list-group-item {
+    font-size: 13px;
+}
+
+.alliance-banner-name {
+    font-size: 25px;
+    margin-top: 1rem;
+    font-weight: bolder;
+    color: darkblue;
+}
+
+.sub-lable {
+    font-size: 15px;
+}
+
+.tanzaniya-banner svg {
+    width: 200px;
+    height: 200px;
+}
+
+.tanzaniya-banner svg path {
+    fill: ghostwhite;
+}
+
+.hh-grayBox {
+    padding: 10px;
+}
+
+.order-tracking {
+    text-align: center;
+    width: 33.33%;
+    position: relative;
+    display: block;
+}
+
+.order-tracking .is-complete {
+    display: block;
+    position: relative;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    border: 0px solid #AFAFAF;
+    background-color: #ccc;
+    margin: 0 auto;
+    transition: background 0.25s linear;
+    -webkit-transition: background 0.25s linear;
+    z-index: 1;
+}
+
+.order-tracking .is-complete:after {
+    display: block;
+    position: absolute;
+    content: '';
+    height: 10px;
+    width: 7px;
+    top: -2px;
+    bottom: 0;
+    left: 5px;
+    margin: auto 0;
+    border: 0px solid #AFAFAF;
+    border-width: 0px 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+}
+
+.order-tracking.completed .is-complete {
+    border-color: #27aa80;
+    border-width: 0px;
+    background-color: #27aa80;
+}
+
+.order-tracking.completed .is-complete:after {
+    border-color: #fff;
+    border-width: 0px 3px 3px 0;
+    width: 7px;
+    left: 7px;
+    opacity: 1;
+}
+
+.order-tracking p {
+    color: #A4A4A4;
+    margin-top: 8px;
+    margin-bottom: 0;
+    line-height: 20px;
+    font-size: 14px;
+}
+
+.order-tracking p span {
+    font-size: 14px;
+}
+
+.order-tracking.completed p {
+    color: #000;
+}
+
+.order-tracking::before {
+    content: '';
+    display: block;
+    height: 3px;
+    width: calc(100% - 40px);
+    background-color: #ccc;
+    top: 8px;
+    position: absolute;
+    left: calc(-50% + 20px);
+    z-index: 0;
+}
+
+.order-tracking:first-child:before {
+    display: none;
+}
+
+.order-tracking.completed:before {
+    background-color: #27aa80;
+}
+
+#faqlist {
+    margin-top: 1rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+}
+
+.accordion-collapse {
+    border: 0;
+}
+
+.accordion-button {
+    border: 0;
+    color: #333333;
+    text-align: left;
+}
+
+.accordion-header .accordion-button {
+    background-color: #f5f5f5;
+    padding: 5px 11px;
+    color: black;
+    font-weight: bold;
+    box-shadow: none;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+    border: none;
+}
+
+.accordion-button:not(.collapsed) {
+    background: none;
+    color: #dc3545;
+}
+
+.accordion-body {
+    padding: 0px;
+}
+
+.accordion-button:not(.collapsed)::after,
+.accordion-button::after {
+    background-image: none;
+}
+
+.accordion-button::before {
+    background-image: none;
+    color: #000;
+    content: "\f105";
+    font-family: "Font Awesome 5 Free";
+    /* This is the correct font-family*/
+    font-style: normal;
+    font-weight: 900;
+    transform: translateY(-4px);
+    font-size: 21px;
+    padding: 0px 5px;
+    line-height: 1.2;
+    margin-top: 4px;
+}
+
+.accordion-button:not(.collapsed)::before {
+    background-image: none;
+    font-family: "Font Awesome 5 Free";
+    /* This is the correct font-family*/
+    font-style: normal;
+    font-weight: 900;
+    transform: translateY(-4px);
+    content: "\f106";
+    transform: translate(-5px, -4px);
+    transform: rotate(0deg);
+    font-size: 21px;
+    padding: 0px 5px;
+    line-height: 1.2;
+    margin-top: 4px;
+}

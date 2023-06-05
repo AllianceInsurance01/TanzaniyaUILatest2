@@ -1,0 +1,630 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+          <div class="maan-grid customer-grid maan-grid-column-1">
+             
+            <div class="maan-grid-item">
+
+                <div class="maan-grid-item-title">
+
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <span class="mx-1">
+                                <!--<i class="fas fa-user mx-1"></i>-->
+                                <i class='fas fa-motorcycle' style='font-size:24px'></i>
+        
+                            </span> Vechile Information
+                        </div>
+                        <div>
+                            <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                            <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                        </div>
+                    </div>
+                    </div>
+                    <div class="maan-grid-item-body mt-3">
+                        <div class="row mt-1 ml-4">
+
+                            <div class="row ml-4">
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>ChassisNumber</b></label>
+                                        <div class="input-form-radio-box">
+                                            {{QuotationNo}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Quotation No</b></label>
+                                        <div class="input-form-radio-box">
+                                         {{QuotationNo}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>CustomerId</b></label>
+                                        <div class="input-form-radio-box">
+                                           {{CustomerId}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         
+
+                            <div class="row mt-2 ml-4">
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Policy No</b></label>
+                                        <div class="input-form-radio-box">
+                                               {{MobileNo1}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Policy TinyUrl</b></label>
+                                        <div class="input-form-radio-box">
+                                               {{Po}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Quotation Date</b></label>
+                                        <div class="input-form-radio-box">
+                                               {{MobileNo1}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            
+                            <div class="row mt-2 ml-4">
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Inception Date</b></label>
+                                        <div class="input-form-radio-box">
+                                               {{MobileNo1}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Vehicle RegDate</b></label>
+                                        <div class="input-form-radio-box">
+                                               {{RE}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>PromoCode YN</b></label>
+                                        <div class="input-form-radio-box">
+                                               {{YnPo}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                           
+                        </div>
+                    </div>
+
+
+                    </div>
+
+
+
+                    <div class="maan-grid-item">
+
+                        <div class="maan-grid-item-title">
+        
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <span class="mx-1">
+                                        
+                                        <i class='fas fa-motorcycle' style='font-size:24px'></i>
+                
+                                    </span> Vechile Details
+                                </div>
+                                <div>
+                                    <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                                    <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                                </div>
+                            </div>
+                            </div>
+                            <div class="maan-grid-item-body mt-3">
+                                <div class="row mt-1 ml-4">
+        
+                                    <div class="row ml-4">
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Body Code</b></label>
+                                                <div class="input-form-radio-box">
+                                                    {{ReferenceNo}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Body</b></label>
+                                                <div class="input-form-radio-box">
+                                                 {{QuotationNo}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Make</b></label>
+                                                <div class="input-form-radio-box">
+                                                   {{CustomerId}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 
+        
+                                    <div class="row mt-2 ml-4">
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Model Code</b></label>
+                                                <div class="input-form-radio-box">
+                                                       {{MobileNo1}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Model</b></label>
+                                                <div class="input-form-radio-box">
+                                                       {{Po}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Trim</b></label>
+                                                <div class="input-form-radio-box">
+                                                       {{MobileNo1}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+        
+        
+                                    
+                                    <div class="row mt-2 ml-4">
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Vechile Type</b></label>
+                                                <div class="input-form-radio-box">
+                                                       {{MobileNo1}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Plate Nationality</b></label>
+                                                <div class="input-form-radio-box">
+                                                       {{RE}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>NCD Value</b></label>
+                                                <div class="input-form-radio-box">
+                                                       {{YnPo}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+        
+        
+                                    
+                                    
+                                    <div class="row mt-2 ml-4">
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Renewal Yes/No</b></label>
+                                                <div class="input-form-radio-box">
+                                                       No
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Renewal Claim Amount</b></label>
+                                                <div class="input-form-radio-box">
+                                                       0.0000
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Manufacture Year</b></label>
+                                                <div class="input-form-radio-box">
+                                                       2022
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+        
+        
+                                        
+                                    <div class="row mt-2 ml-4">
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Engine No</b></label>
+                                                <div class="input-form-radio-box">
+                                                      K24VHty
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Chassis Number</b></label>
+                                                <div class="input-form-radio-box">
+                                                       LUCCRR24567
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Plate No</b></label>
+                                                <div class="input-form-radio-box">
+                                                      42637
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                           
+                                    <div class="row mt-2 ml-4">
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Plate char</b></label>
+                                                <div class="input-form-radio-box">
+                                                      D
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Sum Insured</b></label>
+                                                <div class="input-form-radio-box">
+                                                      40000
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Quote Type</b></label>
+                                                <div class="input-form-radio-box">
+                                                      SQ
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+        
+        
+                            </div>
+
+            </div>
+
+            </div>
+
+    </div>
+</div>
+
+
+
+<!--<div class="container">
+    <div class="row">
+        <div class="col-12">
+          <div class="maan-grid customer-grid maan-grid-column-1">
+             
+            <div class="maan-grid-item">
+
+                <div class="maan-grid-item-title">
+
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <span class="mx-1">
+                               
+                                <i class='fas fa-motorcycle' style='font-size:24px'></i>
+        
+                            </span> Vechile Information
+                        </div>
+                        <div>
+                           
+                        </div>
+                    </div>
+                    </div>
+                    <div class="maan-grid-item-body mt-3">
+                        <div class="row mt-1 ml-4" *ngFor="let Vech of ViewRisk">
+
+                            <div class="row ml-4">
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>ReferenceNo</b></label>
+                                        <div class="input-form-radio-box">
+                                               {{Vech.RequestReferenceNo}}                                                              
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Quotation No</b></label>
+                                        <div class="input-form-radio-box">
+                                                 {{Vech.QuoteNo}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>CustomerId</b></label>
+                                        <div class="input-form-radio-box">
+                                               {{Vech.CustomerId}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         
+
+                            <div class="row mt-2 ml-4">
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Policy No</b></label>
+                                        <div class="input-form-radio-box">
+                                               {{Vech.PolicyNo}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Policy Type</b></label>
+                                        <div class="input-form-radio-box">
+                                             {{Vech.PolicyTypeDesc}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Quotation Date</b></label>
+                                        <div class="input-form-radio-box">
+                                               {{Vech.QuatationDate}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            
+                            <div class="row mt-2 ml-4">
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Inception Date</b></label>
+                                        <div class="input-form-radio-box">
+                                              {{Vech.InceptionDate}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Vehicle RegDate</b></label>
+                                        <div class="input-form-radio-box">
+                                            {{Vech.RegistrationYear}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Registration No</b></label>
+                                        <div class="input-form-radio-box">
+                                            {{Vech.Registrationnumber}}
+                                        </div>
+                                    </div>
+                                </div>
+                             
+                            </div>
+
+
+                            
+                            <div class="row mt-2 ml-4">
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Engine No</b></label>
+                                        <div class="input-form-radio-box">
+                                             {{Vech.EngineNumber}}         
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Chassis Number</b></label>
+                                        <div class="input-form-radio-box">
+                                              {{Vech.Chassisnumber}}
+                                        </div>
+                                    </div>
+                                </div>
+                             
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>PromoCode YN</b></label>
+                                        <div class="input-form-radio-box">
+                                               {{Vech.HavePromoCode}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+
+
+                            <div class="row mt-2 ml-4">
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Promo Code</b></label>
+                                        <div class="input-form-radio-box">
+                                           {{Vech.Promocode}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Body</b></label>
+                                        <div class="input-form-radio-box">
+                                           {{Vech.VehicleTypeDesc}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Make</b></label>
+                                        <div class="input-form-radio-box">
+                                           {{Vech.VehiclemakeDesc}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row mt-2 ml-4">
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Model Code</b></label>
+                                        <div class="input-form-radio-box">
+                                              {{Vech.ModelNumber}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Model</b></label>
+                                        <div class="input-form-radio-box">
+                                              {{Vech.VehcilemodelDesc}}
+                                        </div>
+                                    </div>
+                                </div>
+                             
+
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>InsuranceType</b></label>
+                                        <div class="input-form-radio-box">
+                                             {{Vech.InsuranceTypeDesc}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                              
+                            <div class="row mt-2 ml-4">
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Vechile Type</b></label>
+                                        <div class="input-form-radio-box">
+                                              {{Vech.VehicleTypeDesc}}
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Manufacture Year</b></label>
+                                        <div class="input-form-radio-box">
+                                             {{Vech.ManufactureYear}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>NCD Value</b></label>
+                                        <div class="input-form-radio-box">
+                                              {{Vech.NcdYn}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            
+                            
+                            <div class="row mt-2 ml-4">
+                              
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Claim Amount</b></label>
+                                        <div class="input-form-radio-box">
+                                              {{Vech.ClaimRatio}}
+                                        </div>
+                                    </div>
+                                </div>
+                        
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Sum Insured</b></label>
+                                        <div class="input-form-radio-box">
+                                           {{Vech.SumInsured}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Fuel Type</b></label>
+                                        <div class="input-form-radio-box">
+                                             {{Vech.FuelTypeDesc}}
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                            </div>
+
+
+                           
+                           
+                                   
+                            <div class="row mt-2 ml-4">
+                               
+                              
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Seats</b></label>
+                                        <div class="input-form-radio-box">
+                                            {{Vech.SeatingCapacity}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Gpstrackinginstalled</b></label>
+                                        <div class="input-form-radio-box">
+                                           {{Vech.Gpstrackinginstalled}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                           
+                        </div>
+                    </div>
+
+
+                    </div>
+
+
+
+                   
+            </div>
+
+            </div>
+
+    </div>
+</div>-->

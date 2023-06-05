@@ -1,0 +1,30 @@
+<div class="card">
+    <div class="card-header">Existing Insurance Employee's</div>
+    <div class="card-body">
+        <!-- <div class="row">
+            <div class="col-md-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Broker</label>
+                    <ng-select class="input-form-select" appendTo="body" [items]="brokerList" [(ngModel)]="brokerValue" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+        </div> -->
+        <div class="row mb-2">
+            <div class="col-md-4 col-xl-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Insurance Company<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" appendTo="body" [disabled]="subUserType!='SuperAdmin'" [(ngModel)]="insuranceId" (change)="getIssuerList()" [items]="companyList" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-3 col-xl-3 col-lg-3 offset-5 pl-4" *ngIf="insuranceId">
+                <button class="btn btn-warning" (click)="onAddNew()">Add New Issuer</button>
+            </div>
+        </div>
+        <ng-container *ngIf="issuerData">
+            <app-grid-table [cols]="issuerHeader" [data]="issuerData" [filterValue]="filterValue" changeStatus="true"  (onStatus)="EditStatus($event)" (onEdit)="onEdit($event)" (onConfigure)="onConfigure($event)">
+            </app-grid-table>
+        </ng-container>
+    </div>
+</div>

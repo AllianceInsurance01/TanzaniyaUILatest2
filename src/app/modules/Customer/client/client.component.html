@@ -1,0 +1,42 @@
+<div class="bg-banner">
+    <div class="container mt-3">
+        <div class="d-flex justify-content-between">
+            <div class="mt-2">
+                <b>Customer Details</b>
+            </div>
+            <div class="mt-2">
+                <ng-container *ngIf="customerId">
+                    <b>Customer RefNo - {{customerId}}</b>
+                </ng-container>
+
+            </div>
+        </div>
+        <div [ngClass]="activeStep =='ClientDetails-stepper'? 'stepper-conatiner-grid-column-2' : 'maan-grid-column-2'" class="maan-grid stepper-conatiner">
+            <div class="maan-grid-item">
+                <div class="maan-grid-item-body">
+                    <div class="container">
+                        <div class="hh-grayBox">
+                            <div class="row justify-content-between">
+                                <div class="order-tracking" [ngClass]="{completed: activeStep !='ClientDetails-stepper'}" (click)="ontap('/Home/customer/Client/client-details')">
+                                    <span class="is-complete"></span>
+                                    <span class="spancommon span_font_size">Client Details</span>
+                                </div>
+                                <div class="order-tracking" [ngClass]="{completed: activeStep !='ClientType-stepper' && activeStep !='ClientDetails-stepper'}" (click)="ontap('/Home/customer/Client/client-type')">
+                                    <span class="is-complete"></span>
+                                    <span class="spancommon span_font_size">Client Type</span>
+                                </div>
+                                <div class="order-tracking" [ngClass]="{completed: activeStep !='ClientAddress-stepper' && activeStep !='ClientType-stepper' && activeStep !='ClientDetails-stepper'}" (click)="ontap('/Home/customer/Client/client-address')">
+                                    <span class="is-complete"></span>
+                                    <span class="spancommon span_font_size">Client Address</span>
+                                </div>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="customerDetails">
+                            <router-outlet></router-outlet>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

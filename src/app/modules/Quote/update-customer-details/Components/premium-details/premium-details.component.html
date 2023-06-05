@@ -1,0 +1,862 @@
+<div>
+    <div class="maan-grid document-grid maan-grid-column-2">
+
+    </div>
+
+    <div class="d-flex justify-content-between p-1 card-header">
+
+        <div>
+            <span class="spancommon span_font_size">Coverage Details</span>
+
+        </div>
+        <div>
+            <div>
+                <ng-container *ngIf="!endorsementSection">
+                    <span class="spancommon span_font_size">Total Premium<span>:{{totalPremium|commaseparator}}
+                        &nbsp;({{currencyCode}})</span></span>
+                </ng-container>
+                <ng-container *ngIf="endorsementSection">
+                    <span class="spancommon span_font_size">Total Endorsement Premium<span>:
+                        <ng-container *ngIf="totalPremium!=0 && totalPremium!=null ">
+                            {{totalPremium|commaseparator}}&nbsp;({{currencyCode}})
+                        </ng-container>
+                        <ng-container *ngIf="totalPremium==0 || totalPremium==null">
+                            {{totalPremium}}&nbsp;({{currencyCode}})
+                        </ng-container>
+                    </span></span>
+                </ng-container>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="maan-grid customer-grid maan-grid-column-1">
+        <div class="maan-grid-item" *ngIf="endorsementSection">
+            <div class="maan-grid-item-title">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <span class="mx-1">
+                                <i class="fas fa-user mx-1"></i>
+                            </span>
+                        <span class="spancommon">Endorsement Details</span>
+                    </div>
+                    <div>
+                        <ng-container>
+                            <!-- RefNo - {{customerDetails?.CustomerReferenceNo}} -->
+                        </ng-container>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="maan-grid-item-body">
+                <div class="row mt-1">
+                    <div class="col-12 col-md-3 ">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Original Policy No</label>
+                            <div class="input-form-radio-box">
+                                <span class="spancommon span_font_size">{{orgPolicyNo}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 ">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Endorsement Policy No</label>
+                            <div class="input-form-radio-box">
+                                <span class="spancommon span_font_size">{{endorsePolicyNo}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3 ">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Endorsement Category</label>
+                            <div class="input-form-radio-box">
+                                <span class="spancommon span_font_size">{{endorseCategory}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Endorsement Name</label>
+                            <div class="input-form-radio-box">
+                                <span class="spancommon span_font_size">{{endorsementName}}</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <app-premiumdetails-subsection [cols]="quoteDetails" [cols1]="Riskdetails" [endrose]="endorsementSection" [cols2]="customerDetails"></app-premiumdetails-subsection>
+        </div>
+        <div class="maan-grid-item">
+            <div class="maan-grid-item-body">
+                <div class="row mt-1" *ngIf="endorsementSection">
+                    <div class="col-12 col-md-2" >
+                        <div class="input-control-container">
+                            <label class="input-form-label">Title</label><span class="text-danger">*</span>
+                            <ng-select class="input-form-select" appendTo="body" [items]="titleList"  [disabled]="endorsementSection && !enableCustomerDetails" [(ngModel)]="titleCode" bindValue="Code" bindLabel="CodeDesc">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4" >
+                        <div class="input-control-container">
+                            <label class="input-form-label">Customer Name</label><span class="text-danger">*</span>
+                            <div class="input-form-box">
+                                <input type="text" maxlength="50" class="input-form-control without-icon" [disabled]="endorsementSection && !enableCustomerDetails" [(ngModel)]="clientName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-2" >
+                        <div class="input-control-container">
+                            <label class="input-form-label">MobileCode</label><span class="text-danger">*</span>
+                            <ng-select class="input-form-select" appendTo="body" [items]="mobileCodeList" [disabled]="endorsementSection && !enableCustomerDetails" [(ngModel)]="mobileCode" bindValue="Code" bindLabel="CodeDesc">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4" >
+                        <div class="input-control-container">
+                            <label class="input-form-label">Mobile Number</label><span class="text-danger">*</span>
+                            <div class="input-form-box">
+                                <input type="text" maxlength="50" class="input-form-control without-icon" [disabled]="endorsementSection && !enableCustomerDetails" [(ngModel)]="mobileNo">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4" >
+                        <div class="input-control-container">
+                            <label class="input-form-label">Gender</label><span class="text-danger">*</span>
+                            <ng-select class="input-form-select" appendTo="body" [items]="genderList" [disabled]="endorsementSection && !enableCustomerDetails" [(ngModel)]="gender" bindValue="Code" bindLabel="CodeDesc">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4" >
+                        <div class="input-control-container">
+                            <label class="input-form-label">Address1</label><span class="text-danger">*</span>
+                            <div class="input-form-box">
+                                <input type="text" maxlength="50" class="input-form-control without-icon" [disabled]="endorsementSection && !enableCustomerDetails" [(ngModel)]="customerDetails.Address1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4" >
+                        <div class="input-control-container">
+                            <label class="input-form-label">Address2</label><span class="text-danger">*</span>
+                            <div class="input-form-box">
+                                <input type="text" maxlength="50" class="input-form-control without-icon" [disabled]="endorsementSection && !enableCustomerDetails" [(ngModel)]="customerDetails.Address2">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-12 col-md-4" >
+                        <div class="input-control-container">
+                            <label class="input-form-label">Occupation</label><span class="text-danger">*</span>
+                            <ng-select class="input-form-select" appendTo="body" [items]="occupationList" [disabled]="endorsementSection && !enableCustomerDetails" [(ngModel)]="customerDetails.Occupation" bindValue="Code" bindLabel="CodeDesc">
+                            </ng-select>
+                        </div>
+                    </div> -->
+                    <!-- <div class="col-12 col-md-4" >
+                        <label class="input-form-label">Appointment Date</label><span class="text-danger">*</span>
+                        <mat-form-field appearance="fill">
+                            <input matInput [matDatepicker]="picker1" [min]="currentDate" [disabled]="endorsementSection && !enableCustomerDetails"  [(ngModel)]="appointmentDate">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+                    </div> -->
+                    <div class="col-12 col-md-4" >
+                        <div class="input-control-container">
+                            <label class="input-form-label">Email Id</label><span class="text-danger">*</span>
+                            <div class="input-form-box">
+                                <input type="text" maxlength="50" class="input-form-control without-icon" [disabled]="endorsementSection && !enableCustomerDetails" [(ngModel)]="customerDetails.Email1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4" >
+                        <div class="input-control-container">
+                            <label class="input-form-label">Prefered Notification</label><span class="text-danger">*</span>
+                            <ng-select class="input-form-select" appendTo="body" [items]="notificationList" [disabled]="endorsementSection && !enableCustomerDetails" [(ngModel)]="customerDetails.PreferredNotification" bindValue="Code" bindLabel="CodeDesc">
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="maan-grid-item" *ngIf="motorDetails">
+            <div class="maan-grid-item-title">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <span class="mx-1">
+                            <i class="fas fa-car mx-1"></i>
+                        </span> Motor Details&nbsp;&nbsp; | &nbsp;&nbsp;Chassis No - {{motorDetails?.Chassisnumber}}
+                    </div>
+                    <div>
+                        <div (click)="panelOpen = !panelOpen;">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="maan-grid-item-body">
+                <ul class="list-group">
+                    <li class="customList">
+                        <div class="row mt-1">
+                            <div class="col-12 col-md-3 ">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Make</label>
+                                    <div class="input-form-radio-box">
+                                        {{motorDetails?.Vehiclemake}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Model</label>
+                                    <div class="input-form-radio-box">
+                                        {{motorDetails?.Vehcilemodel}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Body Type</label>
+                                    <div class="input-form-radio-box">
+                                        {{motorDetails?.VehicleType}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Vehicle Usage</label>
+                                    <div class="input-form-radio-box">
+                                        {{motorDetails?.Motorusage}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="customList" *ngIf="panelOpen">
+                        <div class="row mt-1">
+                            <div class="col-12 col-md-3 ">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Registration No</label>
+                                    <div class="input-form-radio-box">
+                                        {{motorDetails?.Registrationnumber}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Engine No</label>
+                                    <div class="input-form-radio-box">
+                                        {{motorDetails?.EngineNumber}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Engine Capacity</label>
+                                    <div class="input-form-radio-box">
+                                        {{motorDetails?.ResEngineCapacity}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Manufacture Year</label>
+                                    <div class="input-form-radio-box">
+                                        {{motorDetails?.ManufactureYear}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="customList" *ngIf="panelOpen">
+                        <div class="row mt-1">
+                            <div class="col-12 col-md-3 ">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Owner Categry</label>
+                                    <div class="input-form-radio-box">
+                                        {{motorDetails?.OwnerCategory}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Motor Category</label>
+                                    <div class="input-form-radio-box">
+                                        {{motorDetails?.ReqMotorCategory}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Seating Capacity</label>
+                                    <div class="input-form-radio-box">
+                                        {{motorDetails?.SeatingCapacity}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Tare Weight</label>
+                                    <div class="input-form-radio-box">
+                                        {{motorDetails?.Tareweight}}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-12 col-md-3">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Gross Weight</label>
+                                    <div class="input-form-radio-box">
+                                        {{motorDetails?.Grossweight}}
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="maan-grid-item" *ngIf="productId==5">
+            <div class="maan-grid-item-title">
+                <div class="d-flex justify-content-between">
+
+                    <div><span><i class="fas fa-home mx-1 mt-3"></i>
+                        </span> <b font-style="24px;">Driver Details</b> </div>
+                    <div class="mr-3"> <button class="maan-btn maan-btn-blue maan-button-data"  *ngIf="!endorsementSection" (click)="AddNew()"><i class="fas fa-plus mx-1 mt-3"></i>&nbsp;Add New </button></div>
+                </div>
+            </div>
+            
+            <div class="row mt-3 table table_expand">
+                <div class="col-md-12 col-lg-12 col-xl-12">
+
+                    <table class="table">
+                        <thead style="background-color: #333b85;">
+                            <tr class="table_row">
+                                <th class="tbl-header spancommon span_font_size">DriverName</th>
+                                <th class="tbl-header spancommon span_font_size">Chassis Number</th>
+                                <th class="tbl-header spancommon span_font_size">LicenseNo</th>
+                                <th class="tbl-header spancommon span_font_size">Date of Birth</th>
+                                <th class="tbl-header spancommon span_font_size">DriverType</th>
+
+                                <th class="tbl-header spancommon span_font_size" *ngIf="!endorsementSection || (endorsementSection && enableDriverDetails)">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let row of driverDetailsList;let i = index">
+                                <!--<td class="tbl-content">
+                                    <ng-select class="custom" [items]="occupationList" [(ngModel)]="row.OccupationType" (change)="onOccupationChange(row)" placeholder="Select OcuppationType" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc"></ng-select>
+                                </td>-->
+                                <div class="input-form-box">
+                                <input type="text" class="input-form-control without-icon" maxlength="100" [disabled]="(endorsementSection && !enableDriverDetails)" [(ngModel)]="row.DriverName" [ngModelOptions]="{standalone: true}">
+                            </div>
+                                <td class="tbl-content">
+                                    <div class="input-form-box">
+                                    <!--<input type="text" digitOnly class="input-form-control without-icon" maxlength="3" [(ngModel)]="row.LicenseNo" [ngModelOptions]="{standalone: true}">-->
+                                    <fieldset [disabled]="(endorsementSection && !enableDriverDetails)">
+                                        <ng-select class="custom" [items]="LicenseList" [(ngModel)]="row.RiskId"  (change)="onLicenseChange(row)"
+                                        placeholder="Select" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc"></ng-select>
+                                    </fieldset>
+                                    </div>
+                                </td>
+                                <td class="tbl-content">
+                                    <div class="input-form-box">
+                                        <input type="text" class="input-form-control without-icon" maxlength="100" [disabled]="(endorsementSection && !enableDriverDetails)"  [(ngModel)]="row.LicenseNo" [ngModelOptions]="{standalone: true}">
+                                    </div>
+                                </td>
+                                <td class="tbl-content">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Date Of Birth</mat-label>
+                                        <input matInput [matDatepicker]="picker" [max]="minDate" [disabled]="(endorsementSection && !enableDriverDetails)"  [(ngModel)]="row.DriverDob">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                <div class="input-form-radio-box">
+                                    <div class="radio-toolbar">
+                                    <!-- <input id="fac-yes" type="radio" name="status" value="Y" [(ngModel)]="status"  />
+                                        <label for="fac-yes">Rent</label>
+                                        <input type="radio" id="fac-no" name="status" value="N"  [(ngModel)]="status"/>
+                                        <label for="fac-no">Owner</label>-->
+                                        <input [id]="'orginwarehouse_Yes'+i" type="radio" [name]="'originatingWarehouse'+i"  [disabled]="(endorsementSection && !enableDriverDetails)" [(ngModel)]="row.DriverType" value="2">
+                                        <label [for]="'orginwarehouse_Yes'+i" class="yes">Driver</label>
+                                        <input [id]="'orginwarehouse_No'+i" type="radio" [name]="'originatingWarehouse'+i" [disabled]="(endorsementSection && !enableDriverDetails)" [(ngModel)]="row.DriverType" value="1">
+                                        <label [for]="'orginwarehouse_No'+i" class="no">Owner</label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="tbl-content" *ngIf="(endorsementSection && enableDriverDetails)">
+                                    <button class="btn btn-primary" *ngIf="i!=0"  (click)="delete(row)"> <i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+
+                        </tfoot>
+                    </table>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="maan-grid-item">
+            <div class="maan-grid-item-title">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <span class="mx-1">
+                            <i class="fas fa-book mx-1"></i>
+                        </span>
+                        <span class="spancommon span_font_size">Document Details</span>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            </div>
+            <div class="maan-grid-item-body">
+                <div class="maan-grid-item-title">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <span class="mx-1">
+                                <i class="fas fa-book mx-1"></i>
+                            </span>
+                            <span class="spancommon span_font_size"> Common Documents</span>
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                </div>
+                <div class="maan-grid-item-body">
+                    <div class="row" *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
+                        <div class="product_Section col-md-6 col-lg-4 ml-1" *ngIf="commonDocTypeList.length!=0">
+                            <div class="text-center">
+                                <span class="spancommon span_font_size" style="font-weight:600;position:relative;bottom: 0.7rem;right: 0.9rem;">Document
+                                    Types</span>
+                                <br>
+
+                            </div>
+                            <div>
+                                <ul style="list-style-type: none;" *ngFor="let doc of commonDocTypeList">
+                                    <li class="spancommon p-0"><i class="fa-solid fa-circle-check" style="position: relative;right: 1rem;"></i><span style="font-size:1rem">{{doc.CodeDesc}}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 offset-1" >
+                            <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct')" #doc>
+                            <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onDragDocument($event,null,'direct')" (click)="doc.click()">
+                                <div>
+                                    <div class="center">
+                                        <b class="text-dark" style="font-size:1rem">
+                                            <i class="far fa-images"></i> Drag or Click</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="uploadDocList.length !=0">
+                        <table class="table" id="capture_table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                    <th scope="col"><span class="spancommon">FileName</span></th>
+                                    <th scope="col"><span class="spancommon">Document Type</span></th>
+                                    <th scope="col"><span class="spancommon">Delete</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let document of uploadDocList;let i=index">
+                                    <th scope="row">{{i+1}}</th>
+                                    <td><span class="spancommon">{{document.filename}}</span></td>
+                                    <td>
+                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.DocTypeId" [items]="commonDocTypeList" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </td>
+                                    <td>
+                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteDocument(i)"><i
+                                                class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="text-center">
+                            <button class=" btn btn-success maan-btn-success" (click)="onFileUploadCommonList()"><span style="position:relative;bottom:0.22rem">Upload</span></button>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="uploadedDocList.length !=0">
+                        <div class="maan-grid-item-title">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <span class="mx-1">
+                                        <i class="fas fa-book mx-1"></i>
+                                    </span>
+                                    <span class="spancommon span_font_size">Uploaded Documents</span>
+                                </div>
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table" id="capture_table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                    <th scope="col"><span class="spancommon">FileName</span></th>
+                                    <th scope="col"><span class="spancommon">Document Type</span></th>
+                                    <th scope="col"><span class="spancommon">View</span></th>
+                                    <th scope="col" *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)"><span class="spancommon" >Delete</span></th>
+                                    <th scope="col"><span class="spancommon">Download</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let document of uploadedDocList;let i=index">
+                                    <th scope="row"><span class="spancommon span_font_size">{{i+1}}</span></th>
+                                    <td><span class="spancommon span_font_size">{{document.OrginalFileName}}</span></td>
+                                    <td>
+                                        <ng-select class="input-form-select" appendTo="body" disabled [(ngModel)]="document.DocumentId" [items]="commonDocTypeList" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </td>
+                                    <td>
+                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewCommonDocument(i)"><i class="fa fa-eye"></i></a>
+                                    </td>
+                                    <td *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
+                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete" (click)="onDeleteCommonDocument(i)"><i
+                                                class="fa fa-trash"></i></a>
+                                    </td>
+                                    <td>
+                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onCommonDocumentDownload(i)"><i
+                                                class="fa fa-download"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </ng-container>
+                    <ng-container *ngIf="uploadedDocList.length ==0 && uploadDocList.length ==0 && endorsementSection">
+                        <div class="row">
+                            <div class="text-center">
+                                <h4 class="spancommon">No Document Available</h4>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="maan-grid-item-title">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <span class="mx-1">
+                                <i class="fas fa-book mx-1"></i>
+                            </span>
+                            <ng-container *ngIf="productId!='5' && productId!='4' && productId!='3'"><span class="spancommon span_font_size">Individual Documents</span></ng-container>
+                            <ng-container *ngIf="productId=='5'"><span class="spancommon span_font_size">Vehicle Documents</span></ng-container>
+                            <ng-container *ngIf="productId=='4'"><span class="spancommon span_font_size">Passenger Documents</span></ng-container>
+                            <ng-container *ngIf="productId=='3'"><span class="spancommon span_font_size">Location Documents</span></ng-container>
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                </div>
+                <div class="maan-grid-item-body">
+                    <div class="row customFlow">
+                        <div class="col-md-6 col-lg-6 offset-3"  *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
+                            <input style="display: none;" type="file" (change)="onUploadListDocuments($event,null,'direct',j)" #doc>
+                            <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onDragDocument($event,null,'direct')" (click)="doc.click()">
+                                <div>
+                                    <div class="center">
+                                        <b class="text-dark" style="font-size:1rem">
+                                            <i class="far fa-images"></i> Drag or Click</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="uploadListDoc.length !=0">
+                        <table class="table table-border-1ed" id="capture_table" style="position: relative;
+                        top: 2rem;">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                    <th scope="col"><span class="spancommon">FileName</span></th>
+                                    <th scope="col">
+                                        <span class="spancommon">
+                                            <ng-container *ngIf="productId=='5'">Chassis Number</ng-container>
+                                            <ng-container *ngIf="productId=='4'">Passenger Name</ng-container>
+                                            <ng-container *ngIf="productId!='4' && productId!='5'">Insurer Name</ng-container>
+                                        </span>
+                                    </th>
+                                    <th scope="col"><span class="spancommon">Document Type</span></th>
+                                    <th scope="col"><span class="spancommon" >Delete</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let document of uploadListDoc;let i=index">
+                                    <th scope="row"><span class="spancommon span_font_size">{{i+1}}</span></th>
+                                    <td><span class="spancommon span_font_size">{{document.filename}}</span></td>
+                                    <td>
+                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.Id" (change)="onChangeSectionType(document)" [items]="listDocTypes" bindValue="RiskId" bindLabel="DocumentTitle">
+                                        </ng-select>
+                                    </td>
+                                    <td>
+                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.DocTypeId" [items]="document.docTypeList" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </td>
+                                    <td>
+                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteSelectedListDocument(menu,i)"><i
+                                                class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="text-center">
+                            <button class="btn btn-success maan-btn-success"  (click)="onFileUploadVehicleList(j)"><span style="position:relative;">Upload</span></button>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="uploadedIndividualList.length !=0">
+                        <div class="maan-grid-item-title">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <span class="mx-1">
+                                        <i class="fas fa-book mx-1"></i>
+                                    </span><span class="spancommon span_font_size">Uploaded Documents</span>
+                                </div>
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table" id="capture_table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                    <th scope="col"><span class="spancommon">FileName</span></th>
+                                    <th scope="col"><span class="spancommon">
+                                        <ng-container *ngIf="productId=='5'">Chassis Number</ng-container>
+                                        <ng-container *ngIf="productId=='4'">Passenger Name</ng-container>
+                                        <ng-container *ngIf="productId!='4' && productId!='5'">Insurer Name</ng-container>
+                                    </span></th>
+                                    <th scope="col"><span class="spancommon">Document Type</span></th>
+                                    <th scope="col"><span class="spancommon">View</span></th>
+                                    <th scope="col"><span class="spancommon" *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">Delete</span></th>
+                                    <th scope="col"><span class="spancommon">Download</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let document of uploadedIndividualList;let i=index">
+                                    <th scope="row"><span class="spancommon span_font_size">{{i+1}}</span></th>
+                                    <td><span class="spancommon span_font_size">{{document.OrginalFileName}}</span></td>
+                                    <td>
+                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.Id" disabled [items]="listDocTypes" bindValue="RiskId" bindLabel="DocumentTitle">
+                                        </ng-select>
+                                    </td>
+                                    <td>
+                                        <ng-select class="input-form-select" appendTo="body" disabled [(ngModel)]="document.DocumentId" [items]="document.docTypeList" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </td>
+                                    <td>
+                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewListDocument(j,document)"><i
+                                                class="fa fa-eye"></i></a>
+                                    </td>
+                                    <td *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
+                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete" (click)="onDeleteListDocument(j,document)"><i
+                                                class="fa fa-trash"></i></a>
+                                    </td>
+                                    <td>
+                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onListDocumentDownload(j,document)"><i
+                                                class="fa fa-download"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </ng-container>
+                </div>
+                <!-- <div class="maan-grid-item-body">
+                    <div class="row customFlow">
+                        <div class="col-md-12 col-lg-12 col-12 p-0">
+                            <ul id="accordion" class="accordion" *ngIf="docListSection">
+                                <li class="li-data" *ngFor="let menu of vehicleList; let j = index" [class.active]="menu.Collapse">
+                                    <div class="menu">
+                                        <span class="icon"><span class="fas fa-chevron-down" style="position: relative;float: right;color:navy" (click)="toggle(j)"></span></span>
+                                      
+                                        <ng-container *ngIf="productId=='5'">
+                                            <span class="spancommon span_font_size font_weight" style="color: navy;"> {{ menu.Vehiclemake }} &nbsp;|&nbsp; {{ menu.Vehcilemodel }} &nbsp;|&nbsp;
+                                                {{ menu.Chassisnumber }}</span>
+
+                                        </ng-container>
+                                        <ng-container *ngIf="productId=='4'">
+                                            <ng-container *ngIf="menu.TravelId=='1'">
+                                                <span class="spancommon span_font_size font_weight" style="color:navy"> Kids&nbsp;({{menu.TotalPassengers}})</span>
+
+                                            </ng-container>
+                                            <ng-container *ngIf="menu.TravelId=='2'">
+                                                <span class="spancommon span_font_size font_weight" style="color:navy"> Adults&nbsp;({{menu.TotalPassengers}})</span>
+
+                                            </ng-container>
+                                            <ng-container *ngIf="menu.TravelId=='3'">
+                                                <span class="spancommon span_font_size font_weight" style="color:navy"> Seniors&nbsp;({{menu.TotalPassengers}})</span>
+
+                                            </ng-container>
+                                            <ng-container *ngIf="menu.TravelId=='4'">
+                                                <span class="spancommon span_font_size font_weight" style="color:navy"> Super Seniors&nbsp;({{menu.TotalPassengers}})</span>
+
+                                            </ng-container>
+                                            <ng-container *ngIf="menu.TravelId=='5'">
+                                                <span class="spancommon span_font_size font_weight" style="color:navy">  Grand Seniors&nbsp;({{menu.TotalPassengers}})</span>
+
+                                            </ng-container>
+                                            <span class="spancommon span_font_size font_weight" style="color:navy"> &nbsp;|&nbsp; {{menu.DestinationCountry}} &nbsp;|&nbsp; {{
+                                                menu.TravelStartDate }} &nbsp;~&nbsp; {{ menu.TravelEnddDate }}</span>
+
+                                        </ng-container>
+                                        <ng-container *ngIf="productId!='13' && productId!='14' && productId!='15' && productId!='4' && productId!='5' && productId!='3' || productId!='19'">
+                                            <span class="spancommon span_font_size font_weight" style="color:navy">  {{menu.SectionName}} &nbsp;|&nbsp;{{ menu.SumInsured }}
+                                                </span>
+                                        </ng-container>
+                                        <ng-container *ngIf="productId=='3' || productId=='19' ">
+                                          <span class="spancommon span_font_size font_weight" style="color:navy">  {{menu.DocumentsTitle}} &nbsp;|&nbsp;{{ menu.SumInsured }}
+                                              </span>
+                                      </ng-container>
+                                        <ng-container *ngIf="productId=='13' || productId=='14' || productId=='15'">
+                                            <span class="spancommon span_font_size font_weight" style="color:navy"> {{menu.CustomerName}}</span>
+
+                                            <ng-container *ngIf="productId=='15' || productId=='14'">
+                                                <span class="spancommon span_font_size font_weight" style="color:navy"> &nbsp;|&nbsp; {{
+                                                    menu.JobJoiningMonth }}</span>
+                                            </ng-container> &nbsp;~&nbsp; {{ menu.SumInsured }}
+                                        </ng-container>
+                                        <div class="submenu " #submenu [style.height.px]="menu.Collapse ? submenu.scrollHeight : 0">
+                                            <div class="row">
+                                                <div class="product_Section col-md-6 col-lg-4 ml-1" *ngIf="menu.docTypeList.length!=0" style="left: 0.7rem;
+                                                top: 1rem;
+                                                position: relative;">
+                                                    <div class="text-center">
+                                                        <b class="text-dark"><span class="spancommon span_font_size" style="font-weight: 600; position: relative; bottom: 0.7rem; right: 0.9rem;">Document Types</span></b><br>
+
+                                                    </div>
+                                                    <div class="mt-2">
+                                                        <ul *ngFor="let doc of menu.docTypeList" style="list-style-type: none;">
+                                                            <li class="spancommon p-0"><i class="fa-solid fa-circle-check" style="position: relative; right: 1rem;"></i><span style="font-size: 1rem;font-family: var(--our-font-family-new)!important;">{{doc.CodeDesc}}</span></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-lg-6 offset-1"  *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
+                                                    <input style="display: none;" type="file" (change)="onUploadListDocuments($event,null,'direct',j)" #doc>
+                                                    <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onDragDocument($event,null,'direct')" (click)="doc.click()">
+                                                        <div>
+                                                            <div class="center">
+                                                                <b class="text-dark" style="font-size:1rem">
+                                                                    <i class="far fa-images"></i> Drag or Click</b>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <ng-container *ngIf="menu.docList.length !=0">
+                                                <table class="table table-border-1ed" id="capture_table" style="position: relative;
+                                                top: 2rem;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                                            <th scope="col"><span class="spancommon">FileName</span></th>
+                                                            <th scope="col"><span class="spancommon">Document Type</span></th>
+                                                            <th scope="col"><span class="spancommon" >Delete</span></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let document of menu.docList;let i=index">
+                                                            <th scope="row"><span class="spancommon span_font_size">{{i+1}}</span></th>
+                                                            <td><span class="spancommon span_font_size">{{document.filename}}</span></td>
+                                                            <td>
+                                                                <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.DocTypeId" [items]="menu.docTypeList" bindValue="Code" bindLabel="CodeDesc">
+                                                                </ng-select>
+                                                            </td>
+                                                            <td>
+                                                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteSelectedListDocument(menu,i)"><i
+                                                                        class="fa fa-trash"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="text-center">
+                                                    <button class="btn btn-success maan-btn-success" style="top:1.5rem;" (click)="onFileUploadVehicleList(j)"><span style="position:relative;bottom:0.22rem;">Upload</span></button>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container *ngIf="menu.uploadedList.length !=0">
+                                                <div class="maan-grid-item-title">
+                                                    <div class="d-flex justify-content-between">
+                                                        <div>
+                                                            <span class="mx-1">
+                                                                <i class="fas fa-book mx-1"></i>
+                                                            </span><span class="spancommon span_font_size">Uploaded Documents</span>
+                                                        </div>
+                                                        <div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <table class="table" id="capture_table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                                            <th scope="col"><span class="spancommon">FileName</span></th>
+                                                            <th scope="col"><span class="spancommon">Document Type</span></th>
+                                                            <th scope="col"><span class="spancommon">View</span></th>
+                                                            <th scope="col"><span class="spancommon" *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">Delete</span></th>
+                                                            <th scope="col"><span class="spancommon">Download</span></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let document of menu.uploadedList;let i=index">
+                                                            <th scope="row"><span class="spancommon span_font_size">{{i+1}}</span></th>
+                                                            <td><span class="spancommon span_font_size">{{document.OrginalFileName}}</span></td>
+                                                            <td>
+                                                                <ng-select class="input-form-select" appendTo="body" disabled [(ngModel)]="document.DocumentId" [items]="menu.docTypeList" bindValue="Code" bindLabel="CodeDesc">
+                                                                </ng-select>
+                                                            </td>
+                                                            <td>
+                                                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewListDocument(j,document)"><i
+                                                                        class="fa fa-eye"></i></a>
+                                                            </td>
+                                                            <td *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
+                                                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete" (click)="onDeleteListDocument(j,document)"><i
+                                                                        class="fa fa-trash"></i></a>
+                                                            </td>
+                                                            <td>
+                                                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onListDocumentDownload(j,document)"><i
+                                                                        class="fa fa-download"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </ng-container>
+                                            <ng-container *ngIf="menu.uploadedList.length ==0 && menu.docList.length ==0 && endorsementSection">
+                                                <div class="row mt-4">
+                                                    <div class="text-center">
+                                                        <h4 class="spancommon">No Document Available</h4>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div> -->
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="text-center my-2">
+        <button class="custom-btn btn-5 mx-2" *ngIf="endorsementSection" (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+        <button class="custom-btn btn-5 mx-2" *ngIf="productId==3 && !endorsementSection" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+        <button class="custom-btn btn-5 mx-2" *ngIf="productId==4 &&  !endorsementSection" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+        <button class="custom-btn btn-5 mx-2" *ngIf="productId!=3 && productId!='4' &&  !endorsementSection" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+        <!-- <button class="custom-btn btn-6 mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/make-payment']" routerLinkActive="router-link-active">Next</button> -->
+        <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 11rem" matRipple (click)="onProceed()">Proceed to Payment</button>
+    </div>
+
+</div>

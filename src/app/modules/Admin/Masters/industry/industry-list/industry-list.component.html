@@ -1,0 +1,52 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div>
+                Industry
+            </div>
+            <div>
+                <button class="btn btn-warning" *ngIf="productValue" (click)="onAddSection()">Add New</button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row mt-2">
+            <div class="col-md-4 col-lg-4 col-xl-4">
+              <div class="input-control-container">
+                  <label class="input-form-label">Branch<span class="text-required">*</span></label>
+                  <ng-select class="input-form-select" appendTo="body" [items]="branchList" bindValue="Code" [(ngModel)]="branchValue" (change)="getCompanyProductList()" bindLabel="CodeDesc">
+                  </ng-select>
+              </div>
+          </div>
+          <div class="col-12 col-lg-4 col-xl-4">
+            <div class="input-control-container">
+                <label class="input-form-label">ProductId<span class="text-required">*</span></label>
+                <ng-select class="input-form-select" appendTo="body" [items]="productList"
+                    [(ngModel)]="productValue"
+                    bindValue="ProductId" bindLabel="ProductName"  (change)="getCatogery()">
+                </ng-select>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-lg-4 col-xl-4">
+          <div class="input-control-container">
+              <label class="input-form-label">Category<span class="text-required">*</span></label>
+              <ng-select class="input-form-select" appendTo="body" [items]="CategoryList" bindValue="Code" [(ngModel)]="CategoryValue"  (change)="getExistingTinyUrl()" bindLabel="CodeDesc">
+              </ng-select>
+          </div>
+      </div>
+      <!--<div class="col-md-4 col-lg-4 col-xl-4">
+        <div class="input-control-container">
+            <label class="input-form-label">Industry<span class="text-required">*</span></label>
+            <ng-select class="input-form-select" appendTo="body" [items]="IndustryList" bindValue="Code" [(ngModel)]="IndustryValue" bindLabel="CodeDesc" (change)="getExistingTinyUrl() ">
+            </ng-select>
+        </div>
+    </div>-->
+
+          </div>
+        <ng-container *ngIf="tinyUrlData">
+            <app-grid-table [cols]="columnHeader" changeStatus="true" (onStatus)="EditStatus($event)"[data]="tinyUrlData" [filterValue]="filterValue" (onEdit)="onEditSection($event)" (onConfigure)="onConfigure($event)">
+            </app-grid-table>
+        </ng-container>
+    </div>
+</div>

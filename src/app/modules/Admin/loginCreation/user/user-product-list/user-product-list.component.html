@@ -1,0 +1,38 @@
+<div class="card">
+    <div class="card-header">User Configuration</div>
+    <div class="card p-1">
+        <div class="vision-grid vision-grid-column-2">
+            <div class="vision-grid-item">
+                <div class="radio-toolbar menu-bar">
+                    <input type="radio" id="menu1" name="menu" value="Branch" (click)="onRedirect('Branch')" [(ngModel)]="activeMenu">
+                    <label for="menu1">Branch</label>
+                    <input id="menu7" type="radio" name="menu" value="Product" [(ngModel)]="activeMenu" (click)="onRedirect('Product')">
+                    <label for="menu7">Product</label>
+
+                    <!-- <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+                    <label for="menu2">Cover</label> -->
+                </div>
+            </div>
+            <div class="vision-grid-item">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                Existing Products
+                            </div>
+                            <div>
+                                <button class="btn btn-warning" (click)="onAddNewProduct()">Add New</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ng-container *ngIf="productData">
+                            <app-grid-table [cols]="productHeader" [data]="productData" [filterValue]="filterValue" (onEdit)="onEditProduct($event)" (onConfigure)="onConfigure($event)">
+                            </app-grid-table>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

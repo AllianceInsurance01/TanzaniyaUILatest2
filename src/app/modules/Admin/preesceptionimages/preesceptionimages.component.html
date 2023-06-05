@@ -1,0 +1,80 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div class="spancommon span_font_size">
+                Pre-Exception
+            </div>
+        </div>
+    </div>
+    <div class="card-body">    
+        <div class="row">
+            <h5 style="font-family: var(--our-font-family-new)!important;
+            position: relative;top: 0.4rem;color: #252525;">Image Uploaded Date</h5>
+                <mat-form-field appearance="fill">
+                    <h4>dd/mm/yyy</h4>
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="dob" placeholder="dd/mm/yyyy">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <button type="button" class="custom-btn btn-3" (click)="getPreinspectionImagesByDate()"><span>Search</span></button>
+            <!-- </div> -->
+        </div>
+        <div class="container" *ngIf="tableData.length>0">
+            <div class="card imagecard" style="width: 18rem;" *ngFor="let data of tableData | paginate:{itemsPerPage: 6, 
+                currentPage: Page,
+                totalitems:TotalLength };let i=index">
+                <div class="card-body">
+                    <p class="card-text"><span class="datastart">Customer Name</span><span class="datavalue">{{data.CustomerName}}</span></p>
+                    <p class="card-text"><span class="datastart" *ngIf="data.RegistrationNo">Registration No</span><span class="datavalue">{{data.RegistrationNo}}</span></p>
+                    <p class="card-text"><span class="datastart">Mobile No</span><span class="datavalue">{{data.MobileNo}}</span></p>
+                    <p class="card-text"><span class="datastart" *ngIf="data.ChassisNo">Chassis No</span><span class="datavalue">{{data.ChassisNo}}</span></p>
+                    <p class="card-text"><span class="datastart">Transacton Id</span><span class="datavalue">{{data.TransactionId}}</span></p>
+
+                </div>
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <h4 class="card-text" style="font-size: 1rem;position: relative;right: 0.5rem;">Images</h4>
+                        </button>
+                      </h2>
+                      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body card-text" *ngFor="let image of data.Image;let i=index">
+                            <span class="datavalue">{{image.ImageName}}</span>
+                            <a  *ngIf="image.ImagePath" style="cursor: pointer;font-weight: 700!important;font-family: var(--our-font-family-new)!important;color: Green;text-decoration: underline;" (click)="getPreinspectionImagesdownload(data,i)">Available</a>
+                            <span  *ngIf="image.ImagePath == ''"style="font-weight: 700!important;font-family: var(--our-font-family-new)!important;color:red">Not Available</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+        </div> 
+        <div *ngIf="tableData.length>0">
+            <pagination-controls class="my-pagination" (pageChange)="Page= $event" previousLabel="Previous"
+            nextLabel="Next">
+          </pagination-controls>
+        </div>
+        
+        <div>
+            <h4 style="color:red;text-align: center;font-family: var(--our-font-family-new)!important;" *ngIf="NoData">No Data Available for this Date!...</h4>
+        </div>
+       
+        <!-- <ng-container *ngIf="preexception.length!=0">
+            <app-commodity-table [cols]="customerHeader" [data]="preexception" 
+            [innerCols]="innerColumnHeader" [innerData]="innerTableData" 
+            (onAdd)="getPreinspectionImagesByDate($event)">
+            </app-commodity-table>
+        </ng-container>
+        <ng-container *ngIf="preexception.length==0">
+            <div class="text-center">
+                No Exception Available
+            </div>
+        </ng-container> -->
+           <!-- <h4 class="card-text">Available Image</h4>
+                    <p class="card-text" *ngFor="let image of data.Image">
+                        <span class="datavalue">{{image.ImageName}}</span>
+                        <a  *ngIf="image.ImagePath" style="cursor: pointer;font-weight: 700!important;font-family: var(--our-font-family-new)!important;color: Green;text-decoration: underline;" (click)="getPreinspectionImagesdownload()">Available</a>
+                        <span  *ngIf="image.ImagePath == ''"style="font-weight: 700!important;font-family: var(--our-font-family-new)!important;color:red">Not Available</span>
+                    </p> -->
+    </div>
+</div>

@@ -1,0 +1,194 @@
+<div class="maan-grid-item" [formGroup]="TravelForm">
+    <div class="maan-grid-item-title">
+        <span class="mx-0">
+            <i class="fas fa-car mx-1"></i>
+        </span> <span class="spancommon span_font_size">Travel Quote Details</span>
+    </div>
+    <div class="maan-grid-item-body">
+        <div class="row p-2">
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+                <label class="customLabel spancommon span_font_size">Type Of Plan</label>
+                <div class="input-form-radio-box mt-1">
+                    <div class="radio-toolbar" style="position: relative;top: 1rem;right: 0.8rem;">
+                        <input id="rent" type="radio" formControlName="PlanTypeId" name="PlanTypeId" value="1">
+                        <label for="rent" class="no spancommon span_font_size">Individual</label>&nbsp;
+                        <input id="rent_yes" type="radio" formControlName="PlanTypeId" name="PlanTypeId" value="2">
+                        <label for="rent_yes" class="no spancommon span_font_size">Student</label>&nbsp;
+                        <input id="rent_no" type="radio" formControlName="PlanTypeId" name="PlanTypeId" value="3">
+                        <label for="rent_no" class="no spancommon span_font_size" style="position: absolute;bottom: 0.2rem;">Family</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Destination Country</label>
+                    <ng-select class="input-form-select" appendTo="body" [items]="countryList" (change)="premiunDropdown(null)" formControlName="SourceCountry" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                    <div class="input-form-error">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Premium Plan</label><span class="text-danger">*</span>
+                    <ng-container *ngIf="TravelForm.controls.SectionId.value !='' && TravelForm.controls.SectionId.value !=null"> &nbsp;
+                        <a style="text-decoration:underline;color: rgb(18, 174, 236);cursor: pointer;" (click)="viewplanBenifits()">View Plan Benefits</a></ng-container>
+                    <ng-select class="input-form-select" appendTo="body" [items]="premiumList" formControlName="SectionId" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                    <div class="input-form-error">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="maan-grid-item">
+            <div class="maan-grid-item-title">
+                <span class="mx-1">
+                </span><span class="spancommon span_font_size">No.Of.Persons</span> 
+            </div>
+            <div class="col-12 col-md-12 col-lg-12 col-xl-12 p-2">
+                <div class="row" *ngIf="passengerError">
+                    <div class="col-md-4 col-lg-4 col-xl-4 ml-2">
+                        <div class="input-form-error">
+                            <div class="error-text text-danger">
+                                <b>Please Add Atleast 1 Passenger</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row p2">
+                    <div class="col-12 col-md-5 col-lg-5 offset-1" *ngFor="let group of travelGroupList;let i=index">
+                        <div class="input-control-container">
+                            <label class="input-form-label">{{group.GroupDesc}}</label><br>
+                            <div class="row mb-2">
+                                <div class="col-md-2 col-lg-2 col-xl-2 mt-3">
+                                    <button class="yes" *ngIf="group.GroupMembers!='0'" (click)="onchangeContents('sub',i)"><i class="fas fa-minus mx-1"></i></button>
+                                </div>
+                                <div class="col-md-5 col-lg-5 col-xl-5 p-0 mt-2">
+                                    <div class="text-center valueRadiate">
+                                        <h5><b> &nbsp;{{group.GroupMembers}}</b></h5>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-lg-2 col-xl-2 mt-3">
+                                    <button class="yes" (click)="onchangeContents('add',i)"><i class="fas fa-plus mx-1"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6" *ngIf="kidSection">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Kids({{kidStartAge}} Months-{{kidEndAge}} Years)</label>
+                            <div class="input-form-box">
+                                <input type="text" formControlName="TravelGroupDetails1" class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6" *ngIf="adultSection">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Adult({{adultStartAge}}-{{adultEndAge}})</label>
+                            <div class="input-form-box">
+                                <input type="text" formControlName="TravelGroupDetails2" class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6" *ngIf="seniorSection">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Senior({{seniorStartAge}}-{{seniorEndAge}})</label>
+                            <div class="input-form-box">
+                                <input type="text" formControlName="TravelGroupDetails3" class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6" *ngIf="superSeniorSection">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Super Senior({{superSeniorStartAge}}-{{superSeniorEndAge}})</label>
+                            <div class="input-form-box">
+                                <input type="text" formControlName="TravelGroupDetails4" class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6" *ngIf="grandSeniorSection">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Grand Senior({{grandSeniorStartAge}}-{{grandSeniorEndAge}})</label>
+                            <div class="input-form-box">
+                                <input type="text" formControlName="TravelGroupDetails5" class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- need to cut-->
+
+                <div class="maan-grid-item" *ngIf="uwQuestionList.length!=0">
+                    <div class="maan-grid-item-title">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="mx-1">
+                                        <i class="fas fa-user mx-1"></i>
+                                    </span> <span class="spancommon span_font_size">UnderWriter Questions</span>
+                            </div>
+                            <div>
+                                <ng-container>
+                                </ng-container>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="maan-grid-item-body">
+                        <ng-container *ngIf="questionSection">
+                            <div class="row">
+                                <div class="col-12 col-md-12 col-lg-12">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item" *ngFor="let ques of uwQuestionList;let i=index">
+                                            <div class="row p-0 w-100 customRow">
+                                                <div class="col-md-8 col-lg-8 col-xl-8 customFont spancommon span_font_size">
+                                                    {{ques.UwQuestionDesc}}
+                                                    <ng-container *ngIf="ques.MandatoryYn=='Y'"> &nbsp;<span class="text-danger">*</span></ng-container>
+                                                </div>
+                                                <div class="col-md-4 col-lg-4 col-xl-4">
+                                                    <ng-container *ngIf="ques?.QuestionType=='01'">
+                                                        <div class="input-control-container">
+                                                            <div class="input-form-radio-box">
+                                                                <div class="radio-toolbar">
+                                                                    <input [id]="'orginwarehouse_Yes'" type="radio" name="'originatingWarehouse'" [(ngModel)]="ques.Value" value="Y">
+                                                                    <label [for]="'orginwarehouse_Yes'" class="yes">Yes</label>
+                                                                    <input type="radio" [id]="'orginwarehouse_No'" name="'originatingWarehouse'" [(ngModel)]="ques.Value" value="N">
+                                                                    <label [for]="'orginwarehouse_No'" class="no">No</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="ques?.QuestionType=='02' && ques?.DataType!='02'">
+                                                        <div class="input-control-container">
+                                                            <div class="input-form-box">
+                                                                <input type="text" [(ngModel)]="ques.Value" class="input-form-control without-icon">
+                                                            </div>
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="ques?.QuestionType=='02' && ques?.DataType=='02'">
+                                                        <div class="input-control-container">
+                                                            <div class="input-form-box">
+                                                                <input type="text" digitOnly [(ngModel)]="ques.Value" class="input-form-control without-icon">
+                                                            </div>
+                                                        </div>
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+
+                <!-- need to cut-->
+                <div class="text-center my-2">
+                    <button class="custom-btn btn-5 mr-2" [routerLink]="['/Home/existingQuotes']" routerLinkActive="router-link-active" matRipple><<&nbsp;Back</button>&nbsp;
+                    <button class="custom-btn btn-6 maan-button-data" matRipple (click)="onProceed()"><i class="fas fa-check"></i>&nbsp;Proceed</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div>
+                <span class="mx-1">
+                        <i class="fas fa-book mx-1"></i>
+                    </span> Country Master
+            </div>
+            <div *ngIf="InsuranceId">
+                <button class="btn btn-warning" (click)="onAddNew()">Add New Country</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Insurance Company Based Country?<span class="text-required">*</span></label>
+                    <div class="input-form-radio-box">
+                        <div class="radio-toolbar">
+                            <input id="orginwarehouse1" type="radio" name="originatingWarehouse1" (change)="onChangeYN()" [(ngModel)]="companyYn" value="Y">
+                            <label for="orginwarehouse1">Yes</label>
+                            <input type="radio" id="orginwarehouse2" name="originatingWarehouse1" (change)="onChangeYN()" [(ngModel)]="companyYn" value="N">
+                            <label for="orginwarehouse2">No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4" *ngIf="companyYn=='Y'">
+                <div class="input-control-container">
+                    <label class="input-form-label">Insurance Company<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="InsuranceId" (change)="getExistingCountry()" [items]="insuranceList" bindValue="InsuranceId" bindLabel="CompanyName">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-3 col-xl-3 col-lg-3 offset-1 pl-4">
+
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-md-3 col-xl-3 col-lg-3">
+
+            </div>
+
+        </div>
+        <ng-container *ngIf="countryData.length!=0">
+            <app-grid-table [cols]="countryHeader" changeStatus="true" (OnStatus)="EditStatus($event)" [data]="countryData" [filterValue]="filterValue" (onEdit)="onEdit($event)" (onConfigure)="onConfigure($event)">
+            </app-grid-table>
+        </ng-container>
+        <ng-container *ngIf="countryData.length==0">
+            <div class="text-center">
+                No Country Available
+            </div>
+        </ng-container>
+    </div>
+</div>

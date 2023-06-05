@@ -1,0 +1,170 @@
+<div class="card">
+    <div class="card-header" style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Product Configuration</div>
+    <div class="card p-1">
+        <div class="vision-grid vision-grid-column-2">
+            <div class="vision-grid-item">
+                <div class="radio-toolbar menu-bar">
+                    <input id="menu" type="radio" name="menu" value="Product" (click)="onRedirect('Product')" [(ngModel)]="activeMenu">
+                    <label for="menu">Product Details</label>
+                    <input type="radio" id="menu6" name="menu" value="FactorType" (click)="onRedirect('FactorType')" [(ngModel)]="activeMenu">
+                    <label for="menu6">Factor Type</label>
+                    <input type="radio" id="menu1" name="menu" value="Section" (click)="onRedirect('Section')" [(ngModel)]="activeMenu">
+                    <label for="menu1">Section</label>
+                    <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+          
+                    <label for="menu2">Cover</label>
+                    <input type="radio" id="menu15" name="menu" value="Policy"(click)="onRedirect('Policy')" [(ngModel)]="activeMenu">
+                    <label for="menu15">Policy Type</label>
+                    <input type="radio" id="menu10" name="menu" value="Emi" (click)="onRedirect('Emi')" [(ngModel)]="activeMenu">
+                    <label for="menu10">EMI</label>
+                    <!-- <input type="radio" id="menu3" name="menu" value="SubCover" (click)="onRedirect('SubCover')" [(ngModel)]="activeMenu">
+                    <label for="menu3">SubCover</label> -->
+                    <input type="radio" id="menu8" name="menu" value="Tax" (click)="onRedirect('Tax')" [(ngModel)]="activeMenu">
+                    <label for="menu8">Tax</label>
+                    <input type="radio" id="menu9" name="menu" value="Prorata" (click)="onRedirect('Prorata')" [(ngModel)]="activeMenu">
+                    <label for="menu9">ProRata</label>
+                    <input type="radio" id="menu7" name="menu" value="UwQues" (click)="onRedirect('UwQues')" [(ngModel)]="activeMenu">
+                    <label for="menu7">UnderWriter Questions</label>
+                    <input type="radio" id="menu5" name="menu" value="Referral" (click)="onRedirect('Referral')" [(ngModel)]="activeMenu">
+                    <label for="menu5">Referral</label>
+                    <input type="radio" id="menu4" name="menu" value="Document" (click)="onRedirect('Document')" [(ngModel)]="activeMenu">
+                    <label for="menu4">Attached Documents</label>
+                    <input type="radio" id="menu11" name="menu" value="Payment" (click)="onRedirect('Payment')" [(ngModel)]="activeMenu">
+                    <label for="menu11">Payment</label>
+                    <input type="radio" id="menu12" name="menu" value="Notification"(click)="onRedirect('Notification')" [(ngModel)]="activeMenu">
+                    <label for="menu12">Notification</label>
+                    <input type="radio" id="menu13" name="menu" value="TinyUrl"(click)="onRedirect('TinyUrl')" [(ngModel)]="activeMenu">
+                    <label for="menu13">TinyUrl</label>
+                    <input type="radio" id="menu14" name="menu" value="Premia"(click)="onRedirect('Premia')" [(ngModel)]="activeMenu">
+                    <label for="menu14">Premia Configuration</label>
+                    <!--<input type="radio" id="menu16" name="menu" value="Industry"(click)="onRedirect('Industry')" [(ngModel)]="activeMenu">
+                    <label for="menu16">Industry</label>-->
+                    <input type="radio" id="menu17" name="menu" value="Promo"(click)="onRedirect('Promo')" [(ngModel)]="activeMenu">
+                    <label for="menu17">PromoCode</label>
+                    <input type="radio" id="menu19" name="menu" value="EndorsementField"(click)="onRedirect('EndorsementField')" [(ngModel)]="activeMenu">
+                    <label for="menu19">EndorsementField Type</label>
+                    <input type="radio" id="menu18" name="menu" value="Endorsement"(click)="onRedirect('Endorsement')" [(ngModel)]="activeMenu">
+                    <label for="menu18">Endorsement Type</label>
+                  </div>
+            </div>
+            <div class="vision-grid-item">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div style="font-family: var(--our-font-family-new)!important;font-weight: 500;">
+                                Tax Detailsssss
+                            </div>
+                            <div>
+                                <!-- <button class="btn btn-warning" (click)="onAddSection()">Add New</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-1 ml-2">
+                        <div class="col-12 col-md-4 col-lg-4 mt-2">
+                            <label class="input-form-label">Effective Date</label>
+                            <mat-form-field appearance="fill">
+                                <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="onStartDateChange()" [(ngModel)]="effectiveDateStart">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                            <!-- <div class="input-control-container">
+                                    <label class="input-form-label">Effective Date Start<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <input matInput [matDatepicker]="picker" [(ngModel)]="productDetails.EffectiveDateStart">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </div>
+                                </div> -->
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4" style="position: relative;top: 0.85rem;">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Branch</label>
+                                <ng-select class="input-form-select" [(ngModel)]="branchValue" (change)="getTaxDetails()" [items]="branchList" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <!-- <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>End Date</mat-label>
+                                    <input matInput [matDatepicker]="picker1" [(ngModel)]="effectiveDateEnd">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+
+
+                        </div> -->
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <div></div>
+                        <div style="position: relative;bottom: 1rem;right: 1rem;font-family: var(--our-font-family-new)!important;font-weight: 500;">
+                            <button class="btn btn-primary" (click)="onAddNewEntry()">Add New</button>
+                        </div>
+                    </div>
+                    <div class="row table-responsive">
+                        <div class="col-md-10 col-lg-10 col-xl-10 ml-1">
+                            <table class="table table-headerRow">
+                                <tr>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Calculation Type</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Tax Name</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Tax Code</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Description</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Amount</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Status</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Remove</th>
+                                </tr>
+                                <tr *ngFor="let row of taxList;let i = index;">
+                                    <td class="tbl-content">
+                                        <ng-select class="custom" name="calcType" [(ngModel)]="row.CalcType" placeholder="Select Calculation Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                            <ng-option *ngFor="let opt of calculationTypes2" [value]="opt.value" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;">{{opt.text}}</ng-option>
+                                        </ng-select>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-control-container">
+                                            <input type="text" style="width: 120px;" maxlength="30" [(ngModel)]="row.TaxName" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;">
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-control-container">
+                                            <input type="text" style="width: 120px;" maxlength="30" [(ngModel)]="row.TaxCode" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;">
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-control-container">
+                                            <input type="text" style="width: 120px;" maxlength="10" [(ngModel)]="row.TaxDesc" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;">
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-control-container">
+                                            <input type="text" style="width: 120px;" maxlength="10" [(ngModel)]="row.Value" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;">
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar" style="white-space: nowrap;">
+                                                <input [id]="'orginwarehouse_Pending'+i" type="radio" [name]="'originatingWarehouse'+i" [(ngModel)]="row.Status" value="P">
+                                                <label class="customRadioLabel" [for]="'orginwarehouse_Pending'+i">Pending</label>
+                                                <input [id]="'orginwarehouse_Yes'+i" type="radio" [name]="'originatingWarehouse'+i" [(ngModel)]="row.Status" value="Y">
+                                                <label class="customRadioLabel" [for]="'orginwarehouse_Yes'+i">Active</label>
+                                                <input type="radio" [id]="'orginwarehouse_No'+i" [name]="'originatingWarehouse'+i" [(ngModel)]="row.Status" value="N">
+                                                <label class="customRadioLabel" [for]="'orginwarehouse_No'+i">DeActive</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" id="remove" data-placement="top" title="Delete" (click)="deleteRow(row.TaxId,row.TaxName,i)"><i
+                                            class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="text-center mt-2" >
+                        <button class="ml-2 btn btn-success" (click)="onSaveTaxDetails()" style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>

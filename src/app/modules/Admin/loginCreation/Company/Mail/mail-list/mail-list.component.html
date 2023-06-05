@@ -1,0 +1,211 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-3 col-xl-3 col-lg-3">
+                Company Configuration
+            </div>
+            <div class="col-md-4 col-xl-4 col-lg-4 offset-5 pl-4" >
+                Company Name - <b></b>
+            </div>
+        </div>
+    </div>
+<div class="card p-1">
+    <div class="vision-grid vision-grid-column-2">
+        <div class="vision-grid-item">
+            <div class="radio-toolbar menu-bar">
+                <input id="menu8" type="radio" name="menu" value="Product" (click)="onRedirect('Product')" [(ngModel)]="activeMenu">
+                <label for="menu8">Products</label>
+                <!-- <input type="radio" id="menu2" name="menu" value="Region" (click)="onRedirect('Region')" [(ngModel)]="activeMenu">
+                <label for="menu2">Region</label> -->
+                <input type="radio" id="menu1" name="menu" value="Branch" (click)="onRedirect('Branch')" [(ngModel)]="activeMenu">
+                <label for="menu1">Branch</label>
+                <input type="radio" id="menu4" name="menu" value="Currency" (click)="onRedirect('Currency')" [(ngModel)]="activeMenu">
+                <label for="menu4">Currency</label>
+                <input type="radio" id="menu5" name="menu" value="Color" (click)="onRedirect('Color')" [(ngModel)]="activeMenu">
+                <!-- <input type="radio" id="menu3" name="menu" value="State" (click)="onRedirect('State')" [(ngModel)]="activeMenu">
+                <label for="menu3">State</label>
+                <input type="radio" id="menu4" name="menu" value="City" (click)="onRedirect('City')" [(ngModel)]="activeMenu">
+                <label for="menu4">City</label>-->
+                <input type="radio" id="menu5" name="menu" value="Mail" (click)="onRedirect('Mail')" [(ngModel)]="activeMenu">
+                <label for="menu5">Mail</label>
+                <input type="radio" id="menu6" name="menu" value="Sms" (click)="onRedirect('Sms')" [(ngModel)]="activeMenu">
+                <label for="menu6">SMS</label>
+                <!-- <input type="radio" id="menu7" name="menu" value="NotificationTemplate" (click)="onRedirect('NotificationTemplate')" [(ngModel)]="activeMenu">
+                <label for="menu7">Notification Template</label> -->
+            </div>
+        </div>
+        <div class="vision-grid-item">
+            <div class="card">
+                <div class="card-header">Existing Mail</div>
+                <div class="card-body">
+                    <mat-tab-group mat-align-tabs="center">
+                        <mat-tab label="Inbox">
+                            <ng-container *ngIf="inboxList.length!=0">
+                                <p-table [value]="inboxList" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="{first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>From</th>
+                                            <th>Subject</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-mail>
+                                        <tr (click)="onReadMail(mail,'inbox')">
+                                            <td>From</td>
+                                            <td>Subject</td>
+                                            <td>ReceivedDate</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </ng-container>
+                            <ng-container *ngIf="inboxList.length==0">
+                                <div class="text-center mt-5">
+                                    <span>No Mail Available</span>
+                                </div>
+                            </ng-container>
+                        </mat-tab>
+                        <mat-tab label="Sent">
+                            <ng-container *ngIf="sentList.length!=0">
+                                <p-table [value]="sentList" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="{first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>From</th>
+                                            <th>Subject</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-followUp>
+                                        <tr (click)="onReadMail(followUp,'sent')">
+                                            <td>From</td>
+                                            <td>Subject</td>
+                                            <td>ReceivedDate</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </ng-container>
+                            <ng-container *ngIf="sentList.length==0">
+                                <div class="text-center mt-5">
+                                    <span>No Mail Available</span>
+                                </div>
+                            </ng-container>
+                        </mat-tab>
+                    </mat-tab-group>
+                    <ng-container *ngIf="inboxSection || sentSection">
+                        <div class="input-control-container mt-2">
+                            <h4>ReadSubject</h4>
+                        </div>
+                        <div class="input-control-container">
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <label for="mailFrom">From</label><br>
+                                <span><b>fromValue</b></span>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <label for="mailFrom">To</label><br>
+                                <span>toValue</span>
+                            </div>
+                        </div>
+                        <div class="input-control-container">
+                            <div class="field col-12 md:col-5 mb-0"></div>
+                            <div class="field col-12 md:col-2 mb-0">
+                                <button label="Reply" icon="pi pi-reply" (click)="onReplyMail()" pi- styleClass="button-outlined mr-2"></button>
+                            </div>
+                            <div class="field col-12 md:col-2 mb-0">
+                                <button label="Forward" styleClass="button-outlined mr-2"></button>
+                            </div>
+                        </div>
+                        <div class="input-control-container">
+                            <div class="field col-12 md:col-12">
+                                <ng-container *ngIf="inboxSection">
+                                    <textarea disabled cols="100" rows="30" class="customContent" [(ngModel)]="readBody"></textarea>
+                                </ng-container>
+                                <ng-container *ngIf="!inboxSection">
+                                    <div [innerHTML]="readBody"></div>
+                                </ng-container>
+                            </div>
+                        </div>
+                </ng-container>
+                <ng-container *ngIf="mailSection">
+                    <div class="input-control-container mt-3">
+                        <div class="col-12 col-md-6 col-lg-6">
+
+                                <p-dropdown [options]="mailTemplatesList" (onChange)="onMailTemplateSubjectChange()" [(ngModel)]="mailTemplateValue" optionValue="Code" optionLabel="CodeDesc"></p-dropdown>
+                                <label for="dropdown">Templates</label>
+
+                        </div>
+                    </div>
+                    <div class="input-control-container">
+                        <div class="col-12 col-md-6 col-lg-6">
+
+                                <input type="text" id="mailFrom" class="input-form-control without-icon" disabled [(ngModel)]="mailFrom" pInputText>
+                                <label for="mailFrom">From</label>
+
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+
+                                <input type="text" disabled id="mailFromUserName"class="input-form-control without-icon" [(ngModel)]="createdBy" pInputText>
+                                <label for="mailFromUserName">Name</label>
+
+                        </div>
+                    </div>
+                    <div class="input-control-container">
+                        <div class="col-12 col-md-6 col-lg-6">
+
+                                <mat-chip-list id="mailTo"  [(ngModel)]="mailTo" ></mat-chip-list>
+                                <label for="mailTo">To</label>
+
+                        </div>
+                        <div class="field col-12 md:col-2">
+                            <div class="input-control-container">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <button (click)="ccSection=!ccSection" *ngIf="!ccSection" label="CC" class="button-text"></button>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <button (click)="bccSection=!bccSection" *ngIf="!bccSection" label="BCC"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-control-container">
+                        <div class="col-12 col-md-6 col-lg-6" *ngIf="ccSection">
+                            <span class="p-float-label">
+                                <mat-chip-list id="cc" [(ngModel)]="ccName" ></mat-chip-list>
+                                <label for="cc">CC</label>
+                            </span>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6" *ngIf="bccSection">
+                            <span class="p-float-label">
+                                <mat-chip-list id="bcc" [(ngModel)]="bccName" ></mat-chip-list>
+                                <label for="bcc">BCC</label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="content">
+                            <form [formGroup]="formEdit">
+                                <div class="editor">
+                                    <ngx-editor-menu [editor]="editor2" [toolbar]="toolbar">
+                                    </ngx-editor-menu>
+                                    <ngx-editor [editor]="editor2" formControlName="editorContent">
+                                    </ngx-editor>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </ng-container>
+                </div>
+                <!-- <ng-template pTemplate="footer">
+                    <p-button icon="pi pi-check" *ngIf="mailSection && formEdit.controls['editorContent'].value!=''" (click)="onSendMail()" label="Send Mail" class="p-button-text"></p-button>
+                    <p-button icon="pi pi-times" *ngIf="inboxSection || sentSection" (click)="inboxSection=false;sentSection=false" label="Close"></p-button>
+                    <p-button icon="pi pi-times" *ngIf="!inboxSection && !sentSection" (click)="getBackPage()" label="Close"></p-button>
+                </ng-template> -->
+                <div class="text-center mt-2">
+                    <button type="button" class="btn btn-danger" >Close</button>&nbsp;
+                    <button type="button" class="btn btn-danger"  >Close</button>&nbsp;
+                    <button type="button" class="btn btn-success"  >Send Mail</button>&nbsp;
+                </div>
+            </div>
+        </div>
+</div>
+</div>
+</div>
+

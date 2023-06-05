@@ -1,0 +1,153 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div>
+                Make Master
+            </div>
+
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Make Name<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="MakeDetails.MakeNameEn" maxlength="100">
+                    </div>
+                </div>
+            </div>
+           <!--<div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Regulatory Code<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ColorDetails.RegulatoryCode">
+                    </div>
+                </div>
+            </div>-->
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Color Desc</label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="MakeDetails.ColorDesc">
+                    </div>
+                </div>
+            </div>
+           <!-- <div class="col-12 col-md-4 col-lg-4">
+              <div class="input-control-container">
+                  <label class="input-form-label">Branch Code<span class="text-required">*</span></label>
+                  <div class="input-form-box">
+                      <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="MakeDetails.BranchCode">
+                  </div>
+              </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Insurance Id<span class="text-required">*</span></label>
+                <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="MakeDetails.InsuranceId">
+                </div>
+            </div>
+        </div>-->
+            <!-- <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Core App Code<span class="text-required" >*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="sectionDetails.CoreAppCode" maxlength="20">
+                    </div>
+                </div>
+            </div> -->
+           <!--<div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Status<span class="text-required">*</span></label>
+                    <div class="input-form-radio-box">
+                        <div class="radio-toolbar">
+                            <input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="sectionDetails.Status" value="P">
+                            <label for="orginwarehouse_Pending">Pending</label>
+                            <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="sectionDetails.Status" value="Y">
+                            <label for="orginwarehouse_Yes">Active</label>
+                            <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="sectionDetails.Status" value="N">
+                            <label for="orginwarehouse_No">DeActive</label>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+
+            <div class="col-12 col-md-6 col-lg-4">
+              <div class="input-control-container">
+                  <label class="input-form-label">BranchCode</label>
+                  <ng-select class="input-form-select" appendTo="body" disabled [items]="branchList" [(ngModel)]="BranchCode" bindValue="Code" bindLabel="CodeDesc">
+                  </ng-select>
+              </div>
+              </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+              <mat-form-field appearance="fill">
+
+                  <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="onDateFormatInEdit" [(ngModel)]="MakeDetails.EffectiveDateStart">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+
+              <!-- <div class="input-control-container">
+                  <label class="input-form-label">Effective Date Start<span class="text-required">*</span></label>
+                  <div class="input-form-box">
+                      <input matInput [matDatepicker]="picker" [(ngModel)]="productDetails.EffectiveDateStart">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                  </div>
+              </div> -->
+          </div>
+          <!-- <div class="col-12 col-md-4 col-lg-4">
+              <div class="input-control-container">
+                  <mat-form-field appearance="fill">
+                      <mat-label>End Date</mat-label>
+                      <input matInput [matDatepicker]="picker1" [min]="sectionDetails.EffectiveDateStart" [(ngModel)]="sectionDetails.EffectiveDateEnd">
+                      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+              </div>
+          </div> -->
+
+
+
+
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+              <label class="input-form-label">Remarks</label>
+              <div class="input-form-box">
+                  <textarea cols="60" ros="3" class="input-form-select" [(ngModel)]="MakeDetails.Remarks"></textarea>
+              </div>
+          </div>
+      </div>
+
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+              <label class="input-form-label">status</label>
+              <div class="input-form-radio-box">
+                  <div class="radio-toolbar">
+                      <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="MakeDetails.Status" value="Y">
+                      <label for="orginwarehouse_Yes">Active</label>
+                      <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="MakeDetails.Status" value="N">
+                      <label for="orginwarehouse_No">DeActive</label>
+                      <input type="radio" id="orginwarehouse_Referral" name="originatingWarehouse" [(ngModel)]="MakeDetails.Status" value="R">
+                      <label for="orginwarehouse_Referral">Referral</label>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    </div>
+    <div>
+        <div class="d-flex justify-content-center">
+            <div>
+
+            </div>
+            <div>
+                <button class="btn btn-danger" (click)="dismiss()">Cancel</button>
+                <button class="btn btn-success ml-2" (click)="onSaveMake()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

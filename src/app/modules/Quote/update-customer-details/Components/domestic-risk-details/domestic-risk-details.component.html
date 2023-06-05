@@ -1,0 +1,1328 @@
+<div>
+    <app-premiumdetails-subsection [cols]="quoteDetails" [cols1]="Riskdetails" [endrose]="endorsementSection" [cols2]="customerDetails"></app-premiumdetails-subsection>
+</div>
+<mat-tab-group mat-align-tabs="center" [(selectedIndex)]="selectedTab" (selectedTabChange)="tabClick($event)">
+    <div class="col-12">
+        <div class="maan-grid customer-grid maan-grid-column-1">
+            <div class="maan-grid-item">
+                <mat-tab label="Building" *ngIf="productId!='32' && productId!='14' && productId!='15'">
+                    <!--table-->
+                    <div>
+                        <!-- <div class="row mt-1">
+                        </div> table_expand-->
+                        <div class="row mt-2" *ngIf="!enableBuildingEditSection">
+                            <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                                <div class="boxForm">
+                                    <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                        <div class="headcommon">
+                                            <span><i class="fas fa-home mx-1 mt-3"></i></span>
+                                            <span class="spancommon span_font_size" style="font-weight:600">Building Risk Details</span>
+                                        </div>
+                                        <div>
+                                            Currency({{currencyValue}})
+                                        </div>
+                                        <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('building')"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="AddNew()">Add New </button></div>
+                                    </div>
+                                    <!-- <span><u> Building Risk Details </u></span> -->
+                                    <div  *ngIf="building.length==0">
+                                        <div class="groupBtnMembers text-center">
+                                            <div class="groupBtnMembers__desc groupBtnMembers__desc_top">
+                                                Enter All Location Details that you want to insure
+                                            </div>
+                                                <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNew()"><i class="fa fa-plus-circle"></i>&nbsp; Add New</button>
+                                        </div>
+                                    </div>
+                                    <div  class="addMembers" *ngIf="building.length!=0">
+                                        <div class="addMembers__item" *ngFor="let entry of building;let i=index">
+                                            <div class="addMembers__header">
+                                                <div class="addMembers__name">{{entry.LocationName}}</div>
+                                                <div class="addMembers__edit">
+                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="delete(entry)"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditBuilding(i)"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                   
+                                                    
+                                                </div>
+                                                <div class="addMembers__edit">
+                                                    <span>{{entry.BuildingSuminsured| commaseparator }}</span>&nbsp;&nbsp;&nbsp;
+                                                </div>
+                                            </div>
+                                            <ul class="addMembers__list"><li>{{entry.BuildingAddress}}</li></ul>
+                                        </div>
+                                        <div  class="d-flex justify-content-between maan-grid-item maan-grid-item-title" *ngIf="sumInsured">
+                                            <div class="totalProsession">
+                                                <span ><b>Sum Insured</b></span>
+                                            </div>
+                                            <div class="totalProsession">
+                                                <span ><b>Actual&nbsp;&nbsp;{{actualBuildingSI | commaseparator }}</b></span>
+                                            </div>
+                                            <div class="totalProsession">
+                                                <ng-container *ngIf="totalBuildingSumInsured!=0 && totalBuildingSumInsured!='0' && totalBuildingSumInsured!=null">
+                                                    &nbsp;<span style="text-align: end !important;"><b>{{totalBuildingSumInsured | commaseparator }}</b></span>
+                                                </ng-container>
+                                                <ng-container *ngIf="totalBuildingSumInsured==0 || totalBuildingSumInsured=='0' || totalBuildingSumInsured==null">
+                                                    <span style="text-align: end !important;"><b>0</b></span>
+                                                </ng-container>
+                                                
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                                    
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="enableBuildingEditSection">
+                            <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                                <div class="boxForm" >
+                                        <span><u> Building Risk Details </u></span>
+                                    <div class="row">
+                                        <div class="col-12 col-md-7 col-lg-7 offset-2 input-control-container">
+                                            <label class="input-form-label">Location Name</label><span class="text-danger">*</span>
+                                            <div class="input-form-box">
+                                                <input type="text" class="input-form-control without-icon" maxlength="50" [disabled]="checkEndorseDisable('building')" [(ngModel)]="LocationName" [ngModelOptions]="{standalone: true}">
+                                            </div>
+                                            <div class="input-form-error" *ngIf="buildingLocationError">
+                                                <div class="error-text text-danger">
+                                                    Please Enter Valid Location Name
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-7 col-lg-7 offset-2 input-control-container">
+                                            <label class="input-form-label">Address</label><span class="text-danger">*</span>
+                                            <div class="input-form-box">
+                                                <input type="text" class="input-form-control without-icon" maxlength="50" [disabled]="checkEndorseDisable('building')" [(ngModel)]="BuildingAddress">
+                                            </div>
+                                            <div class="input-form-error" *ngIf="buildingAddressError">
+                                                <div class="error-text text-danger">
+                                                    Please Enter Valid Location Address
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="sumInsured">
+                                        <div class="col-12 col-md-7 col-lg-7 offset-2 input-control-container">
+                                            <label class="input-form-label">Sum Insured</label><span class="text-danger">*</span>
+                                            <div class="input-form-box">
+                                                <input type="text" class="input-form-control without-icon" [disabled]="checkEndorseDisable('building')" maxlength="40" (keydown)="onSIValueChange($event)" (keyup)="individualCommaFormatted('building')" [(ngModel)]="BuildingSuminsured" [ngModelOptions]="{standalone: true}">
+                                            </div>
+                                            <div class="input-form-error" *ngIf="buildingSIError">
+                                                <div class="error-text text-danger">
+                                                    Please Enter Valid SumInsured
+                                                </div>
+                                            </div>
+                                            <div class="input-form-error" *ngIf="totalBuildSIError">
+                                                <div class="error-text text-danger">
+                                                    SumInsured Exceeds than Actual SumInsured
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="sumInsured">
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6 ml-3">
+                                            <b style="white-space: nowrap;">Actual SumInsured &nbsp;{{actualBuildingSI | commaseparator }} &nbsp;({{currencyValue}})</b>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="ml-3" *ngIf="totalBuildingSumInsured==0 || totalBuildingSumInsured=='0' || totalBuildingSumInsured==null">
+                                                <b style="white-space: nowrap;">Total SumInsured &nbsp;0&nbsp;({{currencyValue}})</b>
+                                            </div>
+                                            <div *ngIf="totalBuildingSumInsured!=0 && totalBuildingSumInsured!='0' && totalBuildingSumInsured!=null">
+                                                <b style="white-space: nowrap;">Total SumInsured &nbsp;{{totalBuildingSumInsured | commaseparator }} &nbsp;({{currencyValue}})</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="text-center">
+                                        <button class="btn btn-danger btn-sm mr-5" (click)="onBuildingCancel()"> Cancel</button>&nbsp;&nbsp;
+                                        <button class="btn btn-primary btn-sm" (click)="onBuildingSave()"> Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <!-- <div class="row mt-1 table table_expand">
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <table class="table">
+                                    <thead style="background-color: #333b85;">
+                                        <tr class="table_row">
+                                            <th class="tbl-header spancommon span_font_size">Location Name</th>
+                                            <th class="tbl-header spancommon span_font_size">Location Address</th>
+                                            <th class="tbl-header spancommon span_font_size" *ngIf="sumInsured">Sum Insured ({{currencyValue}})</th>
+                                            <th class="tbl-header spancommon span_font_size" *ngIf="!enableAddNewBtn('building')">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let row of building|paginate:{itemsPerPage: 5, currentPage:p,id: 'p'} ;let i = index">
+                                            <td class="tbl-content">
+                                                <div class="input-form-box input-data-hover">
+                                                    <input type="text" class="input-form-control without-icon" maxlength="50" [disabled]="checkEndorseDisable('building')" [(ngModel)]="row.LocationName" (Change)="onValueChange($event)" [ngModelOptions]="{standalone: true}">
+                                                </div>
+                                            </td>
+                                            <td class="tbl-content">
+                                                <div class="input-form-box input-data-hover">
+                                                    <input type="text" class="input-form-control without-icon" maxlength="50" [disabled]="checkEndorseDisable('building')" [(ngModel)]="row.BuildingAddress">
+                                                </div>
+                                            </td>
+                                            
+                                            <td class="tbl-content" *ngIf="sumInsured" style="position: relative!important;">
+                                                <div class="input-form-box input-data-hover">
+                                                    <input type="text" class="input-form-control without-icon" [disabled]="checkEndorseDisable('building')" maxlength="50" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'building')" [(ngModel)]="row.BuildingSuminsured" [ngModelOptions]="{standalone: true}" style="text-align: end;">
+                                                </div>
+                                            </td>
+                                            <td class="tbl-content table-data-center" *ngIf="!enableAddNewBtn('building')" style="text-align: center!important;position: relative!important;top: 0.8rem!important;">
+                                                <ng-container *ngIf="i==0 && building.length==1">
+                                                        N/A
+                                                </ng-container>
+                                                <button class="btn btn-primary" (click)="delete(row)" *ngIf="i!=0 && building.length!=1"> <i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot *ngIf="sumInsured">
+                                        <tr>
+                                            <td class="actualsuminsure">
+                                                <div class="ml-3">
+                                                    <b style="white-space: nowrap;">Actual SumInsured &nbsp;{{actualBuildingSI | commaseparator }} &nbsp;({{currencyValue}})</b>
+                                                </div>
+                                            </td>
+                                            <td style="text-align: start;">
+                                                <div class="ml-3" style="position: relative;left: 1rem;">
+                                                    <b style="text-align: end;">Total SumInsured</b>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="ml-3" *ngIf="totalBuildingSumInsured==0 || totalBuildingSumInsured=='0' || totalBuildingSumInsured==null">
+                                                    <span style="float:right;left:0.85rem;">0&nbsp;({{currencyValue}})</span>
+                                                </div>
+                                                <div *ngIf="totalBuildingSumInsured!=0 && totalBuildingSumInsured!='0' && totalBuildingSumInsured!=null">
+                                                    <span style="float:right;right:0.85rem;">{{totalBuildingSumInsured | commaseparator}} &nbsp;({{currencyValue}})</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="d-flex justify-content-end">
+                                  <pagination-controls (pageChange)="p=$event"  id="p"></pagination-controls>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    
+                    <div class="text-center mt-1 mb-2">
+                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack()"  routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <!-- <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="building.length!=0 && !enableBuildingEditSection" (click)="AddNew()"><i class="fa fa-plus-circle"></i>&nbsp; Add New</button> -->
+                        <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="building.length!=0 && !enableBuildingEditSection" style="width: 11rem;" matRipple (click)="onSave(null)" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Save Building Details</button>
+                    </div>
+                    <!--<mat-paginator
+                        (page)="handlePageEvent($event)"
+                        [length]="length"
+                        [pageSize]="pageSize"
+                        [showFirstLastButtons]="showFirstLastButtons"
+                        [pageSizeOptions]="pageSizeOptions"
+                        [pageIndex]="pageIndex"
+                        aria-label="Select page">
+                        </mat-paginator>-->
+
+                </mat-tab>
+                <mat-tab label="Content Risk" [disabled]="!fourth" *ngIf="first">
+                    <div>
+                        
+                        <div class="row mt-2" *ngIf="!enableContentEditSection">
+                            <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                                <div class="boxForm">
+                                    <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                        <div class="headcommon">
+                                            <span><i class="fas fa-home mx-1 mt-3"></i></span>
+                                            <span class="spancommon span_font_size" style="font-weight:600">Content Details</span>
+                                        </div>
+                                        <div>
+                                            Currency&nbsp;({{currencyValue}})
+                                        </div>
+                                        <div class="headcommon mr-3"  *ngIf="!enableAddNewBtn('content')"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="ContentAdd()">Add New </button></div>
+                                    </div>
+                                    <div  *ngIf="Cotentrisk.length==0">
+                                        <div class="groupBtnMembers text-center">
+                                            <div class="groupBtnMembers__desc groupBtnMembers__desc_top">
+                                                Enter All Content Details that you want to insure
+                                            </div>
+                                                <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="ContentAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>
+                                        </div>
+                                    </div>
+                                    <div  class="addMembers" *ngIf="Cotentrisk.length!=0">
+                                        <div class="addMembers__item" *ngFor="let entry of Cotentrisk;let i=index">
+                                            <div class="addMembers__header">
+                                                <div class="addMembers__name">{{getLocationName(entry.RiskId)}}</div>
+                                                <div class="addMembers__edit">
+                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="ContentDelete(entry)"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditContent(i)"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                    
+                                                    
+                                                </div>
+                                                <div class="addMembers__edit">
+                                                    <span>{{entry.SumInsured| commaseparator }} </span>&nbsp;&nbsp;
+                                                </div>
+                                            </div>
+                                            <ul class="addMembers__list">
+                                                <li>{{getContentName(entry)}} &nbsp; | &nbsp; {{entry.SerialNoDesc}}</li>
+                                            </ul>
+                                        </div>
+                                        <div  class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                            <div class="totalProsession">
+                                                <span ><b>Sum Insured</b></span>
+                                            </div>
+                                            <div class="totalProsession">
+                                                <span ><b>Actual&nbsp;&nbsp;{{actualContentSI | commaseparator }}</b></span>
+                                            </div>
+                                            <div class="totalProsession">
+                                                <ng-container *ngIf="totalContentSI!=0 && totalContentSI!='0' && totalContentSI!=null">
+                                                    &nbsp;<span style="text-align: end !important;"><b>{{totalContentSI | commaseparator }}</b></span>
+                                                </ng-container>
+                                                <ng-container *ngIf="totalContentSI==0 || totalContentSI=='0' || totalContentSI==null">
+                                                    <span style="text-align: end !important;"><b>0</b></span>
+                                                </ng-container>
+                                                
+                                            </div>
+                                        </div>  
+                                    </div>
+                                </div>
+                                    
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="enableContentEditSection">
+                            <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                                <div class="boxForm" >
+                                        <span><u> Content Risk Details </u></span>
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                            <label class="input-form-label">Location</label><span class="text-danger">*</span>
+                                            <ng-select class="custom" [items]="LocationList"  [disabled]="checkEndorseDisable('content')" [(ngModel)]="LocationId" placeholder="Select Location" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                                            </ng-select>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                            <label class="input-form-label">Content Type</label><span class="text-danger">*</span>
+                                            <div class="input-form-box" style="position: relative;top:.2rem">
+                                                <ng-select class="custom" [items]="dropList" [disabled]="checkEndorseDisable('content')" [(ngModel)]="contentId" placeholder="Select Content" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                            <label class="input-form-label">Serial No</label><span class="text-danger">*</span>
+                                            <div class="input-form-box">
+                                                <textarea style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('content')" (keyup)="onSerialNoChange('content')" class="input-form-control without-icon" cols="40" rows="1" maxlength="100" [(ngModel)]="serialNoDesc" [ngModelOptions]="{standalone: true}"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                            <label class="input-form-label">Description</label><span class="text-danger">*</span>
+                                            <div class="input-form-box">
+                                                <textarea style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('content')" (keyup)="onContentRiskDescChange('content')" class="input-form-control without-icon" cols="40" rows="1" maxlength="500" [(ngModel)]="contentRiskDesc" [ngModelOptions]="{standalone: true}"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-7 col-lg-7 offset-2 input-control-container">
+                                            <label class="input-form-label">Sum Insured  ({{currencyValue}})</label><span class="text-danger">*</span>
+                                            <div class="input-form-box">
+                                                <input type="text" style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('content')" (keydown)="onSIValueChange($event)" (keyup)="individualCommaFormatted('content')" class="input-form-control without-icon" maxlength="50" [(ngModel)]="contentSI" [ngModelOptions]="{standalone: true}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6 ml-3">
+                                            <b style="white-space: nowrap;">Actual SumInsured &nbsp;{{actualContentSI | commaseparator }} &nbsp;({{currencyValue}})</b>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="ml-3" *ngIf="totalContentSI==0 || totalContentSI=='0' || totalContentSI==null">
+                                                <b style="white-space: nowrap;">Total SumInsured &nbsp;0&nbsp;({{currencyValue}})</b>
+                                            </div>
+                                            <div *ngIf="totalContentSI!=0 && totalContentSI!='0' && totalContentSI!=null">
+                                                <b style="white-space: nowrap;">Total SumInsured &nbsp;{{totalContentSI | commaseparator }} &nbsp;({{currencyValue}})</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="text-center">
+                                        <button class="btn btn-danger btn-sm mr-5" (click)="onContentCancel()"> Cancel</button>&nbsp;&nbsp;
+                                        <button class="btn btn-primary btn-sm" (click)="onContentSubmit()"> Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="row mt-3 table table_expand">
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <table class="table">
+                                    <thead style="background-color: #333b85;">
+                                        <tr class="table_row">
+                                            <th class="tbl-header spancommon span_font_size">Location</th>
+                                            <th class="tbl-header spancommon span_font_size">Content</th>
+                                            <th class="tbl-header spancommon span_font_size">Serial No</th>
+                                            <th class="tbl-header spancommon span_font_size">Description</th>
+                                            <th class="tbl-header spancommon span_font_size">Sum Insured ({{currencyValue}})</th>
+                                            <th class="tbl-header spancommon span_font_size" *ngIf="!enableAddNewBtn('content')">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let row of Cotentrisk |paginate:{itemsPerPage: 5, currentPage:s,id: 's'} ;let i = index">
+                                            <td class="tbl-content" style="position: relative;top:.2rem">
+                                                <ng-select class="custom" [items]="LocationList"  [disabled]="checkEndorseDisable('content')" [(ngModel)]="row.RiskId" placeholder="Select Location" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                                                </ng-select>
+                                            </td>
+                                            <td class="tbl-content">
+                                                <div class="input-form-box" style="position: relative;top:.2rem">
+                                                    <ng-select class="custom" [items]="dropList" [disabled]="checkEndorseDisable('content')" [(ngModel)]="row.ItemId" placeholder="Select Content" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                                                    </ng-select>
+                                                </div>
+                                            </td>
+                                            <td class="tbl-content" style="position: relative!important;top: 0.8rem!important;">
+                                                <div class="input-form-box">
+                                                    <textarea style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('content')" (keyup)="onSerialNoChange('content')" class="input-form-control without-icon" cols="40" rows="1" maxlength="100" [(ngModel)]="serialNoDesc" [ngModelOptions]="{standalone: true}"></textarea>
+                                                </div>
+                                            </td>
+                                            <td class="tbl-content" style="position: relative!important;top: 0.8rem!important;">
+                                                <div class="input-form-box">
+                                                    <textarea style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('content')" (keyup)="onContentRiskDescChange('content')" class="input-form-control without-icon" cols="40" rows="1" maxlength="500" [(ngModel)]="row.ContentRiskDesc" [ngModelOptions]="{standalone: true}"></textarea>
+                                                </div>
+                                            </td>
+                                            <td class="tbl-content" style="position: relative!important;top: 0.8rem!important;">
+                                                <div class="input-form-box">
+                                                    <input type="text" style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('content')" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'content')" class="input-form-control without-icon" maxlength="50" [(ngModel)]="row.SumInsured" [ngModelOptions]="{standalone: true}">
+                                                </div>
+                                            </td>
+                                            <td class="tbl-content table-data-center" *ngIf="!enableAddNewBtn('content')" style="text-align: center!important;position: relative!important;top: 0.8rem!important;">
+                                                <ng-container *ngIf="i==0 && Cotentrisk.length==1">
+                                                    N/A
+                                            </ng-container>
+                                                <button class="btn btn-primary delete_icon" (click)="ContentDelete(row)"  *ngIf="i!=0 && Cotentrisk.length!=1"> <i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                            <td  class="actualsuminsure">
+                                                <div class="ml-3">
+                                                    <b >Actual SumInsured</b><br><span style="position: relative;">{{actualContentSI | commaseparator}} &nbsp;({{currencyValue}})</span>
+                                                </div>
+                                            </td>
+                                           
+                                            <td></td>
+                                            <td >
+                                                <div class="d-flex justify-content-end">
+                                                    <div>
+                                                        <b style="text-align: end;">Total SumInsured</b>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td >
+                                                <div class="d-flex justify-content-end">
+                                                        <div class="ml-5" *ngIf="totalContentSI==0 || totalContentSI=='0' || totalContentSI==null">
+                                                            <span style="position: relative;right: 3rem;">0&nbsp;({{currencyValue}})</span>
+                                                        </div>
+                                                        <div class="ml-5" *ngIf="totalContentSI!=0 && totalContentSI!='0' && totalContentSI!=null">
+                                                            <span style="position: relative;right: 3rem;">{{totalContentSI | commaseparator}} &nbsp;({{currencyValue}})</span>
+                                                        </div>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="text-center mt-2">
+                        <button class="custom-btn btn-5 mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+
+                        <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="onSaveContentRisk()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
+                    </div>
+
+                    <!-- <div class="d-flex justify-content-end">
+                      <pagination-controls (pageChange)="s=$event" id="s"></pagination-controls>
+                    </div> -->
+                </mat-tab>
+                <mat-tab label="Personal Accident" [disabled]="!fourth" *ngIf="second" style="overflow: none;">
+                    <div>
+                        <div class="d-flex justify-content-between maan-grid-item">
+                            <div><span><i class="fas fa-home mx-1 mt-3"></i></span>
+                                <b font-style="24px;"> Personal Accident Details</b>
+                            </div>
+                            <div class="mr-3" *ngIf="!enableAddNewBtn('personalAccident')"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="PersonalAdd()">Add New </button></div>
+                        </div>
+
+
+                        <div class="row mt-3 table table_expand" style="overflow: auto;">
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <table class="table">
+                                    <thead style="background-color: #333b85;">
+                                        <tr class="table_row">
+                                            <th class="tbl-header spancommon span_font_size">Location</th>
+                                            <th class="tbl-header spancommon span_font_size">Occupation</th>
+                                            <th class="tbl-header spancommon span_font_size">Name</th>
+                                            <th class="tbl-header spancommon span_font_size">Salary &nbsp;({{currencyValue}})</th>
+                                            <th class="tbl-header spancommon span_font_size">Date Of Birth</th>
+                                            <!-- <th class="tbl-header spancommon span_font_size">Height(cm)</th>
+                                            <th class="tbl-header spancommon span_font_size">Weight(Kg)</th> -->
+                                            <th class="tbl-header spancommon span_font_size" *ngIf="!enableAddNewBtn('personalAccident')">Action</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let row of PersonalAssistantList|paginate:{itemsPerPage: 5, currentPage:pa, id:'pa'} ;let i = index">
+
+                                            <td class="tbl-content">
+                                                <ng-select class="custom" [items]="LocationList" [(ngModel)]="row.RiskId" [disabled]="checkEndorseDisable('personalAccident')" placeholder="Select Location" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+
+                                                </ng-select>
+                                            </td>
+                                            <td class="tbl-content">
+                                                <ng-container *ngIf="row.OccupationDesc==undefined || row.OccupationDesc==null">
+                                                   <div class="text-center">
+                                                    N/A
+                                                   </div> 
+                                                </ng-container>
+                                                <ng-container *ngIf="row.OccupationDesc!=undefined && row.OccupationDesc!=null">
+                                                    <b>{{row.OccupationDesc}}</b>
+                                                </ng-container>
+                                                <!-- <ng-select class="custom" [items]="occupationList" [(ngModel)]="row.OccupationId" [disabled]="checkEndorseDisable('personalAccident')" placeholder="Select Ocuppation" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+
+                                                </ng-select> -->
+                                            </td>
+                                            <td class="tbl-content" style="position: relative;top: 0.2rem;">
+                                                <div class="input-form-box">
+                                                    <input type="text" style="min-width: 200px;" class="input-form-control without-icon" [disabled]="checkEndorseDisable('personalAccident')" maxlength="50" [(ngModel)]="row.PersonName" [ngModelOptions]="{standalone: true}">
+                                                </div>
+                                            </td>
+                                            <td class="tbl-content" style="position: relative;top: 0.2rem;">
+                                                <div class="input-form-box">
+                                                    <input type="text" style="min-width: 200px;" class="input-form-control without-icon" [disabled]="checkEndorseDisable('personalAccident')" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'personalAccident')" maxlength="50" [(ngModel)]="row.Salary" [ngModelOptions]="{standalone: true}">
+                                                </div>
+                                            </td>
+                                            <td class="tbl-content" style="position: relative;bottom: 0.4rem;">
+                                                <mat-form-field appearance="fill">
+                                                    <input matInput [matDatepicker]="picker" [max]="minDate" [(ngModel)]="row.Dob" [disabled]="checkEndorseDisable('personalAccident')" [ngModelOptions]="{standalone: true}">
+                                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker></mat-datepicker>
+                                                </mat-form-field>
+                                            </td>
+
+                                            <!-- <td class="tbl-content" style="position: relative;top: 0.2rem;">
+                                                <div class="input-form-box">
+                                                    <input type="text" style="min-width: 100px;" class="input-form-control without-icon" [disabled]="checkEndorseDisable('personalAccident')" maxlength="3" [(ngModel)]="row.Height" [ngModelOptions]="{standalone: true}">
+                                                </div>
+                                            </td>
+                                            <td class="tbl-content" style="position: relative;top: 0.2rem;">
+                                                <div class="input-form-box">
+                                                    <input type="text" style="min-width: 100px;" class="input-form-control without-icon" [disabled]="checkEndorseDisable('personalAccident')" maxlength="3" [(ngModel)]="row.Weight" [ngModelOptions]="{standalone: true}">
+                                                </div>
+                                            </td> -->
+                                            <td class="tbl-content" *ngIf="!enableAddNewBtn('personalAccident')" style="position: relative;top: 0.8rem;text-align: center;">
+                                                <ng-container *ngIf="i==0 && PersonalAssistantList.length==1">
+                                                    N/A
+                                            </ng-container>
+                                                <button class="btn btn-primary delete_icon" (click)="deletePersonal(row)"  *ngIf="i!=0 && PersonalAssistantList.length!=1"> <i class="fa fa-trash"></i></button>
+                                                <!--<button class="btn btn-primary" (click)="deletePersonal(row)"> <i class="fa fa-trash"></i></button>-->
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                    <tfoot *ngIf="actualPersonalAccSI!=undefined && actualPersonalAccSI!=''">
+                                        <tr>
+                                            <td>
+                                                <div class="ml-3">
+                                                    <b style="white-space: nowrap;">Actual SumInsured</b>
+                                                </div>
+                                            </td>
+                                            <td style="text-align: end;">{{actualPersonalAccSI | commaseparator}} &nbsp;({{currencyValue}})</td>
+                                            <td>
+                                                <div class="ml-5" style="position: relative;left: 2rem;">
+                                                    <b style="text-align: end;">Total SumInsured</b>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="ml-5" *ngIf="totalPASI==0 || totalPASI=='0' || totalPASI==null">
+                                                    <span style="position: relative;left: 6rem;">0&nbsp;({{currencyValue}})</span>
+                                                </div>
+                                                <div class="ml-5" *ngIf="totalPASI!=0 && totalPASI!='0' && totalPASI!=null">
+                                                    <span style="position: relative;left: 6rem;">{{totalPASI | commaseparator}} &nbsp;({{currencyValue}})</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <button class="custom-btn btn-5 maan-btn-red  custom-btn btn-5 mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+
+                        <button class="custom-btn btn-6  maan-button-data mx-2" matRipple (click)="onSavePersonalAccident()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                      <pagination-controls (pageChange)="pa=$event" id="pa"></pagination-controls>
+                    </div>
+
+                </mat-tab>
+                <mat-tab label="All Risk" [disabled]="!fourth" *ngIf="third">
+                    <div>
+                        <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                            <div><span><i class="fas fa-home headcommon mx-1 mt-3"></i>
+                       </span> <span class="spancommon span_font_size headcommon" style="font-weight:600">All Risk Details</span> </div>
+
+                            <div class="headcommon mr-3"  *ngIf="!enableAddNewBtn('allRisk')"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="AllAdd()">Add New </button></div>
+                        </div>
+
+
+                        <div class="row mt-3 table table_expand">
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <table class="table">
+                                    <thead style="background-color: #333b85;">
+                                        <tr class="table_row">
+                                            <th class="tbl-header spancommon span_font_size">Location</th>
+                                            <th class="tbl-header spancommon span_font_size">Content Type</th>
+                                            <th class="tbl-header spancommon span_font_size">Serial No</th>
+                                            <th class="tbl-header spancommon span_font_size">Description</th>
+                                            <th class="tbl-header spancommon span_font_size">Sum Insured &nbsp;({{currencyValue}})</th>
+                                            <th class="tbl-header spancommon span_font_size" *ngIf="!enableAddNewBtn('allRisk')">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let row of risk|paginate:{itemsPerPage: 5, currentPage:ar, id:'ar'};let i = index">
+                                            <td class="tbl-content">
+                                                <ng-select class="custom" [items]="LocationList" [(ngModel)]="row.RiskId" [disabled]="checkEndorseDisable('allRisk')" placeholder="Select Location" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc" style="position:relative;">
+
+                                                </ng-select>
+                                            </td>
+                                            <td class="tbl-content">
+                                                <div class="input-form-box">
+                                                    <ng-select class="custom" [items]="allriskList" [(ngModel)]="row.ItemId" [disabled]="checkEndorseDisable('allRisk')" placeholder="Select Location" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc" style="position:relative;">
+
+                                                    </ng-select>
+                                                </div>
+                                            </td>
+                                            <td class="tbl-content" style="position: relative!important;top: 0.8rem!important;">
+                                                <div class="input-form-box">
+                                                    <textarea style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('allRisk')" (keyup)="onSerialNoChange('allRisk')" class="input-form-control without-icon" cols="40" rows="1" maxlength="100" [(ngModel)]="row.SerialNoDesc" [ngModelOptions]="{standalone: true}"></textarea>
+                                                </div>
+                                            </td>
+                                            <td class="tbl-content" style="position: relative!important;top: 0.8rem!important;">
+                                                <div class="input-form-box">
+                                                    <textarea style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('allRisk')" (keyup)="onContentRiskDescChange('allRisk')" class="input-form-control without-icon" cols="40" rows="1" maxlength="500" [(ngModel)]="row.ContentRiskDesc" [ngModelOptions]="{standalone: true}"></textarea>
+                                                </div>
+                                            </td>
+                                            <td class="tbl-content">
+                                                <div class="input-form-box">
+                                                    <input type="text" class="input-form-control without-icon" [disabled]="checkEndorseDisable('allRisk')" style="position: relative;top: 0.8rem!important;text-align: end;" maxlength="50" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'allRisk')" [(ngModel)]="row.SumInsured"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                </div>
+                                            </td>
+                                            <td class="tbl-content" *ngIf="!enableAddNewBtn('allRisk')">
+                                                <ng-container *ngIf="i==0 && risk.length==1">
+                                                    N/A
+                                            </ng-container>
+                                                <button class="btn btn-primary delete_icon" (click)="AllDelete(row)"  *ngIf="i!=0 && risk.length!=1"> <i class="fa fa-trash"></i></button>
+                                                <!--<button class="btn btn-primary" (click)="AllDelete(row)"> <i class="fa fa-trash"></i></button>-->
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot *ngIf="actualAllRiskSI!=undefined && actualAllRiskSI!=''">
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <div class="ml-3">
+                                                    <b style="white-space: nowrap;">Actual SumInsured</b>&nbsp;~&nbsp;<span style="position: relative;
+                                                    left: 9rem;">{{actualAllRiskSI}} &nbsp;({{currencyValue}})</span>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                            <td>
+                                                <div class="ml-5" style="position: relative;left: 2rem;">
+                                                    <b style="text-align: end;">Total SumInsured</b>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="ml-5" *ngIf="totalAllRiskSI==0 ||  totalAllRiskSI=='0' || totalAllRiskSI==null">
+                                                    <span style="position: relative;left: 6rem;">0</span>
+                                                </div>
+                                                <div class="ml-5" *ngIf="totalAllRiskSI!=0 && totalAllRiskSI!='0' && totalAllRiskSI!=null">
+                                                    <span style="position: relative;left: 6rem;">{{totalAllRiskSI | commaseparator}} &nbsp;({{currencyValue}})</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="text-center">
+                        <button class="custom-btn btn-5  mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+
+                        <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="onSaveAllRisk()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                      <pagination-controls (pageChange)="ar=$event" id="ar"></pagination-controls>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Personal Indemenity" [disabled]="!fourth" *ngIf="fifth">
+                    <div class="headcommon">
+                        <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                            <div><span><i class="fas fa-home headcommon mx-1 mt-3"></i></span>
+                                <span class="spancommon span_font_size headcommon" style="font-weight:600"> Personal Indemenity Details</span>
+                            </div>
+                            <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('personalIndeminity')"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="IntermedityAdd()">Add New </button></div>
+                        </div>
+                        <div class="row mt-3 table table_expand">
+                            <div class="col-md-12 col-lg-12 col-xl-12 customRow">
+                                <table class="table">
+                                    <thead style="background-color: #333b85;">
+                                        <tr class="table_row">
+                                            <th class="tbl-header spancommon span_font_size">Location</th>
+                                            <th class="tbl-header spancommon span_font_size">Occupation</th>
+                                            <th class="tbl-header spancommon span_font_size">Name</th>
+                                            <th class="tbl-header spancommon span_font_size">Salary &nbsp;({{currencyValue}})</th>
+                                            <th class="tbl-header spancommon span_font_size">Date Of Birth</th>
+                                            <!-- <th class="tbl-header spancommon span_font_size">Height(cm)</th>
+                                            <th class="tbl-header spancommon span_font_size">Weight(Kg)</th> -->
+                                            <th class="tbl-header spancommon span_font_size" *ngIf="!enableAddNewBtn('personalIndeminity')">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let row of Intermedity|paginate:{itemsPerPage: 5, currentPage:pi , id:'pi'};let i = index">
+
+                                            <td class="tbl-content" style="position: relative;left: .5rem;top:.2rem">
+                                                <ng-select class="custom" [items]="LocationList" [disabled]="checkEndorseDisable('personalIndeminity')" [(ngModel)]="row.RiskId" placeholder="Select Location" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+
+                                                </ng-select>
+                                            </td>
+                                            <td class="tbl-content" style="position: relative;left: 1rem;top:.2rem">
+                                                <ng-container *ngIf="row.OccupationDesc==undefined || row.OccupationDesc==null">
+                                                    N/A
+                                                </ng-container>
+                                                <ng-container *ngIf="row.OccupationDesc!=undefined && row.OccupationDesc!=null">
+                                                    <b>{{row.OccupationDesc}}</b>
+                                                </ng-container>
+                                                
+                                                <!-- <ng-select class="custom" [items]="occupationList" [disabled]="checkEndorseDisable('personalIndeminity')" [(ngModel)]="row.OccupationId" placeholder="Select Ocuppation" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+
+                                                </ng-select> -->
+                                            </td>
+                                            <td class="tbl-content" style="position: relative;top: 0.65rem;">
+                                                <div class="input-form-box">
+                                                    <input type="text" [disabled]="checkEndorseDisable('personalIndeminity')" style="min-width: 166px;position: relative;left: 1.5rem;bottom: 0.3rem;" class="input-form-control without-icon" maxlength="50" [(ngModel)]="row.PersonName"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                </div>
+                                            </td>
+                                            <td class="tbl-content" style="position: relative;top: 0.65rem;">
+                                                <div class="input-form-box">
+                                                    <input type="text" [disabled]="checkEndorseDisable('personalIndeminity')" style="min-width: 166px;position: relative;left: 1.5rem;bottom: 0.3rem;text-align: end;"  class="input-form-control without-icon" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'personalIndemenity')" maxlength="50" [(ngModel)]="row.Salary" [ngModelOptions]="{standalone: true}">
+                                                </div>
+                                                <!--(keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'personalInt')"-->
+                                            </td>
+                                            <td class="tbl-content" >
+                                                <mat-form-field appearance="fill" style="position: relative;left: 1.5rem;bottom: 0.2rem;">
+                                                    <input matInput [matDatepicker]="picker" [disabled]="checkEndorseDisable('personalIndeminity')" [max]="minDate" [(ngModel)]="row.Dob" [ngModelOptions]="{standalone: true}">
+                                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker></mat-datepicker>
+                                                </mat-form-field>
+                                            </td>
+                                            <!-- <td class="tbl-content" style="position: relative;top: 0.65rem;">
+                                                <div class="input-form-box">
+                                                    <input type="text" [disabled]="checkEndorseDisable('personalIndeminity')" style="min-width: 96px;position: relative;bottom: 0.3rem;left: 1rem;" class="input-form-control without-icon" maxlength="3" [(ngModel)]="row.Height" [ngModelOptions]="{standalone: true}">
+                                                </div>
+                                            </td>
+                                            <td class="tbl-content" style="position: relative;top: 0.65rem;">
+                                                <div class="input-form-box">
+                                                    <input type="text" [disabled]="checkEndorseDisable('personalIndeminity')" style="min-width: 96px;position: relative;bottom: 0.3rem;left: 0.5rem" class="input-form-control without-icon" maxlength="3" [(ngModel)]="row.Weight" [ngModelOptions]="{standalone: true}">
+                                                </div>
+                                            </td> -->
+                                            <td class="tbl-content" *ngIf="!enableAddNewBtn('personalIndeminity')" style="position: relative;top: 0.65rem;text-align: center;">
+                                                <ng-container *ngIf="i==0 && Intermedity.length==1">
+                                                    N/A
+                                            </ng-container>
+                                            <button class="btn btn-primary" (click)="IntermedityDelete(row)" *ngIf="i!=0 && Intermedity.length!=1">
+                                                
+                                                    <i class="fa fa-trash"></i></button>
+                                                <!--<button class="btn btn-primary mt-1" (click)="IntermedityDelete(row)"> <i class="fa fa-trash"></i></button>-->
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot *ngIf="actualPersonalIntSI!=undefined && actualPersonalIntSI!=''">
+                                        <tr>
+                                            <td>
+                                                <div class="ml-3">
+                                                    <b style="white-space: nowrap;">Actual SumInsured</b>
+                                                </div>
+                                            </td>
+                                            <td style="text-align: end;">{{actualPersonalIntSI}} &nbsp;({{currencyValue}})</td>
+                                            <td>
+                                                <div class="ml-5" style="position: relative;left: 2rem;">
+                                                    <b style="text-align: end;">Total SumInsured</b>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="ml-5" *ngIf="totalPersIntSI==0 || totalPersIntSI=='0' || totalPersIntSI==null">
+                                                    <span style="position: relative;left: 6rem;">0&nbsp;({{currencyValue}})</span>
+                                                </div>
+                                                <div class="ml-5" *ngIf="totalPersIntSI!=0 && totalPersIntSI!='0' && totalPersIntSI!=null">
+                                                    <span style="position: relative;left: 6rem;">{{totalPersIntSI | commaseparator}} &nbsp;({{currencyValue}})</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button class="custom-btn btn-5 mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="onSavePersonalIntermedity()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                      <pagination-controls (pageChange)="pi=$event" id="pi"></pagination-controls>
+                    </div>
+                </mat-tab>
+                <mat-tab label="ElectricalEquipment" [disabled]="!fourth" *ngIf="six">
+
+                    <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                        <div><span><i class="fas fa-home headcommon mx-1 mt-3"></i>
+                   </span> <span class="spancommon span_font_size headcommon" style="font-weight:600">All Equipment Details</span> </div>
+
+                        <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('electronic')"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="AllAdds()">Add New </button></div>
+                    </div>
+                    <div class="row mt-3 table table_expand">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <table class="table">
+                                <thead style="background-color: #333b85;">
+                                    <tr class="table_row">
+                                        <th class="tbl-header spancommon span_font_size">Location</th>
+                                        <th class="tbl-header spancommon span_font_size">Electronic Item</th>
+                                        <th class="tbl-header spancommon span_font_size">PurchaseMonth</th>
+                                        <th class="tbl-header spancommon span_font_size">PurchaseYear</th>
+                                        <th class="tbl-header spancommon span_font_size">MakeAndModel</th>
+                                        <th class="tbl-header spancommon span_font_size">SumInsured &nbsp;({{currencyValue}})</th>
+                                        <th class="tbl-header spancommon span_font_size" *ngIf="!enableAddNewBtn('electronic')">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let row of ElectronicItem|paginate:{itemsPerPage: 5, currentPage:E , id:'E'};let i = index">
+                                        <td class="tbl-content" style="position: relative;left: 2rem;top:.2rem">
+                                            <ng-select class="custom" [items]="LocationList" [disabled]="checkEndorseDisable('electronic')" [(ngModel)]="row.RiskId" placeholder="Select Location" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+
+                                            </ng-select>
+                                        </td>
+                                        <td class="tbl-content" style="position: relative;left: 2rem;top:.2rem">
+                                            <ng-select class="custom" [items]="ElectronicList" [disabled]="checkEndorseDisable('electronic')" [(ngModel)]="row.ItemId" placeholder="Select Electronic Equipment" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+
+                                            </ng-select>
+                                        </td>
+                                        <td class="tbl-content">
+                                          <div class="input-form-box">
+                                              <input type="text" [disabled]="checkEndorseDisable('electronic')" style="min-width: 166px;position: relative;left: 1.5rem;bottom: 0.3rem;" class="input-form-control without-icon" maxlength="50" [(ngModel)]="row.PurchaseMonth" [ngModelOptions]="{standalone: true}">
+                                          </div>
+                                      </td>
+                                      <td class="tbl-content">
+                                        <div class="input-form-box">
+                                            <input type="text" [disabled]="checkEndorseDisable('electronic')" style="min-width: 166px;position: relative;top:.2rem;left: 1rem;bottom: 0.3rem;" class="input-form-control without-icon" maxlength="50" [(ngModel)]="row.PurchaseYear" [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                      <div class="input-form-box">
+                                          <input type="text" [disabled]="checkEndorseDisable('electronic')" style="min-width: 166px;position: relative;top:.2rem;left: 1rem;bottom: 0.3rem;" class="input-form-control without-icon" maxlength="50" [(ngModel)]="row.MakeAndModel" [ngModelOptions]="{standalone: true}">
+                                      </div>
+                                  </td>
+
+                                        <td class="tbl-content" style="position: relative!important;top: 0.8rem!important;">
+                                            <div class="input-form-box">
+                                                <input type="text" [disabled]="checkEndorseDisable('electronic')"  style="position: relative;left: 1rem;top:.2rem" class="input-form-control without-icon" maxlength="50" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'ElectricalEquipment')" [(ngModel)]="row.SumInsured" [ngModelOptions]="{standalone: true}">
+                                            </div>
+                                        </td>
+                                        <td class="tbl-content" *ngIf="!enableAddNewBtn('electronic')">
+                                            <ng-container *ngIf="i==0 && ElectronicItem.length==1">
+                                                N/A
+                                        </ng-container>
+                                        <button class="btn btn-primary" (click)="AllDeleteElect(row)" *ngIf="i!=0 && ElectronicItem.length!=1">
+                                            <!--<button class="btn btn-primary" (click)="AllDelete(row)">-->
+                                                <i class="fa fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>
+                                            <div class="ml-3">
+                                                <b style="white-space: nowrap;">Actual SumInsured</b>&nbsp;~&nbsp;<span  style="position: relative;
+                                                left: 9rem;">{{actualElectronicIntSI}} &nbsp;({{currencyValue}})</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="ml-5" style="position: relative;left: 13rem;">
+                                                <b  style="text-align: end;">Total SumInsured</b>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="ml-5" *ngIf="totalElectrIntSI==0 || totalElectrIntSI=='0' || totalElectrIntSI==null">
+                                                <span style="position: relative;left: 8rem;">0&nbsp;({{currencyValue}})</span>
+                                            </div>
+                                            <div class="ml-5" *ngIf="totalElectrIntSI!=0 && totalElectrIntSI!='0' && totalElectrIntSI!=null">
+                                                <span style="position: relative;left: 9rem;">{{totalElectrIntSI | commaseparator}} &nbsp;({{currencyValue}})</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+
+                      <div class="text-center">
+                        <button class="custom-btn btn-5  mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+
+                        <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="onSaveElectronic()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                      <pagination-controls (pageChange)="E=$event" id="E"></pagination-controls>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Employee Details" *ngIf="seven">
+                    <div class="row mt-2" *ngIf="!enableEmployeeEditSection">
+                        <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                            <div class="boxForm">
+                                <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                    <div class="headcommon" *ngIf="!enableEmployeeUploadSection">
+                                        <span><i class="fas fa-users mx-1 mt-3"></i></span>
+                                        <span class="spancommon span_font_size" style="font-weight:600">Employee Details</span>
+                                    </div>
+                                    <div *ngIf="!enableEmployeeUploadSection">Currency&nbsp;({{currencyValue}})</div>
+                                    
+                                    <div class="headcommon mr-3"  *ngIf="!enableAddNewBtn('employee') && !enableEmployeeUploadSection && employeeList.length!=0">
+                                        <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2"  (click)="EmployeeAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>&nbsp;
+                                            <!-- <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2"  (click)="onUploadEmployeeSection()"><i class="fa fa-upload"></i>&nbsp;Upload</button> -->
+                                    </div>
+                                    <div class="headcommon" *ngIf="enableEmployeeUploadSection">
+                                        <ng-container *ngIf="showEmpRecordsSection">
+                                            <span><i class="fas fa-users mx-1 mt-3"></i></span>
+                                            <span class="spancommon span_font_size" style="font-weight:600">Employee Records</span>
+                                        </ng-container>
+                                        <ng-container *ngIf="!showEmpRecordsSection">
+                                            <span><i class="fas fa-upload mx-1 mt-3"></i></span>
+                                            <span class="spancommon span_font_size" style="font-weight:600">Upload Employee Details</span>
+                                        </ng-container>
+                                    </div>
+                                    <div class="headcommon mr-3"  *ngIf="enableEmployeeUploadSection"> <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data"><i class="fas fa-download mx-1"></i>Sample</button></div>
+                                </div>
+                                <div  *ngIf="employeeList.length==0 && !enableEmployeeUploadSection" >
+                                    <div class="groupBtnMembers text-center">
+                                        <div class="groupBtnMembers__desc groupBtnMembers__desc_top">
+                                            Enter All Employee Details that you want to insure
+                                        </div>
+                                        <div>
+                                            <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="EmployeeAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>&nbsp;
+                                            <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2" (click)="onUploadEmployeeSection()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div  class="addMembers" *ngIf="employeeList.length!=0 && !enableEmployeeUploadSection">
+                                    <div class="addMembers__item" *ngFor="let entry of employeeList;let i=index">
+                                        <div class="addMembers__header">
+                                            <div class="addMembers__name">{{entry.EmployeeName}} &nbsp;|&nbsp;{{entry.DateOfJoiningYear}}</div>
+                                            <div class="addMembers__edit">
+                                                <button class="circle btn btn-danger btn-sm mr-2" (click)="EmployeeDelete(entry)"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                                <button class="circle btn btn-primary btn-sm" (click)="onEditEmployee(i)"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                            </div>
+                                            <div class="addMembers__edit mr-5">
+                                                <span>{{entry.Salary| commaseparator }}</span>
+                                            </div>
+                                        </div>
+                                        <ul class="addMembers__list">
+                                            <li>{{entry.OccupationDesc}} &nbsp; | &nbsp; {{entry.NationalityId}}</li>
+                                        </ul>
+                                    </div>
+                                    <div  class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                        <div class="totalProsession">
+                                            <span ><b>Sum Insured</b></span>
+                                        </div>
+                                        <div class="totalProsession">
+                                            <span ><b>Actual&nbsp;&nbsp;{{actualEmployeeSI | commaseparator }}</b></span>
+                                        </div>
+                                        <div class="totalProsession">
+                                            <ng-container *ngIf="totalEmpIntSI!=0 && totalEmpIntSI!='0' && totalEmpIntSI!=null">
+                                                &nbsp;<span style="text-align: end !important;"><b>{{totalEmpIntSI | commaseparator }}</b></span>
+                                            </ng-container>
+                                            <ng-container *ngIf="totalEmpIntSI==0 || totalEmpIntSI=='0' || totalEmpIntSI==null">
+                                                <span style="text-align: end !important;"><b>0</b></span>
+                                            </ng-container>
+                                            
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div *ngIf="enableEmployeeUploadSection && !showEmpRecordsSection">
+                                    <div class="row" *ngIf="uploadStatus==null">
+                                        <div class="col-md-8 col-lg-8 offset-2" >
+                                            <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct')" #doc>
+                                            <div class="imag-card my-3" appDragDropFileUpload (click)="doc.click()">
+                                                <div>
+                                                    <div class="center">
+                                                        <b class="text-dark" style="font-size:1rem">
+                                                            <i class="far fa-images"></i> Drag or Click</b>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="uploadDocList.length!=0 && uploadStatus==null">
+                                        <div class="col-md-12 col-lg-12 col-xl-12">
+                                            <table class="table" id="capture_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                                        <th scope="col"><span class="spancommon">FileName</span></th>
+                                                        <th scope="col"><span class="spancommon">Delete</span></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let document of uploadDocList;let i=index">
+                                                        <th scope="row">{{i+1}}</th>
+                                                        <td><span class="spancommon">{{document.filename}}</span></td>
+                                                        <td>
+                                                            <button class="btn-sm btn btn-danger" (click)="uploadDocList=[];"><i class="fa fa-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-2" *ngIf="uploadStatus==null">
+                                        <button class="btn btn-danger btn-sm mr-5" (click)="enableEmployeeUploadSection=!enableEmployeeUploadSection;uploadDocList=[]"> Cancel</button>&nbsp;&nbsp;
+                                        <button class="btn btn-success btn-sm" *ngIf="uploadDocList.length!=0" (click)="onUploadEmployeeDetails()">Upload</button>
+                                    </div>
+                                    <div class="text-center">
+                                        <p>{{uploadStatus}}</p>
+                                    </div>
+                                </div>
+                                <div *ngIf="enableEmployeeUploadSection && showEmpRecordsSection">
+                                    <div class="row" *ngIf="employeeUploadRecords.length!=0">
+                                        <div class="col-md-12 col-lg-12 col-xl-12">
+                                            <table class="table" id="capture_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                                        <th scope="col"><span class="spancommon">Uploaded Date</span></th>
+                                                        <th scope="col"><span class="spancommon">Total Records</span></th>
+                                                        <th scope="col"><span class="spancommon">Valid Records</span></th>
+                                                        <th scope="col"><span class="spancommon">Error Records</span></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let records of employeeUploadRecords;let i=index">
+                                                        <th scope="row">{{i+1}}</th>
+                                                        <td><span class="spancommon">{{records.UploadDate}}</span></td>
+                                                        <td> <span class="spancommon">{{records.TotalRecords}}</span> </td>
+                                                        <td> <span class="spancommon">{{records.ValidRecords}}</span> </td>
+                                                        <td> <span class="spancommon">{{records.ErrorRecords}}</span> </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="text-center mt-2" *ngIf="errorRecords.length==0">
+                                            <button class="custom-btn btn-7 maan-button-data mx-2" (click)="updateEmployeeRecordsTable()">View Records</button>
+                                        </div>
+                                        <ng-container *ngIf="errorRecords.length!=0">
+                                            <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                                <div class="headcommon" >
+                                                    <span><i class="fas fa-users mx-1 mt-3"></i></span>
+                                                    <span class="spancommon span_font_size" style="font-weight:600">Error  Details</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-xl-12" >
+                                                <table class="table" id="capture_table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                                            <th scope="col"><span class="spancommon">Employee Name</span></th>
+                                                            <th scope="col"><span class="spancommon">Date Of Birth</span></th>
+                                                            <th scope="col"><span class="spancommon">Nationality</span></th>
+                                                            <th scope="col"><span class="spancommon">Error Reason</span></th>
+                                                            <th scope="col"><span class="spancommon">Action</span></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let records of errorRecords|paginate:{itemsPerPage: 5, currentPage:j , id:'j'};let i=index">
+                                                            <th scope="row">{{i+1}}</th>
+                                                            <td><span class="spancommon">{{records.EmployeeName}}</span></td>
+                                                            <td> <span class="spancommon">{{records.DateOfBirth}}</span> </td>
+                                                            <td> <span class="spancommon">{{records.NationalityId}}</span> </td>
+                                                            <td> <span class="spancommon">{{records.ErrorDesc}}</span> </td>
+                                                            <td> 
+                                                                    <button class="btn btn-primary" (click)="onEditEmployeeError(records,mymodal)"><i class="fa fa-pencil"></i></button>    
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="d-flex justify-content-end">
+                                                <pagination-controls (pageChange)="j=$event"  id="j"></pagination-controls>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-2" >
+                            <button class="custom-btn btn-5 mx-2" *ngIf="!enableEmployeeUploadSection" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+    
+                            <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="employeeList.length!=0 && !enableEmployeeUploadSection" matRipple (click)="onSaveEmployeeDetails()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="enableEmployeeEditSection">
+                        <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                            <div class="boxForm" >
+                                <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                    <div class="headcommon">
+                                        <span><i class="fas fa-home mx-1 mt-3"></i></span>
+                                        <span class="spancommon span_font_size" style="font-weight:600">Employee Details</span>
+                                    </div>
+                                    <div>Currency&nbsp;({{currencyValue}})</div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                        <label class="input-form-label">Employee Name</label><span class="text-danger">*</span>
+                                        <div class="input-form-box mt-2">
+                                            <input type="text" style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('employee')" class="input-form-control without-icon" maxlength="100" [(ngModel)]="employeeName" [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                        <div class="input-form-error" *ngIf="employeeNameError">
+                                            <div class="error-text text-danger">
+                                                Please Enter Valid Employee Name
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                        <label class="input-form-label">Occupation</label><span class="text-danger">*</span>
+                                        <div class="input-form-box" style="position: relative;top:.2rem">
+                                            <ng-select class="custom" [items]="occupationList" [disabled]="checkEndorseDisable('employee')" [(ngModel)]="occupationType" placeholder="Select Occupation" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                                            </ng-select>
+                                        </div>
+                                        <div class="input-form-error" *ngIf="employeeOccupationError">
+                                            <div class="error-text text-danger">
+                                                Please Select Employee Occupation
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                        <label class="input-form-label">Address</label><span class="text-danger">*</span>
+                                        <div class="input-form-box  mt-2">
+                                            <textarea style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('employee')"  class="input-form-control without-icon" cols="40" rows="1" maxlength="150" [(ngModel)]="empAddress" [ngModelOptions]="{standalone: true}"></textarea>
+                                        </div>
+                                        <div class="input-form-error" *ngIf="employeeAddressError">
+                                            <div class="error-text text-danger">
+                                                Please Enter Valid Address
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                        <label class="input-form-label">Nationality ID</label><span class="text-danger">*</span>
+                                        <div class="input-form-box mt-2">
+                                            <input type="text" style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('employee')" class="input-form-control without-icon" maxlength="100" [(ngModel)]="nationality" [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                        <div class="input-form-error" *ngIf="employeeNationalityError">
+                                            <div class="error-text text-danger">
+                                                Please Enter Valid NationalityID
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                        <label class="input-form-label">Date Of Birth</label><span class="text-danger">*</span>
+                                        <mat-form-field appearance="fill">
+                                            <input matInput [matDatepicker]="picker" [max]="minDate" [(ngModel)]="empDob" [disabled]="checkEndorseDisable('employee')" [ngModelOptions]="{standalone: true}">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                        <div class="input-form-error" *ngIf="employeeDobError">
+                                            <div class="error-text text-danger">
+                                                Please Enter Date Of Birth
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                        <label class="input-form-label">Joining Period</label><span class="text-danger">*</span>
+                                        <div class="row p-0" style="margin-left: 0px !important;">
+                                            <div class="col-md-8 col-lg-8 p-0 input-form-box mt-1">
+                                                <ng-select class="custom" [items]="monthList" [disabled]="checkEndorseDisable('employee')" [(ngModel)]="empJoiningMonth" placeholder="Select Month" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                                                </ng-select>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 p-0 input-form-box mt-1">
+                                                <input type="text" placeholder="YYYY" [disabled]="checkEndorseDisable('employee')" class="input-form-control without-icon" maxlength="4" [(ngModel)]="empJoiningDate" [ngModelOptions]="{standalone: true}">    
+                                            </div>
+                                        </div>
+                                        <!-- <mat-form-field appearance="fill">
+                                            <input matInput [matDatepicker]="picker1" [max]="maxDate" [(ngModel)]="empJoiningDate" [disabled]="checkEndorseDisable('employee')" [ngModelOptions]="{standalone: true}">
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                        </mat-form-field> -->
+                                        <div class="input-form-error" *ngIf="employeeDojError">
+                                            <div class="error-text text-danger">
+                                                Please Enter Year Of Joining
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-7 col-lg-7 offset-2 input-control-container">
+                                        <label class="input-form-label">Salary</label><span class="text-danger">*</span>
+                                        <div class="input-form-box  mt-2">
+                                            <input type="text" style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('content')" (keydown)="onSIValueChange($event)" (keyup)="individualCommaFormatted('employee')" class="input-form-control without-icon" maxlength="50" [(ngModel)]="employeeSalary" [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                        <div class="input-form-error" *ngIf="employeeSalaryError">
+                                            <div class="error-text text-danger">
+                                                Please Enter Valid Amount
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div  class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                    <div class="totalProsession">
+                                        <span ><b>Sum Insured</b></span>
+                                    </div>
+                                    <div class="totalProsession">
+                                        <span ><b>Actual&nbsp;&nbsp;{{actualEmployeeSI | commaseparator }}</b></span>
+                                    </div>
+                                    <div class="totalProsession">
+                                        <ng-container *ngIf="totalEmpIntSI!=0 && totalEmpIntSI!='0' && totalEmpIntSI!=null">
+                                            &nbsp;<span style="text-align: end !important;"><b>{{totalEmpIntSI | commaseparator }}</b></span>
+                                        </ng-container>
+                                        <ng-container *ngIf="totalEmpIntSI==0 || totalEmpIntSI=='0' || totalEmpIntSI==null">
+                                            <span style="text-align: end !important;"><b>0</b></span>
+                                        </ng-container>
+                                        
+                                    </div>
+                                </div> 
+                                
+                                <div class="text-center">
+                                    <button class="btn btn-danger btn-sm mr-5" (click)="onEmplyeeCancel()"> Cancel</button>&nbsp;&nbsp;
+                                    <button class="btn btn-primary btn-sm" (click)="onEmployeeSave()"> Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+            </div>
+        </div>
+    </div>
+</mat-tab-group>
+
+
+
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Employee
+                Details</span></h4>
+        <button type="button" class="close" #myModalClose aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <ng-container *ngIf="employeeErrorList.length!=0">
+            <div class="row" *ngFor="let emp of employeeErrorList">
+                <div class="col-lg-4 col-md-4 col-xl-4 text-danger">
+                    <b>{{emp.Message}}</b>
+                </div>
+            </div>
+        </ng-container>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                <label class="input-form-label">Employee Name</label><span class="text-danger">*</span>
+                <div class="input-form-box mt-2">
+                    <input type="text" style="position: relative;bottom: 0.35rem;" class="input-form-control without-icon" maxlength="100" [(ngModel)]="employeeName" [ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="input-form-error" *ngIf="employeeNameError">
+                    <div class="error-text text-danger">
+                        Please Enter Valid Employee Name
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                <label class="input-form-label">Occupation</label><span class="text-danger">*</span>
+                <div class="input-form-box" style="position: relative;top:.2rem">
+                    <ng-select class="custom" [items]="occupationList" [(ngModel)]="occupationType" placeholder="Select Occupation" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+                <div class="input-form-error" *ngIf="employeeOccupationError">
+                    <div class="error-text text-danger">
+                        Please Select Employee Occupation
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                <label class="input-form-label">Nationality ID</label><span class="text-danger">*</span>
+                <div class="input-form-box mt-2">
+                    <input type="text" style="position: relative;bottom: 0.35rem;" class="input-form-control without-icon" maxlength="100" [(ngModel)]="nationality" [ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="input-form-error" *ngIf="employeeNationalityError">
+                    <div class="error-text text-danger">
+                        Please Enter Valid NationalityID
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                <label class="input-form-label">Date Of Birth</label><span class="text-danger">*</span>
+                <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker" [max]="minDate" [(ngModel)]="empDob" [disabled]="checkEndorseDisable('employee')" [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <div class="input-form-error" *ngIf="employeeDobError">
+                    <div class="error-text text-danger">
+                        Please Enter Date Of Birth
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                <label class="input-form-label">Joining Period</label><span class="text-danger">*</span>
+                <div class="row p-0" style="margin-left: 0px !important;">
+                    <div class="col-md-8 col-lg-8 p-0 input-form-box mt-1">
+                        <ng-select class="custom" [items]="monthList" [disabled]="checkEndorseDisable('employee')" [(ngModel)]="empJoiningMonth" placeholder="Select Month" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                    <div class="col-md-4 col-lg-4 p-0 input-form-box mt-1">
+                        <input type="text" placeholder="YYYY" [disabled]="checkEndorseDisable('employee')" class="input-form-control without-icon" maxlength="4" [(ngModel)]="empJoiningDate" [ngModelOptions]="{standalone: true}">    
+                    </div>
+                </div>
+                <!-- <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker1" [max]="maxDate" [(ngModel)]="empJoiningDate" [disabled]="checkEndorseDisable('employee')" [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field> -->
+                <div class="input-form-error" *ngIf="employeeDojError">
+                    <div class="error-text text-danger">
+                        Please Enter Year Of Joining
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                <label class="input-form-label">Salary</label><span class="text-danger">*</span>
+                <div class="input-form-box  mt-2">
+                    <input type="text" style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('content')" (keydown)="onSIValueChange($event)" (keyup)="individualCommaFormatted('employee')" class="input-form-control without-icon" maxlength="50" [(ngModel)]="employeeSalary" [ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="input-form-error" *ngIf="employeeSalaryError">
+                    <div class="error-text text-danger">
+                        Please Enter Valid Amount
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer text-end">
+            <button class="btn btn-danger" (click)="modal.dismiss('Cross click')">Cancel</button>&nbsp;
+            <button class="btn btn-success" (click)="onSaveErrorRecordDetails(modal)">Submit</button>
+    </div>
+</ng-template>

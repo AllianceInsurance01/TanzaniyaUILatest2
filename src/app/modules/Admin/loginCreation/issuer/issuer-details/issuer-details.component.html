@@ -1,0 +1,465 @@
+<div class="card">
+    <div class="card-header">Insurance Employee Details</div>
+    <div class="card-body">
+        <div class="card-header" class="p-0">
+            <div class="row headerClass">
+                <div class="col-md-12 col-lg-12 col-xl-12">
+                    Personal Information
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <!-- <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Broker Name<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" [items]="cityList" bindValue="Code" bindLabel="CodeDescription">
+                    </ng-select>
+                </div>
+            </div> -->
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Insurance Employee Name<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="userName" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Menu Type<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <ng-select class="input-form-select"  appendTo="body" [(ngModel)]="issuerType" [items]="typeList" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Email<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="userEmail" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Contact Person Name<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="contactPersonName" maxlength="100">
+                    </div>
+                </div>
+            </div> -->
+            <!-- <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">CoreApp Code<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="coreAppCode" maxlength="50">
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <div class="row">
+            <!-- <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Designation</label>
+                    <input type="text" class="input-form-control without-icon" [(ngModel)]="designation" maxlength="50">
+                </div>
+            </div> -->
+            <!-- <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Website<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div> -->
+            <!-- <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Company Logo<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div> -->
+
+        </div>
+        <div class="row mt-2">
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Insurance Company<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" [disabled]="editSection || issuerType!='SuperAdmin'" [(ngModel)]="insuranceId" (change)="onCompanyChange('change',null,null)" [items]="companyList" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4" *ngIf="issuerType == 'SuperAdmin' || issuerType == 'low'"><!--*ngIf="issuerType == 'SuperAdmin'"-->
+                <div class="input-control-container">
+                    <label class="input-form-label">Products<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" appendTo="body" [clearSearchOnAdd]="true" [closeOnSelect]="false" [multiple]="true" [(ngModel)]="productIds" [items]="productList" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Branches<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" appendTo="body" [clearSearchOnAdd]="true" [closeOnSelect]="false" labelForId="state" [multiple]="true" [(ngModel)]="branchIds" [items]="branchList" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Country <span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="CountryCode" [items]="countryList" (change)="onCountryChange('change')" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">State</label>
+                    <ng-select class="input-form-select" appendTo="body" [items]="stateList" bindValue="Code" bindLabel="CodeDesc" (change)="onStateChange('change')" [(ngModel)]="stateCode">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">City <span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" [(ngModel)]="CityName" class="input-form-control without-icon" maxlength="150">
+                    </div>
+                    <!-- <ng-select class="input-form-select" appendTo="body" [(ngModel)]="cityCode" [items]="cityList" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select> -->
+                </div>
+            </div>
+
+            <!-- <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Address 3<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="150">
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <div class="row">
+            <!-- <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">State</label>
+                    <ng-select class="input-form-select" [items]="cityList" bindValue="Code" bindLabel="CodeDescription">
+                    </ng-select>
+                </div>
+            </div> -->
+
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Address 1<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" [(ngModel)]="address1" class="input-form-control without-icon" maxlength="150">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Address 2<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" [(ngModel)]="address2" class="input-form-control without-icon" maxlength="150">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <label class="input-form-label">Mobile No<span class="text-required">*</span></label>
+                <div class="input-group mb-3">
+                    <ng-select class="input-form-select" style="min-width: 100px;" [(ngModel)]="mobileCode" [items]="mobileCodeList" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                    <div class="input-form-box">
+                        <input type="text" [(ngModel)]="userMobileNo" class="input-form-control without-icon" maxlength="10">
+                    </div>
+
+                </div>
+                <!-- <div class="input-control-container">
+                    <label class="input-form-label">Mobile No<span class="text-required">*</span></label>
+                    <div class="row">
+                        <div class="col-12 col-md-5 col-lg-5">
+                            <div class="input-form-box">
+                                <ng-select class="input-form-select" [(ngModel)]="mobileCode" [items]="mobileCodeList" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-7 col-lg-7 p-0">
+                            <div class="input-form-box">
+                                <input type="text" [(ngModel)]="userMobileNo" class="input-form-control without-icon" maxlength="10">
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">WhatsApp No<span class="text-required">*</span></label>
+                    <div class="input-group mb-3">
+                        <ng-select class="input-form-select" style="min-width: 100px;" [(ngModel)]="whatsappCode" [items]="mobileCodeList" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                        <div class="input-form-box">
+                            <input type="text" class="input-form-control without-icon" [(ngModel)]="userWhatsAppNo" maxlength="10">
+                        </div>
+    
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col-12 col-md-5 col-lg-5">
+                            <div class="input-form-box">
+                                <ng-select class="input-form-select" [(ngModel)]="whatsappCode" appendTo="body" [items]="mobileCodeList" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-7 col-lg-7 p-0">
+                            <div class="input-form-box">
+                                <input type="text" class="input-form-control without-icon" [(ngModel)]="userWhatsAppNo" maxlength="10">
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+
+            <!--<div class="col-12 col-md-4 col-lg-4">
+              <div class="input-control-container">
+                  <label class="input-form-label">Endrosement Type<span class="text-required">*</span></label>
+                  <ng-select class="input-form-select" appendTo="body" [clearSearchOnAdd]="true" (change)="Endrosement(EndrosementType)" [closeOnSelect]="false" [multiple]="true" [(ngModel)]="EndrosementType" [items]="EndList" bindValue="Code" bindLabel="CodeDesc">
+                  </ng-select>
+              </div>
+          </div>-->
+
+
+
+            <!--
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">PO Box<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="50">
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <div class="row">
+
+            <!-- <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Employee Code<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="50">
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <!-- <div class="row">
+
+
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Is it Brokerage Company?<span class="text-required">*</span></label>
+                    <div class="input-form-radio-box">
+                        <div class="radio-toolbar">
+                            <input id="orginwarehouse_Yes2" type="radio" name="originatingWarehouse2" [(ngModel)]="brokerYN" value="YES">
+                            <label for="orginwarehouse_Yes2">Yes</label>
+                            <input type="radio" id="orginwarehouse_No2" name="originatingWarehouse2" [(ngModel)]="brokerYN" value="NO">
+                            <label for="orginwarehouse_No2">No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- <div class="row">
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Insurance Company</label>
+                    <ng-select class="input-form-select" [items]="cityList" bindValue="Code" bindLabel="CodeDescription">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Rsa BrokerCode</label>
+                    <ng-select class="input-form-select" [items]="cityList" bindValue="Code" bindLabel="CodeDescription">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Missippi Id</label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="50">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Ac ExecutiveId</label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="50">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Customer Id</label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="50">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">MakerYn</label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="50">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">CheckerYn</label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="50">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Commission VatYn</label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="50">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">CustConfirm Yn</label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="50">
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="card-header" class="p-0">
+            <div class="row headerClass">
+                <div class="col-md-12 col-lg-12 col-xl-12">
+                    Login Information
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Login Id<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" [disabled]="editSection" [(ngModel)]="issuerLoginId" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4" *ngIf="!editSection">
+                <div class="input-control-container">
+                    <label class="input-form-label">Password<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="password" [(ngModel)]="password" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4" *ngIf="!editSection">
+                <div class="input-control-container">
+                    <label class="input-form-label">Re-Enter Password<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="password" [(ngModel)]="rePassword" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                      <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                    <mat-form-field appearance="fill">
+                        <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="effectiveDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <textarea cols="120" rows="2" [(ngModel)]="remarks" class="input-form-control without-icon" maxlength="200"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Status<span class="text-required">*</span></label>
+                    <div class="input-form-radio-box">
+                        <div class="radio-toolbar">
+                            <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="statusValue" value="Y">
+                            <label for="orginwarehouse_Yes">Active</label>
+                            <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="statusValue" value="N">
+                            <label for="orginwarehouse_No">DeActive</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row">
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">UserType<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Sub UserType<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Created By<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="row">
+            <!-- <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Agency Code<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Bank Code<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div> -->
+
+        </div>
+
+        <div class="text-center mt-2">
+            <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+            <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
+        </div>
+    </div>
+</div>

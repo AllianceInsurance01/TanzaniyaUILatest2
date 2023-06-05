@@ -1,0 +1,95 @@
+<div class="card">
+    <div class="card-header">Occupation Details</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Occupation Name<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" [(ngModel)]="occupationName" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" [(ngModel)]="coreAppCode" class="input-form-control without-icon" maxlength="20">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Regulatory Code<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" [(ngModel)]="regCode" class="input-form-control without-icon" maxlength="20">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-lg-4 col-xl-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Branch<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" disabled appendTo="body" [items]="branchList" disabled [(ngModel)]="branchValue" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-12 col-md-8 col-lg-8">
+                <div class="input-control-container">
+                    <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <textarea cols="160" ros="3" [(ngModel)]="remarks" class="input-form-select"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-lg-4 col-xl-4">
+              <div class="input-control-container">
+                  <label class="input-form-label">Product<span class="text-required">*</span></label>
+                  <ng-select class="input-form-select" appendTo="body" [items]="productList" disabled [(ngModel)]="productId" bindValue="Code" bindLabel="CodeDesc">
+                  </ng-select>
+              </div>
+          </div>
+          <div class="col-md-4 col-lg-4 col-xl-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Cateogry<span class="text-required">*</span></label>
+                <ng-select class="input-form-select" appendTo="body" [items]="categoryList" [(ngModel)]="categoryvalue" bindValue="Code" bindLabel="CodeDesc">
+                </ng-select>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                    <mat-form-field appearance="fill">
+                        <input matInput required [matDatepicker]="picker" [min]="minDate" [(ngModel)]="effectiveDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Status</label>
+                    <div class="input-form-radio-box">
+                        <div class="radio-toolbar">
+                            <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="statusValue" value="Y">
+                            <label for="orginwarehouse_Yes" class="customLabel">Active</label>
+                            <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="statusValue" value="N">
+                            <label for="orginwarehouse_No" class="customLabel">DeActive</label>
+                            <input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="statusValue" value="R">
+                            <label for="orginwarehouse_Pending" class="customLabel">Referral</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="text-center mt-2">
+            <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+            <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
+        </div>
+    </div>
+</div>

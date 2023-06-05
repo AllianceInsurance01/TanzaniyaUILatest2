@@ -1,0 +1,320 @@
+<div class="card p-1">
+    <div class="vision-grid vision-grid-column-2">
+        <div class="vision-grid-item">
+            <div class="radio-toolbar menu-bar">
+                <input id="menu" type="radio" name="menu" value="Product" (click)="onRedirect('Product')" [(ngModel)]="activeMenu">
+                <label for="menu">Product Details</label>
+                <input type="radio" id="menu6" name="menu" value="FactorType" (click)="onRedirect('FactorType')" [(ngModel)]="activeMenu">
+                <label for="menu6">Factor Type</label>
+                <input type="radio" id="menu1" name="menu" value="Section" (click)="onRedirect('Section')" [(ngModel)]="activeMenu">
+                <label for="menu1">Section</label>
+                <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+
+                <label for="menu2">Cover</label>
+                <input type="radio" id="menu20" name="menu" value="Benefit" (click)="onRedirect('Benefit')" [(ngModel)]="activeMenu">
+                <label for="menu20">Product Benefit</label>
+                <input type="radio" id="menu15" name="menu" value="Policy"(click)="onRedirect('Policy')" [(ngModel)]="activeMenu">
+                <label for="menu15">Policy Type</label>
+                <input type="radio" id="menu10" name="menu" value="Emi" (click)="onRedirect('Emi')" [(ngModel)]="activeMenu">
+                <label for="menu10">EMI</label>
+                <!-- <input type="radio" id="menu3" name="menu" value="SubCover" (click)="onRedirect('SubCover')" [(ngModel)]="activeMenu">
+                <label for="menu3">SubCover</label> -->
+                <input type="radio" id="menu8" name="menu" value="Tax" (click)="onRedirect('Tax')" [(ngModel)]="activeMenu">
+                <label for="menu8">Tax</label>
+                <input type="radio" id="menu9" name="menu" value="Prorata" (click)="onRedirect('Prorata')" [(ngModel)]="activeMenu">
+                <label for="menu9">ProRata</label>
+                <input type="radio" id="menu7" name="menu" value="UwQues" (click)="onRedirect('UwQues')" [(ngModel)]="activeMenu">
+                <label for="menu7">UnderWriter Questions</label>
+                <input type="radio" id="menu5" name="menu" value="Referral" (click)="onRedirect('Referral')" [(ngModel)]="activeMenu">
+                <label for="menu5">Referral</label>
+                <input type="radio" id="menu4" name="menu" value="Document" (click)="onRedirect('Document')" [(ngModel)]="activeMenu">
+                <label for="menu4">Attached Documents</label>
+                <input type="radio" id="menu11" name="menu" value="Payment" (click)="onRedirect('Payment')" [(ngModel)]="activeMenu">
+                <label for="menu11">Payment</label>
+                <input type="radio" id="menu12" name="menu" value="Notification"(click)="onRedirect('Notification')" [(ngModel)]="activeMenu">
+                <label for="menu12">Notification</label>
+                <input type="radio" id="menu13" name="menu" value="TinyUrl"(click)="onRedirect('TinyUrl')" [(ngModel)]="activeMenu">
+                <label for="menu13">TinyUrl</label>
+                <input type="radio" id="menu14" name="menu" value="Premia"(click)="onRedirect('Premia')" [(ngModel)]="activeMenu">
+                <label for="menu14">Premia Configuration</label>
+                <!--<input type="radio" id="menu16" name="menu" value="Industry"(click)="onRedirect('Industry')" [(ngModel)]="activeMenu">
+                <label for="menu16">Industry</label>-->
+                <input type="radio" id="menu17" name="menu" value="Promo"(click)="onRedirect('Promo')" [(ngModel)]="activeMenu">
+                <label for="menu17">PromoCode</label>
+                <input type="radio" id="menu19" name="menu" value="EndorsementField"(click)="onRedirect('EndorsementField')" [(ngModel)]="activeMenu">
+                <label for="menu19">EndorsementField Type</label>
+                <input type="radio" id="menu18" name="menu" value="Endorsement"(click)="onRedirect('Endorsement')" [(ngModel)]="activeMenu">
+                <label for="menu18">Endorsement Type</label>
+            </div>
+        </div>
+        <div class="vision-grid-item">
+            <div class="card">
+                <div class="card-header">FactorType Details</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">FactorType Name<span class="text-required">*</span></label>
+                                <div class="input-form-box" >
+                                    <input type="text" class="input-form-control without-icon" [(ngModel)]="factorTypeDetails.FactorTypeName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                                <mat-form-field appearance="fill">
+                                    <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="onStartDateChange()" [(ngModel)]="factorTypeDetails.EffectiveDateStart">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <!-- <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>End Date</mat-label>
+                                    <input matInput [matDatepicker]="picker2" [(ngModel)]="factorTypeDetails.EffectiveDateEnd">
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div> -->
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Factor Type Description</label>
+                                <div class="input-form-box">
+                                    <textarea cols="60" ros="3" [(ngModel)]="factorTypeDetails.FactorTypeDesc" class="input-form-select"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                                <div class="input-form-box">
+                                    <textarea cols="60" ros="3" [(ngModel)]="factorTypeDetails.Remarks" class="input-form-select"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-5 col-lg-5">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Status</label>
+                                <div class="input-form-radio-box">
+                                    <div class="radio-toolbar">
+                                        <input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="factorTypeDetails.Status" value="P">
+                                        <label for="orginwarehouse_Pending" class="customLabel">Pending</label>
+                                        <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="factorTypeDetails.Status" value="Y">
+                                        <label for="orginwarehouse_Yes" class="customLabel">Active</label>
+                                        <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="factorTypeDetails.Status" value="N">
+                                        <label for="orginwarehouse_No" class="customLabel">DeActive</label>
+                                        <input type="radio" id="orginwarehouse_Referral" name="originatingWarehouse" [(ngModel)]="factorTypeDetails.Status" value="R">
+                                        <label for="orginwarehouse_Referral" class="customLabel">Referral</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Factor Name</label>
+                                <div class="input-form-box">
+                                    <ng-select class="input-form-select" [(ngModel)]="factorValue" [appendTo]="'body'" [items]="typeList" bindValue="value" bindLabel="text">
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <!-- <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">RangeYN<span class="text-required">*</span></label>
+                                <div class="input-form-radio-box">
+                                    <div class="radio-toolbar">
+                                        <input id="range_Yes" type="radio" name="rangeYN" [(ngModel)]="rangeValue" value="Y">
+                                        <label for="range_Yes">Yes</label>
+                                        <input type="radio" id="range_No" name="rangeYN" [(ngModel)]="rangeValue" value="N">
+                                        <label for="range_No">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4" *ngIf="rangeValue=='N'">
+                            <div class="input-control-container">
+                                <label class="input-form-label"> Parameter Name</label>
+                                <div class="input-form-box">
+                                    <input type="text" class="input-form-control without-icon">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4" *ngIf="rangeValue=='Y'">
+                            <div class="input-control-container">
+                                <label class="input-form-label"> Range From Name</label>
+                                <div class="input-form-box">
+                                    <input type="text" class="input-form-control without-icon">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4" *ngIf="rangeValue=='Y'">
+                            <div class="input-control-container">
+                                <label class="input-form-label"> Range To Name</label>
+                                <div class="input-form-box">
+                                    <input type="text" class="input-form-control without-icon">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Effective Date Start<span class="text-required">*</span></label>
+                                <div class="input-form-box">
+                                    <input type="date" class="input-form-control without-icon">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Effective Date End<span class="text-required">*</span></label>
+                                <div class="input-form-box">
+                                    <input type="date" class="input-form-control without-icon">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                                <div class="input-form-box">
+                                    <textarea cols="60" ros="3" class="input-form-select"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Status<span class="text-required">*</span></label>
+                                <div class="input-form-radio-box">
+                                    <div class="radio-toolbar">
+                                        <input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="statusValue" value="P">
+                                        <label for="orginwarehouse_Pending">Pending</label>
+                                        <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="statusValue" value="Y">
+                                        <label for="orginwarehouse_Yes">Active</label>
+                                        <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="statusValue" value="N">
+                                        <label for="orginwarehouse_No">DeActive</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="d-flex justify-content-between">
+              <div class="flex-item"></div>
+              <div class="flex-item mr-2">
+                  <button class="btn btn-primary btn-sm" (click)="onAddRow()">
+                      <i class="fas fa-plus"></i>Add New
+                  </button>
+              </div>
+          </div>
+          <div class="row mt-3" style="overflow-x: scroll;">
+              <div class="col-md-12 col-lg-12 col-xl-12 customRow">
+                  <table class="table table-headerRow">
+                      <tr>
+                          <!-- <th class="tbl-header">Table</th> -->
+                          <th class="tbl-header">Rating FieldName</th>
+                          <th class="tbl-header">RangeYN</th>
+                          <th class="tbl-header">Parameter</th>
+                          <th class="tbl-header">Parameter Name</th>
+                          <th class="tbl-header">Parameter Name</th>
+                          <th class="tbl-header">Status</th>
+                          <th class="tbl-header">Action</th>
+                      </tr>
+                      <tr *ngFor="let row of factorTypeList| paginate:{itemsPerPage: 10, currentPage:p} ;let i = index">
+
+                          <!-- <td class="tbl-content">
+                              <ng-select class="custom" name="tableName" [(ngModel)]="row.tableName" placeholder="Select Calculation Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                  <ng-option *ngFor="let opt of tableList" [value]="opt.Code">{{opt.CodeDesc}}</ng-option>
+                              </ng-select>
+                          </td> -->
+                          <td class="tbl-content">
+                              <ng-select class="custom" name="RatingFiledId" [(ngModel)]="row.RatingFiledId" placeholder="Select Rating Field" appendTo="body" (change)="onRatingFieldChange(i)" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                  <ng-option *ngFor="let opt of fieldList" [value]="opt.Code">{{opt.CodeDesc}}</ng-option>
+                              </ng-select>
+                          </td>
+                          <td class="tbl-content">
+                              <div class="input-form-radio-box">
+                                  <div class="radio-toolbar" style="width: 120px !important;">
+                                      <input [id]="'range_Yes'+i" type="radio" [name]="'rangeYN'+i" [(ngModel)]="row.RangeYn" value="Y">
+                                      <label [for]="'range_Yes'+i" class="customLabel">Yes</label>
+                                      <input type="radio" [id]="'range_No'+i" [name]="'rangeYN'+i" [(ngModel)]="row.RangeYn" value="N">
+                                      <label [for]="'range_No'+i" class="customLabel">No</label>
+                                  </div>
+                              </div>
+                          </td>
+                          <td class="tbl-content">
+                              <ng-container *ngIf="row.RangeYn!='Y'">
+                                  <ng-select class="custom" name="ColumnsId" [(ngModel)]="row.ColumnsId" placeholder="Select Calculation Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                      <ng-option *ngFor="let opt of param2List" [value]="opt.Code">{{opt.CodeDesc}}</ng-option>
+                                  </ng-select>
+                              </ng-container>
+                              <ng-container *ngIf="row.RangeYn=='Y'">
+                                  <ng-select class="custom" name="ColumnsId" [(ngModel)]="row.ColumnsId" placeholder="Select Calculation Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                      <ng-option *ngFor="let opt of param1List" [value]="opt.Code">{{opt.CodeDesc}}</ng-option>
+                                  </ng-select>
+                              </ng-container>
+                          </td>
+                          <td class="tbl-content">
+                              <div class="input-control-container">
+                                  <div class="input-form-box">
+                                      <ng-container *ngIf="row.RangeYn=='Y'">
+                                          <input type="text" name="FromDisplayName" style="max-width: 150px;" [(ngModel)]="row.FromDisplayName">
+                                      </ng-container>
+                                      <ng-container *ngIf="row.RangeYn!='Y'">
+                                          <input type="text" name="DiscreteDisplayName" style="max-width: 150px;" [(ngModel)]="row.DiscreteDisplayName">
+                                      </ng-container>
+                                  </div>
+                              </div>
+                          </td>
+                          <td class="tbl-content">
+                              <ng-container *ngIf="row.RangeYn=='Y'">
+                                  <div class="input-control-container">
+                                      <input type="text" name="ToDisplayName" style="max-width: 150px;" [(ngModel)]="row.ToDisplayName">
+                                  </div>
+                              </ng-container>
+                              <ng-container *ngIf="row.RangeYn!='Y'">
+                                  N/A
+                              </ng-container>
+                          </td>
+                          <td class="tbl-content">
+                              <div class="input-form-radio-box">
+                                  <div class="radio-toolbar" style="width: 300px;">
+                                      <input [id]="'orginwarehouse_Pending'+i" type="radio" [name]="'originatingWarehouse'+i" [(ngModel)]="row.Status" value="P">
+                                      <label [for]="'orginwarehouse_Pending'+i" class="customLabel">Pending</label>
+                                      <input [id]="'orginwarehouse_Yes'+i" type="radio" [name]="'originatingWarehouse'+i" [(ngModel)]="row.Status" value="Y">
+                                      <label [for]="'orginwarehouse_Yes'+i" class="customLabel">Active</label>
+                                      <input type="radio" [id]="'orginwarehouse_No'+i" [name]="'originatingWarehouse'+i" [(ngModel)]="row.Status" value="N">
+                                      <label [for]="'orginwarehouse_No'+i" class="customLabel">DeActive</label>
+                                  </div>
+                              </div>
+                          </td>
+                          <td class="tbl-content">
+                            <ng-container *ngIf="i!=0">
+                                <a mat-raised-button class="mx-1" data-toggle="tooltip" id="remove" data-placement="top" title="Delete" (click)="onDeleteRow(i)"><i
+                                    class="fa fa-trash"></i></a>
+                            </ng-container>
+                            <ng-container *ngIf="i==0">
+                                N/A
+                            </ng-container>
+                          </td>
+                      </tr>
+                  </table>
+              </div>
+             </div>
+
+        </div>
+    </div>
+
+       <div class="d-flex justify-content-end">
+        <pagination-controls (pageChange)="p=$event"></pagination-controls>
+      </div>
+    <div class="text-center mt-1 mb-1">
+        <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>
+        <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
+    </div>
+</div>

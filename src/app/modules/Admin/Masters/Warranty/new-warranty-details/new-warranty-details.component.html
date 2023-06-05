@@ -1,0 +1,197 @@
+<div class="vision-grid-item">
+    <div class="card">
+        <div class="card-header">Warranty</div>
+        <div class="card-body">
+            <div class="row mt-2">
+
+                <div class="col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Branch Code<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" appendTo="body" disabled [items]="branchList" [(ngModel)]="branchValue"  bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Product<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" appendTo="body" disabled [items]="productList" [(ngModel)]="productValue"  bindValue="ProductId" bindLabel="ProductName">
+                        </ng-select>
+                    </div>
+                </div>
+
+
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Warranty Description<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <textarea cols="120" rows="2" class="input-form-control without-icon" [(ngModel)]="WarrantyDetails.WarrantyDescription" maxlength="500"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 col-xl-6" *ngIf="sectionValue!='99999'">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Section</label>
+                        <ng-select class="input-form-select" appendTo="body" disabled [items]="sectionList" [(ngModel)]="sectionValue" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <input type="text" class="input-form-control without-icon" [(ngModel)]="WarrantyDetails.CoreAppCode" maxlength="100">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Regulatory Code<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <input type="text" class="input-form-control without-icon" [(ngModel)]="WarrantyDetails.RegulatoryCode" maxlength="100">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                      <label class="input-form-label">EffectiveDateStart<span class="text-required">*</span></label>
+                        <mat-form-field appearance="fill">
+                            <!--<mat-label>EffectiveDateStart<span class="text-danger">*</span></mat-label>-->
+                            <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="WarrantyDetails.EffectiveDateStart">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Status</label>
+                        <div class="input-form-radio-box">
+                            <div class="radio-toolbar">
+                                <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse"  value="Y" [(ngModel)]="WarrantyDetails.Status">
+                                <label for="orginwarehouse_Yes">Active</label>
+                                <input type="radio" id="orginwarehouse_No" name="originatingWarehouse"  value="N" [(ngModel)]="WarrantyDetails.Status" >
+                                <label for="orginwarehouse_No">DeActive</label>
+                                <input type="radio" id="orginwarehouse_Referral" name="originatingWarehouse"  value="R" [(ngModel)]="WarrantyDetails.Status">
+                                <label for="orginwarehouse_Referral">Referral</label>
+                                <input type="radio" id="orginwarehouse_Pending" name="originatingWarehouse"  value="P" [(ngModel)]="WarrantyDetails.Status">
+                                <label for="orginwarehouse_Pending">Pending</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Document UpLoad<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <input type="file" class="input-form-control without-icon" [(ngModel)]="WarrantyDetails.DocRefNo" maxlength="100">
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-md-6 col-lg-6 col-xl-6">
+                  <div class="input-control-container">
+                      <label class="input-form-label">Type Id<span class="text-required">*</span></label>
+                      <ng-select class="input-form-select" appendTo="body" [(ngModel)]="TypeId" [items]="TypeList" bindValue="Code" bindLabel="CodeDesc">
+                      </ng-select>
+                  </div>
+              </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <textarea cols="120" rows="2" class="input-form-control without-icon" [(ngModel)]="WarrantyDetails.Remarks" maxlength="200"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-container *ngIf="uploadedDocList.length==0">
+                <div class="maan-grid-item-body">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 offset-3">
+                            <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct')" #doc>
+                            <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onDragDocument($event,null,'direct')"
+                                (click)="doc.click()">
+                                <div>
+                                    <div class="center">
+                                        <b class="text-dark">
+                                            <i class="far fa-images"></i> Drag or Click</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ng-container *ngIf="uploadDocList.length !=0">
+                        <table class="table table-border-1ed">
+                            <thead>
+                                <tr>
+                                    <th scope="col">S.No</th>
+                                    <th scope="col">FileName</th>
+                                    <th scope="col">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let document of uploadDocList;let i=index">
+                                    <th scope="row">{{i+1}}</th>
+                                    <td>{{document.filename}}</td>
+                                    <td>
+                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top"
+                                            title="Download" (click)="onDeleteDocument(i)"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!--<div class="text-center">
+                            <button class="btn btn-info" (click)="onFileUploadCommonList()">Upload</button>
+                        </div>-->
+                    </ng-container>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="uploadedDocList.length !=0">
+                <div class="maan-grid-item-title">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <span class="mx-1">
+                                        <i class="fas fa-book mx-1"></i>
+                                    </span>Uploaded Documents
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-border-1ed">
+                    <thead>
+                        <tr>
+                            <th scope="col">S.No</th>
+                            <th scope="col">FileName</th>
+                            <th scope="col">View</th>
+                            <th scope="col">Delete</th>
+                            <th scope="col">Download</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let document of uploadedDocList;let i=index">
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{document.OrginalFileName}}</td>
+                            <td>
+                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewCommonDocument(i,document)"><i class="fa fa-eye"></i></a>
+                            </td>
+                            <td>
+                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete" (click)="onDeleteCommonDocument(i,document)"><i
+                                                class="fa fa-trash"></i></a>
+                            </td>
+                            <td>
+                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onCommonDocumentDownload(i,document)"><i
+                                    class="fa fa-download"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-container>
+            <div class="text-center mt-2">
+                <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>
+                <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

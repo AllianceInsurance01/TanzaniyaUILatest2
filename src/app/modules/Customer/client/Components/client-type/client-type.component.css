@@ -1,0 +1,26 @@
+.maan-grid-column-2 {
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+}
+
+.client-type-grid .maan-grid-item {
+    padding: .5rem;
+    border-radius: .5rem;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+.middle-line {
+    display: flex;
+    flex-direction: row;
+    font-weight: 700;
+    color: var(--theme1);
+}
+  
+.middle-line:before,
+.middle-line:after {
+    content: "";
+    flex: 1 1;
+    border-bottom: 2px solid #ccc;
+    margin: auto 5px;
+}

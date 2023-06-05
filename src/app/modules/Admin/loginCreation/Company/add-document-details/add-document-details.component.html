@@ -1,0 +1,44 @@
+<div class="card">
+    <div class="card-header">Include Document</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3 col-lg-6 col-xl-6" *ngIf="sectionValue!='99999'">
+                <div class="input-control-container">
+                    <label class="input-form-label">Section</label>
+                    <ng-select class="input-form-select" appendTo="body" [items]="sectionList" [(ngModel)]="sectionValue" bindValue="Code" bindLabel="CodeDesc" (change)="getCoverList()">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-3 col-lg-6 col-xl-6">
+                <div class="input-control-container">
+                    <label class="input-form-label">Document Type</label>
+                    <ng-select class="input-form-select" appendTo="body" [items]="docTypeList" [(ngModel)]="docTypeValue" bindValue="Code" bindLabel="CodeDesc" (change)="getCoverList()">
+                    </ng-select>
+                </div>
+            </div>
+            <!-- <div class="col-md-3 col-lg-6 col-xl-6">
+                <div class="input-control-container">
+                    <label class="input-form-label">Cover</label>
+                    <ng-select class="input-form-select" appendTo="body" [items]="coverList" [(ngModel)]="coverValue" bindValue="Code" bindLabel="CodeDesc" (change)="getExistingDoc()">
+                    </ng-select>
+                </div>
+            </div> -->
+        </div>
+        <ng-container *ngIf="tableData && sectionValue && coverValue">
+            <app-grid-table [cols]="columnHeader"  [data]="tableData" [filterValue]="filterValue" (onSelectCustomer)="onSelectDocument($event)" (onEdit)="onEdit($event)">
+            </app-grid-table>
+        </ng-container>
+
+        <!--<ng-container *ngIf="subCoversData && !selectSubCoverSection">
+          <app-grid-table [cols]="subCoversHeader" [data]="subCoversData" [filterValue]="filterValue" (onEdit)="onEditSubCover($event)">
+          </app-grid-table>
+      </ng-container>-->
+        <div class="text-center mt-2">
+            <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+            <button class="btn btn-success ml-2" *ngIf="sectionValue && coverValue" (click)="onProceed()">Submit</button>
+        </div>
+    </div>
+</div>
+
+
+

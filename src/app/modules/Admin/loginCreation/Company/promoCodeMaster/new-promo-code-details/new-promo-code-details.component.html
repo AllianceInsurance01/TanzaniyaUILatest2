@@ -1,0 +1,594 @@
+<div class="vision-grid-item">
+<mat-tab-group  [selectedIndex]="btnNextPrev.index">
+
+<mat-tab label="PromoCode Details" class="p-1">
+    <div class="card">
+        <div class="card-header">PromoCode Master</div>
+        <div class="card-body">
+            <div class="card">
+                <div class="card-header">PromoCode Details</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Promo Code<span class="text-required" style="color:red">*</span></label>
+                                <div class="input-form-box">
+                                    <input type="text" [(ngModel)]="promoDetails.Promocode" class="input-form-control without-icon" maxlength="20">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">PromoCode Description<span class="text-required" style="color:red">*</span></label>
+                                <!--<div class="input-form-box">
+                                    <input type="text" [(ngModel)]="promoDetails.PromocodeDesc" class="input-form-control without-icon" maxlength="100">
+                                </div>-->
+                                <div class="input-form-box">
+                                  <textarea cols="60" ros="3" [(ngModel)]="promoDetails.PromocodeDesc" class="input-form-select"></textarea>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                          <div class="input-control-container">
+                              <label class="input-form-label">PromoCode Type<span class="text-required" style="color:red">*</span></label>
+                              <ng-select class="input-form-select" appendTo="body" [items]="promoList" [(ngModel)]="PromocodeType"  bindValue="value" bindLabel="text">
+                              </ng-select>
+                              <!--<div class="input-form-box">
+                                  <input type="text" [(ngModel)]="promoDetails.PromocodeType" class="input-form-control without-icon" maxlength="100">
+                              </div>-->
+                          </div>
+                      </div>
+                        <!--<div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Product</label>
+                                <ng-select class="input-form-select" appendTo="body" [(ngModel)]="productValue" [items]="productList" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>-->
+                        <!--<div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Renewal<span class="text-required">*</span></label>
+                                <div class="input-form-radio-box">
+                                    <div class="radio-toolbar">
+                                        <input id="renewal_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="renewalValue" value="YES">
+                                        <label for="renewal_Yes">Yes</label>
+                                        <input type="radio" id="renewal_No" name="originatingWarehouse" [(ngModel)]="renewalValue" value="NO">
+                                        <label for="renewal_No">No</label>
+                                        <input type="radio" id="renewal_Both" name="originatingWarehouse" [(ngModel)]="renewalValue" value="Both">
+                                        <label for="renewal_Both">Both</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <div class="col-12 col-md-4 col-lg-4" *ngIf="PromocodeType == 'D'">
+                          <div class="input-control-container">
+                              <label class="input-form-label">Calculation Type<span class="text-required" style="color:red">*</span></label>
+                              <ng-select class="input-form-select" appendTo="body" [items]="calcTypeList" [(ngModel)]="promoDetails.CalcType"  bindValue="value" bindLabel="text">
+                              </ng-select>
+                          </div>
+                      </div>
+
+
+                      <div class="col-12 col-md-4 col-lg-4" *ngIf="PromocodeType == 'S'">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Calculation Type<span class="text-required" style="color:red">*</span></label>
+                            <ng-select class="input-form-select" appendTo="body" [items]="calcTypesList" [(ngModel)]="promoDetails.CalcType"  bindValue="value" bindLabel="text">
+                            </ng-select>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 col-md-4 col-lg-4" *ngIf="PromocodeType == 'D'">
+                      <div class="input-control-container">
+                          <label class="input-form-label">Discount<span class="text-required" style="color:red">*</span></label>
+                          <ng-select class="input-form-select" appendTo="body" [items]="DiscountList" [(ngModel)]="promoDetails.DiscountCoverId"  bindValue="Code" bindLabel="CodeDesc">
+                          </ng-select>
+                      </div>
+                  </div>
+
+                        <div class="col-12 col-md-4 col-lg-4" *ngIf="promoDetails.CalcType == 'A'">
+                          <div class="input-control-container">
+                              <label class="input-form-label">Amount<span class="text-required" style="color:red">*</span></label>
+                              <div class="input-form-box">
+                                  <input type="text" [(ngModel)]="promoDetails.PromoRateOrAmt" class="input-form-control without-icon" maxlength="20">
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="col-12 col-md-4 col-lg-4" *ngIf="promoDetails.CalcType == 'P'">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Percentage<span class="text-required" style="color:red">*</span></label>
+                            <div class="input-form-box">
+                                <input type="text" [(ngModel)]="promoDetails.PromoRateOrAmt" class="input-form-control without-icon" maxlength="20">
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="col-12 col-md-4 col-lg-4">
+                          <div class="input-control-container">
+                              <label class="input-form-label">RegulatoryCode<span class="text-required" style="color:red">*</span></label>
+                              <div class="input-form-box">
+                                  <input type="text" [(ngModel)]="promoDetails.RegulatoryCode" class="input-form-control without-icon" maxlength="20">
+                              </div>
+                          </div>
+                      </div>
+
+
+                        <div class="col-12 col-md-4 col-lg-4">
+                          <div class="input-control-container">
+                              <label class="input-form-label">ToolTip<span class="text-required" style="color:red">*</span></label>
+                              <!--<div class="input-form-box">
+                                  <input type="text" [(ngModel)]="promoDetails.ToolTip" class="input-form-control without-icon" maxlength="100">
+                              </div>-->
+                              <div class="input-form-box">
+                                <textarea cols="60" ros="3" [(ngModel)]="promoDetails.ToolTip" class="input-form-select"></textarea>
+                            </div>
+                          </div>
+                      </div>
+
+
+                       <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Core App Code<span class="text-required" style="color:red">*</span></label>
+                                <div class="input-form-box">
+                                    <input type="text" [(ngModel)]="promoDetails.CoreAppCode" class="input-form-control without-icon" maxlength="20">
+                                </div>
+                            </div>
+                        </div>
+                      <div class="col-12 col-md-4 col-lg-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Maximum Discount<span class="text-required" style="color:red">*</span></label>
+                            <div class="input-form-box">
+                              <input type="text" [(ngModel)]="promoDetails.MinimumPremium" class="input-form-control without-icon" maxlength="20">
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-4 col-lg-4">
+                      <div class="input-control-container">
+                          <label class="input-form-label">IsTaxExcempted<span class="text-required" style="color:red">*</span></label>
+                          <div class="input-form-radio-box">
+                              <div class="radio-toolbar">
+                                  <input id="orginwarehouse_TaxYes" type="radio" name="TaxValue" [(ngModel)]="promoDetails.IsTaxExcempted" value="Y">
+                                  <label for="orginwarehouse_TaxYes">Yes</label>
+                                  <input id="orginwarehouse_TaxNo" type="radio" name="TaxValue" [(ngModel)]="promoDetails.IsTaxExcempted" value="N">
+                                  <label for="orginwarehouse_TaxNo">No</label>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="col-12 col-md-4 col-lg-4" *ngIf="this.promoDetails.IsTaxExcempted=='Y'">
+                    <div class="input-control-container">
+                        <label class="input-form-label">TaxExcemptionReference<span class="text-required" style="color:red">*</span></label>
+                        <div class="input-form-box">
+                          <input type="text" [(ngModel)]="promoDetails.TaxExcemptionReference" class="input-form-control without-icon" maxlength="20">
+                      </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 col-lg-4" *ngIf="this.promoDetails.IsTaxExcempted=='Y'">
+                  <div class="input-control-container">
+                      <label class="input-form-label">TaxExcemptionType<span class="text-required" style="color:red">*</span></label>
+                      <!--<div class="input-form-box">
+                        <input type="text" [(ngModel)]="promoDetails.TaxExcemptionType" class="input-form-control without-icon" maxlength="20">
+                    </div>-->
+                    <ng-select class="input-form-select" [(ngModel)]="promoDetails.TaxExcemptionType" appendTo="body" [items]="taxTypeList" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                  </div>
+              </div>
+                        <!--<div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Type (B2B/B2C)</label>
+                                <ng-select class="input-form-select" appendTo="body" [items]="typeList" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+            <!--<div class="card">
+                <div class="card-header">Vehicle Details</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Division</label>
+                                <ng-select class="input-form-select" appendTo="body" [items]="typeList" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Customer<span class="text-required">*</span></label>
+                                <div class="input-form-box">
+                                    <input type="text" class="input-form-control without-icon" maxlength="20">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Policy Type (TPL/Comprehensive)</label>
+                                <ng-select class="input-form-select" appendTo="body" [items]="typeList" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4" *ngIf="productValue=='Motor'">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Vehicle Category</label>
+                                <ng-select class="input-form-select" appendTo="body" [items]="typeList" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4" *ngIf="productValue=='Motor'">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Vehicle Body Type</label>
+                                <ng-select class="input-form-select" appendTo="body" [items]="typeList" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <div class="card">
+                <div class="card-header">Discount Details</div>
+                <div class="card-body">
+                    <div class="row">
+                        <!--<div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Promo Type</label>
+                                <ng-select class="input-form-select" appendTo="body" [(ngModel)]="promoTypeValue" [items]="promoList" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>-->
+                        <!--<div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Period From<span class="text-required">*</span></label>
+                                <div class="input-form-box">
+                                    <input type="date" [(ngModel)]="promoDetails.PeriodFrom" class="input-form-control without-icon">
+                                </div>
+                            </div>
+                        </div>-->
+                        <div class="col-12 col-md-4 col-lg-4" >
+                          <div class="input-control-container">
+                            <label class="input-form-label">Period From<span class="text-required" style="color:red">*</span></label>
+                              <mat-form-field appearance="fill">
+                                <!--<label class="input-form-label">Period From<span class="text-required">*</span></label>-->
+                                  <mat-label>Period From</mat-label>
+                                  <input matInput [matDatepicker]="picker" [min]="minDate"  [(ngModel)]="promoDetails.PeriodFrom">
+                                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                  <mat-datepicker #picker></mat-datepicker>
+                              </mat-form-field>
+                          </div>
+                      </div>
+                        <!--<div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Period To<span class="text-required">*</span></label>
+                                <div class="input-form-box">
+                                    <input type="date" [(ngModel)]="promoDetails.PeriodTo" class="input-form-control without-icon">
+                                </div>
+                            </div>
+                        </div>-->
+                        <div class="col-12 col-md-4 col-lg-4" >
+                          <div class="input-control-container">
+                            <label class="input-form-label">Period To<span class="text-required" style="color:red">*</span></label>
+                              <mat-form-field appearance="fill">
+                                <!--<label class="input-form-label">Period To<span class="text-required">*</span></label>-->
+                                  <mat-label>Period To</mat-label>
+                                  <input matInput [matDatepicker]="picker1" [min]="minDate"  [(ngModel)]="promoDetails.PeriodTo">
+                                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                  <mat-datepicker #picker1></mat-datepicker>
+                              </mat-form-field>
+                          </div>
+                      </div>
+
+                        <div class="col-12 col-md-3 col-lg-3 offset-1">
+                          <div class="input-control-container">
+                              <label class="input-form-label">Status<span class="text-required" style="color:red">*</span></label>
+                              <div class="input-form-radio-box">
+                                  <div class="radio-toolbar">
+                                      <input id="orginwarehouse_Yes" type="radio" name="statusValue" [(ngModel)]="promoDetails.Status" value="Y">
+                                      <label for="orginwarehouse_Yes">Active</label>
+                                      <input type="radio" id="orginwarehouse_No" name="statusValue" [(ngModel)]="promoDetails.Status" value="N">
+                                      <label for="orginwarehouse_No">DeActive</label>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+
+
+                      <div class="col-12 col-md-4 col-lg-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Remarks<span class="text-required" style="color:red">*</span></label>
+                            <div class="input-form-box">
+                                <textarea cols="120" rows="2" [(ngModel)]="promoDetails.Remarks"  class="input-form-control without-icon" maxlength="200"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                        <!--<div class="col-12 col-md-4 col-lg-4" *ngIf="promoTypeValue=='Discount'">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Discount<span class="text-required">*</span></label>
+                                <div class="input-form-box">
+                                    <input type="text" class="input-form-control without-icon" maxlength="20">
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+
+
+                <!--<div class="col-12 col-md-4 col-lg-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <input type="date" class="input-form-control without-icon">
+                        </div>
+                    </div>
+                </div>-->
+
+
+            <div class="text-center mt-2">
+                <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>&nbsp;
+                <button *ngIf="PromocodeType == 'S'" class="btn btn-primary ml-2" (click)="onSave()">Next</button>
+                <!--<button class="btn btn-primary" (click)="onGetCovers()">View Covers</button>&nbsp;-->
+                <!--<button class="btn btn-primary" *ngIf="promoTypeValue!='Discount'" (click)="onGetDiscount()">View Discount</button>-->
+                <button *ngIf="PromocodeType == 'D'" class="btn btn-success ml-2" (click)="onSave()">Submit</button>
+            </div>
+        </div>
+    </div>
+</mat-tab>
+
+<mat-tab label="PromoCode Scheme" *ngIf="open">
+
+    <div class="card-body">
+          
+       <div class="row">
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="input-control-container">
+              <label class="input-form-label">Factor Type<span class="text-required" style="color:red">*</span></label>
+              <div class="input-form-box">
+                  <ng-select class="input-form-select" style="padding:0px !important" appendTo="body" [items]="factorList" [(ngModel)]="FactorTypeId" (change)="onCoverFactorTypeChange()" bindValue="Code" bindLabel="CodeDesc">
+                  </ng-select>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-12 col-md-4 col-lg-4">
+        <div class="input-control-container">
+            <label class="input-form-label">Cover Based On <span class="text-required">*</span></label>
+            <div class="input-form-box">
+                <ng-select class="input-form-select"  style="padding:0px !important" appendTo="body" [items]="basedOnColumnList" [(ngModel)]="basedOnColumnValue" bindValue="Code" bindLabel="CodeDesc">
+                </ng-select>
+            </div>
+        </div>
+    </div>
+
+        <div class="col-4 col-md-4 col-lg-4 mt-5">
+            <button class="btn btn-primary" style="margin-left:10px;" (click)="onAddFactorList()">Add New</button>
+        </div>
+  
+       </div>
+   
+
+    <div class="row mt-5">
+      
+        <div>
+           
+        <div class="col-md-12 col-lg-12 customRow">
+            <table class="table table-headerRow">
+                <tr>
+                    <th class="tbl-header" *ngIf="coverRangeFirst">{{rangeFirstName}}&nbsp;
+                        <!--<button type="button" *ngIf="rangeApiurl" [nbPopover]="discountCard"
+                            (click)="onCheckFieldDetails(rangeApiurl)">
+                        </button>-->
+                    </th>
+                    <th class="tbl-header" *ngIf="coverRangeFirst">{{rangeSecondName}}&nbsp;
+                        <!--<button type="button" *ngIf="rangeApiurl" [nbPopover]="discountCard"
+                        (click)="onCheckFieldDetails(rangeApiurl)">
+                        </button>-->
+                    </th>
+                    <th class="tbl-header" *ngIf="coverRangeSecond">{{rangeThirdName}}&nbsp;
+                        <!--<button type="button" *ngIf="rangeApiurl1" [nbPopover]="discountCard"
+                        (click)="onCheckFieldDetails(rangeApiurl1)">
+                        </button>-->
+                    </th>
+                    <th class="tbl-header" *ngIf="coverRangeSecond">{{rangeFourthName}}&nbsp;&nbsp;
+                        <!--<button type="button" *ngIf="rangeApiurl1" [nbPopover]="discountCard"
+                        (click)="onCheckFieldDetails(rangeApiurl1)">
+                        </button>-->
+                    </th>
+                    <th class="tbl-header" *ngIf="coverRangeThird">{{rangeFifthName}}&nbsp;
+                        <!--<button type="button" *ngIf="rangeApiurl2" [nbPopover]="discountCard"
+                        (click)="onCheckFieldDetails(rangeApiurl2)">
+                        </button>-->
+                    </th>
+                    <th class="tbl-header" *ngIf="coverRangeThird">{{rangeSixthName}}&nbsp;
+                        <!--<button type="button" *ngIf="rangeApiurl2" [nbPopover]="discountCard"
+                        (click)="onCheckFieldDetails(rangeApiurl2)">
+                        </button>-->
+                    </th>
+                    <th class="tbl-header" *ngIf="coverRangeFourth">{{rangeSeventhName}}&nbsp;
+                        <!--<button type="button" *ngIf="rangeApiurl3" [nbPopover]="discountCard"
+                        (click)="onCheckFieldDetails(rangeApiurl3)">
+                        </button>-->
+                    </th>
+                    <th class="tbl-header" *ngIf="coverRangeFourth">{{rangeEigthName}}&nbsp;
+                        <!--<button type="button" *ngIf="rangeApiurl3"  [nbPopover]="discountCard"
+                        (click)="onCheckFieldDetails(rangeApiurl3)">
+                        </button>-->
+                    </th>
+                    <th class="tbl-header" *ngIf="coverDiscreteFirst">{{discreteFirstName}}&nbsp;
+                        <!--<button type="button" *ngIf="rangeApiurl4" [nbPopover]="discountCard"
+                        (click)="onCheckFieldDetails(rangeApiurl4)">
+                        </button>-->
+                    </th>
+                    <th class="tbl-header" *ngIf="coverDiscreteSecond">{{discreteSecondName}}&nbsp;
+                        <!--<button type="button" *ngIf="rangeApiurl5" [nbPopover]="discountCard"
+                        (click)="onCheckFieldDetails(rangeApiurl5)">
+                        </button>-->
+                    </th>
+                    <th class="tbl-header" *ngIf="coverDiscreteThird">{{discreteThirdName}}&nbsp;
+                        <!--<button type="button" *ngIf="rangeApiurl6" [nbPopover]="discountCard"
+                        (click)="onCheckFieldDetails(rangeApiurl6)">
+                        </button>-->
+                    </th>
+                    <th class="tbl-header" *ngIf="coverDiscreteFourth">{{discreteFourthName}}&nbsp;
+                        <!--<button type="button" *ngIf="rangeApiurl7" [nbPopover]="discountCard"
+                        (click)="onCheckFieldDetails(rangeApiurl7)">
+                        </button>-->
+                    </th>
+                    <th class="tbl-header">CalculationType</th>
+                    <th class="tbl-header">Rate</th>
+                    <th class="tbl-header">Min Premium</th>
+                    <th class="tbl-header">Regulatory Code</th>
+                    <th class="tbl-header">Status</th>
+                    <th class="tbl-header">Action</th>
+                    <!-- <th class="tbl-header">Delete</th> -->
+                </tr>
+                <tr *ngFor="let row of factorTypeList; let i=index">
+
+                    <td class="tbl-content" *ngIf="coverRangeFirst">
+                        <div class="input-control-container">
+                            <input type="text" [(ngModel)]="row.Param1" style="width: 120px;">
+
+                        </div>
+                    </td>
+                    <td class="tbl-content" *ngIf="coverRangeFirst">
+                        <div class="input-control-container">
+                            <input type="text" [(ngModel)]="row.Param2" style="width: 120px;">
+                        </div>
+                    </td>
+                    <td class="tbl-content" *ngIf="coverRangeSecond">
+                        <div class="input-control-container">
+                            <input type="text" [(ngModel)]="row.Param3" style="width: 120px;">
+                        </div>
+                    </td>
+                    <td class="tbl-content" *ngIf="coverRangeSecond">
+                        <div class="input-control-container">
+                            <input type="text" [(ngModel)]="row.Param4" style="width: 120px;">
+                        </div>
+                    </td>
+                    <td class="tbl-content" *ngIf="coverRangeThird">
+                        <div class="input-control-container">
+                            <input type="text" [(ngModel)]="row.Param5" style="width: 120px;">
+                        </div>
+                    </td>
+                    <td class="tbl-content" *ngIf="coverRangeThird">
+                        <div class="input-control-container">
+                            <input type="text" [(ngModel)]="row.Param6" style="width: 120px;">
+                        </div>
+                    </td>
+                    <td class="tbl-content" *ngIf="coverRangeFourth">
+                        <div class="input-control-container">
+                            <input type="text" [(ngModel)]="row.Param7" style="width: 120px;">
+                        </div>
+                    </td>
+                    <td class="tbl-content" *ngIf="coverRangeFourth">
+                        <div class="input-control-container">
+                            <input type="text" [(ngModel)]="row.Param8" style="width: 120px;">
+                        </div>
+                    </td>
+                    <td class="tbl-content" *ngIf="coverDiscreteFirst">
+                        <div class="input-control-container">
+                            <input type="text" [(ngModel)]="row.Param9" style="width: 120px;">
+                        </div>
+                    </td>
+                    <td class="tbl-content" *ngIf="coverDiscreteSecond">
+                        <div class="input-control-container">
+                            <input type="text" [(ngModel)]="row.Param10" style="width: 120px;">
+                        </div>
+                    </td>
+                    <td class="tbl-content" *ngIf="coverDiscreteThird">
+                        <div class="input-control-container">
+                            <input type="text" [(ngModel)]="row.Param11" style="width: 120px;">
+                        </div>
+                    </td>
+                    <td class="tbl-content" *ngIf="coverDiscreteFourth">
+                        <div class="input-control-container">
+                            <input type="text" [(ngModel)]="row.Param12" style="width: 120px;">
+                        </div>
+                    </td>
+                    <td class="tbl-content">
+                        <ng-select class="input-form-select" appendTo="body" [items]="calculationTypes2" [(ngModel)]="row.CalcType" bindValue="value" bindLabel="text">
+                        </ng-select>
+                    </td>
+                    <td class="tbl-content">
+                        <div class="input-control-container">
+                            <input type="text" [(ngModel)]="row.Rate" style="width: 120px;">
+                        </div>
+                    </td>
+                    <td class="tbl-content">
+                        <div class="input-control-container">
+                            <input type="text" [(ngModel)]="row.MinimumPremium" style="width: 120px;">
+                        </div>
+                    </td>
+                    <td class="tbl-content">
+                        <div class="input-control-container">
+                            <input type="text" [(ngModel)]="row.RegulatoryCode" style="width: 120px;">
+                        </div>
+                    </td>
+                    <td class="tbl-content">
+                        <div class="input-form-radio-box">
+                            <div class="radio-toolbar" style="width: 300px;">
+                                <input [id]="'orginwarehouse_Pending'+i" type="radio" [name]="'originatingWarehouse'+i" [(ngModel)]="row.Status" value="P">
+                                <label [for]="'orginwarehouse_Pending'+i" class="customLabel">Pending</label>
+                                <input [id]="'orginwarehouse_Yes'+i" type="radio" [name]="'originatingWarehouse'+i" [(ngModel)]="row.Status" value="Y">
+                                <label [for]="'orginwarehouse_Yes'+i" class="customLabel">Active</label>
+                                <input type="radio" [id]="'orginwarehouse_No'+i" [name]="'originatingWarehouse'+i" [(ngModel)]="row.Status" value="N">
+                                <label [for]="'orginwarehouse_No'+i" class="customLabel">DeActive</label>
+                                <input type="radio" [id]="'orginwarehouse_Referral'+i" [name]="'originatingWarehouse'+i" [(ngModel)]="row.Status" value="R">
+                                <label [for]="'orginwarehouse_Referral'+i" class="customLabel">Referral</label>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="tbl-content">
+                        <ng-container *ngIf="i!=0">
+                            <a mat-raised-button class="mx-1" data-toggle="tooltip" id="remove" data-placement="top" title="Delete" (click)="onDeleteRow(i)"><i
+                                class="fa fa-trash"></i></a>
+                        </ng-container>
+                        <ng-container *ngIf="i==0">
+                            N/A
+                        </ng-container>
+                      </td>
+                    <!-- <td class="tbl-content">
+                    <button class="btn btn-danger btn-sm" (click)="onDeleteFactorRow(i)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td> -->
+                </tr>
+            </table>
+            <!--<mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 15]">
+            </mat-paginator>-->
+
+            <!--<pagination-controls (pageChange)="gty((page = $event))"></pagination-controls>-->
+
+            <!--<pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>-->
+
+            <!-- <app-page> </app-page> -->
+        </div>
+        </div>
+
+
+      </div>
+<!--<div class="d-flex justify-content-end" *ngIf="FactorTypeId">
+        <pagination-controls (pageChange)="p=$event"></pagination-controls>
+      </div>-->
+
+
+      <div class="text-center mt-2">
+        <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>&nbsp;
+        <!--<button class="btn btn-primary" (click)="onGetCovers()">View Covers</button>&nbsp;-->
+        <!--<button class="btn btn-primary" *ngIf="promoTypeValue!='Discount'" (click)="onGetDiscount()">View Discount</button>-->
+        <button class="btn btn-success ml-2" (click)="insertScheme()">Submit</button>
+    </div>
+   </div>
+
+</mat-tab>
+
+</mat-tab-group>
+</div>
+
+
+

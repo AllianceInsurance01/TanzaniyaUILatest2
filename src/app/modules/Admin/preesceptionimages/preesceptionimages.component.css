@@ -1,0 +1,197 @@
+
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-weight: 700!important;
+    font-family: var(--our-font-family-new)!important;
+    width: 100%;
+    border: 2px solid #eaecf1;
+    border-radius: 0.7rem;
+    margin: 8px 0;
+    outline: none;
+    padding: 8px;
+    box-sizing: border-box;
+    transition: all .3s;
+    background: rgb(255,255,255);
+    box-shadow: 1px 1px 1px #1f26875e;
+    backdrop-filter: blur(18.5px);
+}
+.container >*{
+    flex: 1 1 300px;
+}
+.imagecard{
+    max-width: 350px;
+    margin:6px;
+}
+.card-body{
+    padding-bottom: 0rem !important;
+}
+.card-text{
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700!important;
+    font-family: var(--our-font-family-new)!important;
+}
+.card-text .datavalue{
+    font-weight: 700!important;
+    font-family: var(--our-font-family-new)!important;
+}
+.datavalue{
+    color: #333b85;
+    font-weight: 700!important;
+    font-family: var(--our-font-family-new)!important;
+}
+.datastart{
+    color: black;
+    font-weight: 700!important;
+    font-family: var(--our-font-family-new)!important;
+}
+#accordionExample{
+    position: relative;
+    left: 0.05rem;
+}
+.accordion-body{
+    padding-bottom: 0rem;
+}
+.ngx-pagination .current {
+    padding: 0.1875rem 0.625rem;
+    background: #2199e8;
+    color: #fefefe;
+    cursor: default;
+    border-radius: 15px;
+}
+.mat-mdc-form-field {
+    display: inline-flex;
+    flex-direction: column;
+    min-width: 0;
+    text-align: left;
+    width: 15rem !important;
+}
+.columndata{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 8px !important;
+    font-weight: 700!important;
+    font-family: var(--our-font-family-new)!important;
+    width: 20%;
+    border: 1px solid #eaecf1;
+    border-radius: 0.7rem;
+    margin: 8px 0;
+    outline: none;
+    padding: 8px;
+    box-sizing: border-box;
+    transition: all .3s;
+    background: rgb(255,255,255);
+    box-shadow: 1px 1px 1px #1f26875e;
+    backdrop-filter: blur(18.5px);
+}
+select{
+    border: none;
+    padding: 5px;
+}
+.custom-btn {
+    width: 130px;
+    height: 40px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+      7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+    outline: none;
+  }
+  .btn-3 {
+    background: rgb(0, 172, 238);
+    background: linear-gradient(0deg,rgb(55 81 126) 0%,rgb(71 178 228) 100%);
+    width: 71px;
+    height: 30px;
+    position: relative;
+    line-height: 32px;
+    padding: 0;
+    border: none;
+    top: .7rem;
+    left: 2rem;
+    font-family: var(--our-font-family-new)!important;
+  }
+  .btn-3 span {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .btn-3:before,
+  .btn-3:after {
+    position: absolute;
+    content: '';
+    right: 0;
+    top: 0;
+    background: rgba(2, 126, 251, 1);
+    transition: all 0.3s ease;
+  }
+  .btn-3:before {
+    height: 0%;
+    width: 2px;
+  }
+  .btn-3:after {
+    width: 0%;
+    height: 2px;
+  }
+  .btn-3:hover {
+    background: transparent;
+    box-shadow: none;
+  }
+  .btn-3:hover:before {
+    height: 100%;
+  }
+  .btn-3:hover:after {
+    width: 100%;
+  }
+  .btn-3 span:hover {
+    color: rgba(2, 126, 251, 1);
+  }
+  .btn-3 span:before,
+  .btn-3 span:after {
+    position: absolute;
+    content: '';
+    left: 0;
+    bottom: 0;
+    background: rgba(2, 126, 251, 1);
+    transition: all 0.3s ease;
+  }
+  .btn-3 span:before {
+    width: 2px;
+    height: 0%;
+  }
+  .btn-3 span:after {
+    width: 0%;
+    height: 2px;
+  }
+  .btn-3 span:hover:before {
+    height: 100%;
+  }
+  .btn-3 span:hover:after {
+    width: 100%;
+  }
+  .mdc-text-field {
+    padding: 0 11px;
+    position: relative;
+    box-sizing: border-box;
+    will-change: opacity,transform,color;
+    width: 7rem !important;
+}
+.mat-mdc-text-field-wrapper {
+    width: 39% !important;
+    border: none;
+}
+.mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-text-field__input {
+  margin-bottom: 62px!important;
+  font-size: 1.1rem !important;
+  color: #252525!important;
+}

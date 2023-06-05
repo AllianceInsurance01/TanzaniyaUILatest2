@@ -1,0 +1,147 @@
+<div class="card">
+    <div class="card-header">Global Configuration</div>
+    <div class="card p-1">
+        <div class="vision-grid vision-grid-column-2">
+            <div class="vision-grid-item">
+                <div class="radio-toolbar menu-bar">
+                    <!-- <input id="menu5" type="radio" name="menu" value="Company" (click)="onRedirect('Company')" [(ngModel)]="activeMenu">
+                    <label for="menu5">Company Details</label> -->
+                    <!-- <input id="menu6" type="radio" name="menu" value="Branch" [(ngModel)]="activeMenu" (click)="activeMenu='Branch';includeBranch=false">
+                    <label for="menu6">Branch</label> -->
+                    <input id="menu7" type="radio" name="menu" value="Product" [(ngModel)]="activeMenu" (click)="onRedirect('Product')">
+                    <label for="menu7">Product</label>
+                    <input type="radio" id="menu1" name="menu" value="Section" (click)="onRedirect('Section')" [(ngModel)]="activeMenu">
+                    <label for="menu1">Section</label>
+                    <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+                    <label for="menu2">Cover</label>
+                    <!-- <input type="radio" id="menu3" name="menu" value="SubCover" (click)="onRedirect('SubCover')" [(ngModel)]="activeMenu">
+                    <label for="menu3">SubCover</label> -->
+                    <input type="radio" id="menu3" name="menu" value="Rating" (click)="onRedirect('Rating')" [(ngModel)]="activeMenu">
+                    <label for="menu4">Rating Fields</label>
+                    <input type="radio" id="menu4" name="menu" value="Referral" (click)="onRedirect('Referral')" [(ngModel)]="activeMenu">
+                    <label for="menu4">Referral</label>
+                    <input type="radio" id="menu5" name="menu" value="Document" (click)="onRedirect('Document')" [(ngModel)]="activeMenu">
+                    <label for="menu5">Document</label>
+                </div>
+            </div>
+            <div class="vision-grid-item">
+                <div class="card">
+                    <div class="card-header">Rating Field Details</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Rating Field Name<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" [(ngModel)]="ratingDetails.RatingField" class="input-form-control without-icon">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Rating Field Description</label>
+                                    <div class="input-form-box">
+                                        <textarea cols="60" [(ngModel)]="ratingDetails.RatingDesc" class="input-form-control without-icon"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Product</label>
+                                    <ng-select class="input-form-select" [items]="productList" [(ngModel)]="productValue" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Input Table</label>
+                                    <div class="input-form-box">
+                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="ratingDetails.InputTable" (change)="onTableChange()" [items]="tableList" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Input Column</label>
+                                    <div class="input-form-box">
+                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="ratingDetails.InputColumn" [items]="columnList" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Is it Dropdown?</label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="dropdown_Yes" type="radio" name="dropdownYN" [(ngModel)]="ratingDetails.MasterYn" value="Y">
+                                            <label for="dropdown_Yes">Yes</label>
+                                            <input type="radio" id="dropdown_No" name="dropdownYN" [(ngModel)]="ratingDetails.MasterYn" value="N">
+                                            <label for="dropdown_No">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8 col-lg-8" *ngIf="ratingDetails.MasterYn=='Y'">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Dropdown Api Url</label>
+                                    <div class="input-form-box">
+                                        <input type="text" [(ngModel)]="ratingDetails.ApiUrl" class="input-form-control without-icon">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>End Date</mat-label>
+                                        <input matInput [matDatepicker]="picker2" [min]="ratingDetails.EffectiveDateStart" [(ngModel)]="ratingDetails.EffectiveDateEnd">
+                                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker2></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div> -->
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Remarks</label>
+                                    <div class="input-form-box">
+                                        <textarea cols="60" [(ngModel)]="ratingDetails.Remarks" ros="3" class="input-form-select"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Effective Date<span class="text-required">*</span></mat-label>
+                                        <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="onStartDateChange()" [(ngModel)]="ratingDetails.EffectiveDateStart">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-5 col-lg-5">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Status</label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="ratingDetails.Status" value="P">
+                                            <label for="orginwarehouse_Pending">Pending</label>
+                                            <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="ratingDetails.Status" value="Y">
+                                            <label for="orginwarehouse_Yes">Active</label>
+                                            <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="ratingDetails.Status" value="N">
+                                            <label for="orginwarehouse_No">DeActive</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-1 mb-1">
+                    <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>
+                    <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,408 @@
+<div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="maan-grid customer-grid maan-grid-column-1">
+                <div class="maan-grid-item" *ngIf="endorsementSection">
+                    <div class="maan-grid-item-title">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="mx-1">
+                                        <i class="fas fa-user mx-1"></i>
+                                    </span>
+                                <span class="spancommon">Endorsement Details</span>
+                            </div>
+                            <div>
+                                <ng-container>
+                                    <!-- RefNo - {{customerDetails?.CustomerReferenceNo}} -->
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="maan-grid-item-body">
+                        <div class="row mt-1">
+                            <div class="col-12 col-md-3 ">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Original Policy No</label>
+                                    <div class="input-form-radio-box">
+                                        <span class="spancommon span_font_size">{{orgPolicyNo}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 ">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Endorsement Policy No</label>
+                                    <div class="input-form-radio-box">
+                                        <span class="spancommon span_font_size">{{endorsePolicyNo}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 ">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Endorsement Category</label>
+                                    <div class="input-form-radio-box">
+                                        <span class="spancommon span_font_size">{{endorseCategory}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Endorsement Name</label>
+                                    <div class="input-form-radio-box">
+                                        <span class="spancommon span_font_size">{{endorsementName}}</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="maan-grid-item">
+                    <div class="maan-grid-item-title">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="mx-1">
+                                    <i class="fas fa-user mx-1"></i>
+                                </span> <span class="spancommon">Customer Details</span>
+                            </div>
+                            <div>
+                                <button class="maan-btn maan-btn-blue spancommon" (click)="onchange()" style="letter-spacing:1px"><i class="fas fa-user mx-1 customer"></i>Change Customer</button>
+                                <button class="maan-btn maan-btn-red edit" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="maan-grid-item-body" style="background: white;">
+                        <div class="row mt-1">
+                            <div class="col-12 col-md-2">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Client Name</label>
+                                    <div class="input-form-radio-box">
+                                        <span class="spancommon span_font_size">{{title}} &nbsp; {{clientName}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-1"></div>
+                            <div class="col-12 col-md-2">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">DateofBirth/RegDate</label>
+                                    <div class="input-form-radio-box">
+                                        <span class="spancommon span_font_size">{{dateOfBirth}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-1"></div>
+                            <div class="col-12 col-md-2">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">EmailId</label>
+                                    <div class="input-form-radio-box">
+                                        <span class="spancommon span_font_size">{{emailId}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">MobileNo</label>
+                                    <div class="input-form-radio-box">
+                                        <span class="spancommon span_font_size">{{mobileNo}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">ID Number</label>
+                                    <div class="input-form-radio-box">
+                                        <span class="spancommon span_font_size">{{idNumber}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="maan-grid customer-grid maan-grid-column-1">
+                <div class="maan-grid-item">
+                    <div class="maan-grid-item-title">
+                        <span class="mx-1">
+                            <i class="fas fa-book mx-1"></i>
+                        </span> <span class="spancommon">Period of Insurance</span>
+                    </div>
+                    <div class="maan-grid-item-body">
+                        <div class="row">
+                            <div class="col-12 col-md-4" *ngIf="issuerSection">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Division</label><span class="text-danger">*</span>
+                                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="branchValue" [disabled]="endorsementSection" [items]="branchList" (change)="onBranchValueChange()" bindValue="BranchCode" bindLabel="BranchName">
+                                    </ng-select>
+                                    <div class="input-form-error" *ngIf="branchValueError">
+                                        <div class="error-text text-danger">
+                                            Please Select Division
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4" *ngIf="issuerSection">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Customer Code</label><span class="text-danger">*</span>
+                                    <div class="input-form-box">
+                                        <input id="CustomerInput" class="input-form-control without-icon" [disabled]="endorsementSection" [(ngModel)]="customerCode" type="text" (keyup)="onGetCustomerList('change',$event.target.value)" autocomplete="off" placeholder="Search here" data-toggle="dropdown" /><br>
+                                        <ul class="dropdown-menu dropdown-list-style CustomerInput" [ngClass]="{dropdownDisplay: showCustomerList, dropdownNotDisplay: !showCustomerList}">
+                                            <li *ngFor="let item of customerList" (click)="setCustomerValue(item.Code, item.Name)">
+                                                {{item.Code}} - {{ item.Name }}
+                                            </li>
+                                            <div class="text-center" *ngIf="customerList.length == 0">
+                                                <p>Enter any code to Search...</p>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                    <div class="input-form-error" *ngIf="customerCodeError">
+                                        <div class="error-text text-danger">
+                                            Please Select Valid Customer Code
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="col-12 col-md-4" *ngIf="issuerSection">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Customer Name</label><span class="text-danger">*</span>
+                                    <div class="input-form-box">
+                                        <input id="CustomerInput" disabled class="input-form-control without-icon" [(ngModel)]="customerName" type="text" /><br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4" *ngIf="issuerSection">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Source</label><span class="text-danger">*</span>
+                                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="Code" [items]="productList" [disabled]="endorsementSection" bindValue="Code" bindLabel="CodeDesc" (change)="onSourceTypeChange('change')">
+                                    </ng-select>
+                                    <div class="input-form-error" *ngIf="sourceCodeError">
+                                        <div class="error-text text-danger">
+                                            Please Select Source
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4" *ngIf="issuerSection">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Source Code</label><span class="text-danger">*</span>
+                                    <ng-container *ngIf="Code!='Broker'">
+                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerCode" [disabled]="endorsementSection" [items]="brokerList" (change)="onBrokerChange()" bindValue="Code" bindLabel="Name">
+                                        </ng-select>
+                                    </ng-container>
+                                    <ng-container *ngIf="Code=='Broker'">
+                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerCode" [disabled]="endorsementSection" (change)="onBrokerChange()">
+                                            <ng-option *ngFor="let item of brokerList" [value]="item.Code">{{item.Name}}</ng-option>
+                                        </ng-select>
+                                    </ng-container>
+
+                                    <div class="input-form-error" *ngIf="brokerCodeError">
+                                        <div class="error-text text-danger">
+                                            Please Select Source Code
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4" *ngIf="issuerSection && brokerCode && (Code=='Broker' || Code=='Agent')">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Broker Branch</label><span class="text-danger">*</span>
+                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerBranchCode" [disabled]="endorsementSection" [items]="brokerBranchList" (change)="onBrokerBranchChange()" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-1">
+                            <div class="col-12 col-md-4 col-lg-4" *ngIf="productId=='4'">
+                                <label class="input-form-label spancommon span_font_size">Departure Date<span class="text-danger">*</span></label>
+                                <mat-form-field appearance="fill">
+                                    <!-- <mat-label>Departure Date<span class="text-danger">*</span></mat-label> -->
+                                    <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" (dateChange)="onStartDateChange()" [(ngModel)]="travelStartDate" [ngModelOptions]="{standalone: true}">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                    <div class="input-form-error" *ngIf="travelStartError">
+                                        <div class="error-text  text-danger">
+                                            Please Enter Departure Date
+                                        </div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4" *ngIf="productId=='4'">
+                                <label class="input-form-label spancommon span_font_size">Arrival Date<span class="text-danger">*</span></label>
+                                <mat-form-field appearance="fill">
+                                    <!-- <mat-label>Arrival Date<span class="text-danger">*</span></mat-label> -->
+                                    <input matInput [matDatepicker]="picker2" [min]="endMinDate" (dateChange)="onChangeEndDate()" [(ngModel)]="travelEndDate" [ngModelOptions]="{standalone: true}">
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                    <div class="input-form-error" *ngIf="travelEndError">
+                                        <div class="error-text  text-danger">
+                                            Please Enter Arrival Date
+                                        </div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4" *ngIf="productId!='4'">
+                                <label class="input-form-label spancommon span_font_size">Policy Start Date<span class="text-danger">*</span></label>
+                                <ng-container >
+                                    <mat-form-field appearance="fill">
+                                        <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
+                                        <input matInput [matDatepicker]="picker" [min]="minDate" [disabled]="endorsementSection && !enablePolicyStart" [max]="maxDate" (dateChange)="onStartDateChange()" [(ngModel)]="policyStartDate">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </ng-container>
+                                
+                                <div class="input-form-error" *ngIf="policyStartError || policyPassDate" style="position: relative;bottom: 1.4rem;">
+                                    <div class="error-text text-danger" *ngIf="policyStartError">
+                                        <span class="spancommon span_font_size"> Please Enter Policy Start Date</span>
+                                    </div>
+                                    <div class="error-text text-danger" *ngIf="policyPassDate">
+                                        <span class="spancommon span_font_size">Policy Start Date Must Be Future Date</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4" *ngIf="productId!='4'">
+                                <label class="input-form-label spancommon span_font_size">Policy End Date<span class="text-danger">*</span></label>
+                                <mat-form-field appearance="fill">
+                                    <!-- <mat-label>Policy End Date<span class="text-danger">*</span></mat-label> -->
+                                    <input matInput [matDatepicker]="picker2" [min]="endMinDate" [disabled]="endorsementSection && !enablePolicyEnd" (dateChange)="onChangeEndDate()" [(ngModel)]="policyEndDate">
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                </mat-form-field>
+                                <div class="input-form-error" *ngIf="policyEndError">
+                                    <div class="error-text  text-danger">
+                                        <span class="spancommon span_font_size">Please Enter Policy End Date</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Number Of Days<span class="text-danger">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" [(ngModel)]="noOfDays" disabled class="input-form-control without-icon">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4" [ngStyle]="{'position':'realtive','bottom':'0.2rem'}">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Currency</label><span class="text-danger">*</span>
+                                    <ng-select class="input-form-select" appendTo="body" [disabled]="endorsementSection && !enableCurrency" [(ngModel)]="currencyCode" [items]="currencyList" (change)="onCurrencyChange()" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                    <div class="input-form-error" *ngIf="currencyError">
+                                        <div class="error-text">
+                                            Please Select Currency
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4" *ngIf="productId!='4'">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Exchange Rate <span *ngIf="editSection">({{minCurrencyRate | number : '1.2-2'}} ~ {{maxCurrencyRate | number : '1.2-2'}})</span></label><span class="text-danger">*</span>
+                                    <div class="input-form-box">
+                                        <input type="text" (change)="onExchangeRateChange()" [disabled]="endorsementSection" [(ngModel)]="exchangeRate" class="input-form-control without-icon">
+                                    </div>
+                                    <div class="input-form-error" *ngIf="exchangeMinError || exchangeMaxError">
+                                        <div class="error-text" *ngIf="exchangeMinError">
+                                            Please Enter Exchange Rate Less than {{maxCurrencyRate}}
+                                        </div>
+                                        <div class="error-text" *ngIf="exchangeMaxError">
+                                            Please Enter Exchange Rate More than {{minCurrencyRate}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-12 col-md-4 col-lg-4 col-xl-4" *ngIf="PackageYn=='N' && productId=='3'">
+                                <div class="input-control-container" style="position: relative;bottom: 0.2rem;">
+                                    <label class="input-form-label spancommon span_font_size">Insurance Type</label><span class="text-danger">*</span>
+                                    <ng-select class="input-form-select insurenceType" appendTo="body" [items]="premiumList" [(ngModel)]="InsuranceType" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4 col-xl-4" *ngIf="PackageYn=='Y' && productId=='3'">
+                                <div class="input-control-container" style="position: relative;bottom: 0.2rem;">
+                                    <label class="input-form-label spancommon span_font_size">Insurance Type</label><span class="text-danger">*</span>
+                                    <ng-select class="input-form-select insurenceType" appendTo="body" [clearSearchOnAdd]="true" [closeOnSelect]="false" [multiple]="true" [(ngModel)]="InsuranceType" [items]="premiumList" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+
+                            </div> -->
+                            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Have Promo Code</label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="claims_Yes" type="radio" name="HavePromoCode" [disabled]="endorsementSection" (change)="onPromoYNChange()" [(ngModel)]="HavePromoCode" value="Y">
+                                            <label for="claims_Yes" class="yes">Yes</label>
+                                            <input id="claims_No" type="radio" name="HavePromoCode" [disabled]="endorsementSection" (change)="onPromoYNChange()" [(ngModel)]="HavePromoCode" value="N">
+                                            <label for="claims_No" class="no">No</label>
+                                        </div>
+                                    </div>
+                                    <div class="input-form-error" *ngIf="promoYNError">
+                                        <div class="error-text">
+                                            Please Select PromoCode Available or Not
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4" *ngIf="HavePromoCode=='Y'">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Promo Code</label>
+                                    <div class="input-form-box">
+                                        <input type="text" [(ngModel)]="PromoCode" [disabled]="endorsementSection" (change)="onPromoCodeChange()" maxlength="20" class="input-form-control without-icon">
+                                    </div>
+                                    <div class="input-form-error" *ngIf="promoError">
+                                        <div class="error-text">
+                                            Please Enter PromoCode
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4" *ngIf="executiveSection">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">ACExecutive</label><span class="text-danger">*</span>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="executiveList" [(ngModel)]="executiveValue" bindValue="AcExecutiveId" bindLabel="AcExecutiveName">
+                                    </ng-select>
+                                    <div class="input-form-error" *ngIf="executiveError">
+                                        <div class="error-text">
+                                            Please Select AcExecutive
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4" *ngIf="executiveSection">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Commission Type</label><span class="text-danger">*</span>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="commissionTypeList" [(ngModel)]="commissionValue" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                    <div class="input-form-error" *ngIf="commissionError">
+                                        <div class="error-text">
+                                            Please Select Commission Type
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-1" *ngIf="productId!='5' && productId!='4'">
+                        <button class="custom-btn btn-5 mr-2" (click)="ongetBack()" matRipple><<&nbsp;Back</button>&nbsp;
+                        <button class="custom-btn btn-6 maan-button-data" matRipple *ngIf="productId!='3'" (click)="onWishListProceed([])"><i class="fas fa-check"></i>&nbsp;Proceed</button>
+                        <button class="custom-btn btn-6 maan-button-data" matRipple *ngIf="productId=='3'" (click)="onHomeInsuranceSave()"><i class="fas fa-check"></i>&nbsp;Proceed</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-12">
+            <ng-container *ngIf="commonSection && productId=='5'">
+                <app-vehicle-wish-list (getBack)="ongetBack()" (onWishListProceed)="onWishListProceed($event)" (redirectCreateVehicle)="redirectCreateVehicle($event)"></app-vehicle-wish-list>
+            </ng-container>
+            <ng-container *ngIf="commonSection && productId=='4'">
+                <app-travel-quote-details [quoteRefNo]="quoteRefNo" [travelDetails]="travelDetails" (redirectValidations)="redirectValidations($event)" (getBack)="ongetBack()" (onWishListProceed)="onWishListProceed($event)"></app-travel-quote-details>
+            </ng-container>
+        </div>
+    </div>
+</div>

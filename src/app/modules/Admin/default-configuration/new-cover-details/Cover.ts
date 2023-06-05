@@ -1,0 +1,34 @@
+export class Cover{
+    "CoverId": null;
+    "EffectiveDateStart": null;
+    "CoverName": null;
+    "CoverDesc": null;
+    "Status": "Y";
+    "CoreAppCode": null;
+    "DependentCoverYn": "N";
+    "DependentCoverId": null;
+    "Remarks": null;
+    "CreatedBy": null;
+    "ToolTip": null;
+    "RegulatoryCode": null;
+    "EffectiveDateEnd": null;
+    "EntryDate": null;
+    "CoverageType": null;
+    "CoverageLimit": null;
+    "Excess": null;
+    "CalcType": null;
+    "BaseRate": null;
+    "DiscountCoverId":null;
+    "SumInsuredEnd": null;
+    "MinimumPremium": null;
+    "FactorTypeId": null;
+    "SubCoverYn": "N";
+    "ProRataYn":"N";
+    "AmendId": null;
+    "GridDetails": null;
+    "IsTaxExcempted":"N";
+    "TaxAmount":null;
+    "TaxCode":null;
+    "TaxExcemptionReference":null;
+    "TaxExcemptionType":null;
+}

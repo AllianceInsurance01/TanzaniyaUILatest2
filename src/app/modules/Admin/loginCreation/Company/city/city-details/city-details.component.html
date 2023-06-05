@@ -1,0 +1,77 @@
+<div class="card">
+    <div class="card-header">City Details (disabled)</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-6">
+                <div class="input-control-container">
+                    <label class="input-form-label">Country Name<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6">
+                <div class="input-control-container">
+                    <label class="input-form-label">City Name<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-6">
+                <div class="input-control-container">
+                    <label class="input-form-label">Region</label>
+                    <ng-select class="input-form-select" appendTo="body" [items]="regionList" [(ngModel)]="regionValue" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6">
+                <div class="input-control-container">
+                    <label class="input-form-label">State</label>
+                    <ng-select class="input-form-select" appendTo="body" [items]="stateList" [(ngModel)]="stateValue" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-6">
+                <div class="input-control-container">
+                    <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="date" class="input-form-control without-icon">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6">
+                <div class="input-control-container">
+                    <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <textarea cols="120" rows="2" class="input-form-control without-icon" maxlength="200"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-6">
+                <div class="input-control-container">
+                    <label class="input-form-label">Status<span class="text-required">*</span></label>
+                    <div class="input-form-radio-box">
+                        <div class="radio-toolbar">
+                            <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="statusValue" value="YES">
+                            <label for="orginwarehouse_Yes">Active</label>
+                            <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="statusValue" value="NO">
+                            <label for="orginwarehouse_No">DeActive</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="text-center mt-2">
+            <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>
+            <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
+        </div>
+    </div>
+</div>

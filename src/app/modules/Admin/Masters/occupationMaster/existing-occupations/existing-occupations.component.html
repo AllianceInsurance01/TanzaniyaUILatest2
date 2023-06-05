@@ -1,0 +1,40 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div>
+                Existing Occupations
+            </div>
+            <div>
+                <button class="btn btn-warning" (click)="onAddOccupations()">Add New</button>
+            </div>
+        </div>
+
+        
+      </div>
+      <div class="card-body">
+        <div class="row mt-2">
+            <div class="col-md-4 col-lg-4 col-xl-4 ml-3">
+                <div class="input-control-container">
+                    <label class="input-form-label">Branch<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" appendTo="body" [items]="branchList" [(ngModel)]="branchValue"
+                     bindValue="Code" bindLabel="CodeDesc" (change)="getProductList()">
+                    </ng-select>
+                </div>
+            </div>
+    
+            <div class="col-md-4 col-lg-4 col-xl-4 ml-3">
+              <div class="input-control-container">
+                  <label class="input-form-label">Product<span class="text-required">*</span></label>
+                  <ng-select class="input-form-select" appendTo="body" [items]="productList" [(ngModel)]="productValue"
+                   bindValue="Code" bindLabel="CodeDesc" (change)="getExistingOccupations()">
+                  </ng-select>
+              </div>
+          </div>
+            </div>
+        <ng-container *ngIf="occupationData && branchValue">
+        <app-grid-table [cols]="occupationHeader"changeStatus="true" (OnStatus)="EditStatus($event)" [data]="occupationData" [filterValue]="filterValue" (onEdit)="onEditOccupation($event)" (onConfigure)="onConfigure($event)">
+        </app-grid-table>
+      </ng-container>
+    </div>
+</div>
+

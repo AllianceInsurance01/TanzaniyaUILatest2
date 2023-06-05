@@ -1,0 +1,564 @@
+<div class="card">
+    <div class="card-header" style="height: 48px;">
+        <!--<h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Followup Details</span></h4>-->
+            
+        <div class="d-flex justify-content-between">
+          <div>
+              <span class="spancommon span_font_size">Followup Details</span>
+          </div>
+          <div>
+            <button class="custom-btn btn-6 maan-button-data" *ngIf="followupId=='PE' && !opens" (click)="Mail()" style="width: 7rem;">  <i class="fa fa-plus-circle mx-1"></i>Compose</button>
+        </div>
+         
+      </div>
+      
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+            <!--<button for="exampleFormControlTextarea1" class="spancommon span_font_size" style="background-color:blueviolet;color:white;border:none" (click)="Mail()">
+              <i class="fa fa-plus-circle"></i>
+              Compose</button>-->
+
+
+
+                <ng-container *ngIf="opens" style="text-align:center">
+                  <div class="p-fluid grid mt-3">
+                      <div class="field col-12 md:col-5">
+                          <span class="p-float-label">
+                          </span>
+                      </div>
+                  </div>
+                  <div class="row ml-4">
+                        <div class="col-12 col-md-5">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Status</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="TemplateList" disabled [(ngModel)]="followupId" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-5" *ngIf="followupId">
+                          <div class="input-control-container">
+                            <label class="input-form-label">FollowupDesc<span class="text-required">*</span></label>
+                            <div class="input-form-box">
+                                <!--<input type="text"  class="input-form-control without-icon" [(ngModel)]="FollowupDesc" maxlength="100">-->
+                                <textarea cols="1200" ros="3" [(ngModel)]="FollowupDesc"  maxlength="300"  class="input-form-select" width="100%;"></textarea>
+                            </div>
+                        </div>
+                        </div>
+                      </div>
+                      <div class="row ml-4" *ngIf="followupId">
+
+                        <div class="col-12 col-md-5">
+                          <div class="input-control-container">
+                            <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                            <div class="input-form-box">
+                                <input type="text" class="input-form-control without-icon"  [(ngModel)]="Remarks" maxlength="100">
+                            </div>
+
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-5"> 
+                        <label class="input-form-label">Start Date<span class="text-required">*</span></label>
+                      <mat-form-field appearance="fill">
+                <input matInput [matDatepicker]="picker" [min]="minDate"  [(ngModel)]="EntryDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    </div>
+                    <!--  <div class="input-control-container"  </div>-->
+                   
+
+                  </div>
+
+                  <div class="row ml-4" *ngIf="followupId">
+                    <div class="col-12 col-md-5">
+                      <div class="input-control-container">
+                      <label class="input-form-label">End Date<span class="text-required">*</span></label>
+                    <mat-form-field appearance="fill">
+              <input matInput [matDatepicker]="picker3" [min]="minDate"  [(ngModel)]="EndDate">
+                      <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                      <mat-datepicker #picker3></mat-datepicker>
+                  </mat-form-field>
+                  </div>
+                  </div>
+
+                  
+                  <div class="col-12 col-md-5 col-lg-5 mt-2">
+                    <div class="input-control-container">
+                        <label class="input-form-label">StartTime<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                          <input type="time" id="appt" class="input-form-control without-icon" name="appt" (change)="trans(StartTime)" [(ngModel)]="StartTime">
+
+                        </div>
+                    </div>
+                </div>
+                  </div>
+                 <!-- <div class="row mt-2 ml-4">
+                      <div class="col-12 col-md-5">
+                        <div class="input-control-container">
+                          <label class="input-form-label">MailBody<span class="text-required">*</span></label>
+                          <div class="input-form-box">
+                              <input type="text"  class="input-form-control without-icon" [(ngModel)]="MailBody" maxlength="100">
+                          </div>
+                      </div>
+                      </div>
+                      </div>-->
+                      <!--<div class="field col-12 md:col-2">
+                          <div class="p-fluid grid">
+                              <div class="field col-12 md:col-5">
+                                  <p-button (click)="ccSection=!ccSection" *ngIf="!ccSection" label="CC" class="p-button-text"></p-button>
+                              </div>
+                              <div class="field col-12 md:col-5">
+                                  <p-button (click)="bccSection=!bccSection" *ngIf="!bccSection" label="BCC"></p-button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="p-fluid grid">
+                      <div class="field col-12 md:col-5" *ngIf="ccSection">
+                          <span class="p-float-label">
+                              <p-chips id="cc" [(ngModel)]="ccName" ></p-chips>
+                              <label for="cc">CC</label>
+                          </span>
+                      </div>
+                      <div class="field col-12 md:col-5" *ngIf="bccSection">
+                          <span class="p-float-label">
+                              <p-chips id="bcc" [(ngModel)]="bccName" ></p-chips>
+                              <label for="bcc">BCC</label>
+                          </span>
+                      </div>
+                  </div>
+                  <div class="container">
+                      <div class="content">
+                          <form [formGroup]="formEdit">
+                              <div class="editor">
+                                  <ngx-editor-menu [editor]="editor2" [toolbar]="toolbar">
+                                  </ngx-editor-menu>
+                                  <ngx-editor [editor]="editor2" formControlName="editorContent">
+                                  </ngx-editor>
+                              </div>
+                          </form>
+                      </div>
+                  </div>-->
+                  <div class="row ml-4" *ngIf="followupId">
+
+
+                  <div class="col-12 col-md-5 col-lg-5">
+                    <div class="input-control-container">
+                        <label class="input-form-label">EndTime<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                          <input type="time" id="appt"  class="input-form-control without-icon" name="appt" [(ngModel)]="EndTime">
+
+                        </div>
+                    </div>
+                </div>
+                  </div>
+
+
+                  <!--<div class="row mt-4" style="text-align:center">
+                    <div>
+                      <button class="btn btn-success mr-2"  (click)="send()"> Submit</button>
+                     <button class="btn btn-danger" (click)="backs()">Back</button>
+                    </div>
+
+
+                  </div>-->
+
+                  <div class="row mt-2">
+
+                    <div class="col-12">
+                        <div class="text-center my-3">
+                         
+                            <button class="custom-btn btn-5 mx-2" matRipple  *ngIf="followupId" (click)="backs()">Back</button>
+                            <button class="custom-btn btn-6 maan-button-data mx-2" matRipple  *ngIf="followupId" (click)="send(modal)"> Submit</button>
+                           
+                        </div>
+                    </div>
+                </div>
+
+              </ng-container>
+
+
+                <mat-tab-group  mat-align-tabs="center" *ngIf="!opens">
+
+                  <mat-tab label="Followup">
+
+                    <div class="col-12 col-md-5">
+                      <div class="input-control-container p-0">
+                          <label class="input-form-label">Followup</label><span class="text-danger">*</span>
+                          <ng-select class="input-form-select" appendTo="body" [items]="TemplateList" [(ngModel)]="followupId" bindValue="Code" bindLabel="CodeDesc" (change)="onFollowup()">
+                          </ng-select>
+
+                          <button class="btn btn-sucess"> </button>
+                      </div>
+                  </div>
+
+
+                    <ng-container *ngIf="followupId=='PE' && NotifiList.length!=0">
+                      <app-grid-table [cols]="MailHeader" [data]="NotifiList" (onViews)="getMailTemplate($event,SmCard)" (onEdit)="getMailTemplate($event,follow_Up)">
+                      </app-grid-table>
+                  </ng-container>
+
+                  <ng-container *ngIf="NotifiList.length!=0 && followupId=='CO' || followupId=='CA'">
+                    <app-grid-table [cols]="MailHeader" [data]="NotifiList" (onViews)="getMailTemplate($event,SmCard)">
+                    </app-grid-table>
+                </ng-container>
+
+
+              <ng-container *ngIf="NotifiList.length==0 && followupId">
+                <div class="text-center spancommon span_font_size">
+                    No Quote Available
+                </div>
+
+            </ng-container>
+                     </mat-tab>
+
+                
+                <div class="row">
+
+
+  <!--<div class="col-12 col-md-5">
+                    <div class="input-control-container">
+                      <label class="input-form-label">To<span class="text-required">*</span></label>
+                      <div class="input-form-box">
+                          <input type="text"  class="input-form-control without-icon" maxlength="100">
+                      </div>
+                  </div>
+                  </div>-->
+
+                </div>
+
+
+                </mat-tab-group>
+                 
+
+                <div class="row">
+
+                  <div class="col-12">
+                      <div class="text-center my-3">
+                          <button class="custom-btn btn-5 mx-2" matRipple  *ngIf="!opens" (click)="smsBack()">Back</button>
+                         
+                      </div>
+                  </div>
+              </div>
+            <!--<textarea class="form" id="exampleFormControlTextarea1" [(ngModel)]="Remarks" rows="1"></textarea>-->
+          </div>
+    </div>
+    <!--<div class="card-footer" *ngIf="!opens" style="text-align:center">
+      <button class="btn btn-danger"*ngIf="!opens && followupId" (click)="smsBack()">Back</button>
+
+  
+    </div>-->
+  </div>
+
+
+
+
+  <ng-template #SmCard let-modal>
+    <div class="modal-header" style="height: 48px;">
+      <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">View Followup Details</span></h4>
+
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+      </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="form-group">
+            <div class="row ml-2">
+            <div class="col-12 col-md-5">
+              <div class="input-control-container">
+                <label class="input-form-label">FollowupDesc
+                  <span class="text-required">*</span></label>
+                <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon"  [(ngModel)]="FollowupDesc" maxlength="100">
+                </div>
+
+            </div>
+          </div>
+
+          <div class="col-12 col-md-5">
+            <!--<div class="input-control-container">
+              <label class="input-form-label">StatusDesc<span class="text-required">*</span></label>
+              <div class="input-form-box">
+                  <input type="text" class="input-form-control without-icon"  [(ngModel)]="StatusDesc" maxlength="100">
+              </div>
+
+          </div>-->
+          <div class="input-control-container">
+            <label class="input-form-label">Status</label><span class="text-danger">*</span>
+            <ng-select class="input-form-select" disabled appendTo="body" [items]="TemplateList" [(ngModel)]="followupId" bindValue="Code" bindLabel="CodeDesc">
+            </ng-select>
+        </div>
+        </div>
+        </div>
+        <div class="row ml-2">
+          <!--<div class="col-12 col-md-5">
+            <div class="input-control-container">
+              <label class="input-form-label">Status<span class="text-required">*</span></label>
+              <div class="input-form-box">
+                  <input type="text" class="input-form-control without-icon"  [(ngModel)]="Status" maxlength="100">
+              </div>
+
+          </div>
+        </div>-->
+
+        <div class="col-12 col-md-5">
+          <div class="input-control-container">
+            <label class="input-form-label">StartTime
+              <span class="text-required">*</span></label>
+            <div class="input-form-box">
+                <input type="text" class="input-form-control without-icon"  [(ngModel)]="StartTime
+                " maxlength="100">
+            </div>
+
+        </div>
+      </div>
+
+      <div class="col-12 col-md-5">
+        <div class="input-control-container">
+          <label class="input-form-label">EndTime<span class="text-required">*</span></label>
+          <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon"  [(ngModel)]="EndTime" maxlength="100">
+          </div>
+
+      </div>
+    </div>
+      </div>
+
+
+    <div class="row ml-2">
+
+    
+    <!--<div class="col-12 col-md-5">
+      <div class="input-control-container">
+        <label class="input-form-label">ReqTime<span class="text-required">*</span></label>
+        <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon"  [(ngModel)]="SmsViewList.ReqTime" maxlength="100">
+        </div>
+
+    </div>
+  </div>-->
+    </div>
+
+
+    <div class="row ml-2">
+      <div class="col-12 col-md-5">
+        <label class="input-form-label">EntryDate<span class="text-required">*</span></label>
+      <mat-form-field appearance="fill">
+
+        <input matInput disabled [matDatepicker]="picker4" [min]="minDate"  [(ngModel)]="EntryDate">
+        <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+        <mat-datepicker #picker4></mat-datepicker>
+    </mat-form-field>
+    </div>
+    <div class="col-12 col-md-5">
+      <div class="input-control-container">
+      <label class="input-form-label">End Date<span class="text-required">*</span></label>
+    <mat-form-field appearance="fill">
+<input matInput [matDatepicker]="picker1" [min]="minDate"  [(ngModel)]="EndDate">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+  </mat-form-field>
+  </div>
+  </div>
+    </div>
+
+    <div class="col-12 col-md-5">
+      <div class="input-control-container">
+        <label class="input-form-label">Remarks
+          <span class="text-required">*</span></label>
+        <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon"  [(ngModel)]="Remarks" maxlength="100">
+        </div>
+
+    </div>
+    </div>
+    <!--<div class="row ml-2">
+      <div class="col-12 col-md-12">
+        <div class="input-control-container">
+          <label class="input-form-label">SmsContent
+            <span class="text-required">*</span></label>
+        <div class="input-form-box">
+          <textarea cols="1200" ros="3" [(ngModel)]="SmsViewList.SmsContent" class="input-form-select" width="100%;"></textarea>
+      </div>
+
+      </div>
+    </div>
+  </div>-->
+    </div>
+           </div>
+  </ng-template>
+
+  <ng-template #follow_Up let-modal>
+    <div class="modal-header" style="height: 48px;">
+      <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Update Followup Details</span></h4>
+
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">×</span>
+      </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="maan-grid-item popover-card customTemplatess shawdowcustom" style="display: block;" data-keyboard="false" data-bs-backdrop="static">
+
+      <div class="maan-grid-item-body">
+
+    
+            <div class="row ml-2">
+            <div class="col-12 col-md-5">
+              <div class="input-control-container">
+                <label class="input-form-label">FollowupDesc
+                  <span class="text-required">*</span></label>
+                <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon"  [(ngModel)]="FollowupDesc" maxlength="100">
+                </div>
+
+            </div>
+          </div>
+
+          <div class="col-12 col-md-5">
+            <div class="input-control-container">
+              <label class="input-form-label">Status</label><span class="text-danger">*</span>
+              <ng-select class="input-form-select" appendTo="body" [items]="TemplateList" [(ngModel)]="followupId" bindValue="Code" bindLabel="CodeDesc">
+              </ng-select>
+              <!--<label class="input-form-label">Status<span class="text-required">*</span></label>
+              <div class="input-form-box">
+                  <input type="text" class="input-form-control without-icon"  [(ngModel)]="StatusDesc" maxlength="100">
+              </div>-->
+
+          </div>
+        </div>
+        </div>
+        <div class="row ml-2">
+          <!--<div class="col-12 col-md-5">
+            <div class="input-control-container">
+              <label class="input-form-label">Status<span class="text-required">*</span></label>
+              <div class="input-form-box">
+                  <input type="text" class="input-form-control without-icon"  [(ngModel)]="Status" maxlength="100">
+              </div>
+
+          </div>
+        </div>-->
+
+        <div class="col-12 col-md-5">
+          <div class="input-control-container">
+            <label class="input-form-label">StartTime
+              <span class="text-required">*</span></label>
+            <div class="input-form-box">
+                <input type="text" class="input-form-control without-icon"  [(ngModel)]="StartTime" maxlength="100">
+            </div>
+
+        </div>
+      </div>
+ 
+      <div class="col-12 col-md-5">
+        <div class="input-control-container">
+          <label class="input-form-label">EndTime<span class="text-required">*</span></label>
+          <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon"  [(ngModel)]="EndTime" maxlength="100">
+          </div>
+
+      </div>
+    </div>
+
+      </div>
+
+
+    <div class="row ml-2">
+
+     
+    <!--<div class="col-12 col-md-5">
+      <div class="input-control-container">
+        <label class="input-form-label">ReqTime<span class="text-required">*</span></label>
+        <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon"  [(ngModel)]="SmsViewList.ReqTime" maxlength="100">
+        </div>
+
+    </div>
+  </div>-->
+  <div class="col-12 col-md-5">
+    <label class="input-form-label mt-2">Entry Date</label>
+    <mat-form-field appearance="fill">
+        <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
+        <input matInput [matDatepicker]="picker6" [min]="minDate" [max]="maxDate"  [(ngModel)]="EntryDate">
+        <mat-datepicker-toggle matSuffix [for]="picker6"></mat-datepicker-toggle>
+        <mat-datepicker #picker6></mat-datepicker>
+    </mat-form-field>
+</div>
+
+
+<div class="col-12 col-md-5">
+  <div class="input-control-container">
+  <label class="input-form-label mt-2">End Date<span class="text-required">*</span></label>
+<mat-form-field appearance="fill">
+<input matInput [matDatepicker]="picker7" [min]="minDate"  [(ngModel)]="EndDate">
+  <mat-datepicker-toggle matSuffix [for]="picker7"></mat-datepicker-toggle>
+  <mat-datepicker #picker7></mat-datepicker>
+</mat-form-field>
+</div>
+</div>
+
+<div class="col-12 col-md-5">
+  <div class="input-control-container">
+    <label class="input-form-label">Remarks
+      <span class="text-required">*</span></label>
+    <div class="input-form-box">
+        <input type="text" class="input-form-control without-icon"  [(ngModel)]="Remarks" maxlength="100">
+    </div>
+
+</div>
+</div>
+  <!--<div class="col-12 col-md-4 col-lg-4" >
+      <label class="input-form-label">Start Date<span class="text-required" style="color:red">*</span></label>
+        <mat-form-field appearance="fill">
+       
+            <mat-label>Period To</mat-label>
+            <input matInput [matDatepicker]="picker1" [min]="minDate"  [(ngModel)]="EntryDate">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+</div>-->
+ </div>
+
+
+    <div class="row ml-2">
+      <!--<div class="col-12 col-md-5">
+        <label class="input-form-label">EndDate<span class="text-required">*</span></label>
+      <mat-form-field appearance="fill">
+
+        <input matInput [matDatepicker]="picker" [min]="minDate"  [(ngModel)]="EntryDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    </div>-->
+
+    
+    </div>
+
+  </div>
+    <!--<div class="row ml-2">
+      <div class="col-12 col-md-12">
+        <div class="input-control-container">
+          <label class="input-form-label">SmsContent
+            <span class="text-required">*</span></label>
+        <div class="input-form-box">
+          <textarea cols="1200" ros="3" [(ngModel)]="SmsViewList.SmsContent" class="input-form-select" width="100%;"></textarea>
+      </div>
+
+      </div>
+    </div>
+  </div>-->
+  <div class="row">
+
+    <div class="col-12">
+        <div class="text-center my-3">
+            <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="send(modal)">Submit</button>
+           
+        </div>
+    </div>
+</div>
+  <!--<button class="btn btn-success" (click)="send(modal)"> Submit</button>-->
+    </div>
+           </div>
+  </ng-template>

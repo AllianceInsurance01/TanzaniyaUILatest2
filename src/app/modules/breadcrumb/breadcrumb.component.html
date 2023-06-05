@@ -1,0 +1,9 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <ng-container *ngFor="let breadcrumb of breadcrumbs">
+            <li class="breadcrumb-item active" (click)="onRoute(breadcrumb.url)" aria-current="page">{{ breadcrumb.label }}</li>
+        </ng-container>
+    </ol>
+</nav>
+
+  

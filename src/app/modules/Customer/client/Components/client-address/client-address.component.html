@@ -1,0 +1,215 @@
+<div>
+    <div class="row">
+        <!-- <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Region</label>
+                <ng-select class="input-form-select" appendTo="body" [items]="regionList" [(ngModel)]="regionValue" bindValue="Code" bindLabel="CodeDesc">
+                </ng-select>
+            </div>
+        </div> -->
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">State</label><span class="text-danger">*</span>
+                <ng-select class="input-form-select" appendTo="body" [items]="stateList" (change)="getCityList()" [(ngModel)]="stateValue" bindValue="Code" bindLabel="CodeDesc">
+                </ng-select>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">City</label><span class="text-danger">*</span>
+                <div class="input-form-box">
+                <input type="text" class="input-form-control without-icon" [(ngModel)]="cityValue">
+                </div>
+
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Street</label><span class="text-danger">*</span>
+                <div class="input-form-box">
+                    <input type="text" maxlength="120" [(ngModel)]="streetValue" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Address 1</label><span class="text-danger">*</span>
+                <div class="input-form-box">
+                    <input type="text" [(ngModel)]="address1" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Address 2</label><span class="text-danger">*</span>
+                <div class="input-form-box">
+                    <input type="text" [(ngModel)]="address2" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Fax</label>
+                <div class="input-form-box">
+                    <input type="text" [(ngModel)]="faxValue" maxlength="10" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Profile ID</label>
+                <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Profile Category</label>
+                <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Screening Group ID</label>
+                <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div> -->
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Telephone 1</label><span class="text-danger">*</span>
+                <div class="input-form-box">
+
+                    <input type="text"  digitOnly  maxlength="10" [(ngModel)]="telephone1"
+                 class="input-form-control without-icon">
+                 <!--<div *ngIf="f.mobileNumber.errors.pattern">Please, Enter 10 digit Mobile Number.</div>-->
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Telephone 2</label>
+                <div class="input-form-box">
+                    <input type="text" digitOnly maxlength="10"  [(ngModel)]="telephone2" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Telephone 3</label>
+                <div class="input-form-box">
+                    <input type="text" digitOnly maxlength="10"  [(ngModel)]="telephone3" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Mobile No 1</label><span class="text-danger">*</span>
+                <div class="input-form-box">
+                    <input type="text" digitOnly maxlength="10"  [(ngModel)]="mobile1" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Mobile No 2</label>
+                <div class="input-form-box">
+                    <input type="text" digitOnly maxlength="10" [(ngModel)]="mobile2" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Mobile No 3</label>
+                <div class="input-form-box">
+                    <input type="text" digitOnly maxlength="10" [(ngModel)]="mobile3" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Email 1</label><span class="text-danger">*</span>
+                <div class="input-form-box">
+                    <input type="text" [(ngModel)]="email1" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Email 2</label>
+                <div class="input-form-box">
+                    <input type="text" [(ngModel)]="email2" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Email 3</label>
+                <div class="input-form-box">
+                    <input type="text" [(ngModel)]="email3" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-12">
+            <div class="middle-line">
+                Preferred System Notification
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <div class="input-form-box">
+                    <input type="text" class="input-form-control with-icon" readonly value="SMS">
+                    <span class="input-form-icon">
+                        <input class="form-check-input" type="checkbox" id="check1" name="option1">
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <div class="input-form-box">
+                    <input type="text" class="input-form-control with-icon" readonly value="Email">
+                    <span class="input-form-icon">
+                        <input class="form-check-input" type="checkbox" id="check1" name="option1">
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <div class="input-form-box">
+                    <input type="text" class="input-form-control with-icon" readonly value="Tax Exempted">
+                    <span class="input-form-icon">
+                        <input class="form-check-input" type="checkbox" id="check1" name="option1">
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Appointment Date</label>
+                <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4">
+            <div class="input-control-container">
+                <label class="input-form-label">ManDate Expiry</label>
+                <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon">
+                </div>
+            </div>
+        </div> -->
+
+    </div>
+    <div class="text-center my-2">
+        <button class="custom-btn btn-5 mx-2" matRipple [routerLink]="['/Home/customer/Client/client-type']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+        <button class="custom-btn btn-6 mx-2" matRipple (click)="onProceed('save')">Save</button>
+        <button class="custom-btn btn-6 mx-2" matRipple (click)="onProceed('submit')">Submit</button>
+    </div>
+</div>

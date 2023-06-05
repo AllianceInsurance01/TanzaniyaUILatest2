@@ -1,0 +1,100 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div>
+                {{ title }}
+            </div>
+            <div *ngIf="ReferalId">
+                ReferalId ~ {{ReferalId}}
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Referal Name<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="ReferalDetails.ReferalName" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Referral Type<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" [items]="typeList" [(ngModel)]="ReferalDetails.ReferalType" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Regulatory Code<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ReferalDetails.RegulatoryCode">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Referal Desc<span class="text-required" >*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="ReferalDetails.ReferalDesc" maxlength="20">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ReferalDetails.CoreAppCode">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12 col-md-4 col-lg-4">
+                <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="ReferalDetails.EffectiveDateStart">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Remarks<span class="text-required" >*</span></label>
+                    <div class="input-form-box">
+                        <textarea cols="60" ros="3" class="input-form-select" [(ngModel)]="ReferalDetails.Remarks"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-5 col-lg-5">
+                <div class="input-control-container">
+                    <label class="input-form-label">Status<span class="text-required">*</span></label>
+                    <div class="input-form-radio-box">
+                        <div class="radio-toolbar">
+                            <input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="ReferalDetails.Status" value="P">
+                            <label for="orginwarehouse_Pending">Pending</label>
+                            <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="ReferalDetails.Status" value="Y">
+                            <label for="orginwarehouse_Yes">Active</label>
+                            <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="ReferalDetails.Status" value="N">
+                            <label for="orginwarehouse_No">DeActive</label>
+                            <input type="radio" id="orginwarehouse_Referral" name="originatingWarehouse" [(ngModel)]="ReferalDetails.Status" value="R">
+                            <label for="orginwarehouse_Referral">Referral</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="d-flex justify-content-center">
+            <div>
+
+            </div>
+            <div>
+                <button class="btn btn-danger" (click)="dismiss()">Cancel</button>
+                <button class="btn btn-primary ml-2" (click)="onSaveSection()">Save</button>
+            </div>
+        </div>

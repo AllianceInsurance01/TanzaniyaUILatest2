@@ -1,0 +1,223 @@
+<div class="maan-grid-item">
+    <div class="maan-grid-item-title">
+        <div class="d-flex justify-content-between">
+            <div>
+                <span class="mx-0">
+                    <span class="spancommon span_font_size" style="font-weight:600">Section Modification</span>
+                </span>
+            </div>
+            <div>
+                
+            </div>
+            <!-- <div *ngIf="formSection">
+                <button class="custom-btn btn-6 maan-button-data " matRipple (click)="viewSection=!viewSection;formSection=!formSection"><i class="fas fa-edit"></i>&nbsp;Edit</button>
+            </div> -->
+        </div>
+    </div>
+    <div class="maan-grid-item-body">
+          <div class="row" *ngIf="productId=='19'">
+              <div class="col-md-5 col-lg-5  col-xl-5 offset-1">
+                  <div class="input-control-container">
+                      <label class="input-form-label"><b>Ownership Status</b></label><span class="text-danger">*</span>
+                      <div class="input-form-radio-box">
+                          <div class="radio-toolbar">
+                              <input id="claims_Own" type="radio" name="rentOwnHome" [(ngModel)]="BuildingOwnerYn"  value="Y">
+                              <label for="claims_Own" class="yes_alt"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/landlord.png">LANDLORD</label>
+                              <input id="claims_Rent" type="radio" name="rentOwnHome" [(ngModel)]="BuildingOwnerYn" value="N">
+                              <label for="claims_Rent" class="no"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/rentHome.png">TENANT</label>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-6 col-lg-6 col-xl-6">
+                  <div class="input-control-container">
+                      <label class="input-form-label"><b>Cover Required</b></label><span class="text-danger">*</span>
+                      <div class="input-form-radio-box">
+                          <div class="radio-toolbar">
+                              <input id="Content" type="radio" name="Content" [(ngModel)]="coversRequired" value="C">
+                              <label for="Content" class="yes_alt"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/contents.png">&nbsp;CONTENTS</label>
+                              <ng-container *ngIf="BuildingOwnerYn=='Y'">
+                                  <input id="Building" type="radio" name="Content" [(ngModel)]="coversRequired" value="B">
+                                  <label for="Building" class="no"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/buildingSection.png">&nbsp;BUILDING</label>
+                                  <input id="Building_Contents" type="radio" name="Content" [(ngModel)]="coversRequired" value="BC">
+                                  <label for="Building_Contents" class="no"><img style="max-width: 30px;max-height: 10px;"  src="./assets/images/houseContents.png">&nbsp;BUILDING & CONTENTS</label>
+                              </ng-container>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="row" *ngIf="productId=='19'">
+              <div class="col-12 col-md-5 col-lg-5 offset-1 input-control-container">
+                  <label class="input-form-label">Industry</label><span class="text-danger">*</span>
+                  <div class="input-form-box" style="position: relative;top:.2rem">
+                      <ng-select class="custom" [items]="industryList"  [(ngModel)]="IndustryId" placeholder="Select Industry" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                      </ng-select>
+                  </div>
+              </div>
+              <div class="col-12 col-md-5 col-lg-5 input-control-container" *ngIf="categoryDesc">
+                  <label class="input-form-label">Category</label>
+                  <div class="input-form-box mt-2">
+                      <input type="text" style="position: relative;bottom: 0.35rem;" disabled class="input-form-control without-icon" maxlength="4" [(ngModel)]="categoryDesc" [ngModelOptions]="{standalone: true}">
+                  </div>
+              </div>
+          </div>
+          <div class="row mt-4 mb-2" *ngIf="productId=='19'">
+            <div class="col-md-10 col-lg-10  col-xl-10 offset-1">
+              <div class="Choose-Section-Box padd0 bwT">
+                  <span class="heading">SELECT THE SECTIONS YOU WISH TO BUY</span>
+                  <div class="row mt-3">
+                    <ng-container *ngFor="let g of productList| slice:0:6">
+                        <ng-container *ngIf="g.Code=='47' && (coversRequired=='C' || coversRequired=='BC')">
+                            <div class="col-md-6">
+                              <div >
+                                  <!-- {{g.CodeDesc}} -->
+                                  <div class="print-check">
+                                  <label class="custom-checkbox-container">
+                                  <input type="checkbox">
+                                  <span class="checkmark">
+                                    <span class="text-light"><i class="fas fa-check-circle"></i></span>
+                                    <span class=""><i class="fas fa-minus-circle"></i></span>
+                                  </span>
+                                  <div class="description">
+                                    <div class="description-name">
+                                      <span>
+                                      {{g.CodeDesc}}
+                                      </span>
+                                    </div>
+                                  </div>
+                              </label>
+                          </div>
+                              </div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="g.Code=='40' && (coversRequired=='B' || coversRequired=='BC')">
+                          <div class="col-md-6">
+                            <div >
+                                <!-- {{g.CodeDesc}} -->
+                                <div class="print-check">
+                                <label class="custom-checkbox-container">
+                                <input type="checkbox">
+                                <span class="checkmark">
+                                  <span class="text-light"><i class="fas fa-check-circle"></i></span>
+                                  <span class=""><i class="fas fa-minus-circle"></i></span>
+                                </span>
+                                <div class="description">
+                                  <div class="description-name">
+                                    <span>
+                                    {{g.CodeDesc}}
+                                    </span>
+                                  </div>
+                                </div>
+                            </label>
+                        </div>
+                            </div>
+                          </div>
+                        </ng-container>
+                        <ng-container *ngIf="g.Code!='47' && g.Code!='40'">
+                          <div class="col-md-6">
+                            <div >
+                                <!-- {{g.CodeDesc}} -->
+                                <div class="print-check">
+                                <label class="custom-checkbox-container">
+                                <input type="checkbox">
+                                <span class="checkmark">
+                                  <span class="text-light"><i class="fas fa-check-circle"></i></span>
+                                  <span class=""><i class="fas fa-minus-circle"></i></span>
+                                </span>
+                                <div class="description">
+                                  <div class="description-name">
+                                    <span>
+                                    {{g.CodeDesc}}
+                                    </span>
+                                  </div>
+                                </div>
+                                </label>
+                            </div>
+                            </div>
+                          </div>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngFor="let g of productList| slice:6:12">
+                      <ng-container *ngIf="g.Code=='47' && (coversRequired=='C' || coversRequired=='BC')">
+                          <div class="col-md-6">
+                            <div >
+                                <!-- {{g.CodeDesc}} -->
+                                <div class="print-check">
+                                <label class="custom-checkbox-container">
+                                <input type="checkbox">
+                                <span class="checkmark">
+                                  <span class="text-light"><i class="fas fa-check-circle"></i></span>
+                                  <span class=""><i class="fas fa-minus-circle"></i></span>
+                                </span>
+                                <div class="description">
+                                  <div class="description-name">
+                                    <span>
+                                    {{g.CodeDesc}}
+                                    </span>
+                                  </div>
+                                </div>
+                            </label>
+                        </div>
+                            </div>
+                          </div>
+                      </ng-container>
+                      <ng-container *ngIf="g.Code=='40' && (coversRequired=='B' || coversRequired=='BC')">
+                        <div class="col-md-6">
+                          <div >
+                              <!-- {{g.CodeDesc}} -->
+                              <div class="print-check">
+                              <label class="custom-checkbox-container">
+                              <input type="checkbox">
+                              <span class="checkmark">
+                                <span class="text-light"><i class="fas fa-check-circle"></i></span>
+                                <span class=""><i class="fas fa-minus-circle"></i></span>
+                              </span>
+                              <div class="description">
+                                <div class="description-name">
+                                  <span>
+                                  {{g.CodeDesc}}
+                                  </span>
+                                </div>
+                              </div>
+                          </label>
+                      </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                      <ng-container *ngIf="g.Code!='47' && g.Code!='40'">
+                        <div class="col-md-6">
+                          <div >
+                              <!-- {{g.CodeDesc}} -->
+                              <div class="print-check">
+                              <label class="custom-checkbox-container">
+                              <input type="checkbox">
+                              <span class="checkmark">
+                                <span class="text-light"><i class="fas fa-check-circle"></i></span>
+                                <span class=""><i class="fas fa-minus-circle"></i></span>
+                              </span>
+                              <div class="description">
+                                <div class="description-name">
+                                  <span>
+                                  {{g.CodeDesc}}
+                                  </span>
+                                </div>
+                              </div>
+                              </label>
+                          </div>
+                          </div>
+                        </div>
+                      </ng-container>
+                  </ng-container>
+                  </div>
+              </div>
+            </div>
+          </div>
+        
+    </div>
+    <div class="text-center mt-2">
+      <button class="custom-btn btn-5 mr-2" [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/customer-details']" routerLinkActive="router-link-active" matRipple><<&nbsp;Back</button>&nbsp;
+      <button class="custom-btn btn-6 maan-button-data" [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']" routerLinkActive="router-link-active"  matRipple><i class="fas fa-check"></i>&nbsp;Proceed</button> 
+    </div>
+</div>
+    

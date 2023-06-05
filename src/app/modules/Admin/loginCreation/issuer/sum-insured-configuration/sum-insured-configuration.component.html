@@ -1,0 +1,259 @@
+<div class="card" *ngIf="productSection">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div>
+                Products
+            </div>
+            <div>
+                LoginId ~ &nbsp;{{issuerLoginId}}
+            </div>
+        </div>
+    </div>
+    <div class="card-body customPadding">
+        <div class="row">
+            <div class="col-md-10 col-lg-10 col-xl-10 offset-1">
+                <table class="table table-headerRow styled-table">
+                    <tr>
+                        <th class="tbl-header">Select</th>
+                        <th class="tbl-header">Field Name</th>
+                        <!--<th class="tbl-header">Column Name</th>-->
+                        <th class="tbl-header">Product</th>
+                        <th class="tbl-header">Min SumInsured</th>
+                        <th class="tbl-header">Max SumInsured</th>
+                        <th class="tbl-header" *ngIf="IssuerType=='high' || IssuerType=='both'">Referrals</th>
+                        <th class="tbl-header">Endorsements</th>
+                    </tr>
+                    <tr *ngFor="let row of productList | paginate:{itemsPerPage: 5, currentPage:p} ;let i = index">
+
+                        <td class="tbl-content">
+                            <mat-checkbox class="example-margin" style="min-width: 120px;" [(ngModel)]="row.Checked" (change)="onSelectProduct(row,$event.checked,i)"></mat-checkbox>
+                        </td>
+                        <!--<td class="tbl-content">
+                            <ng-select class="input-form-select" style="min-width: 120px;" [(ngModel)]="InputTable" [items]="tableList" (change)="onTableChange()" bindValue="Code" bindLabel="CodeDesc" appendTo="body" >
+                            </ng-select>
+                        </td>-->
+
+                        <td class="tbl-content">
+                            <div class="m-2">{{row.ProductName}}</div>
+                        </td>
+                        <td class="tbl-content">
+                            <ng-select class="input-form-select" style="min-width: 120px;" [(ngModel)]="row.ColumnName" [items]="columnList" bindValue="Code" bindLabel="CodeDesc" appendTo="body">
+                            </ng-select>
+                        </td>
+                        <td class="tbl-content">
+                            <div class="input-control-container">
+                                <div class="input-form-box">
+                                    <input type="text" style="min-width: 120px;" class="input-form-control without-icon"  maxlength="20" autocomplete="off" (keydown)="onSIValueChange($event)" (keyup)="onChangeSumInsuredStart(row)" [(ngModel)]="row.SumInsuredStart">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="tbl-content">
+                            <div class="input-control-container">
+                                <div class="input-form-box">
+                                    <input type="text" style="min-width: 120px;" class="input-form-control without-icon" maxlength="20" autocomplete="off" (keydown)="onSIValueChange($event)" (keyup)="onChangeSumInsuredStart(row)" [(ngModel)]="row.SumInsuredEnd">
+                                </div>
+                            </div>
+                        </td>
+                        <td class="tbl-content text-center" *ngIf="IssuerType=='high' || IssuerType=='both'">
+                            <button class="btn btn-outline btn-warning m-2" (click)="showReferral(row)"><i class="fa fa-book"></i></button>
+                        </td>
+                        <td class="tbl-content text-center">
+                            <button class="btn btn-outline btn-warning m-2" (click)="showEndorsement(row)"><i class="fa fa-address-book"></i></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <pagination-controls (pageChange)="p=$event"></pagination-controls>
+        </div>
+        <div class="text-center mb-2">
+            <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+            <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
+        </div>
+    </div>
+</div>
+<div class="card" *ngIf="referralSection">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div>
+                Referral
+            </div>
+            
+            <div>
+                <span>Product Name ~ &nbsp; Motor</span>|
+                LoginId ~ &nbsp;{{issuerLoginId}}
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row mt-2">
+            <!--<div class="col-md-4 col-lg-4 col-xl-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Product Name</label>
+                    <div class="input-form-box">
+                        <b>Motor</b>
+                    </div>
+                </div>
+            </div>-->
+            <!--<div class="col-md-4 col-lg-4 col-xl-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">SumInsured Range</label>
+                    <div class="input-form-box">
+                        <b>0</b>&nbsp; ~ &nbsp; 50,000
+                    </div>
+                </div>
+            </div>-->
+        </div>
+        <div class="row">
+            <div class="col-md-10 col-lg-10 col-xl-10 offset-1">
+                <table class="table table-headerRow styled-table">
+                    <tr>
+                        <th class="tbl-header">Select</th>
+                        <th class="tbl-header">Referral Name</th>
+                        <th class="tbl-header">EffectiveDateStart</th>
+                    </tr>
+                    <tr *ngFor="let row of referralData;let i = index">
+
+                        <td class="tbl-content">
+                            <mat-checkbox class="example-margin" [checked]="onCheckReferalSelect(row)" (change)="onSelectrefferal(row,$event.checked)"></mat-checkbox>
+                        </td>
+                        <td class="tbl-content">
+                            <div class="input-control-container">
+                                <div class="input-form-box">
+                                    {{row.ApiName}}
+                                    <!--<input type="text" style="min-width: 120px;" class="input-form-control without-icon" autocomplete="off" [(ngModel)]="row.EndtType">-->
+                                </div>
+                            </div>
+                            <!--<div class="m-2">{{row.ProductName}}</div>-->
+                        </td>
+                        
+                        <td class="tbl-content">
+                            <div class="input-control-container">
+                                <div class="input-form-box">
+                                    {{row.EffectiveDateStart}}
+                                   
+                                </div>
+                            </div>
+                        </td>     
+                    </tr>
+                </table>
+            </div>
+            <!--<div class="col-md-12 col-lg-12 col-xl-12">
+                <app-grid-table [cols]="referralHeader" [data]="referralData" changeStatus="true">
+                </app-grid-table>
+            </div>-->
+        </div>
+        <div class="text-center mb-2">
+            <button class="btn btn-danger" (click)="productSection=!productSection;referralSection=!referralSection">Back</button>
+            <button class="btn btn-success ml-2" (click)="onProceedendorse()">Submit</button>
+        </div>
+    </div>
+</div>
+<div class="card" *ngIf="endorseSection">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div>
+                Endorsements
+            </div>
+            <div>
+                <span>Product Name ~ &nbsp;Motor</span>|
+                LoginId ~ &nbsp;{{issuerLoginId}}
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <!--<div class="row mt-2">
+            <div class="col-md-4 col-lg-4 col-xl-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Product Name</label>
+                    <div class="input-form-box">
+                        <b>Motor</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-4 col-xl-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">SumInsured Range</label>
+                    <div class="input-form-box">
+                        <b>0</b>&nbsp; ~ &nbsp; 50,000
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        <!--<div class="row">
+            <div class="col-md-12 col-lg-12 col-xl-12">
+                <app-grid-table [cols]="endorsementHeader" [data]="endorsementData" changeStatus="true">
+                </app-grid-table>
+            </div>
+        </div>-->
+        <div class="row">
+            <div class="col-md-5 col-lg-5 col-xl-5">
+                <div class="input-control-container">
+                    <label class="input-form-label">Category</label>
+                    <ng-select class="input-form-select" appendTo="body" [items]="categoryList" [(ngModel)]="categoryId" (change)="getEndorsementList()" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+             
+        <div class="row" *ngIf="categoryId">
+            <div class="col-md-10 col-lg-10 col-xl-10 offset-1">
+                <table class="table table-headerRow styled-table">
+                    <tr>
+                        <th class="tbl-header">Select</th>
+                        <th class="tbl-header">EndtType</th>
+                        <th class="tbl-header">CoreAppCode</th>
+                        <th class="tbl-header">RegulatoryCode</th>
+                        <th class="tbl-header">EffectiveDateStart</th>
+                    </tr>
+                    <tr *ngFor="let row of endorseData;let i = index">
+
+                        <td class="tbl-content">
+                            <mat-checkbox class="example-margin" [checked]="onCheckEndorseSelect(row)" (change)="onSelectendorse(row,$event.checked)"></mat-checkbox>
+                        </td>
+                        <td class="tbl-content">
+                            <div class="input-control-container">
+                                <div class="input-form-box">
+                                    {{row.EndtType}}
+                                    <!--<input type="text" style="min-width: 120px;" class="input-form-control without-icon" autocomplete="off" [(ngModel)]="row.EndtType">-->
+                                </div>
+                            </div>
+                            <!--<div class="m-2">{{row.ProductName}}</div>-->
+                        </td>
+                        
+                        <td class="tbl-content">
+                            <div class="input-control-container">
+                                <div class="input-form-box">
+                                    {{row.CoreAppCode}}
+                                   
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="tbl-content">
+                            <div class="input-control-container">
+                                <div class="input-form-box">
+                                    {{row.RegulatoryCode}}
+                                   
+                                </div>
+                            </div>
+                        </td>
+                        <td class="tbl-content">   
+                        <div class="input-control-container">
+                            {{row.EffectiveDateStart}}
+                        </div>
+                        </td>
+
+                        
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="text-center mb-2">
+            <button class="btn btn-danger" (click)="productSection=!productSection;endorseSection=!endorseSection">Back</button>
+            <button class="btn btn-success ml-2" (click)="onProceedendorse()">Submit</button>
+        </div>
+    </div>
+</div>

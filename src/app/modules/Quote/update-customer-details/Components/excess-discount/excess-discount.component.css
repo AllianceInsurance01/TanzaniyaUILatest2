@@ -1,0 +1,365 @@
+/* Excess Discount CSS */
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+    border: 0.1px solid #ccc !important;
+}
+
+.mat-header-row {
+    height: 20px !important;
+}
+
+.mat-header-cell {
+    padding: 10px 50px 50px 50px;
+    background-color: #333b85 !important;
+    color: white !important;
+}
+
+.innerHead {
+    font-size: 11px;
+    color: white !important;
+    text-align: center;
+}
+
+.outerHead {
+    font-size: 13px;
+    color: white !important;
+    background-color: #333b85;
+    text-align: center !important;
+}
+
+.outerTable {
+    border-radius: 10px !important;
+}
+
+.customCell {
+    width: 50px !important;
+    font-size: 13px;
+}
+
+.customCellInner {
+    max-width: 70px !important;
+    font-size: 11px;
+}
+
+
+/* .customTemplate {
+    width: 400px;
+    height: auto;
+} */
+
+
+/* .customTemplates {
+    width: 600px;
+    height: auto;
+    padding: 2rem;
+} */
+
+.popover {
+    max-width: 800px;
+    width: intrinsic;
+    width: -moz-max-content;
+    width: -webkit-max-content;
+}
+
+::ng-deep .popover-content {
+    width: 800px;
+}
+
+th.mat-header-cell {
+    text-align: center;
+}
+
+.example-container {
+    width: 100%;
+    background: white;
+    padding: 0.2rem;
+}
+
+table {
+    width: 100% !important;
+}
+
+.mat-table th,
+.mat-table td {
+    white-space: pre-wrap !important;
+    padding: 0px 2px !important;
+}
+
+tr.example-detail-row {
+    height: 0;
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+}
+
+.example-element-row td {
+    border-bottom-width: 0;
+}
+
+.maan-grid-column-1 {
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+}
+
+
+/* .customer-grid .maan-grid-item {
+    overflow: hidden;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 24px 100px 0px;
+}
+
+.customer-grid .maan-grid-item-title {
+    padding: .5rem;
+    font: bolder;
+    font-size: 17px;
+    background-color: whitesmoke;
+    color: black;
+    font-weight: 600;
+}
+
+.customer-grid .maan-grid-item-body {
+    padding: 10px !important;
+} */
+
+
+/* .modal-header {
+    background-color: var(--theme1);
+    color: white;
+    padding: 10px;
+}
+
+.modal-content {
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+} */
+
+
+/* 
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+
+/* Hide default HTML checkbox */
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+*/
+/* The slider */
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #2196F3;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.customList {
+    border-bottom: 1px grey !important;
+    list-style-type: none;
+}
+
+
+/* Rounded sliders */
+
+
+/* .slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.radio-toolbar label {
+    margin-left: 0px;
+    display: inline-block;
+    background-color: white;
+    padding: 5px 5px;
+    border: 1px solid lightgrey;
+    cursor: pointer;
+}
+
+table.mat-table {
+    border-spacing: 0;
+    background: #fff !important;
+}
+
+tr.mat-row {
+    border-bottom: solid 1px black !important;
+}
+
+tr.mat-row:hover {
+    border-bottom: solid 1px black !important;
+}
+
+tr.mat-row:hover {
+    border-bottom: solid 1px black !important;
+    background: #CCCC !important;
+} */
+
+.title {
+    background-color: #dedeed;
+}
+
+#third {
+    background-color: #eeddeb;
+    color: black;
+}
+
+#fourth {
+    background-color: #dae3f1;
+    color: black;
+}
+
+.col-centered {
+    margin: 0 auto;
+    float: none;
+    width: 400px;
+}
+
+.co li {
+    float: left;
+    list-style-type: none;
+    padding: 9px;
+}
+
+.btn-circle i {
+    color: #fff !important;
+}
+
+.btn-circle:hover {
+    transform: rotateY(.5turn) rotateX(-.03turn);
+}
+
+.btn-circle {
+    width: 25px;
+    height: 25px;
+    padding: 3px 0px;
+    border-radius: 15px;
+    text-align: center;
+    color: #fff;
+    background-color: #333b85;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+
+.btn-circle-alt:hover {
+    color: #fff;
+}
+.btn-circle-alt i {
+    color: #fff !important;
+}
+
+.btn-circle-alt:hover {
+    transform: rotateY(.5turn) rotateX(-.03turn);
+}
+
+.btn-circle-alt {
+    width: 25px;
+    height: 25px;
+    padding: 3px 0px;
+    border-radius: 15px;
+    text-align: center;
+    color: #fff;
+    background-color: #3bd4c7;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+
+.btn-circle-alt:hover {
+    color: #fff;
+}
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+}
+
+.cdk-overlay-pane {
+    position: absolute;
+    pointer-events: auto;
+    box-sizing: border-box;
+    z-index: 1000;
+    display: flex;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+::ng-deep .cdk-overlay-container {
+    z-index: 2000;
+}
+
+.modal-backdrop {
+    --bs-backdrop-bg: #000;
+    --bs-backdrop-opacity: .5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bs-backdrop-bg);
+}
+
+.dialogContainer {
+    top: inherit;
+    bottom: 12px;
+    position: fixed;
+    z-index: 300;
+    right: 0;
+}
+
+.dialog .dialogContent {
+    padding: 20px;
+}
+
+th.mat-header-cell {
+    font-size: 13px!important;
+    font-weight: 500;
+}

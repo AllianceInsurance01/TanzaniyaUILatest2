@@ -1,0 +1,74 @@
+.Choose-Product-Box {
+    padding: 10px;
+}
+.heading{
+    background: #fff;
+    box-shadow: 2px 2px 4px #00000029;
+    -webkit-box-shadow: 2px 2px 4px #00000029;
+    -moz-box-shadow: 2px 2px 4px #00000029;
+    padding: 10px 50px;
+    border-radius: 20px;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    color: #e02020;
+    margin-top: -32px;
+    text-align: center;
+    font: 600 16px Arial;
+    letter-spacing: 0;
+    color: #e02020;
+    z-index: 99;
+    position: absolute;
+    white-space: nowrap;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.padd0 {
+    padding-left: 0;
+    padding-right: 0;
+}
+.Choose-Product-Box .InsuranceType {
+    width: 16.65% !important;
+    border-radius: 5px 5px 0 0;
+    opacity: 1!important;
+}
+.box-1 .topIco {
+    margin-top: 35px!important;
+}
+.InsuranceName {
+    font-size: 13px;
+    min-height: 40px;
+    margin-top: 2px;
+    vertical-align: middle;
+    text-align: center;
+    font-weight: Bold;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0;
+    color: #4d4d4d;
+    text-transform: capitalize;
+}
+.InsuranceIcon, .ourProduct-sec .InsuranceIcon {
+    
+    margin: 10px auto;
+    box-shadow: 2px 2px 4px #00000026;
+    -moz-box-shadow: 2px 2px 4px #00000026;
+    -webkit-box-shadow: 2px 2px 4px #00000026;
+    border: 5px solid transparent;
+    border-radius: 50% !important;
+    border-color: transparent !important;
+    
+    background-color: #fff;
+    height: 125px;
+    width: 125px;
+}
+.domesticIcon{
+    background: url('../../../assets/images/health.png') no-repeat center;
+    background-size: 95px !important;
+}
+.InsuranceIcon1 {
+    border: 2px solid #ffde48!important;
+}
+.bwT {
+    background: rgba(275,275,275,.5) !important;
+}

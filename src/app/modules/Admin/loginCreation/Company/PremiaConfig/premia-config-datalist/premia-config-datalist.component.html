@@ -1,0 +1,136 @@
+<div class="vision-grid-item">
+    <div class="card">
+        <div class="card-header"> Premia Configuration Details</div>
+        <div class="card-body">
+            <div class="row">
+                <!-- <div class="col-12 col-lg-6 col-xl-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Section Id<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" appendTo="body"   bindValue="Code" bindLabel="CodeDesc" >
+                        </ng-select>
+                    </div>
+                </div> -->
+                <div class="col-12 col-lg-6 col-xl-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Column Name<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="ColumnNames" [items]="columList"  bindValue="ColumnName" bindLabel="CodeDesc" >
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 col-xl-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Data Type<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" appendTo="body" [items]="Datatype" [(ngModel)]="DataTypeId" bindValue="Code" bindLabel="CodeDesc" >
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 col-xl-6" *ngIf="DataTypeId=='3'">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Date Format<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <input type="text" class="input-form-control without-icon" [(ngModel)]="premiaConfigDetails.DateFormatType" maxlength="100">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 col-xl-6">
+                  <div class="input-control-container">
+                      <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                      <div class="input-form-box">
+                          <input type="text" class="input-form-control without-icon" [(ngModel)]="premiaConfigDetails.Remarks" maxlength="100">
+                      </div>
+                  </div>
+              </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                      <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Effective Date</mat-label>
+                            <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="premiaConfigDetails.EffectiveDateStart">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Default Yn<span class="text-required">*</span></label>
+                        <div class="input-form-radio-box">
+                            <div class="radio-toolbar">
+                                <input id="DefaultYn_Yes" type="radio" name="DefaultYn" [(ngModel)]="premiaConfigDetails.DefaultYn" value="Y">
+                                <label for="DefaultYn_Yes">Yes</label>
+                                <input type="radio" id="DefaultY_no" name="DefaultYn" [(ngModel)]="premiaConfigDetails.DefaultYn" value="N">
+                                <label for="DefaultY_no">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 col-xl-6" *ngIf="premiaConfigDetails.DefaultYn=='Y'">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Default Value<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <input type="text" class="input-form-control without-icon" [(ngModel)]="premiaConfigDetails.DefaultValue" maxlength="100">
+                        </div>
+                    </div>
+                </div>
+            <ng-container  *ngIf="DefaultYn=='N'">
+
+                <!--<div class="col-12 col-lg-6 col-xl-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Input Table<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" appendTo="body" [items]="premiaList" (change)="getBranchListsss()"   bindValue="Code" bindLabel="CodeDesc" >
+                        </ng-select>
+                    </div>
+                </div>-->
+                <div class="col-12 col-lg-6 col-xl-6" *ngIf="premiaConfigDetails.DefaultYn=='N'">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Input Column<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <input type="text" class="input-form-control without-icon" [(ngModel)]="InputColumn" maxlength="100">
+                        </div>
+                        <!-- <ng-select class="input-form-select" appendTo="body" [(ngModel)]="InputColumn" [items]="Datatypes" bindValue="Code" bindLabel="CodeDesc" >
+                        </ng-select> -->
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6" *ngIf="premiaConfigDetails.DefaultYn=='N'">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Case Condition<span class="text-required">*</span></label>
+                        <div class="input-form-radio-box">
+                            <div class="radio-toolbar">
+                                <input id="CaseCondition" type="radio" name="CaseConditionl"  [(ngModel)]="premiaConfigDetails.CaseConditionYn"  value="Y">
+                                <label for="CaseCondition">Yes</label>
+                                <input type="radio" id="CaseConditionno" name="CaseConditionl" [(ngModel)]="premiaConfigDetails.CaseConditionYn" value="N">
+                                <label for="CaseConditionno">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 col-xl-6" *ngIf="premiaConfigDetails.CaseConditionYn =='Y'">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Case Condition<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <input type="text" class="input-form-control without-icon" [(ngModel)]="premiaConfigDetails.CaseCondition" maxlength="200">
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Status<span class="text-required">*</span></label>
+                        <div class="input-form-radio-box">
+                            <div class="radio-toolbar">
+                                <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="premiaConfigDetails.Status"  value="Y">
+                                <label for="orginwarehouse_Yes">Active</label>
+                                <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="premiaConfigDetails.Status" value="N">
+                                <label for="orginwarehouse_No">DeActive</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="text-center mt-2">
+            <button class="btn btn-danger" (click)="ongetBack()">Back</button>&nbsp;
+            <button class="btn btn-primary"   (click)="onSave()">Submit</button>
+        </div>
+        </div>
+    </div>
+</div>

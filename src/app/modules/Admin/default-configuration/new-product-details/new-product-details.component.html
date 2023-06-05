@@ -1,0 +1,251 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div>
+                {{ title }}
+            </div>
+            <div *ngIf="ProductId">
+                ProductId ~ {{ProductId}}
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Product Name<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="productDetails.ProductName" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Product Description<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div> -->
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" [(ngModel)]="productDetails.CoreAppCode" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Product Description<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" [(ngModel)]="productDetails.ProductDesc" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">CheckerYN<span class="text-required">*</span></label>
+                    <div class="input-form-radio-box">
+                        <div class="radio-toolbar">
+                            <input id="checker_Yes" type="radio" name="CheckerYN" [(ngModel)]="productDetails.CheckerYn" value="Y">
+                            <label for="checker_Yes">Yes</label>
+                            <input type="radio" id="checker_No" name="CheckerYN" [(ngModel)]="productDetails.CheckerYn" value="N">
+                            <label for="checker_No">No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">MakerYN<span class="text-required">*</span></label>
+                    <div class="input-form-radio-box">
+                        <div class="radio-toolbar">
+                            <input id="maker_Yes" type="radio" name="MakerYN" [(ngModel)]="productDetails.MakerYn" value="Y">
+                            <label for="maker_Yes">Yes</label>
+                            <input type="radio" id="maker_No" name="MakerYN" [(ngModel)]="productDetails.MakerYn" value="N">
+                            <label for="maker_No">No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">PaymentYn<span class="text-required">*</span></label>
+                    <div class="input-form-radio-box">
+                        <div class="radio-toolbar">
+                            <input id="payment_Yes" type="radio" name="PaymentYN" [(ngModel)]="productDetails.PaymentYn" value="Y">
+                            <label for="payment_Yes">Yes</label>
+                            <input type="radio" id="payment_No" name="PaymentYN" [(ngModel)]="productDetails.PaymentYn" value="N">
+                            <label for="payment_No">No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-4" *ngIf="productDetails.PaymentYn == 'Y'">
+                <div class="input-control-container">
+                    <label class="input-form-label">Payment Redirect Url<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="productDetails.PaymentRedirUrl" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">App Login Url<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="productDetails.AppLoginUrl" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Product Icon<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" [items]="iconList" [(ngModel)]="productDetails.ProductIconId" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Sum Insured Start Limit<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="productDetails.SumInsuredStart" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Sum Insured End Limit<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="productDetails.SumInsuredEnd" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Commission Vat YN<span class="text-required">*</span></label>
+                    <div class="input-form-radio-box">
+                        <div class="radio-toolbar">
+                            <input id="commission_Yes" type="radio" name="CommissionYN" [(ngModel)]="productDetails.CommissionVatYn" value="Y">
+                            <label for="commission_Yes">Yes</label>
+                            <input type="radio" id="commission_No" name="CommissionYN" [(ngModel)]="productDetails.CommissionVatYn" value="N">
+                            <label for="commission_No">No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Customer Confirmation?<span class="text-required">*</span></label>
+                    <div class="input-form-radio-box">
+                        <div class="radio-toolbar">
+                            <input id="customer_Yes" type="radio" name="CustomerYN" [(ngModel)]="productDetails.CustConfirmYn" value="Y">
+                            <label for="customer_Yes">Yes</label>
+                            <input type="radio" id="customer_No" name="CustomerYN" [(ngModel)]="productDetails.CustConfirmYn" value="N">
+                            <label for="customer_No">No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="productDetails.EffectiveDateStart">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <!-- <div class="input-control-container">
+                    <label class="input-form-label">Effective Date Start<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="productDetails.EffectiveDateStart">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </div>
+                </div> -->
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Effective Date End</mat-label>
+                        <input matInput [matDatepicker]="picker1" [(ngModel)]="productDetails.EffectiveDateEnd">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <!-- <div class="input-control-container">
+                    <label class="input-form-label">Effective Date End<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="date" class="input-form-control without-icon" [(ngModel)]="productDetails.EffectiveDateEnd">
+                    </div>
+                </div> -->
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <textarea cols="60" ros="3" class="input-form-select" [(ngModel)]="productDetails.Remarks"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Status<span class="text-required">*</span></label>
+                    <div class="input-form-radio-box">
+                        <div class="radio-toolbar">
+                            <input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="productDetails.Status" value="P">
+                            <label for="orginwarehouse_Pending">Pending</label>
+                            <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="productDetails.Status" value="Y">
+                            <label for="orginwarehouse_Yes">Active</label>
+                            <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="productDetails.Status" value="N">
+                            <label for="orginwarehouse_No">DeActive</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Policy Prefix<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Quote Prefix<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div> -->
+
+        </div>
+    </div>
+    <div>
+        <div class="row mb-2">
+            <div class="col-md-3 col-xl-3 col-lg-3">
+
+            </div>
+            <div class="col-md-3 col-xl-3 col-lg-3 offset-6 pl-4">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6">
+                        <button class="btn btn-danger" (click)="dismiss()">Cancel</button>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6">
+                        <button class="ml-2 btn btn-primary" (click)="onSaveProduct()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

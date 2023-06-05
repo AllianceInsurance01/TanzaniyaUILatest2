@@ -1,0 +1,312 @@
+<!--<div class="vision-grid-item">
+    <div class="card">
+        <div class="card-header">Dropdown Details</div>
+        <div class="card-body">
+            <div class="row">
+
+
+                <div class="col-md-4 col-lg-6 col-xl-6">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Table Type<span class="text-required">*</span></label>
+                            <ng-select class="input-form-select" appendTo="body" [items]="tableList" [(ngModel)]="DropDownDetails.TableType"    bindValue="Code"
+                                bindLabel="CodeDesc" (change)="tableName()">
+                            </ng-select>
+                        </div>
+                    </div>
+
+                <div class="col-md-4 col-lg-6 col-xl-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Table Name<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" appendTo="body" [items]="tableNameList" [(ngModel)]="DropDownDetails.TableName" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Api Name</label>
+                        <div class="input-form-box">
+                            <textarea class="input-form-control without-icon" [(ngModel)]="DropDownDetails.ApiName" maxlength="200" cols="160" rows="2"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-6 col-xl-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Key Table</label>
+                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="DropDownDetails.KeyTable" [items]="keyTableList" bindValue="Code" bindLabel="CodeDesc" (change)="keyName(value)">
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-6 col-xl-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Key Name</label>
+                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="DropDownDetails.KeyName" [items]="KeyNameValue" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">ApiUrl</label>
+                        <div class="input-form-box">
+                            <input type="text" class="input-form-control without-icon" [(ngModel)]="DropDownDetails.ApiUrl" maxlength="100">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-4 col-lg-6 col-xl-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Branch Code<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="DropDownDetails.BranchCode" [items]="branchList" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                        <mat-form-field appearance="fill">
+                            <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="DropDownDetails.EffectiveDateStart">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Status<span class="text-required">*</span></label>
+                        <div class="input-form-radio-box">
+                            <div class="radio-toolbar">
+                                <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouseone" [(ngModel)]="DropDownDetails.Status" value="Y">
+                                <label for="orginwarehouse_Yes">Active</label>
+                                <input type="radio" id="orginwarehouse_No" name="originatingWarehouseone" [(ngModel)]="DropDownDetails.Status" value="N">
+                                <label for="orginwarehouse_No">DeActive</label>
+                                <input type="radio" id="orginwarehouse_Referral" name="originatingWarehouseone" [(ngModel)]="DropDownDetails.Status" value="R">
+                                <label for="orginwarehouse_Referral">Referral</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Request Applicable<span class="text-required">*</span></label>
+                        <div class="input-form-radio-box">
+                            <div class="radio-toolbar">
+                                <input id="RequestYes" type="radio" name="RequestYn" [(ngModel)]="DropDownDetails.RequestYn" value="Y" *ngIf="DropDownDetails.KeyTable">
+                                <label for="RequestYes">Yes</label>
+                                <input type="radio" id="RequestYno" name="RequestYn" [(ngModel)]="DropDownDetails.RequestYn" value="N">
+                                <label for="RequestYno">No</label>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-lg-2 offset-10">
+                        <button class="btn btn-primary" (click)="onAddCalEntry()">Add New</button>
+                    </div>
+
+                    <table class="table table-headerRow mt-2">
+                        <tr>
+                            <th class="tbl-header">Input Key</th>
+                            <th class="tbl-header">ColumnName</th>
+                            <th class="tbl-header">Remove</th>
+                        </tr>
+                        <tr *ngFor="let row of paramList;let i = index">
+
+                            <td class="tbl-content mt-2">
+                                <ng-select class="custom" name="calcType" [(ngModel)]="row.key"
+                                    placeholder="Select Calculation Type" appendTo="body" [searchable]="true"
+                                    [clearable]="true" [closeOnSelect]="true">
+                                    <ng-option *ngFor="let opt of paramKeylist" [value]="opt.value">{{opt.text}}
+                                    </ng-option>
+                                </ng-select>
+                            </td>
+                            <td class="tbl-content">
+                                <div class="input-control-container">
+                                    <div class="input-form-box">
+                                        <input type="text" class="input-form-control without-icon" maxlength="100">
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-danger p-1" (click)="onRemoveIndex(i)"><i class="fa fa-trash"
+                                        aria-hidden="true"></i></button>
+                            </td>
+                        </tr>
+                    </table>
+
+            </div>
+            <div class="d-flex justify-content-between" *ngIf="DropDownDetails.RequestYn=='Y'">
+                <div class="flex-item"></div>
+                <div class="flex-item mr-2">
+                    <button class="btn btn-primary btn-sm" (click)="addItem(row)">
+                        <i class="fas fa-plus"></i>Add New
+                    </button>
+                </div>
+            </div>
+            <div class="row mt-3" *ngIf="DropDownDetails.RequestYn=='Y'">
+                <div class="col-md-12 col-lg-12 col-xl-12 customRow">
+                    <table class="table table-headerRow">
+                        <tr>
+                            <th class="tbl-header">Table</th>
+                            <th class="tbl-header">Table</th>
+                            <th class="tbl-header">Column</th>
+                            <th class="tbl-header">JSON Key</th>
+                            <th class="tbl-header">Action</th>
+                        </tr>
+                        <tr *ngFor="let row of jsonList;let i = index">
+
+                            <td class="tbl-content">
+                                <ng-select class="custom" name="tableName" [(ngModel)]="row.tableName" placeholder="Select Calculation Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                    <ng-option *ngFor="let opt of tableList" [value]="opt.Code">{{opt.CodeDesc}}</ng-option>
+                                </ng-select>
+                            </td>
+                            <td class="tbl-content">
+                                <ng-select class="custom" name="RatingFiledId" [(ngModel)]="row.RequestTable" disabled [items]="keyTableList" bindValue="Code" bindLabel="CodeDesc" appendTo="body">
+
+                                </ng-select>
+                            </td>
+                            <td class="tbl-content">
+                                <div class="input-form-radio-box">
+                                    <div class="radio-toolbar" style="width: 120px !important;">
+                                        <input [id]="'range_Yes'+i" type="radio" [name]="'rangeYN'+i" [(ngModel)]="row.RangeYn" value="Y">
+                                        <label [for]="'range_Yes'+i" class="customLabel">Yes</label>
+                                        <input type="radio" [id]="'range_No'+i" [name]="'rangeYN'+i" [(ngModel)]="row.RangeYn" value="N">
+                                        <label [for]="'range_No'+i" class="customLabel">No</label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="tbl-content">
+                                <ng-container *ngIf="row.RangeYn!='Y'">
+                                    <ng-select class="custom" name="ColumnsId" [(ngModel)]="row.ColumnsId" placeholder="Select Calculation Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                        <ng-option *ngFor="let opt of param2List" [value]="opt.Code">{{opt.CodeDesc}}</ng-option>
+                                    </ng-select>
+                                </ng-container>
+                            </td>
+                           <td class="tbl-content">
+                                <div class="input-control-container">
+                                    <ng-select class="custom" name="RatingFiledId" [(ngModel)]="row.RequestColumn" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                    </ng-select>
+                                </div>
+
+                            </td>
+                        <td class="tbl-content">
+                            <div class="input-form-box">
+                                <input type="text" class="input-form-control without-icon" maxlength="50" [(ngModel)]="row.RequestJsonKey">
+                            </div>
+
+                        </td>
+                        <td class="tbl-content">
+                           <button class="btn btn-primary" (click)="delete(row)"> <i class="fa fa-trash"></i></button>
+                        </td>
+
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="text-center mt-2">
+                    <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+                    <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button></div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+
+<div class="vision-grid-item">
+    <div class="card">
+        <div class="card-header">Dropdown Details</div>
+        <div class="card-body">
+            <div class="row">
+              <div class="col-md-4 col-lg-6 col-xl-6">
+                <div class="input-control-container">
+                    <label class="input-form-label">Description<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                      <input type="text" class="input-form-control without-icon" [(ngModel)]="DropDownDetails.ItemValue" maxlength="100">
+                  </div>
+                </div>
+            </div>
+
+                <div class="col-md-4 col-lg-6 col-xl-6">
+                  <div class="input-control-container">
+                      <label class="input-form-label">Code<span class="text-required" style="color:red">*</span></label>
+                      <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="DropDownDetails.ItemCode" maxlength="100">
+                    </div>
+                  </div>
+              </div>
+              <div class="col-md-4 col-lg-6 col-xl-6">
+                <div class="input-control-container">
+                    <label class="input-form-label">Type<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" appendTo="body" disabled [items]="TypeList" [(ngModel)]="ItemValue" bindValue="CodeDesc"
+                        bindLabel="CodeDesc" (change)="tableName()">
+                    </ng-select>
+                </div>
+            </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Core App Code<span class="text-required" style="color:red">*</span></label>
+                        <div class="input-form-box">
+                          <input type="text" class="input-form-control without-icon" [(ngModel)]="DropDownDetails.CoreAppCode" maxlength="100">
+                      </div>
+                        <!--<div class="input-form-box">
+                            <textarea type="text" cols="60" ros="3" [(ngModel)]="Industrydetails.CoreAppCode" class="input-form-select"></textarea>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                  <div class="input-control-container">
+                      <label class="input-form-label">RegulatoryCode <span class="text-required" style="color:red">*</span></label>
+                      <div class="input-form-box">
+                          <input type="text" class="input-form-control without-icon" [(ngModel)]="DropDownDetails.RegulatoryCode" maxlength="100">
+                      </div>
+                  </div>
+              </div>
+
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Effective Date<span class="text-required" style="color:red">*</span></label>
+                        <mat-form-field appearance="fill">
+                            <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="DropDownDetails.EffectiveDateStart">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+            <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Status<span class="text-required">*</span></label>
+                        <div class="input-form-radio-box">
+                            <div class="radio-toolbar">
+                                <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouseone" [(ngModel)]="DropDownDetails.Status" value="Y">
+                                <label for="orginwarehouse_Yes">Active</label>
+                                <input type="radio" id="orginwarehouse_No" name="originatingWarehouseone" [(ngModel)]="DropDownDetails.Status" value="N">
+                                <label for="orginwarehouse_No">DeActive</label>
+                                <input type="radio" id="orginwarehouse_Referral" name="originatingWarehouseone" [(ngModel)]="DropDownDetails.Status" value="R">
+                                <label for="orginwarehouse_Referral">Referral</label>
+                                <input type="radio" id="orginwarehouse_Pending" name="originatingWarehouseone" [(ngModel)]="DropDownDetails.Status" value="P">
+                                <label for="orginwarehouse_Pending">Pending</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Remarks<span class="text-required" style="color:red">*</span></label>
+                        <div class="input-form-box">
+                          <textarea type="text" cols="60" ros="3" [(ngModel)]="DropDownDetails.Remarks" class="input-form-select"></textarea>
+                      </div>
+                        <!--<div class="input-form-box">
+                            <input type="text" class="input-form-control without-icon" [(ngModel)]="DropDownDetails.Remarks" maxlength="100">
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="text-center mt-2">
+                <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+                <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button></div>
+        </div>
+</div>
+</div>

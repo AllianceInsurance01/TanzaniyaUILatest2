@@ -1,0 +1,29 @@
+<div class="vision-grid-item">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between">
+                <div>
+                    Clauses Details
+                </div>
+                <div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <ng-container *ngIf="clausesData.length!=0">
+                <app-grid-table [cols]="WarrantyHeader" [data]="clausesData" [filterValue]="filterValue" (onSelectCustomer)="onSelectCustomer($event)" (onEdit)="onEdit($event)">
+                </app-grid-table>
+            </ng-container>
+            <ng-container *ngIf="clausesData.length==0">
+                <div class="text-center">
+                    No Data Available
+                </div>
+            </ng-container>
+            <div class="text-center mt-2">
+                <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+                <button class="btn btn-success ml-2" *ngIf="clausesList.length!=0" (click)="onProceed()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

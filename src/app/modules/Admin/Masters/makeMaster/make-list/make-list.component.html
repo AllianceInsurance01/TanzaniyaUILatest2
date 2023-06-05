@@ -1,0 +1,46 @@
+<div class="card">
+            <div class="vision-grid-item">
+                <div class="card">
+                    <div class="card-header">
+                      <div class="d-flex justify-content-between">
+                        <div>
+                          Existing Make
+                        </div>
+                        <div>
+                            <button class="btn btn-warning" (click)="onAddColor()">Add New</button>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-md-4 col-lg-4 col-xl-4">
+                              <div class="input-control-container">
+                                  <label class="input-form-label">Branch<span class="text-required">*</span></label>
+                                  <ng-select class="input-form-select" appendTo="body" [items]="branchList" bindValue="Code"  [(ngModel)]="branchValue" (change)="getExistingColor()" bindLabel="CodeDesc">
+                                  </ng-select>
+                              </div>
+                          </div>
+                            <!--<div class="col-md-3 col-xl-3 col-lg-3 offset-6">
+                                <button class="btn btn-warning" (click)="onAddColor()">Add New</button>
+                            </div>-->
+                        </div>
+
+
+                        <ng-container *ngIf="MakeData">
+                            <app-grid-table [cols]="columnHeader" changeStatus="true" (OnStatus)="EditStatus($event)" [data]="MakeData" [filterValue]="filterValue" (onEdit)="onEditMake($event)">
+                            </app-grid-table>
+                        </ng-container>
+                        <!--<div class="text-center">
+                            <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+                        </div>-->
+
+
+                        <!-- <ng-container *ngIf="branchData && branchValue">
+                            <app-grid-table [cols]="columnHeader" [data]="branchData" [filterValue]="filterValue" (onEdit)="onEditOccupation($event)" (onConfigure)="onConfigure($event)">
+                            </app-grid-table>
+                        </ng-container>-->
+                    </div>
+                </div>
+            </div>
+
+</div>

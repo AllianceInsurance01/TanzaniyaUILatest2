@@ -1,0 +1,131 @@
+<div class="card">
+    <div class="card-body">
+        <div class="card p-1">
+            <div class="vision-grid vision-grid-column-2">
+                <div class="vision-grid-item">
+                    <div class="radio-toolbar menu-bar">
+                        <input id="menu" type="radio" name="menu" value="Country" (click)="onRedirect('Country')" [(ngModel)]="activeMenu">
+                        <label for="menu">Country Details</label>
+                        <input type="radio" id="menu4" name="menu" value="Region" (click)="onRedirect('Region')" [(ngModel)]="activeMenu">
+                        <label for="menu4">Region</label>
+                        <input type="radio" id="menu1" name="menu" value="State" (click)="onRedirect('State')" [(ngModel)]="activeMenu">
+                        <label for="menu1">State</label>
+                        <input type="radio" id="menu2" name="menu" value="City" (click)="onRedirect('City')" [(ngModel)]="activeMenu">
+                        <label for="menu2">City</label>
+                        <input type="radio" id="menu3" name="menu" value="Currency" (click)="onRedirect('Currency')" [(ngModel)]="activeMenu">
+                        <label for="menu3">Currency</label>
+                    </div>
+                </div>
+                <div class="vision-grid-item">
+                    <div class="card">
+                        <div class="card-header">Currency Details</div>
+                        <div class="card-body">
+                            <div class="row mt-2">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Currency Name<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" maxlength="100">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Short Name<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" maxlength="100">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">SubCurrency<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" maxlength="100">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" maxlength="100">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Minimum Limit<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" maxlength="100">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Maximum Limit<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" maxlength="100">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">RFactor<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" maxlength="100">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Status<span class="text-required">*</span></label>
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar">
+                                                <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="statusValue" value="YES">
+                                                <label for="orginwarehouse_Yes">Active</label>
+                                                <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="statusValue" value="NO">
+                                                <label for="orginwarehouse_No">DeActive</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="date" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <textarea cols="120" rows="2" class="input-form-control without-icon" maxlength="200"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mt-2">
+                                <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+                                <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-2">
+            <button class="btn btn-danger" (click)="backtoMainGrid()">Back</button>
+        </div>
+    </div>
+</div>

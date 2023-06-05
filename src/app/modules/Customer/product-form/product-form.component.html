@@ -1,0 +1,245 @@
+<!-- <div class="form__wrapper">
+    <form [formGroup]="form" (ngSubmit)="onSubmit(productItem)" (change)="onChange($event)">
+        <formly-form [form]="form"  [fields]="fields" [model]="productItem"></formly-form>
+
+    </form>
+</div> -->
+<div class="maan-grid customer-grid maan-grid-column-1 ">
+    <div class="maan-grid-item">
+        <div class="maan-grid-item-title">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <span class="mx-1">
+                            <i class="fas fa-user mx-1"></i>
+                        </span>
+                    <span class="spancommon">Customer Details</span>
+                </div>
+                <div>
+                    <ng-container>
+                        <button class="maan-btn maan-btn-blue spancommon" style="letter-spacing:1px"><i class="fas fa-user-plus mx-1 customer"></i>New Customer</button>
+                    </ng-container>
+                </div>
+            </div>
+
+        </div>
+        <div class="maan-grid-item-body">
+            <mat-horizontal-stepper #stepper>
+                <mat-step>
+                  <ng-template matStepLabel>Personal Information</ng-template>
+                  <div class="row">
+                        <div class="col-md-2 col-lg-2 col-xl-2">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Title</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="titleList" (change)="onTitleChange()" [(ngModel)]="productItem.Title" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>  
+                        <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Customer Name</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" maxlength="150" (keypress)="omit_special_char($event)" class="input-form-control without-icon"  [(ngModel)]="productItem.ClientName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Gender</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="genderList"  [(ngModel)]="productItem.Gender" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Customer Type</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="policyHolderList" (change)="getPolicyIdTypeList('change')"  [(ngModel)]="productItem.IdType" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>  
+                   </div>
+                   <div class="row mt-1">
+                        <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Identity Type</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="policyHolderTypeList"  [(ngModel)]="productItem.PolicyHolderTypeid" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">ID Number</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" (keypress)="omit_special_char($event)" class="input-form-control without-icon"  [(ngModel)]="productItem.IdNumber" maxlength="20">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Prefered Notification</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="notificationList"  [(ngModel)]="productItem.PreferredNotification" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        
+                        <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Tax Excempted</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select"  appendTo="body" [items]="taxExcemptedList"  [(ngModel)]="productItem.isTaxExempted" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="productItem.isTaxExempted=='Y'">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Tax Excempted Code</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" maxlength="20" (keypress)="omit_special_char($event)" class="input-form-control without-icon"  [(ngModel)]="productItem.TaxExemptedId">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="productItem.IdType == 1">
+                            <label class="input-form-label spancommon span_font_size">Date Of Birth<span class="text-danger">*</span></label>
+                                <ng-container >
+                                    <mat-form-field appearance="fill">
+                                        <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
+                                        <input matInput [matDatepicker]="picker" [max]="maxDobDate" [(ngModel)]="productItem.dobOrRegDate">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </ng-container>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="productItem.IdType == 2">
+                            <label class="input-form-label spancommon span_font_size">Registration Date<span class="text-danger">*</span></label>
+                                <ng-container >
+                                    <mat-form-field appearance="fill">
+                                        <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
+                                        <input matInput [matDatepicker]="picker1" [max]="maxDate" [(ngModel)]="productItem.dobOrRegDate">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </mat-form-field>
+                                </ng-container>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Status</label><span class="text-danger">*</span>
+                                <div class="input-form-radio-box">
+                                    <div class="radio-toolbar">
+                                        <input id="claims_Active" type="radio" name="clientStatus" [(ngModel)]="productItem.Clientstatus" value="Y">
+                                        <label for="claims_Active" class="yes">Active</label>
+                                        <input id="claims_DeActive" type="radio" name="clientStatus"  [(ngModel)]="productItem.Clientstatus" value="N">
+                                        <label for="claims_DeActive" class="no">DeActive</label>
+                                        <input id="claims_Pending" type="radio" name="clientStatus"  [(ngModel)]="productItem.Clientstatus" value="P">
+                                        <label for="claims_Pending" class="no">Pending</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                  <div class="text-center">
+                    <button class="custom-btn btn-5 mx-2" (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                    <button class="custom-btn btn-6 maan-button-data mx-2" (click)="moveNext(stepper)" style="width: 11rem" matRipple>Next</button>
+                  </div>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>Other Information</ng-template>
+                    <div class="row mt-2">
+                        <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Occupation</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="occupationList"  [(ngModel)]="productItem.Occupation" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-lg-2 col-xl-2">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Code</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="mobileCodeList"  [(ngModel)]="productItem.MobileCode" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Mobile No</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" maxlength="10" (keypress)="omit_special_char($event)" class="input-form-control without-icon"  [(ngModel)]="productItem.MobileNo">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">EmailId</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text"  class="input-form-control without-icon" email [(ngModel)]="productItem.EmailId" #prmEmail="ngModel">
+                                </div>
+                                <div *ngIf="prmEmail.errors?.email" class="text-danger"> 
+                                    Please Enter Valid Email Id
+                               </div> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Address 1</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" maxlength="100" (keypress)="omit_special_char($event)" class="input-form-control without-icon"  [(ngModel)]="productItem.Address1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Address 2</label>
+                                <div class="input-form-box">
+                                    <input type="text" maxlength="100" (keypress)="omit_special_char($event)" class="input-form-control without-icon"  [(ngModel)]="productItem.Address2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Country</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="countryList" (change)="getRegionList('change')" [(ngModel)]="productItem.Country" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Region</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="regionList" (change)="getStateList('change')"  [(ngModel)]="productItem.state" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">District</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="stateList" [(ngModel)]="productItem.CityName" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="productItem.IdType!='1'">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Business Type</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="businessTypeList" [(ngModel)]="productItem.BusinessType" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="productItem.IdType!='1'">
+                            <div class="input-control-container">
+                                <label class="input-form-label">VRN/GST No</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" (keypress)="omit_special_char($event)" class="input-form-control without-icon"  [(ngModel)]="productItem.vrngst" maxlength="20">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button class="custom-btn btn-5 mx-2" (click)="movePrevious(stepper)" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-6 maan-button-data mx-2" (click)="onSubmit(productItem)" style="width: 11rem" matRipple>Proceed</button>
+                      </div>
+                  </mat-step>
+            </mat-horizontal-stepper> 
+        </div>
+    </div>
+</div>

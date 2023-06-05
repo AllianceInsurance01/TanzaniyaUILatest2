@@ -1,0 +1,672 @@
+import { ViewDocumnetDetailsComponent } from './../../../../../shared/view-documnet-details/view-documnet-details.component';
+import { Component, OnInit } from '@angular/core';
+import * as Mydatas from '../../../../../app-config.json';
+import { UpdateCustomerDetailsComponent } from '../../update-customer-details.component';
+import { SharedService } from '../../../../../shared/shared.service';
+import { NbComponentStatus, NbGlobalPhysicalPosition, NbToastrService, NbDialogService } from '@nebular/theme';
+import { NewViewDetailsComponent } from '../new-view-details/new-view-details.component';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-premium-details',
+  templateUrl: './premium-details.component.html',
+  styleUrls: ['./premium-details.component.css']
+})
+export class PremiumDetailsComponent implements OnInit {
+  isMannualReferal:any="N";
+  customerDetails: any;
+  quoteRefNo: string;
+  vehicleId: string;
+  title: any;
+  clientName: any;
+  dateOfBirth: any;
+  emailId: any;
+  mobileNo: any;
+  idNumber: any;uploadDocList:any[]=[];
+  totalPremium: any;
+  vehicleDetails: any;
+  motorDetails: any;uploadedDocList:any[]=[];
+  imageUrl: any;commonDocTypeList:any[]=[];
+  viewFileName: any;docListSection:boolean=false;
+  veiwSelectedDocUrl: any;config = { multi: false };
+  quoteNo: any;vehicleList:any[]=[];branchCode:any;branchList:any;
+  public AppConfig: any = (Mydatas as any).default;
+  public ApiUrl1: any = this.AppConfig.ApiUrl1;
+  public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
+  public motorApiUrl:any = this.AppConfig.MotorApiUrl;productId:any;docTypeList:any[]=[];
+  userDetails:any;loginId:any;userType:any;agencyCode:any;insuranceId:any;
+<<<<<<< HEAD
+  customerType: any;
+  constructor(private sharedService: SharedService,private toastrService:NbToastrService,private updateComponent:UpdateCustomerDetailsComponent,private dialogService: NbDialogService) {
+=======
+  subuserType: string;
+  constructor(private sharedService: SharedService,private toastrService:NbToastrService,
+    private router:Router,
+    private updateComponent:UpdateCustomerDetailsComponent,private dialogService: NbDialogService) {
+>>>>>>> f35d22241f9a51cebb00e2ab5c9a497e8b408de5
+    //this.vehicleId = sessionStorage.getItem('editVehicleId');
+    //this.quoteNo = sessionStorage.getItem('quoteNo');
+    //this.updateComponent.quoteNo = this.quoteNo;
+    this.subuserType = sessionStorage.getItem('typeValue');
+    this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+    this.loginId = this.userDetails.Result.LoginId;
+    this.userType = this.userDetails?.Result?.UserType;
+    this.agencyCode = this.userDetails.Result.OaCode;
+    this.branchCode = this.userDetails.Result.BranchCode;
+    this.branchList = this.userDetails.Result.LoginBranchDetails;
+    this.productId = this.userDetails.Result.ProductId;
+    this.insuranceId = this.userDetails.Result.InsuranceId;
+     this.quoteRefNo = sessionStorage.getItem('quoteReferenceNo');
+     this.quoteNo = sessionStorage.getItem('quoteNo');
+     this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
+     console.log( 'CCCCCCCCCCCCCCCCCCCC',this.customerDetails);
+    if(this.customerDetails){
+      this.title = this.customerDetails?.TitleDesc;
+      this.clientName = this.customerDetails?.ClientName;
+      this.dateOfBirth = this.customerDetails?.DobOrRegDate;
+      this.emailId = this.customerDetails?.Email1;
+      this.mobileNo = this.customerDetails?.MobileNo1;
+      this.idNumber = this.customerDetails?.IdNumber;
+      if(this.customerDetails.PolicyHolderType=='1')
+      {
+        this.customerType="Individual";
+
+      }
+      else if(this.customerDetails.PolicyHolderType=='2')
+      {
+        this.customerType="Corporate";
+      }
+    }
+    this.vehicleDetails = JSON.parse(sessionStorage.getItem('vehicleDetails'));
+
+   }
+
+  ngOnInit(): void {
+    this.getCommonDocTypeList();
+    if(this.quoteRefNo){
+      this.getEditQuoteDetails();
+    }
+    // let chassisNo = sessionStorage.getItem('vehChassisNo');
+    // console.log("Chassis No ",chassisNo)
+    // if(chassisNo) this.getVehicleDetails(chassisNo);
+  }
+  getTotalVehiclesCost(){
+    let totalCost=0,i=0;
+    console.log('VECGJKKK',this.vehicleList);
+    for(let veh of this.vehicleList){
+      if(veh?.OverallPremiumFc) totalCost = totalCost+Number(veh?.OverallPremiumFc);
+
+      i+=1;
+      if(i==this.vehicleList.length) this.totalPremium = totalCost;
+      console.log('tttttt',);
+    }
+  }
+  getCommonDocTypeList(){
+    let ReqObj = {
+      "ProductId": this.productId,
+      "SectionId":"99999",
+      "DocumentType": "1",
+      "InsuranceId": this.insuranceId
+    }
+    let urlLink = `${this.ApiUrl1}master/dropdown/coverdocument`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+           this.commonDocTypeList = data.Result;
+          //  this.commonDocTypeList = [
+          //    {"Code":"1","CodeDesc":"License"},
+          //    {"Code":"2","CodeDesc":"Aadhar Card"}
+          //  ];
+           this.getUploadedDocList(null,-1);
+        }
+      },
+      (err) => { },
+    );
+
+  }
+  getVehicleDetails(chassisNo){
+    let ReqObj = {
+      "ReqChassisNumber": chassisNo,
+      "ReqRegNumber": null
+    }
+    let urlLink = `${this.motorApiUrl}regulatory/showvehicleinfo`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      console.log(data);
+      if(data.Result){
+      this.motorDetails = data.Result;
+
+      }
+      },
+      (err) => { },
+    );
+  }
+  getEditQuoteDetails(){
+    let ReqObj = {
+      "ProductId": this.productId,
+      "RequestReferenceNo": this.quoteRefNo
+    }
+    let urlLink = `${this.CommonApiUrl}api/view/calc`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+          if(data?.Result){
+            this.vehicleList = data?.Result;
+            console.log('VVVVVVVV',this.vehicleList);
+            if(this.vehicleList.length!=0){
+              this.setVehicleList();
+              // if(this.productId=='3'){
+
+              // }
+              // else{
+              //   this.setVehicleList();
+              // }
+
+
+
+              // let entry = this.vehicleList.find(ele=>String(ele.Vehicleid)==String(this.vehicleId));
+              // if(entry){
+              //   let index= this.vehicleList.findIndex(ele=>String(ele.Vehicleid)==entry.VehicleDetails.Vehicleid)
+              //   let coverList:any[] = entry.Covers;
+              //   if(coverList.length!=0 && this.coverList.length!=0){
+              //     let i=0;
+              //     for(let event of coverList){
+              //       let cover = this.coverList.find(ele=>ele.CoverId == event.CoverId);
+              //       if(cover){
+              //         cover['selected']= true;
+              //         this.onSelectCover(cover,true,this.vehicleId,'vehList');
+              //       }
+              //       i+=1;
+              //       if(i==coverList.length){
+              //         this.dataSource = new MatTableDataSource(this.coverList);
+              //         this.dataSource.sort = this.sort;
+              //         this.dataSource.paginator = this.paginator;
+              //         this.applyFilter(this.filterValue);
+              //       }
+              //     }
+              //   }
+              //   else{
+              //     this.dataSource = new MatTableDataSource(this.coverList);
+              //     this.dataSource.sort = this.sort;
+              //     this.dataSource.paginator = this.paginator;
+              //     this.applyFilter(this.filterValue);
+              //   }
+              // }
+              // else{
+              //   this.dataSource = new MatTableDataSource(this.vehicleDetailsList);
+              //   this.dataSource.sort = this.sort;
+              //   this.dataSource.paginator = this.paginator;
+              //   this.applyFilter(this.filterValue);
+              // }
+            }
+            else{
+
+            }
+          }
+      },
+      (err) => { },
+    );
+
+  }
+  setVehicleList(){
+    let i =0
+    for(let vehicle of this.vehicleList){
+      vehicle['docList'] = [];
+      vehicle['uploadedList']=[];
+      this.getDocTypeList(vehicle,i);
+      this.getUploadedDocList(vehicle,i);
+      i+=1;
+      if(i==this.vehicleList.length) this.docListSection = true;
+       this.getTotalVehiclesCost();
+
+
+    }
+  }
+  getDocTypeList(rowData,index){
+    console.log("Row Data",rowData)
+    let ReqObj = {
+      "ProductId": this.productId,
+      "SectionId": rowData.SectionId,
+      "DocumentType": "2",
+      "InsuranceId": this.insuranceId
+    }
+    let urlLink = `${this.ApiUrl1}master/dropdown/coverdocument`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          this.vehicleList[index]['docTypeList'] = data.Result;
+        }
+      },
+      (err) => { },
+    );
+  }
+  getUploadedDocList(vehicleData:any,index:any){
+    let docType="",i=0;
+    if(index>=0){ docType="2"}
+    else{  docType = "1" }
+
+    let ReqObj = {
+      "DocumentType": docType,
+      "Id": String(index+1),
+      "InsCompanyId": this.insuranceId,
+      "QuoteNo":  this.quoteNo
+    }
+    let urlLink = `${this.ApiUrl1}document/getdoclist`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+          if(data?.Result){
+            if(index<0){
+              this.uploadedDocList = data.Result;
+            }
+            else  this.vehicleList[index].uploadedList=data.Result;
+          }
+        },
+        (err) => { },
+      );
+  }
+onDeleteListDocument(vehIndex,rowData){
+  let entry = this.vehicleList[vehIndex];
+  let ReqObj = {
+    "DocumentId": rowData.DocumentId,
+    "DocumentReferenceNo": rowData.DocumentReferenceNo,
+    "Id": String(vehIndex+1),
+    "QuoteNo": this.quoteNo
+  }
+  let urlLink = `${this.ApiUrl1}document/delete`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+          if(data.ErrorMessage.length!=0){
+            for(let entry of data.ErrorMessage){
+              let type: NbComponentStatus = 'danger';
+              const config = {
+                status: type,
+                destroyByClick: true,
+                duration: 4000,
+                hasIcon: true,
+                position: NbGlobalPhysicalPosition.TOP_RIGHT,
+                preventDuplicates: false,
+              };
+              this.toastrService.show(
+                entry.Field,
+                entry.Message,
+                config);
+            }
+          }
+          else if(data?.Result){
+            let type: NbComponentStatus = 'success';
+              const config = {
+                status: type,
+                destroyByClick: true,
+                duration: 4000,
+                hasIcon: true,
+                position: NbGlobalPhysicalPosition.TOP_RIGHT,
+                preventDuplicates: false,
+              };
+            this.toastrService.show(
+              "Delete",
+              "Document Deleted Successfully",
+              config);
+              this.getUploadedDocList(null,vehIndex);
+          }
+        },
+        (err) => { },
+      );
+}
+toggle(index: number) {
+  let entry = this.vehicleList[index];
+  if (!this.config.multi) {
+    this.vehicleList.filter(
+      (menu, i) => i == index
+    ).forEach(menu => menu.Collapse = !menu.Collapse);
+    this.vehicleList.filter(
+      (menu, i) => i != index
+    ).forEach(menu => menu.Collapse = false);
+  }
+}
+  onUploadDocuments(target:any,fileType:any,type:any){
+    console.log("Event ",target);
+    let event:any = target.target.files;
+
+    let fileList = event;
+    for (let index = 0; index < fileList.length; index++) {
+      const element = fileList[index];
+      var reader:any = new FileReader();
+      reader.readAsDataURL(element);
+        var filename = element.name;
+
+        let imageUrl: any;
+        reader.onload = (res: { target: { result: any; }; }) => {
+          imageUrl = res.target.result;
+          this.imageUrl = imageUrl;
+          this.uploadDocList.push({ 'url': element,'DocTypeId':'','filename':element.name, 'JsonString': {} });
+
+        }
+
+    }
+    console.log("Final File List",this.uploadDocList)
+  }
+  onUploadListDocuments(target:any,fileType:any,type:any,i:any){
+    console.log("Event ",target);
+    let event:any = target.target.files;
+
+    let fileList = event;
+    for (let index = 0; index < fileList.length; index++) {
+      const element = fileList[index];
+
+      var reader:any = new FileReader();
+      reader.readAsDataURL(element);
+        var filename = element.name;
+
+        let imageUrl: any;
+        reader.onload = (res: { target: { result: any; }; }) => {
+          imageUrl = res.target.result;
+          this.imageUrl = imageUrl;
+            this.vehicleList[i].docList.push({ 'url': element,'DocTypeId':'','filename':element.name, 'JsonString': {} });
+            console.log("Final File List", this.vehicleList[i].docList)
+        }
+
+    }
+
+  }
+  onFileUploadCommonList(){
+
+    let docList = this.uploadDocList;
+    if(docList.length!=0){
+      let i=0;
+      for(let doc of docList){
+        let ReqObj={
+          "RequestReferenceNo": this.quoteRefNo,
+          "InsuranceId": this.insuranceId,
+          "DocumentId": doc.DocTypeId,
+          "ProductId": this.productId,
+          "SectionId": "99999",
+          "DocumentReferenceNo":"",
+          "FileName": doc.filename,
+          "OriginalFileName": doc.filename,
+          "CreatedBy":this.loginId,
+          "QuoteNo":this.quoteNo,
+          "Id": "0"
+        }
+        let urlLink = `${this.ApiUrl1}document/upload`;
+        this.sharedService.onPostDocumentMethodSync(urlLink, ReqObj,doc.url).subscribe(
+          (data: any) => {
+            if(data.ErrorMessage){
+              for(let entry of data.ErrorMessage){
+                let type: NbComponentStatus = 'danger';
+                const config = {
+                  status: type,
+                  destroyByClick: true,
+                  duration: 4000,
+                  hasIcon: true,
+                  position: NbGlobalPhysicalPosition.TOP_RIGHT,
+                  preventDuplicates: false,
+                };
+                this.toastrService.show(
+                  entry.Field,
+                  entry.Message,
+                  config);
+              }
+            }
+            else if(data?.Result){
+                i+=1;
+                if(i==docList.length){
+                  this.uploadDocList = [];
+                  this.getUploadedDocList(null,-1);
+                }
+              }
+            },
+            (err) => { },
+          );
+      }
+    }
+  }
+  onFileUploadVehicleList(index){
+      let vehicleDetails = this.vehicleList[index];
+      let docList = this.vehicleList[index].docList;
+      if(docList.length!=0){
+        let i=0;
+        for(let doc of docList){
+          let ReqObj={
+            "RequestReferenceNo": this.quoteRefNo,
+            "InsuranceId": this.insuranceId,
+            "DocumentId": doc.DocTypeId,
+            "ProductId": this.productId,
+            "SectionId": vehicleDetails?.SectionId,
+            "DocumentReferenceNo":"",
+            "FileName": doc.filename,
+            "OriginalFileName": doc.filename,
+            "CreatedBy":this.loginId,
+            "QuoteNo":this.quoteNo,
+            "Id": String(index+1)
+          }
+          let urlLink = `${this.ApiUrl1}document/upload`;
+          this.sharedService.onPostDocumentMethodSync(urlLink, ReqObj,doc.url).subscribe(
+            (data: any) => {
+              if(data.ErrorMessage){
+                for(let entry of data.ErrorMessage){
+                  let type: NbComponentStatus = 'danger';
+                  const config = {
+                    status: type,
+                    destroyByClick: true,
+                    duration: 4000,
+                    hasIcon: true,
+                    position: NbGlobalPhysicalPosition.TOP_RIGHT,
+                    preventDuplicates: false,
+                  };
+                  this.toastrService.show(
+                    entry.Field,
+                    entry.Message,
+                    config);
+                }
+              }
+              else if(data?.Result){
+                  i+=1;
+                  if(i==docList.length){
+                    this.vehicleList[index].docList = [];
+                    console.log("FInal List",this.vehicleList)
+                    this.getUploadedDocList(null,index);
+                  }
+                }
+              },
+              (err) => { },
+            );
+        }
+      }
+  }
+
+  onViewCommonDocument(index)
+  {
+    let entry = this.uploadedDocList[index];
+    let ReqObj = {
+        "DocumentId": entry.DocumentId,
+        "DocumentReferenceNo": entry.DocumentReferenceNo,
+        "Id": "0",
+        "QuoteNo": this.quoteNo
+  }
+  let urlLink = `${this.ApiUrl1}document/getcompressedimage`;
+  this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+    (data:any) => {
+      console.log(data);
+      this.dialogService.open(ViewDocumnetDetailsComponent, {
+           context: {
+             title: data.Result.OrginalFileName,
+             imageUrl: data.Result.ImgUrl
+           },
+         });
+    },
+    (err) => { },
+  );
+
+  }
+  onViewListDocument(index,doc)
+  {
+    let ReqObj = {
+        "DocumentId": doc.DocumentId,
+        "DocumentReferenceNo": doc.DocumentReferenceNo,
+        "Id": String(index+1),
+        "QuoteNo": this.quoteNo
+  }
+  let urlLink = `${this.ApiUrl1}document/getcompressedimage`;
+  this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+    (data:any) => {
+      console.log(data);
+      this.dialogService.open(ViewDocumnetDetailsComponent, {
+           context: {
+             title: data.Result.OrginalFileName,
+             imageUrl: data.Result.ImgUrl
+           },
+         });
+    },
+    (err) => { },
+  );
+
+  }
+  onProceed(){
+    let ReqObj = {
+      "CreatedBy": this.loginId,
+      "EmiYn": "N",
+      "InsuranceId": this.loginId,
+      "Premium": this.totalPremium,
+      "QuoteNo": this.quoteNo,
+      "Remarks": "None",
+      "SubUserType": this.subuserType,
+      "UserType": this.userType
+    }
+    let urlLink = `${this.CommonApiUrl}payment/makepayment`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          if(data.Result.PaymentId){
+            sessionStorage.setItem('quotePaymentId',data.Result.PaymentId);
+            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
+          }
+        }
+      },
+      (err) => { },
+    );
+  }
+  onCommonDocumentDownload(index){
+    let entry = this.uploadedDocList[index];
+    let ReqObj = {
+      "DocumentId": entry.DocumentId,
+      "DocumentReferenceNo": entry.DocumentReferenceNo,
+      "Id": "0",
+      "QuoteNo": this.quoteNo
+    }
+    let urlLink = `${this.ApiUrl1}document/getoriginalimage`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', data?.Result?.ImgUrl);
+        link.setAttribute('download', data?.Result?.OrginalFileName);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    },
+      (err) => { },
+    );
+  }
+  onListDocumentDownload(vehicleIndex,doc){
+    let ReqObj = {
+      "DocumentId": doc.DocumentId,
+      "DocumentReferenceNo": doc.DocumentReferenceNo,
+      "Id": String(vehicleIndex+1),
+      "QuoteNo": this.quoteNo
+    }
+    let urlLink = `${this.ApiUrl1}document/getoriginalimage`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', data?.Result?.ImgUrl);
+        link.setAttribute('download', data?.Result?.OrginalFileName);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    },
+      (err) => { },
+    );
+  }
+  onDragDocument(target:any,fileType:any,type:any){
+    let fileList = target;
+    for (let index = 0; index < fileList.length; index++) {
+      const element = fileList[index];
+
+      var reader:any = new FileReader();
+      reader.readAsDataURL(element);
+        var filename = element.name;
+
+        let imageUrl: any;
+        reader.onload = (res: { target: { result: any; }; }) => {
+          imageUrl = res.target.result;
+          this.imageUrl = imageUrl;
+          this.uploadDocList.push({ 'url': this.imageUrl,'DocTypeId':'','filename':element.name, 'JsonString': {} });
+
+        }
+      }
+  }
+  onViewDocument(index:any) {
+    console.log("Recieved View",this.uploadDocList[index]);
+    this.viewFileName = this.uploadDocList[index].filename;
+    this.veiwSelectedDocUrl = this.uploadDocList[index].url;
+    //this.modalService.open(this.content, { size: 'md', backdrop: 'static' });
+  }
+  onDeleteCommonDocument(index){
+    let ReqObj = {
+      "DocumentId": this.uploadedDocList[index].DocumentId,
+      "DocumentReferenceNo": this.uploadedDocList[index].DocumentReferenceNo,
+      "Id": "0",
+      "QuoteNo": this.quoteNo
+    }
+    let urlLink = `${this.ApiUrl1}document/delete`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+            if(data.ErrorMessage.length!=0){
+              for(let entry of data.ErrorMessage){
+                let type: NbComponentStatus = 'danger';
+                const config = {
+                  status: type,
+                  destroyByClick: true,
+                  duration: 4000,
+                  hasIcon: true,
+                  position: NbGlobalPhysicalPosition.TOP_RIGHT,
+                  preventDuplicates: false,
+                };
+                this.toastrService.show(
+                  entry.Field,
+                  entry.Message,
+                  config);
+              }
+            }
+            else if(data?.Result){
+              let type: NbComponentStatus = 'success';
+                const config = {
+                  status: type,
+                  destroyByClick: true,
+                  duration: 4000,
+                  hasIcon: true,
+                  position: NbGlobalPhysicalPosition.TOP_RIGHT,
+                  preventDuplicates: false,
+                };
+              this.toastrService.show(
+                "Delete",
+                "Document Deleted Successfully",
+                config);
+                this.getUploadedDocList(null,-1);
+            }
+          },
+          (err) => { },
+        );
+  }
+  onDeleteDocument(index:any) {
+          this.uploadDocList.splice(index,1);
+  }
+  onDeleteSelectedListDocument(rowData,docIndex){
+       rowData.docList.splice(docIndex,1);
+
+  }
+}

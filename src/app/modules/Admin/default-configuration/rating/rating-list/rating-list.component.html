@@ -1,0 +1,61 @@
+<div class="card">
+    <div class="card-header">Global Configuration</div>
+    <div class="card p-1">
+        <div class="vision-grid vision-grid-column-2">
+            <div class="vision-grid-item">
+                <div class="radio-toolbar menu-bar">
+                    <!-- <input id="menu5" type="radio" name="menu" value="Company" (click)="onRedirect('Company')" [(ngModel)]="activeMenu">
+                    <label for="menu5">Company Details</label> -->
+                    <!-- <input id="menu6" type="radio" name="menu" value="Branch" [(ngModel)]="activeMenu" (click)="activeMenu='Branch';includeBranch=false">
+                    <label for="menu6">Branch</label> -->
+                    <input id="menu7" type="radio" name="menu" value="Product" [(ngModel)]="activeMenu" (click)="onRedirect('Product')">
+                    <label for="menu7">Product</label>
+                    <input type="radio" id="menu1" name="menu" value="Section" (click)="onRedirect('Section')" [(ngModel)]="activeMenu">
+                    <label for="menu1">Section</label>
+                    <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+                    <label for="menu2">Cover</label>
+                    <!-- <input type="radio" id="menu3" name="menu" value="SubCover" (click)="onRedirect('SubCover')" [(ngModel)]="activeMenu">
+                    <label for="menu3">SubCover</label> -->
+                    <input type="radio" id="menu3" name="menu" value="Rating" (click)="onRedirect('Rating')" [(ngModel)]="activeMenu">
+                    <label for="menu4">Rating Details</label>
+                    <input type="radio" id="menu4" name="menu" value="Referral" (click)="onRedirect('Referral')" [(ngModel)]="activeMenu">
+                    <label for="menu4">Referral</label>
+                    <input type="radio" id="menu5" name="menu" value="Document" (click)="onRedirect('Document')" [(ngModel)]="activeMenu">
+                    <label for="menu5">Document</label>
+                </div>
+            </div>
+            <div class="vision-grid-item">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                Existing Rating Fields
+                            </div>
+                            <div>
+                                <button *ngIf="productValue" class="btn btn-warning" (click)="onAddNewFactor()">Add New</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Product</label>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="productList" [(ngModel)]="productValue" (change)="ongetRatingList()" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div>
+
+                            </div>
+                        </div>
+                        <ng-container *ngIf="factorData && productValue">
+                            <app-grid-table [cols]="columnHeader" changeStatus="true" (onStatus)="EditStatus($event)" [data]="factorData" [filterValue]="filterValue" (onEdit)="onEditFactor($event)" (onConfigure)="onConfigure($event)">
+                            </app-grid-table>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

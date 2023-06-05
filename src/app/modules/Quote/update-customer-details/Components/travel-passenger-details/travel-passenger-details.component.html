@@ -1,0 +1,121 @@
+<div>
+    <div>
+        <div>
+            <app-premiumdetails-subsection [cols]="quoteDetails" [cols1]="Riskdetails" [endrose]="endorsementSection" [cols2]="customerDetails"></app-premiumdetails-subsection>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="maan-grid customer-grid maan-grid-column-1">
+            <div class="maan-grid-item mt-2" id="slider_0" *ngIf="passengerSection">
+                <div class="maan-grid-item-title">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <span class="mx-1">
+                                    <i class="fas fa-car mx-1"></i>
+                            </span> Passenger Details
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                </div>
+                <div class="maan-grid-item-body" *ngFor="let passenger of PassengerDetails;let i=index">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <button class="btn btn-warning" disabled *ngIf="passenger.GroupId=='1'"> <span class="mx-1"><i class="fas fa-user mx-1"></i></span>Kid Section (3Months - 18Yrs)</button>
+                            <button class="btn btn-dark" disabled *ngIf="passenger.GroupId=='2'"><span class="mx-1"><i class="fas fa-user mx-1"></i></span>Adult Section (19Yrs - 65Yrs)</button>
+                            <button class="btn btn-secondary" disabled *ngIf="passenger.GroupId=='3'"><span class="mx-1"><i class="fas fa-user mx-1"></i></span>Senior Section (66Yrs - 75Yrs)</button>
+                            <button class="btn btn-info" disabled *ngIf="passenger.GroupId=='4'"><span class="mx-1"><i class="fas fa-user mx-1"></i></span>Super Senior Section (76Yrs - 80Yrs)</button>
+                            <button class="btn btn-danger" disabled *ngIf="passenger.GroupId=='5'"><span class="mx-1"><i class="fas fa-user mx-1"></i></span>Grand Senior Section (81Yrs - 110Yrs)</button>
+                        </div>
+                        <div>
+                            <ng-container *ngIf="(passenger.GroupId=='1' && kidTrashSection) || (passenger.GroupId=='2' && adultTrashSection) || (passenger.GroupId=='3' && seniorTrashSection) || (passenger.GroupId=='4' && superSeniorTrashSection) || (passenger.GroupId=='5' && grandSeniorTrashSection)">
+                                <button class="btn btn-warning" (click)="onDeletePassenger(passenger)"> <span class="mx-1"><i class="fas fa-trash mx-1"></i></span>Delete</button>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="row p-0 mt-2">
+
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="input-control-container">
+                                <label class="input-form-label">First Name</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" [(ngModel)]="passenger.PassengerFirstName" class="input-form-control without-icon">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Last Name</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" [(ngModel)]="passenger.PassengerLastName" class="input-form-control without-icon">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-2 col-lg-2">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Gender</label>
+                                <div class="input-form-radio-box">
+                                    <div class="radio-toolbar">
+                                        <input [id]="'claims_Yes'+i" type="radio" [name]="'HavePromoCode'+i" (change)="getRelationshipList(i)" [(ngModel)]="passenger.GenderId" value="M">
+                                        <label [for]="'claims_Yes'+i" class="yes">Male</label>
+                                        <input [id]="'claims_No'+i" type="radio" [name]="'HavePromoCode'+i"  (change)="getRelationshipList(i)" [(ngModel)]="passenger.GenderId" value="F">
+                                        <label [for]="'claims_No'+i" class="no">Female</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="input-control-container">
+                                <label class="input-form-box">Gender</label><span class="text-danger">*</span>
+                                <div class="input-form-radio-box">
+                                    <div class="radio-toolbar">
+                                        <input [id]="'rent'+i" type="radio" [name]="'rentYN'+i" value="M" (change)="getRelationshipList(i)" [(ngModel)]="passenger.GenderId">
+                                        <label [for]="'rent'+i" class="yes"><i class="fa fa-male" aria-hidden="true"></i>&nbsp;Male</label>&nbsp;
+                                        <input [id]="'rent_yes'+i" type="radio" [name]="'rentYN'+i" value="F" [(ngModel)]="passenger.GenderId" (change)="getRelationshipList(i)">
+                                        <label [for]="'rent_yes'+i" class="no"><i class="fa fa-female" aria-hidden="true"></i>&nbsp;Female</label>&nbsp;
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="input-control-container">
+                                <label class="input-form-label">RelationShip</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" [disabled]="i==0" [items]="passenger.relationship" appendTo="body" [(ngModel)]="passenger.RelationId" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                                <div class="input-form-error">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6 mt-2">
+                            <label class="input-form-label">Date Of Birth</label><span class="text-danger">*</span>
+                            <mat-form-field appearance="fill">
+                                <input matInput [matDatepicker]="picker" [min]="passenger.minDate" [max]="passenger.maxDate" (dateChange)="onDobChange(i)" [(ngModel)]="passenger.Dob" [ngModelOptions]="{standalone: true}">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Nationality</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" [items]="countryList" appendTo="body" [(ngModel)]="passenger.Nationality" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                                <div class="input-form-error">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Passport No</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" [(ngModel)]="passenger.PassportNo" maxlength="50" class="input-form-control without-icon">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-2">
+            <button class="custom-btn btn-5 maan-btn-red mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active" matRipple (click)="onGetBack()"><<&nbsp;Back</button>
+            <button class="custom-btn btn-6 mx-2" (click)="onFormSubmit()">Proceed</button>
+        </div>
+    </div>
+</div>

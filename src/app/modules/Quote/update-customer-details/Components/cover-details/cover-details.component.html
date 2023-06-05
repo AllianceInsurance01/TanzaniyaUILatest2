@@ -1,0 +1,60 @@
+<div class="maan-grid customer-grid maan-grid-column-1 ">
+    <div class="maan-grid-item">
+        <div class="maan-grid-item-title">
+            <div class="d-flex justify-content-between">
+                <div class="spancommon span_font_size">
+                    Plan Benefits
+                </div>
+                <div>
+                    <button type="button" class="close" (click)="onClose()">&times;</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="maan-grid-item mt-2 ml-2 p-1" *ngFor="let benefit of benefitList">
+            <div class="maan-grid-item-title bg-info text-white">
+                {{benefit.PolicyTypeDesc}}&nbsp;|&nbsp;{{benefit.PlanTypeDesc}}
+            </div>
+            <div class="maan-grid-item-body">
+                <ng-container *ngIf="benefit.CoverDetails.length!=0">
+                    <app-commodity-table [cols]="PolicyHeader" [data]="benefit.CoverDetails" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onAdd)="onInnerData($event)">
+                    </app-commodity-table>
+                </ng-container>
+                <ng-container *ngIf="benefit.CoverDetails.length==0">
+                    <div class="text-center spancommon span_font_size">
+                        No Quote Available
+                    </div>
+                </ng-container>
+                <!-- <table>
+                    <th>
+                        CoverDesc
+                    </th>
+                    <td class="table" *ngFor="let row of benefit.CoverDetails">
+                        <table>
+                            <tr>
+                                <th> SubCoverDesc</th>
+                                <th> SumInsured</th>
+                                <th> EntryDate</th>
+                                <th> Status</th>
+                            </tr>
+                            <tr *ngFor="let rows of benefit.CoverDetails.SubCoverDetails">
+                                <td>{{rows.SubCoverDesc}}</td>
+                                <td>{{rows.SumInsured}}</td>
+                                <td>{{rows.EntryDate}}</td>
+                                <td>{{rows.Status}}</td>
+                            </tr>
+
+                        </table>
+
+
+                        <span> {{row.CoverDesc}}</span>
+                    </td>
+
+
+
+                </table> -->
+            </div>
+        </div>
+    </div>
+
+</div>

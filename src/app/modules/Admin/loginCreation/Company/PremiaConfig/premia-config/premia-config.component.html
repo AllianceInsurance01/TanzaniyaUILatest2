@@ -1,0 +1,67 @@
+<!-- <nb-card>
+    <nb-card-header>Product Configuration</nb-card-header>
+    <div class="card p-1">
+        <div class="vision-grid vision-grid-column-2">
+            <div class="vision-grid-item">
+                <div class="radio-toolbar menu-bar">
+                    <input id="menu" type="radio" name="menu" value="Product" (click)="onRedirect('Product')" [(ngModel)]="activeMenu">
+                    <label for="menu">Product Details</label>
+                    <input type="radio" id="menu6" name="menu" value="FactorType" (click)="onRedirect('FactorType')" [(ngModel)]="activeMenu">
+                    <label for="menu6">Factor Type</label>
+                    <input type="radio" id="menu1" name="menu" value="Section" (click)="onRedirect('Section')" [(ngModel)]="activeMenu">
+                    <label for="menu1">Section</label>
+                    <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+                    <label for="menu2">Cover</label>
+                    <input type="radio" id="menu10" name="menu" value="Emi" (click)="onRedirect('Emi')" [(ngModel)]="activeMenu">
+                     <label for="menu10">EMI</label>
+                    <input type="radio" id="menu8" name="menu" value="Tax" (click)="onRedirect('Tax')" [(ngModel)]="activeMenu">
+                    <label for="menu8">Tax</label>
+
+                    <input type="radio" id="menu9" name="menu" value="Prorata" (click)="onRedirect('Prorata')" [(ngModel)]="activeMenu">
+                    <label for="menu9">ProRata</label>
+
+                    <input type="radio" id="menu7" name="menu" value="UwQues" (click)="onRedirect('UwQues')" [(ngModel)]="activeMenu">
+                    <label for="menu7">UnderWriter Questions</label>
+                    <input type="radio" id="menu5" name="menu" value="Referral" (click)="onRedirect('Referral')" [(ngModel)]="activeMenu">
+                    <label for="menu5">Referral</label>
+                    <input type="radio" id="menu4" name="menu" value="Document" (click)="onRedirect('Document')" [(ngModel)]="activeMenu">
+                    <label for="menu4">Attached Documents</label>
+                    <input type="radio" id="menu11" name="menu" value="Payment" (click)="onRedirect('Payment')" [(ngModel)]="activeMenu">
+                    <label for="menu11">Payment</label>
+                    <input type="radio" id="menu12" name="menu" value="Notification"(click)="onRedirect('Notification')" [(ngModel)]="activeMenu">
+                    <label for="menu12">Notification</label>
+                    <input type="radio" id="menu13" name="menu" value="TinyUrl"(click)="onRedirect('TinyUrl')" [(ngModel)]="activeMenu">
+                    <label for="menu13">TinyUrl</label>
+                    <input type="radio" id="menu14" name="menu" value="Premia"(click)="onRedirect('Premia')" [(ngModel)]="activeMenu">
+                    <label for="menu14">Premia Configuration</label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</nb-card> -->
+<div class="vision-grid-item">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between">
+                <div>
+                    Premia Configuration Data
+                </div>
+                <div>
+                    <button class="btn btn-warning" (click)="onAddSection()">Add New</button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <ng-container *ngIf="premiaConfigData">
+                <app-grid-table [cols]="columnHeader" [data]="premiaConfigData" [filterValue]="filterValue" (onEdit)="onEditSection($event)" (onConfigure)="onConfigure($event)">
+                </app-grid-table>
+            </ng-container>
+        </div>
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-danger" (click)="onBack()">Back</button>
+        </div>
+
+    </div>
+
+</div>

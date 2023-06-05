@@ -1,0 +1,128 @@
+<div class="card">
+    <div class="card-header">Broker Configuration</div>
+    <div class="card p-1">
+        <div class="vision-grid vision-grid-column-2">
+            <div class="vision-grid-item">
+                <div class="radio-toolbar menu-bar">
+                    <input type="radio" id="menu1" name="menu" value="Branch" (click)="onRedirect('Branch')" [(ngModel)]="activeMenu">
+                    <label for="menu1">Branch</label>
+                    <input id="menu7" type="radio" name="menu" value="Product" [(ngModel)]="activeMenu" (click)="onRedirect('Product')">
+                    <label for="menu7">Product</label>
+
+                    <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+                    <label for="menu2">Cover</label>
+                </div>
+            </div>
+            <div class="vision-grid-item">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                Existing Covers
+                            </div>
+                            <div>
+                                <!-- <button class="btn btn-warning" (click)="onAddNewCover()">Add New</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-5 col-lg-5 col-xl-5">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Product</label>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="productList" [(ngModel)]="productValue" (change)="onChangeProduct()" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-lg-5 col-xl-5">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Section</label>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="sectionList" [(ngModel)]="sectionValue" (change)="getBrokerBranchList()" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-md-5 col-lg-5 col-xl-5">
+                              <div class="input-control-container">
+                                  <label class="input-form-label">CompanyBranch</label>
+                                  <ng-select class="input-form-select" appendTo="body" [items]="branchsData" (change)="getInc()" [(ngModel)]="branchValue" bindValue="BranchCode" bindLabel="BrokerBranchName">
+                                  </ng-select>
+                              </div>
+                          </div>
+                          <div class="col-md-5 col-lg-5 col-xl-5" *ngIf="branchValue">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Included/Excluded</label>
+                                <ng-select class="input-form-select" appendTo="body" [items]="Inc" [(ngModel)]="IncValue" (change)="getInc()" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        </div>
+                        
+                        <ng-container *ngIf="tableData.length!=0">
+                            <div class="row mt-2">
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onEdit)="onEditCover($event)" (onCoverRatingEdit)="onCoverRatingEdit($event)" (onSelectCustomer)="onSelectCustomer($event,template)" (onSubCoverRatingEdit)="onSubCoverRatingEdit($event)">
+                                    </app-grid-table>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="tableData.length==0">
+                            <div class="text-center">
+                                No Data Available
+                            </div>
+                        </ng-container>
+
+                        <div *ngIf="brokerList.length!=0 || coverList.length!=0" style="text-align: center;">
+                            <!-- <button *ngIf="IncValue=='2'" class="btn btn-success" (click)="submit()">Submit</button> -->
+                            <button class="btn btn-success" (click)="openDialog(template)">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #template>
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex p-2 row">
+                <div class="col-md-8 col-lg-8 col-xl-8">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                        <mat-form-field appearance="fill">
+                            <input matInput [matDatepicker]="picker" [min]="minDate" (change)="Effectivedate(effectiveDate)" [(ngModel)]="effectiveDate">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="d-flex row p-2" *ngIf="IncValue=='1'">
+                <div class="col-md-8 col-lg-8 col-xl-8">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Status<span class="text-required">*</span></label>
+                        <div class="input-form-radio-box">
+                            <div class="radio-toolbar">
+                                <!-- <input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="statusValue" value="P">
+                                <label for="orginwarehouse_Pending" >Pending</label> -->
+                                <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="statusValue" value="Y">
+                                <label for="orginwarehouse_Yes">Active</label>
+                                <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="statusValue" value="N">
+                                <label for="orginwarehouse_No">DeActive</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mb-2">
+                <button class="btn btn-danger" (click)="close()">Close</button>
+                <button class="btn btn-success ml-2" (click)="submit()">Submit</button>
+            </div>
+        </div>
+    </div>
+    
+    
+   
+   </ng-template>

@@ -1,0 +1,74 @@
+<div class="product-menubar">
+    <div class="logo-img">
+        <img src="./assets/images/logo-2.png">
+    </div>
+
+
+    <div class="user-container">
+
+        <div style="margin-right:50px;">
+            <!--<a (click)="onLog(title)" style="color:blue;font-size:16px;font-weight:600;cursor:pointer;display:flex;text-decoration: underline;"> LogIn </a>-->
+            <a class="productsidesection">{{loginId}} <span style="padding-left:10px;"> |</span></a>
+        </div>
+
+        <!--<img src="assets/images/nick.png">-->
+        <div style="margin-left:-40px;">
+            <a (click)="onLog(title)"  class="productlogout"> LogOut </a>
+        </div>
+
+
+    </div>
+
+
+</div>
+<div class="login-grid">
+    <div class="login-grid-item">
+        <div class="login-grid-item-body">
+            <div class="login-component branch_select">
+                <div class="row ">
+                    <div class="col-md-6 col-lg-12 col-xl-12">
+                        <div class="middle-line">
+                           <span>SELECT BRANCH</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-md-12 col-lg-12 col-xl-12">
+                        <div class="input-control-container">
+                            <ng-container *ngIf="userType=='Issuer'">
+                                <ng-select class="input-form-select" name="ColumnsId" [(ngModel)]="branchValue" placeholder="Select Any Branch" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                    <ng-option *ngFor="let opt of branchList" [value]="opt.BranchCode">{{opt.BranchName}}</ng-option>
+                                </ng-select>
+
+                            </ng-container>
+                            <ng-container *ngIf="userType!='Issuer'">
+                                <!-- <select placeholder="Select Any Branch" class="form-control">  
+                                    <option>Choose Branch</option>  
+                                    <option *ngFor="let opt of branchList" [value]="opt.BrokerBranchCode">{{opt.BrokerBranchName}}</option>  
+                                </select> -->
+                                <ng-select class="input-form-select" name="ColumnsId" [(ngModel)]="branchValue" placeholder="Select Any Branch" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                    <ng-option *ngFor="let opt of branchList" [value]="opt.BrokerBranchCode">{{opt.BrokerBranchName}}</ng-option>
+                                </ng-select>
+
+                            </ng-container>
+                            <div class="input-form-error" *ngIf="(f.branch.errors && Proceed) || (!f.branch.valid && f.branch.touched)">
+                                <div *ngIf="f.branch.errors?.required" class="error-text">
+                                    Please Select Branch
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="text-center mt-2">
+                    <!-- <button class="button-36" (click)="onCancel()">Cancel</button>&nbsp; -->
+                    <button class="button-34" role="button" (click)="onBranchProceed()"><span class="button-content">Proceed</span></button>
+                    <button class="button-36" (click)="onCancel()" style="position: relative;right: 0.5rem;"><span class="button-content1">Cancel</span></button>&nbsp;
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>

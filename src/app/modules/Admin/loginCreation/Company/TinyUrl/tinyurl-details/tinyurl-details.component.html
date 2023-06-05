@@ -1,0 +1,241 @@
+<div class="card">
+    <div class="card-header">Product Configuration</div>
+    <div class="card p-1">
+        <div class="vision-grid vision-grid-column-2">
+            <div class="vision-grid-item">
+                <div class="radio-toolbar menu-bar">
+                    <input id="menu" type="radio" name="menu" value="Product" (click)="onRedirect('Product')" [(ngModel)]="activeMenu">
+                    <label for="menu">Product Details</label>
+                    <input type="radio" id="menu6" name="menu" value="FactorType" (click)="onRedirect('FactorType')" [(ngModel)]="activeMenu">
+                    <label for="menu6">Factor Type</label>
+                    <input type="radio" id="menu1" name="menu" value="Section" (click)="onRedirect('Section')" [(ngModel)]="activeMenu">
+                    <label for="menu1">Section</label>
+                    <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+          
+                    <label for="menu2">Cover</label>
+                    <input type="radio" id="menu15" name="menu" value="Policy"(click)="onRedirect('Policy')" [(ngModel)]="activeMenu">
+                    <label for="menu15">Policy Type</label>
+                    <input type="radio" id="menu10" name="menu" value="Emi" (click)="onRedirect('Emi')" [(ngModel)]="activeMenu">
+                    <label for="menu10">EMI</label>
+                    <!-- <input type="radio" id="menu3" name="menu" value="SubCover" (click)="onRedirect('SubCover')" [(ngModel)]="activeMenu">
+                    <label for="menu3">SubCover</label> -->
+                    <input type="radio" id="menu8" name="menu" value="Tax" (click)="onRedirect('Tax')" [(ngModel)]="activeMenu">
+                    <label for="menu8">Tax</label>
+                    <input type="radio" id="menu9" name="menu" value="Prorata" (click)="onRedirect('Prorata')" [(ngModel)]="activeMenu">
+                    <label for="menu9">ProRata</label>
+                    <input type="radio" id="menu7" name="menu" value="UwQues" (click)="onRedirect('UwQues')" [(ngModel)]="activeMenu">
+                    <label for="menu7">UnderWriter Questions</label>
+                    <input type="radio" id="menu5" name="menu" value="Referral" (click)="onRedirect('Referral')" [(ngModel)]="activeMenu">
+                    <label for="menu5">Referral</label>
+                    <input type="radio" id="menu4" name="menu" value="Document" (click)="onRedirect('Document')" [(ngModel)]="activeMenu">
+                    <label for="menu4">Attached Documents</label>
+                    <input type="radio" id="menu11" name="menu" value="Payment" (click)="onRedirect('Payment')" [(ngModel)]="activeMenu">
+                    <label for="menu11">Payment</label>
+                    <input type="radio" id="menu12" name="menu" value="Notification"(click)="onRedirect('Notification')" [(ngModel)]="activeMenu">
+                    <label for="menu12">Notification</label>
+                    <input type="radio" id="menu13" name="menu" value="TinyUrl"(click)="onRedirect('TinyUrl')" [(ngModel)]="activeMenu">
+                    <label for="menu13">TinyUrl</label>
+                    <input type="radio" id="menu14" name="menu" value="Premia"(click)="onRedirect('Premia')" [(ngModel)]="activeMenu">
+                    <label for="menu14">Premia Configuration</label>
+                    <!--<input type="radio" id="menu16" name="menu" value="Industry"(click)="onRedirect('Industry')" [(ngModel)]="activeMenu">
+                    <label for="menu16">Industry</label>-->
+                    <input type="radio" id="menu17" name="menu" value="Promo"(click)="onRedirect('Promo')" [(ngModel)]="activeMenu">
+                    <label for="menu17">PromoCode</label>
+                    <input type="radio" id="menu19" name="menu" value="EndorsementField"(click)="onRedirect('EndorsementField')" [(ngModel)]="activeMenu">
+                    <label for="menu19">EndorsementField Type</label>
+                    <input type="radio" id="menu18" name="menu" value="Promo"(click)="onRedirect('Endorsement')" [(ngModel)]="activeMenu">
+                    <label for="menu18">Endorsement Type</label>
+                  </div>
+            </div>
+            <div class="vision-grid-item">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                TinyUrl Details
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mt-2">
+                            <!--<div class="col-12 col-lg-6 col-xl-6">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Branch<span class="text-required">*</span></label>
+                                  
+                                    <div class="input-form-box">
+                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="branchValue" maxlength="100">
+                                    </div>
+                                </div>
+                            </div>-->
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Description<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+
+                                      <input type="text" class="input-form-control without-icon" [(ngModel)]="tinyUrldetalis.NotifDesc" maxlength="100" >
+                                    </div>
+                                </div>
+                            </div>
+                           
+
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">NotificationBased TinyURL <span class="text-required">*</span></label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="orginwarehouse_NotiYes" type="radio" name="originatingWarehouses" [(ngModel)]="tinyUrldetalis.NotifYn" value="Y">
+                                            <label for="orginwarehouse_NotiYes">Yes</label>
+                                            <input type="radio" id="orginwarehouse_NotiNo" name="originatingWarehouses" [(ngModel)]="tinyUrldetalis.NotifYn" value="N">
+                                            <label for="orginwarehouse_NotiNo">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="input-control-container" *ngIf="tinyUrldetalis.NotifYn == 'Y'">
+                                    <label class="input-form-label">Type<span class="text-required">*</span></label>
+                                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="tinyUrldetalis.Type" [items]="typeList" bindValue="CodeDesc" bindLabel="CodeDesc">
+                                    </ng-select>
+                                    <!--<div class="input-form-box">
+                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="tinyUrldetalis.Type" maxlength="100">
+                                    </div>-->
+                                </div>
+                                <div class="input-control-container" *ngIf="tinyUrldetalis.NotifYn == 'N'">
+                                    <label class="input-form-label">Type<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+
+                                      <input type="text" class="input-form-control without-icon" [(ngModel)]="tinyUrldetalis.Type" maxlength="100" >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">AppUrl<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+
+                                      <input type="text" class="input-form-control without-icon" [(ngModel)]="tinyUrldetalis.AppUrl" maxlength="100" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                                    <mat-form-field appearance="fill">
+                                        <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="tinyUrldetalis.EffectiveDateStart">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            
+
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <textarea type="text" cols="60" ros="3" [(ngModel)]="tinyUrldetalis.Remarks" class="input-form-select"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Status<span class="text-required">*</span></label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="tinyUrldetalis.Status" value="Y">
+                                            <label for="orginwarehouse_Yes">Active</label>
+                                            <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="tinyUrldetalis.Status" value="N">
+                                            <label for="orginwarehouse_No">DeActive</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Request Applicable<span class="text-required">*</span></label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="RequestYes" type="radio" name="RequestYn" [(ngModel)]="tinyUrldetalis.RequestYn" value="Y" (change)="Ye()"> <!--*ngIf="DropDownDetails.KeyTable == 'EserviceCustomerDetails' "-->
+                                            <label for="RequestYes">YES</label>
+                                            <input type="radio" id="RequestYno" name="RequestYn" [(ngModel)]="tinyUrldetalis.RequestYn" value="N" (change)="Ye()">
+                                            <label for="RequestYno">NO</label>
+              
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="d-flex justify-content-between" *ngIf="tinyUrldetalis.RequestYn =='Y'">
+                                <div class="flex-item"></div>
+                                <div class="flex-item mr-2">
+                                    <button class="btn btn-primary btn-sm" (click)="addItem()"> <!-- (click)="onAddRow()"-->
+                                        <i class="fas fa-plus"></i>Add New
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row mt-3"  *ngIf="tinyUrldetalis.RequestYn =='Y'">
+                                <div class="col-md-12 col-lg-12 col-xl-12 customRow">
+                                    <table class="table table-headerRow">
+                                        <tr>
+                                            <!-- <th class="tbl-header">Table</th> -->
+                                            <!--<th class="tbl-header">Table</th>-->
+                                            <th class="tbl-header">JSON Key</th>
+                                            <th class="tbl-header">Is Dropdown</th>
+                                            <th class="tbl-header">Column Value</th>
+                                            <th class="tbl-header">Action</th>
+                                        </tr>
+                                        <tr *ngFor="let row of jsonList;let i = index">
+                                          
+                                        <td class="tbl-content">
+                                            <div class="input-form-box">
+                                                <input type="text" class="input-form-control without-icon" [(ngModel)]="row.RequestJsonKey" maxlength="50" >
+                                            </div>
+                  
+                                        </td>
+                                        <td class="tbl-content">
+                                            <div class="input-form-radio-box">
+                                                <div class="radio-toolbar" style="width: 120px !important;">
+                                                    <input [id]="'range_Yes'+i" type="radio" [name]="'rangeYN'+i" [(ngModel)]="row.DropdownYn" value="Y">
+                                                    <label [for]="'range_Yes'+i" class="customLabel">Yes</label>
+                                                    <input type="radio" [id]="'range_No'+i" [name]="'rangeYN'+i" [(ngModel)]="row.DropdownYn" value="N">
+                                                    <label [for]="'range_No'+i" class="customLabel">No</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                         
+                                        <td class="tbl-content">
+                                            <div class="input-control-container" *ngIf="row.DropdownYn == 'Y'">
+                                                <ng-select class="custom" style="width: 100%" name="RatingFiledId"  [(ngModel)]="row.RequestColumn" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true"  [items]="KeyNameValue" bindValue="Code" bindLabel="CodeDesc">
+                                                </ng-select>
+                      
+                                            </div>
+                                            <div class="input-form-box" *ngIf="row.DropdownYn == 'N'">
+                                                <input type="text" class="input-form-control without-icon"  [(ngModel)]="row.RequestColumn" maxlength="50" >
+                                            </div>
+                                                   
+                                        </td>
+                                        <td class="tbl-content">
+                                           <button class="btn btn-outline-primary" (click)="delete(row)"> <i class="fa fa-trash"></i></button>
+                                        </td>
+                  
+                  
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="text-center mt-2">
+                    <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>
+                    <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,860 @@
+<div class="card">
+    <div class="card-header">Global Configuration</div>
+    <div class="card-body">
+        <div class="card p-1">
+            <div class="vision-grid vision-grid-column-2">
+                <div class="vision-grid-item">
+                    <div class="radio-toolbar menu-bar">
+                        <!-- <input id="menu5" type="radio" name="menu" value="Company" (click)="onRedirect('Company')" [(ngModel)]="activeMenu">
+                            <label for="menu5">Company Details</label> -->
+                        <!-- <input id="menu6" type="radio" name="menu" value="Branch" [(ngModel)]="activeMenu" (click)="activeMenu='Branch';includeBranch=false">
+                            <label for="menu6">Branch</label> -->
+                        <input id="menu7" type="radio" name="menu" value="Product" [(ngModel)]="activeMenu" (click)="onRedirect('Product')">
+                        <label for="menu7">Product</label>
+                        <input type="radio" id="menu1" name="menu" value="Section" (click)="onRedirect('Section')" [(ngModel)]="activeMenu">
+                        <label for="menu1">Section</label>
+                        <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+                        <label for="menu2">Cover</label>
+                        <!-- <input type="radio" id="menu3" name="menu" value="SubCover" (click)="onRedirect('SubCover')" [(ngModel)]="activeMenu">
+                            <label for="menu3">SubCover</label> -->
+                        <input type="radio" id="menu6" name="menu" value="Rating" (click)="onRedirect('Rating')" [(ngModel)]="activeMenu">
+                        <label for="menu6">Rating Fields</label>
+                        <input type="radio" id="menu4" name="menu" value="Referral" (click)="onRedirect('Referral')" [(ngModel)]="activeMenu">
+                        <label for="menu4">Referral</label>
+                        <input type="radio" id="menu5" name="menu" value="Document" (click)="onRedirect('Document')" [(ngModel)]="activeMenu">
+                        <label for="menu5">Document</label>
+                    </div>
+                </div>
+                <div class="vision-grid-item">
+                    <mat-tab-group [selectedIndex]="btnNextPrev.index">
+                        <mat-tab label="Cover Details" class="p-1">
+                            <div class="card">
+                                <div class="card" *ngIf="!ratingSection">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                        </div>
+                                        <div *ngIf="coverDetails?.CoverId">
+                                            CoverId ~ {{coverDetails.CoverId}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Cover Name<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" [(ngModel)]="coverDetails.CoverName" class="input-form-control without-icon" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Cover Description<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" [(ngModel)]="coverDetails.CoverDesc" class="input-form-control without-icon" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Regulatory Code<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" [(ngModel)]="coverDetails.RegulatoryCode" class="input-form-control without-icon" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Tooltip<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <textarea cols="60" ros="3" [(ngModel)]="coverDetails.ToolTip" class="input-form-select"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">SubCoverYN<span class="text-required">*</span></label>
+                                                <div class="input-form-radio-box">
+                                                    <div class="radio-toolbar">
+                                                        <input id="subCover_Yes" type="radio" name="subCoverYN" (change)="onSubCoverChange()" [(ngModel)]="coverDetails.SubCoverYn" value="Y">
+                                                        <label for="subCover_Yes">Yes</label>
+                                                        <input id="subCover_No" type="radio" name="subCoverYN" (change)="onSubCoverChange()" [(ngModel)]="coverDetails.SubCoverYn" value="N">
+                                                        <label for="subCover_No">No</label>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4"  >
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">ProRataYN<span class="text-required">*</span></label>
+                                                <div class="input-form-radio-box">
+                                                    <div class="radio-toolbar">
+                                                        <input id="proRata_Yes" type="radio" name="proRataYN"  [(ngModel)]="coverDetails.ProRataYn" value="Y">
+                                                        <label for="proRata_Yes">Yes</label>
+                                                        <input id="proRata_No" type="radio" name="proRataYN"  [(ngModel)]="coverDetails.ProRataYn" value="N">
+                                                        <label for="proRata_No">No</label>
+  
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4"  *ngIf="coverDetails.SubCoverYn=='Y'">
+                                          <div class="input-control-container">
+                                              <label class="input-form-label">MultiSelectYn<span class="text-required">*</span></label>
+                                              <div class="input-form-radio-box">
+                                                  <div class="radio-toolbar">
+                                                      <input id="subMulti_Yes" type="radio" name="subMultiYN"  [(ngModel)]="coverDetails.MultiSelectYn" value="Y">
+                                                      <label for="subMulti_Yes">Yes</label>
+                                                      <input id="subMulti_No" type="radio" name="subMultiYN"  [(ngModel)]="coverDetails.MultiSelectYn" value="N">
+                                                      <label for="subMulti_No">No</label>
+
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                        <div class="col-12 col-md-4 col-lg-4" *ngIf="coverDetails.SubCoverYn=='Y'">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                                                <mat-form-field appearance="fill">
+                                                    <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="onCoverStartDateChange()" [(ngModel)]="coverDetails.EffectiveDateStart">
+                                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                            <!-- <div class="input-control-container">
+                                                <label class="input-form-label">Effective Start Date<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="date" [(ngModel)]="coverDetails.EffectiveDateStart" class="input-form-control without-icon">
+                                                </div>
+                                            </div> -->
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <textarea cols="60" ros="3" [(ngModel)]="coverDetails.Remarks" class="input-form-select"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-5 col-lg-5">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Status<span class="text-required">*</span></label>
+                                                <div class="input-form-radio-box">
+                                                    <div class="radio-toolbar">
+                                                        <input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="coverDetails.Status" value="P">
+                                                        <label for="orginwarehouse_Pending">Pending</label>
+                                                        <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="coverDetails.Status" value="Y">
+                                                        <label for="orginwarehouse_Yes">Active</label>
+                                                        <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="coverDetails.Status" value="N">
+                                                        <label for="orginwarehouse_No">DeActive</label>
+                                                        <input type="radio" id="orginwarehouse_Referral" name="originatingWarehouse" [(ngModel)]="coverDetails.Status" value="R">
+                                                        <label for="orginwarehouse_Referral">Referral</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body" *ngIf="ratingSection">
+                                    <div class="row mt-2" *ngIf="!subCoverDetails">
+                                        <div class="col-md-4 col-lg-4 col-xl-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Cover Name</label>
+                                                <div class="input-form-box">
+                                                    <b>{{coverDetails.CoverName}}</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Cover Description</label>
+                                                <div class="input-form-box">
+                                                    <b>Sample Cover Description</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Core App Code</label>
+                                                <div class="input-form-box">
+                                                    <b>241</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2" *ngIf="subCoverDetails">
+                                        <div class="col-md-4 col-lg-4 col-xl-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">SubCover Name</label>
+                                                <div class="input-form-box">
+                                                    <b>Sample SubCover Name</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Cover Description</label>
+                                                <div class="input-form-box">
+                                                    <b>Sample SubCover Description</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Core App Code</label>
+                                                <div class="input-form-box">
+                                                    <b>241</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-md-4 col-lg-4 col-xl-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Coverage Type</label>
+                                                <ng-select class="input-form-select" appendTo="body" [items]="CoverList" [(ngModel)]="coverageTypeValue" bindValue="Code" bindLabel="CodeDesc">
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <!--<div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Excess<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" class="input-form-control without-icon" [(ngModel)]="excessValue" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>-->
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Coverage Limit<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" [(ngModel)]="coverageLimit" class="input-form-control without-icon" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Is Tax Excempted?<span class="text-required">*</span></label>
+                                                <div class="input-form-radio-box">
+                                                    <div class="radio-toolbar">
+                                                        <input id="orginwarehouse1" type="radio" name="originatingWarehouse1" [(ngModel)]="coverDetails.IsTaxExcempted" (change)="onTaxYNChnage()" value="Y">
+                                                        <label for="orginwarehouse1">Yes</label>
+                                                        <input type="radio" id="orginwarehouse2" name="originatingWarehouse1" [(ngModel)]="coverDetails.IsTaxExcempted" (change)="onTaxYNChnage()" value="N">
+                                                        <label for="orginwarehouse2">No</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-lg-4 col-xl-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Calculation Type</label>
+                                                <ng-select class="input-form-select" appendTo="body" [items]="calcTypeList" [(ngModel)]="calcType" (change)="onChangeCalcType()" bindValue="value" bindLabel="text">
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4" *ngIf="calcType!='G' && calcType!='F'">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Base Rate<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" [(ngModel)]="baseRate" class="input-form-control without-icon" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-4 col-lg-4" *ngIf="coverageTypeValue=='d' || coverageTypeValue=='l'">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Discount Applicable For</label>
+                                                <ng-select class="input-form-select" appendTo="body" [items]="coverList" [(ngModel)]="coverDetails.DiscountCoverId" bindValue="Code" bindLabel="CodeDesc">
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4" *ngIf="calcType!='G' && calcType!='F'">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Maximum Discount<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" [(ngModel)]="minPremium" class="input-form-control without-icon" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4" *ngIf="calcType!='G' && calcType!='F'">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Maximum SumInsured<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" [(ngModel)]="maxSumInsured" class="input-form-control without-icon" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- <div class="col-12 col-md-4 col-lg-4" *ngIf="calcType!='A'">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Cover Based On <span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <ng-select class="input-form-select" appendTo="body" [items]="basedOnColumnList" [(ngModel)]="basedOnColumnValue" bindValue="Code" bindLabel="CodeDesc">
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="coverDetails.IsTaxExcempted=='N'">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Tax Amount<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" [(ngModel)]="coverDetails.TaxAmount" class="input-form-control without-icon" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="coverDetails.IsTaxExcempted=='N'">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Tax Code<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" [(ngModel)]="coverDetails.TaxCode" class="input-form-control without-icon" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="coverDetails.IsTaxExcempted=='Y'">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Tax Excemption Reference<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" [(ngModel)]="coverDetails.TaxExcemptionReference" class="input-form-control without-icon" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="coverDetails.IsTaxExcempted=='Y'">
+                                            <div class="input-control-container">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Tax Excemption Type</label>
+                                                    <ng-select class="input-form-select" [(ngModel)]="coverDetails.TaxExcemptionType" appendTo="body" [items]="taxTypeList" bindValue="Code" bindLabel="CodeDesc">
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                <div class="row">
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Dependent Cover?<span class="text-required">*</span></label>
+                                                <div class="input-form-radio-box">
+                                                    <div class="radio-toolbar">
+                                                        <input id="dependantY" type="radio" name="dependantYN" [(ngModel)]="coverDetails.DependentCoverYn" value="Y">
+                                                        <label for="dependantY">Yes</label>
+                                                        <input type="radio" id="dependantN" name="dependantYN" [(ngModel)]="coverDetails.DependentCoverYn" value="N">
+                                                        <label for="dependantN">No</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4" *ngIf="coverDetails.DependentCoverYn=='Y'">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Dependant Cover Name</label>
+                                                <ng-select class="input-form-select" appendTo="body" [items]="coverList" [(ngModel)]="coverDetails.DependentCoverId" bindValue="Code" bindLabel="CodeDesc">
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-6" *ngIf="coverDetails.SubCoverYn=='N'">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                                                <mat-form-field appearance="fill">
+                                                    <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="onCoverStartDateChange()" [(ngModel)]="coverDetails.EffectiveDateStart">
+                                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     </div>
+                                     <div class="col-12 col-md-4 col-lg-4" *ngIf="coverDetails.SubCoverYn=='N' && coverageTypeValue=='P'">
+                                      <div class="input-control-container">
+                                          <mat-form-field appearance="fill">
+                                              <mat-label>End Date</mat-label>
+                                              <input matInput [matDatepicker]="picker2" [min]="coverDetails.EffectiveDateStart" [(ngModel)]="coverDetails.EffectiveDateEnd">
+                                              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                              <mat-datepicker #picker2></mat-datepicker>
+                                          </mat-form-field>
+                                      </div>
+                                  </div>
+
+                                    <div class="row">
+
+                                      <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">ExcessPercent<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" class="input-form-control without-icon" [(ngModel)]="excessValue" maxlength="100">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                      <div class="input-control-container">
+                                          <label class="input-form-label">ExcessAmount<span class="text-required">*</span></label>
+                                          <div class="input-form-box">
+                                              <input type="text" class="input-form-control without-icon" [(ngModel)]="excessamount" maxlength="100">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">ExcessDesc<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" [(ngModel)]="excessDesc" maxlength="100">
+                                        </div>
+                                    </div>
+                                  </div>
+                                    </div>
+
+                                    <div class="row mt-3" *ngIf="calcType=='G' ">
+                                        <div class="col-md-2 col-lg-2 offset-10">
+                                            <button class="btn btn-primary" (click)="onAddCalEntry()">Add New</button>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3" *ngIf="calcType=='G'">
+                                        <div class="col-md-12 col-lg-12">
+                                            <table class="table table-headerRow">
+                                                <tr>
+                                                    <th class="tbl-header">Calculation Type</th>
+                                                    <th class="tbl-header">Min SumInsured</th>
+                                                    <th class="tbl-header">Max SumInsured</th>
+                                                    <th class="tbl-header">Maxium Discount</th>
+                                                    <th class="tbl-header">Rate</th>
+                                                    <th class="tbl-header">Remove</th>
+                                                </tr>
+                                                <tr *ngFor="let row of selectedCalcList;let i = index">
+
+                                                    <td class="tbl-content">
+                                                        <ng-select class="custom" name="calcType" [(ngModel)]="row.CalculationType" placeholder="Select Calculation Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                                            <ng-option *ngFor="let opt of calculationTypes2" [value]="opt.value">{{opt.text}}</ng-option>
+                                                        </ng-select>
+                                                    </td>
+                                                    <td class="tbl-content">
+                                                        <div class="input-control-container">
+                                                            <input type="text" style="width: 120px;" maxlength="10" [(ngModel)]="row.MinSuminsured">
+                                                        </div>
+                                                    </td>
+                                                    <td class="tbl-content">
+                                                        <div class="input-control-container">
+                                                            <input type="text" style="width: 120px;" maxlength="10" [(ngModel)]="row.MaxSuminsured">
+                                                        </div>
+                                                    </td>
+                                                    <td class="tbl-content">
+                                                        <div class="input-control-container">
+                                                            <input type="text" style="width: 120px;" maxlength="10" [(ngModel)]="row.MinimumPremium">
+                                                        </div>
+                                                    </td>
+                                                    <td class="tbl-content">
+                                                        <div class="input-control-container">
+                                                            <input type="text" style="width: 120px;" maxlength="10" [(ngModel)]="row.BaseRate">
+                                                        </div>
+                                                    </td>
+                                                    <td class="tbl-content">
+                                                        <ng-container *ngIf="i==0">N/A</ng-container>
+                                                        <button *ngIf="i!=0" class="btn btn-danger p-1" (click)="onRemoveIndex(i)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                  <!--nbButton hero status="danger" nbButton hero status="primary"-->
+                                    <div class="d-flex justify-content-end">
+                                        <div>
+                                            <button class="btn btn-danger" *ngIf="!ratingSection" (click)="getBackPage()">Cancel</button>
+                                            <button class="btn btn-danger"  *ngIf="ratingSection" (click)="ratingSection=!ratingSection;title='Cover Details'">Back</button>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-primary ml-2" *ngIf="!ratingSection && coverDetails.SubCoverYn=='Y'" (click)="onSaveCoverForm('subCover')">Proceed To SubCover Details</button>
+                                            <button class="btn btn-success ml-2" *ngIf="(coverDetails.SubCoverYn=='Y' && !ratingSection)" (click)="onSaveCoverForm('saveCover')">SAVE</button>
+                                            <button class="btn btn-success ml-2" *ngIf="(coverDetails.SubCoverYn!='Y' && ratingSection)" (click)="onSaveCoverForm('direct')">Submit</button>
+                                            <button class="btn btn-primary ml-2" *ngIf="!ratingSection && coverDetails.SubCoverYn!='Y'" (click)="ratingSection=!ratingSection;title='Rating Details'">Proceed To Rating Details</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="SubCover Details" *ngIf="coverDetails.SubCoverYn=='Y'">
+                            <div class="card" *ngIf="!addSubCoverSection">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between mt-2 mb-1">
+                                        <div>
+                                            <b>SubCover Details</b>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-warning" (click)="onAddSubCover()"><i class="fas fa-plus"></i>Add New SubCover</button>
+                                        </div>
+                                    </div>
+                                    <ng-container *ngIf="subCoversData">
+                                        <app-grid-table [cols]="subCoversHeader" [data]="subCoversData" [filterValue]="filterValue" (onEdit)="onEditSubCover($event)">
+                                        </app-grid-table>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="card" *ngIf="addSubCoverSection">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between mt-2 mb-1">
+                                        <div>
+                                            <b>SubCover Details</b>
+                                        </div>
+                                    </div>
+                                    <ng-container *ngIf="!subRatingSection">
+                                        <div class="row">
+                                            <div class="col-12 col-md-4 col-lg-4">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">SubCover Name<span class="text-required">*</span></label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="subCoverData.SubCoverName" class="input-form-control without-icon" maxlength="100">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4 col-lg-4">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">SubCover Description<span class="text-required">*</span></label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="subCoverData.SubCoverDesc" class="input-form-control without-icon" maxlength="100">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4 col-lg-4">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Cover<span class="text-required">*</span></label><br>
+                                                    <b>{{coverDetails.CoverName}}</b>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 col-md-4 col-lg-4">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Regulatory Code<span class="text-required">*</span></label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="subCoverData.RegulatoryCode" class="input-form-control without-icon" maxlength="100">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="col-12 col-md-4 col-lg-4">
+                                                <div class="input-control-container">
+                                                    <mat-form-field appearance="fill">
+                                                        <mat-label>Start Date</mat-label>
+                                                        <input matInput [matDatepicker]="picker3" [min]="minDate" (dateChange)="onSubCoverStartDateChange()" [(ngModel)]="subCoverData.EffectiveDateStart">
+                                                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                                                        <mat-datepicker #picker3></mat-datepicker>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-12 col-md-4 col-lg-4">
+                                                <div class="input-control-container">
+                                                    <mat-form-field appearance="fill">
+                                                        <mat-label>End Date</mat-label>
+                                                        <input matInput [matDatepicker]="picker4" [min]="subCoverData.EffectiveDateStart" [(ngModel)]="subCoverData.EffectiveDateEnd">
+                                                        <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                                                        <mat-datepicker #picker4></mat-datepicker>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div> -->
+                                            <div class="col-12 col-md-4 col-lg-4">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                                                    <div class="input-form-box">
+                                                        <textarea cols="60" [(ngModel)]="subCoverData.Remarks" ros="3" class="input-form-select"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-5 col-lg-5">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Status<span class="text-required">*</span></label>
+                                                    <div class="input-form-radio-box">
+                                                        <div class="radio-toolbar">
+                                                            <input id="subCover_Pending" type="radio" name="subCoverStatus" [(ngModel)]="subCoverData.Status" value="P">
+                                                            <label for="subCover_Pending">Pending</label>
+                                                            <input id="subCover_Yes" type="radio" name="subCoverStatus" [(ngModel)]="subCoverData.Status" value="Y">
+                                                            <label for="subCover_Yes">Active</label>
+                                                            <input type="radio" id="subCover_No" name="subCoverStatus" [(ngModel)]="subCoverData.Status" value="N">
+                                                            <label for="subCover_No">DeActive</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="subRatingSection">
+                                        <div class="row mt-2">
+                                            <div class="col-md-4 col-lg-4 col-xl-4">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">SubCover Name</label>
+                                                    <div class="input-form-box">
+                                                        <b>{{subCoverData.SubCoverName}}</b>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4 col-lg-4">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">SubCover Description</label>
+                                                    <div class="input-form-box">
+                                                        <b>{{subCoverData.SubCoverDesc}}</b>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4 col-lg-4">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Regulatory Code</label>
+                                                    <div class="input-form-box">
+                                                        <b>{{subCoverData.RegulatoryCode}}</b>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-md-4 col-lg-4 col-xl-4">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Coverage Type</label>
+                                                    <ng-select class="input-form-select" appendTo="body" [items]="CoverList" [(ngModel)]="subCoverData.CoverageType" bindValue="Code" bindLabel="CodeDesc">
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <!--<div class="col-12 col-md-4 col-lg-4">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Excess<span class="text-required">*</span></label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="subCoverData.Excess" class="input-form-control without-icon" maxlength="100">
+                                                    </div>
+                                                </div>
+                                            </div>-->
+                                            <div class="col-12 col-md-4 col-lg-4">
+                                              <div class="input-control-container">
+                                                  <label class="input-form-label">ExcessPercent<span class="text-required">*</span></label>
+                                                  <div class="input-form-box">
+                                                      <input type="text" [(ngModel)]="subCoverData.ExcessPercent" class="input-form-control without-icon" maxlength="100">
+                                                  </div>
+                                              </div>
+                                          </div>
+
+                                          <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">ExcessAmount<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" [(ngModel)]="subCoverData.ExcessAmount" class="input-form-control without-icon" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                          <div class="input-control-container">
+                                              <label class="input-form-label">ExcessDesc<span class="text-required">*</span></label>
+                                              <div class="input-form-box">
+                                                  <input type="text" [(ngModel)]="subCoverData.ExcessDesc" class="input-form-control without-icon" maxlength="100">
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                            <div class="col-12 col-md-4 col-lg-4">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Coverage Limit<span class="text-required">*</span></label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="subCoverData.CoverageLimit" class="input-form-control without-icon" maxlength="100">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 col-md-4 col-lg-4">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Is Tax Excempted?<span class="text-required">*</span></label>
+                                                    <div class="input-form-radio-box">
+                                                        <div class="radio-toolbar">
+                                                            <input id="subTax1" type="radio" name="subCoverTaxYN" [(ngModel)]="subCoverData.IsTaxExcempted" value="Y">
+                                                            <label for="subTax1">Yes</label>
+                                                            <input type="radio" id="subTax2" name="subCoverTaxYN" [(ngModel)]="subCoverData.IsTaxExcempted" value="N">
+                                                            <label for="subTax2">No</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4 col-lg-4 col-xl-4">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Calculation Type</label>
+                                                    <ng-select class="input-form-select" appendTo="body" [items]="calcTypeList" [(ngModel)]="subCoverData.CalcType" (change)="onChangeSubCalcType()" bindValue="value" bindLabel="text">
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4 col-lg-4" *ngIf="subCoverData.CalcType!='G' && subCoverData.CalcType!='F'">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Base Rate<span class="text-required">*</span></label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="subCoverData.BaseRate" class="input-form-control without-icon" maxlength="100">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 col-md-4 col-lg-4" *ngIf="subCoverData.CoverageType=='d' || subCoverData.CoverageType=='l'">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Discount Applicable For</label>
+                                                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="subCoverData.DiscountCoverId" [items]="coverList" bindValue="value" bindLabel="text">
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4 col-lg-4" *ngIf="subCoverData.CalcType!='G' && subCoverData.CalcType!='F'">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Maxium Discount<span class="text-required">*</span></label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="subCoverData.MinimumPremium" class="input-form-control without-icon" maxlength="100">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4 col-lg-4" *ngIf="subCoverData.CalcType!='G' && subCoverData.CalcType!='F'">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Maximum SumInsured<span class="text-required">*</span></label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="subCoverData.SumInsuredEnd" class="input-form-control without-icon" maxlength="100">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4 col-lg-4">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                                                    <mat-form-field appearance="fill">
+                                                        <input matInput [matDatepicker]="picker3" [min]="minDate" (dateChange)="onSubCoverStartDateChange()" [(ngModel)]="subCoverData.EffectiveDateStart">
+                                                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                                                        <mat-datepicker #picker3></mat-datepicker>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-4 col-lg-4" *ngIf="subCoverData.CoverageType=='P'">
+                                                <div class="input-control-container">
+                                                    <mat-form-field appearance="fill">
+                                                        <mat-label>End Date</mat-label>
+                                                        <input matInput [matDatepicker]="picker4" [(ngModel)]="subCoverData.EffectiveDateEnd">
+                                                        <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                                                        <mat-datepicker #picker4></mat-datepicker>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="col-12 col-md-4 col-lg-4" *ngIf="subCoverData.CalcType!='A'">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">SubCover Based On <span class="text-required">*</span></label>
+                                                    <div class="input-form-box">
+                                                        <ng-select class="input-form-select" appendTo="body" [items]="basedOnColumnList" [(ngModel)]="subCoverData.CoverBasedOn" bindValue="Code" bindLabel="CodeDesc">
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="subCoverData.IsTaxExcempted=='N'">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Tax Amount<span class="text-required">*</span></label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="subCoverData.TaxAmount" class="input-form-control without-icon" maxlength="100">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="subCoverData.IsTaxExcempted=='N'">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Tax Code<span class="text-required">*</span></label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="subCoverData.TaxCode" class="input-form-control without-icon" maxlength="100">
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="subCoverData.IsTaxExcempted=='Y'">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Tax Excemption Reference<span class="text-required">*</span></label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="subCoverData.TaxExcemptionReference" class="input-form-control without-icon" maxlength="100">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="subCoverData.IsTaxExcempted=='Y'">
+                                                <div class="input-control-container">
+                                                    <div class="input-control-container">
+                                                        <label class="input-form-label">Tax Excemption Type</label>
+                                                        <ng-select class="input-form-select" [(ngModel)]="subCoverData.TaxExcemptionType" appendTo="body" [items]="taxTypeList" bindValue="Code" bindLabel="CodeDesc">
+                                                        </ng-select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3" *ngIf="subCoverData.CalcType=='G'">
+                                            <div class="col-md-2 col-lg-2 offset-10">
+                                                <button class="btn btn-primary" (click)="onAddCalEntry()">Add New</button>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3" *ngIf="subCoverData.CalcType=='G'">
+                                            <div class="col-md-12 col-lg-12">
+                                                <table class="table table-headerRow">
+                                                    <tr>
+                                                        <th class="tbl-header">Calculation Type</th>
+                                                        <th class="tbl-header">Min SumInsured</th>
+                                                        <th class="tbl-header">Max SumInsured</th>
+                                                        <th class="tbl-header">Maxium Discount</th>
+                                                        <th class="tbl-header">Rate</th>
+                                                        <th class="tbl-header">Remove</th>
+                                                    </tr>
+                                                    <tr *ngFor="let row of selectedCalcList;let i = index">
+
+                                                        <td class="tbl-content">
+                                                            <ng-select class="custom" name="calcType" [(ngModel)]="row.CalculationType" placeholder="Select Calculation Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                                                <ng-option *ngFor="let opt of calculationTypes2" [value]="opt.value">{{opt.text}}</ng-option>
+                                                            </ng-select>
+                                                        </td>
+                                                        <td class="tbl-content">
+                                                            <div class="input-control-container">
+                                                                <input type="text" style="width: 120px;" maxlength="10" [(ngModel)]="row.MinSuminsured">
+                                                            </div>
+                                                        </td>
+                                                        <td class="tbl-content">
+                                                            <div class="input-control-container">
+                                                                <input type="text" style="width: 120px;" maxlength="10" [(ngModel)]="row.MaxSuminsured">
+                                                            </div>
+                                                        </td>
+                                                        <td class="tbl-content">
+                                                            <div class="input-control-container">
+                                                                <input type="text" style="width: 120px;" maxlength="10" [(ngModel)]="row.MinimumPremium">
+                                                            </div>
+                                                        </td>
+                                                        <td class="tbl-content">
+                                                            <div class="input-control-container">
+                                                                <input type="text" style="width: 120px;" maxlength="10" [(ngModel)]="row.BaseRate">
+                                                            </div>
+                                                        </td>
+                                                        <td class="tbl-content">
+                                                            <ng-container *ngIf="i==0">N/A</ng-container>
+                                                            <button *ngIf="i!=0" class="btn btn-danger p-1" (click)="onRemoveIndex(i)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                <div>
+                                    <div class="d-flex justify-content-end">
+                                        <div>
+                                            <button class="btn btn-danger" *ngIf="!subRatingSection" (click)="addSubCoverSection=!addSubCoverSection">Cancel</button>
+                                            <button class="btn btn-danger" *ngIf="subRatingSection" (click)="subRatingSection=!subRatingSection;title='Cover Details'">Back</button>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-success ml-2" *ngIf="subRatingSection" (click)="onSaveSubCoverDetails()">Submit</button>
+                                            <button class="btn btn-primary ml-2" *ngIf="!subRatingSection" (click)="subRatingSection=!subRatingSection;title='Rating Details'">Proceed To Rating Details</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

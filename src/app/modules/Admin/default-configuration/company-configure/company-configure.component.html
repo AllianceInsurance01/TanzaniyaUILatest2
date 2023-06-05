@@ -1,0 +1,399 @@
+<div class="card">
+    <div class="card-header">Global Configuration</div>
+    <div class="card p-1">
+        <div class="vision-grid vision-grid-column-2">
+            <div class="vision-grid-item">
+                <div class="radio-toolbar menu-bar">
+                    <!-- <input id="menu5" type="radio" name="menu" value="Company" (click)="onRedirect('Company')" [(ngModel)]="activeMenu">
+                        <label for="menu5">Company Details</label> -->
+                    <!-- <input id="menu6" type="radio" name="menu" value="Branch" [(ngModel)]="activeMenu" (click)="activeMenu='Branch';includeBranch=false">
+                        <label for="menu6">Branch</label> -->
+                    <input id="menu7" type="radio" name="menu" value="Product" [(ngModel)]="activeMenu" (click)="onRedirect('Product')">
+                    <label for="menu7">Product</label>
+                    <input type="radio" id="menu1" name="menu" value="Section" (click)="onRedirect('Section')" [(ngModel)]="activeMenu">
+                    <label for="menu1">Section</label>
+                    <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+                    <label for="menu2">Cover</label>
+                    <!-- <input type="radio" id="menu3" name="menu" value="SubCover" (click)="onRedirect('SubCover')" [(ngModel)]="activeMenu">
+                        <label for="menu3">SubCover</label> -->
+                    <input type="radio" id="menu6" name="menu" value="Rating" (click)="onRedirect('Rating')" [(ngModel)]="activeMenu">
+                    <label for="menu6">Rating Fields</label>
+                    <input type="radio" id="menu4" name="menu" value="Referral" (click)="onRedirect('Referral')" [(ngModel)]="activeMenu">
+                    <label for="menu4">Referral</label>
+                    <input type="radio" id="menu5" name="menu" value="Document" (click)="onRedirect('Document')" [(ngModel)]="activeMenu">
+                    <label for="menu5">Document</label>
+                </div>
+            </div>
+            <div class="vision-grid-item">
+                <!-- <ng-container *ngIf="activeMenu=='Insurance'">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <nb-card *ngIf="!includeCompany">
+                                <nb-card-header>
+                                    <div class="row">
+                                        <div class="col-md-3 col-xl-3 col-lg-3">
+                                            Existing Companies
+                                        </div>
+                                        <div class="col-md-3 col-xl-3 col-lg-3 offset-6">
+                                            <button class="btn btn-warning" (click)="includeCompany=!includeCompany">Add New</button>
+                                        </div>
+                                    </div>
+                                </nb-card-header>
+                                <nb-card-body>
+                                    <ng-container *ngIf="companyData">
+                                        <app-grid-table [cols]="companyHeader" [data]="companyData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+                                        </app-grid-table>
+                                    </ng-container>
+                                </nb-card-body>
+                            </nb-card>
+                            <nb-card *ngIf="includeCompany">
+                                <nb-card-header>Include Companies</nb-card-header>
+                                <nb-card-body>
+                                    <ng-container *ngIf="companyData">
+                                        <app-grid-table [cols]="companyHeader2" [data]="companyData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+                                        </app-grid-table>
+                                    </ng-container>
+                                </nb-card-body>
+                                <div class="text-center mt-2">
+                                    <button class="btn btn-danger" (click)="includeCompany=!includeCompany">Back</button>
+                                    <button class="btn btn-success ml-2" (click)="includeCompany=!includeCompany">Submit</button>
+                                </div>
+                            </nb-card>
+                        </div>
+                    </ng-container> -->
+                <ng-container *ngIf="activeMenu=='Branch'">
+                    <div class="col-md-12 col-lg-12 col-xl-12">
+                        <div class="card" *ngIf="!includeBranch">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-md-3 col-xl-3 col-lg-3">
+                                        Existing Branches
+                                    </div>
+                                    <div class="col-md-3 col-xl-3 col-lg-3 offset-6">
+                                        <button class="btn btn-warning" (click)="onAddBranch()">Add New</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <ng-container *ngIf="branchData">
+                                    <app-grid-table [cols]="branchHeader"  [data]="branchData" [filterValue]="filterValue" (onEdit)="onAddBranch()">
+                                    </app-grid-table>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="card" *ngIf="includeBranch">
+                            <div class="card-header">Branch Details</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Branch Name<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" class="input-form-control without-icon" maxlength="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Address 1<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" class="input-form-control without-icon" maxlength="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Address 2<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" class="input-form-control without-icon" maxlength="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">City</label>
+                                            <ng-select class="input-form-select" [items]="cityList" bindValue="Code" bindLabel="CodeDescription">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Email<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" class="input-form-control without-icon" maxlength="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Mobile No<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" class="input-form-control without-icon" maxlength="10">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Contact Person Name<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" class="input-form-control without-icon" maxlength="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">BrokerCode<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" class="input-form-control without-icon" maxlength="10">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Insurance Company Branch</label>
+                                            <ng-select class="input-form-select" [items]="cityList" bindValue="Code" bindLabel="CodeDescription">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Branch Type<span class="text-required">*</span></label>
+                                            <div class="input-form-radio-box">
+                                                <div class="radio-toolbar">
+                                                    <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="statusValue" value="YES">
+                                                    <label for="orginwarehouse_Yes">Main</label>
+                                                    <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="statusValue" value="NO">
+                                                    <label for="orginwarehouse_No">Branch</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-2">
+                                    <button class="btn btn-danger" (click)="includeBranch=!includeBranch">Back</button>
+                                    <button class="btn btn-success ml-2" (click)="includeBranch=!includeBranch">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="activeMenu=='Product'">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    Existing Products
+                                </div>
+                                <div>
+                                    <button class="btn btn-warning" (click)="onAddProduct()">Add New Product</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <ng-container *ngIf="productData">
+                                <app-grid-table [cols]="productHeader" changeStatus="true" (onStatus)="EditStatus($event)" [data]="productData" [filterValue]="filterValue" (onEdit)="onEditProduct($event)">
+                                </app-grid-table>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <!-- <nb-card *ngIf="includeProduct">
+                            <nb-card-header>Include Products</nb-card-header>
+                            <nb-card-body>
+                                <ng-container *ngIf="productData">
+                                    <app-grid-table [cols]="productHeader2" [data]="productData" [filterValue]="filterValue" (onEdit)="onEditSection($event)">
+                                    </app-grid-table>
+                                </ng-container>
+                                <div class="text-center mt-2">
+                                    <button class="btn btn-danger" (click)="includeProduct=!includeProduct">Back</button>
+                                    <button class="btn btn-success ml-2" (click)="includeProduct=!includeProduct">Submit</button>
+                                </div>
+                            </nb-card-body>
+                        </nb-card> -->
+                </ng-container>
+                <ng-container *ngIf="activeMenu=='Section'">
+                    <div class="col-md-12 col-lg-12 col-xl-12">
+                        <div class="card" *ngIf="!includeSections">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Existing Sections
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-warning" (click)="onAddSection()">Add New Section</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+
+                                <ng-container *ngIf="sectionData!=undefined">
+                                    <app-grid-table [cols]="sectionHeader" [data]="sectionData" [filterValue]="filterValue" (onEdit)="onEditSection($event)">
+                                    </app-grid-table>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <!-- <nb-card *ngIf="includeSections">
+                                <nb-card-header>Include Sections</nb-card-header>
+                                <nb-card-body>
+                                    <ng-container *ngIf="sectionData">
+                                        <app-grid-table [cols]="sectionHeader2" [data]="sectionData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+                                        </app-grid-table>
+                                    </ng-container>
+                                    <div class="text-center mt-2">
+                                        <button class="btn btn-danger" (click)="includeSections=!includeSections">Back</button>
+                                        <button class="btn btn-success ml-2" (click)="includeSections=!includeSections">Submit</button>
+                                    </div>
+                                </nb-card-body>
+                            </nb-card> -->
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="activeMenu=='Cover'">
+                    <div class="col-md-12 col-lg-12 col-xl-12">
+                        <div class="card" *ngIf="!includeCovers">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-md-3 col-xl-3 col-lg-3">
+                                        Existing Covers
+                                    </div>
+                                    <div class="col-md-3 col-xl-3 col-lg-3 offset-6">
+                                        <button class="btn btn-warning" (click)="onAddCover()">Add New Covers</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <ng-container *ngIf="coversData.length!=0">
+                                    <app-grid-table [cols]="coversHeader" [data]="coversData" [filterValue]="filterValue" (onEdit)="onEditCovers($event)">
+                                    </app-grid-table>
+                                </ng-container>
+                                <ng-container *ngIf="coversData.length==0">
+                                    <div class="text-center">
+                                        No Data Available
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <!-- <nb-card *ngIf="includeCovers">
+                                <nb-card-header>Include Covers</nb-card-header>
+                                <nb-card-body>
+                                    <div class="row">
+                                        <div class="col-md-3 col-lg-3 col-xl-3">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Section</label>
+                                                <ng-select class="input-form-select" [items]="sectionList" [(ngModel)]="sectionValue" bindValue="SectionId" bindLabel="SectionName">
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ng-container *ngIf="coversData && sectionValue">
+                                        <app-grid-table [cols]="coversHeader2" [data]="coversData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+                                        </app-grid-table>
+                                    </ng-container>
+                                    <div class="text-center mt-2">
+                                        <button class="btn btn-danger" (click)="includeCovers=!includeCovers">Back</button>
+                                        <button class="btn btn-success ml-2" *ngIf="sectionValue" (click)="includeCovers=!includeCovers">Submit</button>
+                                    </div>
+                                </nb-card-body>
+                            </nb-card> -->
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="activeMenu=='SubCover'">
+                    <div class="col-md-12 col-lg-12 col-xl-12">
+                        <div class="card" *ngIf="!includeSubCovers">
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Existing SubCovers
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-warning" (click)="onAddSubCover()">Add New</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <ng-container *ngIf="subCoversData">
+                                    <app-grid-table [cols]="subCoversHeader" [data]="subCoversData" [filterValue]="filterValue" (onEdit)="onEditSubCover($event)">
+                                    </app-grid-table>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="activeMenu=='Referral'">
+                    <div class="col-md-12 col-lg-12 col-xl-12">
+                        <div class="card" *ngIf="!includeBranch">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-md-3 col-xl-3 col-lg-3">
+                                        Existing Referral
+                                    </div>
+                                    <div class="col-md-3 col-xl-3 col-lg-3 offset-6">
+                                        <button class="btn btn-warning" (click)="onAddReferral()">Add New</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <ng-container *ngIf="branchData">
+                                    <app-grid-table [cols]="referralHeader" [data]="referralData" [filterValue]="filterValue" (onEdit)="onEditReferral($event)">
+                                    </app-grid-table>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="activeMenu=='Document'">
+                    <div class="col-md-12 col-lg-12 col-xl-12">
+                        <div class="card" *ngIf="!includeDocument">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-md-3 col-xl-3 col-lg-3">
+                                        Existing Document
+                                    </div>
+                                    <div class="col-md-3 col-xl-3 col-lg-3 offset-6">
+                                        <button class="btn btn-warning" (click)="onAddDocument()">Add New</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <ng-container *ngIf="branchData">
+                                    <app-grid-table [cols]="documentHeader" [data]="documentData" [filterValue]="filterValue" (onEdit)="onAddDocument()">
+                                    </app-grid-table>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="row">
+            <div class="col-md-2 col-lg-2 col-xl-2">
+                <div class="btn-group-vertical">
+
+                    <button type="button" class="btn btn-warning" *ngIf="activeMenu=='Company'">Company Details</button>
+                    <button type="button" class="btn btn-secondary" *ngIf="activeMenu!='Company'" (click)="activeMenu='Company'">Company Details</button>
+                    <button type="button" class="btn btn-warning" *ngIf="activeMenu=='Branch'">Branch</button>
+                    <button type="button" class="btn btn-secondary" *ngIf="activeMenu!='Branch'" (click)="activeMenu='Branch';includeBranch=false">Branch</button>
+                    <button type="button" class="btn btn-warning" *ngIf="activeMenu=='Product'">Product</button>
+                    <button type="button" class="btn btn-secondary" *ngIf="activeMenu!='Product'" (click)="activeMenu='Product'">Product</button>
+                    <button type="button" class="btn btn-warning" *ngIf="activeMenu=='Section'">Section</button>
+                    <button type="button" class="btn btn-secondary" *ngIf="activeMenu!='Section'" (click)="activeMenu='Section';includeSections=false">Section</button>
+                    <button type="button" class="btn btn-warning" *ngIf="activeMenu=='Cover'">Cover</button>
+                    <button type="button" class="btn btn-secondary" *ngIf="activeMenu!='Cover'" (click)="activeMenu='Cover';includeCovers=false">Cover</button>
+                    <button type="button" class="btn btn-warning" *ngIf="activeMenu=='SubCover'">SubCover</button>
+                    <button type="button" class="btn btn-secondary" *ngIf="activeMenu!='SubCover'" (click)="activeMenu='SubCover';includeSubCovers=false">SubCover</button>
+                </div>
+            </div>
+            <div class="col-md-10 col-lg-10 col-xl-10">
+
+            </div>
+        </div> -->
+    <div class="text-center mt-2">
+        <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+        <button class="btn btn-success ml-2" (click)="onFormSubmit()">Proceed</button>
+    </div>
+</div>

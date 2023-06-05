@@ -1,0 +1,286 @@
+<div class="card">
+    <div class="card-header" *ngIf="showStepperSection">
+        <div class="d-flex justify-content-between">
+            <div class="spancommon">
+                Quote Details
+            </div>
+            <div>
+                <ng-container *ngIf="quoteRefNo">
+                    <b class="spancommon" style="letter-spacing: 1px;">RefNo - {{quoteRefNo}}</b>
+                </ng-container>
+                <ng-container *ngIf="quoteNo">
+                    | &nbsp; <b class="spancommon" style="letter-spacing: 1px;">Quote No - {{quoteNo}}</b>
+                </ng-container>
+            </div> 
+        </div>
+    </div>
+    <div class="maan-grid-item-body p-1">
+
+        <div class="row">
+            <!-- <div class="p-4 col-12 col-md-4" *ngIf="referenceNo">
+                <b>CustomerRefNo - {{referenceNo}}</b>
+            </div> -->
+            <div class="p-2 col-12 col-md-3 offset-9">
+                <ng-template #card>
+                    <div class="popover-card">
+                        <div status="warning">
+                            Hello!
+                        </div>
+                        <div>
+                            Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template #vehicleCard>
+                    <div class="popover-card customTemplate">
+                        <div status="warning">
+                            Vehicle Details
+                        </div>
+                        <div>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            Engine Number
+                                        </div>
+                                        <div>
+                                            {{vehicleDetails?.EngineNumber}}
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            Registration Number
+                                        </div>
+                                        <div>
+                                            {{vehicleDetails?.Registrationnumber}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            Chassis Number
+                                        </div>
+                                        <div>
+                                            {{vehicleDetails?.ReqChassisNumber}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            Body Type
+                                        </div>
+                                        <div>
+                                            {{vehicleDetails?.VehicleType}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            Vehicle Usage
+                                        </div>
+                                        <div>
+                                            {{vehicleDetails?.Motorusage}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            Make
+                                        </div>
+                                        <div>
+                                            {{vehicleDetails?.Vehiclemake}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            Model
+                                        </div>
+                                        <div>
+                                            {{vehicleDetails?.Vehcilemodel}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            Seating Capacity
+                                        </div>
+                                        <div>
+                                            {{vehicleDetails?.SeatingCapacity}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            Manufacture Year
+                                        </div>
+                                        <div>
+                                            {{vehicleDetails?.ManufactureYear}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            FuelType
+                                        </div>
+                                        <div>
+                                            {{vehicleDetails?.FuelType}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            Gross Weight
+                                        </div>
+                                        <div>
+                                            {{vehicleDetails?.Grossweight}}
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            Tare Weight
+                                        </div>
+                                        <div>
+                                            {{vehicleDetails?.Tareweight}}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </ng-template>
+                <!-- <button class="custom-btn btn-6 mx-2 w-100 mt-2" matRipple [nbPopover]="card"><i class="fas fa-eye mx-1"></i>Customer Details</button> -->
+            </div>
+
+            <!-- <div class="p-2 col-12 col-md-2" *ngIf="vehicleDetails">
+                <button class="custom-btn btn-6 mx-2 w-100 mt-2" matRipple [nbPopover]="vehicleCard"><i class="fas fa-eye mx-1"></i>Vehicle Details</button>
+            </div> -->
+            <!-- <div class="p-2 col-12 col-md-3 mt-2" *ngIf="vehicleDetails">
+                <b>Chassis No - {{vehicleDetails?.Chassisnumber}}</b>
+            </div> -->
+        </div>
+        <div class="container-fluid">
+            <div class="hh-grayBox" *ngIf="(productId!='4' && productId!='3') && showStepperSection">
+                <div class="row justify-content-between">
+                    <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='Customer-stepper'}" (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/customer-details')">
+                        <span class="is-complete"></span>
+                        <p>Customer Details</p>
+                    </div>
+                    <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" *ngIf="vehicleDetailSection" [ngClass]="{completed: activeStep !='Motor-stepper' && activeStep !='Customer-stepper'}"
+                        (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/motor-details')">
+                        <span class="is-complete"></span>
+                        <p>Vehicle Details</p>
+                    </div>
+                    <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='Domestic-stepper' && activeStep !='Motor-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Customer-stepper'}"
+                        (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/vehicle-details')">
+                        <span class="is-complete"></span>
+                        <p>Policy Details</p>
+                    </div>
+                    <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='Motor-stepper' && activeStep !='Excess-stepper' && activeStep !='Customer-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Domestic-stepper' }"
+                        (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/excess-discount')">
+                        <span class="is-complete"></span>
+                        <p>Cover Details</p>
+                    </div>
+                    <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='Motor-stepper' && activeStep !='Premium-stepper' && activeStep !='Customer-stepper' && activeStep !='Excess-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Domestic-stepper'}"
+                        (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/premium-details')">
+                        <span class="is-complete"></span>
+                        <p>Document Details</p>
+                    </div>
+                    <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='Motor-stepper' && activeStep !='Payment-stepper' && activeStep !='Premium-stepper' && activeStep !='Customer-stepper' && activeStep !='Excess-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Domestic-stepper'}"
+                        (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/make-payment')">
+                        <span class="is-complete"></span>
+                        <p>Make Payment</p>
+                    </div>
+                </div>
+            </div>
+            <div class="hh-grayBox" *ngIf="productId=='4'">
+                <div class="row justify-content-between">
+                    <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='Customer-stepper'}" (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/customer-details')">
+                        <span class="is-complete"></span>
+                        <p>Risk Details</p>
+                    </div>
+                    <!-- <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" *ngIf="vehicleDetailSection" [ngClass]="{completed: activeStep !='Motor-stepper' && activeStep !='Customer-stepper'}"
+                    (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/motor-details')">
+                        <span class="is-complete"></span>
+                        <p>Vehicle Details</p>
+                    </div> -->
+                    <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='Motor-stepper' && activeStep !='Excess-stepper' && activeStep !='Customer-stepper' }"
+                        (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/excess-discount')">
+                        <span class="is-complete"></span>
+                        <p>Cover Details</p>
+                    </div>
+                     <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='Motor-stepper'  && activeStep !='Excess-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Customer-stepper' && activeStep !='Travel-stepper'}"
+                        (click)="ontap('/Travel/customerDetails/premium-details')">
+                        <span class="is-complete"></span>
+                        <p>Passenger Details</p>
+                    </div>
+
+                    <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='Motor-stepper' && activeStep !='Premium-stepper' && activeStep !='Customer-stepper' && activeStep !='Excess-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Travel-stepper'}"
+                        (click)="ontap('/Travel/customerDetails/premium-details')">
+                        <span class="is-complete"></span>
+                        <p>Document Details</p>
+                    </div>
+                    <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='Motor-stepper' && activeStep !='Payment-stepper' && activeStep !='Premium-stepper' && activeStep !='Customer-stepper' && activeStep !='Excess-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Travel-stepper'}"
+                        (click)="ontap('/Travel/customerDetails/make-payment')">
+                        <span class="is-complete"></span>
+                        <p>Make Payment</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hh-grayBox" *ngIf="productId=='3'">
+                <div class="row justify-content-between">
+                    <div class="order-tracking domesticrisk" [ngClass]="{completed: activeStep !='Customer-stepper'}" (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/customer-details')">
+                        <span class="is-complete"></span>
+                        <p>Customer Details</p>
+                    </div>
+                    <div class="order-tracking domesticrisk" [ngClass]="{completed: activeStep !='Domestic-stepper' && activeStep !='Motor-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Customer-stepper'}"
+                     (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/domestic-quote-details')">
+                        <span class="is-complete"></span>
+                        <p>Risk Details</p>
+                    </div>
+                    <!--<div class="order-tracking domesticrisk" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='Motor-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Customer-stepper' && activeStep !='Domestic-stepper'}"
+                      (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/underwriter-details')">
+                      <span class="is-complete"></span>
+                      <p>UnderWriter Questions</p>
+                  </div>-->
+                    <div class="order-tracking domesticrisk" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='Motor-stepper' && activeStep !='Excess-stepper' && activeStep !='Customer-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Domestic-stepper'}"
+                        (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/excess-discount')">
+                        <span class="is-complete"></span>
+                        <p>Cover Details</p>
+                    </div>
+                    <div class="order-tracking domesticrisk" [ngClass]="{completed: activeStep !='DomesticRisk-stepper'  && activeStep !='UW-stepper' && activeStep !='Motor-stepper' && activeStep !='Customer-stepper' && activeStep !='Domestic-stepper' && activeStep !='Excess-stepper' && activeStep != 'Vehicle-stepper'}"
+                        (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details')">
+                        <span class="is-complete"></span>
+                        <p>Policy Details</p>
+                    </div>
+                    <div class="order-tracking domesticrisk" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='Motor-stepper' && activeStep !='Premium-stepper' && activeStep !='Customer-stepper' && activeStep !='Excess-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Domestic-stepper' && activeStep !='DomesticRisk-stepper'}"
+                        (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/premium-details')">
+                        <span class="is-complete"></span>
+                        <p>Document Details</p>
+                    </div>
+                    <div class="order-tracking domesticrisk" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='Motor-stepper' && activeStep !='Payment-stepper' && activeStep !='Premium-stepper' && activeStep !='Customer-stepper' && activeStep !='Excess-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Domestic-stepper' && activeStep !='DomesticRisk-stepper'}"
+                        (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/make-payment')">
+                        <span class="is-complete"></span>
+                        <p>Make Payment</p>
+                    </div>
+                </div>
+            </div>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

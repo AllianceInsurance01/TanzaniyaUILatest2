@@ -1,0 +1,38 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div class="spancommon span_font_size">
+                Endorsements
+            </div>
+            <div class="spancommon span_font_size" *ngIf="policyNo">
+                    Policy No ~ {{policyNo}}
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="d-flex justify-content-between mb-2" >
+            <div class="spancommon span_font_size">
+                
+            </div>
+            <div class="spancommon span_font_size" *ngIf="checkCreateEndorse()">
+                <button class="custom-btn btn-6 maan-button-data" (click)="onCreateEndorsement()" style="width: 8rem;"><i class="fas fa-plus mx-1"></i>Create New</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <ng-container *ngIf="quoteData.length!=0 && currencyCode">
+                    <app-grid-table [cols]="quoteHeader" [data]="quoteData" (onGetSchedule)="onGetSchedule($event)" [Currency]="currencyCode" [filterValue]="filterValue" (onEdit)="onEditCovers($event)">
+                    </app-grid-table>
+                </ng-container>
+                <ng-container *ngIf="quoteData.length==0">
+                    <div class="text-center spancommon span_font_size">
+                        No Endorsement Available
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="text-center mt-1">
+            <button class="custom-btn btn-5 mr-2" (click)="ongetBack()" matRipple><<&nbsp;Back</button>&nbsp;
+        </div>
+    </div>
+</div>

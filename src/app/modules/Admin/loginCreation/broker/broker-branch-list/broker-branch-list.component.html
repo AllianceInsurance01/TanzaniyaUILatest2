@@ -1,0 +1,45 @@
+<div class="card">
+    <div class="card-header">Broker Configuration</div>
+    <div class="card p-1">
+        <div class="vision-grid vision-grid-column-2">
+            <div class="vision-grid-item">
+                <div class="radio-toolbar menu-bar">
+                    <input type="radio" id="menu1" name="menu" value="Branch" (click)="onRedirect('Branch')" [(ngModel)]="activeMenu">
+                    <label for="menu1">Branch</label>
+                    <input id="menu7" type="radio" name="menu" value="Product" [(ngModel)]="activeMenu" (click)="onRedirect('Product')">
+                    <label for="menu7">Product</label>
+
+                    <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+                    <label for="menu2">Cover</label>
+                </div>
+            </div>
+            <div class="vision-grid-item">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                Existing Branches
+                            </div>
+                            <div>
+                                <button class="btn btn-warning" (click)="onAddNewBranch()">Add New</button>
+                            </div>
+                        </div>
+                      </div>
+                    <div>
+                        <ng-container *ngIf="branchData.length!=0">
+                            <app-grid-table [cols]="branchHeader" [data]="branchData" [filterValue]="filterValue" (onEdit)="onEditBranch($event)">
+                            </app-grid-table>
+                        </ng-container>
+                        <ng-container *ngIf="branchData.length==0">
+                            <div class="text-center">
+                                No Data Available
+                            </div>
+                        </ng-container>
+                        <div class="text-center mt-2">
+                            <button class="btn btn-danger" (click)="getBackPage()">Back</button>
+                        </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>

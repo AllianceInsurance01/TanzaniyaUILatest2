@@ -1,0 +1,291 @@
+<!-- <main class="main d-flex align-items-center">
+    <div class="container-fluid" style="padding-left: 0px;">
+        <div class="row" style="background-color: white;overflow-x: hidden;">
+            <div class="col-4">
+                <img src="./assets/img/brand/Al_Main.jpg" class="img-fluid rounded float-left" style="height: 80px;">
+            </div>
+            <div class="col-3 offset-md-5 float-right">
+                <h1 style="margin-bottom: 0px;padding-top: 10px;">Live Environment</h1><br>
+                <div class="row" style="padding-left: 15px;">
+                    <b>LoginID</b> &nbsp;
+                    <p>{{loginId}}</p> &nbsp; | &nbsp; <button class="btn btn-outline-primary" style="border:none;padding: 0px;margin-bottom:10px;" (click)="productRoute()">Home</button> &nbsp; | &nbsp;<button class="btn btn-outline-primary" style="border:none;padding: 0px;margin-bottom:10px;"
+                        (click)="loginRoute()">Signout</button>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-left: 20px;margin-top:20px;">
+            <div class="col-3 offset-md-2 product-container product-gridBorderStyle" style="margin-right: 0px;" *ngIf="cargoPolicy">
+                <img src="./assets/img/brand/export.jpg" width="100%" height="200" />
+                <div class="product-overlay">
+                    <div class="product-text ">
+                        <h4 style="margin-left: 20px;">Marine- Cargo Individual Policy</h4><br>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-warning" (click)="getExistingQuote()">Get Quote</button>
+                        </div>
+
+                    </div>
+                </div>
+                <h5 style="margin-left: 20px;">Marine- Cargo Individual Policy</h5>
+            </div>
+            <div class="col-3 offset-md-1 product-container product-gridBorderStyle" style="margin-right: 0px;" *ngIf="cargoOpenPolicy">
+                <img src="./assets/img/brand/containers.jpg" width="100%" height="200" />
+                <div class="product-overlay">
+                    <div class="product-text ">
+                        <h4 style="margin-left: 20px;">Marine- Cargo Open Cover</h4><br>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-warning" (click)="getOpenCover()">Get Quote</button>
+                        </div>
+
+                    </div>
+                </div>
+                <h5 style="margin-left: 20px;">Marine- Cargo Open Cover</h5>
+            </div>
+        </div>
+        <div class="row" style="margin-left: 20px;margin-top:20px;">
+            <div class="col-3 offset-md-2 product-container product-gridBorderStyle" *ngIf="yachtPolicy">
+                <img src="./assets/img/brand/yacht.jpg" width="100%" height="200" />
+                <div class="product-overlay">
+                    <div class="product-text ">
+                        <h4 style="margin-left: 20px;">Yacht Insurance</h4><br>
+                        <button type="button" class="btn btn-warning" (click)="yachtDetails()">Get Quote</button>
+                    </div>
+                </div>
+                <h5 style="margin-left: 20px;">Yacht Insurance</h5>
+            </div>
+            <div class="col-3 offset-md-1 product-container product-gridBorderStyle" *ngIf="jetskiPolicy">
+                <img src="./assets/img/brand/jetski.jpg" width="100%" height="200" />
+                <div class="product-overlay">
+                    <div class="product-text ">
+                        <h4 style="margin-left: 20px;">JetSki Insurance</h4><br>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-warning" (click)="jetskiDetails()">Get Quote</button>
+                        </div>
+
+                    </div>
+                </div>
+                <h5 style="margin-left: 20px;">JetSki Insurance</h5>
+            </div>
+        </div>
+        <div class="row" style="margin-left: 20px;margin-top:20px;">
+            <div class="col-3 offset-md-2 product-container product-gridBorderStyle" *ngIf="issuerSection">
+                <img src="./assets/img/brand/containers.jpg" width="100%" height="200" />
+                <div class="product-overlay">
+                    <div class="product-text ">
+                        <h4 style="margin-left: 20px;">Marine- Cargo Open Cover Policy</h4><br>
+                        <button type="button" class="btn btn-warning" (click)="getOpenCOverPolicy()">Get Quote</button>
+                    </div>
+                </div>
+                <h5 style="margin-left: 20px;">Marine- Cargo Open Cover Policy</h5>
+            </div>
+        </div>
+    </div>
+</main> -->
+
+
+<div class="product-menubar">
+    <div class="logo-img" style="background-color: #fff;">
+        <img src="./assets/images/logo-2.png">
+    </div>
+
+
+    <div class="user-container">
+
+        <div style="margin-right:50px;">
+            <!--<a (click)="onLog(title)" style="color:blue;font-size:16px;font-weight:600;cursor:pointer;display:flex;text-decoration: underline;"> LogIn </a>-->
+            <a class="productsidesection">{{loginId}} <span style="padding-left:10px;"> |</span></a>
+        </div>
+
+        <!--<img src="assets/images/nick.png">-->
+        <div style="margin-left:-40px;">
+            <a (click)="onLog(title)" class="productlogout"> LogOut </a>
+        </div>
+    </div>
+    <!--<div class="d-flex flex-row-reverse">
+        <div class="p-2">
+            <button class="btn btn-circle"><i class="fa fa-sign-out" style="font-size:24px"></i></button>
+        </div>
+    </div>-->
+    <!--<div class="login-details">
+        <nb-actions size="small">
+            <nb-action class="user-action" *nbIsGranted="['view', 'user']">
+                <nb-user [nbContextMenu]="userMenu" [onlyPicture]="userPictureOnly" [name]="loginId" [picture]="user?.picture" nbContextMenuTag="my-context-menu">
+                </nb-user>
+            </nb-action>
+        </nb-actions>
+    </div>-->
+    <!-- <div>
+        <nb-actions size="small">
+
+            <nb-action class="control-item" icon="home"></nb-action>
+            <nb-action class="control-item" icon="home"></nb-action>
+        </nb-actions>
+    </div> -->
+
+</div>
+<!--<div class="product-grid">
+    <div class="product-grid-item">
+        <div class="product-grid-item-body">
+            <div class="product-container">
+                <ng-container *ngFor="let item of productList">
+                    <div class="product-card">
+                        <div class="product-tumb">
+
+                        </div>
+                        <div class="product-details">
+
+                            <h4><a>{{item?.ProductName}}</a></h4>
+                            <div class="product-bottom-details">
+                                <button class="button-34 w-100 logo-bg-2" role="button" (click)="onSelectProduct(item)">Select</button>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="productList.length==0">
+                    <div class="text-center">
+                        No Product Available
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<!-- <img src="./assets/images/ship-1.svg" alt=""> -->
+<!-- <span class="product-catagory">Women,bag</span> -->
+
+
+
+<!--<div>
+      <div class="container" style="margin-left:11%;">
+        <div class="product-container">
+          <ng-container *ngFor="let item of productList">
+            <div class="product-card">
+              <div class="product-tumb">
+
+                <img src="./assets/images/travel.png" *ngIf="item.ProductId=='4'" alt="">
+                <img src="./assets/images/home2.webp" *ngIf="item.ProductId=='3'" alt="" width="60%" height="60%" style="background-color:lightblue">
+                <img src="./assets/images/cars.png" *ngIf="item.ProductId=='5'" alt="" width="60%" height="60%">
+
+            </div>
+            <div class="product-details">
+
+                <h4><a>{{item?.ProductName}}</a></h4>
+            </div>
+
+            <div class="product-bottom-details">
+              <button class="button-34 w-50 logo-bg-2" role="button" (click)="onSelectProduct(item)" style="margin-left:23%;">Select</button>
+
+          </div>
+
+            </div>
+            </ng-container>
+            </div>
+      </div>
+
+    </div>-->
+<!--<div>
+  <div style="background-color:#22a8da;height:80px;background-repeat: repeat;
+  background-position: center top;font-family: inherit;
+  font-size: 100%;
+
+  font-family: 'Pacifico', Arial;
+  font-weight: 700px;
+  border: 0;
+  outline: 0;border:1px solid;align-items: center;
+  color: #fff;
+  letter-spacing: 5px;
+  text-align: center;
+  padding-top:20px;">
+    Select Product
+  </div>
+</div>-->
+<div class="maan-grid-item p-1">
+    <div class="product-main">
+        <div class="product-card p-1">
+            <div class="text-center mt-1">
+                <h5 class="text-primary"><b><u>PRODUCTS</u></b></h5><br>
+                <h5 class="text-primary">All In One Place</h5>
+            </div>
+            <div class="product-item ml-2" *ngFor="let item of productList">
+                <div (click)="onSelectProduct(item)">
+                    <div style="display: flex;justify-content: center;" >
+                        <div class="dot p-2" >
+                            <img src="./assets/images/health.png" *ngIf="item.ProductId=='3'" width="70" height="70">
+                            <img src="./assets/images/car5.png" *ngIf="item.ProductId=='5'" width="70" height="70">
+                            <img src="./assets/images/family1.jpg" *ngIf="item.ProductId=='4'" width="70" height="70">
+                            <img src="./assets/images/employers.png" *ngIf="item.ProductId=='14'" width="70" height="70">
+                            <img src="./assets/images/personal1.png" *ngIf="item.ProductId=='13'" width="70" height="70">
+                            <img src="./assets/images/workmens.png.crdownload" *ngIf="item.ProductId=='15'" width="70" height="70">
+                            <img src="./assets/images/All-risk.png" *ngIf="item.ProductId=='2'" width="70" height="70">
+                            <img src="./assets/images/sme1.png" *ngIf="item.ProductId=='19'" width="70" height="70">
+                            <img src="./assets/images/fidelity.png" *ngIf="item.ProductId=='32'" width="70" height="80">
+                            <img src="./assets/images/Burglary.png" *ngIf="item.ProductId=='1'" width="70" height="80">
+                        </div>
+                    </div>
+                    
+                    <div class="text-center p-0" style="background-color: #73747e;border-radius: 10px;height: 2rem;position: relative;top: 0.7rem;">
+                        
+                        <h5 style="color: #fff;white-space: nowrap !important;position: relative;top: 0.4rem;font-size: .9rem;padding: unset;">{{item?.ProductName}}</h5>
+                    </div>
+                </div>
+                
+            </div>
+            <!-- <div style="padding:1rem;" class="Product_image">
+                <div class=" ml-2">
+                    <div class="row p-3">
+                        <div class="productSection he2 m-1" *ngFor="let item of productList">
+                            <div class="p-2" (click)="onSelectProduct(item)">
+                                <img src="./assets/images/health.png" *ngIf="item.ProductId=='3'" width="150" height="100">
+                                <img src="./assets/images/car5.png" *ngIf="item.ProductId=='5'" width="150" height="100">
+                                <img src="./assets/images/family1.jpg" *ngIf="item.ProductId=='4'" width="150" height="100">
+                                <img src="./assets/images/employers.png" *ngIf="item.ProductId=='14'" width="150" height="100">
+                                <img src="./assets/images/personal1.png" *ngIf="item.ProductId=='13'" width="150" height="100">
+                                <img src="./assets/images/workmens.png.crdownload" *ngIf="item.ProductId=='15'" width="130" height="100">
+                                <img src="./assets/images/All-risk.png" *ngIf="item.ProductId=='2'" width="150" height="100">
+                                <img src="./assets/images/sme1.png" *ngIf="item.ProductId=='19'" width="150" height="100">
+                                <h5 style="color:black;">{{item?.ProductName}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    
+    
+</div>
+<!-- <div class="AllinProductBox">
+    <div class="Choose-Product-Box col-sm-12 col-xs-12 padd0 bwT"><span class="heading">SELECT THE PRODUCT YOU WISH TO BUY
+        </span>
+        <div class="box-1 col-xs-12 col-sm-12 padd0">
+            <div class="InsuranceType AllTabShow col-sm-2 col-xs-4" *ngFor="let item of productList">
+                <div class="topIco">
+                    <div class="InsuranceIcon InsuranceIcon1 domesticIcon" *ngIf="item.ProductId=='3'"></div>
+                    <div class="InsuranceIcon InsuranceIcon1" *ngIf="item.ProductId!='3'"></div>
+                </div>
+                <div class="InsuranceName">{{item?.ProductName}}</div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<!--<div class="header1 header2 mt-2">
+
+         <div class="hed3">
+          <div class="inner-col">
+            <div class="wrapper">
+              <div clas="content-wrap">
+                <div class="columns_wrap column-1_3 sc_column_item sc_column_item_1 odd first">
+
+
+                </div>
+                <div class="columns_wrap column-2_3 sc_column_item sc_column_item_2 even">
+
+                    <div> Home</div>
+                </div>
+              </div>
+            </div>
+          </div>
+         </div>
+    </div>--->

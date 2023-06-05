@@ -1,0 +1,42 @@
+<!-- <div class="header-container">
+    <div class="logo-container">
+        <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
+            <nb-icon icon="menu-2-outline"></nb-icon>
+        </a>
+        <a class="logo" (click)="onRoute()">
+            <img src="../../../../assets/images/logo-2.png" width="150px">
+        </a>
+    </div>
+   
+</div>
+
+<div class="header-container">
+    <nb-actions size="small">
+       
+        <nb-action class="control-item">
+            <div class="input-control-container" style="min-width: 150px;">
+                <ng-container *ngIf="userType=='Issuer'">
+                    <ng-select class="input-form-select" (change)="onBranchChange()" name="ColumnsId" [(ngModel)]="branchValue" placeholder="Branch Name" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                        <ng-option *ngFor="let opt of branchList" [value]="opt.BranchCode">{{opt.BranchName}}</ng-option>
+                    </ng-select>
+                </ng-container>
+                <ng-container *ngIf="userType!='Issuer'">
+                    <ng-select class="input-form-select" (change)="onBranchChange()" name="ColumnsId" [(ngModel)]="branchValue" placeholder="Branch Name" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                        <ng-option *ngFor="let opt of branchList" [value]="opt.BrokerBranchCode">{{opt.BrokerBranchName}}</ng-option>
+                    </ng-select>
+                </ng-container>
+            </div>
+        </nb-action>
+        <nb-action class="control-item">
+            <div class="input-control-container" style="min-width: 150px;">
+                <ng-select class="input-form-select" [(ngModel)]="typeValue" (change)="onTypeChange('change')" [items]="typeList" placeholder="Menu Type" bindValue="CodeDesc" bindLabel="DisplayName">
+                </ng-select>
+            </div>
+        </nb-action>
+        <nb-action class="control-item" icon="home" (click)="onRoute()"></nb-action>
+        <nb-action class="user-action" *nbIsGranted="['view', 'user']">
+            <nb-user [nbContextMenu]="userMenu" [onlyPicture]="userPictureOnly" [name]="userResponse?.LoginId" [picture]="user?.picture" nbContextMenuTag="my-context-menu">
+            </nb-user>
+        </nb-action>
+    </nb-actions>
+</div> -->

@@ -1,0 +1,96 @@
+import { UpdateCustomerDetailsComponent } from './update-customer-details.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule, DatePipe, DecimalPipe } from '@angular/common';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgModule } from '@angular/core';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import {MatTabsModule} from '@angular/material/tabs';
+import { UpdateCustomerDetailsRoutingModule } from './update-customer-details-routing.module';
+import { CustomerDetailsComponent } from './Components/customer-details/customer-details.component';
+import { InsuredDetailsComponent } from './Components/insured-details/insured-details.component';
+import { PremiumDetailsComponent } from './Components/premium-details/premium-details.component';
+import { ExcessDiscountComponent } from './Components/excess-discount/excess-discount.component';
+import { TooltipModule } from 'ng2-tooltip-directive';
+import { MakePayementComponent } from './Components/make-payement/make-payement.component';
+import { PageHeaderModule } from '../../../shared/Header/page-header.module';
+import { MaterialModule } from '../../../shared/material/material.module';
+import { NbPopoverModule, NbThemeModule, NbDatepickerModule, NbTabsetModule, NbRouteTabsetModule, NbStepperModule, NbCardModule, NbButtonModule, NbListModule, NbAccordionModule, NbUserModule, NbInputModule, NbSelectModule, NbSearchModule } from '@nebular/theme';
+import { TablesModule } from '../../../shared/Tables/tables.module';
+import { NbMomentDateModule } from '@nebular/moment';
+import { DirectivesModule } from '../../../shared/Directives/directives.module';
+import { ThemeModule } from '../../../@theme/theme.module';
+import { PipesModule } from '../../../shared/pipes/pipes.module';
+import { DigitOnlyModule } from '@uiowa/digit-only';
+import { MotorDetailsComponent } from './Components/motor-details/motor-details.component';
+import { VehicleDetailsComponent } from './Components/vehicle-details/vehicle-details.component';
+import { UnderWriterDetailsComponent } from './Components/under-writer-details/under-writer-details.component';
+import { VehicleWishListComponent } from './Components/vehicle-wish-list/vehicle-wish-list.component';
+import { TravelQuoteDetailsComponent } from './Components/travel-quote-details/travel-quote-details.component';
+import { CoverDetailsComponent } from './Components/cover-details/cover-details.component';
+import { DomesticQuoteDetailsComponent } from './Components/domestic-quote-details/domestic-quote-details.component';
+import { TravelPassengerDetailsComponent } from './Components/travel-passenger-details/travel-passenger-details.component';
+import { PersonalQuoteDetailsComponent } from './Components/personal-quote-details/personal-quote-details.component';
+import { EmployersQuoteDetailsComponent } from './Components/employers-quote-details/employers-quote-details.component';
+import { WorkmensQuoteDetailsComponent } from './Components/workmens-quote-details/workmens-quote-details.component';
+//import { NewViewDetailsComponent } from './Components/new-view-details/new-view-details.component';
+import { DomesticRiskDetailsComponent } from './Components/domestic-risk-details/domestic-risk-details.component';
+@NgModule({
+  declarations: [
+    UpdateCustomerDetailsComponent,
+    CustomerDetailsComponent,
+    InsuredDetailsComponent,
+    VehicleDetailsComponent,
+    PremiumDetailsComponent,
+    ExcessDiscountComponent,
+    MakePayementComponent,
+    MotorDetailsComponent,
+    UnderWriterDetailsComponent,
+    CoverDetailsComponent,
+    VehicleWishListComponent,
+    TravelQuoteDetailsComponent,
+    DomesticQuoteDetailsComponent,
+    TravelPassengerDetailsComponent,
+<<<<<<< HEAD
+    DomesticRiskDetailsComponent
+=======
+    PersonalQuoteDetailsComponent,
+    EmployersQuoteDetailsComponent,
+    WorkmensQuoteDetailsComponent
+>>>>>>> a16eef1cec2c97f2cf74f5c536f5117a7e2731e0
+    //NewViewDetailsComponent
+
+    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    DirectivesModule,
+    NgSelectModule,
+    ThemeModule,
+    NbTabsetModule,
+    NbRouteTabsetModule,
+    NbStepperModule,
+    NbCardModule,
+    NbButtonModule,
+    NbListModule,
+    NbAccordionModule,
+    NbUserModule,
+    UpdateCustomerDetailsRoutingModule,
+    NbInputModule,
+    NbSelectModule,
+    NbPopoverModule,
+    TablesModule,
+    NbSearchModule,
+    NbDatepickerModule,
+    NbMomentDateModule,
+    MaterialModule,
+    PipesModule,
+    DigitOnlyModule,
+    MatTabsModule
+  ],
+
+  providers: [DatePipe, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
+  bootstrap: [UpdateCustomerDetailsComponent],
+})
+export class UpdateCustomerDetailsModule {}

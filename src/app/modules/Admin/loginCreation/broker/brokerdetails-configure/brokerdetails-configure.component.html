@@ -1,0 +1,446 @@
+<div class="card">
+    <div class="card-header">Broker Configuration</div>
+    <div class="card-body">
+        <div class="card p-1">
+            <div class="vision-grid vision-grid-column-2">
+                <div class="vision-grid-item">
+                    <div class="radio-toolbar menu-bar">
+                        <!-- <input id="menu5" type="radio" name="menu5" value="Insurance" (click)="brokerSection='Insurance'" [(ngModel)]="brokerSection">
+                        <label for="menu5">Insurance Company</label> -->
+                        <input id="menu6" type="radio" name="menu6" value="Branch" [(ngModel)]="brokerSection" (click)="brokerSection='Branch';includeBranch=false">
+                        <label for="menu6">Branch</label>
+                        <input id="menu7" type="radio" name="menu7" value="Product" [(ngModel)]="brokerSection" (click)="brokerSection='Product';includeProduct=false">
+                        <label for="menu7">Product</label>
+                        <input type="radio" id="menu2" name="menu" value="Cover" (click)="brokerSection='Cover';includeCovers=false" [(ngModel)]="brokerSection">
+                        <label for="menu2">Cover</label>
+                        <!-- <input type="radio" id="menu1" name="menu" value="Section" (click)="brokerSection='Section';includeSections=false" [(ngModel)]="brokerSection">
+                        <label for="menu1">Section</label>
+
+                        <input type="radio" id="menu3" name="menu" value="SubCover" (click)="brokerSection='SubCover';includeSubCovers=false" [(ngModel)]="brokerSection">
+                        <label for="menu3">SubCover</label> -->
+                    </div>
+                </div>
+                <div class="vision-grid-item">
+                    <ng-container *ngIf="brokerSection=='Insurance'">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="card" *ngIf="!includeCompany">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-3 col-xl-3 col-lg-3">
+                                            Existing Companies
+                                        </div>
+                                        <div class="col-md-3 col-xl-3 col-lg-3 offset-6">
+                                            <!-- <button class="btn btn-warning" (click)="includeCompany=!includeCompany">Add New</button> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <ng-container *ngIf="companyData">
+                                        <app-grid-table [cols]="companyHeader" [data]="companyData" [filterValue]="filterValue" (onEdit)="onAddCompany()">
+                                        </app-grid-table>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="card" *ngIf="includeCompany">
+                                <div class="card-header">Include Companies</div>
+                                <div class="card-body">
+                                    <ng-container *ngIf="companyData">
+                                        <app-grid-table [cols]="companyHeader2" [data]="companyData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+                                        </app-grid-table>
+                                    </ng-container>
+                                </div>
+                                <div class="text-center mt-2">
+                                    <button class="btn btn-danger" (click)="includeCompany=!includeCompany">Back</button>
+                                    <button class="btn btn-success ml-2" (click)="includeCompany=!includeCompany">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="brokerSection=='Branch'">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="card" *ngIf="!includeBranch">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-3 col-xl-3 col-lg-3">
+                                            Existing Branches
+                                        </div>
+                                        <div class="col-md-3 col-xl-3 col-lg-3 offset-6">
+                                            <button class="btn btn-warning" (click)="includeBranch=!includeBranch">Add New</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <ng-container *ngIf="branchData">
+                                        <app-grid-table [cols]="branchHeader" [data]="branchData" [filterValue]="filterValue" (onEdit)="onAddBranch()">
+                                        </app-grid-table>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="card" *ngIf="includeBranch">
+                                <div class="card-header">Branch Details</div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Branch Name<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <ng-select class="input-form-select" [items]="cityList" bindValue="Code" bindLabel="CodeDescription">
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Address 1<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" class="input-form-control without-icon" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Address 2<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" class="input-form-control without-icon" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">City</label>
+                                                <ng-select class="input-form-select" [items]="cityList" bindValue="Code" bindLabel="CodeDescription">
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Email<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" class="input-form-control without-icon" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Mobile No<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" class="input-form-control without-icon" maxlength="10">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Contact Person Name<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" class="input-form-control without-icon" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">BrokerCode<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" class="input-form-control without-icon" maxlength="10">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Insurance Company</label>
+                                                <ng-select class="input-form-select" [items]="cityList" bindValue="Code" bindLabel="CodeDescription">
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Insurance Company Branch</label>
+                                                <ng-select class="input-form-select" [items]="cityList" bindValue="Code" bindLabel="CodeDescription">
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Branch Type<span class="text-required">*</span></label>
+                                                <div class="input-form-radio-box">
+                                                    <div class="radio-toolbar">
+                                                        <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="statusValue" value="YES">
+                                                        <label for="orginwarehouse_Yes">Main</label>
+                                                        <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="statusValue" value="NO">
+                                                        <label for="orginwarehouse_No">Branch</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Status<span class="text-required">*</span></label>
+                                                <div class="input-form-radio-box">
+                                                    <div class="radio-toolbar">
+                                                        <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse1" [(ngModel)]="statusValue" value="YES">
+                                                        <label for="orginwarehouse_Yes">Active</label>
+                                                        <input type="radio" id="orginwarehouse_No" name="originatingWarehouse1" [(ngModel)]="statusValue" value="NO">
+                                                        <label for="orginwarehouse_No">DeActive</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="date" class="input-form-control without-icon">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <textarea cols="120" rows="2" class="input-form-control without-icon" maxlength="200"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-2">
+                                        <button class="btn btn-danger" (click)="includeBranch=!includeBranch">Back</button>
+                                        <button class="btn btn-success ml-2" (click)="includeBranch=!includeBranch">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="brokerSection=='Product'">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="card" *ngIf="!includeProduct">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-3 col-xl-3 col-lg-3">
+                                            Existing Products
+                                        </div>
+                                        <div class="col-md-3 col-xl-3 col-lg-3 offset-6">
+                                            <button class="btn btn-warning" (click)="includeProduct=!includeProduct">Add New Product</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <ng-container *ngIf="productData">
+                                        <app-grid-table [cols]="productHeader" [data]="productData" [filterValue]="filterValue" (onEdit)="onAddProduct()">
+                                        </app-grid-table>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="card" *ngIf="includeProduct">
+                                <div class="card-header">Include Products</div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Product Name(Multiple)<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <ng-select class="input-form-select" [items]="cityList" bindValue="Code" bindLabel="CodeDescription">
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">SumInsured Start<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" class="input-form-control without-icon" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Sum Insured End<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" class="input-form-control without-icon" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">VAT<span class="text-required">*</span></label>
+                                                <div class="input-form-radio-box">
+                                                    <div class="radio-toolbar">
+                                                        <input id="vat_yes" type="radio" name="vatYN" [(ngModel)]="statusValue" value="YES">
+                                                        <label for="vat_yes">Yes</label>
+                                                        <input type="radio" id="vat_no" name="vatYN" [(ngModel)]="statusValue" value="NO">
+                                                        <label for="vat_no">No</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">VAT(%)<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" class="input-form-control without-icon" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Commission(%)<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" class="input-form-control without-icon" maxlength="100">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Status<span class="text-required">*</span></label>
+                                                <div class="input-form-radio-box">
+                                                    <div class="radio-toolbar">
+                                                        <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="statusValue" value="YES">
+                                                        <label for="orginwarehouse_Yes">Active</label>
+                                                        <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="statusValue" value="NO">
+                                                        <label for="orginwarehouse_No">DeActive</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="date" class="input-form-control without-icon">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <textarea cols="120" rows="2" class="input-form-control without-icon" maxlength="200"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <ng-container *ngIf="productData">
+                                        <app-grid-table [cols]="productHeader2" [data]="productData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+                                        </app-grid-table>
+                                    </ng-container> -->
+                                    <div class="text-center mt-2">
+                                        <button class="btn btn-danger" (click)="includeProduct=!includeProduct">Cancel</button>
+                                        <button class="btn btn-success ml-2" (click)="includeProduct=!includeProduct">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="brokerSection=='Section'">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="card" *ngIf="!includeSections">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-3 col-xl-3 col-lg-3">
+                                            Existing Sections
+                                        </div>
+                                        <div class="col-md-3 col-xl-3 col-lg-3 offset-6">
+                                            <button class="btn btn-warning" (click)="includeSections=!includeSections">Add New Section</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+
+                                    <ng-container *ngIf="sectionData">
+                                        <app-grid-table [cols]="sectionHeader" [data]="sectionData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+                                        </app-grid-table>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="card" *ngIf="includeSections">
+                                <div class="card-header">Include Sections</div>
+                                <div class="card-body">
+                                    <ng-container *ngIf="sectionData">
+                                        <app-grid-table [cols]="sectionHeader2" [data]="sectionData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+                                        </app-grid-table>
+                                    </ng-container>
+                                    <div class="text-center mt-2">
+                                        <button class="btn btn-danger" (click)="includeSections=!includeSections">Back</button>
+                                        <button class="btn btn-success ml-2" (click)="includeSections=!includeSections">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="brokerSection=='Cover'">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="card" *ngIf="!includeCovers">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-3 col-xl-3 col-lg-3">
+                                            Existing Covers
+                                        </div>
+                                        <div class="col-md-3 col-xl-3 col-lg-3 offset-6">
+                                            <button class="btn btn-warning" (click)="includeCovers=!includeCovers">Add New Covers</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <ng-container *ngIf="coversData">
+                                        <app-grid-table [cols]="coversHeader" [data]="coversData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+                                        </app-grid-table>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="card" *ngIf="includeCovers">
+                                <div class="card-header">Include Covers</div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3 col-lg-3 col-xl-3">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Section</label>
+                                                <ng-select class="input-form-select" [items]="sectionList" [(ngModel)]="sectionValue" bindValue="SectionId" bindLabel="SectionName">
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ng-container *ngIf="coversData && sectionValue">
+                                        <app-grid-table [cols]="coversHeader2" [data]="coversData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
+                                        </app-grid-table>
+                                    </ng-container>
+                                    <div class="text-center mt-2">
+                                        <button class="btn btn-danger" (click)="includeCovers=!includeCovers">Back</button>
+                                        <button class="btn btn-success ml-2" *ngIf="sectionValue" (click)="includeCovers=!includeCovers">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row">
+            <div class="col-md-2 col-lg-2 col-xl-2">
+                <div class="btn-group-vertical">
+                    <button type="button" class="btn btn-warning" *ngIf="brokerSection=='Insurance'">Insurance Company</button>
+                    <button type="button" class="btn btn-secondary" *ngIf="brokerSection!='Insurance'" (click)="brokerSection='Insurance';includeCompany=false">Insurance Company</button>
+                    <button type="button" class="btn btn-warning" *ngIf="brokerSection=='Branch'">Broker Branch</button>
+                    <button type="button" class="btn btn-secondary" *ngIf="brokerSection!='Branch'" (click)="brokerSection='Branch';includeBranch=false">Broker Branch</button>
+                    <button type="button" class="btn btn-warning" *ngIf="brokerSection=='Product'">Product</button>
+                    <button type="button" class="btn btn-secondary" *ngIf="brokerSection!='Product'" (click)="brokerSection='Product'">Product</button>
+
+                </div>
+            </div>
+            <div class="col-md-10 col-lg-10 col-xl-10">
+
+            </div>
+        </div> -->
+        <div class="text-center mt-2">
+            <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+            <button class="btn btn-success ml-2" (click)="onFormSubmit()">Proceed</button>
+        </div>
+    </div>
+</div>

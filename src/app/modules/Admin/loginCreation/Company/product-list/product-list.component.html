@@ -1,0 +1,103 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div>
+                Company Configuration
+            </div>
+            <div *ngIf="insuranceName">
+                Company Name - <b>{{insuranceName}}</b>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row">
+            <div class="col-md-4 col-lg-4 col-12">
+                <div class="input-control-container">
+                    <label class="input-form-label">Insurance Company<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <ng-select class="input-form-select" appendTo="body" [items]="companyList" [(ngModel)]="companyValue" bindValue="Code" bindLabel="CodeDescription">
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    <div class="card p-1">
+        <div class="vision-grid vision-grid-column-2">
+            <div class="vision-grid-item">
+                <div class="radio-toolbar menu-bar">
+                    <input id="menu8" type="radio" name="menu" value="Product" (click)="onRedirect('Product')" [(ngModel)]="activeMenu">
+                    <label for="menu8">Products</label>
+                    <!-- <input type="radio" id="menu2" name="menu" value="Region" (click)="onRedirect('Region')" [(ngModel)]="activeMenu">
+                    <label for="menu2">Region</label> -->
+                    <input type="radio" id="menu1" name="menu" value="Branch" (click)="onRedirect('Branch')" [(ngModel)]="activeMenu">
+                    <label for="menu1">Branch</label>
+                    <input type="radio" id="menu4" name="menu" value="Currency" (click)="onRedirect('Currency')" [(ngModel)]="activeMenu">
+                    <label for="menu4">Currency</label>
+                    <!-- <input type="radio" id="menu5" name="menu" value="Color" (click)="onRedirect('Color')" [(ngModel)]="activeMenu"> -->
+                    <!-- <input type="radio" id="menu3" name="menu" value="State" (click)="onRedirect('State')" [(ngModel)]="activeMenu">
+                    <label for="menu3">State</label>
+                    <input type="radio" id="menu4" name="menu" value="City" (click)="onRedirect('City')" [(ngModel)]="activeMenu">
+                    <label for="menu4">City</label>-->
+                    <input type="radio" id="menu5" name="menu" value="Mail" (click)="onRedirect('Mail')" [(ngModel)]="activeMenu">
+                    <label for="menu5">Mail</label>
+                    <input type="radio" id="menu6" name="menu" value="Sms" (click)="onRedirect('Sms')" [(ngModel)]="activeMenu">
+                    <label for="menu6">SMS</label>
+                    <!-- <input type="radio" id="menu7" name="menu" value="NotificationTemplate" (click)="onRedirect('NotificationTemplate')" [(ngModel)]="activeMenu">
+                    <label for="menu7">Notification Template</label> -->
+                </div>
+            </div>
+            <div class="vision-grid-item">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                Products
+                            </div>
+                            <div>
+                                <button class="btn btn-warning" (click)="onAddProduct()">Add Product</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="grid-container">
+                             
+                            <!--<div class="grid-item" *ngFor="let product of productList">
+                            <div style="display: flex;justify-content: center;" >
+                                <div>
+                                    <div (click)="open()">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </div>
+                                <div class="text-center" style="background-color:palevioletred;width:160px;height: 2rem;position: relative;top: 0.7rem;">
+                                    <div style="color: #fff;white-space: nowrap !important;position: relative;top: 0.4rem;font-size: .9rem;padding: unset;"(click)="onProductSelect(product)">{{product?.ProductName}}</div>
+                                </div>
+                                    </div>
+
+                                    
+                            </div>
+                            </div>-->
+
+                            <ng-container *ngFor="let product of productList">
+                                 
+                                <div class="grid-item">
+                                <div (click)="onProductSelect(product)" style="text-align:center">
+                                    {{product.ProductName}}
+                                </div>
+                                <div style="text-align:right; margin-top:-28px;">
+                                    <button class="btn btn-primary" (click)="open(product.ProductName,product.ProductId)"> 
+                                        <i class="fa fa-circle-info"></i></button>
+                                </div>
+                            </div>
+                            </ng-container>
+
+                            <!-- <div class="grid-item" (click)="onProductSelect('Home Insurance')"><i class="control-icon ion ion-ios-home">&nbsp;Home Insurance</i></div>
+                            <div class="grid-item" (click)="onProductSelect('Motor Insurance')"><i class="control-icon icon ion-android-car"></i>&nbsp;Motor Insurance</div> -->
+                        </div>
+
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

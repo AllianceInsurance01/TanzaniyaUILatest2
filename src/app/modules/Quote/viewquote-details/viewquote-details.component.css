@@ -1,0 +1,7 @@
+.maan-grid-column-1 {
+  grid-template-columns: 1fr;
+}
+
+.maan-grid-column-2 {
+  grid-template-columns: 1fr 2fr;
+}

@@ -1,0 +1,72 @@
+<div class="vision-grid-item">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between">
+                <div>
+                    Clauses
+                </div>
+                <div>
+                    <button class="btn btn-warning"
+                        (click)="onAddSection()">Add New</button>
+                        <!--*ngIf="sectionYn!='Y' && branchValue && productValue"-->
+                    <!--<button class="btn btn-warning" *ngIf="sectionYn!='N' && branchValue && productValue"
+                        (click)="onAddSectionList()">Add New</button>-->
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="row mt-2 card-body">
+                <div class="col-12 col-lg-4 col-xl-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Branch<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" appendTo="body" [items]="branchList"
+                            [(ngModel)]="branchValue" (change)="getCompanyProductList()" bindValue="Code"
+                            bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-xl-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">ProductId<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" appendTo="body" [items]="productList"
+                            [(ngModel)]="productValue" (change)="getSectionList();getExistingClauses()"
+                            bindValue="ProductId" bindLabel="ProductName">
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Section Included?<span class="text-required">*</span></label>
+                        <div class="input-form-radio-box">
+                            <div class="radio-toolbar">
+                                <input id="orginwarehouse1" type="radio" name="originatingWarehouse1"
+                                    [(ngModel)]="sectionYn" (change)="onChangeSectionYn()" value="Y">
+                                <label for="orginwarehouse1">Yes</label>
+                                <input type="radio" id="orginwarehouse2" name="originatingWarehouse1"
+                                    [(ngModel)]="sectionYn" (change)="onChangeSectionYn()" value="N">
+                                <label for="orginwarehouse2">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 col-xl-4" *ngIf="sectionYn!='N'">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Section</label>
+                        <ng-select class="input-form-select" appendTo="body" [items]="sectionList"
+                            [(ngModel)]="sectionValue" (change)="getExistingClauses()" bindValue="Code"
+                            bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <ng-container *ngIf="ClausesData">
+                <app-grid-table [cols]="columnHeader" changeStatus="true" (OnStatus)="EditStatus($event)"
+                    [data]="ClausesData" [filterValue]="filterValue" (onEdit)="onEditClauses($event)">
+                </app-grid-table>
+            </ng-container>
+        </div>
+    </div>
+</div>

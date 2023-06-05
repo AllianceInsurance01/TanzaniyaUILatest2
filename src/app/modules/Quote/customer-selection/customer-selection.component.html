@@ -1,0 +1,43 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div>
+                <span class="spancommon span_font_size">Customer Selection</span>
+            </div>
+            <div>
+                <button class="custom-btn btn-6 maan-button-data" matRipple (click)="onAddCustomer()" style="width: 8rem;"><i class="fas fa-user mx-1"></i> &nbsp;Add New </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row mb-2">
+            <div>
+                <div class="input-control-container" style="position:absolute;">
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control with-icon" [(ngModel)]="searchValue" placeholder="Search By TIN No / Passport / Driving License">
+                        <span class="input-form-icon">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div  *ngIf="searchValue.length > 2 ? '...' : ''">
+                <button class="custom-btn btn-6 maan-button-data fa_search" matRipple style="position: absolute!important;left: 20rem;top: 4rem!important;" (click)="onCustomerSearch()"><i class="fas fa-search" style="position: relative!important;top: 0.1rem!important;right: 0.2rem;"></i>&nbsp;Search </button>
+            </div>
+        </div>
+        <ng-container *ngIf="customerData.length!=0">
+            <app-grid-table [cols]="customerHeader" [data]="customerData" [filterValue]="filterValue" (onSelectCustomer)="onSelectCustomer($event)" (onEdit)="onEditCustomer($event)" [ReferenceNo]="referenceNo">
+            </app-grid-table>
+        </ng-container>
+        <ng-container *ngIf="customerData.length==0">
+            <div class="text-center">
+                No Customer Available
+            </div>
+        </ng-container>
+        <div class="text-center">
+            <button class="maan-btn-red mx-2 custom-btn btn-5" matRipple [routerLink]="['/Home/existingQuotes']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+            <button class="maan-btn btn-warning maan-btn-clearsearch" *ngIf="clearSearchSection" matRipple (click)="getCustomersList()"><i class="fas fa-close" style="position: relative;right: 0.1rem;top: 0.1rem;"></i>&nbsp;Clear Search &nbsp;</button>
+            <button class="custom-btn btn-6 mx-2 maan-button-data" *ngIf="customerValue" matRipple (click)="onProceed()">Submit</button>
+        </div>
+    </div>
+</div>

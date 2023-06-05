@@ -1,0 +1,263 @@
+<div class="maan-grid customer-grid maan-grid-column-1">
+    <div class="maan-grid-item">
+        <div class="maan-grid-item-title">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <span class="mx-1">
+                            <i class="fas fa-user mx-1"></i>
+                        </span> Customer Details
+                </div>
+                <div>
+                    <ng-container>
+                        <!-- RefNo - {{customerDetails?.CustomerReferenceNo}} -->
+                    </ng-container>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="maan-grid-item-body">
+            <div class="row mt-1">
+                <div class="col-12 col-md-3 ">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Customer Name</label>
+                        <div class="input-form-radio-box">
+                            {{title}} &nbsp; {{clientName}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Customer ID</label>
+                        <div class="input-form-radio-box">
+                            {{idNumber}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Customer Type</label>
+                        <div class="input-form-radio-box">
+                            {{clientType}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Mobile Number</label>
+                        <div class="input-form-radio-box">
+                            {{mobileNo}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="maan-grid-item" *ngIf="motorDetails">
+        <div class="maan-grid-item-title">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <span class="mx-1">
+                        <i class="fas fa-car mx-1"></i>
+                    </span> Motor Details&nbsp;&nbsp; | &nbsp;&nbsp;Chassis No - {{motorDetails?.Chassisnumber}}
+                </div>
+                <div>
+                    <div (click)="panelOpen = !panelOpen;">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="maan-grid-item-body">
+            <ul class="list-group">
+                <li class="customList">
+                    <div class="row mt-1">
+                        <div class="col-12 col-md-3 ">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Make</label>
+                                <div class="input-form-radio-box">
+                                    {{motorDetails?.Vehiclemake}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Model</label>
+                                <div class="input-form-radio-box">
+                                    {{motorDetails?.Vehcilemodel}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Body Type</label>
+                                <div class="input-form-radio-box">
+                                    {{motorDetails?.VehicleType}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Vehicle Usage</label>
+                                <div class="input-form-radio-box">
+                                    {{motorDetails?.Motorusage}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="customList" *ngIf="panelOpen">
+                    <div class="row mt-1">
+                        <div class="col-12 col-md-3 ">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Registration No</label>
+                                <div class="input-form-radio-box">
+                                    {{motorDetails?.Registrationnumber}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Engine No</label>
+                                <div class="input-form-radio-box">
+                                    {{motorDetails?.EngineNumber}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Engine Capacity</label>
+                                <div class="input-form-radio-box">
+                                    {{motorDetails?.ResEngineCapacity}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Manufacture Year</label>
+                                <div class="input-form-radio-box">
+                                    {{motorDetails?.ManufactureYear}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="customList" *ngIf="panelOpen">
+                    <div class="row mt-1">
+                        <div class="col-12 col-md-3 ">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Owner Categry</label>
+                                <div class="input-form-radio-box">
+                                    {{motorDetails?.OwnerCategory}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Motor Category</label>
+                                <div class="input-form-radio-box">
+                                    {{motorDetails?.ReqMotorCategory}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Seating Capacity</label>
+                                <div class="input-form-radio-box">
+                                    {{motorDetails?.SeatingCapacity}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Tare Weight</label>
+                                <div class="input-form-radio-box">
+                                    {{motorDetails?.Tareweight}}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Gross Weight</label>
+                                <div class="input-form-radio-box">
+                                    {{motorDetails?.Grossweight}}
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="maan-grid-item">
+        <div class="maan-grid-item-title">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <span class="mx-1">
+                            <i class="fas fa-user mx-1"></i>
+                        </span> UnderWriter Questions
+                </div>
+                <div>
+                    <ng-container>
+                        <!-- RefNo - {{customerDetails?.CustomerReferenceNo}} -->
+                    </ng-container>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="maan-grid-item-body">
+            <ng-container *ngIf="questionSection">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" *ngFor="let ques of this.uwQuestionList;let i=index">
+                                <div class="row p-0 w-100 customRow">
+                                    <div class="col-md-8 col-lg-8 col-xl-8 customFont">
+                                        {{ques.UwQuestionDesc}}
+                                        <ng-container *ngIf="ques.MandatoryYn=='Y'"> &nbsp;<span class="text-danger">*</span></ng-container>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xl-4">
+                                        <ng-container *ngIf="ques?.QuestionType=='01'">
+                                            <div class="input-control-container">
+                                                <div class="input-form-radio-box">
+                                                    <div class="radio-toolbar">
+                                                        <input [id]="'orginwarehouse_Yes'+i" type="radio" [name]="'originatingWarehouse'+i" [(ngModel)]="ques.Value" value="Y">
+                                                        <label [for]="'orginwarehouse_Yes'+i">Yes</label>
+                                                        <input type="radio" [id]="'orginwarehouse_No'+i" [name]="'originatingWarehouse'+i" [(ngModel)]="ques.Value" value="N">
+                                                        <label [for]="'orginwarehouse_No'+i">No</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="ques?.QuestionType=='02' && ques?.DataType!='02'">
+                                            <div class="input-control-container">
+                                                <div class="input-form-box">
+                                                    <input type="text" [(ngModel)]="ques.Value" class="input-form-control without-icon">
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="ques?.QuestionType=='02' && ques?.DataType=='02'">
+                                            <div class="input-control-container">
+                                                <div class="input-form-box">
+                                                    <input type="text" digitOnly [(ngModel)]="ques.Value" class="input-form-control without-icon">
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </ng-container>
+            <div class="text-center mt-2">
+                <button class="custom-btn btn-6 maan-btn-red mx-2" matRipple (click)="onGetBack()"><<&nbsp;Back</button>
+
+                <button class="custom-btn btn-6 mx-2" matRipple (click)="onFormSubmit()">Next</button>
+            </div>
+        </div>
+    </div>
+</div>

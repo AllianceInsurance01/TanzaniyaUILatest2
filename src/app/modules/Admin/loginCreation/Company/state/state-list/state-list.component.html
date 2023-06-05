@@ -1,0 +1,91 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-3 col-xl-3 col-lg-3">
+                Company Configuration
+            </div>
+            <div class="col-md-4 col-xl-4 col-lg-4 offset-5 pl-4" *ngIf="insuranceName">
+                Company Name - <b>{{insuranceName}}</b>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <!-- <div class="row">
+            <div class="col-md-4 col-lg-4 col-12">
+                <div class="input-control-container">
+                    <label class="input-form-label">Insurance Company<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <ng-select class="input-form-select" appendTo="body" [items]="companyList" [(ngModel)]="companyValue" bindValue="Code" bindLabel="CodeDescription">
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="card p-1">
+            <div class="vision-grid vision-grid-column-2">
+                <div class="vision-grid-item">
+                    <div class="radio-toolbar menu-bar">
+                        <input id="menu" type="radio" name="menu" value="Product" (click)="onRedirect('Product')" [(ngModel)]="activeMenu">
+                        <label for="menu">Products</label>
+                        <input type="radio" id="menu1" name="menu" value="Branch" (click)="onRedirect('Branch')" [(ngModel)]="activeMenu">
+                        <label for="menu1">Branch</label>
+                        <input type="radio" id="menu2" name="menu" value="Region" (click)="onRedirect('Region')" [(ngModel)]="activeMenu">
+                        <label for="menu2">Region</label>
+                        <input type="radio" id="menu3" name="menu" value="State" (click)="onRedirect('State')" [(ngModel)]="activeMenu">
+                        <label for="menu3">State</label>
+                        <input type="radio" id="menu4" name="menu" value="City" (click)="onRedirect('City')" [(ngModel)]="activeMenu">
+                        <label for="menu4">City</label>
+                        <input type="radio" id="menu5" name="menu" value="Mail" (click)="onRedirect('Mail')" [(ngModel)]="activeMenu">
+                        <label for="menu5">Mail</label>
+                        <input type="radio" id="menu6" name="menu" value="Sms" (click)="onRedirect('Sms')" [(ngModel)]="activeMenu">
+                        <label for="menu6">SMS</label>
+                        <input type="radio" id="menu7" name="menu" value="NotificationTemplate" (click)="onRedirect('NotificationTemplate')" [(ngModel)]="activeMenu">
+                        <label for="menu7">Notification Template</label>
+                    </div>
+                </div>
+                <div class="vision-grid-item">
+                    <div class="card">
+                        <div class="card-header">Existing State</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 ml-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Region</label>
+                                        <ng-select class="input-form-select" appendTo="body" [items]="regionList" [(ngModel)]="regionValue" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2" *ngIf="regionValue">
+                                <div class="col-md-3 col-xl-3 col-lg-3">
+
+                                </div>
+                                <div class="col-md-3 col-xl-3 col-lg-3 offset-6 pl-4">
+                                    <button class="btn btn-warning" (click)="onAddSection()">Add New State</button>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="tableData && regionValue">
+                                <app-grid-table [cols]="columnHeader" changeStatus="true" (OnStatus)="EditStatus($event)" [data]="tableData" [filterValue]="filterValue" (onEdit)="onEditSection()" (onConfigure)="onConfigure($event)">
+                                </app-grid-table>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row">
+            <div class="col-md-2 col-lg-2 col-xl-2">
+                <div class="btn-group-vertical">
+                    <button type="button" class="btn btn-secondary" (click)="onRedirect('Product')">Product Details</button>
+                    <button type="button" class="btn btn-warning">Section</button>
+                    <button type="button" class="btn btn-secondary" (click)="onRedirect('Cover')">Cover</button>
+                    <button type="button" class="btn btn-secondary" (click)="onRedirect('SubCover')">SubCover</button>
+                    <button type="button" class="btn btn-secondary" (click)="onRedirect('Attachment')">Attachment</button>
+                </div>
+            </div>
+            <div class="col-md-10 col-lg-10 col-xl-10">
+
+            </div>
+        </div> -->
+    </div>
+</div>

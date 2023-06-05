@@ -1,0 +1,125 @@
+<div>
+    <div class="maan-grid client-type-grid maan-grid-column-1">
+        <div class="maan-grid-item" *ngIf="policyType=='1'">
+            <div class="maan-grid-item-title middle-line">
+                Individual
+            </div>
+            <div class="maan-grid-item-body">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Country</label>
+                            <ng-select class="input-form-select" appendTo="body" [items]="countryList" [(ngModel)]="countryValue" bindValue="Code" bindLabel="CodeDesc">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Gender</label>
+                            <ng-select class="input-form-select" appendTo="body" [items]="genderList" [(ngModel)]="genderValue" bindValue="Code" bindLabel="CodeDesc">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <!--<div class="col-12 col-md-6 mt-2">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Date Of birth</mat-label>
+                            <input matInput [matDatepicker]="picker" [min]="minDate"  [max]="maxiDate" [(ngModel)]="dob">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>-->
+
+                    <div class="col-12 col-md-6">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Place of Birth</label>
+                            <div class="input-form-box">
+                                <input type="text" [(ngModel)]="placeOfBirth" class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Occupation</label>
+                            <ng-select class="input-form-select" appendTo="body" [items]="occupationList" [(ngModel)]="occupationValue" bindValue="Code" bindLabel="CodeDesc">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="input-control-container">
+                            <label class="input-form-label">VRN/GST</label>
+                            <div class="input-form-box">
+                                <input type="text" [(ngModel)]="Vrngst" class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="maan-grid-item" *ngIf="policyType=='2'">
+            <div class="maan-grid-item-title middle-line">
+                Corporate
+            </div>
+            <div class="maan-grid-item-body">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Business Type</label>
+                            <ng-select class="input-form-select" appendTo="body" [items]="businessTypeList" [(ngModel)]="businessValue" bindValue="Code" bindLabel="CodeDesc">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Country of Registration</label>
+                            <ng-select class="input-form-select" appendTo="body" [items]="countryList" [(ngModel)]="countryValue" bindValue="Code" bindLabel="CodeDesc">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <!--<div class="col-12 col-md-6">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Registration Date</mat-label>
+                            <input matInput [matDatepicker]="picker" [min]="regDate" [max]="maxDate" [(ngModel)]="dob">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>-->
+                    <!-- <div class="col-12 col-md-6">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Contact Person</label>
+                            <div class="input-form-box">
+                                <input type="text" class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="col-12 col-md-6">
+                        <div class="input-control-container">
+                            <label class="input-form-label">VRN/GST</label>
+                            <div class="input-form-box">
+                                <input type="text" [(ngModel)]="Vrngst" class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-12 col-md-6">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Registration No</label>
+                            <div class="input-form-box">
+                                <input type="text" class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+
+            </div>
+
+        </div>
+        <div>
+            <div class="text-center">
+                <button class="custom-btn btn-6 maan-btn-red mx-2" matRipple [routerLink]="['/Home/customer/Client/client-details']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                <button class="custom-btn btn-6 mx-2" matRipple (click)="onProceed('save')">Save</button>
+
+                <button class="custom-btn btn-6 mx-2" *ngIf="policyType" matRipple (click)="onProceed('submit')">Next</button>
+            </div>
+        </div>
+    </div>
+</div>

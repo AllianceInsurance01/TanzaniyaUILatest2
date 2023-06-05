@@ -1,0 +1,42 @@
+/*.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050 !important;
+  display: none;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  outline: 0;
+}
+.popover {
+  max-width: 800px;
+  width: intrinsic;
+  width: -moz-max-content;
+  width: -webkit-max-content;
+}
+
+.modal-backdrop {
+  --bs-backdrop-bg: #000;
+  --bs-backdrop-opacity: .5;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bs-backdrop-bg);
+}*/
+
+/*.md-datepicker-calendar-pane {
+  z-index: 1200;
+}
+
+.cdk-overlay-container { 
+  z-index: 1200 !important; 
+}*/
+
+
+::ng-deep .cdk-overlay-container{
+  z-index: 1200 !important;
+}

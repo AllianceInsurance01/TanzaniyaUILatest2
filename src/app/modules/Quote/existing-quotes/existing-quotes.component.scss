@@ -1,0 +1,25 @@
+.form{
+  width:100%;
+  border-radius:10px;
+  //cursor: pointer;
+}
+.banner-color {
+  background-color: #eb681f;
+  }
+  .title-color {
+  color: #0066cc;
+  }
+  .button-color {
+  background-color: #0066cc;
+  }
+  @media screen and (min-width: 500px) {
+  .banner-color {
+  background-color: #0066cc;
+  }
+  .title-color {
+  color: #eb681f;
+  }
+  .button-color {
+  background-color: #eb681f;
+  }
+  }

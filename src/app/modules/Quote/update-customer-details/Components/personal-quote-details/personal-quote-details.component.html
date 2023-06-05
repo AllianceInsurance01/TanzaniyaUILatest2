@@ -1,0 +1,477 @@
+<div class="maan-grid-item">
+    <div class="card-header">
+        <div class="d-flex justify-content-between ">
+            <div>
+                <span class="mx-0">
+                    <span class="spancommon span_font_size" style="font-weight:600">Insured Details</span>
+                </span>
+            </div>
+            <div *ngIf="viewSection">
+                <button class="maan-btn maan-btn-blue maan-button-data" matRipple (click)="viewSection=!viewSection;formSection=!formSection"><i class="fas fa-edit"></i>&nbsp;Edit</button>
+            </div>
+            <!-- <div *ngIf="formSection">
+                <button class="custom-btn btn-6 maan-button-data " matRipple (click)="viewSection=!viewSection;formSection=!formSection"><i class="fas fa-edit"></i>&nbsp;Edit</button>
+            </div> -->
+        </div>
+    </div>
+    <div class="maan-grid-item-body" *ngIf="formSection && productId!='3' && productId!='1'">
+       
+        <div class="row p-2" *ngIf="!viewSection && (productId=='14' || productId=='15')">
+            <div class="col-12 col-md-6 col-lg-6 input-control-container" style="padding-left: 10px !important;">
+                <label class="input-form-label">Organization Name</label>
+                <div class="input-form-box mt-2">
+                    <input type="text" style="position: relative;bottom: 0.35rem;" class="input-form-control without-icon" maxlength="100" [(ngModel)]="productItem.IndustryName" [ngModelOptions]="{standalone: true}">
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6 input-control-container" >
+                <label class="input-form-label">Nature Of Business</label><span class="text-danger">*</span>&nbsp;<ng-container *ngIf="categoryDesc"><label class="input-form-label">(Category - {{categoryDesc}})</label></ng-container>
+                <div class="input-form-box" style="position: relative;top:.2rem">
+                    <ng-select class="custom" [items]="industryList" (change)="onIndustryChange()"  [(ngModel)]="productItem.NatureOfBusinessId" placeholder="Select Industry" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+        <div class="form__wrapper">
+            <form [formGroup]="form" (ngSubmit)="onSubmit(productItem)">
+                <formly-form [form]="form" [fields]="fields" [model]="productItem"></formly-form>
+            </form>
+        </div>
+    </div>
+    <div class="row" *ngIf="productId=='1'">
+        <div class="col-12 col-lg-12 col-xl-12 col-sm-12">
+            <div class="maan-grid-item-body" *ngIf="formSection">
+                
+
+                <div class="form__wrapper">
+                    <form [formGroup]="form" (ngSubmit)="onSubmit(productItem)">
+                        <formly-form [form]="form" [fields]="fields" [model]="productItem"></formly-form>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="text-center my-2">
+            <button class="custom-btn btn-5 mr-2" [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/customer-details']" routerLinkActive="router-link-active" matRipple><<&nbsp;Back</button>&nbsp;
+            <button class="custom-btn btn-6 maan-button-data "  *ngIf="formSection || viewSection" matRipple (click)="onSubmit(productItem)"><i class="fas fa-check"></i>&nbsp;Proceed</button>
+        </div>
+    </div>
+    <div class="row" *ngIf="productId=='3'">
+        <div class="col-9 col-lg-9 col-xl-9 col-sm-9">
+            <div class="row" *ngIf="!viewSection">
+                <div class="col-md-4 col-lg-4  col-xl-4 offset-1">
+                    <div class="input-control-container">
+                        <label class="input-form-label"><b>Ownership Status</b></label><span class="text-danger">*</span>
+                        <div class="input-form-radio-box">
+                            <div class="radio-toolbar">
+                                <input id="claims_Own" type="radio" name="rentOwnHome" (change)="onChangeOwnerType('change')" [(ngModel)]="productItem.BuildingOwnerYn"  value="Y">
+                                <label for="claims_Own" class="yes_alt"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/landlord.png">LANDLORD</label>
+                                <input id="claims_Rent" type="radio" name="rentOwnHome" (change)="onChangeOwnerType('change')" [(ngModel)]="productItem.BuildingOwnerYn" value="N">
+                                <label for="claims_Rent" class="no"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/rentHome.png">TENANT</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7 col-lg-7 col-xl-7">
+                    <div class="input-control-container">
+                        <label class="input-form-label"><b>Cover Required</b></label><span class="text-danger">*</span>
+                        <div class="input-form-radio-box">
+                            <div class="radio-toolbar">
+                                <input id="Content" type="radio" name="Content" (change)="checkDomesticForm('change')" [(ngModel)]="coversRequired" value="C">
+                                <label for="Content" class="yes_alt"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/contents.png">&nbsp;CONTENTS</label>
+                                <ng-container *ngIf="productItem.BuildingOwnerYn=='Y'">
+                                    <input id="Building" type="radio" name="Content" (change)="checkDomesticForm('change')" [(ngModel)]="coversRequired" value="B">
+                                    <label for="Building" class="no"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/buildingSection.png">&nbsp;BUILDING</label>
+                                    <input id="Building_Contents" type="radio" name="Content" [(ngModel)]="coversRequired" (change)="checkDomesticForm('change')" value="BC">
+                                    <label for="Building_Contents" class="no"><img style="max-width: 30px;max-height: 10px;"  src="./assets/images/houseContents.png">&nbsp;BUILDING & CONTENTS</label>
+                                    
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="!viewSection && productId=='19'">
+                <div class="col-12 col-md-5 col-lg-5 offset-1 input-control-container">
+                    <label class="input-form-label">Industry</label><span class="text-danger">*</span>
+                    <div class="input-form-box" style="position: relative;top:.2rem">
+                        <ng-select class="custom" [items]="industryList" (change)="onIndustryChange()"  [(ngModel)]="productItem.IndustryId" placeholder="Select Industry" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-5 col-lg-5 input-control-container" *ngIf="categoryDesc">
+                    <label class="input-form-label">Category</label>
+                    <div class="input-form-box mt-2">
+                        <input type="text" style="position: relative;bottom: 0.35rem;" disabled class="input-form-control without-icon" maxlength="4" [(ngModel)]="categoryDesc" [ngModelOptions]="{standalone: true}">
+                    </div>
+                </div>
+            </div>
+            <div class="maan-grid-item-body" *ngIf="formSection">
+                
+
+                <div class="form__wrapper">
+                    <form [formGroup]="form" (ngSubmit)="onSubmit(productItem)">
+                        <formly-form [form]="form" [fields]="fields" [model]="productItem"></formly-form>
+                    </form>
+                </div>
+            </div>
+            <div class="maan-grid-item-body" *ngIf="viewSection">
+                <div class="row form__wrapper ml-2">
+                    <div class=" offset-1 col-10 col-lg-10 col-xl-10 col-sm-12">
+                        <ul class="list-group list-group-light">
+                            <li class="list-group-item px-3 border-0 rounded-3 list-group-item-secondary mb-2" style="font-size: 1rem;font-weight: 600;">
+                                <div>
+                                    <b>Risk Name</b>
+                                </div>
+                                <div>
+                                    <b>Sum Insured ({{commonDetails[0].Currency}})</b>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="list-group-item px-3 border-0 rounded-3 list-group-item-info">
+                            <li class="list_cover_insured  mb-1">
+                                <div>
+                                    <b>Building </b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.BuildingSuminsured | commaseparator}}</b>
+                                </div>
+                            </li>
+                            <li class="list_cover_insured  mb-1">
+                                <div>
+                                    <b>HouseHold Content </b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.ContentSuminsured | commaseparator}}</b>
+                                </div>
+                            </li>
+                            <li class="list_cover_insured  mb-1" *ngIf="productId=='19'">
+                                <div>
+                                    <b>Breakdown Of Equipment</b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.ElecEquipSuminsured | commaseparator}}</b>
+                                </div>
+                            </li>
+                            <li class="list_cover_insured  mb-1" *ngIf="productId=='3'">
+                                <div>
+                                    <b>Personal Liability</b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.PersonalIntermediarySuminsured | commaseparator}}</b>
+                                </div>
+                            </li>
+                            <li class="list_cover_insured  mb-1" *ngIf="productId=='3'">
+                                <div>
+                                    <b>Personal Accident</b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.PersonalAccidentSuminsured | commaseparator}}</b>
+                                </div>
+                            </li>
+                            <li class="list_cover_insured  mb-1" *ngIf="productId=='3'">
+                                <div>
+                                    <b>All Risk</b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.AllriskSumInsured | commaseparator}}</b>
+                                </div>
+                            </li>
+                            <li class="list_cover_insured  mb-1" *ngIf="productId=='19'">
+                                <div>
+                                    <b>Goods Turnover </b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.GoodsTurnoverSuminsured | commaseparator}}</b>
+                                </div>
+                            </li>
+                            <li class="list_cover_insured  mb-1" *ngIf="productId=='19'">
+                                <div>
+                                    <b>Goods Single Carry </b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.GoodsSinglecarrySuminsured | commaseparator}}</b>
+                                </div>
+                            </li>
+                            <li class="list_cover_insured  mb-1" *ngIf="productId=='19'">
+                                <div>
+                                    <b>Money - Estimated Annual Cash Carrying </b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.MoneyAnnualcarrySuminsured | commaseparator}}</b>
+                                </div>
+                            </li>
+                            <li class="list_cover_insured  mb-1" *ngIf="productId=='19'">
+                                <div>
+                                    <b>Money in Safe During Business Hours </b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.MoneyInSafeBusiness | commaseparator}}</b>
+                                </div>
+                            </li>
+                            <li class="list_cover_insured  mb-1" *ngIf="productId=='19'">
+                                <div>
+                                    <b>Money in Safe After Business Hours </b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.MoneyOutSafeBusiness | commaseparator}}</b>
+                                </div>
+                            </li>
+                            <li class="list_cover_insured  mb-1" *ngIf="productId=='19'">
+                                <div>
+                                    <b>Money in residence of director & partner </b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.MoneyInPremises | commaseparator}}</b>
+                                </div>
+                            </li>
+                            <li class="list_cover_insured  mb-1" *ngIf="productId=='19'">
+                                <div>
+                                    <b>Cash in Transit Limit </b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.CashInTransit | commaseparator}}</b>
+                                </div>
+                            </li>
+                            <li class="list_cover_insured  mb-1" *ngIf="productId=='19'">
+                                <div>
+                                    <b>Cash in Safe </b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.CashInSafe | commaseparator}}</b>
+                                </div>
+                            </li>
+                            <li class="list_cover_insured  mb-1" *ngIf="productId=='19'">
+                                <div>
+                                    <b>Money in Custody Of Collectors</b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.CashInHandEmployees | commaseparator}}</b>
+                                </div>
+                            </li>
+                            <li class="list_cover_insured  mb-1" *ngIf="productId=='19'">
+                                <div>
+                                    <b>Fidelity Annual </b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.FidelityAnnualSuminsured | commaseparator}}</b>
+                                </div>
+                            </li>
+                            <li class="list_cover_insured  mb-1" *ngIf="productId=='19'">
+                                <div>
+                                    <b>Fidelity AnyOne Occurance </b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.FidelityAnyoccuSuminsured | commaseparator}}</b>
+                                </div>
+                            </li>
+                            <li class="list_cover_insured  mb-1" *ngIf="productId=='19'">
+                                <div>
+                                    <b>Third Party Liability</b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.TpliabilityAnyoccuSuminsured | commaseparator}}</b>
+                                </div>
+                            </li>
+                            <li class="list_cover_insured  mb-1" *ngIf="productId=='19'">
+                                <div>
+                                    <b>WorkmenCompensation/EmployerLiability Excess</b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.EmpliabilityExcessSuminsured | commaseparator}}</b>
+                                </div>
+                            </li>
+                            <li class="list_cover_insured  mb-1" *ngIf="productId=='19'">
+                                <div>
+                                    <b>WorkmenCompensation/EmployerLiability Annual</b>
+                                </div>
+                                <div>
+                                    <b>{{productItem.EmpliabilityAnnualSuminsured | commaseparator}}</b>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="text-center my-2">
+                <button class="custom-btn btn-5 mr-2" [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/customer-details']" routerLinkActive="router-link-active" matRipple><<&nbsp;Back</button>&nbsp;
+                <button class="custom-btn btn-6 maan-button-data "  *ngIf="formSection || viewSection" matRipple (click)="onSubmit(productItem)"><i class="fas fa-check"></i>&nbsp;Proceed</button>
+            </div>
+        </div>
+        <div class="col-3 col-md-3 col-lg-3 col-xl-3 ">
+            <div class="w3-animate-top form_wrapper">
+                <div class="maan-grid-item-title ">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <span class="mx-0">
+                                <span class="spancommon span_font_size" style="font-weight:600">Opted Covers</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="maan-grid-item-body">
+                    <ul class="diamond px-3" style="list-style-type: square;">
+                        <ng-container *ngIf="productId=='3'">
+                            <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="(productItem.BuildingSuminsured!='0' && productItem.BuildingSuminsured!='' && productItem.BuildingSuminsured!=null) || ((coversRequired=='B' || coversRequired=='BC'))">Building</li>
+                            <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="(productItem.ContentSuminsured!='0' && productItem.ContentSuminsured!='') || ((coversRequired=='C' || coversRequired=='BC'))">HouseHold Content</li>
+                            <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="productItem.PersonalIntermediarySuminsured!='0' && productItem.PersonalIntermediarySuminsured!=''">Personal Liability</li>
+                            <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="productItem.PersonalAccidentSuminsured!='0' && productItem.PersonalAccidentSuminsured!=''">Personal Accident</li>
+                            <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="productItem.AllriskSumInsured!='0' && productItem.AllriskSumInsured!=''">All Risk</li>
+                        </ng-container>
+                        <ng-container *ngIf="productId=='19'">
+                            <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="(productItem.BuildingSuminsured!='0' && productItem.BuildingSuminsured!='' && productItem.BuildingSuminsured!=null) || ((coversRequired=='B' || coversRequired=='BC'))">Building</li>
+                            <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="(productItem.ContentSuminsured!='0' && productItem.ContentSuminsured!='' && productItem.ContentSuminsured!=null) || ((coversRequired=='C' || coversRequired=='BC'))">HouseHold Content</li>
+                               <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="productItem.ElecEquipSuminsured!='0' && productItem.ElecEquipSuminsured!=''">
+                                   Breakdown Of Equipment</li>
+                               <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="productItem.MoneySinglecarrySuminsured!='0' && productItem.MoneySinglecarrySuminsured!='' &&
+                            productItem.MoneyAnnualcarrySuminsured!='0' && productItem.MoneyAnnualcarrySuminsured!='' &&
+                            productItem.MoneyInsafeSuminsured!='0' && productItem.MoneyInsafeSuminsured!=''">Money Risk (Cash/Cheque)</li>
+                               <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="productItem.FidelityAnyoccuSuminsured!='0' && productItem.FidelityAnyoccuSuminsured!='' &&
+                            productItem.FidelityAnnualSuminsured!='0' && productItem.FidelityAnnualSuminsured!=''">Fidelity Guarantee</li>
+                               <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="productItem.TpliabilityAnyoccuSuminsured!='0' && productItem.TpliabilityAnyoccuSuminsured!=''">Liability</li>
+                               <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="productItem.EmpliabilityExcessSuminsured!='0' && productItem.EmpliabilityExcessSuminsured!='' &&
+                            productItem.EmpliabilityAnnualSuminsured!='0' && productItem.EmpliabilityAnnualSuminsured!=''">WC / EL</li>
+                               <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="productItem.GoodsTurnoverSuminsured!='0' && productItem.GoodsTurnoverSuminsured!='' &&
+                            productItem.GoodsSinglecarrySuminsured!='0' && productItem.GoodsSinglecarrySuminsured!=''">Goods In Transit</li>
+                        </ng-container>
+                        
+                    </ul>
+                    <span class="spancommon" *ngIf="checkCoverValues()">No Covers Opted</span>
+                </div>
+ 
+            </div>
+
+            <div class="w3-animate-top form_wrapper mt-5" *ngIf="uwQuestionList.length!=0">
+                <div class="maan-grid-item-title ">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <span class="mx-0">
+                                <span class="spancommon span_font_size" style="font-weight:600">UnderWriter Questions</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="maan-grid-item-body mt-2">
+                    <ng-container *ngIf="questionSection">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <ul class="list-group list-group-flush" ><!-- class="list-group list-group-flush"diamond px-3-->
+                                    <li class="list-group-item" *ngFor="let ques of uwQuestionList;let i=index">
+                                        <div class="row p-0 w-100 customRow">
+                                            <div class="col-md-12 col-lg-12 col-xl-12  customFont" [ngClass]="{'customRowBg': ques?.Status === 'R'}">
+                                                <span class="spancommon spanc">{{ques.UwQuestionDesc}}</span><!--span_font_size-->
+                                                <ng-container *ngIf="ques.MandatoryYn=='Y'"> &nbsp;<span class="text-danger">*</span></ng-container>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                                <ng-container *ngIf="ques?.QuestionType=='01'">
+                                                    <div class="input-control-container">
+                                                        <div class="input-form-radio-box">
+                                                            <div class="radio-toolbar">
+                                                                <input [id]="'orginwarehouse_Yes'+i" type="radio" [name]="'originatingWarehouse'+i" [disabled]="endorsementSection" [(ngModel)]="ques.Value" value="Y">
+                                                                <label [for]="'orginwarehouse_Yes'+i" class="yes">Yes</label>
+                                                                <input type="radio" [id]="'orginwarehouse_No'+i" [name]="'originatingWarehouse'+i" [disabled]="endorsementSection" [(ngModel)]="ques.Value" value="N">
+                                                                <label [for]="'orginwarehouse_No'+i" class="no">No</label>
+                                                                <!--<input [id]="'orginwarehouse_Yes'+i" type="radio" [name]="'originatingWarehouse'+i" class="yes" [(ngModel)]="ques.Value" value="Y">
+                                                                <label [for]="'orginwarehouse_Yes'+i">Yes</label>
+                                                                <input type="radio" [id]="'orginwarehouse_No'+i" [name]="'originatingWarehouse'+i" class="no" [(ngModel)]="ques.Value" value="N">
+                                                                <label [for]="'orginwarehouse_No'+i">No</label>-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                                <ng-container *ngIf="ques?.QuestionType=='02' && ques?.DataType!='02'">
+                                                    <div class="input-control-container">
+                                                        <div class="input-form-box">
+                                                            <input type="text" [(ngModel)]="ques.Value" class="input-form-control without-icon">
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                                <ng-container *ngIf="ques?.QuestionType=='02' && ques?.DataType=='02'">
+                                                    <div class="input-control-container">
+                                                        <div class="input-form-box">
+                                                            <input type="text" digitOnly [(ngModel)]="ques.Value" class="input-form-control without-icon">
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="maan-grid-item" *ngIf="productId!='19' && productId!='3' && productId!='1' && uwQuestionList.length!=0 ">
+    <div class="maan-grid-item-title">
+        <div class="d-flex justify-content-between">
+            <div>
+                <span class="mx-1">
+                        <i class="fas fa-user mx-1"></i>
+                    </span><span class="spancommon span_font_size">UnderWriter Questions</span>
+            </div>
+            <div>
+                <!--<div class="row">
+                    <div class="custombox"></div>&nbsp; - &nbsp;<span class="spancommon span_font_size">Referral</span>&nbsp;&nbsp;
+                </div>-->
+
+            </div>
+        </div>
+
+    </div>
+<div class="maan-grid-item-body mt-2">
+        <ng-container *ngIf="questionSection">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" *ngFor="let ques of uwQuestionList;let i=index">
+                            <div class="row p-0 w-100 customRow">
+                                <!-- <div class="col-md-8 col-lg-8 col-xl-8 offset-1 customFont" [ngClass]="{'customRowBg': ques?.Status === 'R'}"> -->
+                                <div class="col-md-8 col-lg-8 col-xl-8 offset-1 customFont">
+                                    <span class="spancommon span_font_size">{{ques.UwQuestionDesc}}</span>
+                                    <ng-container *ngIf="ques.MandatoryYn=='Y'"> &nbsp;<span class="text-danger">*</span></ng-container>
+                                </div>
+                                <div class="col-md-4 col-lg-3 col-xl-3">
+                                    <ng-container *ngIf="ques?.QuestionType=='01'">
+                                        <div class="input-control-container">
+                                            <div class="input-form-radio-box">
+                                                <div class="radio-toolbar">
+                                                    <input [id]="'orginwarehouse_Yes'+i" type="radio" [name]="'originatingWarehouse'+i" [(ngModel)]="ques.Value" value="Y">
+                                                    <label [for]="'orginwarehouse_Yes'+i">Yes</label>
+                                                    <input type="radio" [id]="'orginwarehouse_No'+i" [name]="'originatingWarehouse'+i"  [(ngModel)]="ques.Value" value="N">
+                                                    <label [for]="'orginwarehouse_No'+i">No</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="ques?.QuestionType=='02' && ques?.DataType!='02'">
+                                        <div class="input-control-container">
+                                            <div class="input-form-box">
+                                                <input type="text" [(ngModel)]="ques.Value" class="input-form-control without-icon">
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="ques?.QuestionType=='02' && ques?.DataType=='02'">
+                                        <div class="input-control-container">
+                                            <div class="input-form-box">
+                                                <input type="text" digitOnly [(ngModel)]="ques.Value" class="input-form-control without-icon">
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>
+<div class="text-center my-2" *ngIf="productId!='19' && productId!='3' && productId!='1'">
+    <button class="custom-btn btn-5 mr-2" [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/customer-details']" routerLinkActive="router-link-active" matRipple><<&nbsp;Back</button>&nbsp;
+    <button class="custom-btn btn-6 maan-button-data " matRipple (click)="onFormSubmit()"><i class="fas fa-check"></i>&nbsp;Proceed</button>
+</div>

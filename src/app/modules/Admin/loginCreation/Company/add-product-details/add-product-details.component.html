@@ -1,0 +1,27 @@
+<ng-container>
+    <ng-template #discountCard>
+        <div class="popover-card customTemplate card">
+            <div class="card-header" status="warning">
+                Status!
+            </div>
+            <!-- <nb-card-body class="p-0"> 
+                    <app-grid-table [cols]="columnHeader" [data]="customerDetail" >
+                    </app-grid-table>
+            </nb-card-body> -->
+        </div>
+    </ng-template>
+</ng-container>
+
+<div class="card">
+    <div class="card-header">Include Product's</div>
+    <div class="card-body">
+        <ng-container *ngIf="tableData">
+            <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onSelectCustomer)="onSelectCustomer($event)" (onEdit)="onEdit($event)">
+            </app-grid-table>
+        </ng-container>
+        <div class="text-center mt-2">
+            <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+            <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
+        </div>
+    </div>
+</div>

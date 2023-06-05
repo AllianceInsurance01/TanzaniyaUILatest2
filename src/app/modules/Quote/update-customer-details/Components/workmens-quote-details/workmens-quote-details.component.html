@@ -1,0 +1,175 @@
+<div class="maan-grid-item">
+  <div class="maan-grid-item-title">
+      <span class="mx-0">
+
+      </span> Workmen's Compensation
+  </div>
+  <div class="maan-grid-item-body">
+      <div class="row p-2">
+
+
+        <div class="col-12 col-md-4 col-lg-4 mt-2">
+          <div class="input-control-container">
+              <label class="input-form-label">FirstName<span class="text-danger">*</span></label>
+              <div class="input-form-box">
+                  <input type="text" [(ngModel)]="FirstName" disabled class="input-form-control without-icon">
+              </div>
+          </div>
+      </div>
+
+      <div class="col-12 col-md-4 col-lg-4 mt-2">
+        <div class="input-control-container">
+            <label class="input-form-label">LastName<span class="text-danger">*</span></label>
+            <div class="input-form-box">
+                <input type="text" [(ngModel)]="FirstName" disabled class="input-form-control without-icon">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-12 col-md-4 col-lg-4 mt-3">
+      <mat-form-field appearance="fill">
+          <mat-label>Date Of Birth<span class="text-danger">*</span></mat-label>
+          <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" (dateChange)="onStartDateChange()" [(ngModel)]="DateOfBirth">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+  </div>
+          <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+              <div class="input-control-container">
+                  <label class="input-form-label">Occupation</label>
+                  <ng-select class="input-form-select" [items]="countyList" bindValue="Code"
+                      bindLabel="CodeDescription">
+                  </ng-select>
+                  <div class="input-form-error">
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+            <div class="input-control-container">
+                <label class="input-form-label">ID Proof Type</label>
+                <ng-select class="input-form-select" [items]="countyList" bindValue="Code"
+                    bindLabel="CodeDescription">
+                </ng-select>
+                <div class="input-form-error">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+          <div class="input-control-container">
+              <label class="input-form-label">ID Proof Number</label><span
+                  class="text-danger">*</span>
+              <div class="input-form-box">
+                  <input type="text"
+                      class="input-form-control without-icon">
+              </div>
+          </div>
+      </div>
+          <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+              <div class="input-control-container">
+                  <label class="input-form-label">Salary/Year</label><span
+                      class="text-danger">*</span>
+                  <div class="input-form-box">
+                      <input type="text"
+                          class="input-form-control without-icon">
+                  </div>
+              </div>
+          </div>
+          <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+            <div class="input-control-container">
+                <label class="input-form-label">Job Joining Month / Year</label><span
+                    class="text-danger">*</span>
+                <div class="input-form-box">
+                    <input type="text"
+                        class="input-form-control without-icon">
+                </div>
+            </div>
+        </div>
+
+          <!--<div class="col-12 col-md-4 col-lg-4 col-xl-4 mt-2">
+            <div class="input-control-container">
+                <label class="input-form-label">BenifitCover</label>
+                <br>
+
+               <input type="checkbox" id="vehicle1" name="vehicle1" value="12months">
+               <label for="vehicle1" style="padding-left:10px;">12 Months</label><br>
+               <input type="checkbox" id="vehicle2" name="vehicle2" value="24months">
+               <label for="vehicle2" style="padding-left:10px;">24 Months</label><br>
+               <input type="checkbox" id="vehicle2" name="vehicle2" value="24months">
+               <label for="vehicle2" style="padding-left:10px;">36 Months</label><br>
+
+
+                <div class="input-form-error">
+                </div>
+            </div>
+        </div>-->
+
+        <!--<div class="col-12 col-md-4 col-lg-4 col-xl-4">
+        <div class="radio-toolbar menu-bar"> BenifitCover
+          <input id="menu" type="radio" name="menu" value="menu1" [(ngModel)]="activeMenu">
+          <label for="menu">Menu 1</label>
+          <input type="radio" id="menu1" name="menu" value="menu2" [(ngModel)]="activeMenu">
+          <label for="menu1">Menu 2</label>
+          <input type="radio" id="menu2" name="menu" value="menu3" [(ngModel)]="activeMenu">
+          <label for="menu2">Menu 3</label>
+
+        </div>
+        </div>-->
+
+
+        <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+          <div class="input-control-container">
+          <label class="input-form-label">Between Discontinued</label><span
+          class="text-danger">*</span>
+          <div class="radio-toolbar menu-bar mt-1">
+            <input id="menu" type="radio" name="menu" value="menu1" [(ngModel)]="activeMenu">
+            <label for="menu">Yes</label>
+            <input type="radio" id="menu1" name="menu" value="menu2" [(ngModel)]="activeMenu">
+            <label for="menu1">No</label>
+
+          </div>
+        </div>
+        </div>
+
+        <div class="col-12 col-md-4 col-lg-4 col-xl-4" *ngIf="activeMenu=='menu1' ">
+          <div class="input-control-container">
+            <label class="input-form-label">Involved in unethical work </label><span
+            class="text-danger">*</span>
+            <div class="radio-toolbar menu-bar mt-1">
+              <input id="menu2" type="radio" name="menu2" value="Y" [(ngModel)]="active">
+              <label for="menu2">Yes</label>
+              <input type="radio" id="menu3" name="menu3" value="N" [(ngModel)]="active">
+              <label for="menu3">No</label>
+
+            </div>
+          </div>
+      </div>
+
+
+
+        <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+          <div class="input-control-container">
+              <label class="input-form-label">Workmen’s  Insured </label><span
+                  class="text-danger">*</span>
+              <div class="input-form-box">
+                  <input  digitOnly type="text"
+                      class="input-form-control without-icon">
+              </div>
+          </div>
+      </div>
+
+
+
+
+
+          </div>
+
+
+              <div class="text-center my-2">
+                  <button class="custom-btn btn-5 mr-2" [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/customer-details']" routerLinkActive="router-link-active" matRipple><<&nbsp;Back</button>
+  <button class="custom-btn btn-6" matRipple (click)="onAddVehicle('edit')"><i class="fas fa-check"></i>&nbsp;Proceed</button>
+              </div>
+          </div>
+      </div>

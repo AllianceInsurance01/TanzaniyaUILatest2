@@ -1,0 +1,97 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div>
+                Endorsements
+            </div>
+            <div>
+                <span>Product Name ~ Motor </span>|
+                <span>LoginId ~ &nbsp;Admin</span>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-5 col-lg-5 col-xl-5">
+                <div class="input-control-container">
+                    <label class="input-form-label">Category</label>
+                    <ng-select class="input-form-select" appendTo="body" [items]="categoryList" [(ngModel)]="categoryId" (change)="getEndorsementList()" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+             
+        <div class="row" *ngIf="categoryId">
+            <div class="col-md-10 col-lg-10 col-xl-10 offset-1">
+                <table class="table table-headerRow styled-table">
+                    <tr>
+                        <th class="tbl-header">Select</th>
+                        <th class="tbl-header">EndtType</th>
+                        <th class="tbl-header">CoreAppCode</th>
+                        <th class="tbl-header">RegulatoryCode</th>
+                        <th class="tbl-header">EffectiveDateStart</th>
+                    </tr>
+                    <tr *ngFor="let row of endorseData;let i = index">
+
+                        <td class="tbl-content">
+                            <mat-checkbox class="example-margin" [checked]="onCheckEndorseSelect(row)" (change)="onSelectProduct(row,$event.checked)"></mat-checkbox>
+                        </td>
+                        <td class="tbl-content">
+                            <div class="input-control-container">
+                                <div class="input-form-box">
+                                    {{row.EndtType}}
+                                    <!--<input type="text" style="min-width: 120px;" class="input-form-control without-icon" autocomplete="off" [(ngModel)]="row.EndtType">-->
+                                </div>
+                            </div>
+                            <!--<div class="m-2">{{row.ProductName}}</div>-->
+                        </td>
+                        
+                        <td class="tbl-content">
+                            <div class="input-control-container">
+                                <div class="input-form-box">
+                                    {{row.CoreAppCode}}
+                                   
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="tbl-content">
+                            <div class="input-control-container">
+                                <div class="input-form-box">
+                                    {{row.RegulatoryCode}}
+                                   
+                                </div>
+                            </div>
+                        </td>
+                        <td class="tbl-content">   
+                        <div class="input-control-container">
+                            {{row.EffectiveDateStart}}
+                        </div>
+                        </td>
+
+                        
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!--<ng-container *ngIf="endorseData.length!=0">
+            <div class="row">
+                <div class="col-12 col-md-12 col-xl-12 col-lg-12">
+                    <app-grid-table [cols]="columnHeader"  [data]="endorseData" [filterValue]="filterValue" (onEdit)="onEditEndo($event)" (onSelectCustomer)="onSelectProduct($event)">
+                    </app-grid-table>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="endorseData.length==0">
+                <div class="text-center">
+                    No Endorsement Available
+                </div>
+        </ng-container>-->
+
+        <div class="text-center mb-2 mt-2">
+            <button class="btn btn-danger" (click)="back()">Back</button>
+            <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
+        </div>
+    </div>
+</div>

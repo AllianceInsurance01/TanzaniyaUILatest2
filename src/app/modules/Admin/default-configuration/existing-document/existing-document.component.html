@@ -1,0 +1,49 @@
+<div class="card">
+    <div class="card-header">Global Configuration</div>
+    <div class="card p-1">
+        <div class="vision-grid vision-grid-column-2">
+            <div class="vision-grid-item">
+                <div class="radio-toolbar menu-bar">
+                    <!-- <input id="menu5" type="radio" name="menu" value="Company" (click)="onRedirect('Company')" [(ngModel)]="activeMenu">
+                        <label for="menu5">Company Details</label> -->
+                    <!-- <input id="menu6" type="radio" name="menu" value="Branch" [(ngModel)]="activeMenu" (click)="activeMenu='Branch';includeBranch=false">
+                        <label for="menu6">Branch</label> -->
+                    <input id="menu7" type="radio" name="menu" value="Product" [(ngModel)]="activeMenu" (click)="onRedirect('Product')">
+                    <label for="menu7">Product</label>
+                    <input type="radio" id="menu1" name="menu" value="Section" (click)="onRedirect('Section')" [(ngModel)]="activeMenu">
+                    <label for="menu1">Section</label>
+                    <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+                    <label for="menu2">Cover</label>
+                    <!-- <input type="radio" id="menu3" name="menu" value="SubCover" (click)="activeMenu='SubCover';includeSubCovers=false" [(ngModel)]="activeMenu">
+                        <label for="menu3">SubCover</label> -->
+                    <input type="radio" id="menu6" name="menu" value="Rating" (click)="onRedirect('Rating')" [(ngModel)]="activeMenu">
+                    <label for="menu6">Rating Fields</label>
+                    <input type="radio" id="menu4" name="menu" value="Referral" (click)="onRedirect('Referral')" [(ngModel)]="activeMenu">
+                    <label for="menu4">Referral</label>
+                    <input type="radio" id="menu5" name="menu" value="Document" (click)="onRedirect('Document')" [(ngModel)]="activeMenu">
+                    <label for="menu5">Document</label>
+                </div>
+            </div>
+            <div class="vision-grid-item">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-3 col-xl-3 col-lg-3">
+                                Existing Document
+                            </div>
+                            <div class="col-md-3 col-xl-3 col-lg-3 offset-6">
+                                <button class="btn btn-warning" (click)="onAddDocument()">Add New</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ng-container *ngIf="documentData">
+                            <app-grid-table [cols]="documentHeader" changeStatus="true" (onStatus)="EditStatus($event)" [data]="documentData" [filterValue]="filterValue" (onEdit)="onEditDocument($event)">
+                            </app-grid-table>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>

@@ -1,0 +1,301 @@
+<div class="card">
+    <div class="card-header">Product Configuration</div>
+    <div class="card p-1">
+        <div class="vision-grid vision-grid-column-2">
+            <div class="vision-grid-item">
+                <div class="radio-toolbar menu-bar">
+                    <input id="menu" type="radio" name="menu" value="Product" (click)="onRedirect('Product')" [(ngModel)]="activeMenu">
+                    <label for="menu">Product Details</label>
+                    <input type="radio" id="menu6" name="menu" value="FactorType" (click)="onRedirect('FactorType')" [(ngModel)]="activeMenu">
+                    <label for="menu6">Factor Type</label>
+                    <input type="radio" id="menu1" name="menu" value="Section" (click)="onRedirect('Section')" [(ngModel)]="activeMenu">
+                    <label for="menu1">Section</label>
+                    <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+
+                    <label for="menu2">Cover</label>
+
+                    <input type="radio" id="menu20" name="menu" value="Benefit" (click)="onRedirect('Benefit')" [(ngModel)]="activeMenu">
+
+                    <label for="menu20">Product Benefit</label>
+                    <input type="radio" id="menu15" name="menu" value="Policy"(click)="onRedirect('Policy')" [(ngModel)]="activeMenu">
+                    <label for="menu15">Policy Type</label>
+                    <input type="radio" id="menu10" name="menu" value="Emi" (click)="onRedirect('Emi')" [(ngModel)]="activeMenu">
+                    <label for="menu10">EMI</label>
+                    <!-- <input type="radio" id="menu3" name="menu" value="SubCover" (click)="onRedirect('SubCover')" [(ngModel)]="activeMenu">
+                    <label for="menu3">SubCover</label> -->
+                    <input type="radio" id="menu8" name="menu" value="Tax" (click)="onRedirect('Tax')" [(ngModel)]="activeMenu">
+                    <label for="menu8">Tax</label>
+                    <input type="radio" id="menu9" name="menu" value="Prorata" (click)="onRedirect('Prorata')" [(ngModel)]="activeMenu">
+                    <label for="menu9">ProRata</label>
+                    <input type="radio" id="menu7" name="menu" value="UwQues" (click)="onRedirect('UwQues')" [(ngModel)]="activeMenu">
+                    <label for="menu7">UnderWriter Questions</label>
+                    <input type="radio" id="menu5" name="menu" value="Referral" (click)="onRedirect('Referral')" [(ngModel)]="activeMenu">
+                    <label for="menu5">Referral</label>
+                    <input type="radio" id="menu4" name="menu" value="Document" (click)="onRedirect('Document')" [(ngModel)]="activeMenu">
+                    <label for="menu4">Attached Documents</label>
+                    <input type="radio" id="menu11" name="menu" value="Payment" (click)="onRedirect('Payment')" [(ngModel)]="activeMenu">
+                    <label for="menu11">Payment</label>
+                    <input type="radio" id="menu12" name="menu" value="Notification"(click)="onRedirect('Notification')" [(ngModel)]="activeMenu">
+                    <label for="menu12">Notification</label>
+                    <input type="radio" id="menu13" name="menu" value="TinyUrl"(click)="onRedirect('TinyUrl')" [(ngModel)]="activeMenu">
+                    <label for="menu13">TinyUrl</label>
+                    <input type="radio" id="menu14" name="menu" value="Premia"(click)="onRedirect('Premia')" [(ngModel)]="activeMenu">
+                    <label for="menu14">Premia Configuration</label>
+                    <!--<input type="radio" id="menu16" name="menu" value="Industry"(click)="onRedirect('Industry')" [(ngModel)]="activeMenu">
+                    <label for="menu16">Industry</label>-->
+                    <input type="radio" id="menu17" name="menu" value="Promo"(click)="onRedirect('Promo')" [(ngModel)]="activeMenu">
+                    <label for="menu17">PromoCode</label>
+                    <input type="radio" id="menu19" name="menu" value="EndorsementField"(click)="onRedirect('EndorsementField')" [(ngModel)]="activeMenu">
+                    <label for="menu19">EndorsementField Type</label>
+                    <input type="radio" id="menu18" name="menu" value="Endorsement"(click)="onRedirect('Endorsement')" [(ngModel)]="activeMenu">
+                    <label for="menu18">Endorsement Type</label>
+                  
+                </div>
+            </div>
+            <div class="vision-grid-item">
+                <div class="card">
+                    <div class="card-header"> Product Details</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Product Name<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="productDetails.ProductName" maxlength="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Product Description<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" maxlength="100">
+                                        </div>
+                                    </div>
+                                </div> -->
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Regulatory Code<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="productDetails.RegulatoryCode" maxlength="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="productDetails.CoreAppCode" maxlength="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Product Description<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" [(ngModel)]="productDetails.ProductDesc" class="input-form-control without-icon" maxlength="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Checker & Maker YN<span class="text-required">*</span></label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="checker_Yes" type="radio" name="CheckerYN" [(ngModel)]="productDetails.CheckerYn" value="Y">
+                                            <label for="checker_Yes">Active</label>
+                                            <input type="radio" id="checker_No" name="CheckerYN" [(ngModel)]="productDetails.CheckerYn" value="N">
+                                            <label for="checker_No">DeActive</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">PaymentYn<span class="text-required">*</span></label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="payment_Yes" type="radio" name="PaymentYN" (change)="onPaymentChange()" [(ngModel)]="productDetails.PaymentYn" value="Y">
+                                            <label for="payment_Yes">Yes</label>
+                                            <input type="radio" id="payment_No" name="PaymentYN" (change)="onPaymentChange()" [(ngModel)]="productDetails.PaymentYn" value="N">
+                                            <label for="payment_No">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <!-- <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">MakerYN<span class="text-required">*</span></label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="maker_Yes" type="radio" name="MakerYN" [(ngModel)]="productDetails.MakerYn" value="Y">
+                                            <label for="maker_Yes">Active</label>
+                                            <input type="radio" id="maker_No" name="MakerYN" [(ngModel)]="productDetails.MakerYn" value="N">
+                                            <label for="maker_No">DeActive</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-4 col-lg-4" *ngIf="productDetails.PaymentYn=='Y'">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Payment Redirect Url<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="productDetails.PaymentRedirUrl" maxlength="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Product Icon</label>
+                                    <ng-select class="input-form-select" [(ngModel)]="productDetails.ProductIconId" [items]="iconList" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Commission Vat YN<span class="text-required">*</span></label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="orginwarehouse_Yes1" type="radio" name="originatingWarehouse1" [(ngModel)]="productDetails.CommissionVatYn" value="Y">
+                                            <label for="orginwarehouse_Yes1">Yes</label>
+                                            <input type="radio" id="orginwarehouse_No1" name="originatingWarehouse1" [(ngModel)]="productDetails.CommissionVatYn" value="N">
+                                            <label for="orginwarehouse_No1">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Sum Insured Start Limit<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                     <input type="text" class="input-form-control without-icon" [(ngModel)]="productDetails.SumInsuredStart" (keydown)="onProductValueChange($event)" (keyup)="SIStartCommaFormatted()" maxlength="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Sum Insured End Limit<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="productDetails.SumInsuredEnd" (keydown)="onProductValueChange($event)" (keyup)="SIEndCommaFormatted()" maxlength="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-control-container">
+                                <label class="input-form-label">Package Policy<span class="text-required">*</span></label>
+                                <div class="input-form-radio-box">
+                                    <div class="radio-toolbar">
+                                        <input id="PackageYn_Yes" type="radio" name="PackageYn" [(ngModel)]="productDetails.PackageYn" value="Y">
+                                        <label for="PackageYn_Yes">Yes</label>
+                                        <input type="radio" id="PackageYn_No" name="PackageYn" [(ngModel)]="productDetails.PackageYn" value="N">
+                                        <label for="PackageYn_No">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Currency<span class="text-required">*</span></label>
+                                    <ng-select class="input-form-select" appendTo="body" [clearSearchOnAdd]="true" [closeOnSelect]="false" [multiple]="true" [(ngModel)]="productDetails.CurrencyIds" [items]="CurrencyList" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                                    <mat-form-field appearance="fill">
+                                        <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="productDetails.EffectiveDateStart">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <!-- <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>End Date</mat-label>
+                                        <input matInput [matDatepicker]="picker2" [(ngModel)]="productDetails.EffectiveDateEnd">
+                                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker2></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div> -->
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <textarea cols="60" ros="3" [(ngModel)]="productDetails.Remarks" class="input-form-select"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Status<span class="text-required">*</span></label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="productDetails.Status" value="P">
+                                            <label for="orginwarehouse_Pending">Pending</label>
+                                            <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="productDetails.Status" value="Y">
+                                            <label for="orginwarehouse_Yes">Active</label>
+                                            <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="productDetails.Status" value="N">
+                                            <label for="orginwarehouse_No">DeActive</label>
+                                            <input type="radio" id="orginwarehouse_Referral" name="originatingWarehouse" [(ngModel)]="productDetails.Status" value="R">
+                                            <label for="orginwarehouse_Referral">Referral</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Policy Prefix<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" maxlength="100">
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                            <!-- <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Quote Prefix<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" maxlength="100">
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                        </div>
+                        <div class="row">
+
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+                            <button class="btn btn-primary ml-2" (click)="onProceed()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row">
+            <div class="col-md-2 col-lg-2 col-xl-2">
+                <div class="btn-group-vertical">
+                    <button type="button" class="btn btn-warning">Product Details</button>
+
+
+                    <button type="button" class="btn btn-secondary" (click)="onRedirect('Section')">Section</button>
+
+                    <button type="button" class="btn btn-secondary" (click)="onRedirect('Cover')">Cover</button>
+                    <button type="button" class="btn btn-secondary" (click)="onRedirect('SubCover')">SubCover</button>
+                    <button type="button" class="btn btn-secondary" (click)="onRedirect('Attachment')">Attachment</button>
+                </div>
+            </div>
+            <div class="col-md-10 col-lg-10 col-xl-10">
+
+            </div>
+        </div> -->
+</div>

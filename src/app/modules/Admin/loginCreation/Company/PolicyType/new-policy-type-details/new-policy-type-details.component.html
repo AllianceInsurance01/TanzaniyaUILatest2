@@ -1,0 +1,132 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div>
+                Company Configuration
+            </div>
+            <div *ngIf="insuranceName">
+                Company Name - <b>{{insuranceName}}</b>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row">
+            <div class="col-md-4 col-lg-4 col-12">
+                <div class="input-control-container">
+                    <label class="input-form-label">Insurance Company<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <ng-select class="input-form-select" appendTo="body" [items]="companyList" [(ngModel)]="companyValue" bindValue="Code" bindLabel="CodeDescription">
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    <div class="card p-1">
+        <div class="vision-grid vision-grid-column-2">
+            <div class="vision-grid-item">
+                <div class="radio-toolbar menu-bar">
+                    <input id="menu" type="radio" name="menu" value="Product" (click)="onRedirect('Product')" [(ngModel)]="activeMenu">
+                    <label for="menu">Product Details</label>
+                    <input type="radio" id="menu6" name="menu" value="FactorType" (click)="onRedirect('FactorType')" [(ngModel)]="activeMenu">
+                    <label for="menu6">Factor Type</label>
+                    <input type="radio" id="menu1" name="menu" value="Section" (click)="onRedirect('Section')" [(ngModel)]="activeMenu">
+                    <label for="menu1">Section</label>
+                    <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+
+                    <label for="menu2">Cover</label>
+                    <input type="radio" id="menu15" name="menu" value="Policy"(click)="onRedirect('Policy')" [(ngModel)]="activeMenu">
+                    <label for="menu15">Policy Type</label>
+                    <input type="radio" id="menu10" name="menu" value="Emi" (click)="onRedirect('Emi')" [(ngModel)]="activeMenu">
+                    <label for="menu10">EMI</label>
+                    <!-- <input type="radio" id="menu3" name="menu" value="SubCover" (click)="onRedirect('SubCover')" [(ngModel)]="activeMenu">
+                    <label for="menu3">SubCover</label> -->
+                    <input type="radio" id="menu8" name="menu" value="Tax" (click)="onRedirect('Tax')" [(ngModel)]="activeMenu">
+                    <label for="menu8">Tax</label>
+                    <input type="radio" id="menu9" name="menu" value="Prorata" (click)="onRedirect('Prorata')" [(ngModel)]="activeMenu">
+                    <label for="menu9">ProRata</label>
+                    <input type="radio" id="menu7" name="menu" value="UwQues" (click)="onRedirect('UwQues')" [(ngModel)]="activeMenu">
+                    <label for="menu7">UnderWriter Questions</label>
+                    <input type="radio" id="menu5" name="menu" value="Referral" (click)="onRedirect('Referral')" [(ngModel)]="activeMenu">
+                    <label for="menu5">Referral</label>
+                    <input type="radio" id="menu4" name="menu" value="Document" (click)="onRedirect('Document')" [(ngModel)]="activeMenu">
+                    <label for="menu4">Attached Documents</label>
+                    <input type="radio" id="menu11" name="menu" value="Payment" (click)="onRedirect('Payment')" [(ngModel)]="activeMenu">
+                    <label for="menu11">Payment</label>
+                    <input type="radio" id="menu12" name="menu" value="Notification"(click)="onRedirect('Notification')" [(ngModel)]="activeMenu">
+                    <label for="menu12">Notification</label>
+                    <input type="radio" id="menu13" name="menu" value="TinyUrl"(click)="onRedirect('TinyUrl')" [(ngModel)]="activeMenu">
+                    <label for="menu13">TinyUrl</label>
+                    <input type="radio" id="menu14" name="menu" value="Premia"(click)="onRedirect('Premia')" [(ngModel)]="activeMenu">
+                    <label for="menu14">Premia Configuration</label>
+                    <!--<input type="radio" id="menu16" name="menu" value="Industry"(click)="onRedirect('Industry')" [(ngModel)]="activeMenu">
+                    <label for="menu16">Industry</label>-->
+                    <input type="radio" id="menu17" name="menu" value="Promo"(click)="onRedirect('Promo')" [(ngModel)]="activeMenu">
+                    <label for="menu17">PromoCode</label>
+                    <input type="radio" id="menu19" name="menu" value="EndorsementField"(click)="onRedirect('EndorsementField')" [(ngModel)]="activeMenu">
+                    <label for="menu19">EndorsementField Type</label>
+                    <input type="radio" id="menu18" name="menu" value="Promo"(click)="onRedirect('Endorsement')" [(ngModel)]="activeMenu">
+                    <label for="menu18">Endorsement Type</label>
+                </div>
+            </div>
+            <div class="vision-grid-item">
+                <div class="card">
+                    <div class="card-header">Region Details</div>
+                    <div class="card-body">
+                        <div class="row mt-2">
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Policy Type Name<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" class="input-form-control without-icon" maxlength="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="input-control-container">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label>
+                                        <input matInput [matDatepicker]="picker" [min]="minDate">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Status<span class="text-required">*</span></label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" value="YES">
+                                            <label for="orginwarehouse_Yes">Active</label>
+                                            <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" value="NO">
+                                            <label for="orginwarehouse_No">DeActive</label>
+                                            <input type="radio" id="orginwarehouse_Referral" name="originatingWarehouse" value="Referral">
+                                            <label for="orginwarehouse_Referral">Referral</label>
+                                            <input type="radio" id="orginwarehouse_Pending" name="originatingWarehouse" value="Pending">
+                                            <label for="orginwarehouse_Pending">Pending</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <textarea cols="120" rows="2" class="input-form-control without-icon" maxlength="200"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-2">
+                            <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>
+                            <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

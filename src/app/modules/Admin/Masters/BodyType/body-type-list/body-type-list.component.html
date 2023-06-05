@@ -1,0 +1,38 @@
+<div class="vision-grid-item">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between">
+                <div >
+                   Motor Body Type
+                </div>
+                <div>
+                    <button class="btn btn-warning" (click)="onAddBody()">Add New</button>
+                </div>
+            </div>
+            
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 col-lg-4 col-xl-4 ml-3">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Branch<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" appendTo="body" [items]="branchList" [(ngModel)]="branchValue" bindValue="Code" bindLabel="CodeDesc" (change)="getExistingBodyType()">
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Insurance Type</label>
+                        <ng-select class="input-form-select" appendTo="body" [items]="insuranceList" [(ngModel)]="SectionId" (change)="getExistingBodyType()" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+            
+            <ng-container *ngIf="BodyTypeData">
+                <app-grid-table [cols]="columnHeader" changeStatus="true" (OnStatus)="EditStatus($event)" [data]="BodyTypeData" [filterValue]="filterValue" (onEdit)="onEditBody($event)">
+                </app-grid-table>
+            </ng-container>
+        </div>
+    </div>
+</div>

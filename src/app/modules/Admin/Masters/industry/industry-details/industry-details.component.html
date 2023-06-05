@@ -1,0 +1,110 @@
+
+<div class="vision-grid-item">
+  <div class="card">
+      <div class="card-header">
+          <div class="d-flex justify-content-between">
+              <div>
+                   Industry Details
+              </div>
+          </div>
+      </div>
+      <div class="card-body">
+          <div class="row mt-2">
+              <div class="col-12 col-lg-6 col-xl-6">
+                  <div class="input-control-container">
+                      <label class="input-form-label">Branch<span class="text-required">*</span></label>
+                      <ng-select class="input-form-select" appendTo="body" disabled [items]="branchList" [(ngModel)]="BranchCode" bindValue="Code" bindLabel="CodeDesc" >
+                      </ng-select>
+                  </div>
+              </div>
+              <!--<div class="col-12 col-md-6 col-lg-6">
+                  <div class="input-control-container">
+                      <label class="input-form-label">CategoryDesc<span class="text-required">*</span></label>
+                      <div class="input-form-box">
+
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="Industrydetails.CategoryDesc" maxlength="100" >
+                      </div>
+                  </div>
+              </div>-->
+              <div class="col-md-6 col-lg-6 col-xl-6">
+                <div class="input-control-container">
+                    <label class="input-form-label">Category<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" appendTo="body" disabled [items]="CategoryList" bindValue="Code" [(ngModel)]="CategoryValue" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="input-control-container">
+                    <label class="input-form-label">IndustryName<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="Industrydetails.IndustryName" maxlength="100">
+                    </div>
+                </div>
+            </div>
+
+              <div class="col-12 col-md-6 col-lg-6">
+                  <div class="input-control-container">
+                      <label class="input-form-label">RegulatoryCode<span class="text-required">*</span></label>
+                      <div class="input-form-box">
+                          <input type="text" class="input-form-control without-icon" [(ngModel)]="Industrydetails.RegulatoryCode" maxlength="100">
+                      </div>
+                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="input-control-container">
+                    <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                      <input type="text" class="input-form-control without-icon" [(ngModel)]="Industrydetails.CoreAppCode" maxlength="100">
+                  </div>
+                    <!--<div class="input-form-box">
+                        <textarea type="text" cols="60" ros="3" [(ngModel)]="Industrydetails.CoreAppCode" class="input-form-select"></textarea>
+                    </div>-->
+                </div>
+            </div>
+              <div class="col-12 col-md-6 col-lg-6">
+                  <div class="input-control-container">
+                    <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                      <mat-form-field appearance="fill">
+                          <!--<mat-label>Effective Date<span class="text-danger">*</span></mat-label>-->
+                          <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="Industrydetails.EffectiveDateStart">
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                  </div>
+              </div>
+
+              <div class="col-12 col-md-6 col-lg-6">
+                  <div class="input-control-container">
+                      <label class="input-form-label">Status<span class="text-required">*</span></label>
+                      <div class="input-form-radio-box">
+                          <div class="radio-toolbar">
+                              <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="Industrydetails.Status" value="Y">
+                              <label for="orginwarehouse_Yes">Active</label>
+                              <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="Industrydetails.Status" value="N">
+                              <label for="orginwarehouse_No">DeActive</label>
+                              <input type="radio" id="orginwarehouse_Referral" name="originatingWarehouse" [(ngModel)]="Industrydetails.Status" value="R">
+                              <label for="orginwarehouse_Referral">Referral</label>
+                              <input type="radio" id="orginwarehouse_Pending" name="originatingWarehouse" [(ngModel)]="Industrydetails.Status" value="P">
+                              <label for="orginwarehouse_Pending">Pending</label>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6">
+                <div class="input-control-container">
+                    <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <textarea type="text" cols="60" ros="3" [(ngModel)]="Industrydetails.Remarks" class="input-form-select"></textarea>
+                    </div>
+                </div>
+            </div>
+          </div>
+      </div>
+
+  </div>
+  <div class="text-center mt-2">
+      <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>
+      <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
+  </div>
+</div>

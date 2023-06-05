@@ -1,0 +1,1725 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="maan-grid customer-grid maan-grid-column-1">
+        <div class="maan-grid-item" style="padding:1rem;">
+
+          <div class="maan-grid-item-title">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <span class="mx-1">
+                        <i class="fas fa-user mx-1"></i>
+
+                    </span> Customer Details
+                </div>
+                <div>
+                    <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                    <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                </div>
+            </div>
+
+        </div>
+        <div class="maan-grid-item-body" >
+          <div class="row mt-1">
+              <div class="col-12 col-md-3 ">
+                  <div class="input-control-container">
+                      <label class="input-form-label"><b>Customer Name</b></label>
+                      <div class="input-form-radio-box">
+                          &nbsp; {{clientName}}
+                      </div>
+                  </div>
+              </div>
+              <div class="col-12 col-md-3">
+                  <div class="input-control-container">
+                      <label class="input-form-label"><b>Customer ID</b></label>
+                      <div class="input-form-radio-box">
+                       {{idNumber}}
+                      </div>
+                  </div>
+              </div>
+              <div class="col-12 col-md-3">
+                  <div class="input-control-container">
+                      <label class="input-form-label"><b>Customer Type</b></label>
+                      <div class="input-form-radio-box">
+                         {{policyDesc}}
+                      </div>
+                  </div>
+              </div>
+              <div class="col-12 col-md-3">
+                  <div class="input-control-container">
+                      <label class="input-form-label"><b>Mobile Number</b></label>
+                      <div class="input-form-radio-box">
+                             {{MobileNo1}}
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+             <!-- for vechile--><div *ngIf="productId=='5'">
+              <div *ngFor="let motor of coverDetails;let i=index" class="mt-3">
+
+                <div>
+                  <div class="maan-grid-item-title" id="first">
+                    <span> Vechile Details ({{i+1}})</span>
+                      </div>
+
+
+
+                      <div class="maan-grid-item-body" id="#first">
+                        <div>
+                          <div class="row">
+                            <div class="col-12 col-md-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label"><b>Insurance Type</b></label>
+                                    <br>
+                                    <span> {{motor.VehicleDetails?.InsuranceTypeDesc}}</span>
+
+                                    <div>
+
+                               </div>
+
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label"><b>Insurance Class</b></label>
+                                    <br><span>{{motor.VehicleDetails?.InsuranceClass}}</span>
+
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4">
+                              <div class="input-control-container">
+                                  <label class="input-form-label"><b>Body Type</b>
+                                    </label>
+                                    <br>
+                                    <span> {{motor.VehicleDetails?.BodyType}} </span>
+
+                              </div>
+                          </div>
+
+                        </div>
+
+                    <div class="row">
+
+
+                        <div class="col-12 col-md-4 mt-2" >
+                            <div class="input-control-container">
+                                <label class="input-form-label"><b>Motor Usage</b>
+                                 </label>
+                                 <br>
+                                 <span>{{motor.VehicleDetails?.Motorusage}}</span>
+
+
+
+                            </div>
+                        </div>
+                        <!-- <div class="col-12 col-md-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Currency</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="currencyList" [(ngModel)]="currencyValue" (change)="onCurrencyChange()" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Exchange Rate</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" [(ngModel)]="exchangeRate" class="input-form-control without-icon">
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-12 col-md-4 col-lg-4 mt-2">
+                            <div class="input-control-container">
+                                <label class="input-form-label"><b>Claims YN?</b></label>
+                                <br>
+                                <span>{{motor.VehicleDetails?.NcdYn}}</span>
+
+
+                                <!--<div class="input-form-radio-box">
+                                    <div class="radio-toolbar">
+                                        <input id="claims_Yes" type="radio" name="claimsYN"  value="Y">
+                                        <label for="claims_Yes">Yes</label>
+                                        <input id="claims_No" type="radio" name="claimsYN"  value="N">
+                                        <label for="claims_No">No</label>
+                                    </div>
+                                </div>-->
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4 mt-2">
+                          <div class="input-control-container">
+                              <label class="input-form-label"><b>Vehicle Sum Insured  ({{Currency}})</b> &nbsp;
+                              </label>
+                              <br>
+                              <span>{{motor.VehicleDetails?.SumInsured|commaseparator}}</span>
+
+                              <!--<div class="input-form-box">
+                                  <input type="text"  class="input-form-control without-icon">
+                              </div>-->
+                          </div>
+                      </div>
+
+                        <!-- <div class="col-12 col-md-4" *ngIf="typeValue=='13'">
+                            <div class="input-control-container">
+                                <label class="input-form-label">City Limit</label> &nbsp;<span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="cityList" [(ngModel)]="cityValue" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div> -->
+                    </div>
+
+                    <div class="row">
+
+
+                        <div class="col-12 col-md-4 mt-2">
+                            <div class="input-control-container">
+                                <label class="input-form-label"><b>Accessories Sum Insured ({{Currency}})</b></label>
+                                <br>
+                                <span>{{motor.VehicleDetails?.AcccessoriesSumInsured}}</span>
+
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 mt-2">
+                            <div class="input-control-container">
+                                <label class="input-form-label"><b>WindShield Sum Insured ({{Currency}})</b></label>
+                                <br>
+                                      <span> {{motor.VehicleDetails?.WindScreenSumInsured}}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4 mt-2">
+                          <div class="input-control-container">
+                              <label class="input-form-label"><b>Extended TPPD Sum Insured ({{Currency}})</b></label>
+                              <br>
+                              <span> {{motor.VehicleDetails?.TppdIncreaeLimit}}</span>
+
+                          </div>
+                      </div>
+                    </div>
+                    <div class="row">
+
+
+
+                        <div class="col-12 col-md-4 mt-2">
+                          <div class="input-control-container">
+                              <label class="input-form-label"><b>Policy Start Date </b></label>
+                              <br>
+                              <span>{{motor.VehicleDetails?.PolicyStartDate}}</span>
+
+
+                          </div>
+                      </div>
+                      <div class="col-12 col-md-4 mt-2">
+                        <div class="input-control-container">
+                            <label class="input-form-label"><b>Policy End Date</b></label>
+                            <br>
+                            <span>{{motor.VehicleDetails?.PolicyEndDate}}</span>
+
+
+                        </div>
+                    </div>
+                        <!--<div class="col-12 col-md-4 col-lg-4 mt-3">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label>
+                                <input matInput [matDatepicker]="picker">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>-->
+                        <!--<div class="col-12 col-md-4 col-lg-4 mt-3">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Policy End Date<span class="text-danger">*</span></mat-label>
+                                <input matInput [matDatepicker]="picker2">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                            </mat-form-field>
+                        </div>-->
+                        <!-- <div class="col-12 col-md-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Account Executive ID</label> &nbsp;<span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="executiveList" [(ngModel)]="cityValue" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div> -->
+                    </div>
+                  </div>
+                    </div>
+
+                    <div>
+                      <ng-container *ngFor="let cover of motor.Covers;let i=index">
+                        <div class="maan-grid-item-title"id="second">
+                          <span> Cover Details </span>
+                            </div>
+                            <div class="col-md-12 col-lg-12" style="padding:1rem;" id=#second>
+                              <table class="firstclass" style="width:100%;">
+                                  <thead>
+                                      <!-- <tr>
+                                        style="border-radius:20px;border:1px solid gray;box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 0px;margin:auto;"
+                                  <th colspan="4" class="text-center" id="first">3Months</th>
+                                  <th colspan="4" class="text-center" id="6">6Months</th>
+                                  <th colspan="4" class="text-center" id="9">9Months</th>
+                                </tr> -->
+
+                                      <tr class="firstclass">
+
+                                          <th scope="col" colspan="3"></th>
+                                          <th scope="col" colspan="2" style="text-align:center;">Premium</th>
+                                          <!--<th scope="col" id="second" *ngIf="yearlySection || nineMonthSection">Installment Amount</th>
+                                          <th scope="col" id="third" *ngIf="yearlySection || nineMonthSection || sixMonthSection">Installment Amount</th>
+                                          <th scope="col" id="fourth" *ngIf="yearlySection || nineMonthSection || sixMonthSection || threeMonthSection">Installment Amount</th>-->
+                                      </tr>
+                                      <tr class="firstclass">
+                                          <th scope="col">Cover Name</th>
+                                          <th scope="col">SumInsured</th>
+                                          <th scope="col">Rate%</th>
+                                          <th scope="col"  id="first" style="text-align:center">After Discount(TZS)</th>
+                                          <th scope="col"  id="second" style="text-align:center">Included Tax(TZS)</th>
+
+                                      </tr>
+
+
+                                  </thead>
+
+                                  <tbody>
+
+                                      <ng-container>
+
+                                          <tr class="firstclass">
+                                            <ng-container>
+                                              <td>{{cover?.CoverName}}</td>
+                                              <td>{{cover?.SumInsured}}</td>
+                                              <td>{{cover?.Rate}}</td>
+                                              <td  id="first" style="text-align:right;">{{cover?.PremiumAfterDiscount|commaseparator}}</td>
+                                              <td id="second" style="text-align:right;">{{cover?.PremiumIncludedTax|commaseparator}}</td>
+
+                                            </ng-container>
+                                            </tr>
+
+
+
+                                      </ng-container>
+
+
+
+                                  </tbody>
+
+                              </table>
+
+
+                          </div>
+                      </ng-container>
+
+                    </div>
+
+                      <div class="maan-grid-item-title" *ngIf="productId=='5'">
+                        <div class="d-flex justify-content-between">
+                          <div>
+                              <span class="mx-1">
+                                  <i class="fas fa-user mx-1"></i>
+
+                              </span> Vehicle Documents
+                          </div>
+                          <div>
+                              <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                              <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                          </div>
+                      </div>
+                      </div>
+
+                      <table class="table table-border-1ed" style="width:100%;">
+                        <thead>
+                            <tr>
+                                <th scope="col">S.No</th>
+                                <th scope="col">FileName</th>
+                                <th scope="col">Doument Type</th>
+                                <th scope="col">View</th>
+                                <th scope="col">Download</th>
+                            </tr>
+                        </thead>
+
+                      <tbody>
+                        <tr *ngFor="let document of motor.uploadedList; let i = index">
+                        <!--<td>{{menu.Vehicleid}}</td>-->
+                        <ng-container >
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{document.OrginalFileName}}</td>
+                            <td>{{document.DocDesc}}</td>
+                            <td>
+                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewListDocument(i,document)"><i class="fa fa-eye"></i></a>
+                            </td>
+
+                            <td>
+                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onListDocumentDownload(i,document)"><i
+                                    class="fa fa-download"></i></a>
+                            </td>
+                       </ng-container>
+                      </tr>
+                    </tbody>
+                    </table>
+
+
+
+
+
+                </div>
+
+              </div>
+             </div>
+
+                 <!-- for Domestic--><div *ngIf="productId=='3'">
+                  <div *ngFor="let motor of coverDetails;let i=index" class="mt-3">
+
+                    <div>
+                      <div class="maan-grid-item-title" id="first">
+                        <span> Buildind Details ({{i+1}})</span>
+                          </div>
+
+
+
+                          <div class="maan-grid-item-body" id="#first">
+                            <div>
+                              <div class="row">
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Insurance Type</b></label>
+                                        <br>
+                                        <span> {{motor.BuildingDetails?.InsuranceType}}</span>
+
+                                        <div>
+
+                                   </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>PolicyStartDate</b></label>
+                                        <br><span>{{motor.BuildingDetails?.PolicyStartDate}}</span>
+
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                  <div class="input-control-container">
+                                      <label class="input-form-label"><b>PolicyEndDate</b>
+                                        </label>
+                                        <br>
+                                        <span> {{motor.BuildingDetails?.PolicyEndDate}} </span>
+
+                                  </div>
+                              </div>
+
+                            </div>
+
+                        <div class="row">
+
+
+                            <div class="col-12 col-md-4 mt-2" >
+                                <div class="input-control-container">
+                                    <label class="input-form-label"><b>Currency</b>
+                                     </label>
+                                     <br>
+                                     <span>{{motor.BuildingDetails?.Currency}}</span>
+
+
+
+                                </div>
+                            </div>
+                            <!-- <div class="col-12 col-md-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Currency</label><span class="text-danger">*</span>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="currencyList" [(ngModel)]="currencyValue" (change)="onCurrencyChange()" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-2">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Exchange Rate</label><span class="text-danger">*</span>
+                                    <div class="input-form-box">
+                                        <input type="text" [(ngModel)]="exchangeRate" class="input-form-control without-icon">
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="col-12 col-md-4 col-lg-4 mt-2">
+                                <div class="input-control-container">
+                                    <label class="input-form-label"><b>BuildingSumInsured</b></label>
+                                    <br>
+                                    <span>{{motor.BuildingDetails?.BuildingSuminsured|commaseparator}}</span>
+
+
+                                    <!--<div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="claims_Yes" type="radio" name="claimsYN"  value="Y">
+                                            <label for="claims_Yes">Yes</label>
+                                            <input id="claims_No" type="radio" name="claimsYN"  value="N">
+                                            <label for="claims_No">No</label>
+                                        </div>
+                                    </div>-->
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4 mt-2">
+                              <div class="input-control-container">
+                                  <label class="input-form-label"><b>Personal Intermedity Sum Insured</b> &nbsp;
+                                  </label>
+                                  <br>
+                                  <span>{{motor.BuildingDetails?.PersonalIntermediarySuminsured
+                                    |commaseparator}}</span>
+
+                                  <!--<div class="input-form-box">
+                                      <input type="text"  class="input-form-control without-icon">
+                                  </div>-->
+                              </div>
+                          </div>
+
+                            <!-- <div class="col-12 col-md-4" *ngIf="typeValue=='13'">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">City Limit</label> &nbsp;<span class="text-danger">*</span>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="cityList" [(ngModel)]="cityValue" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div> -->
+                        </div>
+
+                        <div class="row">
+
+
+                            <div class="col-12 col-md-4 mt-2">
+                                <div class="input-control-container">
+                                    <label class="input-form-label"><b>Content Sum Insured</b></label>
+                                    <br>
+                                    <span>{{motor.BuildingDetails?.ContentSuminsured|commaseparator}}</span>
+
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 mt-2">
+                                <div class="input-control-container">
+                                    <label class="input-form-label"><b>All Risk Sum Insured</b></label>
+                                    <br>
+                                          <span> {{motor.BuildingDetails?.AllriskSumInsured|commaseparator}}</span>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                      </div>
+                        </div>
+
+                        <div>
+                          <ng-container *ngFor="let cover of motor.Covers;let i=index">
+                            <div class="maan-grid-item-title"id="second">
+                              <span> Cover Details </span>
+                                </div>
+                                <div class="col-md-12 col-lg-12" style="padding:1rem;" id=#second>
+                                  <table class="firstclass" style="width:100%;">
+                                      <thead>
+                                          <!-- <tr>
+                                            style="border-radius:20px;border:1px solid gray;box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 0px;margin:auto;"
+                                      <th colspan="4" class="text-center" id="first">3Months</th>
+                                      <th colspan="4" class="text-center" id="6">6Months</th>
+                                      <th colspan="4" class="text-center" id="9">9Months</th>
+                                    </tr> -->
+
+                                          <tr class="firstclass">
+
+                                              <th scope="col" colspan="3"></th>
+                                              <th scope="col" colspan="2" style="text-align:center;">Premium</th>
+                                              <!--<th scope="col" id="second" *ngIf="yearlySection || nineMonthSection">Installment Amount</th>
+                                              <th scope="col" id="third" *ngIf="yearlySection || nineMonthSection || sixMonthSection">Installment Amount</th>
+                                              <th scope="col" id="fourth" *ngIf="yearlySection || nineMonthSection || sixMonthSection || threeMonthSection">Installment Amount</th>-->
+                                          </tr>
+                                          <tr class="firstclass">
+                                              <th scope="col">Cover Name</th>
+                                              <th scope="col">SumInsured</th>
+                                              <th scope="col">Rate%</th>
+                                              <th scope="col"  id="first" style="text-align:center">After Discount(TZS)</th>
+                                              <th scope="col"  id="second" style="text-align:center">Included Tax(TZS)</th>
+
+                                          </tr>
+
+
+                                      </thead>
+
+                                      <tbody>
+
+                                          <ng-container>
+
+                                              <tr class="firstclass">
+                                                <ng-container>
+                                                  <td>{{cover?.CoverName}}</td>
+                                                  <td>{{cover?.SumInsured}}</td>
+                                                  <td>{{cover?.Rate}}</td>
+                                                  <td  id="first" style="text-align:right;">{{cover?.PremiumAfterDiscount|commaseparator}}</td>
+                                                  <td id="second" style="text-align:right;">{{cover?.PremiumIncludedTax|commaseparator}}</td>
+
+                                                </ng-container>
+                                                </tr>
+
+
+
+                                          </ng-container>
+
+
+
+                                      </tbody>
+
+                                  </table>
+
+
+                              </div>
+                          </ng-container>
+
+                        </div>
+
+
+
+                       <!--vechile Documents--> <div>
+                        <ng-container>
+
+                          <div class="maan-grid-item-title" *ngIf="productId=='5'">
+                            <div class="d-flex justify-content-between">
+                              <div>
+                                  <span class="mx-1">
+                                      <i class="fas fa-user mx-1"></i>
+
+                                  </span>Building Documents
+                              </div>
+                              <div>
+                                  <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                                  <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                              </div>
+                          </div>
+                          </div>
+
+                          <table class="table table-border-1ed" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th scope="col">S.No</th>
+                                    <th scope="col">FileName</th>
+                                    <th scope="col">Doument Type</th>
+                                    <th scope="col">View</th>
+                                    <th scope="col">Download</th>
+                                </tr>
+                            </thead>
+
+                          <tbody>
+                            <tr *ngFor="let document of motor.uploadedList; let i = index">
+                            <!--<td>{{menu.Vehicleid}}</td>-->
+                            <ng-container >
+                                <th scope="row">{{i+1}}</th>
+                                <td>{{document.OrginalFileName}}</td>
+                                <td>{{document.DocDesc}}</td>
+                                <td>
+                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewListDocument(i,document)"><i class="fa fa-eye"></i></a>
+                                </td>
+
+                                <td>
+                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onListDocumentDownload(i,document)"><i
+                                        class="fa fa-download"></i></a>
+                                </td>
+                           </ng-container>
+                          </tr>
+                        </tbody>
+                        </table>
+                         </ng-container>
+                        </div>
+
+
+                    </div>
+
+                  </div>
+                 </div>
+                     <!-- for Travel--><div *ngIf="productId=='4'">
+                      <div *ngFor="let motor of coverDetails;let i=index" class="mt-3">
+
+                        <div>
+                          <div class="maan-grid-item-title" id="first">
+                            <span> Travel Details ({{i+1}})</span>
+                              </div>
+
+
+
+                              <div class="maan-grid-item-body" id="#first">
+                                <div>
+                                  <div class="row">
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Travel StartDate</b></label>
+                                            <br>
+                                            <span> {{motor.TravelPassengerDetails?.TravelStartDate}}</span>
+
+                                            <div>
+
+                                       </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Travel EndDate</b></label>
+                                            <br><span>{{motor.TravelPassengerDetails?.TravelEnddDate}}</span>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                      <div class="input-control-container">
+                                          <label class="input-form-label"><b>Number of days</b>
+                                            </label>
+                                            <br>
+                                            <span> {{motor.TravelPassengerDetails?.TravelCoverDuration }} </span>
+
+                                      </div>
+                                  </div>
+
+                                </div>
+
+                            <div class="row">
+
+
+                                <div class="col-12 col-md-4 mt-2" >
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Currency</b>
+                                         </label>
+                                         <br>
+                                         <span>{{motor.TravelPassengerDetails?.Currency}}</span>
+
+
+
+                                    </div>
+                                </div>
+                                <!-- <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Currency</label><span class="text-danger">*</span>
+                                        <ng-select class="input-form-select" appendTo="body" [items]="currencyList" [(ngModel)]="currencyValue" (change)="onCurrencyChange()" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-2">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Exchange Rate</label><span class="text-danger">*</span>
+                                        <div class="input-form-box">
+                                            <input type="text" [(ngModel)]="exchangeRate" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="col-12 col-md-4 col-lg-4 mt-2">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Type Of Plan</b></label>
+                                        <br>
+                                        <span>{{motor.TravelPassengerDetails?.PlanTypeDesc}}</span>
+
+
+                                        <!--<div class="input-form-radio-box">
+                                            <div class="radio-toolbar">
+                                                <input id="claims_Yes" type="radio" name="claimsYN"  value="Y">
+                                                <label for="claims_Yes">Yes</label>
+                                                <input id="claims_No" type="radio" name="claimsYN"  value="N">
+                                                <label for="claims_No">No</label>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-4 mt-2">
+                                  <div class="input-control-container">
+                                      <label class="input-form-label"><b>Destination Country</b> &nbsp;
+                                      </label>
+                                      <br>
+                                      <span>{{motor.TravelPassengerDetails?.DestinationCountryDesc}}</span>
+
+                                      <!--<div class="input-form-box">
+                                          <input type="text"  class="input-form-control without-icon">
+                                      </div>-->
+                                  </div>
+                              </div>
+
+                                <!-- <div class="col-12 col-md-4" *ngIf="typeValue=='13'">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">City Limit</label> &nbsp;<span class="text-danger">*</span>
+                                        <ng-select class="input-form-select" appendTo="body" [items]="cityList" [(ngModel)]="cityValue" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
+                                </div> -->
+                            </div>
+
+                            <div class="row">
+
+
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label"><b>Premium Plan</b></label>
+                                        <br>
+                                        <span>{{motor.TravelPassengerDetails?.TravelCoverDesc}}</span>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                          </div>
+                            </div>
+
+                            <div>
+                              <ng-container *ngFor="let cover of motor.Covers;let i=index">
+                                <div class="maan-grid-item-title"id="second">
+                                  <span> Cover Details </span>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12" style="padding:1rem;" id=#second>
+                                      <table class="firstclass" style="width:100%;">
+                                          <thead>
+                                              <!-- <tr>
+                                                style="border-radius:20px;border:1px solid gray;box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 0px;margin:auto;"
+                                          <th colspan="4" class="text-center" id="first">3Months</th>
+                                          <th colspan="4" class="text-center" id="6">6Months</th>
+                                          <th colspan="4" class="text-center" id="9">9Months</th>
+                                        </tr> -->
+
+                                              <tr class="firstclass">
+
+                                                  <th scope="col" colspan="3"></th>
+                                                  <th scope="col" colspan="2" style="text-align:center;">Premium</th>
+                                                  <!--<th scope="col" id="second" *ngIf="yearlySection || nineMonthSection">Installment Amount</th>
+                                                  <th scope="col" id="third" *ngIf="yearlySection || nineMonthSection || sixMonthSection">Installment Amount</th>
+                                                  <th scope="col" id="fourth" *ngIf="yearlySection || nineMonthSection || sixMonthSection || threeMonthSection">Installment Amount</th>-->
+                                              </tr>
+                                              <tr class="firstclass">
+                                                  <th scope="col">Cover Name</th>
+                                                  <th scope="col">SumInsured</th>
+                                                  <th scope="col">Rate%</th>
+                                                  <th scope="col"  id="first" style="text-align:center">After Discount(TZS)</th>
+                                                  <th scope="col"  id="second" style="text-align:center">Included Tax(TZS)</th>
+
+                                              </tr>
+
+
+                                          </thead>
+
+                                          <tbody>
+
+                                              <ng-container>
+
+                                                  <tr class="firstclass">
+                                                    <ng-container>
+                                                      <td>{{cover?.CoverName}}</td>
+                                                      <td>{{cover?.SumInsured}}</td>
+                                                      <td>{{cover?.Rate}}</td>
+                                                      <td  id="first" style="text-align:right;">{{cover?.PremiumAfterDiscount|commaseparator}}</td>
+                                                      <td id="second" style="text-align:right;">{{cover?.PremiumIncludedTax|commaseparator}}</td>
+
+                                                    </ng-container>
+                                                    </tr>
+
+
+
+                                              </ng-container>
+
+
+
+                                          </tbody>
+
+                                      </table>
+
+
+                                  </div>
+                              </ng-container>
+
+                            </div>
+
+
+
+                              <div>
+                                <ng-container>
+
+                                  <div class="maan-grid-item-title">
+                                    <div class="d-flex justify-content-between">
+                                      <div>
+                                          <span class="mx-1">
+                                              <i class="fas fa-user mx-1"></i>
+
+                                          </span> Travel Documents
+                                      </div>
+                                      <div>
+                                          <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                                          <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                                      </div>
+                                  </div>
+                                  </div>
+
+                                  <table class="table table-border-1ed" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">S.No</th>
+                                            <th scope="col">FileName</th>
+                                            <th scope="col">Doument Type</th>
+                                            <th scope="col">View</th>
+                                            <th scope="col">Download</th>
+                                        </tr>
+                                    </thead>
+
+                                  <tbody>
+                                    <tr *ngFor="let document of motor.uploadedList; let i = index">
+                                    <!--<td>{{menu.Vehicleid}}</td>-->
+                                    <ng-container >
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{document.OrginalFileName}}</td>
+                                        <td>{{document.DocDesc}}</td>
+                                        <td>
+                                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewListDocument(i,document)"><i class="fa fa-eye"></i></a>
+                                        </td>
+
+                                        <td>
+                                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onListDocumentDownload(i,document)"><i
+                                                class="fa fa-download"></i></a>
+                                        </td>
+                                   </ng-container>
+                                  </tr>
+                                </tbody>
+                                </table>
+                                 </ng-container>
+                              </div>
+
+
+
+
+
+
+                        </div>
+
+                      </div>
+                     </div>
+
+                     <!--for Employeers Liability-->
+                     <div *ngIf="productId=='14'">
+                          <div *ngFor="let motor of coverDetails;let i=index" class="mt-3">
+
+                            <div>
+                              <div class="maan-grid-item-title" id="first">
+                                <span> Common Details ({{i+1}})</span>
+                                  </div>
+
+
+
+                                  <div class="maan-grid-item-body" id="#first">
+                                    <div>
+                                      <div class="row">
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Insurance Name</b></label>
+                                                <br>
+                                                <span> {{motor.CommonDetails?.CustomerName}}</span>
+
+                                                <div>
+
+                                           </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Date of Birth</b></label>
+                                                <br><span>{{motor.CommonDetails?.Dob}}</span>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                          <div class="input-control-container">
+                                              <label class="input-form-label"><b>Occupation</b>
+                                                </label>
+                                                <br>
+                                                <span> {{motor.CommonDetails?.OccupationTypeDesc }} </span>
+
+                                          </div>
+                                      </div>
+
+                                    </div>
+
+                                <div class="row">
+
+
+                                    <div class="col-12 col-md-4 mt-2" >
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>SalaryPerAnnum
+                                            </b>
+                                             </label>
+                                             <br>
+                                             <span>{{motor.CommonDetails?.SalaryPerAnnum}}</span>
+
+
+
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Currency</label><span class="text-danger">*</span>
+                                            <ng-select class="input-form-select" appendTo="body" [items]="currencyList" [(ngModel)]="currencyValue" (change)="onCurrencyChange()" bindValue="Code" bindLabel="CodeDesc">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-2">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Exchange Rate</label><span class="text-danger">*</span>
+                                            <div class="input-form-box">
+                                                <input type="text" [(ngModel)]="exchangeRate" class="input-form-control without-icon">
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-12 col-md-4 col-lg-4 mt-2">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Job Joined Year</b></label>
+                                            <br>
+                                            <span>{{motor.CommonDetails?.JobJoiningMonth
+                                            }}</span>
+
+
+                                            <!--<div class="input-form-radio-box">
+                                                <div class="radio-toolbar">
+                                                    <input id="claims_Yes" type="radio" name="claimsYN"  value="Y">
+                                                    <label for="claims_Yes">Yes</label>
+                                                    <input id="claims_No" type="radio" name="claimsYN"  value="N">
+                                                    <label for="claims_No">No</label>
+                                                </div>
+                                            </div>-->
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-4 mt-2">
+                                      <div class="input-control-container">
+                                          <label class="input-form-label"><b>Sum Insured</b> &nbsp;
+                                          </label>
+                                          <br>
+                                          <span>{{motor.CommonDetails?.SumInsured}}</span>
+
+                                          <!--<div class="input-form-box">
+                                              <input type="text"  class="input-form-control without-icon">
+                                          </div>-->
+                                      </div>
+                                  </div>
+
+                                    <!-- <div class="col-12 col-md-4" *ngIf="typeValue=='13'">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">City Limit</label> &nbsp;<span class="text-danger">*</span>
+                                            <ng-select class="input-form-select" appendTo="body" [items]="cityList" [(ngModel)]="cityValue" bindValue="Code" bindLabel="CodeDesc">
+                                            </ng-select>
+                                        </div>
+                                    </div> -->
+                                </div>
+
+
+
+                              </div>
+                                </div>
+
+                                <div>
+                                  <ng-container *ngFor="let cover of motor.Covers;let i=index">
+                                    <div class="maan-grid-item-title"id="second">
+                                      <span> Cover Details </span>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12" style="padding:1rem;" id=#second>
+                                          <table class="firstclass" style="width:100%;">
+                                              <thead>
+                                                  <!-- <tr>
+                                                    style="border-radius:20px;border:1px solid gray;box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 0px;margin:auto;"
+                                              <th colspan="4" class="text-center" id="first">3Months</th>
+                                              <th colspan="4" class="text-center" id="6">6Months</th>
+                                              <th colspan="4" class="text-center" id="9">9Months</th>
+                                            </tr> -->
+
+                                                  <tr class="firstclass">
+
+                                                      <th scope="col" colspan="3"></th>
+                                                      <th scope="col" colspan="2" style="text-align:center;">Premium</th>
+                                                      <!--<th scope="col" id="second" *ngIf="yearlySection || nineMonthSection">Installment Amount</th>
+                                                      <th scope="col" id="third" *ngIf="yearlySection || nineMonthSection || sixMonthSection">Installment Amount</th>
+                                                      <th scope="col" id="fourth" *ngIf="yearlySection || nineMonthSection || sixMonthSection || threeMonthSection">Installment Amount</th>-->
+                                                  </tr>
+                                                  <tr class="firstclass">
+                                                      <th scope="col">Cover Name</th>
+                                                      <th scope="col">SumInsured</th>
+                                                      <th scope="col">Rate%</th>
+                                                      <th scope="col"  id="first" style="text-align:center">After Discount(TZS)</th>
+                                                      <th scope="col"  id="second" style="text-align:center">Included Tax(TZS)</th>
+
+                                                  </tr>
+
+
+                                              </thead>
+
+                                              <tbody>
+
+                                                  <ng-container>
+
+                                                      <tr class="firstclass">
+                                                        <ng-container>
+                                                          <td>{{cover?.CoverName}}</td>
+                                                          <td>{{cover?.SumInsured}}</td>
+                                                          <td>{{cover?.Rate}}</td>
+                                                          <td  id="first" style="text-align:right;">{{cover?.PremiumAfterDiscount|commaseparator}}</td>
+                                                          <td id="second" style="text-align:right;">{{cover?.PremiumIncludedTax|commaseparator}}</td>
+
+                                                        </ng-container>
+                                                        </tr>
+
+
+
+                                                  </ng-container>
+
+
+
+                                              </tbody>
+
+                                          </table>
+
+
+                                      </div>
+                                  </ng-container>
+
+                                </div>
+
+
+
+                                  <div>
+                                    <ng-container>
+
+                                      <div class="maan-grid-item-title">
+                                        <div class="d-flex justify-content-between">
+                                          <div>
+                                              <span class="mx-1">
+                                                  <i class="fas fa-user mx-1"></i>
+
+                                              </span> Employeers Documents
+                                          </div>
+                                          <div>
+                                              <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                                              <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                                          </div>
+                                      </div>
+                                      </div>
+
+                                      <table class="table table-border-1ed" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">S.No</th>
+                                                <th scope="col">FileName</th>
+                                                <th scope="col">Doument Type</th>
+                                                <th scope="col">View</th>
+                                                <th scope="col">Download</th>
+                                            </tr>
+                                        </thead>
+
+                                      <tbody>
+                                        <tr *ngFor="let document of motor.uploadedList; let i = index">
+                                        <!--<td>{{menu.Vehicleid}}</td>-->
+                                        <ng-container >
+                                            <th scope="row">{{i+1}}</th>
+                                            <td>{{document.OrginalFileName}}</td>
+                                            <td>{{document.DocDesc}}</td>
+                                            <td>
+                                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewListDocument(i,document)"><i class="fa fa-eye"></i></a>
+                                            </td>
+
+                                            <td>
+                                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onListDocumentDownload(i,document)"><i
+                                                    class="fa fa-download"></i></a>
+                                            </td>
+                                       </ng-container>
+                                      </tr>
+                                    </tbody>
+                                    </table>
+                                     </ng-container>
+                                  </div>
+
+
+
+
+
+
+                            </div>
+
+                          </div>
+                         </div>
+
+
+                          <!-- for Personal Accident-->   <div *ngIf="productId=='13'">
+                          <div *ngFor="let motor of coverDetails;let i=index" class="mt-3">
+
+                            <div>
+                              <div class="maan-grid-item-title" id="first">
+                                <span> Common Details ({{i+1}})</span>
+                                  </div>
+
+
+
+                                  <div class="maan-grid-item-body" id="#first">
+                                    <div>
+                                      <div class="row">
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Insurance Name</b></label>
+                                                <br>
+                                                <span> {{motor.CommonDetails?.CustomerName}}</span>
+
+                                                <div>
+
+                                           </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Date of Birth</b></label>
+                                                <br><span>{{motor.CommonDetails?.Dob}}</span>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                          <div class="input-control-container">
+                                              <label class="input-form-label"><b>Occupation</b>
+                                                </label>
+                                                <br>
+                                                <span> {{motor.CommonDetails?.OccupationTypeDesc }} </span>
+
+                                          </div>
+                                      </div>
+
+                                    </div>
+
+                                <div class="row">
+
+
+                                    <div class="col-12 col-md-4 mt-2" >
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>SalaryPerAnnum
+                                            </b>
+                                             </label>
+                                             <br>
+                                             <span>{{motor.CommonDetails?.SalaryPerAnnum}}</span>
+
+
+
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-12 col-md-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Currency</label><span class="text-danger">*</span>
+                                            <ng-select class="input-form-select" appendTo="body" [items]="currencyList" [(ngModel)]="currencyValue" (change)="onCurrencyChange()" bindValue="Code" bindLabel="CodeDesc">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-2">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Exchange Rate</label><span class="text-danger">*</span>
+                                            <div class="input-form-box">
+                                                <input type="text" [(ngModel)]="exchangeRate" class="input-form-control without-icon">
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-12 col-md-4 col-lg-4 mt-2">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Job Joined Year</b></label>
+                                            <br>
+                                            <span>{{motor.CommonDetails?.JobJoiningMonth
+                                            }}</span>
+
+
+                                            <!--<div class="input-form-radio-box">
+                                                <div class="radio-toolbar">
+                                                    <input id="claims_Yes" type="radio" name="claimsYN"  value="Y">
+                                                    <label for="claims_Yes">Yes</label>
+                                                    <input id="claims_No" type="radio" name="claimsYN"  value="N">
+                                                    <label for="claims_No">No</label>
+                                                </div>
+                                            </div>-->
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-4 mt-2">
+                                      <div class="input-control-container">
+                                          <label class="input-form-label"><b>Sum Insured</b> &nbsp;
+                                          </label>
+                                          <br>
+                                          <span>{{motor.CommonDetails?.SumInsured}}</span>
+
+                                          <!--<div class="input-form-box">
+                                              <input type="text"  class="input-form-control without-icon">
+                                          </div>-->
+                                      </div>
+                                  </div>
+
+                                    <!-- <div class="col-12 col-md-4" *ngIf="typeValue=='13'">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">City Limit</label> &nbsp;<span class="text-danger">*</span>
+                                            <ng-select class="input-form-select" appendTo="body" [items]="cityList" [(ngModel)]="cityValue" bindValue="Code" bindLabel="CodeDesc">
+                                            </ng-select>
+                                        </div>
+                                    </div> -->
+                                </div>
+
+
+
+                              </div>
+                                </div>
+
+                                <div>
+                                  <ng-container *ngFor="let cover of motor.Covers;let i=index">
+                                    <div class="maan-grid-item-title"id="second">
+                                      <span> Cover Details </span>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12" style="padding:1rem;" id=#second>
+                                          <table class="firstclass" style="width:100%;">
+                                              <thead>
+                                                  <!-- <tr>
+                                                    style="border-radius:20px;border:1px solid gray;box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 0px;margin:auto;"
+                                              <th colspan="4" class="text-center" id="first">3Months</th>
+                                              <th colspan="4" class="text-center" id="6">6Months</th>
+                                              <th colspan="4" class="text-center" id="9">9Months</th>
+                                            </tr> -->
+
+                                                  <tr class="firstclass">
+
+                                                      <th scope="col" colspan="3"></th>
+                                                      <th scope="col" colspan="2" style="text-align:center;">Premium</th>
+                                                      <!--<th scope="col" id="second" *ngIf="yearlySection || nineMonthSection">Installment Amount</th>
+                                                      <th scope="col" id="third" *ngIf="yearlySection || nineMonthSection || sixMonthSection">Installment Amount</th>
+                                                      <th scope="col" id="fourth" *ngIf="yearlySection || nineMonthSection || sixMonthSection || threeMonthSection">Installment Amount</th>-->
+                                                  </tr>
+                                                  <tr class="firstclass">
+                                                      <th scope="col">Cover Name</th>
+                                                      <th scope="col">SumInsured</th>
+                                                      <th scope="col">Rate%</th>
+                                                      <th scope="col"  id="first" style="text-align:center">After Discount(TZS)</th>
+                                                      <th scope="col"  id="second" style="text-align:center">Included Tax(TZS)</th>
+
+                                                  </tr>
+
+
+                                              </thead>
+
+                                              <tbody>
+
+                                                  <ng-container>
+
+                                                      <tr class="firstclass">
+                                                        <ng-container>
+                                                          <td>{{cover?.CoverName}}</td>
+                                                          <td>{{cover?.SumInsured}}</td>
+                                                          <td>{{cover?.Rate}}</td>
+                                                          <td  id="first" style="text-align:right;">{{cover?.PremiumAfterDiscount|commaseparator}}</td>
+                                                          <td id="second" style="text-align:right;">{{cover?.PremiumIncludedTax|commaseparator}}</td>
+
+                                                        </ng-container>
+                                                        </tr>
+
+
+
+                                                  </ng-container>
+
+
+
+                                              </tbody>
+
+                                          </table>
+
+
+                                      </div>
+                                  </ng-container>
+
+                                </div>
+
+
+
+                                  <div>
+                                    <ng-container>
+
+                                      <div class="maan-grid-item-title">
+                                        <div class="d-flex justify-content-between">
+                                          <div>
+                                              <span class="mx-1">
+                                                  <i class="fas fa-user mx-1"></i>
+
+                                              </span> Personal Accident Documents
+                                          </div>
+                                          <div>
+                                              <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                                              <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                                          </div>
+                                      </div>
+                                      </div>
+
+                                      <table class="table table-border-1ed" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">S.No</th>
+                                                <th scope="col">FileName</th>
+                                                <th scope="col">Doument Type</th>
+                                                <th scope="col">View</th>
+                                                <th scope="col">Download</th>
+                                            </tr>
+                                        </thead>
+
+                                      <tbody>
+                                        <tr *ngFor="let document of motor.uploadedList; let i = index">
+                                        <!--<td>{{menu.Vehicleid}}</td>-->
+                                        <ng-container >
+                                            <th scope="row">{{i+1}}</th>
+                                            <td>{{document.OrginalFileName}}</td>
+                                            <td>{{document.DocDesc}}</td>
+                                            <td>
+                                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewListDocument(i,document)"><i class="fa fa-eye"></i></a>
+                                            </td>
+
+                                            <td>
+                                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onListDocumentDownload(i,document)"><i
+                                                    class="fa fa-download"></i></a>
+                                            </td>
+                                       </ng-container>
+                                      </tr>
+                                    </tbody>
+                                    </table>
+                                     </ng-container>
+                                  </div>
+
+
+
+
+
+
+                            </div>
+
+                          </div>
+                         </div>
+
+                          <!-- for WorkMans-->   <div *ngIf="productId=='15'">
+                            <div *ngFor="let motor of coverDetails;let i=index" class="mt-3">
+
+                              <div>
+                                <div class="maan-grid-item-title" id="first">
+                                  <span> Common Details ({{i+1}})</span>
+                                    </div>
+
+
+
+                                    <div class="maan-grid-item-body" id="#first">
+                                      <div>
+                                        <div class="row">
+                                          <div class="col-12 col-md-4">
+                                              <div class="input-control-container">
+                                                  <label class="input-form-label"><b>Insurance Name</b></label>
+                                                  <br>
+                                                  <span> {{motor.CommonDetails?.CustomerName}}</span>
+
+                                                  <div>
+
+                                             </div>
+
+                                              </div>
+                                          </div>
+                                          <div class="col-12 col-md-4">
+                                              <div class="input-control-container">
+                                                  <label class="input-form-label"><b>Date of Birth</b></label>
+                                                  <br><span>{{motor.CommonDetails?.Dob}}</span>
+
+                                              </div>
+                                          </div>
+                                          <div class="col-12 col-md-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label"><b>Occupation</b>
+                                                  </label>
+                                                  <br>
+                                                  <span> {{motor.CommonDetails?.OccupationTypeDesc }} </span>
+
+                                            </div>
+                                        </div>
+
+                                      </div>
+
+                                  <div class="row">
+
+
+                                      <div class="col-12 col-md-4 mt-2" >
+                                          <div class="input-control-container">
+                                              <label class="input-form-label"><b>SalaryPerAnnum
+                                              </b>
+                                               </label>
+                                               <br>
+                                               <span>{{motor.CommonDetails?.SalaryPerAnnum}}</span>
+
+
+
+                                          </div>
+                                      </div>
+                                      <!-- <div class="col-12 col-md-4">
+                                          <div class="input-control-container">
+                                              <label class="input-form-label">Currency</label><span class="text-danger">*</span>
+                                              <ng-select class="input-form-select" appendTo="body" [items]="currencyList" [(ngModel)]="currencyValue" (change)="onCurrencyChange()" bindValue="Code" bindLabel="CodeDesc">
+                                              </ng-select>
+                                          </div>
+                                      </div>
+                                      <div class="col-12 col-md-2">
+                                          <div class="input-control-container">
+                                              <label class="input-form-label">Exchange Rate</label><span class="text-danger">*</span>
+                                              <div class="input-form-box">
+                                                  <input type="text" [(ngModel)]="exchangeRate" class="input-form-control without-icon">
+                                              </div>
+                                          </div>
+                                      </div> -->
+                                      <div class="col-12 col-md-4 col-lg-4 mt-2">
+                                          <div class="input-control-container">
+                                              <label class="input-form-label"><b>Job Joined Year</b></label>
+                                              <br>
+                                              <span>{{motor.CommonDetails?.JobJoiningMonth
+                                              }}</span>
+
+
+                                              <!--<div class="input-form-radio-box">
+                                                  <div class="radio-toolbar">
+                                                      <input id="claims_Yes" type="radio" name="claimsYN"  value="Y">
+                                                      <label for="claims_Yes">Yes</label>
+                                                      <input id="claims_No" type="radio" name="claimsYN"  value="N">
+                                                      <label for="claims_No">No</label>
+                                                  </div>
+                                              </div>-->
+                                          </div>
+                                      </div>
+
+                                      <div class="col-12 col-md-4 mt-2">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Sum Insured</b> &nbsp;
+                                            </label>
+                                            <br>
+                                            <span>{{motor.CommonDetails?.SumInsured}}</span>
+
+                                            <!--<div class="input-form-box">
+                                                <input type="text"  class="input-form-control without-icon">
+                                            </div>-->
+                                        </div>
+                                    </div>
+
+                                      <!-- <div class="col-12 col-md-4" *ngIf="typeValue=='13'">
+                                          <div class="input-control-container">
+                                              <label class="input-form-label">City Limit</label> &nbsp;<span class="text-danger">*</span>
+                                              <ng-select class="input-form-select" appendTo="body" [items]="cityList" [(ngModel)]="cityValue" bindValue="Code" bindLabel="CodeDesc">
+                                              </ng-select>
+                                          </div>
+                                      </div> -->
+                                  </div>
+
+
+
+                                </div>
+                                  </div>
+
+                                  <div>
+                                    <ng-container *ngFor="let cover of motor.Covers;let i=index">
+                                      <div class="maan-grid-item-title"id="second">
+                                        <span> Cover Details </span>
+                                          </div>
+                                          <div class="col-md-12 col-lg-12" style="padding:1rem;" id=#second>
+                                            <table class="firstclass" style="width:100%;">
+                                                <thead>
+                                                    <!-- <tr>
+                                                      style="border-radius:20px;border:1px solid gray;box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 0px;margin:auto;"
+                                                <th colspan="4" class="text-center" id="first">3Months</th>
+                                                <th colspan="4" class="text-center" id="6">6Months</th>
+                                                <th colspan="4" class="text-center" id="9">9Months</th>
+                                              </tr> -->
+
+                                                    <tr class="firstclass">
+
+                                                        <th scope="col" colspan="3"></th>
+                                                        <th scope="col" colspan="2" style="text-align:center;">Premium</th>
+                                                        <!--<th scope="col" id="second" *ngIf="yearlySection || nineMonthSection">Installment Amount</th>
+                                                        <th scope="col" id="third" *ngIf="yearlySection || nineMonthSection || sixMonthSection">Installment Amount</th>
+                                                        <th scope="col" id="fourth" *ngIf="yearlySection || nineMonthSection || sixMonthSection || threeMonthSection">Installment Amount</th>-->
+                                                    </tr>
+                                                    <tr class="firstclass">
+                                                        <th scope="col">Cover Name</th>
+                                                        <th scope="col">SumInsured</th>
+                                                        <th scope="col">Rate%</th>
+                                                        <th scope="col"  id="first" style="text-align:center">After Discount(TZS)</th>
+                                                        <th scope="col"  id="second" style="text-align:center">Included Tax(TZS)</th>
+
+                                                    </tr>
+
+
+                                                </thead>
+
+                                                <tbody>
+
+                                                    <ng-container>
+
+                                                        <tr class="firstclass">
+                                                          <ng-container>
+                                                            <td>{{cover?.CoverName}}</td>
+                                                            <td>{{cover?.SumInsured}}</td>
+                                                            <td>{{cover?.Rate}}</td>
+                                                            <td  id="first" style="text-align:right;">{{cover?.PremiumAfterDiscount|commaseparator}}</td>
+                                                            <td id="second" style="text-align:right;">{{cover?.PremiumIncludedTax|commaseparator}}</td>
+
+                                                          </ng-container>
+                                                          </tr>
+
+
+
+                                                    </ng-container>
+
+
+
+                                                </tbody>
+
+                                            </table>
+
+
+                                        </div>
+                                    </ng-container>
+
+                                  </div>
+
+
+
+                                    <div>
+                                      <ng-container>
+
+                                        <div class="maan-grid-item-title">
+                                          <div class="d-flex justify-content-between">
+                                            <div>
+                                                <span class="mx-1">
+                                                    <i class="fas fa-user mx-1"></i>
+
+                                                </span> WorkMans Compensation Documents
+                                            </div>
+                                            <div>
+                                                <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                                                <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                                            </div>
+                                        </div>
+                                        </div>
+
+                                        <table class="table table-border-1ed" style="width:100%;">
+                                          <thead>
+                                              <tr>
+                                                  <th scope="col">S.No</th>
+                                                  <th scope="col">FileName</th>
+                                                  <th scope="col">Doument Type</th>
+                                                  <th scope="col">View</th>
+                                                  <th scope="col">Download</th>
+                                              </tr>
+                                          </thead>
+
+                                        <tbody>
+                                          <tr *ngFor="let document of motor.uploadedList; let i = index">
+                                          <!--<td>{{menu.Vehicleid}}</td>-->
+                                          <ng-container >
+                                              <th scope="row">{{i+1}}</th>
+                                              <td>{{document.OrginalFileName}}</td>
+                                              <td>{{document.DocDesc}}</td>
+                                              <td>
+                                                  <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewListDocument(i,document)"><i class="fa fa-eye"></i></a>
+                                              </td>
+
+                                              <td>
+                                                  <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onListDocumentDownload(i,document)"><i
+                                                      class="fa fa-download"></i></a>
+                                              </td>
+                                         </ng-container>
+                                        </tr>
+                                      </tbody>
+                                      </table>
+                                       </ng-container>
+                                    </div>
+
+
+
+
+
+
+                              </div>
+
+                            </div>
+                           </div>
+
+
+          <div>
+            <div class="maan-grid-item-title">
+              <div class="d-flex justify-content-between">
+                <div>
+                    <span class="mx-1">
+                        <i class="fas fa-user mx-1"></i>
+
+                    </span> Common Documents
+                </div>
+                <div>
+                    <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                    <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+                </div>
+            </div>
+            </div>
+
+            <table class="table table-border-1ed" style="width:100%;">
+              <thead>
+                  <tr>
+                      <th scope="col">S.No</th>
+                      <th scope="col">FileName</th>
+                      <th scope="col">Doument Type</th>
+                      <th scope="col">View</th>
+
+                      <th scope="col">Download</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let document of uploadedDocList;let i=index">
+                      <th scope="row">{{i+1}}</th>
+                      <td>{{document.OrginalFileName}}</td>
+                      <td>{{document.DocDesc}}
+
+                      </td>
+                      <td>
+                          <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewCommonDocument(i)"><i class="fa fa-eye"></i></a>
+                      </td>
+
+                      <td>
+                          <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onCommonDocumentDownload(i)"><i
+                              class="fa fa-download"></i></a>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+           </div>
+
+
+           <div class="maan-grid-item-title" *ngIf="productId=='5' && from">
+            <div class="d-flex justify-content-between">
+              <div>
+                  <span class="mx-1">
+                      <i class="fas fa-user mx-1"></i>
+
+                  </span> PolicyDetails
+              </div>
+              <div>
+                  <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                  <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+              </div>
+          </div>
+          </div>
+          <div class="maan-grid-item-title" *ngIf="productId=='5' && from">
+            <div class="d-flex justify-content-between">
+              <div>
+                  <span class="mx-1">
+                      <i class="fas fa-user mx-1"></i>
+
+                  </span> Emi Details
+              </div>
+              <div>
+                  <!--<button class="custom-btn btn-6" (click)="onchange()"><i class="fas fa-user mx-1"></i>Change Customer</button>
+                  <button class="maan-btn maan-btn-red" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>-->
+              </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary" style="margin:auto;" (click)="viewdetail()"> Back</button>
+  </div>
+
+</div>
+

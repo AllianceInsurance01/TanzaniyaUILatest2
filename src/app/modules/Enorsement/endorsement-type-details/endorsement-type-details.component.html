@@ -1,0 +1,198 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div class="spancommon span_font_size">
+                Endorsement Type
+            </div>
+            <div class="spancommon span_font_size" >
+                    <span *ngIf="policyNo">Policy No ~ {{policyNo}}&nbsp;</span><span *ngIf="quoteNo">|&nbsp;Quote No ~ {{quoteNo}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-xl-6 card p-0">
+                <div class="card-header">
+                    <div class="spancommon span_font_size">
+                       Financial
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ng-container *ngIf="financialList.length!=0">
+                       
+                        <ul class="list-group">
+                            
+                                <li class="list-group-item" >
+                                    <div class="row">
+                                        <ng-container *ngFor="let element of financialList;let i=index">
+                                            <div class="col-lg-12 col-md-12 col-xl-12 card p-1" *ngIf="element.EndtType!=42 && element.EndtType!=842">
+                                                <ng-container *ngIf="element.EndtType!=42 && element.EndtType!=842">
+                                                    <div class="custom-control custom-radio custom-control-inline p-2">
+                                                        <input type="radio" class="input-form-control" id="customRadio{{element.EndtType.toString()}}" name="example" [value]="element.EndtType" [checked]="checkEndorseSelection(element)" (change)="onChangeEndorsement(element)" />&nbsp;
+                                                        <label class="input-form-label spancommon span_font_size mt-2" for="customRadio{{element.EndtType.toString()}}">{{ element.EndorsementDesc }}</label>
+                                                    </div>
+                                                    <!-- <mat-checkbox class="example-margin" [checked]="checkEndorseSelection(element)" (change)="onChangeEndorsement(element)">
+                                                            <label class="input-form-label spancommon span_font_size">{{ element.EndorsementDesc }}</label>
+                                                    </mat-checkbox> -->
+                                                    <!-- <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" id="FinancialCustom{{element.EndtType.toString()}}{{i.toString()}}" name="example"   [(ngModel)]="endorsementId" [value]="element.EndtType" (change)="onChangeEndorsement(element)">
+                                                        <label class="custom-control-label" for="FinancialCustom{{element.EndtType.toString()}}{{i.toString()}}">{{ element.EndorsementDesc }}</label>
+                                                      </div> -->
+                                                    <!-- <div class="input-control-container">
+                                                        <div class="input-form-radio-box">
+                                                            <div class="radio-toolbar">
+                                                                <input id="nonFinancialCustom{{element.EndtType.toString()}}" type="radio" name="example" (change)="onChangeEndorsement(element)" [(ngModel)]="endorsementId" [value]="element.EndtType">
+                                                                <label for="nonFinancialCustom{{element.EndtType.toString()}}" class="yes">{{
+                                                                    element.EndorsementDesc }}</label>
+                                                            </div>
+                                                        </div>
+                                                    </div> -->
+                                                </ng-container>
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </li>
+                            
+                          </ul>
+                        
+                        
+
+                                
+                           
+                            <!-- <ng-container *ngFor="let element of financialList;let i=index">
+                                <div class="col-md-6 col-lg-6 col-xl-6" *ngIf="element.EndtType!=42 && element.EndtType!=842">
+                                    <div class="input-control-container">
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar">
+                                                <input id="nonFinancialCustom{{element.EndtType.toString()}}" type="radio" name="example" (change)="onChangeEndorsement(element)" [(ngModel)]="endorsementId" [value]="element.EndtType">
+                                                <label for="nonFinancialCustom{{element.EndtType.toString()}}" class="yes">{{
+                                                    element.EndorsementDesc }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container> -->
+                        </ng-container>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xl-6 card p-0">
+                <div class="card-header">
+                    Non-Financial
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                            
+                        <li class="list-group-item" >
+                            <div class="row">
+                                <ng-container *ngIf="nonFinancialList.length!=0">
+                                    <ng-container *ngFor="let element of nonFinancialList">
+                                        <div class="col-lg-12 col-md-12 col-xl-12 card p-1" *ngIf="element.EndtType!=42 && element.EndtType!=842">
+                                            <ng-container *ngIf="element.EndtType!=42 && element.EndtType!=842">
+                                                <mat-checkbox class="example-margin" [checked]="checkEndorseSelection(element)" (change)="onChangeEndorsement(element)">
+                                                        <label class="input-form-label spancommon span_font_size">{{ element.EndorsementDesc }}</label>
+                                                </mat-checkbox>
+                                            </ng-container>
+                                        </div>
+                                        <!-- <div class="col-md-6 col-lg-6 col-xl-6">
+                                            <div class="input-control-container">
+                                                <div class="input-form-radio-box">
+                                                    <div class="radio-toolbar">
+                                                        <input id="nonFinancialCustom{{element.EndtType.toString()}}" type="radio" name="example" (change)="onChangeEndorsement(element)" [(ngModel)]="endorsementId" [value]="element.EndtType">
+                                                        <label for="nonFinancialCustom{{element.EndtType.toString()}}" class="yes">{{
+                                                            element.EndorsementDesc}}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="nonFinancialList.length==0">
+                                    <div class="text-center">
+                                        <span>No Endorsement Available</span>
+                                    </div>
+                                </ng-container>
+                            
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-xl-6 card p-1" *ngIf="checkCanelEndorse()">
+                <div class="card-header">
+                    <div class="spancommon span_font_size">
+                       Cancellation of Policy
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-xl-6">
+                            <label>Do You Want to Cancel Endorsement?</label><br>
+                            <div class="input-control-container">
+                                <div class="input-form-radio-box">
+                                    <div class="radio-toolbar">
+                                        <input id="customRadioYes" type="radio" name="cancelYN" (change)="onChangeCancelYN()" [(ngModel)]="cancelYN" value="Y">
+                                        <label for="customRadioYes" class="yes">Yes</label>
+                                        <input id="customRadioNo" type="radio" name="cancelYN" (change)="onChangeCancelYN()" [(ngModel)]="cancelYN" value="N">
+                                        <label for="customRadioNo" class="no">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="customRadioYes" name="cancelYN" (change)="onChangeCancelYN()"  [(ngModel)]="cancelYN" value="Y">
+                                <label class="custom-control-label" for="customRadioYes">Yes</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="customRadioNo" name="cancelYN" (change)="onChangeCancelYN()"  [(ngModel)]="cancelYN" value="N">
+                                <label class="custom-control-label" for="customRadioNo">No</label>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xl-6 card p-1" *ngIf="cancelYN=='Y' || selectedEndorsement" >
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-xl-12">
+                            <label class="input-form-label spancommon span_font_size">Effective Date<span class="text-danger">*</span></label>
+                            <mat-form-field appearance="fill">
+                                <!-- <mat-label>Policy End Date<span class="text-danger">*</span></mat-label> -->
+                                <input matInput [matDatepicker]="picker2" [min]="minDate" [(ngModel)]="effectiveDate">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                            </mat-form-field>
+                            <div class="input-form-error" *ngIf="effectiveError">
+                                <div class="error-text  text-danger">
+                                    <span class="spancommon span_font_size">Please Enter Effective Date</span>
+                                </div>
+                            </div>
+                            <div class="input-form-error" *ngIf="effectivePassError">
+                                <div class="error-text  text-danger">
+                                    <span class="spancommon span_font_size">Future Date Only Allowed</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-xl-12">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Remarks<span class="text-danger">*</span></label>
+                                <div class="input-form-box">
+                                    <textarea class="input-form-control without-icon" [(ngModel)]="remarks" style="height: 45px;"></textarea>
+                                </div>
+                                <div class="input-form-error" *ngIf="remarksError">
+                                    <div class="error-text  text-danger">
+                                        <span class="spancommon span_font_size">Please Enter Remarks</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-1">
+            <button class="custom-btn btn-5 mr-2" (click)="ongetBack()" matRipple><<&nbsp;Back</button>&nbsp;
+            <button class="custom-btn btn-6 maan-button-data" *ngIf="selectedEndorsement || cancelYN=='Y'" matRipple (click)="onProceed()"><i class="fas fa-check"></i>&nbsp;Proceed</button>
+        </div>
+    </div>
+</div>

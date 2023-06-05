@@ -1,0 +1,257 @@
+<div class="maan-grid-item">
+    <div class="maan-grid-item-title">
+        <div class="d-flex justify-content-between">
+            <div>
+                <span class="mx-1">
+                    <i class="fas fa-user mx-1"></i>
+                </span>
+                <span class="spancommon span_font_size">Customer & Product Details</span>
+            </div>
+            <div class="mr-3"> 
+                <button class="maan-btn maan-btn-blue maan-button-data" (click)="openmodel(mymodal)"><span>Cover Details</span></button></div>
+        </div>
+        </div>
+        <div class="maan-grid-item-body">
+            <div class="row mt-1" *ngIf="!endrosement">
+                <div class="col-12 col-md-3 ">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Customer Name</label>
+                        <div class="input-form-radio-box">
+                            <span class="spancommon span_font_size">{{customerDetails?.TitleDesc}} &nbsp; {{customerDetails?.ClientName}}</span>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Customer ID</label>
+                        <div class="input-form-radio-box">
+                            <span class="spancommon span_font_size">{{customerDetails?.IdNumber}}</span>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="input-control-container">
+                        <label class="input-form-label">CustomerType</label>
+                        <div class="input-form-radio-box">
+                            <ng-container *ngIf="customerDetails?.PolicyHolderType == 1">
+                                <span class="spancommon span_font_size">{{customerTypeIndividual}}</span>
+                            </ng-container>
+                            <ng-container *ngIf="customerDetails?.PolicyHolderType == 2">
+                                <span class="spancommon span_font_size">{{customerTypeCorporate}}</span>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Mobile Number</label>
+                        <div class="input-form-radio-box">
+                            <span class="spancommon span_font_size">{{customerDetails?.MobileCodeDesc}}&nbsp;{{customerDetails?.MobileNo1}}</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-1">
+                <div class="col-12 col-md-3 ">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Product Name</label>
+                        <div class="input-form-radio-box">
+                            <span class="spancommon span_font_size">{{columnHeader?.ProductName}}</span>
+    
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Total Premium</label>
+                        <ng-container *ngIf="!endrosement">
+                            <div class="input-form-radio-box">
+                                <span class="spancommon span_font_size">{{columnHeader?.OverallPremiumFc|commaseparator}}<span>
+                                    &nbsp;({{columnHeader?.Currency}})</span></span>
+        
+                            </div>
+                           
+                        </ng-container>
+                        <ng-container *ngIf="endrosement && columnHeader.TotalEndtPremium!=undefined && columnHeader.TotalEndtPremium!=0 && columnHeader.TotalEndtPremium!=null">
+                            <span class="spancommon span_font_size">Total Endorsement Premium<span>:
+                                <ng-container *ngIf="columnHeader?.TotalEndtPremium!=0 && columnHeader?.TotalEndtPremium!=null ">
+                                    {{columnHeader?.TotalEndtPremium|commaseparator}}&nbsp;({{columnHeader?.Currency}})
+                                </ng-container>
+                                <ng-container *ngIf="columnHeader?.TotalEndtPremium==0 || columnHeader?.TotalEndtPremium==null">
+                                    {{columnHeader?.TotalEndtPremium}}&nbsp;({{columnHeader?.Currency}})
+                                </ng-container>
+                            </span></span>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3" style="position: inherit;overflow: revert;">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Policy Start Date</label>
+                        <div class="input-form-radio-box">
+                            <span class="spancommon span_font_size">{{columnHeader?.InceptionDate}}</span>
+    
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3" style="position: inherit;overflow: revert;">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Policy End Date</label>
+                        <div class="input-form-radio-box">
+                            <span class="spancommon span_font_size">{{columnHeader?.ExpiryDate}}</span>
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+  <ng-template #mymodal let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title spancommon span_font_size" id="modal-basic-title">Cover Details</h4>
+            <button type="button" class="close" #closeModal aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="maan-grid-item popover-card customTemplatess shawdowcustom" style="display: block;" data-keyboard="false" data-bs-backdrop="static">
+                <div class="maan-grid-item-body"  >
+                    <mat-vertical-stepper [linear]="isLinear" #stepper>
+                        <ng-container *ngFor="let columnvalue of columnriskdetails;let i=index">
+                            <mat-step >
+                                <ng-template matStepLabel style="font-size: 1rem !important;">
+                                    <ng-container *ngIf="productId=='5'">
+                                        <span class="spancommon" style="color:navy;font-size: 1rem;"> {{columnvalue?.PolicyTypeDesc}}&nbsp;|&nbsp;{{
+                                            columnvalue?.VehiclemakeDesc }} &nbsp;|&nbsp; {{ columnvalue?.VehcilemodelDesc}} </span>
+                                    </ng-container>
+                                    <ng-container *ngIf="productId=='4'">
+                                        <ng-container *ngIf="columnvalue?.TravelId=='1'">
+                                            <span class="spancommon" style="color:navy;font-size: 1rem;">Kids&nbsp;({{columnvalue?.TotalPassengers}})</span>
+    
+                                        </ng-container>
+                                        <ng-container *ngIf="columnvalue.TravelId=='2'">
+                                            <span class="spancommon" style="color:navy;font-size: 1rem;">Adults&nbsp;({{columnvalue?.TotalPassengers}})</span>
+    
+                                        </ng-container>
+                                        <ng-container *ngIf="columnvalue.TravelId=='3'">
+                                            <span class="spancommon" style="color:navy;font-size: 1rem;">Seniors&nbsp;({{columnvalue?.TotalPassengers}})</span>
+    
+                                        </ng-container>
+                                        <ng-container *ngIf="columnvalue.TravelId=='4'">
+                                            <span class="spancommon" style="color:navy;font-size: 1rem;">Super
+                                                Seniors&nbsp;({{columnvalue?.TotalPassengers}})</span>
+    
+                                        </ng-container>
+                                        <ng-container *ngIf="columnvalue.TravelId=='5'">
+                                            <span class="spancommon" style="color:navy;font-size: 1rem;">Grand
+                                                Seniors&nbsp;({{columnvalue?.TotalPassengers}})</span>
+    
+                                        </ng-container>
+                                        <span class="spancommon" style="color:navy;font-size: 1rem;"> &nbsp;|&nbsp;
+                                            {{columnvalue?.DestinationCountry}}
+                                            &nbsp;|&nbsp; {{ columnvalue?.TravelStartDate }} &nbsp;~&nbsp; {{
+                                            columnvalue?.TravelEndDate }}</span>
+                                    </ng-container>
+                                    <ng-container *ngIf="productId=='3'">
+                                        <span class="spancommon" style="color:navy;font-size: 1rem;"> {{columnvalue?.DocumentsTitle}}
+                                        </span>
+                                    </ng-container>
+                                    <ng-container *ngIf="productId == '19'">
+                                        <span class="spancommon" style="color:navy;font-size: 1rem;"> {{productName}}
+                                        </span>
+                                    </ng-container>
+                                    <ng-container *ngIf="productId!='3' && productId!='4' && productId!='5' && productId!='19'">
+                                        <span class="spancommon" style="color:navy;font-size: 1rem;">
+                                            {{columnvalue?.CustomerName}} &nbsp;|&nbsp; {{
+                                            columnvalue?.SalaryPerAnnum | number : '1.2-2'}}
+                                            ({{columnHeader?.Currency}})&nbsp;</span>
+                                    </ng-container>
+                                    <!-- {{columnvalue?.PolicyTypeDesc}}&nbsp;|&nbsp;{{columnvalue?.VehiclemakeDesc}}&nbsp;|&nbsp;{{columnvalue?.VehcilemodelDesc}} -->
+                                </ng-template>
+                                <div *ngIf="productId!='3'">
+                                    <span style="display: flex;">Section Name&nbsp; : &nbsp; <p>{{columnvalue?.SectionDetails[0]?.SectionName}}</p></span>
+                                </div>
+                                <table class="table table-striped">
+                                    <thead class="thead-dark">
+                                        <!-- <th scope="col">Section Name</th> -->
+                                        <tr>
+                                          <th scope="col" class="text-center" *ngIf="productId=='3'">Section Name</th>
+                                          <th scope="col" class="text-center">Cover Name</th>
+                                          <th scope="col" class="text-center">Sum Insured&nbsp;<br><span class="currency">({{columnHeader?.Currency}})</span></th>
+                                          <th scope="col" class="text-center">Rate(%)</th>
+                                          <th scope="col" class="text-center">Excess(%)</th>
+                                          <th scope="col" class="text-center">Excess Amount</th>
+                                          <th scope="col" class="text-center">Premium(Inc Tax)&nbsp;<br><span class="currency">({{columnHeader?.Currency}})</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container *ngFor="let section of columnvalue.SectionDetails,let i=index">
+                                            <!-- <td>{{section?.SectionName}}</td> -->
+                                            <tr *ngFor="let Cover of section?.Covers">
+                                                <td class="text-left" *ngIf="productId=='3'"  [attr.rowspan]="section?.length+1">{{section?.SectionName}}</td>
+                                                <td class="text-left">{{Cover?.CoverName}}</td>
+                                                <td class="text-center">
+                                                    <ng-container *ngIf="Cover.SumInsured!=null">
+                                                        {{Cover.SumInsured|commaseparator}}
+                                                    </ng-container>
+                                                    <ng-container *ngIf="Cover.SumInsured == '0' || Cover.SumInsured == null">
+                                                        0
+                                                    </ng-container>
+                                                </td>
+                                                <td class="text-center">{{Cover?.Rate}}</td>
+                                                <td class="text-center">
+                                                    <ng-container *ngIf="Cover?.ExcessPercent!=null">
+                                                        {{Cover?.ExcessPercent}}
+                                                    </ng-container>
+                                                    <ng-container *ngIf="Cover?.ExcessPercent == '0' || Cover?.ExcessPercent == ''|| Cover?.ExcessPercent == null">
+                                                        0
+                                                    </ng-container> 
+                                                </td>
+                                                <td class="text-center">
+                                                    <ng-container *ngIf="Cover?.ExcessAmount!=null">
+                                                        {{Cover?.ExcessAmount | number: '1.0'}}
+                                                    </ng-container>
+                                                    <ng-container *ngIf="Cover?.ExcessAmount == '0' || Cover?.ExcessAmount == ''|| Cover?.ExcessAmount == null">
+                                                        0
+                                                    </ng-container> 
+                                                </td>
+                                                <td class="text-right">
+                                                    <ng-container *ngIf="Cover.PremiumIncludedTax==null || Cover.PremiumIncludedTax==0">
+                                                        <b>0</b>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="Cover.PremiumIncludedTax!=null && Cover.PremiumIncludedTax!=0">
+                                                        {{Cover?.PremiumIncludedTax|commaseparator}}
+                                                    </ng-container></td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>                   
+                                     </table>
+                                     <div style="float: right;">
+                                        <span  style="font-weight:600">Total Premium&nbsp;:&nbsp;</span><span style="color: #333b85;font-weight:600">
+                                            <ng-container *ngIf="columnvalue?.totalPremium == '0' || columnvalue?.totalPremium == ''|| columnvalue?.totalPremium == null">
+                                                0
+                                            </ng-container>
+                                            <ng-container *ngIf="columnvalue?.totalPremium != 0 && columnvalue?.totalPremium != null">
+                                                {{columnvalue?.totalPremium|commaseparator}}&nbsp;({{columnHeader?.Currency}})
+                                            </ng-container>
+                                        </span>
+                                     </div>
+                            </mat-step>
+                        </ng-container>
+                        
+                    </mat-vertical-stepper>
+                </div>
+            </div>
+        </div>
+        <ng-container *ngIf="!endorsementSection">
+            <span class="spancommon span_font_size"  style="position: relative;
+            left: 42rem;"><span style="font-weight:bold">OverAll Premium</span><span style="font-weight: 600;color: #333b85;">&nbsp;:&nbsp;{{columnHeader?.OverallPremiumFc|commaseparator}}
+                &nbsp;({{columnHeader?.Currency}})</span></span>
+        </ng-container>
+        <div class="modal-footer">
+            <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" (click)="modal.dismiss('Cross click')" style="margin-left:10px;">Close</button>
+        </div>
+    </ng-template>

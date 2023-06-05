@@ -1,0 +1,191 @@
+<div class="vision-grid-item">
+  <div class="card">
+      <div class="card-header">Notification Details</div>
+      <div class="card-body">
+          <div class="row mt-2">
+              <div class="col-12 col-md-12 col-lg-12">
+                  <div class="input-control-container">
+                      <label class="input-form-label">QueryKey<span class="text-required">*</span></label>
+                      <div class="input-form-box">
+
+                        <input type="text" class="input-form-control without-icon" maxlength="100"  [(ngModel)]="NotificationDetails.QueryKey">
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-6 col-lg-6 col-xl-6">
+                  <div class="input-control-container">
+                       <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
+                       <div class="input-form-box">
+                      <input type="text" class="input-form-control without-icon"  [(ngModel)]="NotificationDetails.CoreAppCode" maxlength="100">
+                      </div>
+                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6">
+                  <div class="input-control-container">
+                      <label class="input-form-label">RegulatoryCode<span class="text-required">*</span></label>
+                      <div class="input-form-box">
+                          <input type="text" class="input-form-control without-icon" [(ngModel)]="NotificationDetails.RegulatoryCode" maxlength="100">
+                      </div>
+                  </div>
+              </div>
+
+
+              <div class="col-12 col-md-4 col-lg-4">
+                  <div class="input-control-container">
+                      <label class="input-form-label">Mail Required</label>
+                      <div class="input-form-radio-box">
+                          <div class="radio-toolbar">
+                              <input id="MailReq_Yes" type="radio" name="MailReq_Yes"  value="Y" [(ngModel)]="NotificationDetails.MailRequired">
+                              <label for="MailReq_Yes">Yes</label>
+                              <input type="radio" id="MailReq_No" name="MailReq_No"  value="N" [(ngModel)]="NotificationDetails.MailRequired">
+                              <label for="MailReq_No">No</label>
+                              <!--<input type="radio" id="orginwarehouse_Referral" name="originatingWarehouse"  value="R" [(ngModel)]="ClausesDetails.Status">
+                              <label for="orginwarehouse_Referral">Referral</label>-->
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+    <div class="row">
+      <div class="col-md-6 col-lg-4 col-xl-4 offset-2" *ngIf="NotificationDetails.MailRequired == 'Y' ">
+        <div class="input-control-container">
+             <label class="input-form-label">MailSubject<span class="text-required">*</span></label>
+             <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" [(ngModel)]="NotificationDetails.MailSubject" maxlength="100">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4 col-xl-4 "  *ngIf="NotificationDetails.MailRequired == 'Y' ">
+      <div class="input-control-container">
+           <label class="input-form-label">MailRegards<span class="text-required">*</span></label>
+           <div class="input-form-box">
+          <input type="text" class="input-form-control without-icon" [(ngModel)]="NotificationDetails.MailRegards" maxlength="100">
+          </div>
+      </div>
+  </div>
+
+    <div class="col-12 col-md-6 col-lg-6 offset-2"  *ngIf="NotificationDetails.MailRequired == 'Y' ">
+      <div class="input-control-container">
+          <label class="input-form-label">MailBody<span class="text-required">*</span></label>
+          <div class="input-form-box">
+              <textarea cols="120" rows="2" class="input-form-control without-icon" [(ngModel)]="NotificationDetails.MailBody" maxlength="200"></textarea>
+          </div>
+      </div>
+    </div>
+
+    </div>
+
+
+
+
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Sms Required</label>
+                    <div class="input-form-radio-box">
+                        <div class="radio-toolbar">
+                            <input id="SmsReq_Yes" type="radio" name="SmsReq_Yes"  value="Y" [(ngModel)]="NotificationDetails.SmsRequired">
+                            <label for="SmsReq_Yes">Yes</label>
+                            <input type="radio" id="SmsReq_No" name="SmsReq_No"  value="N" [(ngModel)]="NotificationDetails.SmsRequired">
+                            <label for="SmsReq_No">No</label>
+                            <!--<input type="radio" id="orginwarehouse_Referral" name="originatingWarehouse"  value="R" [(ngModel)]="ClausesDetails.Status">
+                            <label for="orginwarehouse_Referral">Referral</label>-->
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+<div class="row">
+        <div class="col-md-6 col-lg-4 col-xl-4 offset-2" *ngIf="NotificationDetails.SmsRequired == 'Y' ">
+            <div class="input-control-container">
+                <label class="input-form-label">SmsSubject<span class="text-required">*</span></label>
+             <div class="input-form-box">
+                  <input type="text" class="input-form-control without-icon" [(ngModel)]="NotificationDetails.SmsSubject" maxlength="100">
+              </div>
+           </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 col-xl-4"  *ngIf="NotificationDetails.SmsRequired == 'Y' ">
+          <div class="input-control-container">
+                   <label class="input-form-label">SmsRegards<span class="text-required">*</span></label>
+               <div class="input-form-box">
+                    <input type="text" class="input-form-control without-icon" [(ngModel)]="NotificationDetails.SmsRegards" maxlength="100">
+              </div>
+         </div>
+        </div>
+
+         <div class="col-12 col-md-6 col-lg-6 offset-2"  *ngIf="NotificationDetails.SmsRequired == 'Y' ">
+             <div class="input-control-container">
+                 <label class="input-form-label">SmsBodyEn<span class="text-required">*</span></label>
+              <div class="input-form-box">
+                 <textarea cols="120" rows="2" class="input-form-control without-icon" [(ngModel)]="NotificationDetails.SmsBodyEn" maxlength="200"></textarea>
+             </div>
+            </div>
+         </div>
+
+</div>
+
+
+
+
+
+              <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Whatsapp Required</label>
+                    <div class="input-form-radio-box">
+                        <div class="radio-toolbar">
+                            <input id="Whatsapp_Yes" type="radio" name="Whatsapp_Yes"  value="Y" [(ngModel)]="NotificationDetails.WhatsappRequired">
+                            <label for="Whatsapp_Yes">Yes</label>
+                            <input type="radio" id="Whatsapp_No" name="Whatsapp_No"  value="N" [(ngModel)]="NotificationDetails.WhatsappRequired">
+                            <label for="Whatsapp_No">No</label>
+                            <!--<input type="radio" id="orginwarehouse_Referral" name="originatingWarehouse"  value="R" [(ngModel)]="ClausesDetails.Status">
+                            <label for="orginwarehouse_Referral">Referral</label>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-lg-4 col-xl-4 offset-2" *ngIf="NotificationDetails.WhatsappRequired == 'Y' ">
+                  <div class="input-control-container">
+                      <label class="input-form-label">WhatsappSubject<span class="text-required">*</span></label>
+                   <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="NotificationDetails.WhatsappSubject" maxlength="100">
+                    </div>
+                 </div>
+              </div>
+
+              <div class="col-md-6 col-lg-4 col-xl-4 "  *ngIf="NotificationDetails.WhatsappRequired == 'Y' ">
+                <div class="input-control-container">
+                         <label class="input-form-label">WhatsappRegards<span class="text-required">*</span></label>
+                     <div class="input-form-box">
+                          <input type="text" class="input-form-control without-icon" [(ngModel)]="NotificationDetails.WhatsappRegards" maxlength="100">
+                    </div>
+               </div>
+              </div>
+
+               <div class="col-12 col-md-6 col-lg-6 offset-2"  *ngIf="NotificationDetails.WhatsappRequired == 'Y' ">
+                   <div class="input-control-container">
+                       <label class="input-form-label">WhatsappBodyEn<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                       <textarea cols="120" rows="2" class="input-form-control without-icon" [(ngModel)]="NotificationDetails.WhatsappBodyEn" maxlength="200"></textarea>
+                   </div>
+                  </div>
+               </div>
+
+
+
+            </div>
+
+
+
+          </div>
+          <div class="text-center mt-2">
+              <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>
+              <button class="btn btn-success ml-2" (click)="onSaveNotification()">Submit</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+

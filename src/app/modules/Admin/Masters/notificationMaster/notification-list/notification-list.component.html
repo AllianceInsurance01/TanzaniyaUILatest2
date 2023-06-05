@@ -1,0 +1,30 @@
+<div class="vision-grid-item">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between">
+                <div>
+                    Notification
+                </div>
+                <div>
+                    <button class="btn btn-warning" (click)="onAddNew()">Add New</button>
+                </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-md-4 col-lg-4 col-xl-4 ml-3">
+                  <div class="input-control-container">
+                      <label class="input-form-label">Branch<span class="text-required">*</span></label>
+                      <ng-select class="input-form-select" appendTo="body" [items]="branchList" [(ngModel)]="BranchCode" bindValue="Code" bindLabel="CodeDesc" (change)="getExistingNotification()">
+                      </ng-select>
+                  </div>
+              </div>
+            </div>
+
+        </div>
+        <div class="card-body">
+            <ng-container *ngIf="NotificationData">
+                <app-grid-table [cols]="NotificationHeader" changeStatus="true" (OnStatus)="EditStatus($event)" [data]="NotificationData" [filterValue]="filterValue" (onEdit)="onEditNotification($event)">
+                </app-grid-table>
+            </ng-container>
+        </div>
+    </div>
+</div>

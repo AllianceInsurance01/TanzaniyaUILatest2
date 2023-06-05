@@ -1,0 +1,49 @@
+.accordion-header{
+    width: 100%;
+    border-radius: 0.7rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: all .3s;
+    height: max-content;
+    background: rgb(255,255,255);
+    box-shadow: 1px 2px 2px #1f26875e;
+    backdrop-filter: blur(18.5px);
+    list-style-type: none;
+}
+.accordion{
+    position: static;
+}
+.icon{
+    float: right;
+    position: relative;
+    bottom: 0.8rem;
+}
+.maan-grid-item-body{
+    border-bottom:none ! important;
+    display: grid ! important;
+    grid-row-gap: 10px ! important;
+}
+.mat-stepper-horizontal {
+    display: block ! important;
+    background: none ! important;
+}
+.table .thead-dark th {
+    color: #fff ! important;
+    background-color: #333b85 ! important;
+    border-color: #333b85 ! important;
+    white-space: nowrap ! important;
+}
+
+td{
+    font-size: .8rem !important;
+}
+th{
+    font-size: .85rem !important;
+}
+tr{
+    padding: 8px !important;
+}
+.currency{
+    position: relative;
+    /* left: 1.5rem; */
+}

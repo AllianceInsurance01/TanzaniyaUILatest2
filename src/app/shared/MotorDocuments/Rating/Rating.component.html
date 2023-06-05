@@ -1,0 +1,46 @@
+
+<div class="card">
+    <div class="row">
+        <div class="col-12 col-md-4 ml-5">
+            <div class="input-control-container">
+                <label class="input-form-label">Rating</label><span class="text-danger">*</span>
+                <ng-select class="input-form-select" appendTo="body" [items]="RatingList"  [(ngModel)]="RatingValue" bindValue="Code" bindLabel="CodeDesc">
+                </ng-select>
+            </div>
+        </div>
+    </div>
+    
+    <div>
+           
+        <table class="styled-table">
+                           
+            <thead>
+    
+                <tr>
+                    <th>S.No</th>
+                    <th>Description</th>
+                    <th>Rate</th>
+                    <th>Value(OMR)</th>
+                </tr>
+                
+             
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Motor Comprehensive Basic</td>
+                    <td>OMR</td>
+                    <td>86.400</td>
+                </tr>
+                <tr class="active-row">
+                    <td>2</td>
+                    <td>Motor Third Party Liability</td>
+                    <td>OMR</td>
+                    <td>0.00</td>
+                </tr>
+              
+            </tbody>
+        </table>
+    </div>
+</div>
+

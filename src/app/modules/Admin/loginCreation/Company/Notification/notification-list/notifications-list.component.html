@@ -1,0 +1,84 @@
+<div class="card">
+    <div class="card-header">Product Configuration</div>
+    <div class="card p-1">
+        <div class="vision-grid vision-grid-column-2">
+            <div class="vision-grid-item">
+                <div class="radio-toolbar menu-bar">
+                    <input id="menu" type="radio" name="menu" value="Product" (click)="onRedirect('Product')" [(ngModel)]="activeMenu">
+                    <label for="menu">Product Details</label>
+                    <input type="radio" id="menu6" name="menu" value="FactorType" (click)="onRedirect('FactorType')" [(ngModel)]="activeMenu">
+                    <label for="menu6">Factor Type</label>
+                    <input type="radio" id="menu1" name="menu" value="Section" (click)="onRedirect('Section')" [(ngModel)]="activeMenu">
+                    <label for="menu1">Section</label>
+                    <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+
+                    <label for="menu2">Cover</label>
+                    <input type="radio" id="menu20" name="menu" value="Benefit" (click)="onRedirect('Benefit')" [(ngModel)]="activeMenu">
+                    <label for="menu20">Product Benefit</label>
+                    <input type="radio" id="menu15" name="menu" value="Policy"(click)="onRedirect('Policy')" [(ngModel)]="activeMenu">
+                    <label for="menu15">Policy Type</label>
+                    <input type="radio" id="menu10" name="menu" value="Emi" (click)="onRedirect('Emi')" [(ngModel)]="activeMenu">
+                    <label for="menu10">EMI</label>
+                    <!-- <input type="radio" id="menu3" name="menu" value="SubCover" (click)="onRedirect('SubCover')" [(ngModel)]="activeMenu">
+                    <label for="menu3">SubCover</label> -->
+                    <input type="radio" id="menu8" name="menu" value="Tax" (click)="onRedirect('Tax')" [(ngModel)]="activeMenu">
+                    <label for="menu8">Tax</label>
+                    <input type="radio" id="menu9" name="menu" value="Prorata" (click)="onRedirect('Prorata')" [(ngModel)]="activeMenu">
+                    <label for="menu9">ProRata</label>
+                    <input type="radio" id="menu7" name="menu" value="UwQues" (click)="onRedirect('UwQues')" [(ngModel)]="activeMenu">
+                    <label for="menu7">UnderWriter Questions</label>
+                    <input type="radio" id="menu5" name="menu" value="Referral" (click)="onRedirect('Referral')" [(ngModel)]="activeMenu">
+                    <label for="menu5">Referral</label>
+                    <input type="radio" id="menu4" name="menu" value="Document" (click)="onRedirect('Document')" [(ngModel)]="activeMenu">
+                    <label for="menu4">Attached Documents</label>
+                    <input type="radio" id="menu11" name="menu" value="Payment" (click)="onRedirect('Payment')" [(ngModel)]="activeMenu">
+                    <label for="menu11">Payment</label>
+                    <input type="radio" id="menu12" name="menu" value="Notification"(click)="onRedirect('Notification')" [(ngModel)]="activeMenu">
+                    <label for="menu12">Notification</label>
+                    <input type="radio" id="menu13" name="menu" value="TinyUrl"(click)="onRedirect('TinyUrl')" [(ngModel)]="activeMenu">
+                    <label for="menu13">TinyUrl</label>
+                    <input type="radio" id="menu14" name="menu" value="Premia"(click)="onRedirect('Premia')" [(ngModel)]="activeMenu">
+                    <label for="menu14">Premia Configuration</label>
+                    <!--<input type="radio" id="menu16" name="menu" value="Industry"(click)="onRedirect('Industry')" [(ngModel)]="activeMenu">
+                    <label for="menu16">Industry</label>-->
+                    <input type="radio" id="menu17" name="menu" value="Promo"(click)="onRedirect('Promo')" [(ngModel)]="activeMenu">
+                    <label for="menu17">PromoCode</label>
+                    <input type="radio" id="menu19" name="menu" value="EndorsementField"(click)="onRedirect('EndorsementField')" [(ngModel)]="activeMenu">
+                    <label for="menu19">EndorsementField Type</label>
+                    <input type="radio" id="menu18" name="menu" value="Endorsement"(click)="onRedirect('Endorsement')" [(ngModel)]="activeMenu">
+                    <label for="menu18">Endorsement Type</label>
+                </div>
+            </div>
+            <div class="vision-grid-item">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                Notification
+                            </div>
+                            <div>
+                                <button class="btn btn-warning" (click)="onAddNew()">Add New</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <nb-card-header><div class="row mt-2">
+                        <div class="col-md-4 col-lg-4 col-xl-4 ml-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Branch<span class="text-required">*</span></label>
+                                <ng-select class="input-form-select" appendTo="body" [items]="branchList" [(ngModel)]="BranchCode" bindValue="Code" bindLabel="CodeDesc" (change)="getExistingNotification()">
+                                </ng-select>
+                            </div>
+                        </div>
+                      </div></nb-card-header> -->
+                    <div class="card-body">
+                        <ng-container *ngIf="NotificationData">
+                            <app-grid-table [cols]="NotificationHeader" changeStatus="true" (onStatus)="EditStatus($event)" [data]="NotificationData" [filterValue]="filterValue" (onEdit)="onEditNotification($event)">
+                            </app-grid-table>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

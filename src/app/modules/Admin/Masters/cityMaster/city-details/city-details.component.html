@@ -1,0 +1,192 @@
+<div class="card">
+    <div class="card-body">
+        <div class="card p-1">
+            <div class="vision-grid vision-grid-column-2">
+                <div class="vision-grid-item">
+                    <div class="radio-toolbar menu-bar">
+                        <input id="menu" type="radio" name="menu" value="Country" (click)="onRedirect('Country')" [(ngModel)]="activeMenu">
+                        <label for="menu">Country Details</label>
+                        <!--<input type="radio" id="menu4" name="menu" value="Region" (click)="onRedirect('Region')" [(ngModel)]="activeMenu">
+                        <label for="menu4">Region</label>-->
+                        <input type="radio" id="menu1" name="menu" value="State" (click)="onRedirect('State')" [(ngModel)]="activeMenu">
+                        <label for="menu1">State</label>
+                        <input type="radio" id="menu2" name="menu" value="City" (click)="onRedirect('City')" [(ngModel)]="activeMenu">
+                        <label for="menu2">City</label>
+
+                        <!-- <input type="radio" id="menu3" name="menu" value="Currency" (click)="onRedirect('Currency')" [(ngModel)]="activeMenu">
+                        <label for="menu3">Currency</label> -->
+                    </div>
+                </div>
+
+                <!--<div class="row">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Region</label>
+                                        <ng-select class="input-form-select" appendTo="body" [items]="regionList" [(ngModel)]="regionValue" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">State</label>
+                                        <ng-select class="input-form-select" appendTo="body" [items]="stateList" [(ngModel)]="stateValue" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>-->
+
+
+                <div class="vision-grid-item">
+                    <div class="card">
+                        <div class="card-header">City Details</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">City Name<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" maxlength="100" [(ngModel)]="CityDetails.CityName">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Country<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="CityDetails.CountryId">
+                                        </div>
+                                    </div>
+                                </div>-->
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Regulatory Code<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="CityDetails.RegulatoryCode">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="CityDetails.CoreAppCode">
+                                        </div>
+                                    </div>
+                                </div>
+                              
+                                <!--<div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">StateId<span class="text-required">*</span></label>
+                                                <div class="input-form-box">
+                                                    <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="CityDetails.StateId">
+                                                </div>
+                                            </div>
+                                          </div>-->
+
+                                          <!--<div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Region</label>
+                                                <ng-select class="input-form-select" appendTo="body" [items]="regionList" [(ngModel)]="CityDetails.RegionId" bindValue="Code" bindLabel="CodeDesc">
+                                                </ng-select>
+                                            </div>
+                                        </div>-->
+                                          <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Country</label>
+                                                <ng-select class="input-form-select" disabled appendTo="body" [items]="CountryList" [(ngModel)]="CityDetails.CountryId" bindValue="Code" bindLabel="CodeDesc" (change)="getStateList()">
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">State</label>
+                                                <ng-select class="input-form-select" disabled appendTo="body" [items]="stateList" [(ngModel)]="CityDetails.StateId" bindValue="Code" bindLabel="CodeDesc">
+                                                </ng-select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>Effective Date</mat-label>
+                                                    <input matInput required [matDatepicker]="picker" [min]="minDate" [(ngModel)]="CityDetails.EffectiveDateStart">
+                                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                    <mat-datepicker #picker></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+        
+        
+                                       
+                            </div>
+                            <div class="row">     
+                              
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Status<span class="text-required">*</span></label>
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar">
+                                                <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="CityDetails.Status" value="Y">
+                                                <label for="orginwarehouse_Yes">Active</label>
+                                                <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="CityDetails.Status" value="N">
+                                                <label for="orginwarehouse_No">DeActive</label>
+                                                <!--<input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="statusValue" value="R">
+                                                          <label for="orginwarehouse_Pending" class="customLabel">Referral</label>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="CityDetails.Remarks">
+                                        </div>
+                                    </div>
+                                </div>
+
+                              
+                              
+                            </div>
+
+
+                       
+                            <!--<div class="row">
+                                          <div class="col-md-4 col-lg-4 col-xl-4">
+                                              <div class="input-control-container">
+                                                  <label class="input-form-label">Branch<span class="text-required">*</span></label>
+                                                  <ng-select class="input-form-select" appendTo="body" [items]="branchList" [(ngModel)]="branchValue" bindValue="Code" bindLabel="CodeDesc">
+                                                  </ng-select>
+                                              </div>
+                                          </div>
+                                          <div class="col-12 col-md-8 col-lg-8">
+                                              <div class="input-control-container">
+                                                  <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                                                  <div class="input-form-box">
+                                                      <textarea cols="160" ros="3" [(ngModel)]="remarks" class="input-form-select"></textarea>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>-->
+                            <div class="row">
+                              
+
+                            </div>
+                            <div class="text-center mt-2">
+                                <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+                                <button class="btn btn-success ml-2" (click)="onSaveCity()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+        <!--<div class="text-center mt-2">
+            <button class="btn btn-danger" (click)="backtoMainGrid()">Back</button>
+        </div>-->
+    </div>
+</div>

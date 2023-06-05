@@ -1,0 +1,279 @@
+
+<div class="card">
+  <div class="card-header" style="height: 48px;">
+    <div class="d-flex justify-content-between">
+      <div>
+          <span class="spancommon span_font_size">Sms Details</span>
+      </div>
+      <div>
+        <button class="custom-btn btn-6 maan-button-data" *ngIf="!smss" (click)="sms()" style="width: 7rem;"> <i class="fa fa-plus-circle mx-1"></i>Compose</button>
+    </div>
+     
+  </div>
+      <!--<h4 class="card-title" id="modal-basic-title"><span class="spancommon span_font_size">Sms Details</span></h4>-->
+
+
+  </div>
+  <div class="card-body">
+      <div class="form-group">
+          <!--<button for="exampleFormControlTextarea1" class="spancommon span_font_size" style="background-color:blueviolet;color:white;border:none" (click)="sms()">
+            <i class="fa fa-plus-circle"></i>
+            Compose</button>-->
+
+              <ng-container *ngIf="smss" style="margin-left:30px;">
+                <div class="p-fluid grid mt-3">
+                    <div class="field col-12 md:col-5">
+                        <span class="p-float-label">
+
+
+                            <!--<label for="dropdown">Templates</label>-->
+                        </span>
+                    </div>
+                </div>
+                <div class="row ml-4">
+
+                      <!--<div class="col-12 col-md-5">
+                        <div class="input-control-container">
+                          <label class="input-form-label">From<span class="text-required">*</span></label>
+                          <div class="input-form-box">
+                              <input type="text" class="input-form-control without-icon" maxlength="100">
+                          </div>
+                      </div>
+
+                    </div>-->
+
+                      <div class="col-12 col-md-5">
+                        <div class="input-control-container p-0">
+                            <label class="input-form-label">Templates</label><span class="text-danger">*</span>
+                            <ng-select class="input-form-select" appendTo="body" [items]="SmsTemplateList" [(ngModel)]="smstemplatevalue" bindValue="Code" bindLabel="CodeDesc" (change)="getSmsTemplate()">
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    </div>
+
+
+                    <div class="row mt-2 ml-4" *ngIf="smstemplatevalue">
+                    <div class="col-12 col-md-5">
+                      <div class="input-control-container">
+                        <label class="input-form-label">SmsSubject
+                          <span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <input type="text"  class="input-form-control without-icon" [(ngModel)]="SmsSubject
+                            " maxlength="100">
+                        </div>
+                    </div>
+                    </div>
+
+                      <div class="col-12 col-md-5">
+                        <div class="input-control-container">
+                          <label class="input-form-label">SmsRegards<span class="text-required">*</span></label>
+                          <div class="input-form-box">
+                              <input type="text" class="input-form-control without-icon"  [(ngModel)]="SmsRegards" maxlength="100">
+                          </div>
+
+                      </div>
+                    </div>
+                </div>
+
+                <div class="row mt-2 ml-4" *ngIf="smstemplatevalue">
+                  <div class="col-12 col-md-11 col-lg-11">
+                    <div class="input-control-container">
+                        <label class="input-form-label">SmsBody<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <textarea cols="1200" ros="3" [(ngModel)]="SmsBody" class="input-form-select" width="100%;"></textarea>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+
+                <!--<div class="row mt-4 ml-4">
+                  <div class="flex" style="box-shadow: inset 0 60px 50px -30px #ffffff, inset 0px -60px 50px -30px #ffffff; width: 100%;
+                  height: 100%; margin-left:5px;">
+                    <button class="btn btn-success" style="margin-left:5px;" *ngIf="smstemplatevalue" (click)="sendSms()"> Send</button>
+
+                  
+                   <button class="btn btn-danger" style="border:none;margin-left:80px;" *ngIf="smstemplatevalue" (click)="back()">Back</button>
+                  </div>
+
+
+                </div>-->
+
+                <div class="row mt-2">
+
+                  <div class="col-12">
+                      <div class="text-center my-3">
+                        
+                          <button class="custom-btn btn-5 mx-2" matRipple   *ngIf="smstemplatevalue" (click)="back()">Back</button>
+                          <button class="custom-btn btn-6 maan-button-data mx-2" matRipple  *ngIf="smstemplatevalue" (click)="sendSms()">Send</button>
+                         
+                      </div>
+                  </div>
+              </div>
+
+            </ng-container>
+
+
+              <mat-tab-group  mat-align-tabs="center" *ngIf="!smss">
+
+                <mat-tab label="SMS">
+
+                  <ng-container *ngIf="SList.length!=0">
+                    <app-grid-table [cols]="SMSHeader" [data]="SList" (onViews)="onViewsms($event,SmCard)">
+                    </app-grid-table>
+                </ng-container>
+
+                <ng-container *ngIf="SList.length==0">
+                  <div class="text-center spancommon span_font_size">
+                      No Quote Available
+                  </div>
+  
+              </ng-container>
+
+                   </mat-tab>
+
+              </mat-tab-group>
+
+              <div class="row">
+
+                <div class="col-12">
+                    <div class="text-center my-3">
+                        <button class="custom-btn btn-5 mx-2" matRipple  *ngIf="!smss" (click)="smsBack()">Back</button>
+                       
+                    </div>
+                </div>
+            </div>
+
+
+          <!--<textarea class="form" id="exampleFormControlTextarea1" [(ngModel)]="Remarks" rows="1"></textarea>-->
+        </div>
+  </div>
+  <!--<div class="modal-footer" style="height: 41px;">
+
+<button class="btn btn-danger" *ngIf="!smss" (click)="smsBack()">Back</button>
+  </div>-->
+</div>
+
+
+<ng-template #SmCard let-modal>
+  <div class="modal-header" style="height: 48px;">
+    <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">View Sms Details</span></h4>
+
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+    </button>
+</div>
+
+<div class="modal-body">
+  <div class="form-group">
+          <div class="row ml-2">
+          <div class="col-12 col-md-5">
+            <div class="input-control-container">
+              <label class="input-form-label">MobileNo
+                <span class="text-required">*</span></label>
+              <div class="input-form-box">
+                  <input type="text" class="input-form-control without-icon"  disabled [(ngModel)]="SmsViewList.MobileNo
+                  " maxlength="100">
+              </div>
+
+          </div>
+        </div>
+
+        <div class="col-12 col-md-5">
+          <div class="input-control-container">
+            <label class="input-form-label">SmsFrom<span class="text-required">*</span></label>
+            <div class="input-form-box">
+                <input type="text" class="input-form-control without-icon" disabled [(ngModel)]="SmsViewList.SmsFrom" maxlength="100">
+            </div>
+
+        </div>
+      </div>
+      </div>
+      <div class="row ml-2">
+        <div class="col-12 col-md-5">
+          <div class="input-control-container">
+            <label class="input-form-label">SmsType
+              <span class="text-required">*</span></label>
+            <div class="input-form-box">
+                <input type="text" class="input-form-control without-icon"  disabled [(ngModel)]="SmsViewList.SmsType
+                " maxlength="100">
+            </div>
+
+        </div>
+      </div>
+
+      <div class="col-12 col-md-5">
+        <div class="input-control-container">
+          <label class="input-form-label">SmsRegards
+            <span class="text-required">*</span></label>
+          <div class="input-form-box">
+              <input type="text" class="input-form-control without-icon" disabled [(ngModel)]="SmsViewList.SmsRegards
+              " maxlength="100">
+          </div>
+
+      </div>
+    </div>
+    </div>
+
+
+  <div class="row ml-2">
+
+    <div class="col-12 col-md-5">
+      <div class="input-control-container">
+        <label class="input-form-label">ResTime<span class="text-required">*</span></label>
+        <div class="input-form-box">
+            <input type="text" class="input-form-control without-icon" disabled [(ngModel)]="SmsViewList.ResTime" maxlength="100">
+        </div>
+
+    </div>
+  </div>
+  <div class="col-12 col-md-5">
+    <div class="input-control-container">
+      <label class="input-form-label">ReqTime<span class="text-required">*</span></label>
+      <div class="input-form-box">
+          <input type="text" class="input-form-control without-icon" disabled [(ngModel)]="SmsViewList.ReqTime" maxlength="100">
+      </div>
+
+  </div>
+</div>
+  </div>
+
+
+  <div class="row ml-2">
+    <div class="col-12 col-md-5">
+      <label class="input-form-label">EntryDate<span class="text-required">*</span></label>
+    <mat-form-field appearance="fill">
+
+      <input matInput [matDatepicker]="picker" [min]="minDate" disabled [(ngModel)]="EntryDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  </div>
+
+  <div class="col-12 col-md-5">
+    <div class="input-control-container">
+      <label class="input-form-label">ResStatus
+        <span class="text-required">*</span></label>
+      <div class="input-form-box">
+          <input type="text" class="input-form-control without-icon" disabled [(ngModel)]="SmsViewList.ResStatus" maxlength="100">
+      </div>
+
+  </div>
+  </div>
+  </div>
+  <div class="row ml-2">
+    <div class="col-12 col-md-12">
+      <div class="input-control-container">
+        <label class="input-form-label">SmsContent
+          <span class="text-required">*</span></label>
+      <div class="input-form-box">
+        <textarea cols="1200" ros="3" disabled [(ngModel)]="SmsViewList.SmsContent" class="input-form-select" width="100%;"></textarea>
+    </div>
+
+    </div>
+  </div>
+</div>
+  </div>
+         </div>
+</ng-template>

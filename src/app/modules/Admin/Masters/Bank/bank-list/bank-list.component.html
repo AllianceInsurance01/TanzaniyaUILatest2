@@ -1,0 +1,30 @@
+<div class="vision-grid-item">
+    <div class="card">
+        <div class="card-header"> 
+            <div class="d-flex justify-content-between">
+                <div>
+                    Existing Bank 
+                </div>
+                <div *ngIf="branchValue">
+                    <button class="btn btn-warning" (click)="onAddSection()">Add New</button>
+                </div>
+            </div>
+            
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 col-lg-4 col-xl-4 ml-3">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Branch<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" appendTo="body" [items]="branchList" [(ngModel)]="branchValue" bindValue="Code" bindLabel="CodeDesc" (change)="getExistingBank()">
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+            <ng-container *ngIf="BankData">
+                <app-grid-table [cols]="columnHeader" changeStatus="true" (onStatus)="EditStatus($event)"  [data]="BankData" [filterValue]="filterValue" (open)="onOpen($event)" (onEdit)="onEditSection($event)">
+                </app-grid-table>
+            </ng-container>
+        </div>
+    </div>
+</div>
