@@ -378,6 +378,7 @@ export class VehicleWishListComponent implements OnInit {
     console.log("Final Filters",entry,this.vehicleDetails,this.vehicleWishList,this.customerData)
   }
   onEnableUploadSection(){
+    this.uploadStatus = null;
     this.errorSection = false;
     this.policyStartDate = this.updateComponent?.policyStartDate;
     this.policyEndDate = this.updateComponent?.policyEndDate;
@@ -410,6 +411,9 @@ export class VehicleWishListComponent implements OnInit {
                             this.searchSection = false;
                             this.uploadSection = true;
                             this.vehicleWishList = [];
+                            this.showEmpRecordsSection = false;
+                            this.uploadDocList = [];
+                            this.employeeUploadRecords = [];
                           }
                           else{ this.errorSection=true;this.promoCodeError = true;}
                         }
@@ -417,6 +421,9 @@ export class VehicleWishListComponent implements OnInit {
                           this.searchSection = false;
                           this.uploadSection = true;
                           this.vehicleWishList = [];
+                          this.showEmpRecordsSection = false;
+                          this.uploadDocList = [];
+                          this.employeeUploadRecords = [];
                         }
                     }
                     else{this.brokerBranchCodeError = true;this.errorSection = true;}
@@ -434,6 +441,9 @@ export class VehicleWishListComponent implements OnInit {
                 this.searchSection = false;
                 this.uploadSection = true;
                 this.vehicleWishList = [];
+                this.showEmpRecordsSection = false;
+                this.uploadDocList = [];
+                this.employeeUploadRecords = [];
               }
               else{ this.errorSection=true;this.promoCodeError = true;}
             }
@@ -441,6 +451,9 @@ export class VehicleWishListComponent implements OnInit {
               this.searchSection = false;
               this.uploadSection = true;
               this.vehicleWishList = [];
+              this.showEmpRecordsSection = false;
+              this.uploadDocList = [];
+              this.employeeUploadRecords = [];
             }
           }
         }
@@ -549,6 +562,8 @@ export class VehicleWishListComponent implements OnInit {
               if(data){
                 let res = data?.Result;
                 if(res.Status=='S'){
+                  this.uploadStatus = null;
+                  this.uploadDocList = [];
                       this.getValidRecordDetails();
                 }
                 else if(res.Status=='E'){

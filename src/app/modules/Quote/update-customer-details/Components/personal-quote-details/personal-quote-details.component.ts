@@ -103,7 +103,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
   windowMaterialList: any[] = [];
   doorsMaterialList: any[] = [];
   nightLeftDoors: any[] = [];
-  buildingOccupiedList: any[] = []; coversRequired: any = 'C';
+  buildingOccupiedList: any[] = []; coversRequired: any = 'BC';
   constructor(private formlyJsonschema: FormlyJsonschema, private sharedService: SharedService, private datePipe: DatePipe,
     private router: Router, private http: HttpClient, private updateComponent: UpdateCustomerDetailsComponent) {
     this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -1633,82 +1633,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       {
         type: 'tabs',
         fieldGroup: [
-          // {
-          //   props: { label: 'Fire And Allied Perils' },
-
-          //   fieldGroupClassName: 'row',
-          //   fieldGroup: [
-          //     {
-          //       className: 'col-6',
-          //       key: 'BuildingOwnerYn',
-          //       type: 'radio',
-          //       templateOptions: {
-          //         type: 'radio',
-          //         label: 'Do You Rent Or Own Home ?',
-          //         required: true,
-          //         disabled: this.checkDisable('BuildingOwnerYn'),
-          //         name: 'BuildingOwnerYn',
-          //         options: [{ value: 'N', label: 'I Rent Home' }, { value: 'Y', label: 'I Own Home' }],
-          //       }
-          //     },
-          //     {
-          //       className: 'offset-2 col-7',
-          //       key: 'IndustryId',
-          //       type: 'select',
-          //       props: {
-          //         label: 'Industry',
-          //         required: true,
-          //         disabled: this.checkDisable('IndustryId'),
-          //         options: [],
-          //       },
-          //     },
-          //     {
-          //       className: 'offset-2 col-7',
-          //       type: 'commaSeparator',
-          //       key: 'BuildingSuminsured',
-          //       templateOptions: {
-          //         label: `Building Sum Insured (${this.commonDetails[0].Currency})`,
-          //         required: true,
-          //       },
-          //       validators: {
-          //         validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-          //       },
-          //       hooks: {
-          //       },
-
-          //       expressions: {
-          //         disabled: this.checkDisable('BuildingSuminsured'),
-          //       },
-          //     },
-          //   ]
-          // },
-          // {
-          //   props: { label: 'Content' },
-          //   fieldGroup: [
-          //     {
-          //       fieldGroupClassName: 'row',
-          //       fieldGroup: [
-          //         {
-          //           className: 'offset-2 col-7',
-          //           type: 'commaSeparator',
-          //           key: 'ContentSuminsured',
-          //           templateOptions: {
-          //             label: `House Hold Content (${this.commonDetails[0].Currency})`,
-          //             required: true,
-          //           },
-          //           validators: {
-          //             validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-          //           },
-          //           hooks: {
-          //           },
-          //           expressions: {
-          //             disabled: this.checkDisable('ContentSuminsured'),
-          //           },
-          //         },
-          //       ]
-          //     },
-          //   ],
-          // },
+          
           {
             props: { label: 'All Risk' },
             fieldGroup: [
@@ -1718,7 +1643,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
                   {
                     className: 'offset-2 col-7',
                     type: 'commaSeparator',
-                    key: 'AllRiskSumInsured',
+                    key: 'AllriskSumInsured',
                     templateOptions: {
                       label: `All Risk Suminsured (${this.commonDetails[0].Currency})`,
                       required: true,
@@ -1894,7 +1819,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
             ],
           },
           {
-            props: { label: 'Burglary  and House breaking' },
+            props: { label: 'Burglary and House Breaking' },
             fieldGroup: [
               {
                 fieldGroupClassName: 'row',
@@ -2224,6 +2149,21 @@ export class PersonalQuoteDetailsComponent implements OnInit {
                 fieldGroup: [
                   {
                     className: 'offset-2 col-7',
+                    type: 'select',
+                    key: 'PlasteGlassType',
+                    props: {
+                      label: 'Plate Glass Type',
+                      disabled: this.checkDisable('PlasteGlassType'),
+                      required: true,
+                      options: [
+                      ],
+                    },
+                    expressions: {
+    
+                    },
+                  },
+                  {
+                    className: 'offset-2 col-7',
                     type: 'commaSeparator',
                     key: 'PlateGlassSi',
                     templateOptions: {
@@ -2240,6 +2180,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
                       disabled: this.checkDisable('PlateGlassSi'),
                     },
                   },
+                  
     
                 ]
               },
@@ -2279,442 +2220,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         ],
       }
     ];
-  // this.fields = [
-  //   {
-  //     type: 'stepper',
-  //     fieldGroup: [
-  //       {
-  //         props: { label: 'Breakdown of equipment' },
-  //         fieldGroup: [
-  //           {
-  //             fieldGroupClassName: 'row',
-  //             fieldGroup: [
-  //               {
-  //                 className: 'offset-2 col-7',
-  //                 type: 'commaSeparator',
-  //                 key: 'ElecEquipSuminsured',
-  //                 props: {
-  //                   label: `Electronic Equipment Sum insured (${this.commonDetails[0].Currency})`,
-  //                   disabled: this.checkDisable('ElecEquipSuminsured'),
-  //                   required: true,
-  //                   options: [
-
-  //                   ],
-
-  //                 },
-  //                 validators: {
-  //                   validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-  //                 },
-  //                 hooks: {
-  //                 },
-  //                 expressions: {
-  //                 },
-  //               }
-  //             ]
-  //           }
-  //         ]
-  //       },
-  //       {
-  //         props: { label: 'Money Risk (Cash/Cheque)' },
-  //         fieldGroup: [
-  //           {
-  //             fieldGroupClassName: 'row',
-  //             fieldGroup: [
-  //               {
-  //                 className: 'col-6',
-  //                 type: 'commaSeparator',
-  //                 key: 'CashInTransit',
-  //                 props: {
-  //                   label: 'Money In Transit Limit',
-  //                   placeholder: "",
-  //                   required: true,
-  //                   maxLength: 20,
-  //                   pattern: /[0-9]+/gm,
-  //                   disabled: this.checkDisable('CashInTransit'),
-  //                   options: [
-  //                   ],
-  //                 },
-  //                 validation: {
-  //                   messages: {
-  //                     pattern: (error: any, field: FormlyFieldConfig) => field.formControl.setValue(field.formControl.value.replace(/[^0-9]+/gm, ''))
-  //                   },
-  //                 },
-  //                 expressions: {
-
-  //                 },
-  //               },
-  //               {
-  //                 className: 'col-6',
-  //                 type: 'commaSeparator',
-  //                 key: 'CashInHandEmployees',
-  //                 props: {
-  //                   label: 'Money in Custody Of Collectors',
-  //                   placeholder: "",
-  //                   required: true,
-  //                   maxLength: 40,
-  //                   pattern: /[0-9]+/gm,
-  //                   disabled: this.checkDisable('CashInHandEmployees'),
-  //                   options: [
-  //                   ],
-  //                 },
-  //                 validation: {
-  //                   messages: {
-  //                     pattern: (error: any, field: FormlyFieldConfig) => field.formControl.setValue(field.formControl.value.replace(/[^0-9]+/gm, ''))
-  //                   },
-  //                 },
-  //                 expressions: {
-
-  //                 },
-  //               },
-  //               {
-  //                 className: 'col-6',
-  //                 type: 'commaSeparator',
-  //                 key: 'CashInSafe',
-  //                 props: {
-  //                   label: 'Money in Safe',
-  //                   placeholder: "",
-  //                   required: true,
-  //                   maxLength: 20,
-  //                   pattern: /[0-9]+/gm,
-  //                   disabled: this.checkDisable('CashInSafe'),
-  //                   options: [
-  //                   ],
-  //                 },
-  //                 validation: {
-  //                   messages: {
-  //                     pattern: (error: any, field: FormlyFieldConfig) => field.formControl.setValue(field.formControl.value.replace(/[^0-9]+/gm, ''))
-  //                   },
-  //                 },
-  //                 expressions: {
-
-  //                 },
-  //               },
-  //               {
-  //                 className: 'col-6',
-  //                 type: 'commaSeparator',
-  //                 key: 'MoneyAnnualcarrySuminsured',
-  //                 props: {
-  //                   label: `Annual Carrying SumInsured`,
-  //                   disabled: this.checkDisable('MoneyAnnualcarrySuminsured'),
-  //                   required: true,
-  //                   options: [
-
-  //                   ],
-
-  //                 },
-  //                 validators: {
-  //                   validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-  //                 },
-  //                 hooks: {
-  //                 },
-  //                 expressions: {
-  //                 },
-  //               },
-  //               {
-  //                 className: 'col-6',
-  //                 type: 'commaSeparator',
-  //                 key: 'MoneyInSafeBusiness',
-  //                 props: {
-  //                   label: 'Money In Safe During Business Hours',
-  //                   placeholder: "",
-  //                   required: true,
-  //                   maxLength: 40,
-  //                   pattern: /[0-9]+/gm,
-  //                   disabled: this.checkDisable('MoneyInSafeBusiness'),
-  //                   options: [
-  //                   ],
-  //                 },
-  //                 validation: {
-  //                   messages: {
-  //                     pattern: (error: any, field: FormlyFieldConfig) => field.formControl.setValue(field.formControl.value.replace(/[^0-9]+/gm, ''))
-  //                   },
-  //                 },
-  //                 expressions: {
-
-  //                 },
-  //               },
-  //               {
-  //                 className: 'col-6',
-  //                 type: 'commaSeparator',
-  //                 key: 'MoneyOutSafeBusiness',
-  //                 props: {
-  //                   label: 'Money in Safe After Business Hours',
-  //                   placeholder: "",
-  //                   required: true,
-  //                   maxLength: 20,
-  //                   pattern: /[0-9]+/gm,
-  //                   disabled: this.checkDisable('MoneyOutSafeBusiness'),
-  //                   options: [
-  //                   ],
-  //                 },
-  //                 validation: {
-  //                   messages: {
-  //                     pattern: (error: any, field: FormlyFieldConfig) => field.formControl.setValue(field.formControl.value.replace(/[^0-9]+/gm, ''))
-  //                   },
-  //                 },
-  //                 expressions: {
-
-  //                 },
-  //               },
-  //               {
-  //                 className: 'col-6',
-  //                 type: 'commaSeparator',
-  //                 key: 'MoneyInPremises',
-  //                 props: {
-  //                   label: 'Money in residence of director & partner',
-  //                   placeholder: "",
-  //                   required: true,
-  //                   maxLength: 40,
-  //                   pattern: /[0-9]+/gm,
-  //                   disabled: this.checkDisable('MoneyInPremises'),
-  //                   options: [
-  //                   ],
-  //                 },
-  //                 validation: {
-  //                   messages: {
-  //                     pattern: (error: any, field: FormlyFieldConfig) => field.formControl.setValue(field.formControl.value.replace(/[^0-9]+/gm, ''))
-  //                   },
-  //                 },
-  //                 expressions: {
-
-  //                 },
-  //               }
-  //             ]
-  //           }
-  //         ]
-  //       },
-
-  //       {
-  //         props: { label: 'Fidelity Guarantee' },
-  //         fieldGroup: [
-  //           {
-  //             fieldGroupClassName: 'row',
-  //             fieldGroup: [
-
-  //               {
-  //                 className: 'offset-2 col-7',
-  //                 type: 'commaSeparator',
-  //                 key: 'FidelityAnyoccuSuminsured',
-  //                 props: {
-  //                   label: `AnyOne Occurance Sum insured (${this.commonDetails[0].Currency})`,
-  //                   disabled: this.checkDisable('FidelityAnyoccuSuminsured'),
-  //                   required: true,
-  //                   options: [
-
-  //                   ],
-
-  //                 },
-  //                 validators: {
-  //                   validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-  //                 },
-  //                 hooks: {
-  //                 },
-  //                 expressions: {
-
-  //                 },
-  //               },
-  //               {
-  //                 className: 'offset-2 col-7',
-  //                 type: 'commaSeparator',
-  //                 key: 'FidelityAnnualSuminsured',
-  //                 props: {
-  //                   label: `Annual Sum insured (${this.commonDetails[0].Currency})`,
-  //                   disabled: this.checkDisable('FidelityAnnualSuminsured'),
-  //                   required: true,
-  //                   options: [
-
-  //                   ],
-
-  //                 },
-  //                 validators: {
-  //                   validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-  //                 },
-  //                 hooks: {
-  //                 },
-  //                 expressions: {
-
-  //                 },
-  //               }
-  //             ]
-  //           }
-  //         ]
-  //       },
-  //       {
-  //         props: { label: 'Liability' },
-  //         fieldGroup: [
-  //           {
-  //             fieldGroupClassName: 'row',
-  //             fieldGroup: [
-  //               // {
-  //               //   className: 'offset-2 col-7',
-  //               //   key: 'LiabilityYN',
-  //               //   type: 'radio',
-  //               //   props: {
-  //               //   label: 'Liability Cover Required?',
-  //               //   required: false,
-  //               //   options: [
-  //               //     {
-  //               //       "label": "Yes",
-  //               //       "value": 'Yes'
-  //               //     },
-  //               //     {
-  //               //       "label": "No",
-  //               //       "value": "No"
-  //               //     }
-  //               //   ],
-  //               //   },
-  //               // },
-  //               {
-  //                 className: 'offset-2 col-7',
-  //                 type: 'commaSeparator',
-  //                 key: 'TpliabilityAnyoccuSuminsured',
-  //                 props: {
-  //                   label: `TPL AnyOne Occurence Sum insured (${this.commonDetails[0].Currency})`,
-  //                   disabled: this.checkDisable('TpliabilityAnyoccuSuminsured'),
-  //                   required: true,
-  //                   options: [
-
-  //                   ],
-
-  //                 },
-  //                 validators: {
-  //                   validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-  //                 },
-  //                 hooks: {
-  //                 },
-  //                 expressions: {
-  //                 },
-  //               },
-  //             ]
-  //           }
-  //         ]
-  //       },
-  //       {
-  //         props: { label: 'WC/EL' },
-  //         fieldGroup: [
-  //           {
-  //             fieldGroupClassName: 'row',
-  //             fieldGroup: [
-  //               // {
-  //               //   className: 'offset-2 col-7',
-  //               //   key: 'WcYN',
-  //               //   type: 'radio',
-  //               //   props: {
-  //               //   label: 'Workmen Compensation / Employers Liability Cover Required?',
-  //               //   required: false,
-  //               //   options: [
-  //               //     {
-  //               //       "label": "Yes",
-  //               //       "value": 'Yes'
-  //               //     },
-  //               //     {
-  //               //       "label": "No",
-  //               //       "value": "No"
-  //               //     }
-  //               //   ],
-  //               //   },
-  //               // },
-  //               {
-  //                 className: 'offset-2 col-7',
-  //                 type: 'commaSeparator',
-  //                 key: 'EmpliabilityExcessSuminsured',
-  //                 props: {
-  //                   label: `Employer's Excess Sum insured (${this.commonDetails[0].Currency})`,
-  //                   disabled: this.checkDisable('EmpliabilityExcessSuminsured'),
-  //                   required: true,
-  //                   options: [
-
-  //                   ],
-
-  //                 },
-  //                 validators: {
-  //                   validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-  //                 },
-  //                 hooks: {
-  //                 },
-  //                 expressions: {
-  //                 },
-  //               },
-  //               {
-  //                 className: 'offset-2 col-7',
-  //                 type: 'commaSeparator',
-  //                 key: 'EmpliabilityAnnualSuminsured',
-  //                 props: {
-  //                   label: `Employer's Annual Sum insured (${this.commonDetails[0].Currency})`,
-  //                   disabled: this.checkDisable('EmpliabilityAnnualSuminsured'),
-  //                   required: true,
-  //                   options: [
-
-  //                   ],
-
-  //                 },
-  //                 validators: {
-  //                   validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-  //                 },
-  //                 hooks: {
-  //                 },
-  //                 expressions: {
-  //                 },
-  //               }
-  //             ]
-  //           }
-  //         ]
-  //       },
-  //       {
-  //         props: { label: 'Goods In Transit' },
-  //         fieldGroup: [
-  //           {
-  //             fieldGroupClassName: 'row',
-  //             fieldGroup: [
-  //               {
-  //                 className: 'offset-2 col-7',
-  //                 type: 'commaSeparator',
-  //                 key: 'GoodsSinglecarrySuminsured',
-  //                 props: {
-  //                   label: `Goods Single Carry Sum insured (${this.commonDetails[0].Currency})`,
-  //                   disabled: this.checkDisable('GoodsSinglecarrySuminsured'),
-  //                   required: true,
-  //                   options: [
-
-  //                   ],
-
-  //                 },
-  //                 validators: {
-  //                   validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-  //                 },
-  //                 hooks: {
-  //                 },
-  //                 expressions: {
-  //                 },
-  //               },
-  //               {
-  //                 className: 'offset-2 col-7',
-  //                 type: 'commaSeparator',
-  //                 key: 'GoodsTurnoverSuminsured',
-  //                 props: {
-  //                   label: `Goods Turn Over Sum insured (${this.commonDetails[0].Currency})`,
-  //                   disabled: this.checkDisable('GoodsTurnoverSuminsured'),
-  //                   required: true,
-  //                   options: [
-
-  //                   ],
-
-  //                 },
-  //                 validators: {
-  //                   validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-  //                 },
-  //                 hooks: {
-  //                 },
-  //                 expressions: {
-  //                 },
-  //               }
-  //             ]
-  //           }
-  //         ]
-  //       }
-  //     ]
-  //   }
-  // ];
+  
   if(this.coversRequired== 'BC') {
   let entry = [
     {
@@ -2723,34 +2229,36 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         {
           fieldGroupClassName: 'row',
           fieldGroup: [
-            // {
-            //   className: 'offset-2 col-7',
-            //   key: 'CategoryId',
-            //   type: 'select',
-            //   props: {
-            //     label: 'Category',
-            //     disabled: this.checkDisable('CategoryId'),
-            //     required: true,
-            //     options: []
+            {
+              className: 'offset-2 col-7',
+              type: 'select',
+              key: 'IndemityPeriod',
+              props: {
+                label: 'Indemity Period',
+                disabled: this.checkDisable('IndemityPeriod'),
+                required: true,
+                options: [
+                ],
+              },
+              expressions: {
 
-            //   },
-            //   hooks: {
-            //     onInit: (field) => field.formControl.valueChanges.pipe(
-            //       tap(value => this.getIndustryList()),
-            //     )
-            //   }
-            // },
-            // {
-            //   className: 'offset-2 col-7',
-            //   key: 'IndustryId',
-            //   type: 'select',
-            //   props: {
-            //     label: 'Industry',
-            //     required: true,
-            //     disabled: this.checkDisable('IndustryId'),
-            //     options: [],
-            //   },
-            // },
+              },
+            },
+
+            {
+              className: 'offset-2 col-7',
+              key: 'MakutiYn',
+              type: 'radio',
+              templateOptions: {
+                type: 'radio',
+                label: 'Makuti',
+                required: true,
+                disabled: this.checkDisable('MakutiYn'),
+                name: 'MakutiYn',
+                options: [{ value: 'N', label: 'No' }, { value: 'Y', label: 'Yes' }],
+              }
+            },
+            
             {
               className: 'offset-2 col-7',
               type: 'commaSeparator',
@@ -2821,34 +2329,36 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         {
           fieldGroupClassName: 'row',
           fieldGroup: [
-            // {
-            //   className: 'offset-2 col-7',
-            //   key: 'CategoryId',
-            //   type: 'select',
-            //   props: {
-            //     label: 'Category',
-            //     disabled: this.checkDisable('CategoryId'),
-            //     required: true,
-            //     options: []
+            {
+              className: 'offset-2 col-7',
+              type: 'select',
+              key: 'IndemityPeriod',
+              props: {
+                label: 'Indemity Period',
+                disabled: this.checkDisable('IndemityPeriod'),
+                required: true,
+                options: [
+                ],
+              },
+              expressions: {
 
-            //   },
-            //   hooks: {
-            //     onInit: (field) => field.formControl.valueChanges.pipe(
-            //       tap(value => this.getIndustryList()),
-            //     )
-            //   }
-            // },
-            // {
-            //   className: 'offset-2 col-7',
-            //   key: 'IndustryId',
-            //   type: 'select',
-            //   props: {
-            //     label: 'Industry',
-            //     required: true,
-            //     disabled: this.checkDisable('IndustryId'),
-            //     options: [],
-            //   },
-            // },
+              },
+            },
+
+            {
+              className: 'offset-2 col-7',
+              key: 'MakutiYn',
+              type: 'radio',
+              templateOptions: {
+                type: 'radio',
+                label: 'Makuti',
+                required: true,
+                disabled: this.checkDisable('MakutiYn'),
+                name: 'MakutiYn',
+                options: [{ value: 'N', label: 'No' }, { value: 'Y', label: 'Yes' }],
+              }
+            },
+
             {
               className: 'offset-2 col-7',
               type: 'commaSeparator',
@@ -2919,7 +2429,7 @@ else if (this.coversRequired == 'C') {
 }
 if (type == 'create' || mode == 'change') { this.formSection = true; this.viewSection = false; }
 else { this.formSection = false; this.viewSection = true; }
-}
+  } 
 setDomesticForm(type, mode){
   this.fields = [
     {

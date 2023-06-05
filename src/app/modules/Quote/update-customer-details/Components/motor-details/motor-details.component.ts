@@ -397,7 +397,7 @@ getYears(from) {
           }
 
 
-          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details'])
+          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
           // if(type=='save'){
           //   if(this.editSection){
           //     sessionStorage.removeItem('vehicleDetails')

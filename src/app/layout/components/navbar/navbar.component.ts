@@ -65,12 +65,10 @@ export class NavbarComponent implements OnInit {
     // $(window).on('click',function(){
     //   $('.subusermenu').hide();
     //  });
-    if(sessionStorage.getItem('typeValue')!='SuperAdmin'){
       $("#dropdownMenuLink1").on('click', function (evt) {  
         console.log("evt***",evt);
         $('.branchsubName').toggle();
       });
-    }
   }
   home() {
     this.router.navigate(['/product']);

@@ -58,7 +58,9 @@ export class ProductData {
 	Address:any='';CategoryDesc:any='';
 	BuildingOccupied: any = '';
 	FirstLossPercentId:any='';
-	
+	IndemityPeriod:any='';
+	MakutiYn:any='';
+	PlasteGlassType:any='';
 	
 	
 	constructor(data?) {
@@ -147,5 +149,9 @@ export class ProductData {
 		this.MoneyOutSafeBusiness = data?.MoneyOutSafeBusiness ?? '0';
 		this.MoneyInLocker = data?.MoneyInLocker ?? '0';
 		this.FirstLossPercentId = data?.FirstLossPercentId ?? '';
+		this.IndemityPeriod = data?.IndemityPeriod ?? '';
+		this.MakutiYn = data?.MakutiYn ?? '';
+		this.PlasteGlassType = data?.PlasteGlassType ?? '';
+	
 	}
 }
