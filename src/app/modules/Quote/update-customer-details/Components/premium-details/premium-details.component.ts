@@ -63,6 +63,9 @@ export class PremiumDetailsComponent implements OnInit {
   listDocTypes: any[];
   uploadedIndividualList: any[]=[];
   CoverList: any[]=[];
+  address1: any;
+  address2: any;
+  preferredNotification: any;
   constructor(private sharedService: SharedService,
     private router:Router,public dialogService: MatDialog,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe) {
@@ -150,6 +153,8 @@ export class PremiumDetailsComponent implements OnInit {
             this.titleCode = this.customerDetails?.Title;
             this.mobileCode = this.customerDetails?.MobileCode1;
             this.gender = this.customerDetails?.Gender;
+            this.address1 = this.customerDetails?.Address1;
+            this.address2 = this.customerDetails?.Address2;
             this.occupation = this.customerDetails?.Occupation;
             this.vrTinNo = this.customerDetails?.VrTinNo;
             this.notification = this.customerDetails?.PreferredNotification;
@@ -157,6 +162,7 @@ export class PremiumDetailsComponent implements OnInit {
             this.clientName = this.customerDetails?.ClientName;
             this.dateOfBirth = this.customerDetails?.DobOrRegDate;
             this.emailId = this.customerDetails?.Email1;
+            this.preferredNotification = this.customerDetails?.PreferredNotification;
             this.mobileNo = this.customerDetails?.MobileNo1;
             this.idNumber = this.customerDetails?.IdNumber;
             if(this.customerDetails.AppointmentDate!='' && this.customerDetails.AppointmentDate!=null){
@@ -1018,14 +1024,14 @@ toggle(index: number) {
       }
     }
     let ReqObj = {
-          "BrokerBranchCode": this.customerDetails.BrokerBranchCode,
+          "BrokerBranchCode": this.quoteDetails.BrokerBranchCode,
           "CustomerReferenceNo": this.customerDetails.CustomerReferenceNo,
           "InsuranceId": this.insuranceId,
           "BranchCode": this.branchCode,
           "ProductId":this.productId,
           "AppointmentDate": appointmentDate,
-          "Address1": this.customerDetails?.Address1,
-          "Address2": this.customerDetails?.Address2,
+          "Address1": this.address1,
+          "Address2": this.address2,
           "BusinessType": this.customerDetails?.BusinessType,
           "CityName":this.customerDetails?.CityName,
           "ClientName": this.clientName,
@@ -1047,9 +1053,11 @@ toggle(index: number) {
           "Nationality": this.customerDetails.Nationality,
           "Occupation": this.customerDetails?.Occupation,
           "Placeofbirth": "Chennai",
-          "PolicyHolderType": this.customerDetails.IdType,
+          "PolicyHolderType": this.customerDetails.PolicyHolderType,
           "PolicyHolderTypeid": this.customerDetails?.PolicyHolderTypeid,
-          "PreferredNotification": this.customerDetails?.PreferredNotification,
+          "PreferredNotification": this.preferredNotification,
+          "QuoteNo": this.quoteNo,
+          "RequestReferenceNo": this.quoteRefNo,
           "RegionCode": "01",
           "MobileCode1": this.mobileCode,
           "WhatsappCode": this.mobileCode,

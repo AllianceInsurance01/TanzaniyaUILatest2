@@ -3546,7 +3546,7 @@ getRegionList() {
             this.regionList[i].value = this.regionList[i]['Code'];
             delete this.regionList[i].CodeDesc;
             if (i == this.regionList.length - 1) {
-              this.fields[0].fieldGroup[1].fieldGroup[0].fieldGroup[6].props.options = defaultObj.concat(this.regionList);
+              this.fields[0].fieldGroup[1].fieldGroup[0].fieldGroup[7].props.options = defaultObj.concat(this.regionList);
 
             }
           }
@@ -3687,7 +3687,7 @@ ongetDistrictList(type){
             this.stateList[i].value = this.stateList[i]['Code'];
             delete this.stateList[i].CodeDesc;
             if (i == this.stateList.length - 1) {
-              this.fields[0].fieldGroup[1].fieldGroup[0].fieldGroup[7].props.options = defaultObj.concat(this.stateList);
+              this.fields[0].fieldGroup[1].fieldGroup[0].fieldGroup[8].props.options = defaultObj.concat(this.stateList);
               if (type == 'change') this.productItem.DistrictCode = '';
               let exist = this.stateList.some(ele => ele.value == this.productItem.DistrictCode);
             }

@@ -64,8 +64,8 @@
                 
             </ng-container>
         </mat-menu> -->
-        <ng-container *ngIf="typeValue!='SuperAdmin'">
-            <a class="btn  dropdown-toggle spancommon span_font_size brnch" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black;cursor:pointer;font-weight: 600;">
+        <ng-container>
+            <a class="btn  dropdown-toggle spancommon span_font_size brnch"  [hidden]="typeValue=='SuperAdmin'" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black;cursor:pointer;font-weight: 600;">
                 Branch - {{branchName}}
             </a>
             <div class="dropdown-menu branchsubName" aria-labelledby="dropdownMenuLink1">
