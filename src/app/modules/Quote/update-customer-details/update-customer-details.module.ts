@@ -55,6 +55,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { DatepickerTypeComponent } from './DatepickerTypeComponent';
 import { SectionModificationComponent } from './Components/section-modification/section-modification.component';
 import { FormlyFieldTabs } from './tab.type';
+import { RepeatTypeComponent } from './repeatArray.type';
+import { TableTypeComponent } from './tableType';
+import { DisplayLabel } from './displayText';
 
 export function maxlengthValidationMessage(err, field) {
   return `This value should be less than ${field.templateOptions.maxLength} characters`;
@@ -92,7 +95,9 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     CommaSeparatorInput,
     DatepickerTypeComponent,
     SectionModificationComponent,
-    FormlyFieldTabs
+    FormlyFieldTabs,
+    RepeatTypeComponent,
+    TableTypeComponent
     //NewViewDetailsComponent
 
     ],
@@ -123,7 +128,10 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
         { name: 'array', component: ArrayTypeComponent },
         { name: 'object', component: ObjectTypeComponent },
         { name: 'multischema', component: MultiSchemaTypeComponent },
+        { name: 'repeat', component: RepeatTypeComponent },
+        { name: 'display', component: DisplayLabel },
         { name: 'commaSeparator', component: CommaSeparatorInput, wrappers: ['form-field'] },
+        { name: 'table', component: TableTypeComponent, wrappers: ['form-field'] },
         {
           name: 'datepicker',
           component: DatepickerTypeComponent,

@@ -35,7 +35,7 @@ export class CustomerDetailsComponent implements OnInit {
   editSection:boolean=true;commonSection:boolean=false;travelStartDate:any;
   code:any;travelEndDate:any;clientType:any;
   travelDetails: any;InsuranceType:any[]=[];
-  PackageYn: any;
+  PackageYn: any;IndustryId:any='';
   premiumList: any[]=[];
   policyStartError: boolean=false;policyPassDate: boolean=false;
   policyEndError: boolean=false;currencyError: boolean=false;
@@ -69,6 +69,10 @@ export class CustomerDetailsComponent implements OnInit {
   endorseEffectiveDate: any;
   enableCurrency:boolean = false;
   quoteNo: any = null;
+  brokerbranchCode: any;
+  industryList: any[];
+  buildingOwnerYN: string;
+  endMaxDate: Date;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       
@@ -82,6 +86,7 @@ export class CustomerDetailsComponent implements OnInit {
     this.userType = this.userDetails?.Result?.UserType;
     this.agencyCode = this.userDetails.Result.OaCode;
     this.branchCode = this.userDetails.Result.BranchCode;
+    this.brokerbranchCode = this.userDetails.Result.BrokerBranchCode;
     this.productId = this.userDetails.Result.ProductId;
     this.PackageYn= this.userDetails.Result.PackageYn
     this.insuranceId = this.userDetails.Result.InsuranceId;
@@ -105,6 +110,7 @@ export class CustomerDetailsComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1'){this.getIndustryList()}
     this.customerHeader =  [
       { key: 'Chassisnumber', display: 'Chassis Number' },
       { key: 'Registrationnumber', display: 'Registration No' },
@@ -236,6 +242,25 @@ export class CustomerDetailsComponent implements OnInit {
     }
     
   }
+  getIndustryList(){
+    this.industryList = [];
+    let ReqObj = {
+      "CategoryId": null,
+      "BranchCode": this.branchCode,
+      "InsuranceId": this.insuranceId,
+      "ProductId": this.productId,
+    }
+    let urlLink = `${this.CommonApiUrl}master/dropdown/industry`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        let defaultObj = [{ 'CodeDesc': '-Select-', 'Code': '' }]
+        this.industryList = defaultObj.concat(data.Result);
+  
+  
+      },
+      (err) => { },
+    );
+  }
   change(currencyCode)
   {
     /*//code= this.currencyCode
@@ -275,6 +300,7 @@ export class CustomerDetailsComponent implements OnInit {
         console.log(data);
         if(data.Result){
           let customerDetails:any = data.Result;
+          this.customerDetails = customerDetails;
           this.setCustomerValues(customerDetails);
           this.clientName = customerDetails?.ClientName
           this.idNumber = customerDetails?.IdNumber;
@@ -291,7 +317,21 @@ export class CustomerDetailsComponent implements OnInit {
     this.mobileNo = customerDetails?.MobileNo1;
     this.idNumber = customerDetails?.IdNumber;
     this.clientType = customerDetails?.PolicyHolderType;
-    if(this.productId!='4'){
+    if(this.productId == '6' || this.productId == '16' || this.productId == '39' || this.productId=='14' || this.productId=='32'  || this.productId=='1'){
+      let referenceNo =  sessionStorage.getItem('quoteReferenceNo');
+      if(referenceNo){
+        this.quoteRefNo = referenceNo;
+        this.getExistingBuildingList();
+      }
+      else{
+        this.quoteRefNo=null;
+        this.currencyCode = this.userDetails.Result.CurrencyId;
+        this.onCurrencyChange();
+        this.searchSection = true;
+        this.commonSection = true;
+      }
+    }
+    else if(this.productId!='4'){
       let vehicleDetails:any;
       let referenceNo =  sessionStorage.getItem('quoteReferenceNo');
       if(referenceNo){
@@ -385,9 +425,12 @@ export class CustomerDetailsComponent implements OnInit {
     let urlLink:any;
     let ReqObj = {
       "RequestReferenceNo": this.quoteRefNo,
-      "RiskId":"1"
+      "RiskId":"1",
+      "ProductId": this.productId,
+      "InsuranceId": this.insuranceId
     }
-    if(this.productId=='3' || this.productId=='19'  || this.productId=='1') urlLink = `${this.motorApiUrl}home/getbuildingdetails`;
+    if(this.productId=='3' || this.productId=='19') urlLink = `${this.motorApiUrl}home/getbuildingdetails`;
+    else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1') urlLink = `${this.motorApiUrl}api/slide/getcommondetails`;
     else urlLink =  `${this.motorApiUrl}api/geteservicebyriskid`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
@@ -396,7 +439,7 @@ export class CustomerDetailsComponent implements OnInit {
             this.customerData = data.Result;
             console.log("Edit Customer Final 3",this.customerData)
               let entry:any;
-              if(this.productId=='3' || this.productId=='19' || this.productId=='1') entry = this.customerData[0];
+              if(this.productId=='3' || this.productId=='19') entry = this.customerData[0];
               else entry = this.customerData
               this.applicationId = entry.ApplicationId;
               if(entry?.PolicyStartDate != null ){
@@ -415,6 +458,7 @@ export class CustomerDetailsComponent implements OnInit {
               this.currencyCode = entry?.Currency;
               this.exchangeRate = entry?.ExchangeRate;
               this.onCurrencyChange();
+              this.IndustryId = entry?.IndustryId;
               this.executiveValue= entry?.AcExecutiveId;
               this.InsuranceType=entry?.SectionId;
               this.HavePromoCode=entry?.Havepromocode;
@@ -487,32 +531,17 @@ export class CustomerDetailsComponent implements OnInit {
               this.PromoCode = entry.Promocode;
             }
             else if(entry.PromoCode){ this.updateComponent.PromoCode = entry.PromoCode; this.PromoCode = entry.PromoCode; }
-            // if(this.productId!='5'){
-              
-            // }
-            
-            
             this.InsuranceType=entry?.SectionId;
             this.onGetCustomerList('direct',this.customerCode);
             console.log("Currency",this.currencyCode,this.exchangeRate,this.HavePromoCode,entry,this.PromoCode)
           }
-
-          if(this.currencyCode=="TZS")
-          {
-            this.editSection=false;
-          }
-          else{
-            this.editSection=true;
-          }
-          if(vehicle.Active){
-            this.customerData.push(vehicle);
-          }
+          if(this.currencyCode=="TZS"){ this.editSection=false; }
+          else{ this.editSection=true; }
+          if(vehicle.Active){  this.customerData.push(vehicle); }
           else{
             this.wishSection=true;
             this.searchSection = true;
-            this.vehicleWishList.push(vehicle)
-
-          console.log("vehicles push",this.vehicleWishList)
+            this.vehicleWishList.push(vehicle);
           }
           i+=1;
           if(i==vehicleList.length){
@@ -573,8 +602,6 @@ export class CustomerDetailsComponent implements OnInit {
         console.log(data);
         if(data.Result){
            this.premiumList = data.Result;
-           
-
         }
       },
       (err) => { },
@@ -591,7 +618,6 @@ export class CustomerDetailsComponent implements OnInit {
     let urlLink = `${this.CommonApiUrl}master/dropdown/acexecutive`;
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
-        console.log(data);
         if(data.Result){
             this.executiveList = data.Result;
             this.getCommissionTypeList();
@@ -944,13 +970,14 @@ export class CustomerDetailsComponent implements OnInit {
       var month = d.getMonth();
       var day = d.getDate();
       this.endMinDate = new Date(this.policyStartDate);
-      //this.policyEndDate = new Date(year + 1, month, day-1);
+      this.policyEndDate = new Date(year + 1, month, day-1);
+      this.endMaxDate = new Date(year + 1, month, day-1);
       this.updateComponent.idNumber = this.idNumber
       this.updateComponent.policyStartDate = this.policyStartDate;
       //this.updateComponent.policyEndDate = this.policyEndDate;
       this.updateComponent.HavePromoCode = this.HavePromoCode;
       this.updateComponent.PromoCode = this.PromoCode;
-      //this.onChangeEndDate();
+      this.onChangeEndDate();
     }
     else{
       var d = this.travelStartDate;
@@ -958,9 +985,11 @@ export class CustomerDetailsComponent implements OnInit {
       var month = d.getMonth();
       var day = d.getDate();
       this.endMinDate = new Date(this.travelStartDate);
+      this.endMaxDate = new Date(year + 1, month, day-1);
        this.updateComponent.travelStartDate = this.travelStartDate;
       if(this.noOfDays!='' && this.noOfDays!=undefined && this.noOfDays!=null){
         this.travelEndDate = new Date(year + 1, month, day+Number(this.noOfDays-1));
+        //this.endMaxDate = new Date(year + 1, month, day-1);
         this.updateComponent.travelStartDate = this.travelStartDate;
         this.updateComponent.travelEndDate = this.travelEndDate;
       }
@@ -1529,6 +1558,7 @@ export class CustomerDetailsComponent implements OnInit {
                                     if(this.productId=='19'){
                                       this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
                                     }
+                                    else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1') this.saveCommonDetails(Details); 
                                     else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
                                   }
                                   else{
@@ -1556,6 +1586,7 @@ export class CustomerDetailsComponent implements OnInit {
                                   if(this.productId=='19'){
                                     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
                                   }
+                                  else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1') this.saveCommonDetails(Details); 
                                   else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
                                 }
                               }
@@ -1612,7 +1643,7 @@ export class CustomerDetailsComponent implements OnInit {
           "HavePromoCode":'',
           "Promocode":"",
         }];
-        Details[0].PolicyStartDate = this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy");;
+        Details[0].PolicyStartDate = this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy");
         Details[0].NoOfDays = this.noOfDays;
         Details[0].PolicyEndDate=this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
         Details[0].Currency = this.currencyCode;
@@ -1641,9 +1672,119 @@ export class CustomerDetailsComponent implements OnInit {
         if(this.productId=='19'){
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
         }
+        else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1') this.saveCommonDetails(Details); 
         else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
     }
     
+  }
+  saveCommonDetails(commonDetails){
+    let promocode = null;
+    let appId = "1", loginId = "", brokerbranchCode = "";let createdBy = "";
+    let quoteStatus = sessionStorage.getItem('QuoteStatus');
+    let referenceNo =  sessionStorage.getItem('quoteReferenceNo');
+      if(referenceNo){
+        this.quoteRefNo = referenceNo;
+      }
+      else this.quoteRefNo = null;
+    if (quoteStatus == 'AdminRP' || quoteStatus == 'AdminRA' || quoteStatus == 'AdminRR') {
+      //createdBy = this.vehicleDetailsList[0].CreatedBy;
+    }
+    else {
+      createdBy = this.loginId;
+      if (this.userType != 'Issuer') {
+        this.brokerCode = this.agencyCode;
+        appId = "1"; loginId = this.loginId;
+      }
+      else {
+        appId = this.loginId;
+        loginId = commonDetails[0].LoginId
+        brokerbranchCode = null;
+      }
+    }
+    this.applicationId = appId;
+    if (quoteStatus == 'AdminRP' || quoteStatus == 'AdminRA' || quoteStatus == 'AdminRR') {
+      if (this.applicationId != '01' && this.applicationId != '1') { this.issuerSection = true; }
+      else { this.issuerSection = false; }
+    }
+    else if (this.userType != 'Broker' && this.userType != 'User') { 
+      brokerbranchCode =  commonDetails[0]['BrokerBranchCode']
+      this.issuerSection = true;
+     }
+    else{ this.issuerSection = false; brokerbranchCode = this.userDetails.Result.BrokerBranchCode; }
+    if (quoteStatus == 'AdminRP' || quoteStatus == 'AdminRA' || quoteStatus == 'AdminRR') {
+    }
+    let section = [];
+    if(this.productId=='6'){section.push('40'); this.buildingOwnerYN = 'Y'};
+    if(this.productId=='39'){section.push('41'); this.buildingOwnerYN = 'N'};
+    if(this.productId=='16'){section.push('42'); this.buildingOwnerYN = 'N'};
+    if(this.productId=='14'){section.push('45'); this.buildingOwnerYN = 'N'};
+    if(this.productId=='32'){section.push('43'); this.buildingOwnerYN = 'N'};
+    if(this.productId=='1'){section.push('52'); this.buildingOwnerYN = 'N'};
+    let ReqObj = { 
+        "AcexecutiveId": "",
+        "PolicyNo": "",
+        "ProductId": this.productId,
+        "ProductType": null,
+        "TiraCoverNoteNo": null,
+        "RequestReferenceNo": this.quoteRefNo,
+        "AgencyCode": this.agencyCode,
+        "ApplicationId": this.applicationId,
+        "BdmCode": this.brokerCode,
+        "BranchCode": this.branchCode,
+        "BrokerBranchCode": brokerbranchCode,
+        "BrokerCode": this.brokerCode,
+        "BuildingOwnerYn": this.buildingOwnerYN,
+        "Createdby": this.loginId,
+        "SourceType": this.code,
+        "Currency": this.currencyCode,
+        "CustomerReferenceNo": this.customerDetails?.CustomerReferenceNo,
+        "CustomerCode": this.customerCode,
+        "ExchangeRate": this.exchangeRate,
+        "Havepromocode": this.HavePromoCode,
+        "Promocode": this.PromoCode,
+        "InsuranceId": this.insuranceId,
+        "LoginId": this.loginId,
+        "UserType": this.userType,
+        "PolicyEndDate": this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy"),
+        "PolicyStartDate": this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy"),
+        "SectionIds": section,
+        "SubUsertype": sessionStorage.getItem('typeValue'),
+        "RiskId":"1",
+        "IndustryId": this.IndustryId,
+        "EndorsementDate": null,
+        "EndorsementEffectiveDate": null,
+        "EndorsementRemarks": null,
+        "EndorsementType": null,
+        "EndorsementTypeDesc": null,
+        "EndtCategoryDesc": null,
+        "EndtCount": null,
+        "EndtPrevPolicyNo": null,
+        "EndtPrevQuoteNo": null,
+        "EndtStatus": null,
+        "IsFinanceEndt": null,
+        "OrginalPolicyNo": null,
+        "Status": "Y"
+    }
+    let urlLink = `${this.motorApiUrl}api/slide/savecommondetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data.Result) {
+                let sections = data.Result?.SectionIds;
+                let refNo = data.Result?.RequestReferenceNo;
+                this.updateComponent.referenceNo = refNo;
+                sessionStorage.setItem('quoteReferenceNo',refNo);
+                let homeDetails = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
+                if (homeDetails) {
+                    if (homeDetails[0].SectionId == undefined || homeDetails[0].SectionId == "undefined") homeDetails[0]['SectionId'] = sections;
+                    else homeDetails[0].SectionId = sections;
+                    sessionStorage.setItem('homeCommonDetails', JSON.stringify(homeDetails))
+                    this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+                }
+        }
+      },
+      (err) => { },
+    );
   }
   setVehicleValue(){
     if(this.productId=='5' || this.productId=='4' || this.productId=='3'){
@@ -1747,6 +1888,7 @@ export class CustomerDetailsComponent implements OnInit {
       if(this.productId=='19'){
         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
       }
+      else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1') this.saveCommonDetails([vehicle]); 
       else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
     }
   }

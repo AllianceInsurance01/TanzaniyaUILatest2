@@ -60,9 +60,16 @@ export class ProductData {
 	FirstLossPercentId:any='';
 	IndemityPeriod:any='';
 	MakutiYn:any='';
-	PlasteGlassType:any='';
-	
-	
+	PlasteGlassType:any='';PowerPlantSi:any='0';
+	BoilerPlantsSi:any='0';ElecMachinesSi:any='0';
+	ManuUnitsSi: any='0';
+	MachineEquipSi: any='0';
+	GeneralMachineSi: any='0';
+	EquipmentSi: any='0';
+	category_1:any[]=[];employeeList:any[]=[];
+	fidelityList: any[]=[];StockLossPercent:any='';
+	GoodsLossPercent:any='';FurnitureLossPercent:any='';
+	ApplianceLossPercent:any='';CashValueablesLossPercent:any='';
 	constructor(data?) {
 		this.id = data?.id ?? ''
 		this.CustomerName = data?.CustomerName ?? '';
@@ -152,6 +159,19 @@ export class ProductData {
 		this.IndemityPeriod = data?.IndemityPeriod ?? '';
 		this.MakutiYn = data?.MakutiYn ?? '';
 		this.PlasteGlassType = data?.PlasteGlassType ?? '';
-	
+		this.BoilerPlantsSi = data?.BoilerPlantsSi ?? '0';
+		this.ElecMachinesSi = data?.ElecMachinesSi ?? '0';
+		this.EquipmentSi = data?.EquipmentSi ?? '0';
+		this.GeneralMachineSi = data?.GeneralMachineSi ?? '0';
+		this.MachineEquipSi = data?.MachineEquipSi ?? '0';
+		this.ManuUnitsSi = data?.ManuUnitsSi ?? '0';
+		this.PowerPlantSi = data?.PowerPlantSi ?? '0';
+		this.employeeList = data?.EmployeeList ?? [];
+		this.fidelityList = data?.FidelityList ?? [];
+		this.StockLossPercent = data?.StockLossPercent ?? '';
+		this.GoodsLossPercent = data?.GoodsLossPercent ?? '';
+		this.FurnitureLossPercent = data?.FurnitureLossPercent ?? '';
+		this.ApplianceLossPercent = data?.ApplianceLossPercent ?? '';
+		this.CashValueablesLossPercent = data?.CashValueablesLossPercent ?? '';
 	}
 }

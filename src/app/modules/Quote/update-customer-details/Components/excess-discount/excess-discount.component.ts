@@ -2980,7 +2980,7 @@ getMotorUsageList(vehicleValue){
               else if(this.productId == '4'){
                 this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']);
               }
-              else if(this.productId=='32'){
+              else if(this.productId=='32' || this.productId=='14'){
                 let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
                 if(homeSession){
                   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])

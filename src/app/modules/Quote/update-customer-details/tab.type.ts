@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FieldType, FormlyFieldConfig } from '@ngx-formly/core';
+import { PersonalQuoteDetailsComponent } from './Components/personal-quote-details/personal-quote-details.component';
 
 @Component({
   selector: 'formly-field-tabs',
@@ -24,7 +25,7 @@ import { FieldType, FormlyFieldConfig } from '@ngx-formly/core';
                 <div class="text-center">
                         <button type="button" *ngIf="i==0" class="btn btn-danger" routerLink="/Home/existingQuotes/customerSelection/customerDetails/risk-selection">Back</button>&nbsp;
                         <button type="button" *ngIf="i!=0" class="btn btn-danger" (click)="previousStep()">Back</button>&nbsp;
-                        <button *ngIf="!last" class="btn btn-primary" (click)="nextStep()" type="button">Next</button>
+                        <button *ngIf="!last" class="btn btn-primary" [disabled]="!form.valid" type="submit">Next</button>
                         <button *ngIf="last" class="btn btn-primary" [disabled]="!form.valid" type="submit">Submit</button>
                 </div>
             </div>
@@ -35,12 +36,17 @@ import { FieldType, FormlyFieldConfig } from '@ngx-formly/core';
 })
 export class FormlyFieldTabs extends FieldType {
     selectedIndex: number = 0;
-
-    nextStep() {
-        if (this.selectedIndex != this.field.fieldGroup.length) {
-            this.selectedIndex = this.selectedIndex + 1;
-        }
-        console.log(this.selectedIndex);
+    constructor(){
+      super();
+      
+    }
+    nextStep(tab,type) {
+        
+    }
+    nextProceed(){
+      if (this.selectedIndex != this.field.fieldGroup.length) {
+        this.selectedIndex = this.selectedIndex + 1;
+      }
     }
     previousStep(){
         if (this.selectedIndex != 0) {

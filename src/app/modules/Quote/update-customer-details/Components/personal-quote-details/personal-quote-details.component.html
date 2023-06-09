@@ -14,9 +14,9 @@
             </div> -->
         </div>
     </div>
-    <div class="maan-grid-item-body" *ngIf="formSection && productId!='3' && productId!='1'">
+    <div class="maan-grid-item-body" *ngIf="formSection && productId!='3' ">
        
-        <div class="row p-2" *ngIf="!viewSection && (productId=='14' || productId=='15')">
+        <div class="row p-2" *ngIf="!viewSection && (productId=='15')">
             <div class="col-12 col-md-6 col-lg-6 input-control-container" style="padding-left: 10px !important;">
                 <label class="input-form-label">Organization Name</label>
                 <div class="input-form-box mt-2">
@@ -31,17 +31,27 @@
                 </div>
             </div>
         </div>
-        <div class="form__wrapper">
+        <div class="row" *ngIf="productId=='14' && employeeError">
+            <div class="input-form-error text-center">
+                <div class="error-text  text-danger">
+                    <b>Please Add Atleast One Employee Details</b>
+                </div>
+            </div>
+        </div>
+        <div class="form__wrapper" *ngIf="productId!='19'">
             <form [formGroup]="form" (ngSubmit)="onSubmit(productItem)">
                 <formly-form [form]="form" [fields]="fields" [model]="productItem"></formly-form>
             </form>
         </div>
+        <div class="form__wrapper" *ngIf="productId=='19'">
+            <form [formGroup]="form" (ngSubmit)="onNextProceed()">
+                <formly-form [form]="form" [fields]="fields" [model]="productItem"></formly-form>
+            </form>
+        </div>
     </div>
-    <div class="row" *ngIf="productId=='1'">
+    <!-- <div class="row" *ngIf="productId=='1'">
         <div class="col-12 col-lg-12 col-xl-12 col-sm-12">
             <div class="maan-grid-item-body" *ngIf="formSection">
-                
-
                 <div class="form__wrapper">
                     <form [formGroup]="form" (ngSubmit)="onSubmit(productItem)">
                         <formly-form [form]="form" [fields]="fields" [model]="productItem"></formly-form>
@@ -53,7 +63,7 @@
             <button class="custom-btn btn-5 mr-2" [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/customer-details']" routerLinkActive="router-link-active" matRipple><<&nbsp;Back</button>&nbsp;
             <button class="custom-btn btn-6 maan-button-data "  *ngIf="formSection || viewSection" matRipple (click)="onSubmit(productItem)"><i class="fas fa-check"></i>&nbsp;Proceed</button>
         </div>
-    </div>
+    </div> -->
     <div class="row" *ngIf="productId=='3'">
         <div class="col-9 col-lg-9 col-xl-9 col-sm-9">
             <div class="row" *ngIf="!viewSection">
@@ -471,7 +481,7 @@
         </ng-container>
     </div>
 </div>
-<div class="text-center my-2" *ngIf="productId!='19' && productId!='3' && productId!='1'">
+<div class="text-center my-2" *ngIf="productId!='19' && productId!='3'">
     <button class="custom-btn btn-5 mr-2" [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/customer-details']" routerLinkActive="router-link-active" matRipple><<&nbsp;Back</button>&nbsp;
     <button class="custom-btn btn-6 maan-button-data " matRipple (click)="onFormSubmit()"><i class="fas fa-check"></i>&nbsp;Proceed</button>
 </div>

@@ -340,7 +340,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
       else {
         this.six = false;
       }
-      const seven = this.item.find((Code) => Code == '43' || Code =='37' || Code == '38');
+      const seven = this.item.find((Code) => Code == '43' || Code =='37' || Code == '38' || Code == '45');
       if(seven){
         this.seven = true;
         this.getEmployeeDetails();

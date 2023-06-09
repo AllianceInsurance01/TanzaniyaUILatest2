@@ -1,13 +1,18 @@
 .Choose-Section-Box {
   padding: 10px !important;
   background-color: #679fdf29 !important;
-  border-radius: 25px;
+  border-radius: 26px;  
+  box-shadow:  5px 5px 10px #b6e4ec,
+             -5px -5px 10px #9fa0b4;
 }
 .heading{
   background: #fff;
-  box-shadow: 2px 2px 4px #00000029;
-  -webkit-box-shadow: 2px 2px 4px #00000029;
-  -moz-box-shadow: 2px 2px 4px #00000029;
+  box-shadow:  2px 2px 4px #3b3d3d,
+  2px 2px 4px #565bbd;
+  -webkit-box-shadow: 2px 2px 4px #3b3d3d,
+  2px 2px 4px #565bbd;
+  -moz-box-shadow:2px 2px 4px #3b3d3d,
+  2px 2px 4px #565bbd;
   padding: 10px 50px;
   border-radius: 20px;
   border-radius: 20px;

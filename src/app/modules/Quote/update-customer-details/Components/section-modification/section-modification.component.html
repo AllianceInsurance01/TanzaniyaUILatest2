@@ -48,38 +48,52 @@
               </div>
           </div>
           <div class="row" *ngIf="productId=='19'">
-              <div class="col-12 col-md-5 col-lg-5 offset-1 input-control-container">
-                  <label class="input-form-label">Industry</label><span class="text-danger">*</span>
-                  <div class="input-form-box" style="position: relative;top:.2rem">
-                      <ng-select class="custom" [items]="industryList"  [(ngModel)]="IndustryId" placeholder="Select Industry" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
-                      </ng-select>
+              <div class="col-12 col-md-5 col-lg-5 offset-1">
+                  <div class="input-control-container">
+                    <label class="input-form-label">Industry</label>&nbsp;<ng-container *ngIf="categoryDesc">({{categoryDesc}})</ng-container><span class="text-danger">*</span>
+                    <div class="input-form-box" style="position: relative;top:.2rem">
+                        <ng-select class="custom" [items]="industryList"  [(ngModel)]="IndustryId" placeholder="Select Industry" (change)="onIndustryChange()" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                  </div>
+                  <div class="input-form-error" *ngIf="industryError" style="position: relative;">
+                    <div class="error-text text-danger">
+                        <span class="spancommon span_font_size"> Please Select Industry</span>
+                    </div>
                   </div>
               </div>
-              <div class="col-12 col-md-5 col-lg-5 input-control-container" *ngIf="categoryDesc">
+              <!-- <div class="col-12 col-md-5 col-lg-5 input-control-container" *ngIf="categoryDesc">
                   <label class="input-form-label">Category</label>
                   <div class="input-form-box mt-2">
                       <input type="text" style="position: relative;bottom: 0.35rem;" disabled class="input-form-control without-icon" maxlength="4" [(ngModel)]="categoryDesc" [ngModelOptions]="{standalone: true}">
                   </div>
-              </div>
+              </div> -->
           </div>
           <div class="row mt-4 mb-2" *ngIf="productId=='19'">
             <div class="col-md-10 col-lg-10  col-xl-10 offset-1">
               <div class="Choose-Section-Box padd0 bwT">
                   <span class="heading">SELECT THE SECTIONS YOU WISH TO BUY</span>
+                  <div class="row mt-3" *ngIf="sectionError">
+                    <div class="text-center input-form-error">
+                        <div class="error-text text-danger">
+                            <span class="spancommon span_font_size"><b>Please Select Atleast One Section</b></span>
+                        </div>
+                    </div>
+                  </div>
                   <div class="row mt-3">
-                    <ng-container *ngFor="let g of productList| slice:0:6">
+                    <ng-container *ngFor="let g of productList;let i = index">
                         <ng-container *ngIf="g.Code=='47' && (coversRequired=='C' || coversRequired=='BC')">
-                            <div class="col-md-6">
+                            <div class="col-md-6" >
                               <div >
                                   <!-- {{g.CodeDesc}} -->
-                                  <div class="print-check">
+                                  <div class="print-check" >
                                   <label class="custom-checkbox-container">
-                                  <input type="checkbox">
+                                  <input type="checkbox" [checked]="g.checked">
                                   <span class="checkmark">
-                                    <span class="text-light"><i class="fas fa-check-circle"></i></span>
-                                    <span class=""><i class="fas fa-minus-circle"></i></span>
+                                    <span class="text-light" *ngIf="g.checked==true"><i class="fas fa-check-circle"></i></span>
+                                    <span class="" *ngIf="g.checked==false"><i class="fas fa-minus-circle"></i></span>
                                   </span>
-                                  <div class="description">
+                                  <div class="description" (click)="onChangeSections(g,i)">
                                     <div class="description-name">
                                       <span>
                                       {{g.CodeDesc}}
@@ -92,17 +106,17 @@
                             </div>
                         </ng-container>
                         <ng-container *ngIf="g.Code=='40' && (coversRequired=='B' || coversRequired=='BC')">
-                          <div class="col-md-6">
+                          <div class="col-md-6" >
                             <div >
                                 <!-- {{g.CodeDesc}} -->
-                                <div class="print-check">
+                                <div class="print-check" >
                                 <label class="custom-checkbox-container">
-                                <input type="checkbox">
+                                <input type="checkbox" [checked]="g.checked">
                                 <span class="checkmark">
-                                  <span class="text-light"><i class="fas fa-check-circle"></i></span>
-                                  <span class=""><i class="fas fa-minus-circle"></i></span>
+                                  <span class="text-light" *ngIf="g.checked==true"><i class="fas fa-check-circle"></i></span>
+                                  <span class="" *ngIf="g.checked==false"><i class="fas fa-minus-circle"></i></span>
                                 </span>
-                                <div class="description">
+                                <div class="description" (click)="onChangeSections(g,i)">
                                   <div class="description-name">
                                     <span>
                                     {{g.CodeDesc}}
@@ -115,17 +129,17 @@
                           </div>
                         </ng-container>
                         <ng-container *ngIf="g.Code!='47' && g.Code!='40'">
-                          <div class="col-md-6">
+                          <div class="col-md-6" >
                             <div >
                                 <!-- {{g.CodeDesc}} -->
-                                <div class="print-check">
+                                <div class="print-check" >
                                 <label class="custom-checkbox-container">
-                                <input type="checkbox">
+                                <input type="checkbox" [checked]="g.checked">
                                 <span class="checkmark">
-                                  <span class="text-light"><i class="fas fa-check-circle"></i></span>
-                                  <span class=""><i class="fas fa-minus-circle"></i></span>
+                                  <span class="text-light" *ngIf="g.checked==true"><i class="fas fa-check-circle"></i></span>
+                                  <span class="" *ngIf="g.checked==false"><i class="fas fa-minus-circle"></i></span>
                                 </span>
-                                <div class="description">
+                                <div class="description" (click)="onChangeSections(g,i)">
                                   <div class="description-name">
                                     <span>
                                     {{g.CodeDesc}}
@@ -138,77 +152,6 @@
                           </div>
                         </ng-container>
                     </ng-container>
-                    <ng-container *ngFor="let g of productList| slice:6:12">
-                      <ng-container *ngIf="g.Code=='47' && (coversRequired=='C' || coversRequired=='BC')">
-                          <div class="col-md-6">
-                            <div >
-                                <!-- {{g.CodeDesc}} -->
-                                <div class="print-check">
-                                <label class="custom-checkbox-container">
-                                <input type="checkbox">
-                                <span class="checkmark">
-                                  <span class="text-light"><i class="fas fa-check-circle"></i></span>
-                                  <span class=""><i class="fas fa-minus-circle"></i></span>
-                                </span>
-                                <div class="description">
-                                  <div class="description-name">
-                                    <span>
-                                    {{g.CodeDesc}}
-                                    </span>
-                                  </div>
-                                </div>
-                            </label>
-                        </div>
-                            </div>
-                          </div>
-                      </ng-container>
-                      <ng-container *ngIf="g.Code=='40' && (coversRequired=='B' || coversRequired=='BC')">
-                        <div class="col-md-6">
-                          <div >
-                              <!-- {{g.CodeDesc}} -->
-                              <div class="print-check">
-                              <label class="custom-checkbox-container">
-                              <input type="checkbox">
-                              <span class="checkmark">
-                                <span class="text-light"><i class="fas fa-check-circle"></i></span>
-                                <span class=""><i class="fas fa-minus-circle"></i></span>
-                              </span>
-                              <div class="description">
-                                <div class="description-name">
-                                  <span>
-                                  {{g.CodeDesc}}
-                                  </span>
-                                </div>
-                              </div>
-                          </label>
-                      </div>
-                          </div>
-                        </div>
-                      </ng-container>
-                      <ng-container *ngIf="g.Code!='47' && g.Code!='40'">
-                        <div class="col-md-6">
-                          <div >
-                              <!-- {{g.CodeDesc}} -->
-                              <div class="print-check">
-                              <label class="custom-checkbox-container">
-                              <input type="checkbox">
-                              <span class="checkmark">
-                                <span class="text-light"><i class="fas fa-check-circle"></i></span>
-                                <span class=""><i class="fas fa-minus-circle"></i></span>
-                              </span>
-                              <div class="description">
-                                <div class="description-name">
-                                  <span>
-                                  {{g.CodeDesc}}
-                                  </span>
-                                </div>
-                              </div>
-                              </label>
-                          </div>
-                          </div>
-                        </div>
-                      </ng-container>
-                  </ng-container>
                   </div>
               </div>
             </div>
@@ -217,7 +160,7 @@
     </div>
     <div class="text-center mt-2">
       <button class="custom-btn btn-5 mr-2" [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/customer-details']" routerLinkActive="router-link-active" matRipple><<&nbsp;Back</button>&nbsp;
-      <button class="custom-btn btn-6 maan-button-data" [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']" routerLinkActive="router-link-active"  matRipple><i class="fas fa-check"></i>&nbsp;Proceed</button> 
+      <button class="custom-btn btn-6 maan-button-data" (click)="onFormSubmit()"  matRipple><i class="fas fa-check"></i>&nbsp;Proceed</button> 
     </div>
 </div>
     
