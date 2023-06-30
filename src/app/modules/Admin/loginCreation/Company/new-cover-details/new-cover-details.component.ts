@@ -1093,7 +1093,7 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
   onSaveCoverForm(value:any){
     console.log('ffffffff',this.factorValue)
     this.coverDetails.CreatedBy = this.loginId;
-    if(this.calcType=='D' || this.calcType=='L'){
+    if(this.coverageTypeValue=='D' || this.coverageTypeValue=='L'){
       this.coverDetails.DependentCoverYn = 'N';
       this.coverDetails.DependentCoverId = null;
     }

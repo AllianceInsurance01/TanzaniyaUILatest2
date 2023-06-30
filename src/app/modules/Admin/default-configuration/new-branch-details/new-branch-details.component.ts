@@ -99,6 +99,18 @@ export class NewBranchDetailsComponent implements OnInit {
     (err) => { },
   );
   }
+  keyPressAlphaNumeric(event) {
+
+    var inp = String.fromCharCode(event.keyCode);
+    console.log('kkkkkkkkkkkk',inp);
+
+    if (/[a-zA-Z0-9]/.test(inp)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
+  }
   getEditBranchDetails(){
     let ReqObj =  {
       "BranchCode":this.BranchId,
@@ -146,7 +158,8 @@ onSaveBranch() {
     "Address2": this.BranchDetails.Address2,
     "Email": this.BranchDetails.Email,
     "MobileNumber": this.BranchDetails.MobileNumber,
-    "BranchType": this.BranchDetails.BranchType
+    "BranchType": this.BranchDetails.BranchType,
+    "SalePointCode":this.BranchDetails.SalePointCode
 
   }
   let urlLink = `${this.CommonApiUrl}master/insertbranch`;

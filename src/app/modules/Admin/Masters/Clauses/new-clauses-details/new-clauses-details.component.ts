@@ -78,7 +78,7 @@ export class NewClausesDetailsComponent implements OnInit {
 
   }
 
-  onProceed(){
+  onProceed(UniqueId){
 
     /*let section
     if(this.ClausesId){
@@ -108,7 +108,8 @@ export class NewClausesDetailsComponent implements OnInit {
       "CoreAppCode":this.ClausesDetails.CoreAppCode,
       "RegulatoryCode":this.ClausesDetails.RegulatoryCode,
       "SectionId":this.sectionValue,
-      "TypeId":this.TypeId
+      "TypeId":this.TypeId,
+      "DocRefNo": UniqueId
 
     }
     let urlLink = `${this.CommonApiUrl}master/insertclauses`;
@@ -137,7 +138,6 @@ export class NewClausesDetailsComponent implements OnInit {
           //         'Clauses Details',
           //         config);
                 //this.getUploadedDocList(data.Result.SuccessId);
-                this.onFileUploadCommonList(data.Result.SuccessId);
                   this.router.navigate(['/Admin/clausesMaster'])
 
         }
@@ -258,7 +258,7 @@ export class NewClausesDetailsComponent implements OnInit {
         }
       }
       console.log("Final Modal Class",this.ClausesDetails);
-      this.getUploadedDocList(null);
+      if(this.ClausesDetails?.DocRefNo!=null) this.getUploadedDocList(this.ClausesDetails?.DocRefNo)
     },
     (err) => { },
   );
@@ -343,26 +343,21 @@ export class NewClausesDetailsComponent implements OnInit {
         }
       }
   }
-  onFileUploadCommonList(Id){
+  onFileUploadCommonList(){
 
     let docList = this.uploadDocList;
     if(docList.length!=0){
       let i=0;
       for(let doc of docList){
         let ReqObj={
-          "RequestReferenceNo": "REF-345345345",
-          "InsuranceId": this.insuranceId,
-          "DocumentId": "18",
-          "ProductId": this.productValue,
-          "SectionId": this.sectionValue,
-          "DocumentReferenceNo":"",
-          "FileName": doc.filename,
-          "OriginalFileName": doc.filename,
-          "CreatedBy": this.loginId,
-          "QuoteNo":Id,
-          "Id": "0"
+            "FileName":doc.filename,
+            "OriginalFileName":doc.filename,
+             "UploadedBy":this.loginId,
+             "TermsAndCondtionId": "18",
+             "TermsAndCondtionDesc": "Clauses" ,
+             "Type": "C"
         }
-        let urlLink = `${this.ApiUrl1}document/upload`;
+        let urlLink = `${this.CommonApiUrl}document/termsdocupload`;
         this.sharedService.onPostDocumentMethodSync(urlLink, ReqObj,doc.url).subscribe(
           (data: any) => {
             if(data.ErrorMessage){
@@ -385,9 +380,7 @@ export class NewClausesDetailsComponent implements OnInit {
             else if(data?.Result){
                 i+=1;
                 if(i==docList.length){
-                  this.uploadDocList = [];
-                 this.getUploadedDocList(null);
-
+                  this.onProceed(data?.Result?.SuccessId);
                 }
               }
             },
@@ -395,32 +388,31 @@ export class NewClausesDetailsComponent implements OnInit {
           );
       }
     }
+    else if(this.uploadedDocList.length!=0){
+      this.onProceed(this.uploadedDocList[0].UniqueId)
+    }
+    else{ this.onProceed(null)}
   }
 
   onDeleteDocument(index:any) {
     this.uploadDocList.splice(index,1);
 }
-getUploadedDocList(index:any){
+getUploadedDocList(uniqueId:any){
   /*let docType="",i=0;
   if(index>=0){ docType="2"}
   else{  docType = "1" }*/
 
   let ReqObj = {
-    "DocumentType":"6",
-    "Id":"0",
-    "InsCompanyId": this.insuranceId,
-    "QuoteNo":this.ClausesId
+    "UniqueId": uniqueId
   }
-  let urlLink = `${this.ApiUrl1}document/getdoclist`;
+  let urlLink = `${this.CommonApiUrl}document/gettermsdoc`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
         if(data?.Result){
-          if(data?.Result.length!=0){
-            this.uploadedDocList = data.Result;
+            this.uploadedDocList = [data.Result];
 
           }
           else this.uploadDocList=[]
-        }
       },
       (err) => { },
     );
@@ -429,110 +421,27 @@ getUploadedDocList(index:any){
 onViewCommonDocument(index)
   {
     let entry = this.uploadedDocList[index];
-    let ReqObj = {
-        "DocumentId":entry.DocumentId,
-        "DocumentReferenceNo":entry.DocumentReferenceNo,
-        "Id": '0',
-        "QuoteNo":this.ClausesId
-  }
-  let urlLink = `${this.ApiUrl1}document/getcompressedimage`;
-  this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
-    (data:any) => {
-      console.log(data);
-      /*this.dialogService.open(ViewDocumnetDetailsComponent, {
-           context: {
-             title: data.Result.OrginalFileName,
-             imageUrl: data.Result.ImgUrl
-           },
-         });*/
          const dialogRef = this.dialogService.open(ViewDocumnetDetailsComponent,{
           data: {
-            title:data.Result.OrginalFileName,
-            imageUrl: data.Result.ImgUrl
+            title:entry?.OrginalFileName,
+            imageUrl: entry?.ImgUrl
           }
         });
-
         dialogRef.afterClosed().subscribe(result => {
           console.log(`Dialog result: ${result}`);
         });
-
-
-    },
-    (err) => { },
-  );
-
   }
   onDeleteCommonDocument(index){
-    let entry = this.uploadedDocList[index];
-    let ReqObj = {
-      "DocumentId": entry.DocumentId,
-      "DocumentReferenceNo":entry.DocumentReferenceNo,
-        "Id": '0',
-        "QuoteNo": this.ClausesId
-    }
-    let urlLink = `${this.ApiUrl1}document/delete`;
-      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-        (data: any) => {
-            if(data.ErrorMessage.length!=0){
-              /*for(let entry of data.ErrorMessage){
-                let type: NbComponentStatus = 'danger';
-                const config = {
-                  status: type,
-                  destroyByClick: true,
-                  duration: 4000,
-                  hasIcon: true,
-                  position: NbGlobalPhysicalPosition.TOP_RIGHT,
-                  preventDuplicates: false,
-                };
-                this.toastrService.show(
-                  entry.Field,
-                  entry.Message,
-                  config);
-                }*/
-            }
-            else if(data?.Result){
-              /*let type: NbComponentStatus = 'success';
-                const config = {
-                  status: type,
-                  destroyByClick: true,
-                  duration: 4000,
-                  hasIcon: true,
-                  position: NbGlobalPhysicalPosition.TOP_RIGHT,
-                  preventDuplicates: false,
-                };
-              this.toastrService.show(
-                "Delete",
-                "Document Deleted Successfully",
-                config);*/
-                this.getUploadedDocList(null);
-
-            }
-            window.location.reload()
-          },
-          (err) => { },
-        );
+    this.uploadedDocList.splice(index,1);
   }
   onCommonDocumentDownload(index){
     let entry = this.uploadedDocList[index];
-    let ReqObj = {
-      "DocumentId": entry.DocumentId,
-      "DocumentReferenceNo":entry.DocumentReferenceNo,
-        "Id": '0',
-        "QuoteNo":this.ClausesId
-    }
-    let urlLink = `${this.ApiUrl1}document/getoriginalimage`;
-    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
-      (data: any) => {
-        console.log(data);
-        const link = document.createElement('a');
-        link.setAttribute('target', '_blank');
-        link.setAttribute('href', data?.Result?.ImgUrl);
-        link.setAttribute('download', data?.Result?.OrginalFileName);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-    },
-      (err) => { },
-    );
+    const link = document.createElement('a');
+    link.setAttribute('target', '_blank');
+    link.setAttribute('href', entry?.ImgUrl);
+    link.setAttribute('download', entry?.OriginalFileName);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   }
 }

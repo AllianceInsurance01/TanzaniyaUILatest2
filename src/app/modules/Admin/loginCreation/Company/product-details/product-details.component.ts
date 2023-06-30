@@ -29,6 +29,8 @@ export class ProductDetailsComponent implements OnInit {
   Currency: any;
   Branch: string;
   agency: string;
+  typeList:any[]=[];
+  commissionError: boolean;
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,) {
 
@@ -51,6 +53,7 @@ export class ProductDetailsComponent implements OnInit {
       this.productDetails = new Product();
       this.getProductDetails();
     }
+    this.getProductTypeList();
    }
 
   ngOnInit(): void {
@@ -177,6 +180,12 @@ export class ProductDetailsComponent implements OnInit {
     if(this.productDetails.SumInsuredStart==undefined) SumInsuredStart = null;
     else if(this.productDetails.SumInsuredStart.includes(',')){ SumInsuredStart = this.productDetails.SumInsuredStart.replace(/,/g, '') }
     else SumInsuredStart = this.productDetails.SumInsuredStart;
+    if(this.productDetails.MotorYn!='' && this.productDetails.MotorYn!=undefined && this.productDetails.MotorYn!=null){
+      this.commissionError=false;
+    }
+    else{
+      this.commissionError=true;
+    }
     let ReqObj =  {
     "ProductId": this.productDetails.ProductId,
     "InsuranceId":this.insuranceId,
@@ -195,6 +204,7 @@ export class ProductDetailsComponent implements OnInit {
     "CheckerYn":this.productDetails.CheckerYn,
     "PackageYn":this.productDetails.PackageYn,
     "MakerYn":this.productDetails.CheckerYn,
+    "MotorYn": this.productDetails.MotorYn,
     "CustConfirmYn":this.productDetails.CustConfirmYn,
     "SumInsuredStart":SumInsuredStart,
     "SumInsuredEnd":SumInsuredEnd,
@@ -263,6 +273,22 @@ export class ProductDetailsComponent implements OnInit {
   }
   ongetBack(){
     this.router.navigate(['/Admin/companyList/companyConfigure'])
+  }
+  getProductTypeList(){
+    let ReqObj = {
+      "InsuranceId":this.insuranceId,
+      "BranchCode":"99999"
+    }
+    let urlLink = `${this.ApiUrl1}dropdown/productcategory`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        let obj = [{ Code: "", CodeDesc: "--SELECT--" }];
+        this.typeList = obj.concat(data?.Result);
+        //this.typeList = data.Result;
+      },
+      (err) => { },
+    );
   }
   onRedirect(value){
     if(value=='Product') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails'])

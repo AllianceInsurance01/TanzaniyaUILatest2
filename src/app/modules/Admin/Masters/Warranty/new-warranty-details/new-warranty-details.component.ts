@@ -177,19 +177,20 @@ export class NewWarrantyDetailsComponent implements OnInit {
             if (this.WarrantyDetails?.EffectiveDateEnd != null) {
               this.WarrantyDetails.EffectiveDateEnd = this.onDateFormatInEdit(this.WarrantyDetails?.EffectiveDateEnd)
             }
+            if(this.WarrantyDetails.DocRefNo!=null) this.getUploadedDocList(this.WarrantyDetails.DocRefNo)
           }
         }
         console.log("Final Modal Class", this.WarrantyDetails);
       },
       (err) => { },
     );
-    this.getUploadedDocList(null);
+    
   }
 
   ongetBack() {
     this.router.navigate(['/Admin/warrantyMaster'])
   }
-  onProceed() {
+  onProceed(Id) {
     // let section
     // if(this.WarrantyId){
     //   section=this.sectionValue;
@@ -210,7 +211,7 @@ export class NewWarrantyDetailsComponent implements OnInit {
       "RegulatoryCode": this.WarrantyDetails.RegulatoryCode,
       "ProductId": this.productValue,
       "SectionId": this.sectionValue,
-      "DocRefNo": this.WarrantyDetails.DocRefNo,
+      "DocRefNo": Id,
       "TypeId":this.TypeId
 
     }
@@ -239,7 +240,6 @@ export class NewWarrantyDetailsComponent implements OnInit {
           //   'Warranty Details Inserted/Updated Successfully',
           //   'Warranty Details',
           //   config);
-          this.onFileUploadCommonList(data.Result.SuccessId);
           this.router.navigate(['/Admin/warrantyMaster'])
         }
       },
@@ -309,193 +309,103 @@ export class NewWarrantyDetailsComponent implements OnInit {
       }
     }
   }
-  onFileUploadCommonList(Id) {
+  onFileUploadCommonList(){
 
     let docList = this.uploadDocList;
-    if (docList.length != 0) {
-      let i = 0;
-      for (let doc of docList) {
-        let ReqObj = {
-          "RequestReferenceNo": "REF-345345345",
-          "InsuranceId": this.insuranceId,
-          "DocumentId": "16",
-          "ProductId": this.productValue,
-          "SectionId": this.sectionValue,
-          "DocumentReferenceNo": "",
-          "FileName": doc.filename,
-          "OriginalFileName": doc.filename,
-          "CreatedBy": this.loginId,
-          "QuoteNo": Id,
-          "Id": "0"
+    if(docList.length!=0){
+      let i=0;
+      for(let doc of docList){
+        let ReqObj={
+            "FileName":doc.filename,
+            "OriginalFileName":doc.filename,
+             "UploadedBy":this.loginId,
+             "TermsAndCondtionId": "19",
+             "TermsAndCondtionDesc": "Exclustion" ,
+             "Type": "E"
         }
-        let urlLink = `${this.ApiUrl1}document/upload`;
-        this.sharedService.onPostDocumentMethodSync(urlLink, ReqObj, doc.url).subscribe(
+        let urlLink = `${this.CommonApiUrl}document/termsdocupload`;
+        this.sharedService.onPostDocumentMethodSync(urlLink, ReqObj,doc.url).subscribe(
           (data: any) => {
-            if (data.ErrorMessage) {
-              for (let entry of data.ErrorMessage) {
-                // let type: NbComponentStatus = 'danger';
-                // const config = {
-                //   status: type,
-                //   destroyByClick: true,
-                //   duration: 4000,
-                //   hasIcon: true,
-                //   position: NbGlobalPhysicalPosition.TOP_RIGHT,
-                //   preventDuplicates: false,
-                // };
-                // this.toastrService.show(
-                //   entry.Field,
-                //   entry.Message,
-                //   config);
-              }
+            if(data.ErrorMessage){
+              // for(let entry of data.ErrorMessage){
+              //   let type: NbComponentStatus = 'danger';
+              //   const config = {
+              //     status: type,
+              //     destroyByClick: true,
+              //     duration: 4000,
+              //     hasIcon: true,
+              //     position: NbGlobalPhysicalPosition.TOP_RIGHT,
+              //     preventDuplicates: false,
+              //   };
+              //   this.toastrService.show(
+              //     entry.Field,
+              //     entry.Message,
+              //     config);
+              // }
             }
-            else if (data?.Result) {
-              i += 1;
-              if (i == docList.length) {
-                this.uploadDocList = [];
-                this.getUploadedDocList(null);
-
+            else if(data?.Result){
+                i+=1;
+                if(i==docList.length){
+                 
+                  this.onProceed(data.Result?.SuccessId)
+                }
               }
-            }
-          },
-          (err) => { },
-        );
+            },
+            (err) => { },
+          );
       }
     }
+    else if(this.uploadedDocList.length!=0){
+      this.onProceed(this.uploadedDocList[0].UniqueId)
+    }
+    else this.onProceed(null);
   }
 
   onDeleteDocument(index: any) {
     this.uploadDocList.splice(index, 1);
   }
-  getUploadedDocList(index: any) {
-    let docType = "", i = 0;
-    if (index >= 0) { docType = "2" }
-    else { docType = "1" }
+  getUploadedDocList(uniqueId:any){
 
     let ReqObj = {
-      "DocumentType": '4',
-      "Id": '0',
-      "InsCompanyId": this.insuranceId,
-      "QuoteNo": this.WarrantyId
+      "UniqueId": uniqueId
     }
-    let urlLink = `${this.ApiUrl1}document/getdoclist`;
+    let urlLink = `${this.CommonApiUrl}document/gettermsdoc`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
-        if (data?.Result) {
-          if (data?.Result.length != 0) {
-            this.uploadedDocList = data.Result;
-
-          }
-          else this.uploadDocList = []
-        }
-      },
-      (err) => { },
-    );
+          if(data?.Result){
+              this.uploadedDocList = [data.Result];
+  
+            }
+            else this.uploadDocList=[]
+        },
+        (err) => { },
+      );
   }
 
-  onViewCommonDocument(index) {
+  onViewCommonDocument(index)
+  {
     let entry = this.uploadedDocList[index];
-    let ReqObj = {
-      "DocumentId": entry.DocumentId,
-      "DocumentReferenceNo": entry.DocumentReferenceNo,
-      "Id": '0',
-      "QuoteNo": this.WarrantyId
-    }
-    let urlLink = `${this.ApiUrl1}document/getcompressedimage`;
-    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-      (data: any) => {
-        console.log(data);
-        /*this.dialogService.open(ViewDocumnetDetailsComponent, {
-          context: {
-            title: data.Result.OrginalFileName,
-            imageUrl: data.Result.ImgUrl
-          },
-        });*/
         const dialogRef = this.dialogService.open(ViewDocumnetDetailsComponent,{
           data: {
-            title: data.Result.OrginalFileName,
-                 imageUrl: data.Result.ImgUrl
+            title:entry?.OrginalFileName,
+            imageUrl: entry?.ImgUrl
           }
         });
-
         dialogRef.afterClosed().subscribe(result => {
           console.log(`Dialog result: ${result}`);
         });
-      },
-      (err) => { },
-    );
-
   }
-  onDeleteCommonDocument(index) {
-    let entry = this.uploadedDocList[index];
-    let ReqObj = {
-      "DocumentId": entry.DocumentId,
-      "DocumentReferenceNo": entry.DocumentReferenceNo,
-      "Id": '0',
-      "QuoteNo": this.WarrantyId
-    }
-    let urlLink = `${this.ApiUrl1}document/delete`;
-    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-      (data: any) => {
-        if (data.ErrorMessage.length != 0) {
-          // for (let entry of data.ErrorMessage) {
-          //   let type: NbComponentStatus = 'danger';
-          //   const config = {
-          //     status: type,
-          //     destroyByClick: true,
-          //     duration: 4000,
-          //     hasIcon: true,
-          //     position: NbGlobalPhysicalPosition.TOP_RIGHT,
-          //     preventDuplicates: false,
-          //   };
-          //   this.toastrService.show(
-          //     entry.Field,
-          //     entry.Message,
-          //     config);
-          // }
-        }
-        else if (data?.Result) {
-          // let type: NbComponentStatus = 'success';
-          // const config = {
-          //   status: type,
-          //   destroyByClick: true,
-          //   duration: 4000,
-          //   hasIcon: true,
-          //   position: NbGlobalPhysicalPosition.TOP_RIGHT,
-          //   preventDuplicates: false,
-          // };
-          // this.toastrService.show(
-          //   "Delete",
-          //   "Document Deleted Successfully",
-          //   config);
-          this.getUploadedDocList(null);
-
-        }
-        window.location.reload()
-      },
-      (err) => { },
-    );
+  onDeleteCommonDocument(index){
+    this.uploadedDocList.splice(index,1);
   }
-  onCommonDocumentDownload(index) {
+  onCommonDocumentDownload(index){
     let entry = this.uploadedDocList[index];
-    let ReqObj = {
-      "DocumentId": entry.DocumentId,
-      "DocumentReferenceNo": entry.DocumentReferenceNo,
-      "Id": '0',
-      "QuoteNo": this.WarrantyId
-    }
-    let urlLink = `${this.ApiUrl1}document/getoriginalimage`;
-    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-      (data: any) => {
-        console.log(data);
-        const link = document.createElement('a');
-        link.setAttribute('target', '_blank');
-        link.setAttribute('href', data?.Result?.ImgUrl);
-        link.setAttribute('download', data?.Result?.OrginalFileName);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-      },
-      (err) => { },
-    );
+    const link = document.createElement('a');
+    link.setAttribute('target', '_blank');
+    link.setAttribute('href', entry?.ImgUrl);
+    link.setAttribute('download', entry?.OriginalFileName);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   }
 }

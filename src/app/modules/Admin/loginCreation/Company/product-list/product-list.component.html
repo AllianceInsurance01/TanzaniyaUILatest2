@@ -77,8 +77,8 @@
 
                             <ng-container *ngFor="let product of productList">
                                  
-                                <div class="grid-item">
-                                <div (click)="onProductSelect(product)" style="text-align:center">
+                                <div class="grid-item" (click)="onProductSelect(product)">
+                                <div  style="text-align:center">
                                     {{product.ProductName}}
                                 </div>
                                 <div style="text-align:right; margin-top:-28px;">

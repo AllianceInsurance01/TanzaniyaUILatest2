@@ -203,7 +203,7 @@
                     <tbody>
                         <tr *ngFor="let document of uploadedDocList;let i=index">
                             <th scope="row">{{i+1}}</th>
-                            <td>{{document.OrginalFileName}}</td>
+                            <td>{{document.OriginalFileName}}</td>
                             <td>
                                 <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View"
                                     (click)="onViewCommonDocument(i,document)"><i class="fa fa-eye"></i></a>
@@ -222,7 +222,7 @@
             </ng-container>
             <div class="text-center mt-2">
                 <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>
-                <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
+                <button class="btn btn-success ml-2" (click)="onFileUploadCommonList()">Submit</button>
             </div>
         </div>
     </div>

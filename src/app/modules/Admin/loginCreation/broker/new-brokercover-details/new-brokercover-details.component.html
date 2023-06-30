@@ -462,7 +462,7 @@
                                   </div>
                               </div>
                               <div class="row">
-                                  <div class="col-md-6 col-lg-6 offset-3" *ngIf="calcType=='F' && coverUploadSection && uploadDocList.length==0">
+                                  <div class="col-md-6 col-lg-6 offset-3" *ngIf="calcType=='F' && coverUploadSection && uploadDocList.length==0  && uploadRecordsList.length==0 && uploadStatus==null">
                                       <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct')" #doc>
                                       <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onDragDocument($event,null,'direct')" (click)="doc.click()">
                                           <div>
@@ -474,32 +474,65 @@
                                       </div>
                                   </div>
                               </div>
-                              <div class="row mt-3">
-                                  <table class="table table-headerRow" style="width: 100%" *ngIf="uploadDocList.length!=0">
-                                      <thead>
-                                          <tr>
-                                              <th width="30%">Name</th>
-                                              <th>Progress</th>
-                                              <th>Remove</th>
-                                          </tr>
-                                      </thead>
-                                      <tbody>
-                                          <tr *ngFor="let item of uploadDocList;let i=index">
-                                              <td>{{ item?.filename }}</td>
-                                              <td>Selected</td>
-                                              <td><button  class="ml-2 btn btn-danger" (click)="clearDocList()"><i class="fa fa-trash" aria-hidden="true" ></i></button></td>
-                                          </tr>
-                                      </tbody>
-                                      <!--<mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
-                                      </mat-paginator>
-                                      <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>-->
-                                  </table>
-                              </div>
-                              <div class="text-center">
-                                  <button  class="btn btn-danger" *ngIf="calcType=='F' && coverUploadSection" (click)="clearDocList();coverUploadSection=!coverUploadSection">Cancel</button>&nbsp;
-                                  <button class="btn btn-success" *ngIf="calcType=='F' && coverUploadSection && uploadDocList.length!=0" (click)="onSaveCoverForm('document')">Upload Document</button>
+                              <div class="row mt-3" *ngIf="uploadStatus==null">
+                                <div class="col-md-10 col-lg-10 col-xl-10 offset-1">
+                                    <table class="table table-headerRow" style="width: 100%" *ngIf="uploadDocList.length!=0">
+                                        <thead>
+                                            <tr>
+                                                <th width="30%">Name</th>
+                                                <th width="30%">Progress</th>
+                                                <th width="30%">Remove</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of uploadDocList;let i=index">
+                                                <td width="30%">{{ item?.filename }}</td>
+                                                <td width="30%">Selected</td>
+                                                <td><button class="btn btn-danger ml-2" (click)="clearDocList()"><i class="fa fa-trash" aria-hidden="true" ></i></button></td>
+                                            </tr>
+                                        </tbody>
+                                        <!--<mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+                                        </mat-paginator>
+                                        <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>-->
+                                    </table>
+                                    <table class="table table-headerRow" style="width: 100%" *ngIf="uploadRecordsList.length!=0">
+                                        <thead>
+                                            <tr>
+                                                <th width="30%">Upload Status</th>
+                                                <th >Total Records</th>
+                                                <th >Valid Records</th>
+                                                <th >Error Records</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of uploadRecordsList;let i=index">
+                                                <td width="30%">{{ item?.Status }}</td>
+                                                <td >{{ item?.TotalRecords }}</td>
+                                                <td >{{ item?.ValidRecords }}</td>
+                                                <td >{{ item?.ErrorRecords }}</td>
+                                            </tr>
+                                        </tbody>
+                                        <!--<mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+                                        </mat-paginator>
+                                        <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>-->
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row mt-3" *ngIf="uploadStatus">
+                                <div class="col-md-10 col-lg-10 col-xl-10 offset-1 text-center">
+                                        <h4><b>{{uploadStatus}}</b></h4>
+                                </div>
+                            </div>
+                            <div class="text-center mt-2">
+                                <button class="btn btn-danger" *ngIf="calcType=='F' && coverUploadSection" (click)="clearDocList();coverUploadSection=!coverUploadSection">Cancel</button>&nbsp;
+                                <button class="btn btn-success" *ngIf="calcType=='F' && coverUploadSection && uploadDocList.length!=0 && uploadStatus==null" (click)="onSaveCoverForm('document')">Upload Document</button>&nbsp;
+                                <ng-container *ngIf="calcType=='F' && coverUploadSection && uploadRecordsList.length!=0 && uploadStatus==null">
+                                    <button class="btn btn-warning" *ngIf="uploadRecordsList[0].ErrorRecords==0 || uploadRecordsList[0].ErrorRecords=='0' || uploadRecordsList[0].ErrorRecords==null"  (click)="onCheckReUpload()">ReUpload</button>
+                                    <button class="btn btn-success" *ngIf="uploadRecordsList[0].ErrorRecords!=0 && uploadRecordsList[0].ErrorRecords!='0' && uploadRecordsList[0].ErrorRecords!=null"  (click)="onMoveRecords()">Move Records</button>
+                                </ng-container>
+                                
 
-                              </div>
+                            </div>
                               <ng-container>
                                   <ng-template #discountCard>
                                       <div class="popover-card customTemplate">

@@ -70,6 +70,9 @@ export class NewBrokercoverDetailsComponent implements OnInit {
   veiwSelectedDocUrl:any;
   excessamount: any;
   excessDesc: any;
+  uploadTranId: any=null;
+  uploadStatus: any=null;
+  uploadRecordsList: any[];
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,) {
       this.minDate = new Date();
@@ -949,7 +952,7 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     if(this.coverDetails.CoverId==null){
       this.coverDetails.CreatedBy = this.loginId
     }
-    if(this.calcType=='D' || this.calcType=='L'){
+    if(this.coverageTypeValue=='D' || this.coverageTypeValue=='L'){
       this.coverDetails.DependentCoverYn = 'N';
       this.coverDetails.DependentCoverId = null;
     }
@@ -1241,69 +1244,110 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
   clearDocList(){
     this.uploadDocList = [];
   }
-  // onFileUpload(){
-  //   let ReqObj={
-  //     "AgencyCode":"",
-  //     "BranchCode":"",
-  //     "CoverId":this.coverDetails?.CoverId,
-  //     "CreatedBy": this.loginId,
-  //     "InsuranceId": this.insuranceId,
-  //     "ProductId": this.coverDetails?.ProductId,
-  //     "SectionId": this.coverDetails?.SectionId,
-  //     "SubCoverId": null,
-  //     "Status":"Y",
-  //   }
-  //   console.log("Reqw",ReqObj);
-  //   let urlLink = `${this.ApiUrl1}file/upload`;
-  //   this.sharedService.onPostCoverDocumentMethodSync(urlLink, ReqObj,this.uploadDocList[0].url).subscribe(
-  //     (data: any) => {
-  //         if(data.Result){
-  //           // let type: NbComponentStatus = 'success';
-  //           // const config = {
-  //           //   status: type,
-  //           //   destroyByClick: true,
-  //           //   duration: 4000,
-  //           //   hasIcon: true,
-  //           //   position: NbGlobalPhysicalPosition.TOP_RIGHT,
-  //           //   preventDuplicates: false,
-  //           // };
-  //           // this.toastrService.show(
-  //           //   'Factor Details Inserted/Updated Successfully',
-  //           //   'Factor Details',
-  //           //   config);
-  //             this.factorValue = this.coverDetails.FactorTypeId;
-  //             if(this.factorValue!=null && this.factorValue!=undefined && this.factorValue!=''){
-  //               this.onCoverFactorTypeChange();
-  //               this.coverUploadSection = false;
-  //               this.uploadDocList = [];
-  //             }
-  //         }
-  //         else if(data.ErrorMessage){
-  //           if(data.ErrorMessage){
-  //             // for(let entry of data.ErrorMessage){
-  //             //   let type: NbComponentStatus = 'danger';
-  //             //   const config = {
-  //             //     status: type,
-  //             //     destroyByClick: true,
-  //             //     duration: 4000,
-  //             //     hasIcon: true,
-  //             //     position: NbGlobalPhysicalPosition.TOP_RIGHT,
-  //             //     preventDuplicates: false,
-  //             //   };
-  //             //   this.toastrService.show(
-  //             //     entry.Field,
-  //             //     entry.Message,
-  //             //     config);
-  //             // }
-  //             console.log("Error Iterate",data.ErrorMessage)
-  //             //this.loginService.errorService(data.ErrorMessage);
-  //           }
-  //         }
-  //     },
-  //     (err) => { },
-  //   );
+  onFileUpload(){
+    let ReqObj = {
+      "InsuranceId":this.insuranceId,
+      "ProductId":this.coverDetails?.ProductId,
+      "CoverId":this.coverDetails?.CoverId,
+      "SubCoverId":null,
+      "AgencyCode":"",
+      "BranchCode":"",
+      "CreatedBy":this.loginId,
+      "SectionId":this.coverDetails?.SectionId
+    }
+    console.log("Reqw",ReqObj);
+    let urlLink = `${this.ApiUrl1}batch/upload`;
+    this.sharedService.onPostCoverDocumentMethodSync(urlLink, ReqObj,this.uploadDocList[0].url).subscribe(
+      (data: any) => {
+        if(data.ErrorMessage){
+          if(data.ErrorMessage){
+            // for(let entry of data.ErrorMessage){
+            //   let type: NbComponentStatus = 'danger';
+            //   const config = {
+            //     status: type,
+            //     destroyByClick: true,
+            //     duration: 4000,
+            //     hasIcon: true,
+            //     position: NbGlobalPhysicalPosition.TOP_RIGHT,
+            //     preventDuplicates: false,
+            //   };
+            //   this.toastrService.show(
+            //     entry.Field,
+            //     entry.Message,
+            //     config);
+            // }
+            console.log("Error Iterate",data.ErrorMessage)
+            //this.loginService.errorService(data.ErrorMessage);
+          }
+        }
+        else{
+          if(data.TranId){
+            this.checkUploadStatus(data.TranId);
+          }
+          
+        } 
+      },
+      (err) => { },
+    );
 
-  // }
+  }
+  onCheckReUpload(){
+    this.uploadStatus = null;
+    this.uploadDocList = [];
+    this.uploadRecordsList = [];
+  }
+  checkUploadStatus(tranId){
+    
+    let urlLink = `${this.ApiUrl1}batch/getTranactionByTranId?tranId=${tranId}`;
+        this.sharedService.onGetMethodSync(urlLink).subscribe(
+          (data: any) => {
+              if(data){
+                let res = data?.Result;
+                if(res.Status=='S'){
+                  this.uploadTranId = tranId;
+                  this.uploadStatus = null;
+                  this.uploadDocList = [];
+                  this.uploadRecordsList = [{"Status":res.Description,"ErrorRecords":res.ErrorRecord,"ValidRecords":res.ValidRecord,"TotalRecords":res.TotalRecord}]
+                }
+                else if(res.Status=='E'){
+                  this.uploadStatus = 'Upload Failed..Please Try Again...'
+                  setTimeout(() => 
+                  {
+                    this.uploadDocList = [];
+                    this.uploadStatus = res?.Description;
+                }, (4*1000));
+                }
+                else{
+                  this.uploadStatus = res?.Description;
+                  setTimeout(() => this.checkUploadStatus(tranId), (4*1000));
+                }
+              }
+            },  
+            (err) => { },
+          );
+  }
+  onMoveRecords(){
+    if(this.uploadTranId!=null){
+      let urlLink = `${this.ApiUrl1}batch/doMainJob?tranId=${this.uploadTranId}`;
+      this.sharedService.onGetMethodSync(urlLink).subscribe(
+        (data: any) => {
+            if(data){
+              let res = data?.Result;
+              this.factorValue = this.coverDetails.FactorTypeId;
+              if(this.factorValue!=null && this.factorValue!=undefined && this.factorValue!=''){
+                this.uploadDocList = [];
+                this.uploadStatus = null;
+                this.uploadRecordsList = [];
+                this.onCoverFactorTypeChange();
+                this.coverUploadSection = false;
+                
+              }
+            }
+          },  
+          (err) => { },
+        );
+    }
+  }
   getBackPage(){
     this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerCoverList']);
   }

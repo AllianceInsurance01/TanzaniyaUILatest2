@@ -14,16 +14,19 @@ export class NewBasicProductDetailsComponent implements OnInit {
 
   @Input() title: any;@Input() ProductId:any;
   CurrencyIds:any[]=[];
+  typeList:any[]=[];
   productList:any[]=[];
+  Motoryn:any;
   iconList:any[]=[];
   statusValue:any= "YES";cityList:any[]=[];
   loginId: any;userType: any;productDetails:any;
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
-  public CommonApiUrl:any= this.AppConfig.CommonApiUrl;typeList:any[]=[];
+  public CommonApiUrl:any= this.AppConfig.CommonApiUrl;
   minDate: Date;activeMenu:any;
   insuranceId: string;
   Currency: any;
+  commissionError: boolean;
   constructor(
     private sharedService: SharedService,private datePipe:DatePipe,private router:Router) {
       this.activeMenu = "Product";
@@ -104,7 +107,8 @@ export class NewBasicProductDetailsComponent implements OnInit {
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         console.log(data);
-        this.typeList = data.Result;
+        let obj = [{ Code: "", CodeDesc: "--SELECT--" }];
+        this.typeList = obj.concat(data?.Result);
       },
       (err) => { },
     );
@@ -153,6 +157,13 @@ export class NewBasicProductDetailsComponent implements OnInit {
     }
   }
   onSaveProduct(){
+    if(this.productDetails.MotorYn!='' && this.productDetails.MotorYn!=undefined && this.productDetails.MotorYn!=null){
+      this.commissionError=false;
+    
+    }
+    else{
+      this.commissionError=true;
+    }
     let ReqObj = {
        "ProductId": this.productDetails.ProductId,
         "ProductName":this.productDetails.ProductName,
@@ -162,7 +173,7 @@ export class NewBasicProductDetailsComponent implements OnInit {
         "Remarks":this.productDetails.Remarks,
         "Status":this.productDetails.Status,
         "PackageYn":this.productDetails.PackageYn,
-        //"MotorYn": this.productDetails.MotorYn,
+        "MotorYn": this.productDetails.MotorYn,
         "EffectiveDateStart":this.productDetails.EffectiveDateStart,
         "CreatedBy":this.loginId,
         "RegulatoryCode":this.productDetails.RegulatoryCode,

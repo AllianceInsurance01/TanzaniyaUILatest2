@@ -17,6 +17,7 @@ import {
 })
 export class ProductListComponent implements OnInit {
 
+  userDetails:any;
   companyList:any[]=[];companyValue:any;
   insuranceName: any;public activeMenu:any='Product';
   insuranceId: string;productList:any[]=[];
@@ -25,6 +26,7 @@ export class ProductListComponent implements OnInit {
   constructor(private router:Router,private sharedService: SharedService,public dialog: MatDialog) {
     this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
     this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
+    this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     //sessionStorage.removeItem('addDetailsObj')
 
      //let c=sessionStorage.getItem('addDetailsObj')

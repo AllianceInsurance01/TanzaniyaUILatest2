@@ -48,6 +48,7 @@ export class IndustryListComponent implements OnInit {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     const user = this.userDetails?.Result;
     this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+    this.insuranceId = "100002";
     this.columnHeader = [
       { key: 'IndustryName', display: 'Industry Name' },
       { key: 'Remarks', display: 'Remarks' },
@@ -106,6 +107,7 @@ getBranchList(){
 
 
   getCompanyProductList(){
+    if(this.insuranceId==null) this.insuranceId = "100002"
     let ReqObj ={
       "InsuranceId":this.insuranceId,
       "Limit":"0",
