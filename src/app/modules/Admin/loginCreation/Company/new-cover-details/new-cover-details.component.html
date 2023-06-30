@@ -278,10 +278,8 @@
                                     <div class="col-12 col-md-4 col-lg-4" *ngIf="calcType=='F'">
                                         <div class="input-control-container">
                                             <label class="input-form-label">Factor Type<span class="text-required">*</span></label>
-                                            <div class="input-form-box">
                                                 <ng-select class="input-form-select" appendTo="body" [items]="factorList" [(ngModel)]="factorValue" (change)="onCoverFactorTypeChange()" bindValue="Code" bindLabel="CodeDesc">
                                                 </ng-select>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-4 col-lg-4" *ngIf="calcType!='G' && calcType!='F'">
@@ -330,10 +328,8 @@
                                     <div class="col-12 col-md-4 col-lg-4" *ngIf="calcType!='A'">
                                         <div class="input-control-container">
                                             <label class="input-form-label">Cover Based On <span class="text-required">*</span></label>
-                                            <div class="input-form-box">
                                                 <ng-select class="input-form-select" appendTo="body" [items]="basedOnColumnList" [(ngModel)]="basedOnColumnValue" bindValue="Code" bindLabel="CodeDesc">
                                                 </ng-select>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="coverDetails.IsTaxExcempted=='Y'">
@@ -781,13 +777,13 @@
                                 <div class="d-flex justify-content-end">
                                     <div>
                                         <button class="btn btn-danger" *ngIf="!ratingSection" (click)="getBackPage()">Cancel</button>
-                                        <button class="btn btn-danger" *ngIf="ratingSection && !coverUploadSection" (click)="ratingSection=!ratingSection;title='Cover Details'">Back</button>
+                                        <button class="btn btn-danger" *ngIf="ratingSection && !coverUploadSection" (click)="ratingSection=!ratingSection;title='Cover Details'">Back</button>&nbsp;
                                     </div>
                                     <div>
                                         <button *ngIf="!ratingSection && coverDetails.SubCoverYn=='Y'" class="ml-2 btn btn-primary" (click)="onGetSubCoverList('direct')">Proceed To SubCover Details</button>
                                         <button *ngIf="(coverDetails.SubCoverYn=='Y' && !ratingSection)" class="ml-2 btn btn-success" (click)="onSaveCoverForm('saveCover')">SAVE</button>
 
-                                        <button *ngIf="(coverDetails.SubCoverYn!='Y' && ratingSection && uploadDocList.length==0)" class="ml-2 btn btn-success" (click)="onSaveCoverForm('direct')">Submit</button>
+                                        <button *ngIf="(coverDetails.SubCoverYn!='Y' && ratingSection && uploadDocList.length==0 && !coverUploadSection)" class="ml-2 btn btn-success" (click)="onSaveCoverForm('direct')">Submit</button>
                                         <button *ngIf="!ratingSection && coverDetails.SubCoverYn!='Y'" class="ml-2 btn btn-primary" (click)="ratingSection=!ratingSection;title='Rating Details'">Proceed To Rating Detail</button>
                                     </div>
                                 </div>
@@ -1049,10 +1045,8 @@
                                         <div class="col-12 col-md-4 col-lg-4" *ngIf="subCoverData.CalcType=='F'">
                                             <div class="input-control-container">
                                                 <label class="input-form-label">Factor Type<span class="text-required">*</span></label>
-                                                <div class="input-form-box">
                                                     <ng-select class="input-form-select" appendTo="body" [items]="factorList" [(ngModel)]="subCoverData.FactorTypeId" (change)="onSubCoverFactorTypeChange()" bindValue="Code" bindLabel="CodeDesc">
                                                     </ng-select>
-                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4" *ngIf="subCoverData.CalcType!='G' && subCoverData.CalcType!='F'">
@@ -1091,10 +1085,8 @@
                                         <div class="col-12 col-md-4 col-lg-4" *ngIf="subCoverData.CalcType!='A'">
                                             <div class="input-control-container">
                                                 <label class="input-form-label">SubCover Based On <span class="text-required">*</span></label>
-                                                <div class="input-form-box">
                                                     <ng-select class="input-form-select" appendTo="body" [items]="basedOnColumnList" [(ngModel)]="subCoverData.CoverBasedOn" bindValue="Code" bindLabel="CodeDesc">
                                                     </ng-select>
-                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4">
@@ -1343,7 +1335,7 @@
                                 <div class="d-flex justify-content-end">
                                     <div>
                                         <button class="btn btn-danger" *ngIf="!subRatingSection" (click)="addSubCoverSection=!addSubCoverSection">Cancel</button>
-                                        <button class="btn btn-danger" *ngIf="subRatingSection" (click)="subRatingSection=!subRatingSection;title='Cover Details'">Back</button>
+                                        <button class="btn btn-danger" *ngIf="subRatingSection" (click)="subRatingSection=!subRatingSection;title='Cover Details'">Back</button>&nbsp;
                                     </div>
                                     <div>
                                         <button class="btn btn-success ml-2" *ngIf="subRatingSection" (click)="onSaveSubCoverDetails('saveCover')">Submit</button>

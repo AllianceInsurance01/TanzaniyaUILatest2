@@ -21,7 +21,7 @@ export class NewBrokerDetailsComponent implements OnInit {
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl; companyList: any[] = [];
   countryList: any[] = []; countryValue: any; repassword: any = null;
   mobileCodeList: any[] = []; brokerDetails: BrokerDetails; commissionVatYN: any;
-  userName: any; contactPersonName: any; subUserType: any; password: any = null;
+  userName: any; contactPersonName: any; subUserType: any=null; password: any = null;
   minDate: Date; designation: any = null; address1: any; address2: any; remarks: any;
   countryCode: any; cityCode: any; userMail: any; mobileCode: any; custConfirmYN: any = "Y";
   userMobile: any; whatsAppCode: any; whatsAppNo: any; pobox: any; checkerYN = "Y";
@@ -55,6 +55,7 @@ export class NewBrokerDetailsComponent implements OnInit {
     let com = sessionStorage.getItem('editBroker');
     if (com) {
       this.editsSection = false;
+      this.subUserType = sessionStorage.getItem('brokerChannelId');
     }
     else {
       this.editsSection = true;

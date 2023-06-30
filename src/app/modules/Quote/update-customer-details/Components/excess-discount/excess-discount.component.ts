@@ -267,7 +267,7 @@ emiyn="N";
           },
         },
         { key: 'CoverName', display: 'Cover Name' },
-        { key: 'ReferalDescription', display: 'Referral' },
+        // { key: 'ReferalDescription', display: 'Referral' },
         { key: 'SumInsured', display: 'Sum Insured' },
         { key: 'Rate', display: 'Rate' },
         { key: 'ExcessPercent', display: 'ExcessPercent' },
