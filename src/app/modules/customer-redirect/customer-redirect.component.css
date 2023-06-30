@@ -1,0 +1,32 @@
+#page_container
+{
+    top: 100px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 12px #555;
+    min-height: 25rem !important;
+    border-radius: 25px;
+    background: linear-gradient(315deg, #334c66 0%, #11A0B0 100%);
+}
+
+#page_container .block_container{
+    background: url('../../../assets/images/securityAlert.png') no-repeat;
+    background-position: right bottom !important;
+    background-size: 25% 50%;
+}
+ul {
+    list-style-type: "*";
+  }
+  ul li {
+    color: #fff;
+    list-style: none;
+    position: relative;
+    font-size: 22px !important;
+    padding: 3px 0 2px 25px;
+  }
+  
+  ul li::before {
+    content: '*';
+    position: absolute;
+    top: 6px;
+    left: 0;
+  }

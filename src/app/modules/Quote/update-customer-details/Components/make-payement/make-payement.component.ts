@@ -218,11 +218,12 @@ export class MakePayementComponent implements OnInit {
       (data: any) => {
           if(data?.Result){
                 this.IsChargeOrRefund = null;
-                this.policySection = true; 
                 this.paymentDetails = {
                   "QuoteNo": this.quoteNo,
                   "PolicyNo": this.endorsePolicyNo
                 }
+                this.updateTiraDetails();
+                
           }
       },
       (err) => { },
@@ -389,6 +390,7 @@ export class MakePayementComponent implements OnInit {
     else{this.iBanNo = null;this.accNo=null;
       if(this.payAmount==undefined) amount = null;
       else if(this.payAmount.includes(',')){ amount = this.payAmount.replace(/,/g, '') }
+      else amount = this.payAmount;
     }
     if(this.IsChargeOrRefund!='REFUND' && this.Menu=='2'){
         if(this.chequeDate!='' && this.chequeDate!=null && this.chequeDate!= undefined){
@@ -418,6 +420,7 @@ export class MakePayementComponent implements OnInit {
       "AccountNumber":this.accNo,
       "IbanNumber": this.iBanNo
     }
+    console.log("Final Pay Req",ReqObj)
     let urlLink = `${this.CommonApiUrl}payment/insertpaymentdetails`;
      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
@@ -425,8 +428,23 @@ export class MakePayementComponent implements OnInit {
           if(data.Result.PolicyNo){
             this.paymentDetails = data.Result;
             this.policyNo = data.Result.PolicyNo;
-            this.policySection = true;
+            this.updateTiraDetails();
+            
           }
+        } 
+      },
+      (err) => { },
+      );
+  }
+  updateTiraDetails(){
+      let ReqObj={
+        "QuoteNo": this.quoteNo,
+      }
+      let urlLink = `${this.CommonApiUrl}payment/pushtira`;
+     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data?.Result){
+            if(data?.Result?.Response=='Success') this.policySection = true;
         } 
       },
       (err) => { },

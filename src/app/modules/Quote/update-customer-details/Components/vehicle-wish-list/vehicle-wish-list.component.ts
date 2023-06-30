@@ -69,6 +69,7 @@ export class VehicleWishListComponent implements OnInit {
   errorRecords: any[]=[];quoteNo:any=null;
   employeeUploadRecords: any[]=[];
   showEmpRecordsSection: boolean;
+  bdmCode: any;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -77,28 +78,62 @@ export class VehicleWishListComponent implements OnInit {
     this.userType = this.userDetails?.Result?.UserType;
     this.agencyCode = this.userDetails.Result.OaCode;
     this.branchCode = this.userDetails.Result.BranchCode;
+    this.brokerBranchCode = this.userDetails.Result.BrokerBranchCode;
     this.productId = this.userDetails.Result.ProductId;
     this.insuranceId = this.userDetails.Result.InsuranceId;
       let quoteNo = sessionStorage.getItem('quoteNo');
       if(quoteNo!=undefined && quoteNo!='undefined') this.quoteNo = quoteNo;
-      this.customerHeader =  [
-        { key: 'Chassisnumber', display: 'Chassis Number' },
-        { key: 'PolicyTypeDesc', display: 'Policy Type' },
-        { key: 'PolicyStartDate', display: 'Start Date'},
-        { key: 'PolicyEndDate', display: 'End Date'},
-        { key: 'OverallPremiumFc', display: 'Premium' },
-        { key: 'Vehiclemake', display: 'Make' },
-        { key: 'Vehcilemodel', display: 'Model' },
-        { key: 'Status', display: 'Status' },
-        {
-          key: 'actions',
-          display: 'Action',
-          config: {
-            isEdit: true,
-            isRemove: true,
+      let quoteStatus = sessionStorage.getItem('QuoteStatus');
+      if(quoteStatus=='AdminRP' || quoteStatus == 'AdminRA' || quoteStatus == 'AdminRE'){
+        if(quoteStatus=='AdminRP') this.statusValue ="RP";
+        else if(quoteStatus =='AdminRA') this.statusValue ="RA";
+        else if(quoteStatus =='AdminRE') this.statusValue ="RE";
+          this.adminSection = true;
+      }
+      else{
+        if(quoteStatus) this.statusValue = quoteStatus;
+        this.adminSection = false;
+      }
+      if(this.adminSection && (quoteStatus=='AdminRP' || quoteStatus == 'AdminRA')){
+        this.customerHeader =  [
+          { key: 'Chassisnumber', display: 'Chassis Number' },
+          { key: 'PolicyTypeDesc', display: 'Policy Type' },
+          { key: 'PolicyStartDate', display: 'Start Date'},
+          { key: 'PolicyEndDate', display: 'End Date'},
+          { key: 'OverallPremiumFc', display: 'Premium' },
+          { key: 'Vehiclemake', display: 'Make' },
+          { key: 'Vehcilemodel', display: 'Model' },
+          { key: 'Status', display: 'Status' },
+          {
+            key: 'actions',
+            display: 'Action',
+            config: {
+              isEdit: true
+            },
           },
-        },
-      ];
+        ];
+      }
+      else {
+        this.customerHeader =  [
+          { key: 'Chassisnumber', display: 'Chassis Number' },
+          { key: 'PolicyTypeDesc', display: 'Policy Type' },
+          { key: 'PolicyStartDate', display: 'Start Date'},
+          { key: 'PolicyEndDate', display: 'End Date'},
+          { key: 'OverallPremiumFc', display: 'Premium' },
+          { key: 'Vehiclemake', display: 'Make' },
+          { key: 'Vehcilemodel', display: 'Model' },
+          { key: 'Status', display: 'Status' },
+          {
+            key: 'actions',
+            display: 'Action',
+            config: {
+              isEdit: true,
+              isRemove: true,
+            },
+          },
+        ];
+      }
+      
       this.customerHeader2 =  [
         {
           key: 'actions',
@@ -389,7 +424,6 @@ export class VehicleWishListComponent implements OnInit {
     this.PromoCode = this.updateComponent?.PromoCode;
     this.sourceType = this.updateComponent?.sourceType;
     this.brokerCode = this.updateComponent?.brokerCode;
-    this.brokerBranchCode = this.updateComponent.brokerBranchCode;
     if(this.policyStartDate!=null && this.policyStartDate!='' && this.policyStartDate!=undefined){
       this.policyStartError = false;
       if(this.policyEndDate!=null && this.policyEndDate!='' && this.policyEndDate!=undefined){
@@ -403,7 +437,8 @@ export class VehicleWishListComponent implements OnInit {
                   this.sourceTypeError = false;
                   if(this.brokerCode!=null && this.brokerCode!='' && this.brokerCode!=undefined){
                     this.brokerCodeError = false;
-                    if(this.brokerBranchCode!=null && this.brokerBranchCode!='' && this.brokerBranchCode!=undefined){
+                    if(this.sourceType=='Broker'){
+                      if(this.brokerBranchCode!=null && this.brokerBranchCode!='' && this.brokerBranchCode!=undefined){
                         this.brokerBranchCodeError = false;
                         if(this.HavePromoCode=='Y'){
                           if(this.PromoCode!=null && this.PromoCode!='' && this.PromoCode!=undefined){
@@ -427,6 +462,29 @@ export class VehicleWishListComponent implements OnInit {
                         }
                     }
                     else{this.brokerBranchCodeError = true;this.errorSection = true;}
+                    }
+                    else{
+                      if(this.HavePromoCode=='Y'){
+                        if(this.PromoCode!=null && this.PromoCode!='' && this.PromoCode!=undefined){
+                          this.promoCodeError = false;
+                          this.searchSection = false;
+                          this.uploadSection = true;
+                          this.vehicleWishList = [];
+                          this.showEmpRecordsSection = false;
+                          this.uploadDocList = [];
+                          this.employeeUploadRecords = [];
+                        }
+                        else{ this.errorSection=true;this.promoCodeError = true;}
+                      }
+                      else{
+                        this.searchSection = false;
+                        this.uploadSection = true;
+                        this.vehicleWishList = [];
+                        this.showEmpRecordsSection = false;
+                        this.uploadDocList = [];
+                        this.employeeUploadRecords = [];
+                      }
+                    }
                   }
                   else {this.brokerCodeError = true;this.errorSection = true;}
                 }
@@ -490,13 +548,43 @@ export class VehicleWishListComponent implements OnInit {
     console.log("Final File List",this.uploadDocList)
   }
   onUploadVehicleData(){
-    let appId = null;
+    let createdBy="";
+    let quoteStatus = sessionStorage.getItem('QuoteStatus');
+    this.subUsertype = sessionStorage.getItem('typeValue');
+      console.log("AcExecutive",this.acExecutiveId,this.vehicleDetails,this.sourceType,this.brokerCode,this.customerCode);
+      
+      let appId = "1",loginId="",brokerbranchCode="";
+      if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
+        brokerbranchCode = this.updateComponent.brokerBranchCode;
+          createdBy = this.updateComponent.brokerLoginId;
+      }
+      else{
+        createdBy = this.loginId;
+        if(this.userType!='Issuer'){
+          this.brokerCode = this.agencyCode;
+          appId = "1"; loginId=this.loginId;
+          brokerbranchCode = this.brokerBranchCode;
+        }
+        else{
+          appId = this.loginId;
+          loginId = this.updateComponent.brokerLoginId
+          brokerbranchCode = this.updateComponent.brokerBranchCode;
+        }
+      }
+      if(this.userType!='Broker' && this.userType!='User'){
+        this.sourceType = this.updateComponent.sourceType;
+        this.bdmCode = this.updateComponent.brokerCode;
+        this.brokerCode = this.updateComponent.brokerCode;
+        this.customerCode = this.updateComponent.CustomerCode;
+      }
+  
+    console.log("AcExecutive",this.acExecutiveId,this.vehicleDetails,this.sourceType,this.bdmCode,this.brokerCode,this.customerCode);
     let ReqObj = {
       "CompanyId": this.insuranceId,
       "ProductId": this.productId,
-      "RequestReferenceNo": this.referenceNo,
+      "RequestReferenceNo": this.quoteRefNo,
       "TypeId":"101",
-      "BrokerBranchCode": this.brokerBranchCode,
+      "BrokerBranchCode":brokerbranchCode,
       "CustomerCode": this.customerCode,
       "SourceType": this.sourceType,
       "CustomerRefNo": sessionStorage.getItem('customerReferenceNo'),
@@ -673,6 +761,10 @@ export class VehicleWishListComponent implements OnInit {
           },  
           (err) => { },
         );
+  }
+  checkDisableField(){
+    let status = sessionStorage.getItem('QuoteStatus');
+    return (this.adminSection && (status=='AdminRP' || status=='AdminRA'))
   }
   onEditVehicle(rowData){
     if(this.statusValue=='RA'){

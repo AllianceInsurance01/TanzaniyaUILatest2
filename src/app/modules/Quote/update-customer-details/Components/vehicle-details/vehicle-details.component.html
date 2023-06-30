@@ -260,21 +260,21 @@
                             <div class="col-12 col-md-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Insurance Type</label><span class="text-danger">*</span>
-                                    <ng-select class="input-form-select" appendTo="body" [disabled]="endorsementSection && !enableFieldsSection" [items]="typeList" [(ngModel)]="typeValue" (change)="getMotorTypeList('change',null,null)" bindValue="Code" bindLabel="CodeDesc">
+                                    <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="typeList" [(ngModel)]="typeValue" (change)="getMotorTypeList('change',null,null)" bindValue="Code" bindLabel="CodeDesc">
                                     </ng-select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Insurance Class</label><span class="text-danger">*</span>
-                                    <ng-select class="input-form-select" appendTo="body" [disabled]="endorsementSection && !enableFieldsSection" [items]="classList" [(ngModel)]="classValue" (change)="onChangeClassType()" bindValue="Code" bindLabel="CodeDesc">
+                                    <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="classList" [(ngModel)]="classValue" (change)="onChangeClassType()" bindValue="Code" bindLabel="CodeDesc">
                                     </ng-select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Body Type</label><span class="text-danger">*</span>
-                                    <ng-select class="input-form-select" appendTo="body" [disabled]="endorsementSection && !enableFieldsSection" [items]="motorTypeList" [(ngModel)]="bodyTypeValue" (change)="onChangeBodyType()" bindValue="Code" bindLabel="CodeDesc">
+                                    <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="motorTypeList" [(ngModel)]="bodyTypeValue" (change)="onChangeBodyType()" bindValue="Code" bindLabel="CodeDesc">
                                     </ng-select>
                                 </div>
                             </div>
@@ -283,7 +283,7 @@
                             <div class="col-12 col-md-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Motor Usage</label><span class="text-danger">*</span>
-                                    <ng-select class="input-form-select" appendTo="body" [disabled]="endorsementSection && !enableFieldsSection" [items]="motorUsageList" [(ngModel)]="motorUsageValue" bindValue="Code" bindLabel="CodeDesc">
+                                    <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="motorUsageList" [(ngModel)]="motorUsageValue" bindValue="Code" bindLabel="CodeDesc">
                                     </ng-select>
                                 </div>
                             </div>
@@ -292,9 +292,9 @@
                                     <label class="input-form-label">Claims YN?</label>
                                     <div class="input-form-radio-box">
                                         <div class="radio-toolbar">
-                                            <input id="claims_Yes" type="radio" name="claimsYN" [disabled]="endorsementSection && !enableFieldsSection" [(ngModel)]="claimsYN" value="Y">
+                                            <input id="claims_Yes" type="radio" name="claimsYN" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="claimsYN" value="Y">
                                             <label for="claims_Yes" class="yes">Yes</label>
-                                            <input id="claims_No" type="radio" name="claimsYN" [disabled]="endorsementSection && !enableFieldsSection" [(ngModel)]="claimsYN" value="N">
+                                            <input id="claims_No" type="radio" name="claimsYN" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="claimsYN" value="N">
                                             <label for="claims_No" class="no">No</label>
                                         </div>
                                     </div>
@@ -305,9 +305,9 @@
                                     <label class="input-form-label">GPS Tracking Enabled?</label>
                                     <div class="input-form-radio-box">
                                         <div class="radio-toolbar">
-                                            <input id="orginwarehouse_Yes" type="radio" name="gpsTracking" [disabled]="endorsementSection && !enableFieldsSection" [(ngModel)]="gpsYn" value="Y">
+                                            <input id="orginwarehouse_Yes" type="radio" name="gpsTracking" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="gpsYn" value="Y">
                                             <label for="orginwarehouse_Yes" class="yes">Yes</label>
-                                            <input id="orginwarehouse_No" type="radio" name="gpsTracking" [disabled]="endorsementSection && !enableFieldsSection" [(ngModel)]="gpsYn" value="N">
+                                            <input id="orginwarehouse_No" type="radio" name="gpsTracking" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="gpsYn" value="N">
                                             <label for="orginwarehouse_No" class="no">No</label>
                                         </div>
                                     </div>
@@ -324,7 +324,7 @@
                                 <div class="input-control-container">
                                     <label class="input-form-label">Vehicle Sum Insured ({{currencyValue}}) &nbsp;<span class="text-danger">*</span></label>
                                     <div class="input-form-box">
-                                        <input type="text" digitOnly [disabled]="(endorsementSection && !enableVehicleSI) && (endorsementSection && !enableFieldsSection)" [(ngModel)]="vehicleSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="CommaFormatted()" class="input-form-control without-icon">
+                                        <input type="text" digitOnly [disabled]="((endorsementSection && !enableVehicleSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="vehicleSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="CommaFormatted()" class="input-form-control without-icon">
                                     </div>
                                 </div>
                             </div>
@@ -332,7 +332,7 @@
                                 <div class="input-control-container">
                                     <label class="input-form-label">Accessories Sum Insured ({{currencyValue}})</label>
                                     <div class="input-form-box">
-                                        <input type="text" digitOnly [disabled]="(endorsementSection && !enableAccessoriesSI) && (endorsementSection && !enableFieldsSection)" [(ngModel)]="accessoriesSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="accessoriesCommaFormatted()" class="input-form-control without-icon">
+                                        <input type="text" digitOnly [disabled]="((endorsementSection && !enableAccessoriesSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="accessoriesSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="accessoriesCommaFormatted()" class="input-form-control without-icon">
                                     </div>
                                 </div>
                             </div>
@@ -340,7 +340,7 @@
                                 <div class="input-control-container">
                                     <label class="input-form-label">WindShield Sum Insured ({{currencyValue}})</label>
                                     <div class="input-form-box">
-                                        <input type="text" digitOnly [disabled]="(endorsementSection && !enableWindshieldSI) && (endorsementSection && !enableFieldsSection)" [(ngModel)]="windShieldSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="WindSICommaFormatted()" class="input-form-control without-icon">
+                                        <input type="text" digitOnly [disabled]="((endorsementSection && !enableWindshieldSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="windShieldSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="WindSICommaFormatted()" class="input-form-control without-icon">
                                     </div>
                                 </div>
                             </div>
@@ -350,7 +350,7 @@
                                 <div class="input-control-container">
                                     <label class="input-form-label">Extended TPPD Sum Insured ({{currencyValue}})</label>
                                     <div class="input-form-box">
-                                        <input type="text" digitOnly [disabled]="(endorsementSection && !enableTppdSI) && (endorsementSection && !enableFieldsSection)" [(ngModel)]="tppdSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="TppdCommaFormatted()" class="input-form-control without-icon">
+                                        <input type="text" digitOnly [disabled]="((endorsementSection && !enableTppdSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="tppdSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="TppdCommaFormatted()" class="input-form-control without-icon">
                                     </div>
                                 </div>
                             </div>
@@ -358,7 +358,7 @@
                                 <div class="input-control-container">
                                     <label class="input-form-label">TIRA Cover Note No (If Exist)</label>
                                     <div class="input-form-box">
-                                        <input type="text" [disabled]="endorsementSection && !enableFieldsSection" [(ngModel)]="tiraCoverNoteNo" autocomplete="off" maxlength="15" class="input-form-control without-icon">
+                                        <input type="text" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="tiraCoverNoteNo" autocomplete="off" maxlength="15" class="input-form-control without-icon">
                                     </div>
                                 </div>
                             </div>
@@ -379,7 +379,7 @@
                             <label class="input-form-label d-flex">
                                 <span class="mx-2" style="font-family: var(--our-font-family-new) !important;font-size: 1rem;">Collateral</span>
                                  <div class="custom-control custom-switch" style="position: relative;bottom: 0.3rem;">
-                                   <input type="checkbox" class="custom-control-input" id="switch1" [disabled]="(endorsementSection && !enableFieldsSection)" (change)="onCollateralChange()" [(ngModel)]="collateralValue">
+                                   <input type="checkbox" class="custom-control-input" id="switch1" [disabled]="((endorsementSection && !enableFieldsSection)) || checkDisableField()" (change)="onCollateralChange()" [(ngModel)]="collateralValue">
                                    <label class="custom-control-label" for="switch1"></label>
                         </div>
                         </label>
@@ -389,7 +389,7 @@
                     <div class="col-12 col-md-4">
                         <div class="input-control-container">
                             <label class="input-form-label">Borrower Type</label><span class="text-danger">*</span>
-                            <ng-select class="input-form-select" appendTo="body" [items]="borrowerList" [disabled]="(endorsementSection && !enableFieldsSection)" [(ngModel)]="borrowerValue" bindValue="Code" bindLabel="CodeDesc">
+                            <ng-select class="input-form-select" appendTo="body" [items]="borrowerList" [disabled]="((endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="borrowerValue" bindValue="Code" bindLabel="CodeDesc">
                             </ng-select>
                         </div>
                     </div>
@@ -397,14 +397,14 @@
                         <div class="input-control-container">
                             <label class="input-form-label">Collateral Name</label><span class="text-danger">*</span>
                             <div class="input-form-box">
-                                <input type="text" maxlength="50" class="input-form-control without-icon" [disabled]="(endorsementSection && !enableFieldsSection)" [(ngModel)]="collateralName">
+                                <input type="text" maxlength="50" class="input-form-control without-icon" [disabled]="((endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="collateralName">
                             </div>
                         </div>
                     </div>
                     <div class="col-12 col-md-4" *ngIf="borrowerValue=='1'">
                         <div class="input-control-container">
                             <label class="input-form-label">Collateral Bank Name</label><span class="text-danger">*</span>
-                            <ng-select class="input-form-select" appendTo="body" [items]="bankList" [disabled]="(endorsementSection && !enableFieldsSection)" [(ngModel)]="collateralName" bindValue="Code" bindLabel="CodeDesc">
+                            <ng-select class="input-form-select" appendTo="body" [items]="bankList" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="collateralName" bindValue="Code" bindLabel="CodeDesc">
                             </ng-select>
                         </div>
                     </div>
@@ -412,7 +412,7 @@
                         <div class="input-control-container">
                             <label class="input-form-label">First Loss Payee</label><span class="text-danger">*</span>
                             <div class="input-form-box">
-                                <input type="text" [(ngModel)]="firstLossPayee" [disabled]="(endorsementSection && !enableFieldsSection)" class="input-form-control without-icon">
+                                <input type="text" [(ngModel)]="firstLossPayee" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" class="input-form-control without-icon">
                             </div>
                         </div>
                     </div>

@@ -105,6 +105,7 @@
     min-width: 36px;
     line-height: 60px;
     text-align: center;
+    left: 0.5rem;
     top: 0.15rem;
 }
 
@@ -115,7 +116,7 @@
 .navigation ul li a .title {
     position: relative;
     display: block;
-    padding: 20px 10px;
+    padding: 20px 20px;
     height: 60px;
     text-align: start;
     white-space: nowrap;
@@ -214,6 +215,7 @@ li:hover .logo::after{
 }
 mat-drawer-content{
     margin-left: 0px !important;
+    overflow-x: hidden !important;
 }
 .navigation::-webkit-scrollbar {
     display: none;

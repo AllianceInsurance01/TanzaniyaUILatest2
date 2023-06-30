@@ -8,6 +8,7 @@ import { SharedService } from '../../../../../shared/shared.service';
 import {PageEvent} from '@angular/material/paginator';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
 
 declare var $:any;
 
@@ -98,7 +99,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   s: Number = 1;
   pa:Number=1;
   ar:Number=1;
-  pi:Number=1;
+  pi:Number=1;emp:Number=1;
   E:Number=1;LocationName:any;
   endorsementSection: boolean;BuildingSuminsured:any;
   orgPolicyNo: string;BuildingAddress:any;
@@ -134,11 +135,11 @@ export class DomesticRiskDetailsComponent implements OnInit {
   serialNoError: boolean;
   contentDescError: boolean;
   contentSIError: boolean;
-  seven: boolean=false;
+  seven: boolean=false;eight:boolean = false;
   employeeList:any[]=[];
   currentEmployeeIndex: number;
   editEmployeeSection: boolean=false;
-  enableEmployeeEditSection: boolean=false;
+  enableEmployeeEditSection: boolean=false;enableFidelityEditSection:boolean=false;
   empAddress: any=null;employeeName: any=null;nationalityList:any[]=[];
   occupationType: any;employeeSalary: any;nationality: any;
   totalEmpIntSI: number;
@@ -163,6 +164,18 @@ export class DomesticRiskDetailsComponent implements OnInit {
   errorRowNum: any;
   employeeErrorList: any[]=[];
   empJoiningMonth: any;
+  originalEmployeeList: any[]=[];
+  editFidelitySection: boolean=false;fidelityList: any[]=[];
+  currentFidelityIndex: number;
+  enableFidelityUploadSection: boolean=false;
+  showFidelityRecordsSection: boolean=false;
+  originalFidelityList: any;
+  totalFidelityIntSI: number;
+  empLocation: any;
+  employeeLocationError: boolean;
+  employeeOccupationList: any[]=[];
+  fidelityOccupationList: any[]=[];
+  actualFidelitySI: any="0";
   constructor(private router: Router,private datePipe:DatePipe,private modalService: NgbModal,
      private sharedService: SharedService,) {
     let homeObj = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
@@ -174,7 +187,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
     this.branchCode = this.userDetails.Result.BranchCode;
     this.quoteNo = sessionStorage.getItem('quoteNo');
     console.log("item received", homeObj)
-    if (homeObj) {
+    if (homeObj && this.productId!='19') {
       this.item = homeObj[0].SectionId;
       this.InbuildConstructType=homeObj[0].InbuildConstructType
       console.log("item received", this.item)
@@ -216,6 +229,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
       {"Code":"11","CodeDesc":"November"},
       {"Code":"12","CodeDesc":"December"},
     ]
+    if(this.productId!='14' && this.productId!='32') this.getOccupationList(null);
     this.getEditQuoteDetails();
       var d = new Date();
       var year = d.getFullYear();
@@ -304,12 +318,23 @@ export class DomesticRiskDetailsComponent implements OnInit {
       else {
         this.sumInsured =false;
       }
-      let first = this.item.find((Code) => Code == '47' || Code=='40');
-      if (first) {
-        this.first=true;
+      if(this.productId!='19'){
+        let first = this.item.find((Code) => Code == '47' || Code=='40');
+        if (first) {
+          this.first=true;
+        }
+        else {
+          this.first =false;
+        }
       }
-      else {
-        this.first =false;
+      else{
+        let first = this.item.find((Code) => Code == '47');
+        if (first) {
+          this.first=true;
+        }
+        else {
+          this.first =false;
+        }
       }
       const second = this.item.find((Code) => Code == '35');
       if (second) {
@@ -334,18 +359,26 @@ export class DomesticRiskDetailsComponent implements OnInit {
         this.fifth = false;
       }
       const six = this.item.find((Code) => Code == '41');
-      if (six) {
+      if (six && this.productId!='19') {
         this.six = true;
       }
       else {
         this.six = false;
       }
-      const seven = this.item.find((Code) => Code == '43' || Code =='37' || Code == '38' || Code == '45');
+      const seven = this.item.find((Code) =>Code =='37' || Code == '38' || Code == '45');
       if(seven){
         this.seven = true;
         this.getEmployeeDetails();
+        this.getOccupationList(seven)
        } 
        else this.seven = false;
+       const eight = this.item.find((Code) => Code == '43');
+      if(eight){
+        this.eight = true;
+        this.getFidelityDetails();
+        this.getOccupationList(eight)
+       } 
+       else this.eight = false;
     }
     
   }
@@ -402,17 +435,41 @@ export class DomesticRiskDetailsComponent implements OnInit {
     );
   }
   getEmployeeDetails(){
+    let SectionId = null;
+    if(this.productId=='14' || this.productId=='19') SectionId = '45';
     let ReqObj = {
       "QuoteNo": this.quoteNo,
-       "RiskId": "1"
+       "RiskId": "1",
+       "SectionId": SectionId
     }
     let urlLink = `${this.motorApiUrl}api/getallproductemployees`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         if(data?.Result){
             this.employeeList = data?.Result;
+            this.originalEmployeeList = new Array().concat(data?.Result);
             if(this.employeeList.length!=0){
               this.getTotalSICost('Employee');
+            }
+        }
+      });
+  }
+  getFidelityDetails(){
+    let SectionId = null;
+    if(this.productId=='32'  || this.productId=='19') SectionId = '43';
+    let ReqObj = {
+      "QuoteNo": this.quoteNo,
+       "RiskId": "1",
+       "SectionId": SectionId
+    }
+    let urlLink = `${this.motorApiUrl}api/getallproductemployees`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data?.Result){
+            this.fidelityList = data?.Result;
+            this.originalFidelityList = new Array().concat(data?.Result);
+            if(this.fidelityList.length!=0){
+              this.getTotalSICost('Fidelity');
             }
         }
       });
@@ -489,11 +546,16 @@ export class DomesticRiskDetailsComponent implements OnInit {
               this.actualElectronicIntSI = electr;
             }
             else this.actualElectronicIntSI=0;
-            let empSI = this.sumInsuredDetails.ProductSuminsuredDetails.SumInsured;
+            let empSI = this.sumInsuredDetails.ProductSuminsuredDetails.EmpLiabilitySi;
             if(empSI!='' && empSI!=null && empSI!=undefined){
               this.actualEmployeeSI = empSI;
             }
             else this.actualEmployeeSI=0;
+            let FidEmpSi = this.sumInsuredDetails.ProductSuminsuredDetails.FidEmpSi;
+            if(FidEmpSi!='' && FidEmpSi!=null && FidEmpSi!=undefined){
+              this.actualFidelitySI = FidEmpSi;
+            }
+            else this.actualFidelitySI=0;
             console.log("SI Rec",this.sumInsuredDetails);
           }
             this.getbuilding();
@@ -516,9 +578,16 @@ export class DomesticRiskDetailsComponent implements OnInit {
   onEmplyeeCancel(){
     if(!this.editEmployeeSection) this.employeeList.splice(this.currentEmployeeIndex,1);
     this.currentEmployeeIndex = null;this.enableEmployeeEditSection = false;
-    this.empAddress = null;this.employeeName = null;this.occupationType = null;
+    this.empAddress = null;this.employeeName = null;this.occupationType = null;this.empLocation = null;
       this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;
   }
+  onFidelityCancel(){
+    if(!this.editFidelitySection) this.fidelityList.splice(this.currentFidelityIndex,1);
+    this.currentFidelityIndex = null;this.enableFidelityEditSection = false;
+    this.empAddress = null;this.employeeName = null;this.occupationType = null;this.empLocation = null;
+      this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;
+  }
+  
   onBuildingSave(){
     this.buildingSIError = false;this.buildingLocationError=false; this.buildingAddressError = false;this.totalBuildSIError = false;
     if(this.LocationName!=null && this.LocationName!=undefined && this.BuildingAddress!=null){
@@ -556,53 +625,237 @@ export class DomesticRiskDetailsComponent implements OnInit {
     }
   
 }
+onFidelitySave(){
+  this.employeeNameError = false;this.employeeOccupationError = false;this.employeeAddressError=false;
+  this.employeeNationalityError = false;this.employeeDobError = false;this.employeeDojError = false;
+  this.employeeSalaryError = false;this.employeeLocationError=false;let i=0;
+  if(this.employeeName=='' || this.employeeName==null || this.employeeName == undefined){i+=1;this.employeeNameError=true};
+  if(this.occupationType=='' || this.occupationType==null || this.occupationType == undefined){i+=1;this.employeeOccupationError=true};
+  // if(this.empAddress=='' || this.empAddress==null || this.empAddress == undefined){i+=1;this.employeeAddressError=true};
+  if(this.nationality=='' || this.nationality==null || this.nationality == undefined){i+=1;this.employeeNationalityError=true};
+  if(this.empDob=='' || this.empDob==null || this.empDob == undefined){i+=1;this.employeeDobError=true};
+  if(this.empJoiningDate=='' || this.empJoiningDate==null || this.empJoiningDate == undefined){i+=1;this.employeeDojError=true};
+  if(this.empLocation=='' || this.empLocation==null || this.empLocation == undefined){i+=1;this.employeeLocationError=true};
+  if(this.employeeSalary=='' || this.employeeSalary==null || this.employeeSalary == undefined){i+=1;this.employeeSalaryError=true};
+  if(i==0){
+    let SectionId = null;
+    if(this.productId=='32') SectionId = '43';
+    this.fidelityList[this.currentFidelityIndex]['RiskId'] = this.empLocation;
+    this.fidelityList[this.currentFidelityIndex]['LocationId'] = this.empLocation;
+    this.fidelityList[this.currentFidelityIndex]['Createdby'] = this.loginId;
+    this.fidelityList[this.currentFidelityIndex]['Address'] = this.empAddress;
+    this.fidelityList[this.currentFidelityIndex]['EmployeeName'] = this.employeeName;
+    this.fidelityList[this.currentFidelityIndex]['OccupationId'] = this.occupationType;
+    this.fidelityList[this.currentFidelityIndex]['OccupationDesc'] = this.fidelityOccupationList.find(ele=>ele.Code==this.occupationType).CodeDesc;
+    this.fidelityList[this.currentFidelityIndex]['DateOfBirth'] = this.datePipe.transform(this.empDob, "dd/MM/yyyy");
+    this.fidelityList[this.currentFidelityIndex]['DateOfJoiningYear'] = this.empJoiningDate;
+    this.fidelityList[this.currentFidelityIndex]['DateOfJoiningMonth'] = this.empJoiningMonth;
+    this.fidelityList[this.currentFidelityIndex]['SectionId'] = SectionId;
+    let salary = '';
+    if(this.employeeSalary.includes(',')){ salary = this.employeeSalary.replace(/,/g, '')}
+    else salary = this.employeeSalary;
+    this.fidelityList[this.currentFidelityIndex]['Salary'] = salary;
+    this.fidelityList[this.currentFidelityIndex]['NationalityId'] = this.nationality;
+    this.editFidelitySection = false;this.enableFidelityEditSection = false;this.currentFidelityIndex=null;
+    this.empAddress = null;this.employeeName = null;this.occupationType = null;this.empJoiningMonth = null;
+    this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;this.empLocation = null;
+  }
+}
   onEmployeeSave(){
     this.employeeNameError = false;this.employeeOccupationError = false;this.employeeAddressError=false;
     this.employeeNationalityError = false;this.employeeDobError = false;this.employeeDojError = false;
-    this.employeeSalaryError = false;let i=0;
+    this.employeeSalaryError = false;this.employeeLocationError=false;let i=0;
     if(this.employeeName=='' || this.employeeName==null || this.employeeName == undefined){i+=1;this.employeeNameError=true};
     if(this.occupationType=='' || this.occupationType==null || this.occupationType == undefined){i+=1;this.employeeOccupationError=true};
-    if(this.empAddress=='' || this.empAddress==null || this.empAddress == undefined){i+=1;this.employeeAddressError=true};
+    // if(this.empAddress=='' || this.empAddress==null || this.empAddress == undefined){i+=1;this.employeeAddressError=true};
     if(this.nationality=='' || this.nationality==null || this.nationality == undefined){i+=1;this.employeeNationalityError=true};
     if(this.empDob=='' || this.empDob==null || this.empDob == undefined){i+=1;this.employeeDobError=true};
     if(this.empJoiningDate=='' || this.empJoiningDate==null || this.empJoiningDate == undefined){i+=1;this.employeeDojError=true};
+    if(this.empLocation=='' || this.empLocation==null || this.empLocation == undefined){i+=1;this.employeeLocationError=true};
     if(this.employeeSalary=='' || this.employeeSalary==null || this.employeeSalary == undefined){i+=1;this.employeeSalaryError=true};
     if(i==0){
       this.employeeList[this.currentEmployeeIndex]['Address'] = this.empAddress;
+      this.employeeList[this.currentEmployeeIndex]['Createdby'] = this.loginId;
+      this.employeeList[this.currentEmployeeIndex]['RiskId'] = this.empLocation;
+      this.employeeList[this.currentEmployeeIndex]['LocationId'] = this.empLocation;
       this.employeeList[this.currentEmployeeIndex]['EmployeeName'] = this.employeeName;
       this.employeeList[this.currentEmployeeIndex]['OccupationId'] = this.occupationType;
-      this.employeeList[this.currentEmployeeIndex]['OccupationDesc'] = this.occupationList.find(ele=>ele.Code==this.occupationType).CodeDesc;
+      this.employeeList[this.currentEmployeeIndex]['OccupationDesc'] = this.employeeOccupationList.find(ele=>ele.Code==this.occupationType).CodeDesc;
       this.employeeList[this.currentEmployeeIndex]['DateOfBirth'] = this.datePipe.transform(this.empDob, "dd/MM/yyyy");
       this.employeeList[this.currentEmployeeIndex]['DateOfJoiningYear'] = this.empJoiningDate;
       this.employeeList[this.currentEmployeeIndex]['DateOfJoiningMonth'] = this.empJoiningMonth;
       let salary = '';
       if(this.employeeSalary.includes(',')){ salary = this.employeeSalary.replace(/,/g, '')}
+      else salary = this.employeeSalary;
       this.employeeList[this.currentEmployeeIndex]['Salary'] = salary;
       this.employeeList[this.currentEmployeeIndex]['NationalityId'] = this.nationality;
       this.editEmployeeSection = false;this.enableEmployeeEditSection = false;this.currentEmployeeIndex=null;
-      this.empAddress = null;this.employeeName = null;this.occupationType = null;
+      this.empAddress = null;this.employeeName = null;this.occupationType = null;this.empJoiningMonth = null;
       this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;
     }
   }
-  onSaveEmployeeDetails(){
-    let urlLink = `${this.motorApiUrl}api/saveproductemployees`;
-    this.sharedService.onPostMethodSync(urlLink, this.employeeList).subscribe(
-      (data: any) => {
-        console.log(data);
-        let res: any = data;
-        if (data.ErrorMessage.length != 0) {
-          if (res.ErrorMessage) {
+  onSaveFidelityDetails(type){
+    if(this.fidelityList.length!=0){
+        let empList = [],i=0;
+        for(let emp of this.fidelityList){
+          let entry = emp;
+          entry['EmployeeId'] = String(i+1);
+          empList.push(entry);
+          i+=1;
+          if(i==this.fidelityList.length){
+            let urlLink = `${this.motorApiUrl}api/saveproductemployees`;
+            let SectionId = null;
+            let validYN='N';
+            if(type=='alter') validYN = 'Y';
+            if(this.productId=='32' || this.productId=='19') SectionId = '43';
+            let ReqObj = {
+              "Createdby": this.loginId,
+              "SectionId": SectionId,
+              "ProductId": this.productId,
+              "EmpcountSIvalidYN": validYN,
+              "ExcelUploadYN": "N",
+              "InsuranceId": this.insuranceId,
+              "ProductEmployeeSaveReq": empList,
+              "QuoteNo": this.quoteNo,
+              "RequestReferenceNo": this.quoteRefNo
+            }
+            this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+              (data: any) => {
+                let res: any = data;
+                if (data.ErrorMessage.length != 0) {
+                  if (res.ErrorMessage) {
+                      console.log("Error Message",res)   
+                      let entry = res.ErrorMessage.some(ele=>ele.Code=='333' || ele.Code=='111' || ele.Code=='222');
+                      if(entry){
+                        let ulList = '';
+                        for (let index = 0; index < res.ErrorMessage.length; index++) {
+                          const element = res.ErrorMessage[index];
+                  
+                           ulList +=`<li class="list-group-login-field">
+                            <div style="color: darkgreen;">Field<span class="mx-2">:</span>${element?.Field}</div>
+                            <div style="color: red;">Message<span class="mx-2">:</span>${element?.Message}</div>
+                          </li>`
+                          if(index==res.ErrorMessage.length-1){
+                            Swal.fire({
+                              title: '<strong>MisMatch Error</strong>',
+                              icon: 'info',
+                              html:
+                                `<ul class="list-group errorlist">
+                                  ${ulList}
+                                  <li>Do you want to continue?</li>
+                             </ul>`,
+                              showCloseButton: true,
+                              //focusConfirm: false,
+                              showCancelButton:true,
+                  
+                             //confirmButtonColor: '#3085d6',
+                             cancelButtonColor: '#d33',
+                             confirmButtonText: 'Yes,Proceed!',
+                             cancelButtonText: 'Cancel',
+                            }).then((result) => {
+                              if (result.isConfirmed) {
+                                  this.onSaveFidelityDetails('alter');
+                              }
+                            });
+                          }
+                        }
+                        
+                      }
+                  }
+                }
+                else{
+                  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+                }
+            },
+            (err) => { },
+            );
           }
-          
-
-      }
-      else{
-        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
-      }
-
-    },
-    (err) => { },
-  );
+        }
+    }
+    else{alert("No Fidelity Details Found")}
+  }
+  onSaveEmployeeDetails(type){
+    if(this.employeeList.length!=0){
+        let empList = [],i=0;
+        for(let emp of this.employeeList){
+          let entry = emp;
+          entry['EmployeeId'] = String(i+1);
+          empList.push(entry);
+          i+=1;
+          if(i==this.employeeList.length){
+            let SectionId = null;
+            if(this.productId=='14' || this.productId=='19') SectionId = '45';
+            let validYN='N';
+            if(type=='alter') validYN = 'Y';
+            let ReqObj = {
+              "Createdby": this.loginId,
+              "SectionId": SectionId,
+              "ProductId": this.productId,
+              "EmpcountSIvalidYN": validYN,
+              "ExcelUploadYN": "N",
+              "InsuranceId": this.insuranceId,
+              "ProductEmployeeSaveReq": empList,
+              "QuoteNo": this.quoteNo,
+              "RequestReferenceNo": this.quoteRefNo
+            }
+            let urlLink = `${this.motorApiUrl}api/saveproductemployees`;
+            this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+              (data: any) => {
+                console.log(data);
+                let res: any = data;
+                if (data.ErrorMessage.length != 0) {
+                  if (res.ErrorMessage) {
+                    let entry = res.ErrorMessage.some(ele=>ele.Code=='333' || ele.Code=='111' || ele.Code=='222');
+                    if(entry){
+                      let ulList = '';
+                      for (let index = 0; index < res.ErrorMessage.length; index++) {
+                        const element = res.ErrorMessage[index];
+                
+                         ulList +=`<li class="list-group-login-field">
+                          <div style="color: darkgreen;">Field<span class="mx-2">:</span>${element?.Field}</div>
+                          <div style="color: red;">Message<span class="mx-2">:</span>${element?.Message}</div>
+                        </li>`
+                        if(index==res.ErrorMessage.length-1){
+                          Swal.fire({
+                            title: '<strong>MisMatch Error</strong>',
+                            icon: 'info',
+                            html:
+                              `<ul class="list-group errorlist">
+                                ${ulList}
+                               <li>Do you want to continue?</li>
+                           </ul>`,
+                            showCloseButton: true,
+                            //focusConfirm: false,
+                            showCancelButton:true,
+                
+                           //confirmButtonColor: '#3085d6',
+                           cancelButtonColor: '#d33',
+                           confirmButtonText: 'Yes,Proceed!',
+                           cancelButtonText: 'Cancel',
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                                this.onSaveEmployeeDetails('alter');
+                            }
+                          });
+                        }
+                      }
+                      
+                    }
+                    
+                }
+              }
+              else{
+                if(this.productId=='19' && this.eight)  this.selectedTab +=1; 
+                else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+              }
+        
+            },
+            (err) => { },
+            );
+          }
+        }
+    }
+    else{alert("No Employees Found")}
   }
   onContentSubmit(){
     this.locationIdError = false;this.contentIdError=false; this.serialNoError = false;this.contentDescError = false;this.contentSIError = false;
@@ -647,25 +900,42 @@ export class DomesticRiskDetailsComponent implements OnInit {
         console.log(data);
         if(data.Result){
             this.contentList = data.Result;
-            this.getOccupationList();
+            
         }
       },
       (err) => { },
     );
   }
-  getOccupationList(){
-    let ReqObj = {
-      "InsuranceId":this.insuranceId,
-      "BranchCode": this.branchCode,
-      "ProductId":this.productId
+  getOccupationList(sectionId){
+    let ReqObj = {},urlLink:any='';
+    if(this.productId!='14' && this.productId!='32' && this.productId!='19'){
+      ReqObj = {
+        "InsuranceId":this.insuranceId,
+        "BranchCode": this.branchCode,
+        "ProductId":this.productId
+      }
+      urlLink = `${this.CommonApiUrl}master/dropdown/occupation`;
     }
-    let urlLink = `${this.CommonApiUrl}master/dropdown/occupation`;
+    else{
+      ReqObj = {
+        "SectionId": sectionId,
+        "ProductId": this.productId,
+        "QuoteNo": this.quoteNo
+      }
+      urlLink = `${this.CommonApiUrl}dropdown/occupations`;
+    }
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         console.log(data);
         if(data.Result){
-            this.occupationList = data.Result;
-            this.getdropList();
+          if(this.productId=='14' || sectionId=='45'){
+                  this.employeeOccupationList = data.Result;
+          }
+          else if(this.productId=='32' || sectionId=='43'){
+            this.fidelityOccupationList = data.Result;
+          }
+          else this.occupationList = data.Result;
+          this.getdropList();
         }
       },
       (err) => { },
@@ -987,7 +1257,11 @@ export class DomesticRiskDetailsComponent implements OnInit {
               this.selectedTab = this.selectedTab+1;
             }
             else{
-              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+              if(this.productId=='19' && this.seven){
+                this.fourth = true;
+                this.selectedTab = this.selectedTab+1;
+              }
+              else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
             }
           }
           else if(type=='PA'){
@@ -1154,7 +1428,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
             else if(type=='ElectricalEquipment'){
               this.fourth = true;this.getElectronicEquipment();
             }
-            else if (this.first||this.second || this.third || this.fifth || this.six) {
+            else if (this.first||this.second || this.third || this.fifth || this.six || this.seven || this.eight) {
               this.fourth = true;
 
               this.selectedTab = 1;
@@ -1307,7 +1581,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
     if(type=='content'){
       let entry = this.contentRiskDesc;
       if(this.contentRiskDesc){
-        let value = this.contentRiskDesc.replace(/[^a-z0-9_/-]/gi, "");
+        let value = this.contentRiskDesc.replace(/[\!\@\#\$\%\^\&\*\)\(\+\=\.\<\>\{\}\[\]\:\;\'\"\|\~\`\_\-]/gi, "");
         this.contentRiskDesc = value;
       }
     }
@@ -1380,6 +1654,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
     }
     if(type=='personalAccident'){
       let entry = this.PersonalAssistantList[index];
+      console.log("Entry Received",entry)
       if(entry.Salary){
         let value = entry.Salary.replace(/\D/g, "")
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -1387,7 +1662,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
         this.getTotalSICost('PersonalAccident');
       }
     }
-    if('personalIndemenity'){
+    if(type=='personalIndemenity'){
       let entry = this.Intermedity[index];
       if(entry.Salary){
         let value = entry.Salary.replace(/\D/g, "")
@@ -1421,11 +1696,23 @@ export class DomesticRiskDetailsComponent implements OnInit {
       if(type=='employee'){
         let entry = this.employeeSalary;
         if(this.employeeSalary){
+          if(this.employeeSalary.includes('.')) this.employeeSalary = this.employeeSalary.split('.')[0];
           let value = this.employeeSalary.replace(/\D/g, "")
           .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          this.employeeList[this.currentEmployeeIndex]['Salary'] = value;
+          this.employeeList[this.currentEmployeeIndex]['Salary'] = value.replace(/,/g, '');
           this.employeeSalary = value;
           this.getTotalSICost('Employee');
+        }
+      }
+      if(type=='fidelity'){
+        let entry = this.employeeSalary;
+        if(this.employeeSalary){
+          if(this.employeeSalary.includes('.')) this.employeeSalary = this.employeeSalary.split('.')[0];
+          let value = this.employeeSalary.replace(/\D/g, "")
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          this.fidelityList[this.currentFidelityIndex]['Salary'] = value.replace(/,/g, '');
+          this.employeeSalary = value;
+          this.getTotalSICost('Fidelity');
         }
       }
   }
@@ -1519,10 +1806,24 @@ export class DomesticRiskDetailsComponent implements OnInit {
         if(this.employeeList.length!=0){
           for(let emp of this.employeeList){
             let SI = emp.Salary,entry=0;
+            //if(emp?.EmployeeId) delete emp['EmployeeId'];
             if(SI==undefined || SI=='' || SI ==null) SI = 0;
             else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
             else entry = SI
             this.totalEmpIntSI = Number(entry)+this.totalEmpIntSI
+          }
+        }
+    }
+    else if(type=='Fidelity'){
+      this.totalFidelityIntSI = 0;
+        if(this.fidelityList.length!=0){
+          for(let emp of this.fidelityList){
+            let SI = emp.Salary,entry=0;
+            //if(emp?.EmployeeId) delete emp['EmployeeId'];
+            if(SI==undefined || SI=='' || SI ==null) SI = 0;
+            else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
+            else entry = SI
+            this.totalFidelityIntSI = Number(entry)+this.totalFidelityIntSI
           }
         }
     }
@@ -1606,6 +1907,11 @@ export class DomesticRiskDetailsComponent implements OnInit {
     this.enableEmployeeUploadSection = true;
     this.showEmpRecordsSection = false;
   }
+  onUploadFidelitySection(){
+    this.currentFidelityIndex = null;this.enableFidelityEditSection = false;
+    this.enableFidelityUploadSection = true;
+    this.showFidelityRecordsSection = false;
+  }
   onUploadDocuments(target:any,fileType:any,type:any){
     console.log("Event ",target);
     this.imageUrl = null;this.uploadDocList=[];
@@ -1634,6 +1940,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
     if(this.productId=='32') typeId = '104';
     else if(this.productId=='14') typeId='102';
     else if(this.productId=='15') typeId='103';
+    let SectionId = null;
+    if(this.productId=='14' || this.productId=='19') SectionId = '45';
     let ReqObj={
       "CompanyId":this.insuranceId,
       "ProductId":this.productId,
@@ -1641,7 +1949,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
       "RiskId":"1",
       "RequestReferenceNo":this.quoteRefNo,
       "TypeId":typeId,
-      "LoginId":this.loginId
+      "LoginId":this.loginId,
+      "SectionId":SectionId
     }
     let urlLink = `${this.UploadUrl}eway/batch/upload`;
         this.sharedService.onPostExcelDocumentMethodSync(urlLink, ReqObj,this.uploadDocList[0].url).subscribe(
@@ -1935,7 +2244,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
                 this.PersonalAssistantList.push(entry);
                   this.CommaFormatted(i,'personalAccident');
                   i+=1;
-                
+                  if(i==personalList.length) console.log("Personal Acc",this.PersonalAssistantList);
               }
             }
            
@@ -2141,12 +2450,39 @@ export class DomesticRiskDetailsComponent implements OnInit {
   onCalculate() {
 
   }
+  FidelityAdd(){
+    let entry = 
+      {
+        "Address": null,
+        "Createdby": this.loginId,
+        "EmployeeName": null,
+        "EmployeeId":null,
+        "InsuranceId": this.insuranceId,
+        "OccupationDesc": null,
+        "OccupationId": null,
+        "DateOfBirth": null,
+        "DateOfJoiningYear": null,
+        "DateOfJoiningMonth": null,
+        "ProductId": this.productId,
+        "QuoteNo": this.quoteNo,
+        "RequestReferenceNo": this.quoteRefNo,
+        "RiskId": "1",
+        "Salary": null,
+        "NationalityId":null
+      }
+    this.currentFidelityIndex = this.fidelityList.length;
+    this.fidelityList.push(entry);
+    this.editFidelitySection = false;this.enableFidelityEditSection = true;
+    this.empAddress = null;this.employeeName = null;this.occupationType = null;this.empJoiningMonth = null;
+    this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;
+}
   EmployeeAdd(){
       let entry = 
         {
           "Address": null,
           "Createdby": this.loginId,
           "EmployeeName": null,
+          "EmployeeId":null,
           "InsuranceId": this.insuranceId,
           "OccupationDesc": null,
           "OccupationId": null,
@@ -2163,7 +2499,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
       this.currentEmployeeIndex = this.employeeList.length;
     this.employeeList.push(entry);
     this.editEmployeeSection = false;this.enableEmployeeEditSection = true;
-    this.empAddress = null;this.employeeName = null;this.occupationType = null;
+    this.empAddress = null;this.employeeName = null;this.occupationType = null;this.empJoiningMonth = null;
     this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;
   }
   ContentAdd() {
@@ -2199,6 +2535,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
     this.currentEmployeeIndex = index;
     this.editEmployeeSection = true;
     this.enableEmployeeEditSection = true;
+    this.empLocation = this.employeeList[index].RiskId;
     this.employeeName = this.employeeList[index].EmployeeName;
     this.empAddress = this.employeeList[index].Address;
     this.occupationType = this.employeeList[index].OccupationId;
@@ -2211,23 +2548,100 @@ export class DomesticRiskDetailsComponent implements OnInit {
     this.empJoiningMonth = this.employeeList[index].DateOfJoiningMonth;
     this.individualCommaFormatted('employee');
   }
-  EmployeeDelete(rowData){
-    let ReqObj = {
-        "QuoteNo": this.quoteNo,
-        "RiskId": "1",
-       "EmployeeId": rowData.EmployeeId
-    }
-    let urlLink = `${this.motorApiUrl}api/deleteproductemployees`;
-      this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
-        (data: any) => {
-          console.log(data);
-          if(data.Result){
-              this.employeeList = [];
-              this.getEmployeeDetails();
+  onEditFidelity(index){
+    this.currentFidelityIndex = index;
+    this.editFidelitySection = true;
+    this.enableFidelityEditSection = true;
+    this.empLocation = this.fidelityList[index].RiskId;
+    this.employeeName = this.fidelityList[index].EmployeeName;
+    this.empAddress = this.fidelityList[index].Address;
+    this.occupationType = this.fidelityList[index].OccupationId;
+    this.employeeSalary = this.fidelityList[index].Salary;
+    this.nationality = this.fidelityList[index].NationalityId;
+    var dateParts = this.fidelityList[index].DateOfBirth.split("/");
+    // month is 0-based, that's why we need dataParts[1] - 1
+    this.empDob = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
+    this.empJoiningDate = this.fidelityList[index].DateOfJoiningYear;
+    this.empJoiningMonth = this.fidelityList[index].DateOfJoiningMonth;
+    this.individualCommaFormatted('fidelity');
+  }
+  FidelityDelete(rowData,index){
+    if(rowData?.EmployeeId==null){
+          this.fidelityList.splice(index,1);
+          if(this.fidelityList.length!=0){
+            this.getTotalSICost('Fidelity');
           }
-        },
-        (err) => { },
-      );
+    }
+    else{
+      let entry = this.originalFidelityList.some(ele=>ele.EmployeeId==rowData.EmployeeId);
+      if(entry){
+        let SectionId = null;
+        if(this.productId=='32' || this.productId=='19') SectionId = '43';
+        let ReqObj = {
+          "QuoteNo": this.quoteNo,
+          "RiskId": "1",
+         "EmployeeId": rowData.EmployeeId,
+         "SectionId": SectionId
+      }
+      let urlLink = `${this.motorApiUrl}api/deleteproductemployees`;
+        this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+          (data: any) => {
+            console.log(data);
+            if(data.Result){
+                this.fidelityList = [];
+                this.getFidelityDetails();
+            }
+          },
+          (err) => { },
+        );
+      }
+      else{
+        this.fidelityList.splice(index,1);
+          if(this.fidelityList.length!=0){
+            this.getTotalSICost('Fidelity');
+          }
+      }
+    }
+   
+  }
+  EmployeeDelete(rowData,index){
+    if(rowData?.EmployeeId==null){
+          this.employeeList.splice(index,1);
+          if(this.employeeList.length!=0){
+            this.getTotalSICost('Employee');
+          }
+    }
+    else{
+      let entry = this.originalEmployeeList.some(ele=>ele.EmployeeId==rowData.EmployeeId);
+      if(entry){
+        let SectionId = null;
+        if(this.productId=='14'  || this.productId=='19') SectionId = '45';
+        let ReqObj = {
+          "QuoteNo": this.quoteNo,
+          "RiskId": rowData.RiskId,
+         "EmployeeId": rowData.EmployeeId,
+          "SectionId": SectionId
+      }
+      let urlLink = `${this.motorApiUrl}api/deleteproductemployees`;
+        this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+          (data: any) => {
+            console.log(data);
+            if(data.Result){
+                this.employeeList = [];
+                this.getEmployeeDetails();
+            }
+          },
+          (err) => { },
+        );
+      }
+      else{
+        this.employeeList.splice(index,1);
+          if(this.employeeList.length!=0){
+            this.getTotalSICost('Employee');
+          }
+      }
+    }
+   
   }
   AddNew() {
     //this.value;
@@ -2272,7 +2686,6 @@ export class DomesticRiskDetailsComponent implements OnInit {
       "SerialNo": null
     }]
     this.PersonalAssistantList = entry.concat(this.PersonalAssistantList);
-    console.log("Personal Acc",this.PersonalAssistantList)
   }
 
   delete(row: any) {
@@ -2371,7 +2784,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   tabClick(event){
     console.log("Source Event",event,event.tab.textLabel);
     if(event.index!=0){
-     this.onSave(event.tab.textLabel)
+    if(this.productId!='19' && this.selectedTab!=1) this.onSave(event.tab.textLabel)
     }
   }
   getBack(){

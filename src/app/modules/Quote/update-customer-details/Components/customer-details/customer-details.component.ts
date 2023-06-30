@@ -71,7 +71,7 @@ export class CustomerDetailsComponent implements OnInit {
   quoteNo: any = null;
   brokerbranchCode: any;
   industryList: any[];
-  buildingOwnerYN: string;
+  buildingOwnerYN: any = 'N';
   endMaxDate: Date;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
@@ -325,11 +325,20 @@ export class CustomerDetailsComponent implements OnInit {
       }
       else{
         this.quoteRefNo=null;
+        this.branchValue = this.userDetails.Result.BranchCode;
+        this.updateComponent.branchValue = this.branchValue;
+        this.onGetCustomerList('direct',this.customerCode);
         this.currencyCode = this.userDetails.Result.CurrencyId;
         this.onCurrencyChange();
         this.searchSection = true;
         this.commonSection = true;
       }
+      let quoteStatus = sessionStorage.getItem('QuoteStatus');
+      if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
+        this.adminSection = true;this.issuerSection = false;
+      }
+      else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
+      else this.issuerSection = false
     }
     else if(this.productId!='4'){
       let vehicleDetails:any;
@@ -346,7 +355,7 @@ export class CustomerDetailsComponent implements OnInit {
         vehicleDetails = JSON.parse( sessionStorage.getItem('homeCommonDetails'));
       }
       if(vehicleDetails!=undefined){
-        if(vehicleDetails.length!=0){
+        if(vehicleDetails.length!=0 && (sessionStorage.getItem('quoteReferenceNo')==undefined)){
           this.quoteRefNo = null;
           this.setExistingValues(vehicleDetails);
         }
@@ -386,10 +395,9 @@ export class CustomerDetailsComponent implements OnInit {
           this.commonSection = true;
           let quoteStatus = sessionStorage.getItem('QuoteStatus');
           if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
-              if(this.applicationId!='01' && this.applicationId!='1'){ this.issuerSection = true; }
-              else{ this.issuerSection = false; }
+            this.adminSection = true;this.issuerSection = false;
           }
-          else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true; }
+          else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
           else this.issuerSection = false
         }
       }
@@ -413,13 +421,16 @@ export class CustomerDetailsComponent implements OnInit {
         this.commonSection = true;
         let quoteStatus = sessionStorage.getItem('QuoteStatus');
         if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
-            if(this.applicationId!='01' && this.applicationId!='1'){ this.issuerSection = true; }
-            else{ this.issuerSection = false; }
+          this.adminSection = true;this.issuerSection = false;
         }
-        else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true; }
+        else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
         else this.issuerSection = false
       }
     }
+  }
+  checkDisableField(){
+    let status = sessionStorage.getItem('QuoteStatus');
+    return (this.adminSection && (status=='AdminRP' || status=='AdminRA'))
   }
   getExistingBuildingList(){
     let urlLink:any;
@@ -429,8 +440,8 @@ export class CustomerDetailsComponent implements OnInit {
       "ProductId": this.productId,
       "InsuranceId": this.insuranceId
     }
-    if(this.productId=='3' || this.productId=='19') urlLink = `${this.motorApiUrl}home/getbuildingdetails`;
-    else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1') urlLink = `${this.motorApiUrl}api/slide/getcommondetails`;
+    if(this.productId=='3') urlLink = `${this.motorApiUrl}home/getbuildingdetails`;
+    else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14'  || this.productId=='19' || this.productId=='32' || this.productId=='1') urlLink = `${this.motorApiUrl}api/slide/getcommondetails`;
     else urlLink =  `${this.motorApiUrl}api/geteservicebyriskid`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
@@ -439,7 +450,7 @@ export class CustomerDetailsComponent implements OnInit {
             this.customerData = data.Result;
             console.log("Edit Customer Final 3",this.customerData)
               let entry:any;
-              if(this.productId=='3' || this.productId=='19') entry = this.customerData[0];
+              if(this.productId=='3') entry = this.customerData[0];
               else entry = this.customerData
               this.applicationId = entry.ApplicationId;
               if(entry?.PolicyStartDate != null ){
@@ -462,6 +473,7 @@ export class CustomerDetailsComponent implements OnInit {
               this.executiveValue= entry?.AcExecutiveId;
               this.InsuranceType=entry?.SectionId;
               this.HavePromoCode=entry?.Havepromocode;
+              if(entry.BuildingOwnerYn!=null && entry?.BuildingOwnerYn!='') this.buildingOwnerYN = entry?.BuildingOwnerYn;
               this.PromoCode=entry?.Promocode;
               this.Code = entry?.SourceType;
               this.updateComponent.sourceType = this.Code;
@@ -473,10 +485,9 @@ export class CustomerDetailsComponent implements OnInit {
               this.onSourceTypeChange('direct');
               let quoteStatus = sessionStorage.getItem('QuoteStatus');
               if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
-                  if(this.applicationId!='01' && this.applicationId!='1'){ this.issuerSection = true; }
-                  else{ this.issuerSection = false; }
+                this.adminSection = true;this.issuerSection = false;
               }
-              else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true; }
+              else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
               else this.issuerSection = false
             }
             console.log(
@@ -547,10 +558,9 @@ export class CustomerDetailsComponent implements OnInit {
           if(i==vehicleList.length){
             let quoteStatus = sessionStorage.getItem('QuoteStatus');
             if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
-                if(this.applicationId!='01' && this.applicationId!='1'){ this.issuerSection = true; }
-                else{ this.issuerSection = false; }
+              this.adminSection = true;this.issuerSection = false;
             }
-            else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true; }
+            else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
             else this.issuerSection = false
             this.updateComponent.vehicleWishList = this.vehicleWishList;
             this.updateComponent.customerData = this.customerData;
@@ -818,6 +828,10 @@ export class CustomerDetailsComponent implements OnInit {
     this.branchValue = entry.BranchCode;
     this.brokerCode = entry.BrokerCode;
     this.brokerBranchCode = entry.BrokerBranchCode;
+    this.updateComponent.sourceType = this.Code;
+    this.updateComponent.brokerCode = this.brokerCode;
+    this.updateComponent.brokerBranchCode = this.brokerBranchCode;
+    
     this.onSourceTypeChange('direct');
     this.executiveValue = entry?.AcExecutiveId;
     this.currencyCode = entry?.Currency;
@@ -842,10 +856,9 @@ export class CustomerDetailsComponent implements OnInit {
             this.applicationId = customerDatas.ApplicationId;
             let quoteStatus = sessionStorage.getItem('QuoteStatus');
             if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
-                if(this.applicationId!='01' && this.applicationId!='1'){ this.issuerSection = true; }
-                else{ this.issuerSection = false; }
+              this.adminSection = true;this.issuerSection = false;
             }
-            else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true; }
+            else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
             else this.issuerSection = false
             this.travelDetails = customerDatas;
             this.Code= customerDatas.SourceType;
@@ -909,10 +922,9 @@ export class CustomerDetailsComponent implements OnInit {
               this.applicationId = this.customerData[0].ApplicationId;
               let quoteStatus = sessionStorage.getItem('QuoteStatus');
               if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
-                  if(this.applicationId!='01' && this.applicationId!='1'){ this.issuerSection = true; }
-                  else{ this.issuerSection = false; }
+                this.adminSection = true;this.issuerSection = false;
               }
-              else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true; }
+              else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
               else this.issuerSection = false
               let entry = this.customerData[0];
               this.commonSection = true;
@@ -1288,7 +1300,7 @@ export class CustomerDetailsComponent implements OnInit {
           }
           else{
                 sessionStorage.setItem('vehicleDetailsList',JSON.stringify(vehicleList));
-                sessionStorage.setItem('vehicleLength',String(vehicleList.length))
+                sessionStorage.setItem('vehicleLength',String(this.customerData.length+1))
                 sessionStorage.setItem('vehicleType','new');
                 sessionStorage.removeItem('vehicleDetails');
                 this.updateComponent.resetVehicleTab();
@@ -1697,7 +1709,7 @@ export class CustomerDetailsComponent implements OnInit {
       }
       else {
         appId = this.loginId;
-        loginId = commonDetails[0].LoginId
+        loginId = this.brokerLoginId
         brokerbranchCode = null;
       }
     }
@@ -1714,12 +1726,12 @@ export class CustomerDetailsComponent implements OnInit {
     if (quoteStatus == 'AdminRP' || quoteStatus == 'AdminRA' || quoteStatus == 'AdminRR') {
     }
     let section = [];
-    if(this.productId=='6'){section.push('40'); this.buildingOwnerYN = 'Y'};
-    if(this.productId=='39'){section.push('41'); this.buildingOwnerYN = 'N'};
-    if(this.productId=='16'){section.push('42'); this.buildingOwnerYN = 'N'};
-    if(this.productId=='14'){section.push('45'); this.buildingOwnerYN = 'N'};
-    if(this.productId=='32'){section.push('43'); this.buildingOwnerYN = 'N'};
-    if(this.productId=='1'){section.push('52'); this.buildingOwnerYN = 'N'};
+    if(this.productId=='6'){section.push('40');};
+    if(this.productId=='39'){section.push('41'); };
+    if(this.productId=='16'){section.push('42');};
+    if(this.productId=='14'){section.push('45');};
+    if(this.productId=='32'){section.push('43');};
+    if(this.productId=='1'){section.push('52');};
     let ReqObj = { 
         "AcexecutiveId": "",
         "PolicyNo": "",
@@ -1735,7 +1747,7 @@ export class CustomerDetailsComponent implements OnInit {
         "BrokerCode": this.brokerCode,
         "BuildingOwnerYn": this.buildingOwnerYN,
         "Createdby": this.loginId,
-        "SourceType": this.code,
+        "SourceType": this.Code,
         "Currency": this.currencyCode,
         "CustomerReferenceNo": this.customerDetails?.CustomerReferenceNo,
         "CustomerCode": this.customerCode,
@@ -1743,7 +1755,7 @@ export class CustomerDetailsComponent implements OnInit {
         "Havepromocode": this.HavePromoCode,
         "Promocode": this.PromoCode,
         "InsuranceId": this.insuranceId,
-        "LoginId": this.loginId,
+        "LoginId": loginId,
         "UserType": this.userType,
         "PolicyEndDate": this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy"),
         "PolicyStartDate": this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy"),

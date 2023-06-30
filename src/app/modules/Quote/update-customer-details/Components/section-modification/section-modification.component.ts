@@ -179,6 +179,31 @@ getIndustryList() {
     }
    
   }
+  onOwnerYNChange(){
+    this.coversRequired = 'C';
+    if(this.coversRequired=='C' || this.coversRequired==null){
+      let entry = this.productList.find(ele=>ele.Code=='40');
+      entry.checked = false;
+      this.selectedSections = this.selectedSections.filter(ele=>ele!='40');
+   }
+   if(this.coversRequired=='B' || this.coversRequired==null){
+     let entry = this.productList.find(ele=>ele.Code=='47');
+     entry.checked = false;
+     this.selectedSections = this.selectedSections.filter(ele=>ele!='47');
+   }
+  }
+  onChangeCoversType(){
+    if(this.coversRequired=='C'){
+       let entry = this.productList.find(ele=>ele.Code=='40');
+       entry.checked = false;
+       this.selectedSections = this.selectedSections.filter(ele=>ele!='40');
+    }
+    else if(this.coversRequired=='B'){
+      let entry = this.productList.find(ele=>ele.Code=='47');
+      entry.checked = false;
+      this.selectedSections = this.selectedSections.filter(ele=>ele!='47');
+   }
+  }
   finalProceed(){
     let promocode = null;
     let appId = "1", loginId = "", brokerbranchCode = "";let createdBy = "";
@@ -244,10 +269,10 @@ getIndustryList() {
         "Havepromocode": this.commonDetails[0].HavePromoCode,
         "Promocode": promocode,
         "InsuranceId": this.insuranceId,
-        "LoginId": this.loginId,
+        "LoginId": loginId,
         "UserType": this.userType,
         "PolicyEndDate": this.commonDetails[0].PolicyEndDate,
-        "PolicyStartDate": "04/06/2023",
+        "PolicyStartDate": this.commonDetails[0].PolicyStartDate,
         "SectionIds": this.selectedSections,
         "SubUsertype": this.subuserType,
         "RiskId":"1",
@@ -287,9 +312,14 @@ getIndustryList() {
       (err) => { },
     );
   }
+  checkDisable(){
+    return this.selectedSections.some(ele=>ele =='56' || ele=='3' || ele=='39' || ele=='53' || ele=='54')
+  }
   checkSectionOpted(rowData){
-    console.log("Entry",rowData.Code,this.selectedSections.some(ele=>ele==rowData.Code))
     return this.selectedSections.some(ele=>ele==rowData.Code);
+  }
+  checkSections(rowData){
+    return rowData.checked;
   }
   onChangeSections(rowData,index){
     let entry = this.checkSectionOpted(rowData);
@@ -297,6 +327,7 @@ getIndustryList() {
       this.sectionError = false;
       this.productList[index].checked = true;
       this.selectedSections.push(rowData.Code);
+
     }
     else{
       this.selectedSections = this.selectedSections.filter(ele=>ele!=rowData.Code);

@@ -43,11 +43,41 @@
                 <formly-form [form]="form" [fields]="fields" [model]="productItem"></formly-form>
             </form>
         </div>
-        <div class="form__wrapper" *ngIf="productId=='19'">
-            <form [formGroup]="form" (ngSubmit)="onNextProceed()">
+        <div class="form__wrapper" *ngIf="productId=='19' && showSection">
+            <mat-tab-group [(selectedIndex)]="selectedIndex" #tabs>
+                <mat-tab *ngFor="let tab of fields[0].fieldGroup; let i = index; let last = last" [label]="tab.props.label">
+                  <div class="maan-grid-item">
+                          <div class="maan-grid-item-title">
+                              <div class="d-flex justify-content-between">
+                                  <div>
+                                      <span class="mx-0">
+                                          <span class="spancommon span_font_size" style="font-weight:600">{{tab.props.label}}</span>
+                                      </span>
+                                  </div>
+                                  <div>
+                                      <!-- <button class="btn btn-danger p-1"><i class="fas fa-trash"></i></button> -->
+                                  </div>
+                              </div>
+                          </div>
+                        <div class="maan-grid-body">
+                            <form [formGroup]="form">
+                                <formly-form [form]="form" [fields]="tab.fieldGroup" [model]="productItem"></formly-form>
+                            </form>
+                            <div class="text-center mt-2 mb-2">
+                            <button type="button" *ngIf="i==0" class="btn btn-danger" routerLink="/Home/existingQuotes/customerSelection/customerDetails/risk-selection">Back</button>&nbsp;
+                            <button type="button" *ngIf="i!=0" (click)="onPreviousTab()" class="btn btn-danger" >Back</button>&nbsp;
+                            <button  class="btn btn-primary" *ngIf="!last" (click)="onNextProceed()">Next</button>
+                            <button  class="btn btn-primary" *ngIf="last" (click)="onNextProceed()">Submit</button>
+                        </div>
+                      </div>
+                  </div>    
+                </mat-tab>
+              </mat-tab-group>
+            <!-- <form [formGroup]="form" (ngSubmit)="onNextProceed()">
                 <formly-form [form]="form" [fields]="fields" [model]="productItem"></formly-form>
-            </form>
+            </form> -->
         </div>
+       
     </div>
     <!-- <div class="row" *ngIf="productId=='1'">
         <div class="col-12 col-lg-12 col-xl-12 col-sm-12">
@@ -142,7 +172,13 @@
                                     <b>Building </b>
                                 </div>
                                 <div>
-                                    <b>{{productItem.BuildingSuminsured | commaseparator}}</b>
+                                    <ng-container *ngIf="productItem.BuildingSuminsured!='0'">
+                                        <b>{{productItem.BuildingSuminsured | commaseparator}}</b>
+                                    </ng-container>
+                                    <ng-container *ngIf="productItem.BuildingSuminsured=='0'">
+                                        <b>{{productItem.BuildingSuminsured}}</b>
+                                    </ng-container>
+                                    
                                 </div>
                             </li>
                             <li class="list_cover_insured  mb-1">
@@ -182,7 +218,12 @@
                                     <b>All Risk</b>
                                 </div>
                                 <div>
-                                    <b>{{productItem.AllriskSumInsured | commaseparator}}</b>
+                                    <ng-container *ngIf="productItem.AllriskSumInsured!='0'">
+                                        <b>{{productItem.AllriskSumInsured | commaseparator}}</b>
+                                    </ng-container>
+                                    <ng-container *ngIf="productItem.AllriskSumInsured=='0'">
+                                        <b>{{productItem.AllriskSumInsured}}</b>
+                                    </ng-container>
                                 </div>
                             </li>
                             <li class="list_cover_insured  mb-1" *ngIf="productId=='19'">

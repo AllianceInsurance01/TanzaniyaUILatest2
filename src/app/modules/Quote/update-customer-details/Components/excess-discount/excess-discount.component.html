@@ -204,21 +204,21 @@
                                     <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
                                     <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button>
                                 </ng-container>
-                                <ng-container *ngIf="productId=='3'">
+                                <ng-container *ngIf="productId=='3' || productId=='19' || productId=='14' || productId=='32'">
                                     <span class="spancommon" style="color:navy;font-size: 1rem;"> {{menu.SectionName}}
                                     </span>
                                     <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
                                     <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
                                     <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button>
                                 </ng-container>
-                                <ng-container *ngIf="productId == '19'">
+                                <ng-container *ngIf="productId!='3' && productId!='4' && productId!='5' && productId!='19' && productId!='14' && productId!='32'">
                                     <span class="spancommon" style="color:navy;font-size: 1rem;"> {{productName}}
                                     </span>
                                     <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
                                     <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
                                     <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" (click)="WarrantyStatus(i,menu)">Warranties</button>
                                 </ng-container>
-                                <ng-container *ngIf="productId!='3' && productId!='4' && productId!='5' && productId!='19'">
+                                <!-- <ng-container *ngIf="productId!='3' && productId!='4' && productId!='5' && productId!='19'">
                                     <span class="spancommon" style="color:navy;font-size: 1rem;">
                                         {{menu.RiskDetails.CustomerName}} &nbsp;|&nbsp; {{
                                         menu.RiskDetails.SalaryPerAnnum | number : '1.2-2'}}
@@ -228,7 +228,7 @@
                                     <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
                                     <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
                                     <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button>
-                                </ng-container>
+                                </ng-container> -->
                                 <ng-container *ngIf="menu.ReferralList.length!=0">
                                     <span class="spancommon" style="color:navy;padding:10px !important;border-radius:10px;font-size: 1rem;background-color: #fd7e14!important;">Refferal</span>
                                 </ng-container>
@@ -286,7 +286,7 @@
                                                     <ng-container *ngIf="columnHeader[i]['display']=='ExcessPercent'" style="white-space: nowrap;">
                                                         Excess&nbsp;(%)
                                                     </ng-container>
-                                                    <ng-container *ngIf="columnHeader[i]['display']!='Sum Insured' && columnHeader[i]['display']!='ExcessPercent' && columnHeader[i]['display']!='Rate' && columnHeader[i]['display']!='Minimum' && columnHeader[i]['display']!='After Discount' && columnHeader[i]['display']!='Included Tax'"
+                                                    <ng-container *ngIf="columnHeader[i]['display']!='Sum Insured' && columnHeader[i]['display']!='Referral' && columnHeader[i]['display']!='ExcessPercent' && columnHeader[i]['display']!='Rate' && columnHeader[i]['display']!='Minimum' && columnHeader[i]['display']!='After Discount' && columnHeader[i]['display']!='Included Tax'"
                                                         style="white-space: nowrap;">
                                                         {{ columnHeader[i]["display"] }}
                                                     </ng-container>
@@ -433,8 +433,8 @@
                                                                                         </div>
                                                                                         <div>
                                                                                             <span class="spancommon span_font_size">
-                                                                                                <ng-container *ngIf="element.PremiumExcluedTaxLC==null || element.PremiumExcluedTaxLC==0"><b>0</b></ng-container>
-                                                                                                    <ng-container *ngIf="element.PremiumExcluedTaxLC!=null && element.PremiumExcluedTaxLC!=0"><b>{{element.PremiumExcluedTaxLC | commaseparator}}</b></ng-container>
+                                                                                                <ng-container *ngIf="element.PremiumExcluedTax==null || element.PremiumExcluedTax==0"><b>0</b></ng-container>
+                                                                                                    <ng-container *ngIf="element.PremiumExcluedTax!=null && element.PremiumExcluedTax!=0"><b>{{element.PremiumExcluedTax | commaseparator}}</b></ng-container>
                                                                                             </span>
                                                                                         </div>
                                                                                     </li>
@@ -444,8 +444,8 @@
                                                                                         </div>
                                                                                         <div>
                                                                                             <span class="spancommon span_font_size">
-                                                                                                <ng-container *ngIf="endorsementDetails?.PremiumAfterDiscountLC==null || endorsementDetails?.PremiumAfterDiscountLC==0"><b>0</b></ng-container>
-                                                                                                    <ng-container *ngIf="endorsementDetails?.PremiumAfterDiscountLC!=null && endorsementDetails?.PremiumAfterDiscountLC!=0"><b>{{endorsementDetails?.PremiumAfterDiscountLC | commaseparator}}</b></ng-container>
+                                                                                                <ng-container *ngIf="endorsementDetails?.PremiumAfterDiscount==null || endorsementDetails?.PremiumAfterDiscount==0"><b>0</b></ng-container>
+                                                                                                    <ng-container *ngIf="endorsementDetails?.PremiumAfterDiscount!=null && endorsementDetails?.PremiumAfterDiscount!=0"><b>{{endorsementDetails?.PremiumAfterDiscount | commaseparator}}</b></ng-container>
                                                                                             </span>
                                                                                         </div>
                                                                                     </li>
@@ -514,8 +514,8 @@
                                                                                         </div>
                                                                                         <div >
                                                                                             <span class="spancommon span_font_size">
-                                                                                                <ng-container *ngIf="(element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC==null || element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC==0) "><b>0</b></ng-container>
-                                                                                                    <ng-container *ngIf="(element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=0)"><b>{{element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC | commaseparator}}</b></ng-container>
+                                                                                                <ng-container *ngIf="(element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax==null || element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax==0) "><b>0</b></ng-container>
+                                                                                                    <ng-container *ngIf="(element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax!=0)"><b>{{element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax | commaseparator}}</b></ng-container>
                                                                                             </span>
                                                                                         </div>
                                                                                     </li>
@@ -632,7 +632,7 @@
                                                                                                             <span class="spancommon span_font_size">Minimum Premium</span>
                                                                                                         </div>
                                                                                                         <div>
-                                                                                                            <span class="spancommon span_font_size">{{MinimumPremium}}</span>
+                                                                                                            <span class="spancommon span_font_size">{{MinimumPremium | number : '1.0' }}</span>
                                                                                                         </div>
                                                                                                         <!-- </div> -->
                                                                                                     </li>
@@ -711,17 +711,17 @@
                                                                                     &nbsp;&nbsp;<button type="button" class="btn maan-btn-blue btn-circle" [ngbPopover]="taxCard" placement="left" (click)="ongetTaxDetails(element)">?</button>
                                                                                 </ng-container>
                                                                             </div>
-                                                                            <div>{{ element.DiffPremiumIncludedTaxLC | commaseparator }}</div>
+                                                                            <div>{{ element.DiffPremiumIncludedTax | commaseparator }}</div>
                                                                         </div>
                                                                     </ng-container>
-                                                                    <ng-container *ngIf="element.DiffPremiumIncludedTaxLC==null || element.DiffPremiumIncludedTaxLC==0 || !endorsementSection">
+                                                                    <ng-container *ngIf="element.DiffPremiumIncludedTax==null || element.DiffPremiumIncludedTax==0 || !endorsementSection">
                                                                         <div class="d-flex justify-content-between">
                                                                             <div>
                                                                                 <ng-container *ngIf="(element.Taxes!=null && element.Taxes.length!=0)">
                                                                                     <ng-template #taxCard>
                                                                                         <div class="popover-card customTemplate shawdowcustom ">
                                                                                             <div class="card-header" status="warning">
-                                                                                                Premium Details!
+                                                                                            Premium Details!
                                                                                             </div>
                                                                                             <div class="card-body p-0">
                                                                                                 <ul class="list-group">
@@ -739,8 +739,8 @@
                                                                                                         </div>
                                                                                                         <div >
                                                                                                             <span class="spancommon span_font_size">
-                                                                                                                <ng-container *ngIf="element?.PremiumAfterDiscountLC==null || element?.PremiumAfterDiscountLC==0"><b>0</b></ng-container>
-                                                                                                                    <ng-container *ngIf="element?.PremiumAfterDiscountLC!=null && element?.PremiumAfterDiscountLC!=0"><b>{{element?.PremiumAfterDiscountLC | commaseparator}}</b></ng-container>
+                                                                                                                <ng-container *ngIf="element?.PremiumAfterDiscount==null || element?.PremiumAfterDiscount==0"><b>0</b></ng-container>
+                                                                                                                    <ng-container *ngIf="element?.PremiumAfterDiscount!=null && element?.PremiumAfterDiscount!=0"><b>{{element?.PremiumAfterDiscount | commaseparator}}</b></ng-container>
                                                                                                             </span>
                                                                                                         </div>
                                                                                                     </li>
@@ -750,7 +750,7 @@
                                                                                                             <span class="spancommon span_font_size">Minimum Premium</span>
                                                                                                         </div>
                                                                                                         <div>
-                                                                                                            <span class="spancommon span_font_size">{{MinimumPremium}}</span>
+                                                                                                            <span class="spancommon span_font_size">{{MinimumPremium | number : '1.0' }}</span>
                                                                                                         </div>
                                                                                                         <!-- </div> -->
                                                                                                     </li>
@@ -1263,7 +1263,7 @@
             </div>
             <div class="maan-grid-item" *ngIf="!statusValue">
                 <div class="maan-grid-item-body">
-                    <!-- <div class="row my-2">
+                    <div class="row my-2">
                         <div class="col-12 col-md-6">
                             <div class="mb-3 mt-3">
                                 <div class="input-control-container">
@@ -1292,7 +1292,7 @@
                                 </div>
                             </div>
                         </ng-container>
-                        <div class="col-12 col-md-6" *ngIf="isMannualReferal != 'Y' && gridshow">
+                        <!-- <div class="col-12 col-md-6" *ngIf="isMannualReferal != 'Y' && gridshow">
                             <div class="mb-3 mt-3">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Do You Like to Choose EMI Option?</label>
@@ -1306,9 +1306,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
-                    <div class="col-md-12 col-lg-12" *ngIf="emiSection && Emilist1.length!=0 && emiYN=='Y'">
+                    <!-- <div class="col-md-12 col-lg-12" *ngIf="emiSection && Emilist1.length!=0 && emiYN=='Y'">
                         <table class="firstclass" style="width:50%;">
                             <thead>
                                 <tr class="firstclass">
@@ -1356,7 +1356,7 @@
 
                         </table>
 
-                    </div> -->
+                    </div>
                     <div class="col-12 col-md-6" *ngIf="isMannualReferal != 'Y' && emiYN=='Y'">
                         <div class="mb-3 mt-3">
                             <div class="input-control-container">
@@ -1389,7 +1389,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>
@@ -1474,10 +1474,8 @@
                                 <ng-container>
                                     <!-- RefNo - {{customerDetails?.CustomerReferenceNo}} -->
                                 </ng-container>
-
                             </div>
                         </div>
-
                     </div>
                     <div class="maan-grid-item-body">
                         <div class="row mt-1  ml-1">

@@ -70,6 +70,64 @@ export class Burglary{
                       },
                       {
                         className: 'col-6',
+                        key: 'BuildingOwnerYn',
+                        type: 'radio',
+                        templateOptions: {
+                          type: 'radio',
+                          label: 'Do You Rent Or Own Home ?',
+                          required: true,
+                          disabled: this.checkDisable('BuildingOwnerYn'),
+                          name: 'BuildingOwnerYn',
+                          options: [{ value: 'N', label: 'I Rent Home' }, { value: 'Y', label: 'I Own Home' }],
+                        }
+                      },
+                      {
+                        className: 'col-6',
+                        type: 'input',
+                        key: 'BuildingBuildYear',
+                        props: {
+                          label: 'Built Construction Year',
+                          placeholder: "YYYY",
+                          required: false,
+                          maxLength: 4,
+                          pattern: /[0-9]+/gm,
+                          disabled: this.checkDisable('BuildingBuildYear'),
+                          options: [
+                          ],
+                        },
+                        validation: {
+                          messages: {
+                            //pattern: (error: any, field: FormlyFieldConfig) => field.formControl.setValue(field.formControl.value.replace(/[^0-9]+/gm, ''))
+                          },
+                        },
+                        expressions: {
+  
+                        },
+                      },
+                      {
+                        className: 'col-6',
+                        type: 'input',
+                        key: 'OccupiedYear',
+                        props: {
+                          label: 'Occupied From(Year)',
+                          placeholder: "YYYY",
+                          required: false,
+                          maxLength: 4,
+                          pattern: /[0-9]+/gm,
+                          options: [
+                          ],
+                        },
+                        validation: {
+                          messages: {
+                            //pattern: (error: any, field: FormlyFieldConfig) => field.formControl.setValue(field.formControl.value.replace(/[^0-9]+/gm, ''))
+                          },
+                        },
+                        expressions: {
+  
+                        },
+                      },
+                      {
+                        className: 'col-6',
                         type: 'select',
                         key: 'WallType',
                         props: {
@@ -173,64 +231,6 @@ export class Burglary{
                           expressions: {
     
                           }
-                        },
-                        {
-                          className: 'col-6',
-                          key: 'BuildingOwnerYn',
-                          type: 'radio',
-                          templateOptions: {
-                            type: 'radio',
-                            label: 'Do You Rent Or Own Home ?',
-                            required: true,
-                            disabled: this.checkDisable('BuildingOwnerYn'),
-                            name: 'BuildingOwnerYn',
-                            options: [{ value: 'N', label: 'I Rent Home' }, { value: 'Y', label: 'I Own Home' }],
-                          }
-                        },
-                        {
-                          className: 'col-6',
-                          type: 'input',
-                          key: 'BuildingBuildYear',
-                          props: {
-                            label: 'Built Construction Year',
-                            placeholder: "YYYY",
-                            required: false,
-                            maxLength: 4,
-                            pattern: /[0-9]+/gm,
-                            disabled: this.checkDisable('BuildingBuildYear'),
-                            options: [
-                            ],
-                          },
-                          validation: {
-                            messages: {
-                              //pattern: (error: any, field: FormlyFieldConfig) => field.formControl.setValue(field.formControl.value.replace(/[^0-9]+/gm, ''))
-                            },
-                          },
-                          expressions: {
-    
-                          },
-                        },
-                        {
-                          className: 'col-6',
-                          type: 'input',
-                          key: 'OccupiedYear',
-                          props: {
-                            label: 'Occupied From(Year)',
-                            placeholder: "YYYY",
-                            required: false,
-                            maxLength: 4,
-                            pattern: /[0-9]+/gm,
-                            options: [
-                            ],
-                          },
-                          validation: {
-                            messages: {
-                              //pattern: (error: any, field: FormlyFieldConfig) => field.formControl.setValue(field.formControl.value.replace(/[^0-9]+/gm, ''))
-                            },
-                          },
-                          expressions: {
-    
-                          },
                         },
                         {
                           className: 'col-6',
@@ -443,9 +443,9 @@ export class Burglary{
                         fieldGroup: [
                           {
                               fieldGroup:[
-                                {props:{label:`Title`}},
+                                {props:{label:`Description`}},
                                 {props:{label:`Sum Insured (${this.commonDetails[0].Currency})`}},
-                                {props:{label:`Loss (%)`}},
+                                {props:{label:`First Loss SumInsured (%)`}},
                               ]
                           },
                           {
@@ -469,7 +469,7 @@ export class Burglary{
                       
                                         templateOptions: {
                                           disabled: this.checkDisable('StockInTradeSi'),
-                                          required: true,
+                                          required: false,
                                           options: [
                       
                                           ],
@@ -487,7 +487,7 @@ export class Burglary{
                                         key: 'StockLossPercent',
                       
                                         templateOptions: {
-                                          required: true,
+                                          required: false,
                                           options: [
                       
                                           ],
@@ -523,7 +523,7 @@ export class Burglary{
                       
                                         templateOptions: {
                                           disabled: this.checkDisable('GoodsSi'),
-                                          required: true,
+                                          required: false,
                                           options: [
                       
                                           ],
@@ -541,7 +541,7 @@ export class Burglary{
                                         key: 'GoodsLossPercent',
                                         
                                         templateOptions: {
-                                          required: true,
+                                          required: false,
                                           options: [
                       
                                           ],
@@ -576,7 +576,7 @@ export class Burglary{
                       
                                         templateOptions: {
                                           disabled: this.checkDisable('FurnitureSi'),
-                                          required: true,
+                                          required: false,
                                           options: [
                       
                                           ],
@@ -594,7 +594,7 @@ export class Burglary{
                                         key: 'FurnitureLossPercent',
                                         
                                         templateOptions: {
-                                          required: true,
+                                          required: false,
                                           options: [
                       
                                           ],
@@ -629,7 +629,7 @@ export class Burglary{
                         
                                           templateOptions: {
                                             disabled: this.checkDisable('ApplianceSi'),
-                                            required: true,
+                                            required: false,
                                             options: [
                         
                                             ],
@@ -647,7 +647,7 @@ export class Burglary{
                                           key: 'ApplianceLossPercent',
                                          
                                           templateOptions: {
-                                            required: true,
+                                            required: false,
                                             options: [
                         
                                             ],
@@ -682,7 +682,7 @@ export class Burglary{
                       
                                         templateOptions: {
                                           disabled: this.checkDisable('CashValueablesSi'),
-                                          required: true,
+                                          required: false,
                                           options: [
                       
                                           ],
@@ -700,7 +700,7 @@ export class Burglary{
                                         key: 'CashValueablesLossPercent',
                                         
                                         templateOptions: {
-                                          required: true,
+                                          required: false,
                                           options: [
                       
                                           ],

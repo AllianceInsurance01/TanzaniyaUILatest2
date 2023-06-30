@@ -10,10 +10,11 @@ import { AuthService } from 'src/app/Auth/auth.service';
 })
 export class CustomerRedirectComponent {
 
-  encryptedValue:any='';
+  encryptedValue:any='';errorSection:boolean=false;
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CustomCommonApiUrl: any = this.AppConfig.CustomCommonApiUrl;
+  errorList: any[]=[];
   constructor(private sharedService: SharedService,private authService: AuthService,
     private route:ActivatedRoute,private router:Router) { 
 
@@ -48,6 +49,7 @@ export class CustomerRedirectComponent {
           let res: any = data;
           console.log(data);
           if (data.Result) {
+            this.errorSection = false;
             if(data.AdditionalInfo){
               let details = data.AdditionalInfo;
               if(details.QuoteNo!='null' && details.QuoteNo!=null){
@@ -87,11 +89,21 @@ export class CustomerRedirectComponent {
               
             }
           }
+          else if(data.ErrorMessage){
+              if(data.ErrorMessage.length!=0){
+                this.errorSection = true;
+                this.errorList = data.ErrorMessage;
+              }
+          }
         },
         (err: any) => {
           alert("Error")
           // console.log(err);
         },
       );
+  }
+  onProceedLogin(){
+    sessionStorage.clear();
+    this.router.navigate(['/login'])
   }
 }

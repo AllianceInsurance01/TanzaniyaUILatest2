@@ -328,7 +328,7 @@
 
                     <div><span><i class="fas fa-home mx-1 mt-3"></i>
                         </span> <b font-style="24px;">Driver Details</b> </div>
-                    <div class="mr-3"> <button class="maan-btn maan-btn-blue maan-button-data"  *ngIf="!endorsementSection" (click)="AddNew()"><i class="fas fa-plus mx-1 mt-3"></i>&nbsp;Add New </button></div>
+                    <div class="mr-3"> <button class="maan-btn maan-btn-blue maan-button-data"  *ngIf="!endorsementSection" (click)="AddNew()"><i class="fas fa-plus mx-1"></i>&nbsp;Add New </button></div>
                 </div>
             </div>
             
@@ -392,7 +392,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="tbl-content" *ngIf="(endorsementSection && enableDriverDetails)">
+                                <td class="tbl-content" *ngIf="!endorsementSection || (endorsementSection && enableDriverDetails)">
                                     <button class="btn btn-primary" *ngIf="i!=0"  (click)="delete(row)"> <i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
@@ -515,7 +515,7 @@
                             <tbody>
                                 <tr *ngFor="let document of uploadedDocList;let i=index">
                                     <th scope="row"><span class="spancommon span_font_size">{{i+1}}</span></th>
-                                    <td><span class="spancommon span_font_size">{{document.OrginalFileName}}</span></td>
+                                    <td><span class="spancommon span_font_size">{{document.OriginalFileName}}</span></td>
                                     <td>
                                         <ng-select class="input-form-select" appendTo="body" disabled [(ngModel)]="document.DocumentId" [items]="commonDocTypeList" bindValue="Code" bindLabel="CodeDesc">
                                         </ng-select>
@@ -579,6 +579,8 @@
                                 <tr>
                                     <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
                                     <th scope="col"><span class="spancommon">FileName</span></th>
+                                    <th scope="col" *ngIf="productId!='5' && productId!='4'"><span class="spancommon">Location</span></th>
+                                    <th scope="col" ><span class="spancommon">Section</span></th>
                                     <th scope="col">
                                         <span class="spancommon">
                                             <ng-container *ngIf="productId=='5'">Chassis Number</ng-container>
@@ -594,8 +596,16 @@
                                 <tr *ngFor="let document of uploadListDoc;let i=index">
                                     <th scope="row"><span class="spancommon span_font_size">{{i+1}}</span></th>
                                     <td><span class="spancommon span_font_size">{{document.filename}}</span></td>
+                                    <td *ngIf="productId!='5' && productId!='4'">
+                                        <ng-select class="input-form-select" [disabled]="document.locationList.length==1" appendTo="body" (change)="onChangeLocationType(document,i)" [(ngModel)]="document.locationId" [items]="document.locationList" bindValue="LocationId" bindLabel="LocationName">
+                                        </ng-select>
+                                    </td>
                                     <td>
-                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.Id" (change)="onChangeSectionType(document)" [items]="listDocTypes" bindValue="RiskId" bindLabel="DocumentTitle">
+                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.sectionId" (change)="onChangeSectionType(document,i)" [items]="document.sectionList" bindValue="SectionId" bindLabel="SectionName">
+                                        </ng-select>
+                                    </td>
+                                    <td>
+                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.Id" (change)="onChangeIdType(document)"  [items]="document.typeList" bindValue="Id" bindLabel="Id">
                                         </ng-select>
                                     </td>
                                     <td>
@@ -630,11 +640,15 @@
                                 <tr>
                                     <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
                                     <th scope="col"><span class="spancommon">FileName</span></th>
-                                    <th scope="col"><span class="spancommon">
-                                        <ng-container *ngIf="productId=='5'">Chassis Number</ng-container>
-                                        <ng-container *ngIf="productId=='4'">Passenger Name</ng-container>
-                                        <ng-container *ngIf="productId!='4' && productId!='5'">Insurer Name</ng-container>
-                                    </span></th>
+                                    <th scope="col" *ngIf="productId!='5' && productId!='4'"><span class="spancommon">Location</span></th>
+                                    <th scope="col" ><span class="spancommon">Section</span></th>
+                                    <th scope="col">
+                                        <span class="spancommon">
+                                            <ng-container *ngIf="productId=='5'">Chassis Number</ng-container>
+                                            <ng-container *ngIf="productId=='4'">Passenger Name</ng-container>
+                                            <ng-container *ngIf="productId!='4' && productId!='5'">ID</ng-container>
+                                        </span>
+                                    </th>
                                     <th scope="col"><span class="spancommon">Document Type</span></th>
                                     <th scope="col"><span class="spancommon">View</span></th>
                                     <th scope="col"><span class="spancommon" *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">Delete</span></th>
@@ -644,14 +658,18 @@
                             <tbody>
                                 <tr *ngFor="let document of uploadedIndividualList;let i=index">
                                     <th scope="row"><span class="spancommon span_font_size">{{i+1}}</span></th>
-                                    <td><span class="spancommon span_font_size">{{document.OrginalFileName}}</span></td>
-                                    <td>
-                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.Id" disabled [items]="listDocTypes" bindValue="RiskId" bindLabel="DocumentTitle">
-                                        </ng-select>
+                                    <td><span class="spancommon span_font_size">{{document.OriginalFileName}}</span></td>
+                                    <td *ngIf="productId!='5' && productId!='4'">
+                                        <span class="spancommon span_font_size">{{document.LocationName}}</span>
+                                    </td>
+                                    <td >
+                                        <span class="spancommon span_font_size">{{document.SectionName}}</span>
                                     </td>
                                     <td>
-                                        <ng-select class="input-form-select" appendTo="body" disabled [(ngModel)]="document.DocumentId" [items]="document.docTypeList" bindValue="Code" bindLabel="CodeDesc">
-                                        </ng-select>
+                                        <span class="spancommon span_font_size">{{document.Id}}</span>
+                                    </td>
+                                    <td>
+                                        <span class="spancommon span_font_size">{{document.DocumentDesc}}</span>
                                     </td>
                                     <td>
                                         <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewListDocument(j,document)"><i
@@ -852,9 +870,9 @@
 
     <div class="text-center my-2">
         <button class="custom-btn btn-5 mx-2" *ngIf="endorsementSection" (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
-        <button class="custom-btn btn-5 mx-2" *ngIf="productId==3 && !endorsementSection" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+        <button class="custom-btn btn-5 mx-2" *ngIf="(productId==3 || productId=='14' || productId=='32') && !endorsementSection" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
         <button class="custom-btn btn-5 mx-2" *ngIf="productId==4 &&  !endorsementSection" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
-        <button class="custom-btn btn-5 mx-2" *ngIf="productId!=3 && productId!='4' &&  !endorsementSection" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+        <button class="custom-btn btn-5 mx-2" *ngIf="productId!=3 && productId!='4' && productId!='14' && productId!='32' &&  !endorsementSection" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
         <!-- <button class="custom-btn btn-6 mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/make-payment']" routerLinkActive="router-link-active">Next</button> -->
         <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 11rem" matRipple (click)="onProceed()">Proceed to Payment</button>
     </div>

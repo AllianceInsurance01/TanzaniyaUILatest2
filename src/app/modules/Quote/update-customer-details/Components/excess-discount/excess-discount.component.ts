@@ -232,7 +232,6 @@ emiyn="N";
         console.log("Enable Obj",this.enableFieldsList)
         if(this.endorsementId!=42){
           this.endorseCovers = this.enableFieldsList.some(ele=>ele=='Covers');
-          alert(this.endorseCovers)
           this.enableRemoveVehicle = this.enableFieldsList.some(ele=>ele=='removeVehicle');
         }
         else{
@@ -268,7 +267,7 @@ emiyn="N";
           },
         },
         { key: 'CoverName', display: 'Cover Name' },
-
+        { key: 'ReferalDescription', display: 'Referral' },
         { key: 'SumInsured', display: 'Sum Insured' },
         { key: 'Rate', display: 'Rate' },
         { key: 'ExcessPercent', display: 'ExcessPercent' },
@@ -1899,12 +1898,14 @@ getMotorUsageList(vehicleValue){
       if(this.statusValue){
           if(this.adminSection){
               if(this.statusValue=='RA') this.router.navigate(['/Admin/referralApproved']);
-              else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
-              // else this.router.navigate(['/Admin/referralPending']);
+              //else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+              
+              else this.router.navigate(['/Admin/referralPending']);
           }
           else{
             if(this.statusValue=='RA') this.router.navigate(['/Home/referralApproved']);
-            else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+            else this.router.navigate(['/Home/referralPending']);
+            //else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
           }
       }
       else{
@@ -2230,7 +2231,6 @@ getMotorUsageList(vehicleValue){
                   if(rowData.Endorsements!=null){
                     
                     if(this.coverModificationYN!='Y'){
-                      alert("Entered Values")
                       vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxLC;
                       vehicle['totalPremium'] =  vehicle['totalPremium']+rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax;
                     }
@@ -2581,7 +2581,7 @@ getMotorUsageList(vehicleValue){
   }
   ongetTaxDetails(rowData){
     console.log("Tax Details",rowData);
-    this.MinimumPremium = rowData.MinimumPremium;
+    this.MinimumPremium = (rowData.MinimumPremium/rowData.ExchangeRate);
     this.premiumExcluedTax = rowData.PremiumExcluedTax;
     this.premiumIncluedTax = rowData.PremiumIncludedTax
     if(rowData.Taxes) this.taxList = rowData.Taxes;
@@ -2605,13 +2605,14 @@ getMotorUsageList(vehicleValue){
   onProceed(coverList:any){
     if(this.statusValue == 'RA' && !this.adminSection){
       if(this.productId!='4'){
-        if(this.productId=='3' || this.productId=='19' || this.productId=='32'){
+        if(this.productId=='3' || this.productId=='19' || this.productId=='32' || this.productId=='14'){
           let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
           if(homeSession){
             this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
           }
           else{
-            this.getExistingBuildingList();
+            if(this.productId=='3') this.getExistingBuildingList();
+            else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
           }
 
         }
@@ -2894,7 +2895,7 @@ getMotorUsageList(vehicleValue){
       this.insertEMIDetails();
     }
     else{
-      if(this.productId=='3' || this.productId=='19'){
+      if(this.productId=='3'){
         let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
         if(homeSession){
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
@@ -2908,14 +2909,14 @@ getMotorUsageList(vehicleValue){
       else if(this.productId == '4'){
         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']);
       }
-      else if(this.productId=='32' || this.productId=='14' || this.productId=='15'){
-        let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
-        if(homeSession){
-          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
-        }
-        else{
-          this.getExistingEserviceDetails();
-        }
+      else if(this.productId=='32' || this.productId=='14' || this.productId=='15' || this.productId=='19'){
+        // let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
+        // if(homeSession){
+           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
+        // }
+        // else{
+         // this.getExistingEserviceDetails();
+        //}
       }
       else{
         
@@ -2966,7 +2967,7 @@ getMotorUsageList(vehicleValue){
             //         this.insert=data.Result
             //       }},);
             //    }
-              if(this.productId=='3' || this.productId=='19'){
+              if(this.productId=='3'){
                 let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
                 if(homeSession){
                   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
@@ -2980,14 +2981,15 @@ getMotorUsageList(vehicleValue){
               else if(this.productId == '4'){
                 this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']);
               }
-              else if(this.productId=='32' || this.productId=='14'){
-                let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
-                if(homeSession){
-                  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
-                }
-                else{
-                  this.getExistingEserviceDetails();
-                }
+              else if(this.productId=='32' || this.productId=='14' || this.productId=='19'){
+                this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
+                // let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
+                // if(homeSession){
+                  
+                // }
+                // else{
+                //   this.getExistingEserviceDetails();
+                // }
               }
               else{
                 
@@ -3069,14 +3071,16 @@ getMotorUsageList(vehicleValue){
                       if(k==veh.Covers.length){
                         j+=1;
                         if(j==entry.length){
+
                             let ReqObj = {
                               "RequestReferenceNo": this.quoteRefNo,
                               "VehicleId": veh.Id,
-                              "SectionId": veh.SectionId,
+                              "SectionId": vehicle.SectionId,
                               "ProductId": this.productId,
                               "InsuranceId": this.insuranceId,
                               "Covers":covers
                             }
+                            console.log("Final Req",vehicle,veh,ReqObj)
                             let urlLink = `${this.CommonApiUrl}api/updatefactorrate`;
                             this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
                               (data: any) => {
@@ -3085,7 +3089,7 @@ getMotorUsageList(vehicleValue){
                                     if(i==this.vehicleDetailsList.length){
                                       if(type=='calculate'){
                                         //sessionStorage.removeItem('vehicleDetailsList');
-                                        //window.location.reload();
+                                        window.location.reload();
                                       }
                                       else if(!this.endorsementSection) this.updateReferralStatus();
                                     }

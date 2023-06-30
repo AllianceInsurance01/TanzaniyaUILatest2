@@ -609,6 +609,7 @@ ng-select input {
 
 .main-content {
     margin-top: 70px;
+    min-height: 83.5% !important;
 }
 
 .card-body {
@@ -2915,6 +2916,7 @@ p {
     background: var(--theme1) !important;
   background: linear-gradient(0deg, rgb(0, 68, 255) 0%, rgb(2, 118, 251) 100%) !important;
   }
+  
   .btn-6:hover {
     color: var(--theme1) !important;
     background: #fff !important;
@@ -2956,6 +2958,63 @@ p {
   background: linear-gradient(0deg, rgb(0, 68, 255) 0%, rgb(2, 118, 251) 100%) !important;
   }
   .btn-6:hover {
+    color: var(--theme1) !important;
+    background: #fff !important;
+     box-shadow:none;
+  }
+  .btn-8 {
+    width: 130px;
+    height: 40px;
+    line-height: 42px;
+    padding: 0;
+    border: none;
+    background: var(--theme1) !important;
+    color: var(--theme1) !important;
+  background: linear-gradient(0deg, rgb(255, 187, 0) 0%, rgb(251, 247, 2) 100%) !important;
+  }
+  
+  .btn-8:hover {
+    color: var(--theme1) !important;
+    background: #fff !important;
+     box-shadow:none;
+  }
+  .btn-8:before,
+  .btn-8:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: var(--theme1);
+    box-shadow:
+     -1px -1px 5px 0px #fff,
+     7px 7px 20px 0px #0003,
+     4px 4px 5px 0px #0002;
+    transition:400ms ease all;
+  }
+  .btn-8:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  .btn-8:hover:before,
+  .btn-8:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+  .btn-8 {
+    width: 130px;
+    height: 40px;
+    line-height: 42px;
+    padding: 0;
+    border: none;
+    color: var(--theme1) !important;
+    background: var(--theme1) !important;
+  background: linear-gradient(0deg, rgb(255, 208, 0) 0%, rgb(251, 226, 2) 100%) !important;
+  }
+  .btn-8:hover {
     color: var(--theme1) !important;
     background: #fff !important;
      box-shadow:none;

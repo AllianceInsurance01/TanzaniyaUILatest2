@@ -1,3 +1,71 @@
-<div class="text-center">
+<div class="product-menubar">
+    <div class="logo-img" style="background-color: #fff;">
+        <img src="./assets/images/logo-2.png">
+    </div>
+
+
+    <div class="user-container">
+
+        <!-- <div style="margin-right:50px;"> -->
+            <!--<a (click)="onLog(title)" style="color:blue;font-size:16px;font-weight:600;cursor:pointer;display:flex;text-decoration: underline;"> LogIn </a>-->
+            <!-- <a class="productsidesection">{{loginId}} <span style="padding-left:10px;"> |</span></a>
+        </div> -->
+
+        <!--<img src="assets/images/nick.png">-->
+        <!-- <div style="margin-left:-40px;">
+            <a (click)="onProceedLogin()" class="productlogout"> LogOut </a>
+        </div> -->
+    </div>
+    <!--<div class="d-flex flex-row-reverse">
+        <div class="p-2">
+            <button class="btn btn-circle"><i class="fa fa-sign-out" style="font-size:24px"></i></button>
+        </div>
+    </div>-->
+    <!--<div class="login-details">
+        <nb-actions size="small">
+            <nb-action class="user-action" *nbIsGranted="['view', 'user']">
+                <nb-user [nbContextMenu]="userMenu" [onlyPicture]="userPictureOnly" [name]="loginId" [picture]="user?.picture" nbContextMenuTag="my-context-menu">
+                </nb-user>
+            </nb-action>
+        </nb-actions>
+    </div>-->
+    <!-- <div>
+        <nb-actions size="small">
+
+            <nb-action class="control-item" icon="home"></nb-action>
+            <nb-action class="control-item" icon="home"></nb-action>
+        </nb-actions>
+    </div> -->
+
+</div>
+<div class="text-center mt-5" *ngIf="!errorSection">
     <p>Please Wait.....</p>
+</div>
+<!-- <div>
+    <h2 style="text-align: center;margin: auto;">Saravana</h2>
+</div> -->
+<div class="row" *ngIf="errorSection">
+    <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+        <div class="card" id="page_container">
+            <div class="card-body block_container">
+                <div class="text-center">
+                    <h2 style="font-weight: 700;color: #fff;"><u>Error!</u></h2>
+                </div>
+                <div class="row" *ngIf="errorList.length!=0">
+                    <div class="col-10 col-lg-10 col-xl-10 col-md-10 offset-1">
+                        <ul class="list" *ngFor="let error of errorList">
+                            <li class="list-item one">{{error.Message}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="text-center">
+                        <button class="custom-btn btn-8 maan-button-data" matRipple (click)="onProceedLogin()">Okay! </button>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>

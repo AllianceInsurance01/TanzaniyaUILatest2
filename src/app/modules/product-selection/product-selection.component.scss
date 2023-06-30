@@ -1,6 +1,18 @@
-.Choose-Product-Box {
-    padding: 10px;
+.prductBg{
+    background: url('../../../assets/images/productBg.png');
+    background-repeat: no-repeat;
+    background-size: 100% 40%;
+    padding: 50px !important;
+    min-height: 75% !important;
 }
+.AllinProductBox{
+    background-color: #f6f8fa29 !important;
+    border: 2px solid grey !important;
+    border-radius: 26px;
+    margin: 4rem 1rem 1rem 1rem!important; 
+}
+.Choose-Product-Box {
+  }
 .heading{
     background: #fff;
     box-shadow: 2px 2px 4px #00000029;
@@ -27,7 +39,7 @@
     padding-left: 0;
     padding-right: 0;
 }
-.Choose-Product-Box .InsuranceType {
+.InsuranceType {
     width: 16.65% !important;
     border-radius: 5px 5px 0 0;
     opacity: 1!important;
@@ -62,12 +74,72 @@
     height: 125px;
     width: 125px;
 }
+.InsuranceType:hover {
+    transform: translateY(-5px);
+    border-radius: 30px !important;
+    background-color: #f1eee3 !important;
+    cursor: pointer;
+    box-shadow: 0px 10px 20px 2px rgba(0, 0, 0, 0.25);
+}
 .domesticIcon{
-    background: url('../../../assets/images/health.png') no-repeat center;
+    background: url('../../../assets/images/domestic.png') no-repeat center;
+    background-size: 130px !important;
+}
+.motorIcon{
+    background: url('../../../assets/images/motor.png') no-repeat center;
+    background-size: 110px !important;
+}
+.travelIcon{
+    background: url('../../../assets/images/travel1.png') no-repeat center;
     background-size: 95px !important;
+}
+.burglaryIcon{
+    background: url('../../../assets/images/Burglary1.png') no-repeat center;
+    background-size: 110px !important;
+}
+.employersIcon{
+    background: url('../../../assets/images/employers.png') no-repeat center;
+    background-size: 95px !important;
+}
+.personalIcon{
+    background: url('../../../assets/images/personalacc.png') no-repeat center;
+    background-size: 115px !important;
+}
+.workmenIcon{
+    background: url('../../../assets/images/workmens.png') no-repeat center;
+    background-size: 115px !important;
+}
+.allRiskIcon{
+    background: url('../../../assets/images/All-risk.png') no-repeat center;
+    background-size: 95px !important;
+}
+.smeIcon{
+    background: url('../../../assets/images/corporate.webp') no-repeat center;
+    background-size: 110px !important;
+}
+.fidelityIcon{
+    background: url('../../../assets/images/fidelity1.webp') no-repeat center;
+    background-size: 110px !important;
+}
+.fireAlliedIcon{
+    background: url('../../../assets/images/fireAllied.png') no-repeat center;
+    background-size: 120px !important;
+}
+.machineryIcon{
+    background: url('../../../assets/images/machinery.jpg') no-repeat center;
+    background-size: 105px !important;
+}
+.moneyInsuranceIcon{
+    background: url('../../../assets/images/money.webp') no-repeat center;
+    background-size: 120px !important;
 }
 .InsuranceIcon1 {
     border: 2px solid #ffde48!important;
+}
+
+.InsuranceType:hover .InsuranceIcon1{
+    border: 2px solid #4891ff!important;
+    
 }
 .bwT {
     background: rgba(275,275,275,.5) !important;

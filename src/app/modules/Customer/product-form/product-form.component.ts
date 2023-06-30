@@ -791,10 +791,11 @@ export class ProductFormComponent implements OnInit {
 					this.productItem.Address1 = customerDetails.Address1;
 					this.productItem.Address2 = customerDetails.Address2;
 					this.productItem.BusinessType = customerDetails.BusinessType;
-					this.productItem.CityName = customerDetails.CityName;
+					this.productItem.CityName = customerDetails.CityCode;
 					this.productItem.Clientstatus = customerDetails.Clientstatus;
 					this.productItem.EmailId = customerDetails.Email1;
 					this.productItem.Country = customerDetails.Nationality;
+					
 					this.productItem.Gender = customerDetails.Gender;
 					this.productItem.IdNumber = customerDetails.IdNumber;
 					this.productItem.IdType = customerDetails.PolicyHolderType;
@@ -838,11 +839,14 @@ export class ProductFormComponent implements OnInit {
 		console.log("Event on Change", event);
 	}
 	public async onSubmit(data) {
-		console.log("Total Data", data)
-		let appointmentDate = "", dobOrRegDate = "", taxExemptedId = null, businessType = null;
+		console.log("Total Data", data);
+		
+		let appointmentDate = "", dobOrRegDate = "", taxExemptedId = null,cityName=null, stateName=null,businessType = null;
 		//  if(data.AppointmentDate!= undefined && data.AppointmentDate!=null && data.AppointmentDate!=''){
 		// 	appointmentDate = this.datePipe.transform(data.AppointmentDate, "dd/MM/yyyy");
 		//  }
+		if(data.CityName!=null && data.CityName!='') cityName = this.stateList.find(ele=>ele.Code==data.CityName)?.CodeDesc;
+		if(data.state!=null && data.state!='') stateName = this.regionList.find(ele=>ele.Code==data.state)?.CodeDesc;
 		if (data.dobOrRegDate != undefined && data.dobOrRegDate != null && data.dobOrRegDate != '') {
 			dobOrRegDate = this.datePipe.transform(data.dobOrRegDate, "dd/MM/yyyy");
 		}
@@ -874,7 +878,8 @@ export class ProductFormComponent implements OnInit {
 			"Address1": data?.Address1,
 			"Address2": data?.Address2,
 			"BusinessType": businessType,
-			"CityName": data?.CityName,
+			"CityCode": data?.CityName,
+			"CityName": cityName,
 			"ClientName": data?.ClientName,
 			"Clientstatus": data?.Clientstatus,
 			"CreatedBy": this.loginId,
@@ -904,6 +909,7 @@ export class ProductFormComponent implements OnInit {
 			"WhatsappDesc": "1",
 			"WhatsappNo": data.MobileNo,
 			"StateCode": data?.state,
+			"StateName": stateName,
 			"Status": data?.Clientstatus,
 			"Street": data?.Street,
 			"TaxExemptedId": taxExemptedId,

@@ -90,7 +90,7 @@
     padding: 1rem 2.5rem;
   }
   
-  .custom-checkbox-container input:checked~.description {
+  .customBg {
     background-color: #2196F3;
     color: #fff;
   }

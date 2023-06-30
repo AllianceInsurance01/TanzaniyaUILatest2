@@ -4,6 +4,7 @@ import { DatePipe } from '@angular/common';
 import { UpdateCustomerDetailsComponent } from '../../update-customer-details.component';
 import * as Mydatas from '../../../../../app-config.json';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 declare var $:any;
 @Component({
   selector: 'app-travel-passenger-details',
@@ -44,6 +45,7 @@ export class TravelPassengerDetailsComponent implements OnInit {
   passengerId: any;countryList:any[]=[];kidTrashSection:boolean=false;
   country: any;groupId:any;adultTrashSection:boolean=false;seniorTrashSection:boolean=false;
   postBoxNo: any;superSeniorTrashSection:boolean=false;grandSeniorTrashSection:boolean=false;
+  validRecordsList: any;
 
   constructor(private router:Router,private updateComponent:UpdateCustomerDetailsComponent,
     private datePipe:DatePipe,private sharedService: SharedService,) {
@@ -343,44 +345,45 @@ export class TravelPassengerDetailsComponent implements OnInit {
 
   onNextVehicle(type){
     let quoteNo=sessionStorage.getItem('quoteNo');
-    let i=0;
+    let i=0;let passengerList:any[] = [];
     for(let passenger of this.PassengerDetails){
-      let ReqObj ={
-        "Address1": passenger.Address1,
-        "Address2": passenger.Address2,
+      let entry = {
         "Age": passenger.Age,
         "City": null,
         "CivilId": null,
         "Dob": passenger.Dob,
         "GenderId": passenger.GenderId,
+        "GroupId": passenger.GroupId,
         "CreatedBy": this.loginId,
-        //"NameTitleId": this.titleValue,
         "Natinality": passenger.Nationality,
         "PassengerId": passenger.PassengerId,
         "PassengerLastName": passenger.PassengerLastName,
         "PassengerFirstName": passenger.PassengerFirstName,
         "PassportNo": passenger.PassportNo,
-        //"PoBox": this.postBoxNo,
         "QuoteNo": quoteNo,
         "RelationId": passenger.RelationId,
-        "StateCode" : null    
+        "StateCode": null
       }
-      if(ReqObj.Dob!='' && ReqObj.Dob!=null && ReqObj.Dob!=undefined){
-        ReqObj['Dob'] = this.datePipe.transform(ReqObj.Dob, "dd/MM/yyyy");
+      if(entry.Dob!='' && entry.Dob!=null && entry.Dob!=undefined){
+        entry['Dob'] = this.datePipe.transform(entry.Dob, "dd/MM/yyyy");
       }
-      let urlLink = `${this.motorApiUrl}api/updatepassdetails`;
-      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-        (data: any) => {
-          if(data.Result){
-            i+=1;
-            if(i==this.PassengerDetails.length){
-              console.log("Received Type ",type)
-              this.checkValidPassengers();
-            }
-          }
-        },
-        (err) => { },
-      );
+      passengerList.push(entry);
+      i+=1;
+      if(i==this.PassengerDetails.length){
+          // let ReqObj = {
+            
+          // }
+          let urlLink = `${this.motorApiUrl}api/updatepassdetails`;
+          this.sharedService.onPostMethodSync(urlLink, passengerList).subscribe(
+            (data: any) => {
+              if(data.Result){
+                  console.log("Received Type ",type)
+                  this.checkValidPassengers();
+              }
+            },
+            (err) => { },
+          );
+      }
     }
     
         
@@ -432,6 +435,7 @@ export class TravelPassengerDetailsComponent implements OnInit {
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
       if(data.Result){
+        this.validRecordsList = data.Result;
         this.getHistoryRecords(data.Result);
         // this.PassengerDetails = data.Result;
         // this.passengerSection = true;
@@ -492,7 +496,7 @@ getHistoryRecords(passengerList){
                 }
             }
             else{
-              this.adultTrashSection = false;
+              this.adultTrashSection = true;
               this.PassengerDetails = this.PassengerDetails.concat(adultList);
               adultSection = true;
               this.checkRendering(adultSection,kidSection,seniorSection,superSeniorSection,grandSeniorSection);
@@ -532,7 +536,7 @@ getHistoryRecords(passengerList){
               }
           }
           else{
-            this.kidTrashSection = false;
+            this.kidTrashSection = true;
             this.PassengerDetails = this.PassengerDetails.concat(kidList);
             kidSection = true;
             this.checkRendering(adultSection,kidSection,seniorSection,superSeniorSection,grandSeniorSection);
@@ -575,7 +579,7 @@ getHistoryRecords(passengerList){
               }
           }
           else{
-            this.seniorTrashSection = false;
+            this.seniorTrashSection = true;
             this.PassengerDetails = this.PassengerDetails.concat(seniorList);
             seniorSection = true;
             this.checkRendering(adultSection,kidSection,seniorSection,superSeniorSection,grandSeniorSection);
@@ -618,7 +622,7 @@ getHistoryRecords(passengerList){
               }
           }
           else{
-            this.superSeniorTrashSection = false;
+            this.superSeniorTrashSection = true;
             this.PassengerDetails = this.PassengerDetails.concat(superSeniorList);
             superSeniorSection = true;
             this.checkRendering(adultSection,kidSection,seniorSection,superSeniorSection,grandSeniorSection);
@@ -661,7 +665,7 @@ getHistoryRecords(passengerList){
               }
           }
           else{
-            this.grandSeniorTrashSection = false;
+            this.grandSeniorTrashSection = true;
             this.PassengerDetails = this.PassengerDetails.concat(grandSeniorList);
             grandSeniorSection = true;
             this.checkRendering(adultSection,kidSection,seniorSection,superSeniorSection,grandSeniorSection);
@@ -690,7 +694,58 @@ getHistoryRecords(passengerList){
   );
 }
 onDeletePassenger(rowData){
-  this.PassengerDetails = this.PassengerDetails.filter(ele=>ele.PassengerId!=rowData.PassengerId);
+  let index =  this.PassengerDetails.findIndex(ele=>(ele.PassengerId==rowData.PassengerId && ele.GroupId==rowData.GroupId));
+  this.PassengerDetails.splice(index,1);
+  let adultList = this.PassengerDetails.filter(ele=>ele.GroupId=='2');
+  let kidList = this.PassengerDetails.filter(ele=>ele.GroupId=='1');
+  let seniorList = this.PassengerDetails.filter(ele=>ele.GroupId=='3');
+  let superSeniorList = this.PassengerDetails.filter(ele=>ele.GroupId=='4');
+  let grandSeniorList = this.PassengerDetails.filter(ele=>ele.GroupId=='5');
+  let adultPassList = this.validRecordsList.filter(ele=>ele.GroupId=='2');
+  let kidPassList = this.validRecordsList.filter(ele=>ele.GroupId=='1');
+  let seniorPassList = this.validRecordsList.filter(ele=>ele.GroupId=='3');
+  let superSeniorPassList = this.validRecordsList.filter(ele=>ele.GroupId=='4');
+  let grandSeniorPassList = this.validRecordsList.filter(ele=>ele.GroupId=='5');
+  if(adultList.length!=0){
+    if(adultPassList.length!=0){
+      if(adultList.length!=adultPassList.length) this.adultTrashSection = true;
+      else this.adultTrashSection = false;
+    }
+    else this.adultTrashSection = true;
+  }
+  else this.adultTrashSection = false;
+  if(kidList.length!=0){
+    if(kidPassList.length!=0){
+      if(kidPassList.length!=kidList.length) this.kidTrashSection = true;
+      else this.kidTrashSection = false;
+    }
+    else this.kidTrashSection = true;
+  }
+  else this.kidTrashSection = false;
+  if(seniorList.length!=0){
+    if(seniorPassList.length!=0){
+      if(seniorPassList.length!=seniorList.length) this.seniorTrashSection = true;
+      else this.seniorTrashSection = false;
+    }
+    else this.seniorTrashSection = true;
+  }
+  else this.seniorTrashSection = false;
+  if(superSeniorList.length!=0){
+    if(superSeniorPassList.length!=0){
+      if(superSeniorPassList.length!=superSeniorList.length) this.superSeniorTrashSection = true;
+      else this.superSeniorTrashSection = false;
+    }
+    else this.superSeniorTrashSection = true;
+  }
+  else this.superSeniorTrashSection = false;
+  if(grandSeniorList.length!=0){
+    if(grandSeniorPassList.length!=0){
+      if(grandSeniorPassList.length!=grandSeniorList.length) this.grandSeniorTrashSection = true;
+      else this.grandSeniorTrashSection = false;
+    }
+    else this.grandSeniorTrashSection = true;
+  }
+  else this.grandSeniorTrashSection = false;
 }
 checkRendering(adultSection,kidSection,seniorSection,superSeniorSection,grandSeniorSection){
     this.passengerSection = adultSection && kidSection && seniorSection && superSeniorSection && grandSeniorSection;
@@ -914,47 +969,96 @@ Proceed()
     }
 
   }*/
-  onFormSubmit()
-  { 
-    // let type: NbComponentStatus = 'danger';
-    //           const config = {
-    //             status: type,
-    //             destroyByClick: true,
-    //             duration: 4000,
-    //             hasIcon: true,
-    //             position: NbGlobalPhysicalPosition.TOP_RIGHT,
-    //             preventDuplicates: false,
-    //           };
-              
+  onFormSubmit(){ 
       if(this.kidTrashSection){
-        // this.toastrService.show(
-        //   'Kid Count MisMatch',
-        //   'Please Remove Extra Passenger From Kid Section',
-        //   config)
+        Swal.fire({
+          title: '<strong>Passenger Error</strong>',
+          icon: 'info',
+          html:
+            `<ul class="list-group errorlist">
+            <li class="list-group-login-field">
+              <div style="color: darkgreen;">Type<span class="mx-2">:</span>Kid Count MisMatch</div>
+              <div style="color: red;">Message<span class="mx-2">:</span>Please Remove Extra Passenger From Kid Section</div>
+           </li>
+          </ul>`,
+          showCloseButton: true,
+          focusConfirm: false,
+          confirmButtonText:
+            '<i class="fa fa-thumbs-down"></i> Errors!',
+          confirmButtonAriaLabel: 'Thumbs down, Errors!',
+        })
       }
       else  if(this.adultTrashSection){
-        // this.toastrService.show(
-        //   'Adult Count MisMatch',
-        //   'Please Remove Extra Passenger From Adult Section',
-        //   config)
+        Swal.fire({
+          title: '<strong>Passenger Error</strong>',
+          icon: 'info',
+          html:
+            `<ul class="list-group errorlist">
+            <li class="list-group-login-field">
+              <div style="color: darkgreen;">Type<span class="mx-2">:</span>Adult Count MisMatch</div>
+              <div style="color: red;">Message<span class="mx-2">:</span>Please Remove Extra Passenger From Adult Section</div>
+           </li>
+          </ul>`,
+          showCloseButton: true,
+          focusConfirm: false,
+          confirmButtonText:
+            '<i class="fa fa-thumbs-down"></i> Errors!',
+          confirmButtonAriaLabel: 'Thumbs down, Errors!',
+        })
       }
       else  if(this.seniorTrashSection){
-        // this.toastrService.show(
-        //   'Senior Count MisMatch',
-        //   'Please Remove Extra Passenger From Senior Section',
-        //   config)
+        Swal.fire({
+          title: '<strong>Passenger Error</strong>',
+          icon: 'info',
+          html:
+            `<ul class="list-group errorlist">
+            <li class="list-group-login-field">
+              <div style="color: darkgreen;">Type<span class="mx-2">:</span>Senior Count MisMatch</div>
+              <div style="color: red;">Message<span class="mx-2">:</span>Please Remove Extra Passenger From Senior Section</div>
+           </li>
+          </ul>`,
+          showCloseButton: true,
+          focusConfirm: false,
+          confirmButtonText:
+            '<i class="fa fa-thumbs-down"></i> Errors!',
+          confirmButtonAriaLabel: 'Thumbs down, Errors!',
+        })
       }
       else  if(this.superSeniorTrashSection){
-        // this.toastrService.show(
-        //   'Super Senior Count MisMatch',
-        //   'Please Remove Extra Passenger From Super Senior Section',
-        //   config)
+        Swal.fire({
+          title: '<strong>Passenger Error</strong>',
+          icon: 'info',
+          html:
+            `<ul class="list-group errorlist">
+            <li class="list-group-login-field">
+              <div style="color: darkgreen;">Type<span class="mx-2">:</span>Super Senior Count MisMatch</div>
+              <div style="color: red;">Message<span class="mx-2">:</span>Please Remove Extra Passenger From Super Senior Section</div>
+           </li>
+          </ul>`,
+          showCloseButton: true,
+          focusConfirm: false,
+          confirmButtonText:
+            '<i class="fa fa-thumbs-down"></i> Errors!',
+          confirmButtonAriaLabel: 'Thumbs down, Errors!',
+        })
       }
       else  if(this.grandSeniorTrashSection){
-        // this.toastrService.show(
-        //   'Super Senior Count MisMatch',
-        //   'Please Remove Extra Passenger From Super Senior Section',
-        //   config)
+        Swal.fire({
+          title: '<strong>Passenger Error</strong>',
+          icon: 'info',
+          html:
+            `<ul class="list-group errorlist">
+            <li class="list-group-login-field">
+              <div style="color: darkgreen;">Type<span class="mx-2">:</span>Grand Senior Count MisMatch</div>
+              <div style="color: red;">Message<span class="mx-2">:</span>Please Remove Extra Passenger From Grand Senior Section</div>
+           </li>
+          </ul>`,
+          showCloseButton: true,
+          focusConfirm: false,
+          confirmButtonText:
+            '<i class="fa fa-thumbs-down"></i> Errors!',
+          confirmButtonAriaLabel: 'Thumbs down, Errors!',
+        })
       }
       else{
         this.onNextVehicle('finalSave');

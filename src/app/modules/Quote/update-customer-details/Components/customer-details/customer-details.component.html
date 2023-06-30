@@ -130,6 +130,17 @@
                     </div>
                     <div class="maan-grid-item-body">
                         <div class="row">
+                            <div class="col-12 col-md-6 col-lg-6 offset-3 mt-4" [ngStyle]="{'position':'realtive','bottom':'0.2rem'}" *ngIf="productId=='6' || this.productId=='16' || productId=='39' || productId=='14' || productId=='32' || productId=='1'">
+                                <div class="Choose-Section-Box padd0 bwT">
+                                    <span class="heading">SELECT INDUSTRY TYPE <span class="text-danger">*</span></span>
+                                    <div class="row mt-3">
+                                        <div class="input-control-container col-md-12 col-lg-12">
+                                            <ng-select class="input-form-select" appendTo="body" [(ngModel)]="IndustryId" [items]="industryList" bindValue="Code" bindLabel="CodeDesc">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-12 col-md-4" *ngIf="issuerSection">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Division</label><span class="text-danger">*</span>
@@ -197,7 +208,6 @@
                                             <ng-option *ngFor="let item of brokerList" [value]="item.Code">{{item.Name}}</ng-option>
                                         </ng-select>
                                     </ng-container>
-
                                     <div class="input-form-error" *ngIf="brokerCodeError">
                                         <div class="error-text text-danger">
                                             Please Select Source Code
@@ -242,24 +252,13 @@
                                     </div>
                                 </mat-form-field>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-6 offset-3 mt-4" [ngStyle]="{'position':'realtive','bottom':'0.2rem'}" *ngIf="productId=='6' || this.productId=='16' || productId=='39' || productId=='14' || productId=='32' || productId=='1'">
-                                <div class="Choose-Section-Box padd0 bwT">
-                                    <span class="heading">SELECT INDUSTRY TYPE <span class="text-danger">*</span></span>
-                                        <div class="row mt-3">
-                                            <div class="input-control-container col-md-12 col-lg-12">
-                                                <ng-select class="input-form-select" appendTo="body" [(ngModel)]="IndustryId" [items]="industryList" bindValue="Code" bindLabel="CodeDesc">
-                                                </ng-select>
-                                            </div>
-                                        </div>
-                                        
-                                </div>
-                            </div>
+                            
                             <div class="col-12 col-md-4 col-lg-4" *ngIf="productId!='4'">
                                 <label class="input-form-label spancommon span_font_size">Policy Start Date<span class="text-danger">*</span></label>
                                 <ng-container >
                                     <mat-form-field appearance="fill">
                                         <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
-                                        <input matInput [matDatepicker]="picker" [min]="minDate" [disabled]="endorsementSection && !enablePolicyStart" [max]="maxDate" (dateChange)="onStartDateChange()" [(ngModel)]="policyStartDate">
+                                        <input matInput [matDatepicker]="picker" [min]="minDate" [disabled]="(endorsementSection && !enablePolicyStart) || checkDisableField()" [max]="maxDate" (dateChange)="onStartDateChange()" [(ngModel)]="policyStartDate">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                     </mat-form-field>
@@ -279,7 +278,7 @@
                                 <label class="input-form-label spancommon span_font_size">Policy End Date<span class="text-danger">*</span></label>
                                 <mat-form-field appearance="fill">
                                     <!-- <mat-label>Policy End Date<span class="text-danger">*</span></mat-label> -->
-                                    <input matInput [matDatepicker]="picker2" [min]="endMinDate" [max]="endMaxDate" [disabled]="endorsementSection && !enablePolicyEnd" (dateChange)="onChangeEndDate()" [(ngModel)]="policyEndDate">
+                                    <input matInput [matDatepicker]="picker2" [min]="endMinDate" [max]="endMaxDate" [disabled]="(endorsementSection && !enablePolicyEnd) || checkDisableField()" (dateChange)="onChangeEndDate()" [(ngModel)]="policyEndDate">
                                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                     <mat-datepicker #picker2></mat-datepicker>
                                 </mat-form-field>
@@ -302,7 +301,7 @@
                             <div class="col-12 col-md-4" [ngStyle]="{'position':'realtive','bottom':'0.2rem'}">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Currency</label><span class="text-danger">*</span>
-                                    <ng-select class="input-form-select" appendTo="body" [disabled]="endorsementSection && !enableCurrency" [(ngModel)]="currencyCode" [items]="currencyList" (change)="onCurrencyChange()" bindValue="Code" bindLabel="CodeDesc">
+                                    <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableCurrency) || checkDisableField()" [(ngModel)]="currencyCode" [items]="currencyList" (change)="onCurrencyChange()" bindValue="Code" bindLabel="CodeDesc">
                                     </ng-select>
                                     <div class="input-form-error" *ngIf="currencyError">
                                         <div class="error-text">
@@ -315,7 +314,7 @@
                                 <div class="input-control-container">
                                     <label class="input-form-label">Exchange Rate <span *ngIf="editSection">({{minCurrencyRate | number : '1.2-2'}} ~ {{maxCurrencyRate | number : '1.2-2'}})</span></label><span class="text-danger">*</span>
                                     <div class="input-form-box">
-                                        <input type="text" (change)="onExchangeRateChange()" [disabled]="endorsementSection" [(ngModel)]="exchangeRate" class="input-form-control without-icon">
+                                        <input type="text" (change)="onExchangeRateChange()" [disabled]="(endorsementSection) || checkDisableField()" [(ngModel)]="exchangeRate" class="input-form-control without-icon">
                                     </div>
                                     <div class="input-form-error" *ngIf="exchangeMinError || exchangeMaxError">
                                         <div class="error-text" *ngIf="exchangeMinError">
@@ -347,9 +346,9 @@
                                     <label class="input-form-label">Have Promo Code</label>
                                     <div class="input-form-radio-box">
                                         <div class="radio-toolbar">
-                                            <input id="claims_Yes" type="radio" name="HavePromoCode" [disabled]="endorsementSection" (change)="onPromoYNChange()" [(ngModel)]="HavePromoCode" value="Y">
+                                            <input id="claims_Yes" type="radio" name="HavePromoCode" [disabled]="(endorsementSection) || checkDisableField()" (change)="onPromoYNChange()" [(ngModel)]="HavePromoCode" value="Y">
                                             <label for="claims_Yes" class="yes">Yes</label>
-                                            <input id="claims_No" type="radio" name="HavePromoCode" [disabled]="endorsementSection" (change)="onPromoYNChange()" [(ngModel)]="HavePromoCode" value="N">
+                                            <input id="claims_No" type="radio" name="HavePromoCode" [disabled]="(endorsementSection) || checkDisableField()" (change)="onPromoYNChange()" [(ngModel)]="HavePromoCode" value="N">
                                             <label for="claims_No" class="no">No</label>
                                         </div>
                                     </div>

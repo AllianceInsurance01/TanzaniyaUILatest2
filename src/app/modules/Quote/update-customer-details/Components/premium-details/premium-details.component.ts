@@ -66,6 +66,7 @@ export class PremiumDetailsComponent implements OnInit {
   address1: any;
   address2: any;
   preferredNotification: any;
+  individualDocumentList: any;
   constructor(private sharedService: SharedService,
     private router:Router,public dialogService: MatDialog,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe) {
@@ -130,9 +131,10 @@ export class PremiumDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCommonDocTypeList();
-
+    this.getUploadedDocList(null,-1);
     if(this.quoteRefNo){
       this.getEditQuoteDetails();
+      this.getLocationWiseList();
     }
     
     // let chassisNo = sessionStorage.getItem('vehChassisNo');
@@ -220,7 +222,6 @@ export class PremiumDetailsComponent implements OnInit {
   let urlLink = `${this.CommonApiUrl}dropdown/policyholdergender`;
   this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
     (data: any) => {
-    console.log(data);
     if(data.Result){
         this.genderList = data.Result;
         this.getOccupationList();
@@ -317,12 +318,11 @@ export class PremiumDetailsComponent implements OnInit {
   }
   getCommonDocTypeList(){
     let ReqObj = {
-      "ProductId": this.productId,
-      "SectionId":"99999",
-      "DocumentType": "1",
-      "InsuranceId": this.insuranceId
+      "InsuranceId": this.insuranceId,
+      "ProductId":this.productId,
+      "SectionId":"99999"
     }
-    let urlLink = `${this.ApiUrl1}master/dropdown/coverdocument`;
+    let urlLink = `${this.CommonApiUrl}document/dropdown/doctypes`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         if(data.Result){
@@ -331,7 +331,7 @@ export class PremiumDetailsComponent implements OnInit {
           //    {"Code":"1","CodeDesc":"License"},
           //    {"Code":"2","CodeDesc":"Aadhar Card"}
           //  ];
-           this.getUploadedDocList(null,-1);
+           
         }
       },
       (err) => { },
@@ -371,35 +371,38 @@ export class PremiumDetailsComponent implements OnInit {
             this.Riskdetails = data?.Result?.RiskDetails
           for (let cover of this.Riskdetails) {
             let j = 0;
-            for (let section of cover?.SectionDetails) {
-              let CoverData = section.Covers;
-              for (let subsectioncover of section?.Covers) {
-                console.log("subsectioncover", subsectioncover);
-                if (cover?.totalPremium) {
-                  cover['totalLcPremium'] = cover['totalLcPremium'] + subsectioncover?.PremiumIncludedTaxLC;
-                  cover['totalPremium'] = cover['totalPremium'] + subsectioncover?.PremiumIncludedTax;
-                }
-                else {
-                  cover['totalLcPremium'] = subsectioncover?.PremiumIncludedTaxLC;
-                  cover['totalPremium'] = subsectioncover?.PremiumIncludedTax;
-
-                }
-                let baseCovers = [], otherCovers = [];
-                baseCovers = CoverData.filter(ele => ele.CoverageType == 'B');
-                otherCovers = CoverData.filter(ele => ele.CoverageType != 'B');
-                section.Covers = baseCovers.concat(otherCovers);
-                console.log("otherCovers", CoverData);
-                this.CoverList.push(cover);
-                console.log("CoverList", this.CoverList);
-                if (j == cover?.SectionDetails) {
+            if(cover?.SectionDetails){
+              for (let section of cover?.SectionDetails) {
+                let CoverData = section.Covers;
+                for (let subsectioncover of section?.Covers) {
+                  console.log("subsectioncover", subsectioncover);
+                  if (cover?.totalPremium) {
+                    cover['totalLcPremium'] = cover['totalLcPremium'] + subsectioncover?.PremiumIncludedTaxLC;
+                    cover['totalPremium'] = cover['totalPremium'] + subsectioncover?.PremiumIncludedTax;
+                  }
+                  else {
+                    cover['totalLcPremium'] = subsectioncover?.PremiumIncludedTaxLC;
+                    cover['totalPremium'] = subsectioncover?.PremiumIncludedTax;
+  
+                  }
+                  let baseCovers = [], otherCovers = [];
+                  baseCovers = CoverData.filter(ele => ele.CoverageType == 'B');
+                  otherCovers = CoverData.filter(ele => ele.CoverageType != 'B');
+                  section.Covers = baseCovers.concat(otherCovers);
+                  console.log("otherCovers", CoverData);
                   this.CoverList.push(cover);
-                  console.log("vehicleList", this.CoverList);
+                  console.log("CoverList", this.CoverList);
+                  if (j == cover?.SectionDetails) {
+                    this.CoverList.push(cover);
+                    console.log("vehicleList", this.CoverList);
+                  }
+                  else j += 1;
                 }
-                else j += 1;
+  
+              
               }
-
-            
             }
+            
           }
             let quoteDetails = data?.Result?.QuoteDetails;
             this.quoteDetails = data?.Result?.QuoteDetails;
@@ -455,7 +458,7 @@ export class PremiumDetailsComponent implements OnInit {
                 i+=1;
                 if(i==vehicles.length){
                   console.log("Final License List",this.LicenseList)
-                  this.setVehicleList();
+                  //this.setVehicleList();
                  
                 }
 
@@ -511,10 +514,26 @@ export class PremiumDetailsComponent implements OnInit {
 
             }
           }
+          console.log("Final Total Premium",this.totalPremium);
       },
       (err) => { },
     );
 
+  }
+  getLocationWiseList(){
+      let ReqObj = {
+          "QuoteNo": this.quoteNo,
+          "InsuranceId": this.insuranceId
+      }
+      let urlLink = `${this.CommonApiUrl}document/getlocationwisesrisk`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+            if(data?.Result){
+                    this.individualDocumentList = data?.Result?.InduvidualDocuments;
+            }
+          },
+          (err) => { },
+        );
   }
   onLicenseChange(rowData){
     console.log("Driver Details",rowData)
@@ -542,18 +561,44 @@ export class PremiumDetailsComponent implements OnInit {
 
     }
   }
-  onChangeSectionType(rowData){
-    if(rowData.Id!=''){
-      let entry:any;
-        rowData.DocTypeId = '';
-        if(this.productId=='4') entry = this.vehicleList.find(ele=>ele.TravelId==rowData.Id);
-        else  entry = this.vehicleList.find(ele=>ele.RiskId==rowData.Id);
-        if(entry){
-          console.log("Entryyyyyyyyyy",entry)
-          rowData.docTypeList = entry.docTypeList;
-          rowData['SectionId'] = entry.SectionId;
-        }
+  onChangeLocationType(rowData,index){
+    let entry = this.individualDocumentList.find(ele=>ele.LocationId==rowData.locationId);
+    if(entry){
+      rowData['sectionList'] = entry.SectionList;
     }
+  }
+  onChangeSectionType(rowData,index){
+    let entry = this.individualDocumentList.find(ele=>ele.LocationId==rowData.locationId);
+    if(entry){
+      let section = entry.SectionList.find(ele=>ele.SectionId==rowData.sectionId);
+      if(section){
+        rowData.Id = "";
+        rowData['typeList'] = section.IdList;
+        if(section.docTypeList==undefined){
+          let ReqObj = {
+            "InsuranceId":this.insuranceId,
+            "ProductId": this.productId,
+            "SectionId": rowData.sectionId
+          }
+          let urlLink = `${this.CommonApiUrl}document/dropdown/doctypes`;
+          this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+            (data: any) => {
+              console.log(data);
+              if(data.Result){
+                console.log("Upload Data",this.uploadListDoc[index])
+                    this.uploadListDoc[index].docTypeList = data.Result;
+                    section['docTypeList'] = data.Result;
+              }
+            },
+            (err) => { },
+          );
+        }
+        else rowData['docTypeList'] = section.docTypeList;
+      }
+    }
+  }
+  onChangeIdType(rowData){
+    
   }
   getDocTypeList(rowData,index){
     console.log("Row Data",rowData)
@@ -575,39 +620,15 @@ export class PremiumDetailsComponent implements OnInit {
     );
   }
   getUploadedDocList(vehicleData:any,index:any){
-    let docType="",i=0;
-    if(index==null){ docType="2";}
-    else{  docType = "1";index="0" }
-
     let ReqObj = {
-      "DocumentType": docType,
-      "Id": index,
-      "InsCompanyId": this.insuranceId,
       "QuoteNo":  this.quoteNo
     }
-    let urlLink = `${this.ApiUrl1}document/getdoclist`;
+    let urlLink = `${this.CommonApiUrl}document/getdoclist`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
           if(data?.Result){
-            if(index!=null){
-              this.uploadedDocList = data.Result;
-            }
-            else{
-              let documents:any[]=data.Result;
-              this.uploadedIndividualList =[];
-              if(documents.length!=0){
-                for(let doc of documents){
-                  let entry:any;
-                    if(this.productId=='4') entry = this.vehicleList.find(ele=>ele.TravelId==doc.Id);
-                    else entry = this.vehicleList.find(ele=>ele.RiskId==doc.Id);
-                    if(entry){
-                      doc.docTypeList = entry.docTypeList;
-                      doc['SectionId'] = entry.SectionId;
-                      this.uploadedIndividualList.push(doc);
-                    }
-                }
-              }
-            }
+            this.uploadedDocList = data?.Result?.CommmonDocument;
+            this.uploadedIndividualList = data?.Result?.InduvidualDocument;
           }
         },
         (err) => { },
@@ -616,12 +637,11 @@ export class PremiumDetailsComponent implements OnInit {
 onDeleteListDocument(vehIndex,rowData){
   let entry = this.vehicleList[vehIndex];
   let ReqObj = {
-    "DocumentId": rowData.DocumentId,
-    "DocumentReferenceNo": rowData.DocumentReferenceNo,
-    "Id": rowData.Id,
-    "QuoteNo": this.quoteNo
+      "Id": rowData.Id,
+      "QuoteNo": this.quoteNo,
+      "UniqueId": rowData.UniqueId
   }
-  let urlLink = `${this.ApiUrl1}document/delete`;
+  let urlLink = `${this.CommonApiUrl}document/delete`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
           if(data.ErrorMessage.length!=0){
@@ -710,7 +730,12 @@ toggle(index: number) {
         reader.onload = (res: { target: { result: any; }; }) => {
           imageUrl = res.target.result;
           this.imageUrl = imageUrl;
-          this.uploadListDoc.push({ 'url': element,'DocTypeId':'','Id':'','docTypeList':[],'filename':element.name, 'JsonString': {} })
+          let entry = { 'url': element,'DocTypeId':'','Id':'','typeList':[],'sectionList':[],'sectionId':'','locationId':'','locationList':this.individualDocumentList,'docTypeList':[],'filename':element.name, 'JsonString': {} }
+          if(this.individualDocumentList.length==1){
+            entry.locationId = this.individualDocumentList[0].LocationId;
+            entry.sectionList = this.individualDocumentList[0].SectionList;
+          }
+          this.uploadListDoc.push(entry)
             //this.vehicleList[i].docList.push({ 'url': element,'DocTypeId':'','filename':element.name, 'JsonString': {} });
           
         }
@@ -724,17 +749,19 @@ toggle(index: number) {
       let i=0;
       for(let doc of docList){
         let ReqObj={
-          "RequestReferenceNo": this.quoteRefNo,
-          "InsuranceId": this.insuranceId,
-          "DocumentId": doc.DocTypeId,
-          "ProductId": this.productId,
-          "SectionId": "99999",
-          "DocumentReferenceNo":"",
-          "FileName": doc.filename,
-          "OriginalFileName": doc.filename,
-          "CreatedBy":this.loginId,
           "QuoteNo":this.quoteNo,
-          "Id": "0"
+          "Id":"99999",
+          "IdType":"Common" ,
+          "SectionId":"99999" ,
+          "InsuranceId": this.insuranceId,
+          "DocumentId":doc.DocTypeId,
+          "RiskId":"99999",
+          "LocationId":"99999",
+          "LocationName":"Common" ,
+          "ProductId":this.productId,
+          "FileName":doc.filename,
+          "OriginalFileName":doc.filename,
+          "UploadedBy":this.loginId
         }
         if(this.endorsementSection && this.enableDocumentDetails){
           ReqObj['EndtStatus'] = this.quoteDetails?.EndtStatus;
@@ -745,7 +772,7 @@ toggle(index: number) {
           ReqObj['EndtPrevPolicyNo'] = this.quoteDetails?.Endtprevpolicyno;
           ReqObj['EndtPrevQuoteNo'] = this.quoteDetails?.Endtprevquoteno;
         }
-        let urlLink = `${this.ApiUrl1}document/upload`;
+        let urlLink = `${this.CommonApiUrl}document/upload`;
         this.sharedService.onPostDocumentMethodSync(urlLink, ReqObj,doc.url).subscribe(
           (data: any) => {
             if(data.ErrorMessage){
@@ -785,19 +812,40 @@ toggle(index: number) {
         let i=0;
         for(let doc of docList){
           console.log("Document",doc)
-          let ReqObj={
-            "RequestReferenceNo": this.quoteRefNo,
-            "InsuranceId": this.insuranceId,
-            "DocumentId": doc.DocTypeId,
-            "ProductId": this.productId,
-            "SectionId": doc?.SectionId,
-            "DocumentReferenceNo":"",
-            "FileName": doc.filename,
-            "OriginalFileName": doc.filename,
-            "CreatedBy":this.loginId,
+          let IdType=null,locationName=null,RiskId=null;
+          let locations = doc.locationList.find(ele=>ele.LocationId==doc.locationId);
+          if(locations) locationName = locations.LocationName;
+          let entry = doc.typeList.find(ele=>ele.Id==doc.Id);
+          if(entry){IdType = entry.IdType;RiskId=entry.RiskId}
+          let ReqObj = {
             "QuoteNo":this.quoteNo,
-            "Id": doc.Id
+            "Id":doc.Id,
+            "IdType":IdType,
+            "SectionId":doc.sectionId,
+            "InsuranceId":this.insuranceId,
+            "DocumentId":doc.DocTypeId,
+            "RiskId":RiskId,
+            "LocationId": doc.locationId,
+            "LocationName": locationName,
+            "ProductId": this.productId,
+            "FileName": doc.filename,
+            "OriginalFileName":doc.filename,
+            "UploadedBy": this.loginId
+            
           }
+          // let ReqObj={
+          //   "RequestReferenceNo": this.quoteRefNo,
+          //   "InsuranceId": this.insuranceId,
+          //   "DocumentId": doc.DocTypeId,
+          //   "ProductId": this.productId,
+          //   "SectionId": doc?.SectionId,
+          //   "DocumentReferenceNo":"",
+          //   "FileName": doc.filename,
+          //   "OriginalFileName": doc.filename,
+          //   "CreatedBy":this.loginId,
+          //   "QuoteNo":this.quoteNo,
+          //   "Id": doc.Id
+          // }
           if(this.endorsementSection && this.enableDocumentDetails){
             ReqObj['EndtStatus'] = this.quoteDetails?.EndtStatus;
             ReqObj['EndorsementTypeDesc'] = this.quoteDetails?.EndtTypeDesc;
@@ -807,7 +855,7 @@ toggle(index: number) {
             ReqObj['EndtPrevPolicyNo'] = this.quoteDetails?.Endtprevpolicyno;
             ReqObj['EndtPrevQuoteNo'] = this.quoteDetails?.Endtprevquoteno;
           }
-          let urlLink = `${this.ApiUrl1}document/upload`;
+          let urlLink = `${this.CommonApiUrl}document/upload`;
           this.sharedService.onPostDocumentMethodSync(urlLink, ReqObj,doc.url).subscribe(
             (data: any) => {
               if(data.ErrorMessage){
@@ -834,12 +882,11 @@ toggle(index: number) {
   {
     let entry = this.uploadedDocList[index];
     let ReqObj = {
-        "DocumentId": entry.DocumentId,
-        "DocumentReferenceNo": entry.DocumentReferenceNo,
-        "Id": "0",
-        "QuoteNo": this.quoteNo
+      "Id": entry.Id,
+      "QuoteNo": this.quoteNo,
+      "UniqueId": entry.UniqueId
   }
-  let urlLink = `${this.ApiUrl1}document/getcompressedimage`;
+  let urlLink = `${this.CommonApiUrl}document/getcompressedimage`;
   this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
     (data:any) => {
       console.log(data);
@@ -880,12 +927,11 @@ toggle(index: number) {
   onViewListDocument(index,doc)
   {
     let ReqObj = {
-        "DocumentId": doc.DocumentId,
-        "DocumentReferenceNo": doc.DocumentReferenceNo,
-        "Id": doc.Id,
-        "QuoteNo": this.quoteNo
+      "Id": doc.Id,
+      "QuoteNo": this.quoteNo,
+      "UniqueId": doc.UniqueId
     }
-  let urlLink = `${this.ApiUrl1}document/getcompressedimage`;
+  let urlLink = `${this.CommonApiUrl}document/getcompressedimage`;
   this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
     (data:any) => {
       console.log(data);
@@ -1014,6 +1060,7 @@ toggle(index: number) {
   }
   saveCustomerDetails(){
     let appointmentDate = "";
+    let cityName = null,stateName = null;
     if(this.appointmentDate!='' && this.appointmentDate!=null && this.appointmentDate!=undefined){
       if(String(this.appointmentDate).split('-').length>1){
         let entry = this.appointmentDate.split('-')
@@ -1034,6 +1081,7 @@ toggle(index: number) {
           "Address2": this.address2,
           "BusinessType": this.customerDetails?.BusinessType,
           "CityName":this.customerDetails?.CityName,
+          "CityCode": this.customerDetails?.CityCode,
           "ClientName": this.clientName,
           "Clientstatus": this.customerDetails?.Clientstatus,
           "CreatedBy": this.loginId,
@@ -1065,6 +1113,7 @@ toggle(index: number) {
           "WhatsappDesc":"1",
           "WhatsappNo": this.mobileNo,
           "StateCode":  this.customerDetails?.StateCode,
+          "StateName":  this.customerDetails?.StateName,
           "Status": this.customerDetails?.Clientstatus,
           "Street": this.customerDetails?.Street,
           "TaxExemptedId": this.customerDetails?.TaxExemptedId,
@@ -1151,19 +1200,18 @@ toggle(index: number) {
   onCommonDocumentDownload(index){
     let entry = this.uploadedDocList[index];
     let ReqObj = {
-      "DocumentId": entry.DocumentId,
-      "DocumentReferenceNo": entry.DocumentReferenceNo,
-      "Id": "0",
-      "QuoteNo": this.quoteNo
+      "Id": entry.Id,
+      "QuoteNo": this.quoteNo,
+      "UniqueId": entry.UniqueId
     }
-    let urlLink = `${this.ApiUrl1}document/getoriginalimage`;
+    let urlLink = `${this.CommonApiUrl}document/getoriginalimage`;
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         console.log(data);
         const link = document.createElement('a');
         link.setAttribute('target', '_blank');
         link.setAttribute('href', data?.Result?.ImgUrl);
-        link.setAttribute('download', data?.Result?.OrginalFileName);
+        link.setAttribute('download', data?.Result?.OriginalFileName);
         document.body.appendChild(link);
         link.click();
         link.remove();
@@ -1173,19 +1221,18 @@ toggle(index: number) {
   }
   onListDocumentDownload(vehicleIndex,doc){
     let ReqObj = {
-      "DocumentId": doc.DocumentId,
-      "DocumentReferenceNo": doc.DocumentReferenceNo,
-      "Id": String(vehicleIndex+1),
-      "QuoteNo": this.quoteNo
+      "Id": doc.Id,
+      "QuoteNo": this.quoteNo,
+      "UniqueId": doc.UniqueId
     }
-    let urlLink = `${this.ApiUrl1}document/getoriginalimage`;
+    let urlLink = `${this.CommonApiUrl}document/getoriginalimage`;
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         console.log(data);
         const link = document.createElement('a');
         link.setAttribute('target', '_blank');
         link.setAttribute('href', data?.Result?.ImgUrl);
-        link.setAttribute('download', data?.Result?.OrginalFileName);
+        link.setAttribute('download', data?.Result?.OriginalFileName);
         document.body.appendChild(link);
         link.click();
         link.remove();
@@ -1219,12 +1266,11 @@ toggle(index: number) {
   }
   onDeleteCommonDocument(index){
     let ReqObj = {
-      "DocumentId": this.uploadedDocList[index].DocumentId,
-      "DocumentReferenceNo": this.uploadedDocList[index].DocumentReferenceNo,
-      "Id": "0",
-      "QuoteNo": this.quoteNo
+      "Id": this.uploadedDocList[index].Id,
+      "QuoteNo": this.quoteNo,
+      "UniqueId": this.uploadedDocList[index].UniqueId
     }
-    let urlLink = `${this.ApiUrl1}document/delete`;
+    let urlLink = `${this.CommonApiUrl}document/delete`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
             if(data.ErrorMessage.length!=0){
@@ -1268,7 +1314,7 @@ toggle(index: number) {
           this.uploadDocList.splice(index,1);
   }
   onDeleteSelectedListDocument(rowData,docIndex){
-       rowData.docList.splice(docIndex,1);
+       this.uploadListDoc.splice(docIndex,1);
 
   }
 }

@@ -197,13 +197,22 @@
                         </div>
                         <div class="col-md-4 col-lg-4 col-xl-4">
                             <div class="input-control-container">
+                                <label class="input-form-label">Street</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" maxlength="100" (keypress)="omit_special_char($event)" class="input-form-control without-icon"  [(ngModel)]="productItem.Street">
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="input-control-container">
                                 <label class="input-form-label">Country</label><span class="text-danger">*</span>
                                 <ng-select class="input-form-select" appendTo="body" [items]="countryList" (change)="getRegionList('change')" [(ngModel)]="productItem.Country" bindValue="Code" bindLabel="CodeDesc">
                                 </ng-select>
                             </div>
                         </div>
-                    </div>
-                    <div class="row mt-2">
                         <div class="col-md-4 col-lg-4 col-xl-4">
                             <div class="input-control-container">
                                 <label class="input-form-label">Region</label><span class="text-danger">*</span>

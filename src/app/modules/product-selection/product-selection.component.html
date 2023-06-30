@@ -199,64 +199,39 @@
     Select Product
   </div>
 </div>-->
-<div class="maan-grid-item p-1">
-    <div class="product-main">
-        <div class="product-card p-1">
-            <div class="text-center mt-1">
-                <h5 class="text-primary"><b><u>PRODUCTS</u></b></h5><br>
-                <h5 class="text-primary">All In One Place</h5>
-            </div>
-            <div class="product-item ml-2" *ngFor="let item of productList">
+<div class="prductBg">
+    <div class="AllinProductBox ml-5 mr-5">
+        <div class="Choose-Product-Box col-sm-12 col-xs-12 padd0 bwT">
+            <span class="heading">SELECT THE PRODUCT YOU WISH TO BUY
+            </span>
+            
+        </div>
+        <div class="row p-3" >
+            <div class="box-1padd0 InsuranceType AllTabShow col-sm-2 col-xs-4" *ngFor="let item of productList">
                 <div (click)="onSelectProduct(item)">
-                    <div style="display: flex;justify-content: center;" >
-                        <div class="dot p-2" >
-                            <img src="./assets/images/health.png" *ngIf="item.ProductId=='3'" width="70" height="70">
-                            <img src="./assets/images/car5.png" *ngIf="item.ProductId=='5'" width="70" height="70">
-                            <img src="./assets/images/family1.jpg" *ngIf="item.ProductId=='4'" width="70" height="70">
-                            <img src="./assets/images/employers.png" *ngIf="item.ProductId=='14'" width="70" height="70">
-                            <img src="./assets/images/personal1.png" *ngIf="item.ProductId=='13'" width="70" height="70">
-                            <img src="./assets/images/workmens.png.crdownload" *ngIf="item.ProductId=='15'" width="70" height="70">
-                            <img src="./assets/images/All-risk.png" *ngIf="item.ProductId=='2'" width="70" height="70">
-                            <img src="./assets/images/sme1.png" *ngIf="item.ProductId=='19'" width="70" height="70">
-                            <img src="./assets/images/fidelity.png" *ngIf="item.ProductId=='32'" width="70" height="80">
-                            <img src="./assets/images/Burglary.png" *ngIf="item.ProductId=='1'" width="70" height="80">
-                            <img src="./assets/images/fireAllied.png" *ngIf="item.ProductId=='6'" width="70" height="80">
-                            <img src="./assets/images/machinery.png" *ngIf="item.ProductId=='39'" width="70" height="80">
-                            <img src="./assets/images/moneyInsurance.png" *ngIf="item.ProductId=='16'" width="70" height="80">
-                        </div>
+                    <div class="topIco">
+                        <div class="InsuranceIcon InsuranceIcon1 domesticIcon" *ngIf="item.ProductId=='3'"></div>
+                        <div class="InsuranceIcon InsuranceIcon1 motorIcon" *ngIf="item.ProductId=='5'"></div>
+                        <div class="InsuranceIcon InsuranceIcon1 fireAlliedIcon" *ngIf="item.ProductId=='6'"></div>
+                        <div class="InsuranceIcon InsuranceIcon1 travelIcon" *ngIf="item.ProductId=='4'"></div>
+                        <div class="InsuranceIcon InsuranceIcon1 burglaryIcon" *ngIf="item.ProductId=='1'"></div>
+                        <div class="InsuranceIcon InsuranceIcon1 employersIcon" *ngIf="item.ProductId=='14'"></div>
+                        <div class="InsuranceIcon InsuranceIcon1 personalIcon" *ngIf="item.ProductId=='13'"></div>
+                        <div class="InsuranceIcon InsuranceIcon1 workmenIcon" *ngIf="item.ProductId=='15'"></div>
+                        <div class="InsuranceIcon InsuranceIcon1 allRiskIcon" *ngIf="item.ProductId=='2'"></div>
+                        <div class="InsuranceIcon InsuranceIcon1 smeIcon" *ngIf="item.ProductId=='19'"></div>
+                        <div class="InsuranceIcon InsuranceIcon1 fidelityIcon" *ngIf="item.ProductId=='32'"></div>
+                        <div class="InsuranceIcon InsuranceIcon1 machineryIcon" *ngIf="item.ProductId=='39'"></div>
+                        <div class="InsuranceIcon InsuranceIcon1 moneyInsuranceIcon" *ngIf="item.ProductId=='16'"></div>
                     </div>
-                    
-                    <div class="text-center p-0" style="background-color: #73747e;border-radius: 10px;height: 2rem;position: relative;top: 0.7rem;">
-                        
-                        <h5 style="color: #fff;white-space: nowrap !important;position: relative;top: 0.4rem;font-size: .9rem;padding: unset;">{{item?.ProductName}}</h5>
-                    </div>
+                    <div class="InsuranceName">{{item?.ProductName}}</div>
                 </div>
                 
             </div>
-            <!-- <div style="padding:1rem;" class="Product_image">
-                <div class=" ml-2">
-                    <div class="row p-3">
-                        <div class="productSection he2 m-1" *ngFor="let item of productList">
-                            <div class="p-2" (click)="onSelectProduct(item)">
-                                <img src="./assets/images/health.png" *ngIf="item.ProductId=='3'" width="150" height="100">
-                                <img src="./assets/images/car5.png" *ngIf="item.ProductId=='5'" width="150" height="100">
-                                <img src="./assets/images/family1.jpg" *ngIf="item.ProductId=='4'" width="150" height="100">
-                                <img src="./assets/images/employers.png" *ngIf="item.ProductId=='14'" width="150" height="100">
-                                <img src="./assets/images/personal1.png" *ngIf="item.ProductId=='13'" width="150" height="100">
-                                <img src="./assets/images/workmens.png.crdownload" *ngIf="item.ProductId=='15'" width="130" height="100">
-                                <img src="./assets/images/All-risk.png" *ngIf="item.ProductId=='2'" width="150" height="100">
-                                <img src="./assets/images/sme1.png" *ngIf="item.ProductId=='19'" width="150" height="100">
-                                <h5 style="color:black;">{{item?.ProductName}}</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-        </div>
+        </div> 
     </div>
-    
-    
 </div>
+
 <!-- <div class="AllinProductBox">
     <div class="Choose-Product-Box col-sm-12 col-xs-12 padd0 bwT"><span class="heading">SELECT THE PRODUCT YOU WISH TO BUY
         </span>

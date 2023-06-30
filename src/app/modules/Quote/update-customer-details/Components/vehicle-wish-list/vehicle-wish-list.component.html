@@ -21,9 +21,9 @@
                         <i class="fas fa-car mx-1"></i>
                     </span> <span class="spancommon">Vehicle to Insure</span>
                 </div>
-                <div *ngIf="!searchSection && statusValue!='RA' && (!endorsementSection || (endorsementSection && enableAddVehicle))">
+                <div *ngIf="!searchSection && statusValue!='RA' && (!endorsementSection || (endorsementSection && enableAddVehicle)) && !checkDisableField()">
                     <button class="maan-btn maan-btn-blue maan-button-data" (click)="searchSection=!searchSection" matRipple><i class="fas fa-plus"></i>&nbsp;Add New</button>&nbsp;
-                    <!-- <button class="maan-btn maan-btn-green maan-btn-data ml-1" matRipple (click)="onEnableUploadSection()" style="white-space: nowrap;"><i class="fas fa-upload"></i>&nbsp;Upload Vehicle Details</button> -->
+                    <button class="maan-btn maan-btn-green maan-btn-data ml-1" matRipple (click)="onEnableUploadSection()" style="white-space: nowrap;"><i class="fas fa-upload"></i>&nbsp;Upload Vehicle Details</button>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
                 </div>
                 <div *ngIf="searchSection">
                     <button class="maan-btn maan-btn-blue maan-btn-data ml-1" matRipple (click)="onCreateVehicle()" style="white-space: nowrap;"><i class="fas fa-plus"></i>&nbsp;Create Vehicle Details</button>&nbsp;
-                    <!-- <button class="maan-btn maan-btn-green maan-btn-data ml-1" matRipple (click)="onEnableUploadSection()" style="white-space: nowrap;"><i class="fas fa-upload"></i>&nbsp;Upload Vehicle Details</button> -->
+                    <button class="maan-btn maan-btn-green maan-btn-data ml-1" matRipple (click)="onEnableUploadSection()" style="white-space: nowrap;"><i class="fas fa-upload"></i>&nbsp;Upload Vehicle Details</button>
                 </div>
             </div>
         </div>
@@ -138,8 +138,7 @@
                     <span class="spancommon span_font_size">Upload Vehicle </span>
                 </div>
                 <div>
-                    
-                    <!-- <button class="maan-btn maan-btn-green maan-btn-data ml-1" *ngIf="showEmpRecordsSection" matRipple (click)="onEnableUploadSection()" style="white-space: nowrap;"><i class="fas fa-upload"></i>&nbsp;Upload Vehicle Details</button> -->
+                    <button class="maan-btn maan-btn-green maan-btn-data ml-1" *ngIf="showEmpRecordsSection" matRipple (click)="onEnableUploadSection()" style="white-space: nowrap;"><i class="fas fa-upload"></i>&nbsp;Upload Vehicle Details</button>
                 </div>
             </div>
         </div>
@@ -213,7 +212,7 @@
                         </table>
                     </div>
                     <div class="text-center mt-2" *ngIf="employeeUploadRecords[0].ValidRecords!='0' && employeeUploadRecords[0].ValidRecords!=null">
-                        <button class="custom-btn btn-7 maan-button-data mx-2" (click)="updateEmployeeRecordsTable()">View Records</button>
+                        <button class="custom-btn btn-7 maan-button-data mx-2" (click)="updateEmployeeRecordsTable()">Move Records</button>
                     </div>
                     <ng-container *ngIf="errorRecords.length!=0">
                         <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">

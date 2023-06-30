@@ -86,7 +86,7 @@ export class MachineryBreakDown{
                   type: 'commaSeparator',
                   key: 'MachineEquipSi',
                   templateOptions: {
-                    label: `Elelctronic Equipment Suminsured (${this.commonDetails[0].Currency})`,
+                    label: `Electronic Equipment Suminsured (${this.commonDetails[0].Currency})`,
                     disabled: this.checkDisable('MachineEquipSi')
                   },
                   validators: {
@@ -140,7 +140,7 @@ export class MachineryBreakDown{
                   type: 'commaSeparator',
                   key: 'BoilerPlantsSi',
                   templateOptions: {
-                    label: `Boiler And Pressur Plants  Suminsured (${this.commonDetails[0].Currency})`,
+                    label: `Boiler And Pressure Plants  Suminsured (${this.commonDetails[0].Currency})`,
                     disabled: this.checkDisable('BoilerPlantsSi')
                   },
                   validators: {

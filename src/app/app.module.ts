@@ -45,6 +45,7 @@ import { BreadcrumbComponent } from './modules/breadcrumb/breadcrumb.component'
 import { NgSelectFormlyComponent } from './ngselect.type';
 import { CustomerRedirectComponent } from './modules/customer-redirect/customer-redirect.component';
 import { BranchDetailsComponent } from './modules/Admin/loginCreation/Company/branch-details/branch-details.component'
+import { FooterComponent } from './layout/components/footer/footer.component'
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { BranchDetailsComponent } from './modules/Admin/loginCreation/Company/br
 		AppComponent,
 		NavbarComponent,
 		HeaderComponent,
+		FooterComponent,
 		HomeLayoutComponent,
 		BreadcrumbComponent,
 		BranchSelectionComponent,

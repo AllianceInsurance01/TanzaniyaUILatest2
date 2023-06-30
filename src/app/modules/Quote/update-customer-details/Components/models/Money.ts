@@ -31,7 +31,7 @@ export class Money{
                   type: 'commaSeparator',
                   key: 'MoneyInSafeBusiness',
                   templateOptions: {
-                    label: `Money In Safe During Working Hours (${this.commonDetails[0].Currency})`,
+                    label: `Safe During Working Hours (${this.commonDetails[0].Currency})`,
                     disabled: this.checkDisable('MoneyInSafeBusiness')
                   },
                   validators: {
@@ -49,7 +49,7 @@ export class Money{
                   type: 'commaSeparator',
                   key: 'MoneyOutSafeBusiness',
                   templateOptions: {
-                    label: `Money In Safe Outside Working Hours (${this.commonDetails[0].Currency})`,
+                    label: `Safe Outside Working Hours (${this.commonDetails[0].Currency})`,
                     disabled: this.checkDisable('MoneyOutSafeBusiness')
                   },
                   validators: {
@@ -67,7 +67,7 @@ export class Money{
                   type: 'commaSeparator',
                   key: 'MoneyInPremises',
                   templateOptions: {
-                    label: `Money In Residence Of Director And Partner (${this.commonDetails[0].Currency})`,
+                    label: `Residence Of Director And Partner (${this.commonDetails[0].Currency})`,
                     disabled: this.checkDisable('MoneyInPremises')
                   },
                   validators: {
@@ -85,7 +85,7 @@ export class Money{
                   type: 'commaSeparator',
                   key: 'CashInTransit',
                   templateOptions: {
-                    label: `Cash In Transit Limit (${this.commonDetails[0].Currency})`,
+                    label: `Cash in Transit Limit (${this.commonDetails[0].Currency})`,
                     disabled: this.checkDisable('CashInTransit')
                   },
                   validators: {
@@ -103,7 +103,7 @@ export class Money{
                   type: 'commaSeparator',
                   key: 'CashInHandEmployees',
                   templateOptions: {
-                    label: `Money in Custody Of Collectors (${this.commonDetails[0].Currency})`,
+                    label: `Custody Of Collectors (${this.commonDetails[0].Currency})`,
                     disabled: this.checkDisable('CashInHandEmployees')
                   },
                   validators: {
@@ -121,7 +121,7 @@ export class Money{
                   type: 'commaSeparator',
                   key: 'CashInSafe',
                   templateOptions: {
-                    label: `Money - Value Of Safe (${this.commonDetails[0].Currency})`,
+                    label: `Value Of Safe (${this.commonDetails[0].Currency})`,
                     disabled: this.checkDisable('CashInSafe')
                   },
                   validators: {

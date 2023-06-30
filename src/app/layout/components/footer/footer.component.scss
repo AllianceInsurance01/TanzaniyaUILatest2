@@ -1,0 +1,31 @@
+.footer {
+  height: 50px;
+  background: #42A5F5;
+  color: white;
+}
+.copyright-area{
+    background: #373a54!important;
+    padding: 10px 0;
+    width: 100% !important;
+    left: 0;
+    bottom: 0;
+  }
+  .copyright-text p {
+    margin: 0;
+    font-size: 14px;
+    color: #f3d4d4;
+  }
+  .copyright-text p a{
+    color: #ff5e14;
+  }
+  .footer-menu li {
+    display: inline-block;
+    margin-left: 20px;
+  }
+  .footer-menu li:hover a{
+    color: #ff5e14;
+  }
+  .footer-menu li a {
+    font-size: 14px;
+    color: #878787;
+  }

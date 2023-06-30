@@ -24,6 +24,7 @@ export class EmployersLiability{
           {
             key: 'employeeList',
             type: 'repeat',
+            
             templateOptions: {
               addText: 'Add Employee',
             },
@@ -58,7 +59,7 @@ export class EmployersLiability{
                       type: 'number',
                       key: 'TotalNoOfEmployees',
                       templateOptions: {
-                        label: 'Empolyees Count',
+                        label: 'Employee Count',
                         required: true,
                       },
                       validators: {

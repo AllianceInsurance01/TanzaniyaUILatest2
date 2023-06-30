@@ -17,14 +17,14 @@ import { Router, ActivatedRoute } from '@angular/router'
           <button matStepperNext *ngIf="!last" class="maan-btn btn-primary maan-button-data" type="button" (click)="onSkipForm(step);onCheckProceed(last)">
           Skip
         </button>&nbsp;
-        <button matStepperNext *ngIf="field.fieldGroup.length!=1 && last" class="maan-btn maan-button-data btn-primary spancommon" type="submit" >
+        <button matStepperNext *ngIf="field.fieldGroup.length!=1 && last  && productId!='19'" class="maan-btn maan-button-data btn-primary spancommon" type="submit" >
           Skip & Proceed
         </button>&nbsp;
           <button matStepperNext *ngIf="!last" class="maan-btn btn-primary maan-button-data" type="button" (click)="onCheckProceed(index)">
             Next
           </button>
 
-          <button *ngIf="last" class="maan-btn btn-primary maan-button-data" [disabled]="!isValid(step)" type="submit">Submit</button>
+          <button *ngIf="last && productId!='19'" class="maan-btn btn-primary maan-button-data" [disabled]="!isValid(step)" type="submit">Submit</button>
         </div>
       </mat-step>
     </mat-vertical-stepper>
@@ -36,7 +36,7 @@ import { Router, ActivatedRoute } from '@angular/router'
 })
 export class FormlyFieldStepper extends FieldType {
   enableProceed: boolean = true;;
- 
+  productId:any = JSON.parse(sessionStorage.getItem('Userdetails')).Result.ProductId;
   isValid(field: FormlyFieldConfig): boolean {
     
     if (field.key) {

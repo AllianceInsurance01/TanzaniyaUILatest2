@@ -58,7 +58,7 @@ export class Fidelity{
                       type: 'number',
                       key: 'FidEmpCount',
                       templateOptions: {
-                        label: 'Empolyees Count',
+                        label: 'Employee Count',
                         required: true,
                       },
                       validators: {
