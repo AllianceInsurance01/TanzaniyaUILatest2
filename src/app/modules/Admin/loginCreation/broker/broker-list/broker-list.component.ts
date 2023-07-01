@@ -19,10 +19,11 @@ export class BrokerListComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   companyList: any;loginId:any;
-  insuranceId: any;
+  insuranceId: any;channelId:any=null;
   productId: string;
   userDetails: any;
   subUserType: string;
+  channelList: any[]=[];
   constructor(private router:Router,public dialogService: MatDialog,
    private sharedService:SharedService) {
     this.productId =  sessionStorage.getItem('companyProductId');
@@ -31,11 +32,14 @@ export class BrokerListComponent implements OnInit {
     this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
     this.loginId = user.LoginId;
     this.subUserType = sessionStorage.getItem('typeValue');
-
-    this.getCompanyList()
+    let channelId =  sessionStorage.getItem('brokerChannelId');
+    if(channelId) this.channelId = channelId;
+    this.getCompanyList();
+    this.geChannelList();
   }
 
   ngOnInit(): void {
+    if(this.insuranceId && this.channelId){ this.getBrokerList(); }
     this.brokerHeader = [
       { key: 'BrokerName', display: 'Broker Name' },
       { key: 'BrokerId', display: 'Broker Code' },
@@ -58,45 +62,65 @@ export class BrokerListComponent implements OnInit {
       }
     ];
   }
-  getBrokerList(){
+  geChannelList(){
     let ReqObj = {
-    "UserType": "Broker",
-    "SubUserType":"",
-    "Limit":"0",
-    "Offset":"100",
-    "InsuranceId":this.insuranceId
+      "UserType": "Broker"
     }
-    let urlLink = `${this.CommonApiUrl}admin/getallbrokers`;
+    let urlLink = `${this.ApiUrl1}dropdown/subusertype`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
-        if(data.Result){
-          this.brokerHeader = [
-            { key: 'UserName', display: 'Broker Name' },
-            { key: 'UserMail', display: 'MailID' },
-            { key: 'UserMobile', display: 'Mobile No' },
-            { key: 'CreatedBy', display: 'Created By' },
-            { key: 'Status', display: 'Status' },
-            {
-              key: 'actions',
-              display: 'Action',
-              config: {
-                isEdit: true,
-              },
-            },
-            {
-              key: 'configure',
-              display: 'Configure',
-              config: {
-                isConfigure: true,
-              },
-            }
-          ];
-          this.brokerData = data.Result;
+        if (data.Result) {
+          this.channelList = data.Result;
         }
       },
       (err) => { },
     );
+  }
+  getBrokerList(){
+    if(this.insuranceId!=null && this.channelId!=null){
+      sessionStorage.setItem('brokerChannelId',this.channelId);
+      let ReqObj = {
+        "UserType": "Broker",
+        "SubUserType":this.channelId,
+        "Limit":"0",
+        "Offset":"1000",
+        "InsuranceId":this.insuranceId
+        }
+        let urlLink = `${this.CommonApiUrl}admin/getallbrokers`;
+        this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+          (data: any) => {
+            console.log(data);
+            if(data.Result){
+              this.brokerHeader = [
+                { key: 'UserName', display: 'Broker Name' },
+                { key: 'UserMail', display: 'MailID' },
+                { key: 'UserMobile', display: 'Mobile No' },
+                { key: 'CreatedBy', display: 'Created By' },
+                { key: 'Status', display: 'Status' },
+                {
+                  key: 'actions',
+                  display: 'Action',
+                  config: {
+                    isEdit: true,
+                  },
+                },
+                {
+                  key: 'configure',
+                  display: 'Configure',
+                  config: {
+                    isConfigure: true,
+                  },
+                }
+              ];
+              this.brokerData = data.Result;
+             
+            }
+          },
+          (err) => { },
+        );
+    }
+    
   }
   onAddNew(){
     sessionStorage.removeItem('editBroker');
@@ -134,7 +158,7 @@ export class BrokerListComponent implements OnInit {
         console.log(data);
         if(data.Result){
             this.companyList = data.Result;
-            if(this.insuranceId){ this.getBrokerList(); }
+            
         }
       },
       (err) => { },

@@ -1513,8 +1513,10 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
                   this.uploadStatus = 'Upload Failed..Please Try Again...'
                   setTimeout(() => 
                   {
-                    this.uploadDocList = [];
-                    this.uploadStatus = res?.Description;
+                    if(this.coverUploadSection){
+                      this.uploadDocList = [];
+                      this.uploadStatus = res?.Description;
+                    }
                 }, (4*1000));
                 }
                 else{

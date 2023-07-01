@@ -26,7 +26,8 @@ export class UserListComponent implements OnInit {
   subUserType:any;
   value:any;
   editSection:boolean = false;
-  brokerBranchCode: any;
+  brokerBranchCode: any;channelId:any=null;
+  channelList: any[]=[];
   constructor(private router:Router,public dialogService: MatDialog,
     private sharedService:SharedService) {
       /*let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -52,7 +53,9 @@ export class UserListComponent implements OnInit {
     else this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
     this.loginId = user.LoginId;
     this.subUserType = sessionStorage.getItem('typeValue');
-    this. getBrokersList();
+    this.getInsuranceList();
+    this.getChannelList();
+    //this. getBrokersList();
     //this. onBrokerChange();
     //this.onBrokerChange();
     //this.getBrokersList();
@@ -93,22 +96,35 @@ export class UserListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let useObj = JSON.parse(sessionStorage.getItem('userEditDetails'));
+    if(useObj) { this.brokerValue = useObj?.BrokerId; this.insuranceId = useObj?.InsuranceId;this.channelId = useObj?.channelId; this.getBrokersList('direct')}
     //this.onBrokerChange()
 
   }
-  getBrokersList(){
+  getBrokersList(type){
+    let ReqObj = {
+      "SubUserType": this.channelId,
+      "InsuranceId": this.insuranceId
+    }
     let urlLink = `${this.CommonApiUrl}admin/dropdown/brokerids`;
-    this.sharedService.onGetMethodSync(urlLink).subscribe(
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
         if(data.Result){
             this.brokerList = data?.Result;
+            if(type!='direct'){
+              this.userData = [];
+              this.brokerValue = null;
+            }
+            else{
+              this.onBrokerChange()
+            }
             /*if(this.brokerValue!=undefined && this.insuranceId!=undefined){
               let useObj = {"broker":this.brokerValue,"insuranceId":this.insuranceId};
               sessionStorage.setItem('adduserDetailsObj',JSON.stringify(useObj));
             }*/
              //this.onBrokerChange();
-            this.getInsuranceList();
+            
 
         }
       },
@@ -166,7 +182,22 @@ export class UserListComponent implements OnInit {
       );
     }
   }*/
-
+  getChannelList(){
+    let ReqObj = {
+      "UserType": "Broker"
+    }
+    let urlLink = `${this.ApiUrl1}dropdown/subusertype`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data.Result) {
+          this.channelList = data.Result;
+          
+        }
+      },
+      (err) => { },
+    );
+  }
   getInsuranceList(){
     let urlLink = `${this.ApiUrl1}master/dropdown/company`;
     let ReqObj ={
@@ -180,8 +211,7 @@ export class UserListComponent implements OnInit {
             //if(this.insuranceId) this.onBrokerChange();
             let obj = [];
             this.companyList = obj.concat(data?.Result);
-            let useObj = JSON.parse(sessionStorage.getItem('adduserDetailsObj'));
-            if(useObj) { this.brokerValue = useObj?.broker; this.insuranceId = useObj?.insuranceId; this.onBrokerChange();}
+            
 
 
         }
@@ -190,27 +220,27 @@ export class UserListComponent implements OnInit {
     );
    }
   onBrokerChange(){
-    let ReqObj = {
+    if(this.insuranceId && this.channelId && this.brokerValue){
+      let ReqObj = {
         "UserType": "User",
         "SubUserType":"",
         "InsuranceId": this.insuranceId,
         "OaCode": this.brokerValue,
         "Limit":"0",
         "Offset":"10000",
+      }
+      let urlLink = `${this.CommonApiUrl}admin/getallusers`;
+      this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+        (data: any) => {
+          this.userData = data.Result;
+          if(this.brokerValue!=undefined && this.insuranceId!=undefined){
+            let useObj = {"BrokerId":this.brokerValue,"InsuranceId":this.insuranceId,"channelId":this.channelId,"UserId": null};
+            sessionStorage.setItem('userEditDetails',JSON.stringify(useObj));
+          }
+        },
+        (err) => { },
+      );
     }
-    let urlLink = `${this.CommonApiUrl}admin/getallusers`;
-    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
-      (data: any) => {
-         this.userData = data.Result;
-         if(this.brokerValue!=undefined && this.insuranceId!=undefined){
-          let useObj = {"broker":this.brokerValue,"insuranceId":this.insuranceId};
-          sessionStorage.setItem('adduserDetailsObj',JSON.stringify(useObj));
-        }
-
-
-      },
-      (err) => { },
-    );
   }
   onAddNew(){
     if(this.brokerValue!= '' && this.brokerValue!= undefined){
@@ -219,6 +249,7 @@ export class UserListComponent implements OnInit {
         let entry = {
            "BrokerId":this.brokerValue,
            "InsuranceId": this.insuranceId,
+           "channelId":this.channelId,
            "UserId": null
         }
         sessionStorage.setItem('userEditDetails',JSON.stringify(entry));
@@ -236,6 +267,7 @@ export class UserListComponent implements OnInit {
             "BrokerId":this.brokerValue,
             "InsuranceId": this.insuranceId,
             "UserId": rowData.LoginId,
+            "channelId":this.channelId,
             "BrokerBranchCode":this.brokerBranchCode,
 
         }
@@ -257,6 +289,7 @@ onConfigure(rowData){
     "BrokerId":this.brokerValue,
     "loginId": rowData.LoginId,
     "InsuranceId": this.insuranceId,
+    "channelId":this.channelId,
     "UserId": rowData.LoginId
   }
     sessionStorage.setItem('userEditDetails',JSON.stringify(entry));

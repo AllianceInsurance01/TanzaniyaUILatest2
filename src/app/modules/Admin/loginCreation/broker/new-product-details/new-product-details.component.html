@@ -27,34 +27,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Product Description<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="100">
-                                    </div>
-                                </div>
-                            </div> -->
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Regulatory Code<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="productDetails.RegulatoryCode" maxlength="100">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="productDetails.CoreAppCode" maxlength="100">
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                        <div class="row">
                             <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Checker And MakerYN<span class="text-required">*</span></label>
@@ -68,19 +40,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--<div class="col-12 col-md-4 col-lg-4">
-                            <div class="input-control-container">
-                                <label class="input-form-label">MakerYN<span class="text-required">*</span></label>
-                                <div class="input-form-radio-box">
-                                    <div class="radio-toolbar">
-                                        <input id="maker_Yes" type="radio" name="MakerYN" [(ngModel)]="productDetails.MakerYn" value="Y">
-                                        <label for="maker_Yes">Active</label>
-                                        <input type="radio" id="maker_No" name="MakerYN" [(ngModel)]="productDetails.MakerYn" value="N">
-                                        <label for="maker_No">DeActive</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>-->
                             <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">PaymentYn<span class="text-required">*</span></label>
@@ -94,6 +53,34 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Product Description<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" class="input-form-control without-icon" maxlength="100">
+                                    </div>
+                                </div>
+                            </div> -->
+                            
+
+
+                        </div>
+                        <div class="row">
+                            
+                            <!--<div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">MakerYN<span class="text-required">*</span></label>
+                                <div class="input-form-radio-box">
+                                    <div class="radio-toolbar">
+                                        <input id="maker_Yes" type="radio" name="MakerYN" [(ngModel)]="productDetails.MakerYn" value="Y">
+                                        <label for="maker_Yes">Active</label>
+                                        <input type="radio" id="maker_No" name="MakerYN" [(ngModel)]="productDetails.MakerYn" value="N">
+                                        <label for="maker_No">DeActive</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                            
                             <div class="col-12 col-md-4 col-lg-4" *ngIf="productDetails.PaymentYn=='Y'">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Payment Redirect Url<span class="text-required">*</span></label>
@@ -102,55 +89,78 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-
-
-                            <!--<div class="col-12 col-md-4 col-lg-4">
-                            <div class="input-control-container">
-                                <label class="input-form-label">Product Icon</label>
-                                <ng-select class="input-form-select" [(ngModel)]="productDetails.ProductIconId" [items]="iconList" bindValue="Code" bindLabel="CodeDesc">
-                                </ng-select>
-                            </div>
-                        </div>-->
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Commission Vat YN<span class="text-required">*</span></label>
-                                    <div class="input-form-radio-box">
-                                        <div class="radio-toolbar">
-                                            <input id="orginwarehouse_Yes1" type="radio" name="originatingWarehouse1" [(ngModel)]="productDetails.CommissionVatYn" value="Y">
-                                            <label for="orginwarehouse_Yes1">Yes</label>
-                                            <input type="radio" id="orginwarehouse_No1" name="originatingWarehouse1" [(ngModel)]="productDetails.CommissionVatYn" value="N">
-                                            <label for="orginwarehouse_No1">No</label>
+                            
+                                <ng-container *ngIf="productDetails">
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="productDetails?.BrokerCommssionDetails.length==1">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Regulatory Code<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" class="input-form-control without-icon" [(ngModel)]="productDetails.RegulatoryCode" maxlength="100">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Commission Percent(%)<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" digitOnly class="input-form-control without-icon" [(ngModel)]="productDetails.CommissionPercent" maxlength="3">
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="productDetails?.BrokerCommssionDetails.length==1">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" class="input-form-control without-icon" [(ngModel)]="productDetails.CoreAppCode" maxlength="100">
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label"> Sum Insured Start Limit<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" digitOnly class="input-form-control without-icon" [(ngModel)]="productDetails.SumInsuredStart" (keydown)="onProductValueChange($event)" (keyup)="SIStartCommaFormatted()" maxlength="100">
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="productDetails?.BrokerCommssionDetails.length==1">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Commission Vat YN<span class="text-required">*</span></label>
+                                            <div class="input-form-radio-box">
+                                                <div class="radio-toolbar">
+                                                    <input id="orginwarehouse_Yes1" type="radio" name="originatingWarehouse1" [(ngModel)]="productDetails.CommissionVatYn" value="Y">
+                                                    <label for="orginwarehouse_Yes1">Yes</label>
+                                                    <input type="radio" id="orginwarehouse_No1" name="originatingWarehouse1" [(ngModel)]="productDetails.CommissionVatYn" value="N">
+                                                    <label for="orginwarehouse_No1">No</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Sum Insured End Limit<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" digitOnly class="input-form-control without-icon" [(ngModel)]="productDetails.SumInsuredEnd" (keydown)="onProductValueChange($event)" (keyup)="SIEndCommaFormatted()" maxlength="100">
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="productDetails.BrokerCommssionDetails.length==1 && productDetails.CommissionVatYn=='Y'">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Commission VAT Percent(%)<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" digitOnly class="input-form-control without-icon" [(ngModel)]="productDetails.CommissionVatPercent" maxlength="3">
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="productDetails.BrokerCommssionDetails.length==1">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Commission Percent(%)<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" digitOnly class="input-form-control without-icon" [(ngModel)]="productDetails.CommissionPercent" maxlength="3">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="productDetails.BrokerCommssionDetails.length==1">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"> Sum Insured Start Limit<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" digitOnly class="input-form-control without-icon" [(ngModel)]="productDetails.SumInsuredStart" (keydown)="onProductValueChange($event)" (keyup)="SIStartCommaFormatted()" maxlength="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="productDetails.BrokerCommssionDetails.length==1">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Sum Insured End Limit<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" digitOnly class="input-form-control without-icon" [(ngModel)]="productDetails.SumInsuredEnd" (keydown)="onProductValueChange($event)" (keyup)="SIEndCommaFormatted()" maxlength="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="productDetails.BrokerCommssionDetails.length==1">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Back Days<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" digitOnly class="input-form-control without-icon" [(ngModel)]="productDetails.BackDays"  maxlength="10">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
                             <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
@@ -161,24 +171,6 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Back Days<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" digitOnly class="input-form-control without-icon" [(ngModel)]="productDetails.BackDays"  maxlength="10">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- <div class="col-12 col-md-4 col-lg-4">
-                            <div class="input-control-container">
-                                <mat-form-field appearance="fill">
-                                    <mat-label>End Date</mat-label>
-                                    <input matInput [matDatepicker]="picker2" [(ngModel)]="productDetails.EffectiveDateEnd">
-                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker2></mat-datepicker>
-                                </mat-form-field>
-                            </div>
-                        </div> -->
                             <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Remarks<span class="text-required">*</span></label>
@@ -195,14 +187,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--<div class="col-12 col-md-4 col-lg-4">
-                              <div class="input-control-container">
-                                  <label class="input-form-label">Endrosement Type<span class="text-required">*</span></label>
-                                  <ng-select class="input-form-select" appendTo="body" [clearSearchOnAdd]="true" (change)="Endrosement(productDetails.EndrosementType)" [closeOnSelect]="false" [multiple]="true" [(ngModel)]="productDetails.EndrosementType" [items]="EndList" bindValue="Code" bindLabel="CodeDesc">
-                                  </ng-select>
-                              </div>
-                          </div>-->
-                            <div class="col-12 col-md-6 col-lg-6">
+                            <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Status<span class="text-required">*</span></label>
                                     <div class="input-form-radio-box">
@@ -219,6 +204,37 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
+
+
+                            <!--<div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Product Icon</label>
+                                <ng-select class="input-form-select" [(ngModel)]="productDetails.ProductIconId" [items]="iconList" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>-->
+                            
+                            <!-- <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>End Date</mat-label>
+                                    <input matInput [matDatepicker]="picker2" [(ngModel)]="productDetails.EffectiveDateEnd">
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div> -->
+                            
+                            <!--<div class="col-12 col-md-4 col-lg-4">
+                              <div class="input-control-container">
+                                  <label class="input-form-label">Endrosement Type<span class="text-required">*</span></label>
+                                  <ng-select class="input-form-select" appendTo="body" [clearSearchOnAdd]="true" (change)="Endrosement(productDetails.EndrosementType)" [closeOnSelect]="false" [multiple]="true" [(ngModel)]="productDetails.EndrosementType" [items]="EndList" bindValue="Code" bindLabel="CodeDesc">
+                                  </ng-select>
+                              </div>
+                          </div>-->
+                            
 
 
                             <!--<div class="col-12 col-md-6 col-lg-6">
@@ -268,12 +284,94 @@
                             </div> -->
 
                         </div>
-                        <div class="row">
-
-                        </div>
+                        <ng-container *ngIf="productDetails.BrokerCommssionDetails.length>1">
+                            <div class="card">
+                                <div class="card-header">Commission Details</div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12 col-xl-12" style="overflow-x: scroll !important;">
+                                            <table class="table table-striped" >
+                                                <tr>
+                                                    <th class="tbl-header">Select</th>
+                                                    <th class="tbl-header">Policy Type</th>
+                                                    <th class="tbl-header">Min SumInsured</th>
+                                                    <th class="tbl-header">Max SumInsured</th>
+                                                    <th class="tbl-header">Commission(%)</th>
+                                                    <th class="tbl-header">VAT(%)</th>
+                                                    <th class="tbl-header">No.Of.Backdays</th>
+                                                    <th class="tbl-header">CoreApp Code</th>
+                                                    <th class="tbl-header">Regulatory Code</th>
+                                                </tr>
+                                                <tr *ngFor="let row of productDetails.BrokerCommssionDetails;let i = index">
+                                                    <td class="tbl-content">
+                                                        <mat-checkbox class="example-margin text-center" (change)="onSelectPolicyTypeRow($event.checked,i)" [checked]="row.SelectedYn=='Y'">
+                                                        </mat-checkbox>
+                                                    </td>
+                                                    <td class="tbl-content">
+                                                        {{row.PolicyTypeDesc}}
+                                                    </td>
+                                                    <td class="tbl-content">
+                                                        <div class="input-control-container">
+                                                            <div class="input-form-box">
+                                                                <input type="text" maxlength="10" [disabled]="row.SelectedYN=='N'" (keydown)="onProductValueChange($event)" (keyup)="SIStartListCommaFormatted(i)" [(ngModel)]="row.SumInsuredStart">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="tbl-content">
+                                                        <div class="input-control-container">
+                                                            <div class="input-form-box">
+                                                                <input type="text" maxlength="10" [disabled]="row.SelectedYN=='N'" (keydown)="onProductValueChange($event)" (keyup)="SIEndListCommaFormatted(i)" [(ngModel)]="row.SumInsuredEnd">
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </td>
+                                                    <td class="tbl-content">
+                                                        <div class="input-control-container">
+                                                            <div class="input-form-box">
+                                                                <input type="text" maxlength="5" style="max-width: 80px !important;" [disabled]="row.SelectedYN=='N'" [(ngModel)]="row.CommissionPercent">
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </td>
+                                                    <td class="tbl-content">
+                                                        <div class="input-control-container">
+                                                            <div class="input-form-box">
+                                                                <input type="text" maxlength="5" style="max-width: 80px !important;" [disabled]="row.SelectedYN=='N'" [(ngModel)]="row.CommissionVatPercent">
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </td>
+                                                    <td class="tbl-content">
+                                                        <div class="input-control-container">
+                                                            <div class="input-form-box">
+                                                                <input type="text" maxlength="5" style="max-width: 80px !important;" [disabled]="row.SelectedYN=='N'" [(ngModel)]="row.BackDays">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="tbl-content">
+                                                        <div class="input-control-container">
+                                                            <div class="input-form-box">
+                                                                <input type="text" maxlength="10" [disabled]="row.SelectedYN=='N'" [(ngModel)]="row.CoreAppCode">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="tbl-content">
+                                                        <div class="input-control-container">
+                                                            <div class="input-form-box">
+                                                                <input type="text" maxlength="10" [disabled]="row.SelectedYN=='N'" [(ngModel)]="row.RegulatoryCode">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
                         <div class="text-center">
-                            <button class="btn btn-danger" (click)="ongetBack()">Back</button>
-                            <button class="btn btn-primary ml-2" (click)="onProceed()">Submit</button>
+                            <button class="btn btn-danger" (click)="ongetBack()">Back</button>&nbsp;
+                            <button class="btn btn-primary ml-2" (click)="onFormSubmit()">Submit</button>
                         </div>
                     </div>
                 </div>

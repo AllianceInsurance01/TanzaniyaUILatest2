@@ -34,6 +34,9 @@ export class BrokerProductListComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  getBackPage(){
+    this.router.navigate(['/Admin/brokersList/newBrokerDetails']);
+  }
   getBrokerProductList(){
     let ReqObj = {
     "LoginId": this.brokerLoginId,

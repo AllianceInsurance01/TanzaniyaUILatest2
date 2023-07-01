@@ -670,7 +670,7 @@ export class CustomerDetailsComponent implements OnInit {
             this.brokerCode = null;
           }
           else{
-            if(this.Code=='Broker' || this.Code=='Agent'){
+            //if(this.Code=='Broker' || this.Code=='Agent'){
               let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
               if(entry){
                 this.brokerLoginId = entry.Name; 
@@ -678,19 +678,19 @@ export class CustomerDetailsComponent implements OnInit {
                 this.updateComponent.brokerCode = this.brokerCode;
               }
               this.getBrokerBranchList();
-            }
-            else if(this.brokerCode){
-              let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
-             if(entry){
-              this.brokerLoginId = entry.Name; 
-              this.brokerBranchCode = null;
-              this.updateComponent.brokerCode = this.brokerCode;
-              this.updateComponent.brokerLoginId = this.brokerLoginId;
-              this.updateComponent.brokerBranchCode = this.brokerBranchCode;
-              console.log("Broker Code Rec",this.brokerCode,this.brokerLoginId,entry,this.brokerList)
-             }
+            // }
+            // else if(this.brokerCode){
+            //   let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
+            //  if(entry){
+            //   this.brokerLoginId = entry.Name; 
+            //   this.brokerBranchCode = null;
+            //   this.updateComponent.brokerCode = this.brokerCode;
+            //   this.updateComponent.brokerLoginId = this.brokerLoginId;
+            //   this.updateComponent.brokerBranchCode = this.brokerBranchCode;
+            //   console.log("Broker Code Rec",this.brokerCode,this.brokerLoginId,entry,this.brokerList)
+            //  }
              
-            }
+            // }
           }
           
       },
@@ -702,7 +702,7 @@ export class CustomerDetailsComponent implements OnInit {
     this.updateComponent.branchValue = this.branchValue;
   }
   onBrokerChange(){
-    if(this.Code=='Broker' || this.Code=='Agent'){
+    //if(this.Code=='Broker' || this.Code=='Agent'){
       let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
       if(entry){
         this.brokerLoginId = entry.Name; 
@@ -710,19 +710,19 @@ export class CustomerDetailsComponent implements OnInit {
         this.updateComponent.brokerCode = this.brokerCode;
       }
       this.getBrokerBranchList();
-    }
-    else if(this.brokerCode){
-      let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
-     if(entry){
-      this.brokerLoginId = entry.Name; 
-      this.brokerBranchCode = null;
-      this.updateComponent.brokerCode = this.brokerCode;
-      this.updateComponent.brokerLoginId = this.brokerLoginId;
-      this.updateComponent.brokerBranchCode = this.brokerBranchCode;
-      console.log("Broker Code Rec",this.brokerCode,this.brokerLoginId,entry,this.brokerList)
-     }
+    // }
+    // else if(this.brokerCode){
+    //   let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
+    //  if(entry){
+    //   this.brokerLoginId = entry.Name; 
+    //   this.brokerBranchCode = null;
+    //   this.updateComponent.brokerCode = this.brokerCode;
+    //   this.updateComponent.brokerLoginId = this.brokerLoginId;
+    //   this.updateComponent.brokerBranchCode = this.brokerBranchCode;
+    //   console.log("Broker Code Rec",this.brokerCode,this.brokerLoginId,entry,this.brokerList)
+    //  }
      
-    }
+    // }
   }
   onBrokerBranchChange(){
     this.updateComponent.brokerBranchCode = this.brokerBranchCode;

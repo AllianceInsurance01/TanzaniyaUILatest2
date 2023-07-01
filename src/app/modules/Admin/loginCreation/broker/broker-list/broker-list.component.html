@@ -3,16 +3,21 @@
     <div class="card-body">
 
         <div class="row mb-2">
-            <div class="col-md-3 col-lg-6 col-xl-6">
+            <div class="col-md-4 col-lg-4 col-xl-4">
                 <div class="input-control-container">
                     <label class="input-form-label">Company <span class="text-required">*</span></label>
-                    <ng-select class="input-form-select" appendTo="body" [disabled]="subUserType!='SuperAdmin'" [(ngModel)]="insuranceId" (change)="getBrokerList()" [items]="companyList" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="input-form-select" appendTo="body" [disabled]="subUserType!='SuperAdmin'" [(ngModel)]="insuranceId"   [items]="companyList" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                 </div>
             </div>
-            <div class="col-md-3 col-xl-3 col-lg-3">
+            <div class="col-md-4 col-xl-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Channel <span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="channelId"  [items]="channelList" (change)="getBrokerList()" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
             </div>
-            <div class="col-md-3 col-xl-3 col-lg-3 p-4" *ngIf="insuranceId">
+            <div class="col-md-3 col-xl-3 col-lg-3 p-4" *ngIf="insuranceId && channelId">
                 <button class="btn btn-warning" (click)="onAddNew()">Add New Broker</button>
             </div>
         </div>

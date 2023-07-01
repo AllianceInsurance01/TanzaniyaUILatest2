@@ -17,6 +17,13 @@
                     </ng-select>
                 </div>
             </div>
+            <div class="col-md-4 col-xl-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Channel <span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="channelId"  [items]="channelList" (change)="getBrokersList('change')" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
             <div class="col-md-4">
                 <div class="input-control-container">
                     <label class="input-form-label">Broker</label>
@@ -36,13 +43,18 @@
             <div class="col-md-3 col-xl-3 col-lg-3">
 
             </div>
-            <div class="col-md-3 col-xl-3 col-lg-3 offset-6 pl-4">
+            <div class="col-md-2 col-xl-2 col-lg-2 offset-7 pl-4">
                 <button class="btn btn-warning" (click)="onAddNew()">Add New User</button>
             </div>
         </div>
         <ng-container *ngIf="userData && brokerValue">
             <app-grid-table [cols]="userHeader" [data]="userData" [filterValue]="filterValue" (onEdit)="onEdit($event)" (onConfigure)="onConfigure($event)">
             </app-grid-table>
+        </ng-container>
+        <ng-container *ngIf="userData.length==0">
+                <div class="text-center mt-2">
+                    No Data Available
+                </div>
         </ng-container>
     </div>
 </div>

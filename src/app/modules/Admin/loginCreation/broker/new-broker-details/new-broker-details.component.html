@@ -28,7 +28,7 @@
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
                     <label class="input-form-label">Channel</label>
-                    <ng-select class="input-form-select" [(ngModel)]="subUserType" [disabled]="subUserType!=null" [items]="channelList" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="input-form-select" [(ngModel)]="subUserType" [disabled]="subUserType" [items]="channelList" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                 </div>
             </div>
@@ -211,7 +211,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-4 col-lg-4">
+            <!-- <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
                     <label class="input-form-label">Customer Confirmation?<span class="text-required">*</span></label>
                     <div class="input-form-radio-box">
@@ -270,7 +270,7 @@
                         <input type="text" class="input-form-control without-icon" [(ngModel)]="vatRegNo" maxlength="50">
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <!-- <div class="row">
             <div class="col-12 col-md-4 col-lg-4">
@@ -463,7 +463,7 @@
         </div>
 
         <div class="text-center mt-2">
-            <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+            <button class="btn btn-danger" (click)="ongetBack()">Back</button>&nbsp;
             <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
         </div>
     </div>

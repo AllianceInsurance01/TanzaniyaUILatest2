@@ -55,9 +55,11 @@ export class NewBrokerDetailsComponent implements OnInit {
     let com = sessionStorage.getItem('editBroker');
     if (com) {
       this.editsSection = false;
-      this.subUserType = sessionStorage.getItem('brokerChannelId');
+      
     }
     else {
+      let channelId =  sessionStorage.getItem('brokerChannelId');
+      if(channelId) this.subUserType = channelId;
       this.editsSection = true;
     }
     if (this.commissionVatYN == null) this.commissionVatYN = 'N';

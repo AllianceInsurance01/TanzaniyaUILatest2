@@ -74,6 +74,7 @@ export class UserDetailsComponent implements OnInit {
       else{
         console.log("Insurance Value",userDetails);
         this.brokerId = userDetails.BrokerId;
+        this.subUserType = userDetails.channelId;
         //this.getInsuranceList('change',userDetails.InsuranceId);
         this.getInsuranceList();
         this.editSection = false;
@@ -130,10 +131,13 @@ export class UserDetailsComponent implements OnInit {
     }
   }*/
   getBrokerList(){
+    let ReqObj = {
+      "SubUserType": this.subUserType,
+      "InsuranceId": this.insuranceId
+    }
     let urlLink = `${this.CommonApiUrl1}admin/dropdown/brokerids`;
-    this.sharedService.onGetMethodSync(urlLink).subscribe(
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
-        console.log(data);
         if(data.Result){
             this.brokerList = data?.Result;
             this.getCountryList();
@@ -238,7 +242,7 @@ export class UserDetailsComponent implements OnInit {
               let obj = [];
         this.companyList = obj.concat(data?.Result);
         let useObj = JSON.parse(sessionStorage.getItem('userEditDetails'));
-        if(useObj) { this.brokerValue = useObj?.BrokerId; this.insuranceId = useObj?.InsuranceId; this.getBrokerList();}
+        if(useObj) { this.brokerValue = useObj?.BrokerId; this.insuranceId = useObj?.InsuranceId;this.subUserType = useObj?.channelId; this.getBrokerList();}
             }
           },
           (err) => { },

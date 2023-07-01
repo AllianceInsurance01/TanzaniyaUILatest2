@@ -525,8 +525,8 @@
                                 <button class="btn btn-danger" *ngIf="calcType=='F' && coverUploadSection" (click)="clearDocList();coverUploadSection=!coverUploadSection">Cancel</button>&nbsp;
                                 <button class="btn btn-success" *ngIf="calcType=='F' && coverUploadSection && uploadDocList.length!=0 && uploadStatus==null" (click)="onSaveCoverForm('document')">Upload Document</button>&nbsp;
                                 <ng-container *ngIf="calcType=='F' && coverUploadSection && uploadRecordsList.length!=0 && uploadStatus==null">
-                                    <button class="btn btn-warning" *ngIf="uploadRecordsList[0].ErrorRecords==0 || uploadRecordsList[0].ErrorRecords=='0' || uploadRecordsList[0].ErrorRecords==null"  (click)="onCheckReUpload()">ReUpload</button>
-                                    <button class="btn btn-success" *ngIf="uploadRecordsList[0].ErrorRecords!=0 && uploadRecordsList[0].ErrorRecords!='0' && uploadRecordsList[0].ErrorRecords!=null"  (click)="onMoveRecords()">Move Records</button>
+                                    <button class="btn btn-warning" *ngIf="uploadRecordsList[0].ErrorRecords!=0 && uploadRecordsList[0].ErrorRecords!='0' && uploadRecordsList[0].ErrorRecords!=null"   (click)="onCheckReUpload()">ReUpload</button>
+                                    <button class="btn btn-success" *ngIf="uploadRecordsList[0].ErrorRecords==0 || uploadRecordsList[0].ErrorRecords=='0' || uploadRecordsList[0].ErrorRecords==null"  (click)="onMoveRecords()">Move Records</button>
                                 </ng-container>
                                 
 
