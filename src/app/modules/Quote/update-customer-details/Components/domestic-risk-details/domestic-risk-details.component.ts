@@ -2700,6 +2700,7 @@ onFidelitySave(){
   deletePersonal(rows: any) {
     const index = this.PersonalAssistantList.indexOf(rows);
     this.PersonalAssistantList.splice(index, 1);
+    this.getTotalSICost('PersonalAccident');
     //this.getTotalSICost('personalInt');
   }
   ContentDelete(rowss: any) {

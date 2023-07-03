@@ -547,11 +547,11 @@
                                                     <input type="text" style="min-width: 100px;" class="input-form-control without-icon" [disabled]="checkEndorseDisable('personalAccident')" maxlength="3" [(ngModel)]="row.Weight" [ngModelOptions]="{standalone: true}">
                                                 </div>
                                             </td> -->
-                                            <td class="tbl-content" *ngIf="!enableAddNewBtn('personalAccident')" style="position: relative;top: 0.8rem;text-align: center;">
+                                            <td class="tbl-content" *ngIf="!enableAddNewBtn('personalAccident')" style="position: relative;text-align: center;">
                                                 <ng-container *ngIf="i==0 && PersonalAssistantList.length==1">
                                                     N/A
                                             </ng-container>
-                                                <button class="btn btn-primary delete_icon" (click)="deletePersonal(row)"  *ngIf="i!=0 && PersonalAssistantList.length!=1"> <i class="fa fa-trash"></i></button>
+                                                <button class="btn btn-primary delete_icon" style="left: unset;" (click)="deletePersonal(row)"  *ngIf="i!=0 && PersonalAssistantList.length!=1"> <i class="fa fa-trash"></i></button>
                                                 <!--<button class="btn btn-primary" (click)="deletePersonal(row)"> <i class="fa fa-trash"></i></button>-->
                                             </td>
                                         </tr>

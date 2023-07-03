@@ -1000,7 +1000,7 @@ export class CustomerDetailsComponent implements OnInit {
       this.endMaxDate = new Date(year + 1, month, day-1);
        this.updateComponent.travelStartDate = this.travelStartDate;
       if(this.noOfDays!='' && this.noOfDays!=undefined && this.noOfDays!=null){
-        this.travelEndDate = new Date(year + 1, month, day+Number(this.noOfDays-1));
+        this.travelEndDate = new Date(year, month, day+Number(this.noOfDays-1));
         //this.endMaxDate = new Date(year + 1, month, day-1);
         this.updateComponent.travelStartDate = this.travelStartDate;
         this.updateComponent.travelEndDate = this.travelEndDate;

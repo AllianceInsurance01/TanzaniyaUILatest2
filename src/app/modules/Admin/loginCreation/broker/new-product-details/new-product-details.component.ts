@@ -138,6 +138,14 @@ export class NewProductDetailsComponent implements OnInit {
               this.productDetails.CoreAppCode = this.productDetails?.BrokerCommssionDetails[0].CoreAppCode;
               this.productDetails.RegulatoryCode = this.productDetails?.BrokerCommssionDetails[0].RegulatoryCode;
             }
+            else{
+              let i = 0;
+              for(let row of this.productDetails?.BrokerCommssionDetails){
+                    this.SIStartListCommaFormatted(i);
+                    this.SIEndListCommaFormatted(i);
+                    i+=1;
+              }
+            }
           }
         }
         }
