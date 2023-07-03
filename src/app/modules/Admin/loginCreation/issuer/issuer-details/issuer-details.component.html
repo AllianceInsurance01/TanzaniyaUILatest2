@@ -27,10 +27,8 @@
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
                     <label class="input-form-label">Menu Type<span class="text-required">*</span></label>
-                    <div class="input-form-box">
-                        <ng-select class="input-form-select"  appendTo="body" [(ngModel)]="issuerType" [items]="typeList" bindValue="Code" bindLabel="CodeDesc">
-                        </ng-select>
-                    </div>
+                    <ng-select class="input-form-select"  appendTo="body" [(ngModel)]="issuerType" [items]="typeList" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
                 </div>
             </div>
             <div class="col-12 col-md-4 col-lg-4">
@@ -454,7 +452,7 @@
         </div>
 
         <div class="text-center mt-2">
-            <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+            <button class="btn btn-danger" (click)="ongetBack()">Back</button>&nbsp;
             <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
         </div>
     </div>

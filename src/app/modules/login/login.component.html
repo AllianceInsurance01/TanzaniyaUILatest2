@@ -2,7 +2,7 @@
     <input type="checkbox" id="chk" aria-hidden="true" name="">
     <div class="content_login">
         <!--Login Section -->
-        <div class="front_login">
+        <div class="front_login" *ngIf="!loginfirst">
             <div class="login-component inner_login">
                 <div class="row">
                     <div class="col-12">
@@ -45,7 +45,7 @@
                             </div>
                             <div class="text-center_new" style="position: relative;
                             top: 4rem;">
-                                <label for="chk" aria-hidden="true" (click)="Forget('change','ChangePassword')" (change)="changepass('ChangePassword')">Change
+                                <label for="chk" aria-hidden="true" (click)="Forget('change','ChangePassword');changepass('ChangePassword')" >Change
                                     Password ?</label>
                                 <button type="button" class="custom-btn btn-3"
                                     (click)="onLogin(req,'N')"><span>Login</span></button>
@@ -54,7 +54,7 @@
                             <!--<label for="chek" aria-hidden="true">Forget Password ?</label>-->
 
                             <div style="margin-top:100px;">
-                              <label for="chk" aria-hidden="true" (click)="Forget('foget','ForgotPassword')"  (change)="changepass('ForgotPassword')">Forgot
+                              <label for="chk" aria-hidden="true" (click)="Forget('foget','ForgotPassword');changepass('ForgotPassword')">Forgot
                                 Password ?</label>
                         </div>
                         </form>
@@ -64,12 +64,19 @@
             </div>
         </div>
         <!--Reset Password Section-->
-        <div class="back_login" *ngIf="!forget">
+        <div class="back_login" *ngIf="changePasswordSection">
             <div class="login-component inner_login">
                 <div class="row">
                     <div class="col-12">
                         <div class="middle-line">
                             <span>Reset Password</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="passExpiredError">
+                    <div class="col-12">
+                        <div class="input-control-container">
+                            <span class="text-danger"><b>Password Expired, Please Reset</b></span>
                         </div>
                     </div>
                 </div>

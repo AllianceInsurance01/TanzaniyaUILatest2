@@ -5,6 +5,7 @@ import { SharedService } from '../../../../../shared/shared.service';
 //import { NbComponentStatus, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 import { DatePipe } from '@angular/common';
 import { Toaster } from 'ngx-toast-notifications';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-issuer-details',
@@ -282,6 +283,18 @@ export class IssuerDetailsComponent implements OnInit {
       this.onSubmit();
     }else{
         if(this.password==null || this.password=="" || this.password==undefined){
+          Swal.fire({
+            title: '<strong>Password Details</strong>',
+            icon: 'error',
+            html:
+              `Please enter Password`,
+            showCloseButton: true,
+            focusConfirm: false,
+            showCancelButton:false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Error!',
+          })
           //  this.Toaster.open({
           //    text:'Please enter Password',
           //    caption: 'password Details',
@@ -289,6 +302,18 @@ export class IssuerDetailsComponent implements OnInit {
           //  });
          }  
          else if(this.rePassword==null || this.rePassword=="" || this.rePassword==undefined){
+          Swal.fire({
+            title: '<strong>Password Details</strong>',
+            icon: 'error',
+            html:
+              `Please enter Re-Password`,
+            showCloseButton: true,
+            focusConfirm: false,
+            showCancelButton:false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Error!',
+          })
           //  this.Toaster.open({
           //    text:'Please enter RePassword',
           //    caption: 'password Details',
@@ -299,6 +324,18 @@ export class IssuerDetailsComponent implements OnInit {
          else if(this.password!=undefined || this.password!=null || this.password!="" ){
            if(this.rePassword!=undefined || this.rePassword!=null || this.rePassword!=""){
              if(this.password!=this.rePassword){
+              Swal.fire({
+                title: '<strong>Password Details</strong>',
+                icon: 'error',
+                html:
+                  `Passwords are MisMatching`,
+                showCloseButton: true,
+                focusConfirm: false,
+                showCancelButton:false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Error!',
+              })
               //  this.Toaster.open({
               //    text:'Passwords are MisMatching',
               //    caption: 'password Details',

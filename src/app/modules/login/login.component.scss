@@ -1931,7 +1931,7 @@
 }
 #chk:checked ~ .content_login{
     animation: 2s animate;
-    transform:rotateY(180deg);
+    //transform:rotateY(180deg);
 }
 
 #chek{
@@ -1940,7 +1940,7 @@
 
 #chek:checked ~ .content_login{
   animation: 2s animate;
-  transform:rotateY(180deg);
+  //transform:rotateY(180deg);
 }
 
 @keyframes animate{
@@ -1980,12 +1980,12 @@
     border-radius: 8px;
 }
 .back_login{
-    transform: rotateY(180deg);
+    //transform: rotateY(180deg);
 }
 .inner_login{
     height: 100%;
     padding: 2.5em;
-    transform: translateZ(80px) scale(1);
+    //transform: translateZ(80px) scale(1);
 }
 
 .login{
@@ -2086,7 +2086,7 @@
 }
 .front_login label{
     font-size: 0.9rem;
-    color: red;
+    color: #1475a1;
     float: right;
     cursor:pointer
 }
@@ -2095,7 +2095,7 @@
     // width: 39%;
     font-size: 13px;
     text-align: center;
-    color: red;
+    color: #1475a1;
     cursor: pointer;
 }
 .input-form-box {

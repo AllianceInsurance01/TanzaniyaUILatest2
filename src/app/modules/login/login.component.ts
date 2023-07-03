@@ -29,6 +29,7 @@ export class LoginComponent {
   issuerLogin = false;
   brokerName = null;
   brokerPassword = null;
+  loginfirst:any=false;
   issuerName = null;
   pass:any;
   issuerPassword = null; branchList: any[] = [];
@@ -46,6 +47,8 @@ export class LoginComponent {
   forget: boolean=false;
   temps:boolean=false;
   pa:any;
+  changePasswordSection: boolean;
+  passExpiredError: boolean;
   constructor(private _formBuilder: FormBuilder, private service: HttpService,
     private loginService: LoginService, private SharedService: SharedService, private authService: AuthService,
     private router: Router,) {
@@ -61,13 +64,19 @@ export class LoginComponent {
     if (value === "Change Password") {
       this.resetForm();
       this.loginSection = true;
+      this.loginfirst = true;
+      this.changePasswordSection = true;
+      this.forget = false;
     }
   }
   cancel(value_cancel) {
     this.value_cancel = value_cancel;
     if (value_cancel === 'Cancel') {
       this.resetForm();
-      this.loginSection = false;
+      this.loginSection = true;
+      this.loginfirst = false;
+      this.changePasswordSection = false;
+      this.forget = false;
     }
   }
 
@@ -115,8 +124,8 @@ export class LoginComponent {
 
     console.log(change)
     this.pa=change
-      if(type=='change') this.forget = false;
-      else this.forget = true;
+      if(type=='change') {this.changePasswordSection = true;this.forget=false;this.loginfirst=true}
+      else  {this.changePasswordSection = false;this.forget=true;this.loginfirst=false}
 
       if(change=='ChangePassword'){
         this.pass=true;
@@ -169,7 +178,9 @@ export class LoginComponent {
           this.ForgetForm.reset();
           //this.loginForm.reset();
           //this.loginSection = false;
-          this.forget=false;
+         this.changePasswordSection = true;
+         this.forget = false;
+         this.loginfirst = true;
           this.temps=true;
         }
 
@@ -361,57 +372,75 @@ export class LoginComponent {
           let ulList:any='';
            let entry:any[] =  errorList.filter(ele=>ele.Field=='SessionError')
            console.log("checked entry",entry);
-
-           for (let index = 0; index < errorList.length; index++) {
-
-             const element = errorList[index];
-              ulList +=`<li class="list-group-login-field">
-                <div style="color: darkgreen;">Field<span class="mx-2">:</span>${element?.Field}</div>
-                <div style="color: red;">Message<span class="mx-2">:</span>${element?.Message}</div>
-              </li>`
-           }
-          if(entry.length==0){
-             Swal.fire({
-              title: '<strong>Form Validation</strong>',
-              icon: 'info',
-              html:
-                `<ul class="list-group errorlist">
-                 ${ulList}
-              </ul>`,
-              showCloseButton: true,
-              focusConfirm: false,
-              confirmButtonText:
-                '<i class="fa fa-thumbs-down"></i> Errors!',
-              confirmButtonAriaLabel: 'Thumbs down, Errors!',
-            })
-          }
-          else {
-            console.log("entered multiiiiiiiiiiiiiiiiiiii");
-            Swal.fire({
-               title: '<strong>Session Error</strong>',
-               icon: 'info',
-               html:
-                 `<ul class="list-group errorlist">
-                  ${ulList}
-              </ul>`,
-               showCloseButton: true,
-               focusConfirm: false,
-               showCancelButton:true,
-
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Proceed Login!',
-              cancelButtonText: 'Cancel',
-            })
-            .then((result) => {
-              if (result.isConfirmed) {
-              // this.loginSection=false;
-              this.onLogin(reqData,'Y')
+            if(res.ChangePasswordYn=='Y'){
+              console.log('UUUUU',res.ChangePasswordYn);
+              //this.Forget('change','ChangePassword');
+              this.loginfirst=true;
+              this.changePasswordSection = true;
+              this.forget = false;
+              //this.loginSection=false;
+              this.pass = true;
+              this.pa='ChangePassword';
+              this.passExpiredError = true;
+              setTimeout(() => 
+              {
+                this.passExpiredError = false;
+            }, (2*1000));
+            this.changeForm.controls['LoginId'].setValue(formData.username);
             }
+            else{
+              for (let index = 0; index < errorList.length; index++) {
 
-            });
-
-          }
+                const element = errorList[index];
+                 ulList +=`<li class="list-group-login-field">
+                   <div style="color: darkgreen;">Field<span class="mx-2">:</span>${element?.Field}</div>
+                   <div style="color: red;">Message<span class="mx-2">:</span>${element?.Message}</div>
+                 </li>`
+              }
+             if(entry.length==0){
+                Swal.fire({
+                 title: '<strong>Form Validation</strong>',
+                 icon: 'info',
+                 html:
+                   `<ul class="list-group errorlist">
+                    ${ulList}
+                 </ul>`,
+                 showCloseButton: true,
+                 focusConfirm: false,
+                 confirmButtonText:
+                   '<i class="fa fa-thumbs-down"></i> Errors!',
+                 confirmButtonAriaLabel: 'Thumbs down, Errors!',
+               })
+             }
+             else {
+               console.log("entered multiiiiiiiiiiiiiiiiiiii");
+               Swal.fire({
+                  title: '<strong>Session Error</strong>',
+                  icon: 'info',
+                  html:
+                    `<ul class="list-group errorlist">
+                     ${ulList}
+                 </ul>`,
+                  showCloseButton: true,
+                  focusConfirm: false,
+                  showCancelButton:true,
+   
+                 confirmButtonColor: '#3085d6',
+                 cancelButtonColor: '#d33',
+                 confirmButtonText: 'Proceed Login!',
+                 cancelButtonText: 'Cancel',
+               })
+               .then((result) => {
+                 if (result.isConfirmed) {
+                 // this.loginSection=false;
+                 this.onLogin(reqData,'Y')
+               }
+   
+               });
+   
+             }
+            }
+          
          }
       },
       (err: any) => {
