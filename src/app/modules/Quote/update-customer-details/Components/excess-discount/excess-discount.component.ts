@@ -685,7 +685,8 @@ getInsuranceClassList(){
   let ReqObj = {
     "InsuranceId": this.insuranceId,
     "ProductId": this.productId,
-    "BranchCode": this.branchCode
+    "BranchCode": this.branchCode,
+    "LoginId":this.loginId
   }
   let urlLink = `${this.ApiUrl1}master/dropdown/policytype`;
   this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(

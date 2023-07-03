@@ -163,7 +163,7 @@ export class NewEmidetailsComponent implements OnInit {
   }
   getPolicyList(){
     let ReqObj = {
-      "InsuranceId":this.insuranceId,"ProductId":this.productId,"BranchCode":"03"
+      "InsuranceId":this.insuranceId,"ProductId":this.productId,"BranchCode":"03","LoginId":this.loginId
     }
     let urlLink = `${this.ApiUrl1}master/dropdown/policytype`;
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
