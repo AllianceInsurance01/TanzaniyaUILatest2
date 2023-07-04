@@ -1701,17 +1701,18 @@
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-6 input-control-container">
-                                        <label class="input-form-label">SumInsured</label><span class="text-danger">*</span>
-                                        <div class="input-form-box" style="position: relative;top:.2rem">
-                                            <input type="text" class="input-form-control without-icon" maxlength="15" [disabled]="checkEndorseDisable('machinery')" (keydown)="onSIValueChange($event)" (keyup)="individualCommaFormatted('machinery')" [(ngModel)]="SumInsured" [ngModelOptions]="{standalone: true}">
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6 col-lg-6 input-control-container">
                                         <label class="input-form-label">Serial No</label><span class="text-danger">*</span>
                                         <div class="input-form-box" style="position: relative;top:.2rem">
                                             <textarea style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('machinery')" (keyup)="onSerialNoChange('machinery')" class="input-form-control without-icon" cols="40" rows="1" maxlength="100" [(ngModel)]="serialNoDesc" [ngModelOptions]="{standalone: true}"></textarea>
                                         </div>
                                     </div>
+                                    <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                        <label class="input-form-label">SumInsured</label><span class="text-danger">*</span>
+                                        <div class="input-form-box" style="position: relative;top:.2rem">
+                                            <input type="text" class="input-form-control without-icon" maxlength="15" [disabled]="checkEndorseDisable('machinery')" (keydown)="onSIValueChange($event)" (keyup)="individualCommaFormatted('machinery')" [(ngModel)]="SumInsured" [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                                 <div class="text-center">
                                     <button class="btn btn-danger btn-sm mr-5" (click)="onMachineryCancel()"> Cancel</button>&nbsp;&nbsp;
@@ -1758,10 +1759,50 @@
                                         <span><u>Accessories Risk Details </u></span>
                                     <div class="row">
                                         <div class="col-12 col-md-6 col-lg-6 input-control-container">
-                                            <label class="input-form-label">Accessories</label><span class="text-danger">*</span>
-                                            <ng-select class="custom" [items]="LocationList"  [disabled]="checkEndorseDisable('content')" [(ngModel)]="LocationId" placeholder="Select Location" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                                            <label class="input-form-label">Chassis No</label><span class="text-danger">*</span>
+                                            <ng-select class="custom" [items]="LocationList"  [disabled]="checkEndorseDisable('accessories')" [(ngModel)]="LocationId" placeholder="Select Location" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
                                             </ng-select>
                                         </div>
+                                        <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                            <label class="input-form-label">Accessories</label><span class="text-danger">*</span>
+                                            <ng-select class="custom" [items]="LocationList"  [disabled]="checkEndorseDisable('accessories')" [(ngModel)]="LocationId" placeholder="Select Location" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                                            </ng-select>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                            <label class="input-form-label">Serial No</label><span class="text-danger">*</span>
+                                            <div class="input-form-box" style="position: relative;top:.2rem">
+                                                <textarea style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('accessories')" (keyup)="onSerialNoChange('accessories')" class="input-form-control without-icon" cols="40" rows="1" maxlength="100" [(ngModel)]="serialNoDesc" [ngModelOptions]="{standalone: true}"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                            <label class="input-form-label">SumInsured</label><span class="text-danger">*</span>
+                                            <div class="input-form-box" style="position: relative;top:.2rem">
+                                                <input type="text" class="input-form-control without-icon" maxlength="15" [disabled]="checkEndorseDisable('accessories')" (keydown)="onSIValueChange($event)" (keyup)="individualCommaFormatted('accessories')" [(ngModel)]="SumInsured" [ngModelOptions]="{standalone: true}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <span><u> Sum Insured </u></span>
+                                    </div>
+                                    <div class="row" >
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="ml-3">
+                                                <b style="white-space: nowrap;">Total</b>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalAccessoriesSI==0 || totalAccessoriesSI=='0' || totalAccessoriesSI==null">
+                                            <b style="white-space: nowrap;float: right !important;">0</b>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalAccessoriesSI!=0 && totalAccessoriesSI!='0' && totalAccessoriesSI!=null">
+                                            <b style="white-space: nowrap;float: right !important;">{{totalAccessoriesSI | commaseparator }} &nbsp;({{currencyValue}})</b>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6 ml-3">
+                                            <b style="white-space: nowrap;">Actual</b>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6">
+                                            <b style="white-space: nowrap;float: right !important;">{{actualAccessoriesSI | commaseparator }} &nbsp;({{currencyValue}})</b>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>

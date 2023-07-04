@@ -60,7 +60,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   third: any;
   occupationList: any[] = [];
   userDetails: any;risk:any[]=[];
-  allriskList:any[]=[];
+  allriskList:any[]=[];actualAccessoriesSI:any='0';
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public UploadUrl: any = this.AppConfig.ExcelUrl;
@@ -184,6 +184,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   currentAccessoriesIndex: number;
   editAccessoriesSection: boolean;
   enableAccessoriesEditSection: boolean;
+  totalAccessoriesSI: any;
   constructor(private router: Router,private datePipe:DatePipe,private modalService: NgbModal,
      private sharedService: SharedService,) {
     let homeObj = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
@@ -416,6 +417,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
           this.quoteDetails = data?.Result?.QuoteDetails;
           this.Riskdetails = data?.Result?.RiskDetails;
           this.customerDetails=data?.Result?.CustomerDetails;
+          if(this.Riskdetails[0].AcccessoriesSumInsured!=null)
+          this.totalAccessoriesSI = String(this.Riskdetails[0].AcccessoriesSumInsured);
           for (let cover of this.Riskdetails) {
             let j = 0;
             for (let section of cover?.SectionDetails) {
@@ -435,7 +438,6 @@ export class DomesticRiskDetailsComponent implements OnInit {
                 baseCovers = CoverData.filter(ele => ele.CoverageType == 'B');
                 otherCovers = CoverData.filter(ele => ele.CoverageType != 'B');
                 section.Covers = baseCovers.concat(otherCovers);
-                console.log("otherCovers", CoverData);
                 this.CoverList.push(cover);
                 console.log("CoverList", this.CoverList);
                 if (j == cover?.SectionDetails) {
@@ -1591,7 +1593,7 @@ onFidelitySave(){
     }
   }
   onSerialNoChange(type){
-    if(type=='content' || type=='machinery'){
+    if(type=='content' || type=='machinery' || type=='accessories'){
       if(this.serialNoDesc){
         let value = this.serialNoDesc.replace(/[^a-z0-9_/-]/gi, "");
         this.serialNoDesc = value;
@@ -1754,6 +1756,17 @@ onFidelitySave(){
           this.getTotalSICost('Machinery');
         }
       }
+      if(type=='accessories'){
+        let entry = this.SumInsured;
+        if(this.SumInsured){
+          if(this.SumInsured.includes('.')) this.SumInsured = this.SumInsured.split('.')[0];
+          let value = this.SumInsured.replace(/\D/g, "")
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          this.accessoriesList[this.currentAccessoriesIndex]['SumInsured'] = value.replace(/,/g, '');
+          this.SumInsured = value;
+          this.getTotalSICost('Accessories');
+        }
+      }
   }
   getTotalSICost(type){
     if(type=='building'){
@@ -1876,6 +1889,19 @@ onFidelitySave(){
             else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
             else entry = SI
             this.totalMachinerySI = Number(entry)+this.totalMachinerySI
+          }
+        }
+    }
+    else if(type=='Accessories'){
+      this.totalAccessoriesSI = 0;
+        if(this.accessoriesList.length!=0){
+          for(let emp of this.accessoriesList){
+            let SI = emp.SumInsured,entry=0;
+            //if(emp?.EmployeeId) delete emp['EmployeeId'];
+            if(SI==undefined || SI=='' || SI ==null) SI = 0;
+            else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
+            else entry = SI
+            this.totalAccessoriesSI = Number(entry)+this.totalAccessoriesSI
           }
         }
     }

@@ -36,6 +36,7 @@ export class EmployersLiability{
                     {
                       type: 'select',
                       key: 'LiabilityOccupationId',
+                      defaultValue: null,
                       className: 'col-sm-4',
                       props: {
                         label: `Occupation`,
@@ -71,6 +72,7 @@ export class EmployersLiability{
                       type: 'commaSeparator',
                       className: 'col-sm-4',
                       key: 'EmpLiabilitySi',
+                      defaultValue: '0',
                       props: {
                         label: `SumInsured (${this.commonDetails[0].Currency})`,
                         disabled: this.checkDisable('EmpLiabilitySi'),

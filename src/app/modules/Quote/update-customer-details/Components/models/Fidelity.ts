@@ -34,11 +34,12 @@ export class Fidelity{
                   fieldGroup: [
                     {
                       type: 'select',
-                      key: 'OccupationType',
+                      key: 'LiabilityOccupationId',
+                      defaultValue: null,
                       className: 'col-sm-4',
                       props: {
                         label: `Occupation`,
-                        disabled: this.checkDisable('OccupationType'),
+                        disabled: this.checkDisable('LiabilityOccupationId'),
                         required: true,
                         options: [
         

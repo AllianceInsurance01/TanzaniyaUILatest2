@@ -1214,8 +1214,8 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         }
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([field]);
       }
-      if(sections.some(ele=>ele=='45')) this.productItem.employeeList = [{"LiabilityOccupationId":'',"TotalNoOfEmployees":null,"EmpLiabilitySi":'0'}];
-        if(sections.some(ele=>ele=='43')) this.productItem.fidelityList = [{"LiabilityOccupationId":'',"TotalNoOfEmployees":null,"EmpLiabilitySi":'0'}];
+      if(sections.some(ele=>ele=='45')) this.productItem.employeeList = [{"LiabilityOccupationId":null,"TotalNoOfEmployees":null,"EmpLiabilitySi":'0'}];
+        if(sections.some(ele=>ele=='43')) this.productItem.fidelityList = [{"LiabilityOccupationId":null,"TotalNoOfEmployees":null,"EmpLiabilitySi":'0'}];
       if(sections.some(ele=>ele=='41')){
         let contentData = new MachineryBreakDown();
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields])
@@ -1495,7 +1495,7 @@ getContentDetails(sections){
   );
 }
 addEmployee(){
-  let entry = [{"LiabilityOccupationId":'',"TotalNoOfEmployees":null,"EmpLiabilitySi":'0'}];
+  let entry = [{"LiabilityOccupationId":null,"TotalNoOfEmployees":null,"EmpLiabilitySi":'0'}];
   this.model.investments = entry.concat(this.model.investments)
 }
 setDomesticForm(type, mode){
@@ -3734,7 +3734,8 @@ getOccupationList(sections) {
                     let fields = this.fields[0].fieldGroup;
                     for(let field of fields){
                           if(field.props.label=='Employers Liability' || field.props.label=='Fidelity'){
-                                console.log("Final Field on Occupatiion",field)
+                                console.log("Final Field on Occupatiion",field,this.productItem)
+                                let defaultObj = [{ 'label': '-Select-', 'value': null }]
                                 field.fieldGroup[0].fieldArray.fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.occupationList);
                                 this.sectionCount +=1;
                                 if(sections.length==this.sectionCount){
@@ -3861,7 +3862,7 @@ setCommonFormValues(){
             }
             else{
               this.productItem.LiabilityOccupationId = '';
-              this.productItem.employeeList = [{"LiabilityOccupationId":'',"TotalNoOfEmployees":null,"EmpLiabilitySi":'0'}];
+              this.productItem.employeeList = [{"LiabilityOccupationId":null,"TotalNoOfEmployees":null,"EmpLiabilitySi":'0'}];
               this.formSection = true; this.viewSection = false;
             }
           }
@@ -3872,7 +3873,7 @@ setCommonFormValues(){
             }
             else{
             this.productItem.OccupationType = '';
-            this.productItem.fidelityList = [{"LiabilityOccupationId":'',"TotalNoOfEmployees":null,"EmpLiabilitySi":'0'}];
+            this.productItem.fidelityList = [{"LiabilityOccupationId":null,"TotalNoOfEmployees":null,"EmpLiabilitySi":'0'}];
             this.formSection = true; this.viewSection = false;
             }
           }
