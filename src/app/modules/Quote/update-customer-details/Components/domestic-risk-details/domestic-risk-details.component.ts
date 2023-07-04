@@ -67,7 +67,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl; ageList: any[] = [];
   public motorApiUrl: any = this.AppConfig.MotorApiUrl;
   newname: any;totalBuildingSumInsured:any=0;
-  loginId: any;
+  loginId: any;enableMachineryEditSection:boolean = false;
   insuranceId: any;
   SectionId: any;
   quote: any; selectedTab: any = 0;
@@ -88,9 +88,9 @@ export class DomesticRiskDetailsComponent implements OnInit {
   totalElectrIntSI:number;
   InbuildConstructType: void;
   sumInsured: boolean;six: boolean;
-  actualPersonalAccSI: any;
-  length = 50;
-  pageSize = 10;
+  actualPersonalAccSI: any;machineries:any[]=[];
+  length = 50;MachineryName:any=null;BrandName:any=null;
+  pageSize = 10;SumInsured:any=null;
   pageIndex = 0;
   pageSizeOptions = [5, 10, 25];
   showFirstLastButtons = true;
@@ -176,6 +176,10 @@ export class DomesticRiskDetailsComponent implements OnInit {
   employeeOccupationList: any[]=[];
   fidelityOccupationList: any[]=[];
   actualFidelitySI: any="0";
+  nine: boolean=false;
+  currentMachineryIndex: number;
+  editMachinerySection: boolean;
+  totalMachinerySI: number;
   constructor(private router: Router,private datePipe:DatePipe,private modalService: NgbModal,
      private sharedService: SharedService,) {
     let homeObj = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
@@ -320,7 +324,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
       }
       if(this.productId!='19'){
         let first = this.item.find((Code) => Code == '47' || Code=='40');
-        if (first) {
+        if (first && this.productId!='6') {
           this.first=true;
         }
         else {
@@ -329,7 +333,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
       }
       else{
         let first = this.item.find((Code) => Code == '47');
-        if (first) {
+        if (first && this.productId!='6') {
           this.first=true;
         }
         else {
@@ -358,7 +362,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
       else {
         this.fifth = false;
       }
-      const six = this.item.find((Code) => Code == '41');
+      const six = this.item.find((Code) => Code == '39');
       if (six && this.productId!='19') {
         this.six = true;
       }
@@ -379,6 +383,13 @@ export class DomesticRiskDetailsComponent implements OnInit {
         this.getOccupationList(eight)
        } 
        else this.eight = false;
+       const nine = this.item.find((Code) => Code == '41');
+        if (nine && this.productId!='19') {
+          this.nine = true;
+        }
+        else {
+          this.nine = false;
+        }
     }
     
   }
@@ -570,6 +581,12 @@ export class DomesticRiskDetailsComponent implements OnInit {
     this.currentBuildingIndex = null;
     this.enableBuildingEditSection = false;
   }
+  onMachineryCancel(){
+    if(!this.editMachinerySection)  this.machineries.splice(this.currentMachineryIndex,1);
+    this.MachineryName = null;this.BrandName=null;this.serialNoDesc=null;this.SumInsured=null;
+    this.currentMachineryIndex = null;
+    this.enableMachineryEditSection = false;
+  }
   onContentCancel(){
     if(!this.editContentSection) this.Cotentrisk.splice(this.currentContentIndex,1);
     this.LocationId = null;this.serialNoDesc = null;this.contentRiskDesc = null;
@@ -624,6 +641,11 @@ export class DomesticRiskDetailsComponent implements OnInit {
       this.LocationName = null; this.BuildingAddress = null; this.BuildingSuminsured = null;
     }
   
+}
+onMachinerySave(){
+  this.MachineryName = null;this.BrandName=null;this.serialNoDesc=null;this.SumInsured=null;
+    this.currentMachineryIndex = null;
+    this.enableMachineryEditSection = false;
 }
 onFidelitySave(){
   this.employeeNameError = false;this.employeeOccupationError = false;this.employeeAddressError=false;
@@ -1252,7 +1274,7 @@ onFidelitySave(){
           //   'Building Details Inserted/Updated Successfully',
           //   config)
           if(type=='C'){
-            if (this.second || this.third || this.fifth || this.six) {
+            if (this.second || this.third || this.fifth || this.six || this.nine) {
               this.fourth = true;
               this.selectedTab = this.selectedTab+1;
             }
@@ -1428,7 +1450,7 @@ onFidelitySave(){
             else if(type=='ElectricalEquipment'){
               this.fourth = true;this.getElectronicEquipment();
             }
-            else if (this.first||this.second || this.third || this.fifth || this.six || this.seven || this.eight) {
+            else if (this.first||this.second || this.third || this.fifth || this.six || this.seven || this.eight || this.nine) {
               this.fourth = true;
 
               this.selectedTab = 1;
@@ -1563,7 +1585,7 @@ onFidelitySave(){
     }
   }
   onSerialNoChange(type){
-    if(type=='content'){
+    if(type=='content' || type=='machinery'){
       if(this.serialNoDesc){
         let value = this.serialNoDesc.replace(/[^a-z0-9_/-]/gi, "");
         this.serialNoDesc = value;
@@ -1715,6 +1737,17 @@ onFidelitySave(){
           this.getTotalSICost('Fidelity');
         }
       }
+      if(type=='machinery'){
+        let entry = this.SumInsured;
+        if(this.SumInsured){
+          if(this.SumInsured.includes('.')) this.SumInsured = this.SumInsured.split('.')[0];
+          let value = this.SumInsured.replace(/\D/g, "")
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          this.machineries[this.currentMachineryIndex]['SumInsured'] = value.replace(/,/g, '');
+          this.SumInsured = value;
+          this.getTotalSICost('Machinery');
+        }
+      }
   }
   getTotalSICost(type){
     if(type=='building'){
@@ -1824,6 +1857,19 @@ onFidelitySave(){
             else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
             else entry = SI
             this.totalFidelityIntSI = Number(entry)+this.totalFidelityIntSI
+          }
+        }
+    }
+    else if(type=='Machinery'){
+      this.totalMachinerySI = 0;
+        if(this.machineries.length!=0){
+          for(let emp of this.machineries){
+            let SI = emp.SumInsured,entry=0;
+            //if(emp?.EmployeeId) delete emp['EmployeeId'];
+            if(SI==undefined || SI=='' || SI ==null) SI = 0;
+            else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
+            else entry = SI
+            this.totalMachinerySI = Number(entry)+this.totalMachinerySI
           }
         }
     }
@@ -2660,6 +2706,20 @@ onFidelitySave(){
     this.editBuildingSection = false;
     this.enableBuildingEditSection = true;
     this.building.push(entry);
+  }
+  AddNewMachinery(){
+    let entry = {
+      "MachineryDesc": null,
+      "Brand": null,
+      "SerialNo": null,
+      "SumInsured": null,
+      "RiskId": null,
+      "SectionId": "41"
+    }
+    this.currentMachineryIndex = this.machineries.length;
+    this.editMachinerySection = false;
+    this.enableMachineryEditSection = true;
+    this.machineries.push(entry);
   }
   onEditBuilding(index){
     this.currentBuildingIndex = index;

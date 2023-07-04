@@ -2606,7 +2606,7 @@ getMotorUsageList(vehicleValue){
   onProceed(coverList:any){
     if(this.statusValue == 'RA' && !this.adminSection){
       if(this.productId!='4'){
-        if(this.productId=='3' || this.productId=='19' || this.productId=='32' || this.productId=='14'){
+        if(this.productId=='3' || this.productId=='19' || this.productId=='32' || this.productId=='14' || this.productId=='39' || this.productId=='1' || this.productId=='6' || this.productId=='16'){
           let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
           if(homeSession){
             this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
@@ -2910,7 +2910,7 @@ getMotorUsageList(vehicleValue){
       else if(this.productId == '4'){
         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']);
       }
-      else if(this.productId=='32' || this.productId=='14' || this.productId=='15' || this.productId=='19'){
+      else if(this.productId=='32' || this.productId=='14' || this.productId=='15' || this.productId=='19' || this.productId=='39' || this.productId=='1' || this.productId=='6' || this.productId=='16'){
         // let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
         // if(homeSession){
            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
@@ -2982,7 +2982,7 @@ getMotorUsageList(vehicleValue){
               else if(this.productId == '4'){
                 this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']);
               }
-              else if(this.productId=='32' || this.productId=='14' || this.productId=='19'){
+              else if(this.productId=='32' || this.productId=='14' || this.productId=='19' || this.productId=='39' || this.productId=='1' || this.productId=='6' || this.productId=='16'){
                 this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
                 // let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
                 // if(homeSession){

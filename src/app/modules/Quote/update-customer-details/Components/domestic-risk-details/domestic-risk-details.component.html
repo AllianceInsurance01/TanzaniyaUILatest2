@@ -1653,6 +1653,74 @@
                         </div>
                     </div>
                 </mat-tab>
+                <mat-tab label="Machinery Breakdown" [disabled]="!fourth" *ngIf="nine">
+                    <div class="row mt-2" *ngIf="!enableMachineryEditSection">
+                        <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                            <div class="boxForm">
+                                <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                    <div class="headcommon">
+                                        <span><i class="fas fa-home mx-1 mt-3"></i></span>
+                                        <span class="spancommon span_font_size" style="font-weight:600">Machinery Breakdown Details</span>
+                                    </div>
+                                    <div *ngIf="sumInsured">
+                                        Currency({{currencyValue}})
+                                    </div>
+                                    <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('machinery') && machineries.length!=0"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNewMachinery()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
+                                </div>
+                                <div  *ngIf="machineries.length==0">
+                                    <div class="groupBtnMembers text-center">
+                                        <div class="groupBtnMembers__desc groupBtnMembers__desc_top">
+                                            Enter All Machinery Details that you want to insure
+                                        </div>
+                                            <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNewMachinery()"><i class="fa fa-plus-circle"></i>&nbsp; Add New</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="enableMachineryEditSection">
+                        <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                            <div class="boxForm" >
+                                    <span><u> Machinery Details </u></span>
+                                <div class="row">
+                                    <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                        <label class="input-form-label">Machinery Description</label><span class="text-danger">*</span>
+                                        <div class="input-form-box" style="position: relative;top:.2rem">
+                                            <input type="text" class="input-form-control without-icon" maxlength="50" [disabled]="checkEndorseDisable('machinery')" [(ngModel)]="MachineryName" [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                        <!-- <div class="input-form-error" *ngIf="buildingLocationError">
+                                            <div class="error-text text-danger">
+                                                Please Enter Valid Location Name
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                        <label class="input-form-label">Brand</label><span class="text-danger">*</span>
+                                        <div class="input-form-box" style="position: relative;top:.2rem">
+                                            <input type="text" class="input-form-control without-icon" maxlength="50" [disabled]="checkEndorseDisable('machinery')" [(ngModel)]="BrandName" [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                        <label class="input-form-label">SumInsured</label><span class="text-danger">*</span>
+                                        <div class="input-form-box" style="position: relative;top:.2rem">
+                                            <input type="text" class="input-form-control without-icon" maxlength="15" [disabled]="checkEndorseDisable('machinery')" (keydown)="onSIValueChange($event)" (keyup)="individualCommaFormatted('machinery')" [(ngModel)]="SumInsured" [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                        <label class="input-form-label">Serial No</label><span class="text-danger">*</span>
+                                        <div class="input-form-box" style="position: relative;top:.2rem">
+                                            <textarea style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('machinery')" (keyup)="onSerialNoChange('machinery')" class="input-form-control without-icon" cols="40" rows="1" maxlength="100" [(ngModel)]="serialNoDesc" [ngModelOptions]="{standalone: true}"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button class="btn btn-danger btn-sm mr-5" (click)="onMachineryCancel()"> Cancel</button>&nbsp;&nbsp;
+                                    <button class="btn btn-primary btn-sm" (click)="onMachinerySave()"> Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
             </div>
         </div>
     </div>
