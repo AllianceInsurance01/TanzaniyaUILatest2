@@ -1112,6 +1112,7 @@ toggle(index: number) {
           "MobileCodeDesc1":"1",
           "WhatsappDesc":"1",
           "WhatsappNo": this.mobileNo,
+          "PinCode":  this.customerDetails?.PinCode,
           "StateCode":  this.customerDetails?.StateCode,
           "StateName":  this.customerDetails?.StateName,
           "Status": this.customerDetails?.Clientstatus,

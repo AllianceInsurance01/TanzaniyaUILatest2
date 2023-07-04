@@ -227,6 +227,14 @@
                                 </ng-select>
                             </div>
                         </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">PinCode</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" maxlength="15" (keypress)="omit_special_char($event)" class="input-form-control without-icon"  [(ngModel)]="productItem.PinCode">
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="productItem.IdType!='1'">
                             <div class="input-control-container">
                                 <label class="input-form-label">Business Type</label><span class="text-danger">*</span>

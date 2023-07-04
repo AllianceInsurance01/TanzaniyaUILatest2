@@ -49,7 +49,7 @@ export class ProductData {
 	backorderLimit: number = 0
 	backordered = false
 	image?: string = ''
-	id: string = ''
+	id: string = '';PinCode:any=null;
   maxDate: "2022-09-25"
   /*const currentYear = new Date().getFullYear();
   minDate= new Date(currentYear - 20, 0, 1);*/

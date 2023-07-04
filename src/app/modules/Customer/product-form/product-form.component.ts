@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common'
 import { SharedService } from 'src/app/shared/shared.service'
 import * as Mydatas from '../../../app-config.json';
 import { MatStepper } from '@angular/material/stepper'
+import Swal from 'sweetalert2'
 
 
 @Component({
@@ -487,6 +488,7 @@ export class ProductFormComponent implements OnInit {
 		];
 		let refNo = sessionStorage.getItem('customerReferenceNo');
 		if (refNo) {
+			this.productItem = new ProductData()
 			this.customerReferenceNo = refNo;
 		}
 		else {
@@ -523,7 +525,6 @@ export class ProductFormComponent implements OnInit {
 							this.getPolicyHolderList();
 						}
 					}
-
 				}
 			},
 			(err) => { },
@@ -795,7 +796,7 @@ export class ProductFormComponent implements OnInit {
 					this.productItem.Clientstatus = customerDetails.Clientstatus;
 					this.productItem.EmailId = customerDetails.Email1;
 					this.productItem.Country = customerDetails.Nationality;
-					
+					this.productItem.PinCode = customerDetails.PinCode;
 					this.productItem.Gender = customerDetails.Gender;
 					this.productItem.IdNumber = customerDetails.IdNumber;
 					this.productItem.IdType = customerDetails.PolicyHolderType;
@@ -914,6 +915,7 @@ export class ProductFormComponent implements OnInit {
 			"Street": data?.Street,
 			"TaxExemptedId": taxExemptedId,
 			"TelephoneNo1": data?.TelephoneNo,
+			"PinCode": data?.PinCode,
 			"TelephoneNo2": null,
 			"TelephoneNo3": null,
 			"Title": data.Title,
@@ -927,19 +929,32 @@ export class ProductFormComponent implements OnInit {
 				console.log(data);
 				if (data.ErrorMessage.length != 0) {
 					if (res.ErrorMessage) {
-						for (let entry of res.ErrorMessage) {
-
-							//     this.toastr.error(
-							//       entry.Field,
-							//       entry.Message);
+						const errorList: any[] = res.ErrorMessage || res?.Result?.ErrorMessage;
+            				let ulList:any='';
+							for (let index = 0; index < errorList.length; index++) {
+			
+							const element = errorList[index];
+							ulList +=`<li class="list-group-login-field">
+								<div style="color: darkgreen;">Field<span class="mx-2">:</span>${element?.Field}</div>
+								<div style="color: red;">Message<span class="mx-2">:</span>${element?.Message}</div>
+							</li>`
+							}
+							Swal.fire({
+							title: '<strong>Form Validation</strong>',
+							icon: 'info',
+							html:
+								`<ul class="list-group errorlist">
+								${ulList}
+							</ul>`,
+							showCloseButton: true,
+							focusConfirm: false,
+							confirmButtonText:
+								'<i class="fa fa-thumbs-down"></i> Errors!',
+							confirmButtonAriaLabel: 'Thumbs down, Errors!',
+							})
 						}
-					}
 				}
 				else {
-					;
-					// this.toastr.success(
-					// 	  'Customer Details',
-					// 	  'Customer Details Inserted/Updated Successfully',);
 					sessionStorage.removeItem('customerReferenceNo');
 					this.router.navigate(['/Home/customer/'])
 				}
