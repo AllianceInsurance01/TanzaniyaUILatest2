@@ -29,13 +29,8 @@ export class RejectedQuotesComponent implements OnInit {
           isCollapseName:'Vehicles'
         },
       },
-      {
-        key: 'actions',
-        display: 'Action',
-        config: {
-          isEdit: true,
-        },
-      },
+      { key: 'RejectReason', display: 'Reject Reason' },
+      
     ];
     this.innerColumnHeader =  [
       { key: 'Vehicleid', display: 'VehicleID' },
