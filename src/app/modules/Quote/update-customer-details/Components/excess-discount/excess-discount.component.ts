@@ -682,13 +682,21 @@ getCoverList(coverListObj){
     }
 
 getInsuranceClassList(){
+  let loginId = null;
+    if(this.userType!='Issuer'){
+      loginId=this.loginId;
+    }
+    else{
+      loginId = this.vehicleDetailsList[0].LoginId;
+      if(this.updateComponent.brokerLoginId) loginId = this.updateComponent.brokerLoginId
+    }
   let ReqObj = {
     "InsuranceId": this.insuranceId,
     "ProductId": this.productId,
     "BranchCode": this.branchCode,
     "LoginId":this.loginId
   }
-  let urlLink = `${this.ApiUrl1}master/dropdown/policytype`;
+  let urlLink = `${this.ApiUrl1}`;
   this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
     (data: any) => {
       if(data.Result){
@@ -2606,7 +2614,14 @@ getMotorUsageList(vehicleValue){
   onProceed(coverList:any){
     if(this.statusValue == 'RA' && !this.adminSection){
       if(this.productId!='4'){
-        if(this.productId=='3' || this.productId=='19' || this.productId=='32' || this.productId=='14' || this.productId=='39' || this.productId=='1' || this.productId=='6' || this.productId=='16'){
+        // if(this.productId=='5'){
+        //       let accessoriesSI = this.vehicleData[0]?.RiskDetails?.AcccessoriesSumInsured;
+        //       if(accessoriesSI!=null && accessoriesSI!=0 && accessoriesSI!=undefined){
+        //         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
+        //       }
+        //       else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
+        // }
+         if(this.productId=='3' || this.productId=='19' || this.productId=='32' || this.productId=='14' || this.productId=='39' || this.productId=='1' || this.productId=='6' || this.productId=='16'){
           let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
           if(homeSession){
             this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
@@ -2910,6 +2925,13 @@ getMotorUsageList(vehicleValue){
       else if(this.productId == '4'){
         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']);
       }
+      // else if(this.productId=='5'){
+      //   let accessoriesSI = this.vehicleData[0]?.RiskDetails?.AcccessoriesSumInsured;
+      //   if(accessoriesSI!=null && accessoriesSI!=0 && accessoriesSI!=undefined){
+      //     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
+      //   }
+      //   else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
+      // }
       else if(this.productId=='32' || this.productId=='14' || this.productId=='15' || this.productId=='19' || this.productId=='39' || this.productId=='1' || this.productId=='6' || this.productId=='16'){
         // let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
         // if(homeSession){
@@ -2982,6 +3004,13 @@ getMotorUsageList(vehicleValue){
               else if(this.productId == '4'){
                 this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']);
               }
+              // else if(this.productId=='5'){
+              //   let accessoriesSI = this.vehicleData[0]?.RiskDetails?.AcccessoriesSumInsured;
+              //   if(accessoriesSI!=null && accessoriesSI!=0 && accessoriesSI!=undefined){
+              //     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
+              //   }
+              //   else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
+              // }
               else if(this.productId=='32' || this.productId=='14' || this.productId=='19' || this.productId=='39' || this.productId=='1' || this.productId=='6' || this.productId=='16'){
                 this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
                 // let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));

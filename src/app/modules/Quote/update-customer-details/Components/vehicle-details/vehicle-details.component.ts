@@ -113,7 +113,7 @@ export class VehicleDetailsComponent implements OnInit {
       }
     }
     this.getInsuranceTypeList();
-    this.getInsuranceClassList();
+    
     this.getBorrowerList();
     this.getBankList();
     this.getUWDetails();
@@ -246,11 +246,19 @@ export class VehicleDetailsComponent implements OnInit {
     );
   }
   getInsuranceClassList(){
+    let loginId = null;
+    if(this.userType!='Issuer'){
+      loginId=this.loginId;
+    }
+    else{
+      loginId = this.vehicleDetailsList[0].LoginId;
+      if(this.updateComponent.brokerLoginId) loginId = this.updateComponent.brokerLoginId
+    }
     let ReqObj = {
       "InsuranceId": this.insuranceId,
       "ProductId": this.productId,
       "BranchCode": this.branchCode,
-      "LoginId":this.loginId
+      "LoginId":loginId
     }
     let urlLink = `${this.ApiUrl1}master/dropdown/policytype`;
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
@@ -425,6 +433,7 @@ export class VehicleDetailsComponent implements OnInit {
                     this.acExecutiveId = vehicleDetails[0].AcExecutiveId;
                     this.commissionType = vehicleDetails[0].CommissionType;
                     this.havePromoCodeYN = vehicleDetails[0].HavePromoCode;
+                    this.getInsuranceClassList();
                     if(this.policyStartDate==null || this.policyStartDate == '' || this.policyStartDate == undefined){
                       console.log("Vehicle Details on First Edit",this.policyStartDate,vehicleDetails[0])
                       if(vehicleDetails[0].PolicyStartDate != null ){

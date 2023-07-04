@@ -161,7 +161,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   errorRecords: any[]=[];
   uploadStatus: any;
   closeResult: string;
-  errorRowNum: any;
+  errorRowNum: any;accessoriesList:any[]=[];
   employeeErrorList: any[]=[];
   empJoiningMonth: any;
   originalEmployeeList: any[]=[];
@@ -180,6 +180,10 @@ export class DomesticRiskDetailsComponent implements OnInit {
   currentMachineryIndex: number;
   editMachinerySection: boolean;
   totalMachinerySI: number;
+  buildingDetailsSection: boolean;
+  currentAccessoriesIndex: number;
+  editAccessoriesSection: boolean;
+  enableAccessoriesEditSection: boolean;
   constructor(private router: Router,private datePipe:DatePipe,private modalService: NgbModal,
      private sharedService: SharedService,) {
     let homeObj = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
@@ -210,6 +214,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
       this.quoteRefNo = referenceNo;
       this.Section = false;
     }
+    if(this.productId=='5') this.buildingDetailsSection=false;
+    else this.buildingDetailsSection = true;
     
     this.getSumInsuredDetails();
     this.Electronic();
@@ -2706,6 +2712,20 @@ onFidelitySave(){
     this.editBuildingSection = false;
     this.enableBuildingEditSection = true;
     this.building.push(entry);
+  }
+  AddNewAccessories(){
+    let entry = {
+      "AccessoriesType": null,
+      "ChassisNo": null,
+      "SerialNo": null,
+      "SumInsured": null,
+      "RiskId": null,
+      "SectionId": ""
+    }
+    this.currentAccessoriesIndex = this.machineries.length;
+    this.editAccessoriesSection = false;
+    this.enableAccessoriesEditSection = true;
+    this.accessoriesList.push(entry);
   }
   AddNewMachinery(){
     let entry = {

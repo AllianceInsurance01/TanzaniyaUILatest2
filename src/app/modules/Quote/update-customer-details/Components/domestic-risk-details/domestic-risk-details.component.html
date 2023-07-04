@@ -5,7 +5,7 @@
     <div class="col-12">
         <div class="maan-grid customer-grid maan-grid-column-1">
             <div class="maan-grid-item">
-                <mat-tab label="Building">
+                <mat-tab label="Building" *ngIf="buildingDetailsSection">
                     <!--table-->
                     <div>
                         <!-- <div class="row mt-1">
@@ -1716,6 +1716,53 @@
                                 <div class="text-center">
                                     <button class="btn btn-danger btn-sm mr-5" (click)="onMachineryCancel()"> Cancel</button>&nbsp;&nbsp;
                                     <button class="btn btn-primary btn-sm" (click)="onMachinerySave()"> Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Accessories" *ngIf="!buildingDetailsSection">
+                    <!--table-->
+                    <div>
+                        <!-- <div class="row mt-1">
+                        </div> table_expand-->
+                        <div class="row mt-2" *ngIf="!enableAccessoriesEditSection">
+                            <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                                <div class="boxForm">
+                                    <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                        <div class="headcommon">
+                                            <span><i class="fas fa-home mx-1 mt-3"></i></span>
+                                            <span class="spancommon span_font_size" style="font-weight:600">Accessories Details</span>
+                                        </div>
+                                        <div >
+                                            Currency({{currencyValue}})
+                                        </div>
+                                        <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('accessories') && accessoriesList.length!=0"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNewAccessories()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
+                                    </div>
+                                    <!-- <span><u> Building Risk Details </u></span> -->
+                                    <div  *ngIf="accessoriesList.length==0">
+                                        <div class="groupBtnMembers text-center">
+                                            <div class="groupBtnMembers__desc groupBtnMembers__desc_top">
+                                                Enter All Accessories Details that you want to insure
+                                            </div>
+                                                <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNewAccessories()"><i class="fa fa-plus-circle"></i>&nbsp; Add New</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                    
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="enableAccessoriesEditSection">
+                            <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                                <div class="boxForm" >
+                                        <span><u>Accessories Risk Details </u></span>
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                            <label class="input-form-label">Accessories</label><span class="text-danger">*</span>
+                                            <ng-select class="custom" [items]="LocationList"  [disabled]="checkEndorseDisable('content')" [(ngModel)]="LocationId" placeholder="Select Location" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                                            </ng-select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -207,11 +207,18 @@ export class TravelQuoteDetailsComponent implements OnInit {
     );
   }
   premiunDropdown(value) {
+    let loginId = null;
+    if(this.userType!='Issuer'){
+      loginId=this.loginId;
+    }
+    else{
+      loginId = this.updateComponent.brokerLoginId;
+    }
     let ReqObj = {
       "InsuranceId": this.insuranceId,
       "ProductId": this.productId,
       "CountryId": this.TravelForm.controls['SourceCountry'].value,
-      "LoginId":this.loginId
+      "LoginId":loginId
     }
     let urlLink = `${this.CommonApiUrl}master/dropdown/countryplans`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
