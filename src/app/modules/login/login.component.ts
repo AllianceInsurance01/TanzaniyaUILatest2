@@ -227,6 +227,38 @@ export class LoginComponent {
             this.changeForm.reset();
             this.loginForm.reset();
             this.loginSection = false;
+            this.loginfirst = false;
+            this.forget = false;
+            this.changePasswordSection = false;
+          }
+          else  if (res?.ErrorMessage && res?.ErrorMessage.length > 0 || res?.Result?.ErrorMessage && res?.Result?.ErrorMessage.length > 0) {
+            const errorList: any[] = res.ErrorMessage || res?.Result?.ErrorMessage;
+            let ulList:any='';
+             let entry:any[] =  errorList.filter(ele=>ele.Field=='SessionError')
+             console.log("checked entry",entry);
+                for (let index = 0; index < errorList.length; index++) {
+  
+                  const element = errorList[index];
+                   ulList +=`<li class="list-group-login-field">
+                     <div style="color: darkgreen;">Field<span class="mx-2">:</span>${element?.Field}</div>
+                     <div style="color: red;">Message<span class="mx-2">:</span>${element?.Message}</div>
+                   </li>`
+                }
+               if(entry.length==0){
+                  Swal.fire({
+                   title: '<strong>Form Validation</strong>',
+                   icon: 'info',
+                   html:
+                     `<ul class="list-group errorlist">
+                      ${ulList}
+                   </ul>`,
+                   showCloseButton: true,
+                   focusConfirm: false,
+                   confirmButtonText:
+                     '<i class="fa fa-thumbs-down"></i> Errors!',
+                   confirmButtonAriaLabel: 'Thumbs down, Errors!',
+                 })
+               }
           }
         });
     }
@@ -260,6 +292,24 @@ export class LoginComponent {
               <li class="list-group-login-field">
                 <div style="color: darkgreen;">Field<span class="mx-2">:</span>Temporary Password</div>
                 <div style="color: red;">Message<span class="mx-2">:</span>Please Enter Temporary Password</div>
+             </li>
+            </ul>`,
+            showCloseButton: true,
+            focusConfirm: false,
+            confirmButtonText:
+              '<i class="fa fa-thumbs-down"></i> Errors!',
+            confirmButtonAriaLabel: 'Thumbs down, Errors!',
+          })
+        }
+        if( p =='ChangePassword' && formData.OldPassword == formData.NewPassword){
+          Swal.fire({
+            title: '<strong>Form Validation</strong>',
+            icon: 'info',
+            html:
+              `<ul class="list-group errorlist">
+              <li class="list-group-login-field">
+                <div style="color: darkgreen;">Field<span class="mx-2">:</span>Password Details</div>
+                <div style="color: red;">Message<span class="mx-2">:</span>New Password cannot Be same as Old Password</div>
              </li>
             </ul>`,
             showCloseButton: true,
