@@ -321,6 +321,19 @@ export class MotorDocumentsComponent implements OnInit {
 
     onRisk(){
 let ReqObj ={
+  "ApplicationId": null,
+  "BranchCode": null,
+  "CustomerCode": null,
+  "InsuranceId": null,
+  "LoginId": null,
+  "MotorCategory": null,
+  "RequestReferenceNo": null,
+  "SearchKey": null,
+  "SearchValue": null,
+  "UserType": null,
+  "VehicleMake": null,
+  "VehicleModel": null,
+  "VehicleType": null,
   "QuoteNo":this.quoteNo,
   "ProductId":this.productId,
 }
@@ -360,10 +373,20 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
            //this.customerData = [];
            let ReqObj = {
             "ApplicationId": app,
-         "QuoteNo":this.quoteNo,
-         "ProductId":this.productId,
-         "LoginId": this.loginId,
-
+            "QuoteNo":this.quoteNo,
+            "ProductId":this.productId,
+            "LoginId": this.loginId,
+            "BranchCode": null,
+            "CustomerCode": null,
+            "InsuranceId": null,
+            "MotorCategory": null,
+            "RequestReferenceNo": null,
+            "SearchKey": null,
+            "SearchValue": null,
+            "UserType": null,
+            "VehicleMake": null,
+            "VehicleModel": null,
+            "VehicleType": null
      
            }
            let urlLink = `${this.CommonApiUrl}api/adminviewcustomerdetails`;
@@ -388,6 +411,19 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
 
        onRating(){
         let ReqObj={
+          "ApplicationId": null,
+          "BranchCode": null,
+          "CustomerCode": null,
+          "InsuranceId": null,
+          "LoginId": null,
+          "MotorCategory": null,
+          "SearchKey": null,
+          "SearchValue": null,
+          "UserType": null,
+          "VehicleMake": null,
+          "VehicleModel": null,
+          "VehicleType": null,
+          "QuoteNo": null,
           "RequestReferenceNo":this.ReferenceNo,
            "ProductId":this.productId
         }
