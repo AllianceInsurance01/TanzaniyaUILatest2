@@ -73,6 +73,7 @@ export class CustomerDetailsComponent implements OnInit {
   industryList: any[];
   buildingOwnerYN: any = 'N';
   endMaxDate: Date;
+  brokerBranchCodeError: boolean;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       
@@ -668,6 +669,7 @@ export class CustomerDetailsComponent implements OnInit {
           //if(this.Code=='Agent') this.executiveSection = true;
           if(type=='change'){
             this.brokerCode = null;
+            this.brokerBranchCode = null;
           }
           else{
             //if(this.Code=='Broker' || this.Code=='Agent'){
@@ -677,7 +679,7 @@ export class CustomerDetailsComponent implements OnInit {
                 this.updateComponent.brokerLoginId = this.brokerLoginId;
                 this.updateComponent.brokerCode = this.brokerCode;
               }
-              this.getBrokerBranchList();
+              this.getBrokerBranchList('direct');
             // }
             // else if(this.brokerCode){
             //   let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
@@ -709,7 +711,7 @@ export class CustomerDetailsComponent implements OnInit {
         this.updateComponent.brokerLoginId = this.brokerLoginId;
         this.updateComponent.brokerCode = this.brokerCode;
       }
-      this.getBrokerBranchList();
+      this.getBrokerBranchList('change');
     // }
     // else if(this.brokerCode){
     //   let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
@@ -727,7 +729,7 @@ export class CustomerDetailsComponent implements OnInit {
   onBrokerBranchChange(){
     this.updateComponent.brokerBranchCode = this.brokerBranchCode;
   }
-  getBrokerBranchList(){
+  getBrokerBranchList(type){
     let urlLink = `${this.ApiUrl1}api/brokerbranches`;
     let ReqObj = {
       "BrokerCode": this.brokerCode,
@@ -741,6 +743,10 @@ export class CustomerDetailsComponent implements OnInit {
         console.log(data);
         if(data.Result){
             this.brokerBranchList = data?.Result;
+            if(type=='change' && this.brokerBranchList.length==1){
+              this.brokerBranchCode = this.brokerBranchList[0].Code;
+              this.updateComponent.brokerBranchCode = this.brokerBranchCode;
+            }
           }
         },
         (err) => { },
@@ -753,6 +759,7 @@ export class CustomerDetailsComponent implements OnInit {
         console.log(data);
         if(data.Result){
             this.brokerList = data?.Result;
+            
             /*if(this.brokerValue!=undefined && this.insuranceId!=undefined){
               let useObj = {"broker":this.brokerValue,"insuranceId":this.insuranceId};
               sessionStorage.setItem('adduserDetailsObj',JSON.stringify(useObj));
@@ -1124,7 +1131,6 @@ export class CustomerDetailsComponent implements OnInit {
                         this.updateComponent.resetVehicleTab();
                         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/motor-details'])
                       }
-  
                     }
                     else if(this.PromoCode!='' && this.PromoCode!=undefined && this.PromoCode!=null){
                       this.promoError = false;
@@ -1199,32 +1205,36 @@ export class CustomerDetailsComponent implements OnInit {
             this.sourceCodeError = false;
             if(this.brokerCode!='' && this.brokerCode!=undefined && this.brokerCode!=null){
               this.brokerCodeError = false;
-              if(this.customerName!='' && this.customerName!=undefined && this.customerName!=null){
-                this.customerCodeError = false;
-                  if(this.executiveSection){
-                    if(this.executiveValue!='' && this.executiveValue!=undefined && this.executiveValue!=null){
-                        this.executiveError=false;
-                        if(this.commissionValue!='' && this.commissionValue!=undefined && this.commissionValue!=null){
-                          this.commissionError=false;
-                          return true;
+              if(this.brokerBranchCode!='' && this.brokerBranchCode!=undefined && this.brokerBranchCode!=null){
+                this.brokerBranchCodeError = false;
+                  if(this.customerName!='' && this.customerName!=undefined && this.customerName!=null){
+                    this.customerCodeError = false;
+                      if(this.executiveSection){
+                        if(this.executiveValue!='' && this.executiveValue!=undefined && this.executiveValue!=null){
+                            this.executiveError=false;
+                            if(this.commissionValue!='' && this.commissionValue!=undefined && this.commissionValue!=null){
+                              this.commissionError=false;
+                              return true;
+                            }
+                            else{
+                              this.commissionError=true;
+                            }
                         }
                         else{
-                          this.commissionError=true;
+                          this.executiveError=true;
                         }
-                    }
-                    else{
-                      this.executiveError=true;
-                    }
+                      }
+                      else{
+                        this.executiveValue = null;
+                        this.commissionValue = null;
+                        return true;
+                      }
                   }
                   else{
-                    this.executiveValue = null;
-                    this.commissionValue = null;
-                    return true;
+                      this.customerCodeError = true;
                   }
               }
-              else{
-                  this.customerCodeError = true;
-              }
+              else this.brokerBranchCodeError = true;
             
             }
             else{
@@ -1311,7 +1321,7 @@ export class CustomerDetailsComponent implements OnInit {
     }
     else{
       if(this.vehicleWishList.length!=0){
-        let j=0;
+        let j=0;k=0;
         for(let vehicle of this.vehicleWishList){
           let m = k+1;
           if(this.endorsementSection && vehicle.EndorsementYn=='Y'){
@@ -1332,13 +1342,14 @@ export class CustomerDetailsComponent implements OnInit {
           vehicle['HavePromoCode'] = this.HavePromoCode;
           vehicle['PromoCode'] = this.PromoCode;
           vehicle['ExchangeRate'] = this.exchangeRate;
-          vehicle['Vehicleid'] = String(m);
+          vehicle['Vehicleid'] = String(j+1);
           vehicle['Active'] = false;
           vehicleList.push(vehicle);
+          
           j+=1;
           if(j==this.vehicleWishList.length){
             sessionStorage.setItem('vehicleDetailsList',JSON.stringify(vehicleList));
-            sessionStorage.setItem('vehicleLength',String(m+1))
+            sessionStorage.setItem('vehicleLength',String(j+1))
             sessionStorage.setItem('vehicleType','new');
             sessionStorage.removeItem('vehicleDetails');
             this.updateComponent.resetVehicleTab();

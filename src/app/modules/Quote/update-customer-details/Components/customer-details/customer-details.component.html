@@ -221,6 +221,11 @@
                                         <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerBranchCode" [disabled]="endorsementSection" [items]="brokerBranchList" (change)="onBrokerBranchChange()" bindValue="Code" bindLabel="CodeDesc">
                                         </ng-select>
                                 </div>
+                                <div class="input-form-error" *ngIf="brokerBranchCodeError">
+                                    <div class="error-text text-danger">
+                                        Please Select BrokerBranchCode
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row p-1">
