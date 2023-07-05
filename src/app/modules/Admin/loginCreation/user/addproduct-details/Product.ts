@@ -24,6 +24,6 @@ export class Product  {
   "CreatedBy":null;
   "LoginId":null;
   "CommissionPercent":null;
-
+  "BrokerCommssionDetails":any[];
   }
   

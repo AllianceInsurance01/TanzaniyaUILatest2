@@ -31,24 +31,22 @@ export class AddproductDetailsComponent implements OnInit {
   oaCode: any;
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe) {
+      this.minDate = new Date();
       let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if(userDetails){
       this.loginId = userDetails?.Result?.LoginId;
     }
+    this.productDetails = new Product();
     let userObj = JSON.parse(sessionStorage.getItem('userEditDetails'));
     if(userObj){
       if(userObj.loginId) this.userLoginId = userObj.loginId;
       if(userObj.BrokerId) this.BrokerCode = userObj.BrokerId;
-      console.log('Product loginid',this.userLoginId)
       if(userObj.InsuranceId) this.insuranceId = userObj.InsuranceId;
-      console.log('Product insuranceId',this.insuranceId)
       if(userObj.userId) this.userId = userObj.userId;
-
       if(userObj.ProductId!=null)this.productId = userObj.ProductId;
       else this.productId = null;
       if(userObj.OaCode!=null)this.oaCode = userObj.OaCode;
       else this.oaCode = null;
-      console.log('Oac.....',this.oaCode)
     }
     this.userId = this.userLoginId;
     this.productDetails = new Product();
@@ -93,6 +91,34 @@ export class AddproductDetailsComponent implements OnInit {
           if(this.productDetails?.EffectiveDateEnd!=null){
             this.productDetails.EffectiveDateEnd = this.onDateFormatInEdit(this.productDetails?.EffectiveDateEnd)
           }
+          if(this.productDetails?.BrokerCommssionDetails)
+          console.log("Commission Details",this.productDetails?.BrokerCommssionDetails)
+          if(this.productDetails?.BrokerCommssionDetails.length!=0){
+            if(this.productDetails?.BrokerCommssionDetails.length==1){
+              this.productDetails.CommissionPercent = this.productDetails?.BrokerCommssionDetails[0].CommissionPercent;
+              if(this.productDetails?.BrokerCommssionDetails[0].CommissionVatYn!=null){
+                this.productDetails.CommissionVatPercent = this.productDetails?.BrokerCommssionDetails[0].CommissionVatPercent;
+                this.productDetails.CommissionVatYn = this.productDetails?.BrokerCommssionDetails[0].CommissionVatYn;
+              }
+              else{
+                this.productDetails.CommissionVatPercent = null;
+                this.productDetails.CommissionVatYn = 'N';
+              }
+              this.productDetails.SumInsuredEnd = this.productDetails?.BrokerCommssionDetails[0].SumInsuredEnd;
+              this.productDetails.SumInsuredStart = this.productDetails?.BrokerCommssionDetails[0].SumInsuredStart;
+              this.productDetails.BackDays = this.productDetails?.BrokerCommssionDetails[0].BackDays;
+              this.productDetails.CoreAppCode = this.productDetails?.BrokerCommssionDetails[0].CoreAppCode;
+              this.productDetails.RegulatoryCode = this.productDetails?.BrokerCommssionDetails[0].RegulatoryCode;
+            }
+            else{
+              let i = 0;
+              for(let row of this.productDetails?.BrokerCommssionDetails){
+                    this.SIStartListCommaFormatted(i);
+                    this.SIEndListCommaFormatted(i);
+                    i+=1;
+              }
+            }
+          }
         }
         }
      this.SIEndCommaFormatted();
@@ -125,10 +151,54 @@ export class AddproductDetailsComponent implements OnInit {
       }
     }
   }
+  onSelectPolicyTypeRow(event,index){
+    let entry = this.productDetails.BrokerCommssionDetails[index];
+    if(event) entry.SelectedYn = 'Y';
+    else entry.SelectedYn = 'N';
+  }
   ongetBack(){
     this.router.navigate(['/Admin/userList/UserproductList'])
   }
-  onProceed(){
+  onFormSubmit(){
+    let finalList = [];
+    if(this.productDetails.BrokerCommssionDetails.length==1){
+      let details = this.productDetails.BrokerCommssionDetails[0];
+      let SumInsuredEnd="",SumInsuredStart="",windSI="",tppSI="" ;
+      if(this.productDetails.SumInsuredEnd==undefined) details.SumInsuredEnd = null;
+      else if(this.productDetails.SumInsuredEnd.includes(',')){details.SumInsuredEnd = this.productDetails.SumInsuredEnd.replace(/,/g, '') }
+      else details.SumInsuredEnd = this.productDetails.SumInsuredEnd;
+      if(this.productDetails.SumInsuredStart==undefined) details.SumInsuredStart = null;
+      else if(this.productDetails.SumInsuredStart.includes(',')){ details.SumInsuredStart = this.productDetails.SumInsuredStart.replace(/,/g, '') }
+      else details.SumInsuredStart = this.productDetails.SumInsuredStart;
+      details.RegulatoryCode = this.productDetails.RegulatoryCode;
+      details.CoreAppCode = this.productDetails.CoreAppCode;
+      details.CommissionPercent = this.productDetails.CommissionPercent;
+      details.BackDays = this.productDetails.BackDays;
+      details.CommissionVatPercent = this.productDetails.CommissionVatPercent;
+      details.CommissionVatYn = this.productDetails.CommissionVatYn;
+      finalList.push(details);
+      this.onProceed(finalList)
+    }
+    else{
+      let i=0;
+      for(let row of this.productDetails.BrokerCommssionDetails){
+        if(row.SelectedYn=='Y'){
+          if(row.SumInsuredEnd==undefined) row.SumInsuredEnd = null;
+          else if(row.SumInsuredEnd.includes(',')){row.SumInsuredEnd = row.SumInsuredEnd.replace(/,/g, '') }
+          else row.SumInsuredEnd = row.SumInsuredEnd;
+          if(row.SumInsuredStart==undefined) row.SumInsuredStart = null;
+          else if(row.SumInsuredStart.includes(',')){ row.SumInsuredStart = row.SumInsuredStart.replace(/,/g, '') }
+          else row.SumInsuredStart = row.SumInsuredStart;
+          if(row.CommissionVatPercent!=null && row.CommissionVatPercent!=undefined) row.CommissionVatYn = "Y";
+          else row.CommissionVatYn = "N";
+          finalList.push(row);
+        }
+        i+=1;
+        if(i==this.productDetails.BrokerCommssionDetails.length) this.onProceed(finalList)
+      }
+    }
+  }
+  onProceed(finalList){
     let SumInsuredEnd="",SumInsuredStart="",windSI="",tppSI="" ;
     if(this.productDetails.SumInsuredEnd==undefined) SumInsuredEnd = null;
     else if(this.productDetails.SumInsuredEnd.includes(',')){SumInsuredEnd = this.productDetails.SumInsuredEnd.replace(/,/g, '') }
@@ -154,16 +224,22 @@ export class AddproductDetailsComponent implements OnInit {
       "BackDays": this.productDetails.BackDays,
       "EffectiveDateStart": this.productDetails.EffectiveDateStart,
       "EffectiveDateEnd": this.productDetails.EffectiveDateEnd,
-      "CommissionVatYn": this.productDetails.CommissionVatYn,
       "MakerYn": this.productDetails.CheckerYn,
       "CustConfirmYn": this.productDetails.CustConfirmYn,
-      "SumInsuredStart": SumInsuredStart,
-      "SumInsuredEnd": SumInsuredEnd,
       "RegulatoryCode": this.productDetails.RegulatoryCode,
       "CreatedBy": this.loginId,
       "CommissionPercent": this.productDetails.CommissionPercent,
       "LoginId": this.productDetails.LoginId,
-      "CoreAppCode": this.productDetails.CoreAppCode
+      "CoreAppCode": this.productDetails.CoreAppCode,
+      "FinanceIds": [
+        
+      ],
+      "NonFinanceIds": [
+          
+      ],
+     "PolicyTypeId":"",
+     "PolicyTypeDesc":"",
+      "BrokerCommissionDetails": finalList
     }
     let urlLink = `${this.CommonApiUrl1}admin/updatebrokercompanyproducts`;
     if (ReqObj.EffectiveDateStart != '' && ReqObj.EffectiveDateStart != null && ReqObj.EffectiveDateStart != undefined) {
@@ -230,7 +306,7 @@ export class AddproductDetailsComponent implements OnInit {
       return true;
     }
   }
-  SIEndCommaFormatted() {
+    SIEndCommaFormatted() {
 
     // format number
     if (this.productDetails.SumInsuredEnd) {
@@ -243,7 +319,21 @@ export class AddproductDetailsComponent implements OnInit {
       if (this.productDetails.SumInsuredStart) {
        this.productDetails.SumInsuredStart = this.productDetails.SumInsuredStart.replace(/\D/g, "")
          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      }}
+    }}
+    SIStartListCommaFormatted(index){
+      let entry = this.productDetails.BrokerCommssionDetails[index];
+      if (entry.SumInsuredStart) {
+        entry.SumInsuredStart = entry.SumInsuredStart.replace(/\D/g, "")
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+       }
+      }
+      SIEndListCommaFormatted(index){
+        let entry = this.productDetails.BrokerCommssionDetails[index];
+        if (entry.SumInsuredEnd) {
+          entry.SumInsuredEnd = entry.SumInsuredEnd.replace(/\D/g, "")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+      }
     accessoriesCommaFormatted() {
 
       // format number
