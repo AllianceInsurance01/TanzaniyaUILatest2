@@ -328,7 +328,7 @@
 
                     <div><span><i class="fas fa-home mx-1 mt-3"></i>
                         </span> <b font-style="24px;">Driver Details</b> </div>
-                    <div class="mr-3"> <button class="maan-btn maan-btn-blue maan-button-data"  *ngIf="!endorsementSection" (click)="AddNew()"><i class="fas fa-plus mx-1"></i>&nbsp;Add New </button></div>
+                    <div class="mr-3"> <button class="maan-btn maan-btn-blue maan-button-data"  *ngIf="(endorsementSection && enableDriverDetails) || !endorsementSection" (click)="AddNew()"><i class="fas fa-plus mx-1"></i>&nbsp;Add New </button></div>
                 </div>
             </div>
             

@@ -103,7 +103,7 @@ export class PremiumDetailsComponent implements OnInit {
         if(this.endorsementId!=42 && this.endorsementId!=842){
           this.enableCustomerDetails = this.enableFieldsList.some(ele=>ele=='customerName');
           this.enableDocumentDetails = this.enableFieldsList.some(ele=>ele=='documentId');
-          this.enableDriverDetails = this.enableFieldsList.some(ele=>ele=='driverName');
+          this.enableDriverDetails = this.enableFieldsList.some(ele=>ele=='driverName' || ele=='DriverName');
           
         }
       }
