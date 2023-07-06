@@ -185,6 +185,12 @@ export class DomesticRiskDetailsComponent implements OnInit {
   editAccessoriesSection: boolean;
   enableAccessoriesEditSection: boolean;
   totalAccessoriesSI: any;
+  chassisNo: null;
+  accessoriesType: null;
+  chassisNoError: boolean;
+  accessoriesTypeError: boolean;
+  sumInsuredError: boolean;
+  totalAccSIError: boolean;
   constructor(private router: Router,private datePipe:DatePipe,private modalService: NgbModal,
      private sharedService: SharedService,) {
     let homeObj = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
@@ -418,13 +424,12 @@ export class DomesticRiskDetailsComponent implements OnInit {
           this.Riskdetails = data?.Result?.RiskDetails;
           this.customerDetails=data?.Result?.CustomerDetails;
           if(this.Riskdetails[0].AcccessoriesSumInsured!=null)
-          this.totalAccessoriesSI = String(this.Riskdetails[0].AcccessoriesSumInsured);
+          this.actualAccessoriesSI = String(this.Riskdetails[0].AcccessoriesSumInsured);
           for (let cover of this.Riskdetails) {
             let j = 0;
             for (let section of cover?.SectionDetails) {
               let CoverData = section.Covers;
               for (let subsectioncover of section?.Covers) {
-                console.log("subsectioncover", subsectioncover);
                 if (cover?.totalPremium) {
                   cover['totalLcPremium'] = cover['totalLcPremium'] + subsectioncover?.PremiumIncludedTaxLC;
                   cover['totalPremium'] = cover['totalPremium'] + subsectioncover?.PremiumIncludedTax;
@@ -439,7 +444,6 @@ export class DomesticRiskDetailsComponent implements OnInit {
                 otherCovers = CoverData.filter(ele => ele.CoverageType != 'B');
                 section.Covers = baseCovers.concat(otherCovers);
                 this.CoverList.push(cover);
-                console.log("CoverList", this.CoverList);
                 if (j == cover?.SectionDetails) {
                   this.CoverList.push(cover);
                   console.log("vehicleList", this.CoverList);
@@ -599,6 +603,12 @@ export class DomesticRiskDetailsComponent implements OnInit {
     if(!this.editContentSection) this.Cotentrisk.splice(this.currentContentIndex,1);
     this.LocationId = null;this.serialNoDesc = null;this.contentRiskDesc = null;
     this.contentSI = null;this.contentId = null;this.enableContentEditSection=false;
+  }
+  onAccessoriesCancel(){
+    if(!this.editAccessoriesSection) this.accessoriesList.splice(this.currentAccessoriesIndex,1);
+    this.chassisNo = null;this.accessoriesType=null;this.serialNoDesc=null;this.SumInsured=null;
+    this.currentAccessoriesIndex = null;
+    this.enableAccessoriesEditSection=false;
   }
   onEmplyeeCancel(){
     if(!this.editEmployeeSection) this.employeeList.splice(this.currentEmployeeIndex,1);
@@ -886,6 +896,36 @@ onFidelitySave(){
         }
     }
     else{alert("No Employees Found")}
+  }
+  onAccessoriesSubmit(){
+    this.chassisNoError = false;this.accessoriesTypeError = false;this.serialNoError = false;this.sumInsuredError = false;
+    this.totalAccSIError = false;let i =0;
+    if(this.chassisNo==null || this.chassisNo==''){
+      i+=1;
+      this.chassisNoError = true;
+    }
+    if(this.accessoriesType==null || this.accessoriesType==''){
+      i+=1;
+      this.accessoriesTypeError = true;
+    }
+    if(this.serialNoDesc==null || this.serialNoDesc==''){
+      i+=1;
+      this.serialNoError = true;
+    }
+    if(this.SumInsured==null || this.SumInsured=='0' || this.SumInsured==''){
+      i+=1;
+      this.sumInsuredError = true;
+    }
+    else if(this.totalAccessoriesSI>this.actualAccessoriesSI){
+      i+=1;
+      this.totalAccSIError = true;
+    }
+    if(i==0){
+      this.currentAccessoriesIndex = null;
+      this.editAccessoriesSection = false;
+      this.enableAccessoriesEditSection = false;
+    }
+      
   }
   onContentSubmit(){
     this.locationIdError = false;this.contentIdError=false; this.serialNoError = false;this.contentDescError = false;this.contentSIError = false;

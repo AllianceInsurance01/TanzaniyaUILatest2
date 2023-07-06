@@ -320,40 +320,39 @@ export class MotorDocumentsComponent implements OnInit {
     }
 
     onRisk(){
-let ReqObj ={
-  "ApplicationId": null,
-  "BranchCode": null,
-  "CustomerCode": null,
-  "InsuranceId": null,
-  "LoginId": null,
-  "MotorCategory": null,
-  "RequestReferenceNo": null,
-  "SearchKey": null,
-  "SearchValue": null,
-  "UserType": null,
-  "VehicleMake": null,
-  "VehicleModel": null,
-  "VehicleType": null,
-  "QuoteNo":this.quoteNo,
-  "ProductId":this.productId,
-}
-let urlLink = `${this.CommonApiUrl}api/adminviewriskdetails`;
-this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-  (data: any) => {
-    console.log(data);
-    if(data?.Result?.RiskDetails){
-        this.ViewRisk=data?.Result.RiskDetails;
+      let ReqObj ={
+        "ApplicationId": null,
+        "BranchCode": null,
+        "CustomerCode": null,
+        "InsuranceId": this.insuranceId,
+        "LoginId": null,
+        "MotorCategory": null,
+        "RequestReferenceNo": null,
+        "SearchKey": null,
+        "SearchValue": null,
+        "UserType": null,
+        "VehicleMake": null,
+        "VehicleModel": null,
+        "VehicleType": null,
+        "QuoteNo":this.quoteNo,
+        "ProductId":this.productId,
+      }
+      let urlLink = `${this.CommonApiUrl}api/adminviewriskdetails`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          console.log(data);
+          if(data?.Result?.RiskDetails){
+              this.ViewRisk=data?.Result.RiskDetails;
 
-        console.log('mmmmmmmmmm',this.ViewRisk)
-        //this.quoteno=data.Result.QuoteNo
+              console.log('mmmmmmmmmm',this.ViewRisk)
+              //this.quoteno=data.Result.QuoteNo
 
 
-    }
+          }
 
-  },
-  (err) => { },
-);
-
+        },
+        (err) => { },
+      );
     }
     onCustomerSearch(){
       let app
@@ -378,7 +377,7 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
             "LoginId": this.loginId,
             "BranchCode": null,
             "CustomerCode": null,
-            "InsuranceId": null,
+            "InsuranceId": this.insuranceId,
             "MotorCategory": null,
             "RequestReferenceNo": null,
             "SearchKey": null,
@@ -414,7 +413,7 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
           "ApplicationId": null,
           "BranchCode": null,
           "CustomerCode": null,
-          "InsuranceId": null,
+          "InsuranceId": this.insuranceId,
           "LoginId": null,
           "MotorCategory": null,
           "SearchKey": null,
