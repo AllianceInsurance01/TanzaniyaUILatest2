@@ -422,7 +422,7 @@ export class MotorDocumentsComponent implements OnInit {
           "VehicleMake": null,
           "VehicleModel": null,
           "VehicleType": null,
-          "QuoteNo": null,
+          "QuoteNo": this.quoteNo,
           "RequestReferenceNo":this.ReferenceNo,
            "ProductId":this.productId
         }
