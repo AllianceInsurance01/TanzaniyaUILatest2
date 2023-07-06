@@ -638,7 +638,7 @@
                                             </td>
                                             <td class="tbl-content">
                                                 <div class="input-form-box">
-                                                    <input type="text" class="input-form-control without-icon" [disabled]="checkEndorseDisable('allRisk')" style="position: relative;top: 0.8rem!important;text-align: end;" maxlength="50" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'allRisk')" [(ngModel)]="row.SumInsured"
+                                                    <input type="text" class="input-form-control without-icon" [disabled]="checkEndorseDisable('allRisk')" style="position: relative;top: 0.8rem!important;" maxlength="50" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'allRisk')" [(ngModel)]="row.SumInsured"
                                                         [ngModelOptions]="{standalone: true}">
                                                 </div>
                                             </td>
@@ -671,11 +671,11 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="ml-5" *ngIf="totalAllRiskSI==0 || totalAllRiskSI=='0' || totalAllRiskSI==null">
-                                                    <span style="position: relative;left: 6rem;">0&nbsp;({{currencyValue}})</span>
+                                                <div *ngIf="totalAllRiskSI==0 || totalAllRiskSI=='0' || totalAllRiskSI==null">
+                                                    <span style="position: relative;left: 2rem;">0&nbsp;({{currencyValue}})</span>
                                                 </div>
-                                                <div class="ml-5" *ngIf="totalAllRiskSI!=0 && totalAllRiskSI!='0' && totalAllRiskSI!=null">
-                                                    <span style="position: relative;left: 6rem;">{{totalAllRiskSI | commaseparator}} &nbsp;({{currencyValue}})</span>
+                                                <div *ngIf="totalAllRiskSI!=0 && totalAllRiskSI!='0' && totalAllRiskSI!=null">
+                                                    <span style="position: relative;left: 2rem;">{{totalAllRiskSI | commaseparator}} &nbsp;({{currencyValue}})</span>
                                                 </div>
                                             </td>
                                         </tr>
@@ -746,7 +746,7 @@
                                             </td>
                                             <td class="tbl-content" style="position: relative;top: 0.65rem;">
                                                 <div class="input-form-box">
-                                                    <input type="text" [disabled]="checkEndorseDisable('personalIndeminity')" style="min-width: 166px;position: relative;left: 1.5rem;bottom: 0.3rem;text-align: end;"  class="input-form-control without-icon" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'personalIndemenity')" maxlength="50" [(ngModel)]="row.Salary" [ngModelOptions]="{standalone: true}">
+                                                    <input type="text" [disabled]="checkEndorseDisable('personalIndeminity')" style="min-width: 166px;position: relative;left: 1.5rem;bottom: 0.3rem;"  class="input-form-control without-icon" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'personalIndemenity')" maxlength="50" [(ngModel)]="row.Salary" [ngModelOptions]="{standalone: true}">
                                                 </div>
                                                 <!--(keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'personalInt')"-->
                                             </td>
@@ -792,11 +792,11 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="ml-5" *ngIf="totalPersIntSI==0 || totalPersIntSI=='0' || totalPersIntSI==null">
-                                                    <span style="position: relative;left: 6rem;">0&nbsp;({{currencyValue}})</span>
+                                                <div *ngIf="totalPersIntSI==0 || totalPersIntSI=='0' || totalPersIntSI==null">
+                                                    <span style="position: relative;left: 2rem;">0&nbsp;({{currencyValue}})</span>
                                                 </div>
-                                                <div class="ml-5" *ngIf="totalPersIntSI!=0 && totalPersIntSI!='0' && totalPersIntSI!=null">
-                                                    <span style="position: relative;left: 6rem;">{{totalPersIntSI | commaseparator}} &nbsp;({{currencyValue}})</span>
+                                                <div *ngIf="totalPersIntSI!=0 && totalPersIntSI!='0' && totalPersIntSI!=null">
+                                                    <span style="position: relative;left: 2rem;">{{totalPersIntSI | commaseparator}} &nbsp;({{currencyValue}})</span>
                                                 </div>
                                             </td>
                                         </tr>
