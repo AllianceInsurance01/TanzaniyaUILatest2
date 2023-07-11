@@ -1,8 +1,6 @@
-<div>
-
-    <div class="row">
-        <div class="col-12">
-            <div class="maan-grid customer-grid maan-grid-column-1">
+<div class="row p-0">
+        <div class="col-12 col-md-12 col-lg-12 p-0">
+            <div class="maan-grid customer-grid maan-grid-column-1 p-0">
                 <div class="maan-grid-item" *ngIf="endorsementSection">
                     <div class="maan-grid-item-title">
                         <div class="d-flex justify-content-between">
@@ -57,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="maan-grid-item">
+                <div class="maan-grid-item" *ngIf="customerDetails">
                     <div class="maan-grid-item-title">
                         <div class="d-flex justify-content-between">
                             <div>
@@ -66,8 +64,8 @@
                                 </span> <span class="spancommon">Customer Details</span>
                             </div>
                             <div>
-                                <button class="maan-btn maan-btn-blue spancommon" (click)="onchange()" style="letter-spacing:1px"><i class="fas fa-user mx-1 customer"></i>Change Customer</button>
-                                <button class="maan-btn maan-btn-red edit" (click)="editChange()" style="margin-left:20px;"><i class="fas fa-edit" style="color:lightblue"></i></button>
+                                <button class="maan-btn maan-btn-blue spancommon" (click)="onchange()" style="letter-spacing:1px;bottom: 0.2rem !important;"><i class="fas fa-user mx-1 customer"></i>Change Customer</button>
+                                <button class="maan-btn maan-btn-red edit" (click)="editChange()" style="margin-left:20px;bottom: 0.2rem !important;"><i class="fas fa-edit" style="color:lightblue"></i></button>
                             </div>
                         </div>
                     </div>
@@ -83,8 +81,8 @@
                             </div>
                             <div class="col-12 col-md-1"></div>
                             <div class="col-12 col-md-2">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">DateofBirth/RegDate</label>
+                                <div class="input-control-container" style="text-wrap: nowrap !important">
+                                    <label class="input-form-label" >Date Of Birth / RegDate</label>
                                     <div class="input-form-radio-box">
                                         <span class="spancommon span_font_size">{{dateOfBirth}}</span>
                                     </div>
@@ -93,7 +91,7 @@
                             <div class="col-12 col-md-1"></div>
                             <div class="col-12 col-md-2">
                                 <div class="input-control-container">
-                                    <label class="input-form-label">EmailId</label>
+                                    <label class="input-form-label">Email Id</label>
                                     <div class="input-form-radio-box">
                                         <span class="spancommon span_font_size">{{emailId}}</span>
                                     </div>
@@ -101,7 +99,7 @@
                             </div>
                             <div class="col-12 col-md-2">
                                 <div class="input-control-container">
-                                    <label class="input-form-label">MobileNo</label>
+                                    <label class="input-form-label">Mobile No</label>
                                     <div class="input-form-radio-box">
                                         <span class="spancommon span_font_size">{{mobileNo}}</span>
                                     </div>
@@ -118,33 +116,18 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="maan-grid customer-grid maan-grid-column-1">
-                <div class="maan-grid-item">
+                <div class="maan-grid-item" *ngIf="issuerSection">
                     <div class="maan-grid-item-title">
                         <span class="mx-1">
                             <i class="fas fa-book mx-1"></i>
-                        </span> <span class="spancommon">Period of Insurance</span>
+                        </span> <span class="spancommon">Policy Details</span>
                     </div>
                     <div class="maan-grid-item-body">
                         <div class="row">
-                            <div class="col-12 col-md-6 col-lg-6 offset-3 mt-4" [ngStyle]="{'position':'realtive','bottom':'0.2rem'}" *ngIf="productId=='6' || this.productId=='16' || productId=='39' || productId=='14' || productId=='32' || productId=='1'">
-                                <div class="Choose-Section-Box padd0 bwT">
-                                    <span class="heading">SELECT INDUSTRY TYPE <span class="text-danger">*</span></span>
-                                    <div class="row mt-3">
-                                        <div class="input-control-container col-md-12 col-lg-12">
-                                            <ng-select class="input-form-select" appendTo="body" [(ngModel)]="IndustryId" [items]="industryList" bindValue="Code" bindLabel="CodeDesc">
-                                            </ng-select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4" *ngIf="issuerSection">
+                           <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Division</label><span class="text-danger">*</span>
-                                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="branchValue" [disabled]="endorsementSection" [items]="branchList" (change)="onBranchValueChange()" bindValue="BranchCode" bindLabel="BranchName">
+                                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="branchValue" [disabled]="endorsementSection" [items]="branchList"  (change)="onBranchValueChange()" bindValue="BranchCode" bindLabel="BranchName">
                                     </ng-select>
                                     <div class="input-form-error" *ngIf="branchValueError">
                                         <div class="error-text text-danger">
@@ -153,11 +136,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4" *ngIf="issuerSection">
+                            <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Customer Code</label><span class="text-danger">*</span>
                                     <div class="input-form-box">
-                                        <input id="CustomerInput" class="input-form-control without-icon" [disabled]="endorsementSection" [(ngModel)]="customerCode" type="text" (keyup)="onGetCustomerList('change',$event.target.value)" autocomplete="off" placeholder="Search here" data-toggle="dropdown" /><br>
+                                        <input id="CustomerInput" class="input-form-control without-icon"  [disabled]="endorsementSection" [(ngModel)]="customerCode" type="text" (keyup)="onGetCustomerList('change',$event.target.value)" autocomplete="off" placeholder="Search here" data-toggle="dropdown" /><br>
                                         <ul class="dropdown-menu dropdown-list-style CustomerInput" [ngClass]="{dropdownDisplay: showCustomerList, dropdownNotDisplay: !showCustomerList}">
                                             <li *ngFor="let item of customerList" (click)="setCustomerValue(item.Code, item.Name)">
                                                 {{item.Code}} - {{ item.Name }}
@@ -176,18 +159,18 @@
                                 </div>
 
                             </div>
-                            <div class="col-12 col-md-4" *ngIf="issuerSection">
+                            <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Customer Name</label><span class="text-danger">*</span>
                                     <div class="input-form-box">
-                                        <input id="CustomerInput" disabled class="input-form-control without-icon" [(ngModel)]="customerName" type="text" /><br>
+                                        <input id="CustomerInput" disabled class="input-form-control without-icon"  [(ngModel)]="customerName" type="text" /><br>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4" *ngIf="issuerSection">
+                            <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Source</label><span class="text-danger">*</span>
-                                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="Code" [items]="productList" [disabled]="endorsementSection" bindValue="Code" bindLabel="CodeDesc" (change)="onSourceTypeChange('change')">
+                                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="Code"  [items]="productList" [disabled]="endorsementSection" bindValue="Code" bindLabel="CodeDesc" (change)="onSourceTypeChange('change')">
                                     </ng-select>
                                     <div class="input-form-error" *ngIf="sourceCodeError">
                                         <div class="error-text text-danger">
@@ -196,15 +179,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4" *ngIf="issuerSection">
+                            <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Source Code</label><span class="text-danger">*</span>
                                     <ng-container *ngIf="Code!='Broker'">
-                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerCode" [disabled]="endorsementSection" [items]="brokerList" (change)="onBrokerChange()" bindValue="Code" bindLabel="Name">
+                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerCode"  [disabled]="endorsementSection" [items]="brokerList" (change)="onBrokerChange()" bindValue="Code" bindLabel="Name">
                                         </ng-select>
                                     </ng-container>
                                     <ng-container *ngIf="Code=='Broker'">
-                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerCode" [disabled]="endorsementSection" (change)="onBrokerChange()">
+                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerCode"  [disabled]="endorsementSection" (change)="onBrokerChange()">
                                             <ng-option *ngFor="let item of brokerList" [value]="item.Code">{{item.Name}}</ng-option>
                                         </ng-select>
                                     </ng-container>
@@ -215,10 +198,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4" *ngIf="issuerSection && brokerCode">
+                            <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection && brokerCode">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Broker Branch</label><span class="text-danger">*</span>
-                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerBranchCode" [disabled]="endorsementSection" [items]="brokerBranchList" (change)="onBrokerBranchChange()" bindValue="Code" bindLabel="CodeDesc">
+                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerBranchCode"  [disabled]="endorsementSection" [items]="brokerBranchList" (change)="onBrokerBranchChange()" bindValue="Code" bindLabel="CodeDesc">
                                         </ng-select>
                                 </div>
                                 <div class="input-form-error" *ngIf="brokerBranchCodeError">
@@ -228,7 +211,27 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="maan-grid-item">
+                    <div class="maan-grid-item-title">
+                        <span class="mx-1">
+                            <i class="fas fa-book mx-1"></i>
+                        </span> <span class="spancommon">Period Of Insurance</span>
+                    </div>
+                    <div class="maan-grid-item-body">
                         <div class="row p-1">
+                            <div class="col-12 col-md-6 col-lg-6 offset-3 mt-4" [ngStyle]="{'position':'realtive','bottom':'0.2rem'}" *ngIf="productId=='6' || this.productId=='16' || productId=='39' || productId=='14' || productId=='32' || productId=='1'">
+                                <div class="Choose-Section-Box padd0 bwT">
+                                    <span class="heading">SELECT INDUSTRY TYPE <span class="text-danger">*</span></span>
+                                    <div class="row mt-3">
+                                        <div class="input-control-container col-md-12 col-lg-12">
+                                            <ng-select class="input-form-select" appendTo="body" [(ngModel)]="IndustryId" [items]="industryList" bindValue="Code" bindLabel="CodeDesc">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-12 col-md-4 col-lg-4" *ngIf="productId=='4'">
                                 <label class="input-form-label spancommon span_font_size">Departure Date<span class="text-danger">*</span></label>
                                 <mat-form-field appearance="fill">
@@ -258,7 +261,7 @@
                                 </mat-form-field>
                             </div>
                             
-                            <div class="col-12 col-md-4 col-lg-4" *ngIf="productId!='4'">
+                            <div class="col-12 col-md-3 col-lg-3" *ngIf="productId!='4'">
                                 <label class="input-form-label spancommon span_font_size">Policy Start Date<span class="text-danger">*</span></label>
                                 <ng-container >
                                     <mat-form-field appearance="fill">
@@ -279,7 +282,7 @@
                                 </div>
 
                             </div>
-                            <div class="col-12 col-md-4 col-lg-4" *ngIf="productId!='4'">
+                            <div class="col-12 col-md-3 col-lg-3" *ngIf="productId!='4'">
                                 <label class="input-form-label spancommon span_font_size">Policy End Date<span class="text-danger">*</span></label>
                                 <mat-form-field appearance="fill">
                                     <!-- <mat-label>Policy End Date<span class="text-danger">*</span></mat-label> -->
@@ -294,7 +297,7 @@
                                 </div>
 
                             </div>
-                            <div class="col-12 col-md-4 col-lg-4">
+                            <div class="col-12 col-md-3 col-lg-3">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Number Of Days<span class="text-danger">*</span></label>
                                     <div class="input-form-box">
@@ -302,8 +305,25 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-12 col-md-4" [ngStyle]="{'position':'realtive','bottom':'0.2rem'}">
+                            <div class="col-12 col-md-3 col-lg-3 col-xl-3">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Have Promo Code</label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="claims_Yes" type="radio" name="HavePromoCode" [disabled]="(endorsementSection) || checkDisableField()" (change)="onPromoYNChange()" [(ngModel)]="HavePromoCode" value="Y">
+                                            <label for="claims_Yes" class="yes">Yes</label>
+                                            <input id="claims_No" type="radio" name="HavePromoCode" [disabled]="(endorsementSection) || checkDisableField()" (change)="onPromoYNChange()" [(ngModel)]="HavePromoCode" value="N">
+                                            <label for="claims_No" class="no">No</label>
+                                        </div>
+                                    </div>
+                                    <div class="input-form-error" *ngIf="promoYNError">
+                                        <div class="error-text">
+                                            Please Select PromoCode Available or Not
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3" [ngStyle]="{'position':'realtive','bottom':'0.2rem'}">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Currency</label><span class="text-danger">*</span>
                                     <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableCurrency) || checkDisableField()" [(ngModel)]="currencyCode" [items]="currencyList" (change)="onCurrencyChange()" bindValue="Code" bindLabel="CodeDesc">
@@ -315,7 +335,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4 col-lg-4" *ngIf="productId!='4'">
+                            <div class="col-12 col-md-3 col-lg-3" *ngIf="productId!='4'">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Exchange Rate <span *ngIf="editSection">({{minCurrencyRate | number : '1.2-2'}} ~ {{maxCurrencyRate | number : '1.2-2'}})</span></label><span class="text-danger">*</span>
                                     <div class="input-form-box">
@@ -346,25 +366,8 @@
                                 </div>
 
                             </div> -->
-                            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Have Promo Code</label>
-                                    <div class="input-form-radio-box">
-                                        <div class="radio-toolbar">
-                                            <input id="claims_Yes" type="radio" name="HavePromoCode" [disabled]="(endorsementSection) || checkDisableField()" (change)="onPromoYNChange()" [(ngModel)]="HavePromoCode" value="Y">
-                                            <label for="claims_Yes" class="yes">Yes</label>
-                                            <input id="claims_No" type="radio" name="HavePromoCode" [disabled]="(endorsementSection) || checkDisableField()" (change)="onPromoYNChange()" [(ngModel)]="HavePromoCode" value="N">
-                                            <label for="claims_No" class="no">No</label>
-                                        </div>
-                                    </div>
-                                    <div class="input-form-error" *ngIf="promoYNError">
-                                        <div class="error-text">
-                                            Please Select PromoCode Available or Not
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4" *ngIf="HavePromoCode=='Y'">
+                           
+                            <div class="col-12 col-md-3 col-lg-3" *ngIf="HavePromoCode=='Y'">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Promo Code</label>
                                     <div class="input-form-box">
@@ -410,16 +413,12 @@
                         <button class="custom-btn btn-6 maan-button-data" matRipple *ngIf="productId=='3'" (click)="onHomeInsuranceSave()"><i class="fas fa-check"></i>&nbsp;Proceed</button>
                     </div>
                 </div>
+                <ng-container *ngIf="commonSection && productId=='5'">
+                    <app-vehicle-wish-list (getBack)="ongetBack()" (onWishListProceed)="onWishListProceed($event)" (redirectCreateVehicle)="redirectCreateVehicle($event)"></app-vehicle-wish-list>
+                </ng-container>
+                <ng-container *ngIf="commonSection && productId=='4'">
+                    <app-travel-quote-details [quoteRefNo]="quoteRefNo" [travelDetails]="travelDetails" (redirectValidations)="redirectValidations($event)" (getBack)="ongetBack()" (onWishListProceed)="onWishListProceed($event)"></app-travel-quote-details>
+                </ng-container>
             </div>
-
         </div>
-        <div class="col-12">
-            <ng-container *ngIf="commonSection && productId=='5'">
-                <app-vehicle-wish-list (getBack)="ongetBack()" (onWishListProceed)="onWishListProceed($event)" (redirectCreateVehicle)="redirectCreateVehicle($event)"></app-vehicle-wish-list>
-            </ng-container>
-            <ng-container *ngIf="commonSection && productId=='4'">
-                <app-travel-quote-details [quoteRefNo]="quoteRefNo" [travelDetails]="travelDetails" (redirectValidations)="redirectValidations($event)" (getBack)="ongetBack()" (onWishListProceed)="onWishListProceed($event)"></app-travel-quote-details>
-            </ng-container>
-        </div>
-    </div>
 </div>

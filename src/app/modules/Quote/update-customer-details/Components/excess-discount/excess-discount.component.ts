@@ -17,6 +17,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { DialogComponent } from '../../../dialog/dialog.component';
+import { CustomerModelComponent } from 'src/app/modules/Customer/customer-model/customer-model.component';
 //import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 declare var $:any;
@@ -258,7 +259,7 @@ emiyn="N";
             isExpand:true
           },
         },
-        { key: 'SectionName', display: 'Section Name' },
+        // { key: 'SectionName', display: 'Section Name' },
         {
           key: 'selected',
           display: 'Select',
@@ -270,8 +271,8 @@ emiyn="N";
         // { key: 'ReferalDescription', display: 'Referral' },
         { key: 'SumInsured', display: 'Sum Insured' },
         { key: 'Rate', display: 'Rate' },
-        { key: 'ExcessPercent', display: 'ExcessPercent' },
-        { key: 'ExcessAmount', display: 'ExcessAmount' },
+        { key: 'ExcessPercent', display: 'Excess Percent' },
+        { key: 'ExcessAmount', display: 'Excess Amount' },
         //{ key: 'MinimumPremium', display: 'Minimum' },
         { key: 'PremiumAfterDiscount', display: 'After Discount' },
         { key: 'PremiumIncludedTax', display: 'Included Tax' },
@@ -2173,8 +2174,7 @@ getMotorUsageList(vehicleValue){
                   }
                 }
                 else{
-                  
-                    vehicle['totalLcPremium'] =  rowData.PremiumIncludedTaxLC;
+                   vehicle['totalLcPremium'] =  rowData.PremiumIncludedTaxLC;
                     vehicle['totalPremium'] =  rowData.PremiumIncludedTax;
                 }
               }
@@ -2605,9 +2605,10 @@ getMotorUsageList(vehicleValue){
   }
   onFormSubmit(){
     console.log("Selected Covers",this.selectedCoverList)
+    this.subuserType = sessionStorage.getItem('typeValue');
     if(this.selectedCoverList.length!=0){
       let coverList:any[]=[];
-      this.onProceed(this.selectedCoverList);
+       this.onProceed(this.selectedCoverList);
 
     }
   }
@@ -2707,7 +2708,15 @@ getMotorUsageList(vehicleValue){
           "ReferralRemarks": this.remarks,
           "Vehicles" : coverList
         }
-        this.finalFormSubmit(ReqObj);
+        if(this.subuserType=='B2C' && this.loginId=='guest'){
+            sessionStorage.setItem('buyPolicyDetails',JSON.stringify(ReqObj));
+            this.router.navigate(['./Home/existingQuotes/customerSelection/customerDetails/userDetails'])
+        }
+        
+        else{
+          this.finalFormSubmit(ReqObj);
+        }
+        
       }
     }
 
@@ -2907,7 +2916,10 @@ getMotorUsageList(vehicleValue){
     });
   }
   onFinalProceed(){
-    if(this.emiYN=='Y' && this.emiPeriod!='N'){
+    if(this.subuserType=='B2C'){
+        this.viewQuoteDetails();
+    }
+    else if(this.emiYN=='Y' && this.emiPeriod!='N'){
       this.insertEMIDetails();
     }
     else{
@@ -2947,6 +2959,51 @@ getMotorUsageList(vehicleValue){
       }
     }
   }
+  viewQuoteDetails(){
+		let ReqObj = {
+			"QuoteNo":this.quoteNo
+		  }
+		  let urlLink = `${this.CommonApiUrl}quote/viewquotedetails`;
+		  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+			(data: any) => {
+				if(data?.Result){
+				  let quoteDetails = data?.Result?.QuoteDetails;
+				  this.localPremiumCost = quoteDetails?.OverallPremiumLc;
+				  this.insertPayementDetails();
+				}
+			},
+			(err) => {
+			  this.sharedService.fnToastMoveHover("Quote Moved to Referral Pending");
+			 },
+		  );
+	}
+	insertPayementDetails(){
+		let ReqObj = {
+			"CreatedBy": this.loginId,
+			"EmiYn": 'N',
+			"InstallmentMonth": null,
+			"InstallmentPeriod": null,
+			"InsuranceId": this.loginId,
+			"Premium": this.localPremiumCost,
+			"QuoteNo": this.quoteNo,
+			"Remarks": "None",
+			"SubUserType": sessionStorage.getItem('typeValue'),
+			"UserType": this.userType
+		  }
+		  let urlLink = `${this.CommonApiUrl}payment/makepayment`;
+		  this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+			(data: any) => {
+			  console.log(data);
+			  if(data.Result){
+				sessionStorage.setItem('quotePaymentId',data.Result.PaymentId);
+				this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
+			  }
+			},
+			(err) => {
+			this.sharedService.fnToastMoveHover("Quote Moved to Referral Pending");
+			},
+		);
+	}
   insertEMIDetails(){
       let ReqObj = {
         "QuoteNo":this.quoteNo,

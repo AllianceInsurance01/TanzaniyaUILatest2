@@ -14,6 +14,10 @@ td.mat-footer-cell {
     padding: 10px 50px 50px 50px;
     background-color: #333b85 !important;
     color: white !important;
+   
+}
+.mat-sort-header-content {
+        white-space: normal !important;
 }
 
 .innerHead {
@@ -26,7 +30,7 @@ td.mat-footer-cell {
     font-size: 13px;
     color: white !important;
     background-color: #333b85;
-    text-align: center !important;
+    white-space: normal !important;
 }
 
 .outerTable {
@@ -81,7 +85,6 @@ table {
     width: 100% !important;
 }
 
-.mat-table th,
 .mat-table td {
     white-space: pre-wrap !important;
     padding: 0px 2px !important;
@@ -103,7 +106,11 @@ tr.example-detail-row {
     grid-template-columns: 1fr;
     grid-gap: 10px;
 }
-
+.mdc-data-table__row .mdc-data-table__cell {
+    /* border-bottom: solid #e3dbdb!important; */
+    box-shadow: inset 0 0 1px #b8b9be,inset 1px 1px 1px #fff!important;
+    font-family: var(--our-font-family-new)!important;
+}
 
 /* .customer-grid .maan-grid-item {
     overflow: hidden;
@@ -194,7 +201,6 @@ input:checked+.slider:before {
 }
 
 .customList {
-    border-bottom: 1px grey !important;
     list-style-type: none;
 }
 
@@ -321,7 +327,9 @@ tr.mat-row:hover {
     -webkit-overflow-scrolling: touch;
     outline: 0;
 }
-
+.striped-row {
+    background-color: #ececec !important;
+}
 .cdk-overlay-pane {
     position: absolute;
     pointer-events: auto;

@@ -58,6 +58,7 @@ import { FormlyFieldTabs } from './tab.type';
 import { RepeatTypeComponent } from './repeatArray.type';
 import { TableTypeComponent } from './tableType';
 import { DisplayLabel } from './displayText';
+import { CustomerModelComponent } from '../../Customer/customer-model/customer-model.component';
 
 export function maxlengthValidationMessage(err, field) {
   return `This value should be less than ${field.templateOptions.maxLength} characters`;
@@ -97,7 +98,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     SectionModificationComponent,
     FormlyFieldTabs,
     RepeatTypeComponent,
-    TableTypeComponent
+    TableTypeComponent,
+    CustomerModelComponent
     //NewViewDetailsComponent
 
     ],

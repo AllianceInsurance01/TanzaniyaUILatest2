@@ -93,10 +93,10 @@ export class CustomerDetailsComponent implements OnInit {
     this.insuranceId = this.userDetails.Result.InsuranceId;
     this.branchList = this.userDetails.Result.LoginBranchDetails;
     this.updateComponent.showStepperSection = true;
+    this.subUsertype = sessionStorage.getItem('typeValue');
     let quoteNo = sessionStorage.getItem('quoteNo');
     if(quoteNo!=undefined && quoteNo!='undefined') this.quoteNo = quoteNo;
     if(this.userType!='Broker' || this.userType== 'User'){
-       this.subUsertype = sessionStorage.getItem('typeValue');
        if(this.subUsertype=='bank'){
          let bankCode = this.userDetails?.Result?.BankCode;
          //this.executiveSection = true;
@@ -159,11 +159,134 @@ export class CustomerDetailsComponent implements OnInit {
       },
 
     ];
-    let referenceNo =  sessionStorage.getItem('customerReferenceNo');
-    if(referenceNo){
-      this.getCustomerDetails(referenceNo);
-      this.referenceNo = referenceNo;
+    this.subUsertype = sessionStorage.getItem('typeValue');
+    if(this.loginId=='guest'){
+      if(this.productId == '6' || this.productId == '16' || this.productId == '39' || this.productId=='14' || this.productId=='32'  || this.productId=='1'){
+        let referenceNo =  sessionStorage.getItem('quoteReferenceNo');
+        if(referenceNo){
+          this.quoteRefNo = referenceNo;
+          this.getExistingBuildingList();
+        }
+        else{
+          this.quoteRefNo=null;
+          this.branchValue = this.userDetails.Result.BranchCode;
+          this.updateComponent.branchValue = this.branchValue;
+          this.onGetCustomerList('direct',this.customerCode);
+          this.currencyCode = this.userDetails.Result.CurrencyId;
+          this.onCurrencyChange();
+          this.searchSection = true;
+          this.commonSection = true;
+        }
+        let quoteStatus = sessionStorage.getItem('QuoteStatus');
+        if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
+          this.adminSection = true;this.issuerSection = false;
+        }
+        else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
+        else this.issuerSection = false
+      }
+      else if(this.productId!='4'){
+        let vehicleDetails:any;
+        let referenceNo =  sessionStorage.getItem('quoteReferenceNo');
+        if(referenceNo){
+          this.quoteRefNo = referenceNo;
+        }
+        if(this.productId=='5'){
+          vehicleDetails = JSON.parse(sessionStorage.getItem('vehicleDetailsList'));
+          //this.getExistingVehiclesList();
+          //this.setCommonValues('direct');
+        }
+        else if(this.productId!='5'){
+          vehicleDetails = JSON.parse( sessionStorage.getItem('homeCommonDetails'));
+        }
+        if(vehicleDetails!=undefined){
+          if(vehicleDetails.length!=0 && (sessionStorage.getItem('quoteReferenceNo')==undefined)){
+            this.quoteRefNo = null;
+            this.setExistingValues(vehicleDetails);
+          }
+          else{
+            let referenceNo =  sessionStorage.getItem('quoteReferenceNo');
+            if(referenceNo){
+              this.quoteRefNo = referenceNo;
+             if(this.productId=='5') this.getExistingVehiclesList();
+             if(this.productId!='5' && this.productId!='4') this.getExistingBuildingList();
+            }
+            else{
+              
+              this.quoteRefNo=null;
+              this.currencyCode = this.userDetails.Result.CurrencyId;
+              this.onCurrencyChange();
+              this.searchSection = true;
+              this.commonSection = true;
+              
+            }
+          }
+  
+        }
+        else{
+          let referenceNo =  sessionStorage.getItem('quoteReferenceNo');
+          if(referenceNo){
+            this.quoteRefNo = referenceNo;
+           if(this.productId=='5') this.getExistingVehiclesList();
+           if(this.productId!='5' && this.productId!='4') this.getExistingBuildingList();
+          }
+          else{
+            this.quoteRefNo=null;
+            this.branchValue = this.userDetails.Result.BranchCode;
+            this.updateComponent.branchValue = this.branchValue;
+            this.currencyCode = this.userDetails.Result.CurrencyId;
+            this.onCurrencyChange();
+            this.onGetCustomerList('direct',this.customerCode);
+              var d= new Date();
+              var year = d.getFullYear();
+              var month = d.getMonth();
+              var day = d.getDate();
+              if(this.productId=='5'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange()}
+              this.searchSection = true;
+            this.commonSection = true;
+            let quoteStatus = sessionStorage.getItem('QuoteStatus');
+            if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
+              this.adminSection = true;this.issuerSection = false;
+            }
+            else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
+            else this.issuerSection = false;
+          }
+        }
+      }
+      else if(this.productId=='4'){
+        let referenceNo =  sessionStorage.getItem('quoteReferenceNo');
+        if(referenceNo){
+          this.quoteRefNo = referenceNo;
+          this.getExistingTravelDetails();
+        }
+        else{
+          this.quoteRefNo=null;
+          this.branchValue = this.userDetails.Result.BranchCode;
+          this.updateComponent.branchValue = this.branchValue;
+          this.updateComponent.HavePromoCode = this.HavePromoCode;
+          this.updateComponent.PromoCode = this.PromoCode;
+          this.currencyCode = this.userDetails.Result.CurrencyId;
+          this.onCurrencyChange();
+          this.onGetCustomerList('direct',this.customerCode);
+          this.searchSection = true;
+          this.commonSection = true;
+          let quoteStatus = sessionStorage.getItem('QuoteStatus');
+          if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
+            this.adminSection = true;this.issuerSection = false;
+          }
+          else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
+          else this.issuerSection = false
+        }
+      }
+     
     }
+    else {
+      let referenceNo =  sessionStorage.getItem('customerReferenceNo');
+      if(referenceNo){
+        this.getCustomerDetails(referenceNo);
+        this.referenceNo = referenceNo;
+      }
+    }
+    
     let quoteStatus = sessionStorage.getItem('QuoteStatus');
     if(quoteStatus=='AdminRP' || quoteStatus == 'AdminRA'){
       if(quoteStatus=='AdminRP') this.statusValue ="RP";
@@ -241,6 +364,7 @@ export class CustomerDetailsComponent implements OnInit {
     else{
   
     }
+    
     
   }
   getIndustryList(){
@@ -374,6 +498,7 @@ export class CustomerDetailsComponent implements OnInit {
             this.onCurrencyChange();
             this.searchSection = true;
             this.commonSection = true;
+            
           }
         }
 
@@ -392,6 +517,11 @@ export class CustomerDetailsComponent implements OnInit {
           this.currencyCode = this.userDetails.Result.CurrencyId;
           this.onCurrencyChange();
           this.onGetCustomerList('direct',this.customerCode);
+            var d= new Date();
+            var year = d.getFullYear();
+            var month = d.getMonth();
+            var day = d.getDate();
+            if(this.productId=='5'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange()}
           this.searchSection = true;
           this.commonSection = true;
           let quoteStatus = sessionStorage.getItem('QuoteStatus');
@@ -399,7 +529,7 @@ export class CustomerDetailsComponent implements OnInit {
             this.adminSection = true;this.issuerSection = false;
           }
           else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
-          else this.issuerSection = false
+          else this.issuerSection = false;
         }
       }
     }

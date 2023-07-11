@@ -18,6 +18,7 @@ import { WorkmensQuoteDetailsComponent } from './Components/workmens-quote-detai
 import { SMERiskDetailsComponent } from './Components/sme-risk-details/sme-risk-details.component';
 import { VieQuoteDetailsComponent } from '../viewquote-details/viewquote-details.component';
 import { SectionModificationComponent } from './Components/section-modification/section-modification.component';
+import { CustomerModelComponent } from '../../Customer/customer-model/customer-model.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,13 @@ const routes: Routes = [
         component: CustomerDetailsComponent,
         data: {
           title: "Customer-stepper",
+        }
+      },
+      {
+        path: 'userDetails',
+        component: CustomerModelComponent,
+        data: {
+          title: "UserDetails-stepper",
         }
       },
       {
@@ -138,6 +146,7 @@ const routes: Routes = [
           title: "WorkmensCompensation-stepper",
         }
       },
+      
       /*{
         path: 'viewquote-details',
         component: VieQuoteDetailsComponent,

@@ -38,8 +38,56 @@
     </div> -->
 
 </div>
-<div class="text-center mt-5" *ngIf="!errorSection">
+<div class="text-center mt-5" *ngIf="!errorSection && !branchselection">
     <p>Please Wait.....</p>
+</div>
+<div class="row customCard" *ngIf="branchselection">
+    <div class="col-md-8 col-lg-8 col-xl-8 offset-2 customcenterPanel" id="mobileAuthSection">
+        <div class="row">
+            <div class="col-md-4 col-lg-4 col-xl-4">
+                <div class="customImage"></div>
+            </div>
+            <div class="col-md-7 col-lg-7 col-xl-7 offset-1 customAuthPanel" *ngIf="!otpSection">
+                <div class="text-center customHeading">
+                    User Login
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Country Code</label>
+                                    <ng-select class="input-form-select" name="ColumnsId" placeholder="Select Any Code" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                        <ng-option *ngFor="let opt of codeList" [value]="opt.Code">{{opt.CodeDesc}}</ng-option>
+                                    </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Mobile Number</label>
+                                <div class="input-form-box">
+                                    <input type="text" class="input-form-control without-icon"
+                                        maxlength="20">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Branch</label>
+                                <ng-select class="input-form-select" name="ColumnsId" [(ngModel)]="branchValue" placeholder="Select Any Branch" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                    <ng-option *ngFor="let opt of branchList" [value]="opt.BrokerBranchCode">{{opt.BrokerBranchName}}</ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button type="button" class="custom-btn btn-3"
+                                    ><span>Login</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
 </div>
 <!-- <div>
     <h2 style="text-align: center;margin: auto;">Saravana</h2>

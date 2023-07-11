@@ -59,10 +59,14 @@ export class MakePayementComponent implements OnInit {
   iBanNo: any;
   paymentDetails: any;
   payAmount: any=null;
+  Sixth: boolean=false;
+  successSection: boolean;
+  tinyUrlInfo: boolean;
   constructor(private router:Router,private sharedService: SharedService,
     private updateComponent:UpdateCustomerDetailsComponent,
    private datePipe:DatePipe) {
     this.minDate = new Date();
+    sessionStorage.removeItem('buyPolicyDetails');
     this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
     this.vehicleDetails = JSON.parse(sessionStorage.getItem('vehicleDetails'));
     let quoteRefNo = sessionStorage.getItem('quoteReferenceNo');
@@ -360,6 +364,7 @@ export class MakePayementComponent implements OnInit {
     else if(this.Menu=='1'){ this.Third=true; }
     else if(this.Menu == '2'){ this.Fourth = true;}
     else if(this.Menu == 'Bank'){ this.Fifth = true;}
+    else if(this.Menu == '4'){this.Sixth = true;}
   }
   getPaymentTypeList(){
     let ReqObj = {
@@ -428,7 +433,8 @@ export class MakePayementComponent implements OnInit {
           if(data.Result.PolicyNo){
             this.paymentDetails = data.Result;
             this.policyNo = data.Result.PolicyNo;
-            this.updateTiraDetails();
+            this.policySection = true;
+            //this.updateTiraDetails();
             
           }
         } 
@@ -466,11 +472,21 @@ export class MakePayementComponent implements OnInit {
     }
   }
   ongetBack(){
-    if(this.endorsementSection && this.cancelEndorse){
+    if(this.subuserType=='B2C'){
+      this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
+    }
+    else if(this.endorsementSection && this.cancelEndorse){
       this.router.navigate(['Home/policies/Endorsements/endorsementTypes'])
     }
     else{
       this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
     }
+  }
+  onOnlinePayment(){
+    this.successSection = true;
+    this.tinyUrlInfo = false;
+  }
+  finalTinyUrlInfo(){
+    this.tinyUrlInfo = true;
   }
 }

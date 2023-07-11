@@ -48,6 +48,7 @@ export class NavbarComponent implements OnInit {
     //this.menu = navItems;
     this.productName = sessionStorage.getItem('productName');
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+    this.typeValue = sessionStorage.getItem('typeValue');
     this.loginId = this.userDetails.Result.LoginId;
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails.Result.UserType;
@@ -71,7 +72,10 @@ export class NavbarComponent implements OnInit {
       });
   }
   home() {
-    this.router.navigate(['/product']);
+    if(this.typeValue=='B2C' && this.loginId=='guest'){
+      this.router.navigate(['/customerProducts']);
+    }
+    else this.router.navigate(['/product']);
   }
   navexpand(i: any) {
     sessionStorage.removeItem('vehicleDetailsList');
@@ -151,7 +155,7 @@ export class NavbarComponent implements OnInit {
           console.log(data);
           if (data.Result) {
             this.typeList = data?.Result;
-            this.typeValue = sessionStorage.getItem('typeValue');
+            
             if (this.typeValue == undefined || this.typeValue == 'undefined') {
               this.typeValue = this.typeList[0].CodeDesc;
               //this.getMenuList();

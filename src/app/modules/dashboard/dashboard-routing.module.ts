@@ -9,6 +9,7 @@ import { ReferralRequoteComponent } from '../referral/referral-requote/referral-
 //import { MotorDocument } from '../../shared/MotorDocuments/MotorDocuments.module';
 import { MotorDocumentsComponent } from 'src/app/shared/MotorDocuments/MotorDocuments.component';
 import { QuotesearchComponent } from 'src/app/shared/Quotesearch/Quotesearch.component';
+import { CustomerModelComponent } from '../Customer/customer-model/customer-model.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
     component: DashboardComponent,
 
   },
+  
   {
     path: 'customer',
     loadChildren: () => import('../Customer/existing-customers/existing-customers.module').then(m => m.ExistingCustomersModule),

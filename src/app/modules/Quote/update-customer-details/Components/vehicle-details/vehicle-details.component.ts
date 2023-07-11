@@ -248,11 +248,15 @@ export class VehicleDetailsComponent implements OnInit {
   getInsuranceClassList(){
     let loginId = null;
     if(this.userType!='Issuer'){
+      this.subuserType = sessionStorage.getItem('typeValue');
+      if(this.subuserType=='B2C') loginId = 'guest';
+      else{
       loginId=this.loginId;
+      }
     }
     else{
-      loginId = this.vehicleDetailsList[0].LoginId;
-      if(this.updateComponent.brokerLoginId) loginId = this.updateComponent.brokerLoginId
+        loginId = this.vehicleDetailsList[0].LoginId;
+        if(this.updateComponent.brokerLoginId) loginId = this.updateComponent.brokerLoginId
     }
     let ReqObj = {
       "InsuranceId": this.insuranceId,
@@ -977,7 +981,10 @@ export class VehicleDetailsComponent implements OnInit {
         brokerbranchCode =  this.updateComponent.brokerBranchCode;
         this.customerCode = this.updateComponent.CustomerCode;
       }
-  
+      let refNo = "99999",regYear="99999",IdType="99999",IdNo="99999";
+      if(this.customerDetails){refNo = this.customerDetails?.CustomerReferenceNo;
+        IdNo = this.customerDetails?.IdNumber;
+        regYear=this.customerDetails?.DobOrRegDate;IdType=this.customerDetails?.PolicyHolderType;};
     console.log("AcExecutive",this.acExecutiveId,this.vehicleDetails,this.sourceType,this.bdmCode,this.brokerCode,this.customerCode);
     let ReqObj = {
       "BrokerBranchCode": brokerbranchCode,
@@ -989,9 +996,9 @@ export class VehicleDetailsComponent implements OnInit {
       "LoginId": loginId,
       "SubUserType": this.subuserType,
       "ApplicationId": appId,
-      "CustomerReferenceNo": this.customerDetails?.CustomerReferenceNo,
+      "CustomerReferenceNo": refNo,
       "RequestReferenceNo": this.requestReferenceNo,
-      "Idnumber": this.customerDetails?.IdNumber,
+      "Idnumber": IdNo,
       "VehicleId": this.vehicleId ,
       "AcccessoriesSumInsured": accSI,
       "AccessoriesInformation": "",
@@ -1026,9 +1033,9 @@ export class VehicleDetailsComponent implements OnInit {
       "AgencyCode": this.agencyCode,
       "ProductId": this.productId,
       "SectionId": this.typeValue,
-      "PolicyType": this.customerDetails?.PolicyHolderType,
+      "PolicyType": IdType,
       "RadioOrCasseteplayer": null,
-      "RegistrationYear": this.customerDetails?.DobOrRegDate,
+      "RegistrationYear": regYear,
       "Registrationnumber": this.vehicleDetails?.Registrationnumber,
       "RoofRack": null,
       "SeatingCapacity": this.vehicleDetails?.SeatingCapacity,
@@ -1720,6 +1727,11 @@ export class VehicleDetailsComponent implements OnInit {
                 brokerbranchCode =  this.updateComponent.brokerBranchCode;
                 this.customerCode = this.updateComponent.CustomerCode;
               }
+              let refNo = "99999",regYear="99999",IdType="99999",IdNo="99999";
+              if(this.customerDetails){refNo = this.customerDetails?.CustomerReferenceNo;
+                IdNo = this.customerDetails?.IdNumber;
+                regYear=this.customerDetails?.DobOrRegDate;IdType=this.customerDetails?.PolicyHolderType;};
+                console.log("AcExecutive",this.acExecutiveId,this.vehicleDetails,this.sourceType,this.bdmCode,this.brokerCode,this.customerCode);
               console.log("AcExecutive",this.acExecutiveId);
               let ReqObj = {
                 "BrokerBranchCode": brokerbranchCode,
@@ -1732,9 +1744,9 @@ export class VehicleDetailsComponent implements OnInit {
               "SourceType":this.sourceType,
               "SubUserType": this.subuserType,
               "ApplicationId": appId,
-              "CustomerReferenceNo": this.customerDetails?.CustomerReferenceNo,
+              "CustomerReferenceNo": refNo,
               "RequestReferenceNo": veh.RequestReferenceNo,
-              "Idnumber": this.customerDetails?.IdNumber,
+              "Idnumber": IdNo,
               "EndorsementYn": veh.EndorsementYn,
               "VehicleId": veh.Vehicleid,
               "AcccessoriesSumInsured": vehicleDetails?.AcccessoriesSumInsured,
@@ -1770,9 +1782,9 @@ export class VehicleDetailsComponent implements OnInit {
               "AgencyCode": this.agencyCode,
               "ProductId": this.productId,
               "SectionId": vehicleDetails?.Insurancetype,
-              "PolicyType": this.customerDetails?.PolicyHolderType,
+              "PolicyType": IdType,
               "RadioOrCasseteplayer": null,
-              "RegistrationYear": this.customerDetails?.DobOrRegDate,
+              "RegistrationYear": regYear,
               "Registrationnumber": vehicleDetails?.Registrationnumber,
               "RoofRack": null,
               "SeatingCapacity": vehicleDetails?.SeatingCapacity,

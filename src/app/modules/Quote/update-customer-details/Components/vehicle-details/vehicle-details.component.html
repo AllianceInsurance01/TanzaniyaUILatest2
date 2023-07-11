@@ -56,8 +56,8 @@
                         </div>
                     </div>
                 </div>
-                </div>
-            <div class="maan-grid-item">
+            </div>
+            <div class="maan-grid-item" *ngIf="customerDetails">
                 <div class="maan-grid-item-title">
                     <div class="d-flex justify-content-between">
                         <div>
@@ -75,7 +75,7 @@
                     </div>
 
                 </div>
-                <div class="maan-grid-item-body">
+                <div class="maan-grid-item-body" style="padding-left: 70px !important;padding-right: 40px !important;">
                     <div class="row mt-1">
                         <div class="col-12 col-md-3 ">
                             <div class="input-control-container">
@@ -132,8 +132,8 @@
                     </div>
 
                 </div>
-                <div class="maan-grid-item-body">
-                    <ul class="list-group">
+                <div class="maan-grid-item-body" >
+                    <ul class="list-group" style="padding-left: 70px !important;padding-right: 20px !important;">
                         <li class="customList">
                             <div class="row mt-1">
                                 <div class="col-12 col-md-3 ">
@@ -255,24 +255,24 @@
                         </span>
                         <span style="font-family: var(--our-font-family-new) !important;">Policy Details</span>
                     </div>
-                    <div class="maan-grid-item-body p-1">
+                    <div class="maan-grid-item-body" style="padding-left: 40px !important;padding-right: 40px !important;">
                         <div class="row">
                             <div class="col-12 col-md-4">
-                                <div class="input-control-container">
+                                <div class="input-control-container" style="padding-left: 40px !important;padding-right: 20px !important;">
                                     <label class="input-form-label">Insurance Type</label><span class="text-danger">*</span>
                                     <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="typeList" [(ngModel)]="typeValue" (change)="getMotorTypeList('change',null,null)" bindValue="Code" bindLabel="CodeDesc">
                                     </ng-select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4">
-                                <div class="input-control-container">
+                                <div class="input-control-container" style="padding-left: 20px !important;padding-right: 20px !important;">
                                     <label class="input-form-label">Insurance Class</label><span class="text-danger">*</span>
                                     <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="classList" [(ngModel)]="classValue" (change)="onChangeClassType()" bindValue="Code" bindLabel="CodeDesc">
                                     </ng-select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4">
-                                <div class="input-control-container">
+                                <div class="input-control-container" style="padding-left: 40px !important;padding-right: 40px !important;">
                                     <label class="input-form-label">Body Type</label><span class="text-danger">*</span>
                                     <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="motorTypeList" [(ngModel)]="bodyTypeValue" (change)="onChangeBodyType()" bindValue="Code" bindLabel="CodeDesc">
                                     </ng-select>
@@ -280,15 +280,15 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 col-md-4">
-                                <div class="input-control-container">
+                            <div class="col-12 col-md-4 ">
+                                <div class="input-control-container" style="padding-left: 40px !important;padding-right: 20px !important;">
                                     <label class="input-form-label">Motor Usage</label><span class="text-danger">*</span>
                                     <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="motorUsageList" [(ngModel)]="motorUsageValue" bindValue="Code" bindLabel="CodeDesc">
                                     </ng-select>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-2">
-                                <div class="input-control-container">
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container" style="padding-left: 20px !important;padding-right: 20px !important;">
                                     <label class="input-form-label">Claims YN?</label>
                                     <div class="input-form-radio-box">
                                         <div class="radio-toolbar">
@@ -300,7 +300,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-2 col-lg-2" >
+                            <div class="col-12 col-md-4 col-lg-4" style="padding-left: 40px !important;padding-right: 40px !important;">
                                 <div class="input-control-container" *ngIf="typeValue=='10'">
                                     <label class="input-form-label">GPS Tracking Enabled?</label>
                                     <div class="input-form-radio-box">
@@ -317,11 +317,8 @@
                         </div>
 
                         <div class="row">
-                        </div>
-
-                        <div class="row">
                             <div class="col-12 col-md-4" *ngIf="classValue=='1' || classValue=='2'">
-                                <div class="input-control-container">
+                                <div class="input-control-container" style="padding-left: 40px !important;padding-right: 20px !important;">
                                     <label class="input-form-label">Vehicle Sum Insured ({{currencyValue}}) &nbsp;<span class="text-danger">*</span></label>
                                     <div class="input-form-box">
                                         <input type="text" digitOnly [disabled]="((endorsementSection && !enableVehicleSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="vehicleSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="CommaFormatted()" class="input-form-control without-icon">
@@ -329,7 +326,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-4" *ngIf="classValue=='1' || classValue=='2'">
-                                <div class="input-control-container">
+                                <div class="input-control-container" style="padding-left: 20px !important;padding-right: 20px !important;">
                                     <label class="input-form-label">Accessories Sum Insured ({{currencyValue}})</label>
                                     <div class="input-form-box">
                                         <input type="text" digitOnly [disabled]="((endorsementSection && !enableAccessoriesSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="accessoriesSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="accessoriesCommaFormatted()" class="input-form-control without-icon">
@@ -337,7 +334,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-4" *ngIf="classValue=='1' || classValue=='2'">
-                                <div class="input-control-container">
+                                <div class="input-control-container" style="padding-left: 40px !important;padding-right: 40px !important;">
                                     <label class="input-form-label">WindShield Sum Insured ({{currencyValue}})</label>
                                     <div class="input-form-box">
                                         <input type="text" digitOnly [disabled]="((endorsementSection && !enableWindshieldSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="windShieldSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="WindSICommaFormatted()" class="input-form-control without-icon">
@@ -347,7 +344,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-4" *ngIf="classValue=='1' || classValue=='2'">
-                                <div class="input-control-container">
+                                <div class="input-control-container" style="padding-left: 40px !important;padding-right: 20px !important;">
                                     <label class="input-form-label">Extended TPPD Sum Insured ({{currencyValue}})</label>
                                     <div class="input-form-box">
                                         <input type="text" digitOnly [disabled]="((endorsementSection && !enableTppdSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="tppdSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="TppdCommaFormatted()" class="input-form-control without-icon">
@@ -355,7 +352,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-4">
-                                <div class="input-control-container">
+                                <div class="input-control-container" style="padding-left: 20px !important;padding-right: 20px !important;">
                                     <label class="input-form-label">TIRA Cover Note No (If Exist)</label>
                                     <div class="input-form-box">
                                         <input type="text" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="tiraCoverNoteNo" autocomplete="off" maxlength="15" class="input-form-control without-icon">
@@ -381,50 +378,51 @@
                                  <div class="custom-control custom-switch" style="position: relative;bottom: 0.3rem;">
                                    <input type="checkbox" class="custom-control-input" id="switch1" [disabled]="((endorsementSection && !enableFieldsSection)) || checkDisableField()" (change)="onCollateralChange()" [(ngModel)]="collateralValue">
                                    <label class="custom-control-label" for="switch1"></label>
-                        </div>
-                        </label>
-                    </div>
-                </div>
-                <div class="row" *ngIf="collateralYN=='Y'">
-                    <div class="col-12 col-md-4">
-                        <div class="input-control-container">
-                            <label class="input-form-label">Borrower Type</label><span class="text-danger">*</span>
-                            <ng-select class="input-form-select" appendTo="body" [items]="borrowerList" [disabled]="((endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="borrowerValue" bindValue="Code" bindLabel="CodeDesc">
-                            </ng-select>
+                                </div>
+                            </label>
                         </div>
                     </div>
-                    <div class="col-12 col-md-4" *ngIf="borrowerValue=='2'">
-                        <div class="input-control-container">
-                            <label class="input-form-label">Collateral Name</label><span class="text-danger">*</span>
-                            <div class="input-form-box">
-                                <input type="text" maxlength="50" class="input-form-control without-icon" [disabled]="((endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="collateralName">
+                    <div class="row" *ngIf="collateralYN=='Y'">
+                        <div class="col-12 col-md-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Borrower Type</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="borrowerList" [disabled]="((endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="borrowerValue" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4" *ngIf="borrowerValue=='2'">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Collateral Name</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" maxlength="50" class="input-form-control without-icon" [disabled]="((endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="collateralName">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4" *ngIf="borrowerValue=='1'">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Collateral Bank Name</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="bankList" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="collateralName" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">First Loss Payee</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" [(ngModel)]="firstLossPayee" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" class="input-form-control without-icon">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-4" *ngIf="borrowerValue=='1'">
-                        <div class="input-control-container">
-                            <label class="input-form-label">Collateral Bank Name</label><span class="text-danger">*</span>
-                            <ng-select class="input-form-select" appendTo="body" [items]="bankList" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="collateralName" bindValue="Code" bindLabel="CodeDesc">
-                            </ng-select>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <div class="input-control-container">
-                            <label class="input-form-label">First Loss Payee</label><span class="text-danger">*</span>
-                            <div class="input-form-box">
-                                <input type="text" [(ngModel)]="firstLossPayee" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" class="input-form-control without-icon">
-                            </div>
-                        </div>
+                    <div class="text-center mt-1 mb-1" *ngIf="vehicleDetailsList.length!=0 && vehicleDetailsList.length!=1">
+                        <button class="custom-btn btn-5 mx-2" *ngIf="currentIndex!=1 || finalSection" matRipple (click)="onPreviousVehicle()"><i class="fa fa-arrow-left"></i>&nbsp;Previous</button>
+                        <ng-container *ngIf="currentIndex<totalCount || currentIndex==totalCount">&nbsp;<span> {{currentIndex}} &nbsp;/&nbsp; {{totalCount}} </span>&nbsp;</ng-container>
+                        <button class="custom-btn btn-6  maan-button-data mx-2" *ngIf="currentIndex<totalCount" matRipple (click)="onFormSubmit('direct')">Next <i class="fa fa-arrow-right"></i></button>
+                        <button class="custom-btn btn-6  maan-button-data mx-2" *ngIf="currentIndex==totalCount && !finalSection" matRipple (click)="onFormSubmit('direct')">Submit</button>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="text-center mt-1 mb-1" *ngIf="vehicleDetailsList.length!=0 && vehicleDetailsList.length!=1">
-            <button class="custom-btn btn-5 mx-2" *ngIf="currentIndex!=1 || finalSection" matRipple (click)="onPreviousVehicle()"><i class="fa fa-arrow-left"></i>&nbsp;Previous</button>
-            <ng-container *ngIf="currentIndex<totalCount || currentIndex==totalCount">&nbsp;<span> {{currentIndex}} &nbsp;/&nbsp; {{totalCount}} </span>&nbsp;</ng-container>
-            <button class="custom-btn btn-6  maan-button-data mx-2" *ngIf="currentIndex<totalCount" matRipple (click)="onFormSubmit('direct')">Next <i class="fa fa-arrow-right"></i></button>
-            <button class="custom-btn btn-6  maan-button-data mx-2" *ngIf="currentIndex==totalCount && !finalSection" matRipple (click)="onFormSubmit('direct')">Submit</button>
-        </div>
+        
         <div class="maan-grid-item">
             <div class="maan-grid-item-title">
                 <div class="d-flex justify-content-between">
@@ -491,7 +489,6 @@
                 </ng-container>
             </div>
         </div>
-
         <div class="maan-grid-item" *ngIf="!addSection">
             <div class="maan-grid-item-title">
                 <div class="d-flex justify-content-between">

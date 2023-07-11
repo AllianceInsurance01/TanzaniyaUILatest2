@@ -38,8 +38,9 @@ export class UpdateCustomerDetailsComponent implements OnInit {
   brokerCode: any=null;
   brokerLoginId: any=null;
   brokerBranchCode: any=null;
-  CustomerCode: any=null;
+  CustomerCode: any=null;subUserType:any=null;
   showStepperSection: boolean = true;
+  b2cSection: boolean=false;
   //public orderStatus="customerDetails"
 
   constructor(
@@ -49,13 +50,13 @@ export class UpdateCustomerDetailsComponent implements OnInit {
   ) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.productId = this.userDetails.Result.ProductId;
+    this.subUserType = sessionStorage.getItem('typeValue');
+    if(this.subUserType=='B2C') this.b2cSection  = true;
     this.navStart = router
       .events
       .pipe(filter(event => event instanceof NavigationEnd))
       .pipe(map(() => {
         let child = this.activatedRoute.firstChild;
-        console.log(child);
-
         while (child) {
           if (child.firstChild) {
             child = child.firstChild;

@@ -355,7 +355,7 @@
         </div>
     </div>
 </div>
-<div class="card mt-4" *ngIf="(!policySection && !endorsementSection)|| (endorsementSection && IsChargeOrRefund=='CHARGE' && !policySection)" style="border: none;">
+<div class="card mt-4" *ngIf="(!policySection && !endorsementSection && !successSection)|| (endorsementSection && IsChargeOrRefund=='CHARGE' && !policySection)" style="border: none;">
     <div class="d-flex justify-content-between">
         <div class="maan-grid-item-title">
             <span class="mx-0">
@@ -667,9 +667,67 @@
                         </div>
                     </div>
                 </div>
+                <div class="card" *ngIf="Sixth" style="width: 100%;border: 2px solid #eaecf1;border-radius: 0.7rem;outline: none;box-sizing: border-box;transition: all .3s;height: auto;background: rgb(255,255,255);box-shadow: 1px 2px 2px #1f26875e;backdrop-filter: blur(18.5px);">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="spancommon span_font_size">Online Payment</span>
+                            </div>
+                            <div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 spancommon span_font_size">
+                                Payment Using Online Transaction
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 col-xl-6">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Payee Name</label>
+                                    <div class="input-form-box">
+                                        <input type="text" [(ngModel)]="payeeName" maxlength="100" class="input-form-control without-icon">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-xl-6">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Amount</label>
+                                    <div class="input-form-box">
+                                        <input type="text" [(ngModel)]="payAmount" (keydown)="onAmountChange($event)" (keyup)="CommaFormatted()"  maxlength="50" class="input-form-control without-icon">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+</div>
+<div class="row" *ngIf="successSection">
+    <div class="col-6 offset-3 spancommon span_font_size">
+        <div class="card mt-4">
+            <div class="card-body" *ngIf="!tinyUrlInfo">
+                <div class="row">
+                    <div class="col-10 offset-1 spancommon span_font_size">
+                        <h4 class="spancommon span_font_size" style="font-weight: 600;text-align: center;">Payment Completed Successfully</h4><br>
+                        <h4 class="spancommon span_font_size" style="font-weight: 600;text-align: center;">Additional Information Required to Generate Policy</h4>
+                    </div>
+                </div>
+                <div class="text-center mt-2" *ngIf="!tinyUrlInfo">
+                    <button class="custom-btn btn-6 maan-button-data mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/premium-details']">Proceed</button>
+                    <button class="custom-btn btn-8 maan-button-data mx-2" matRipple (click)="finalTinyUrlInfo()">Provide Later</button>
+                </div>
+            </div>
+        </div>
+    </div>     
 </div>
 <div class="row"  *ngIf="policySection">
     <div class="col-6 offset-3 spancommon span_font_size">
@@ -833,7 +891,7 @@
 </div>
 <div class="text-center my-2 mt-3" >
     <!-- <button class="custom-btn btn-6 mx-2" matRipple>Download Form</button> -->
-    <button class="custom-btn btn-5 mx-2" *ngIf="!policySection || (cancelEndorse && (IsChargeOrRefund=='REFUND' || IsChargeOrRefund=='CHARGE'))" matRipple (click)="ongetBack()" ><<&nbsp;Back</button>
+    <button class="custom-btn btn-5 mx-2" *ngIf="(!policySection && !successSection)  || (cancelEndorse && (IsChargeOrRefund=='REFUND' || IsChargeOrRefund=='CHARGE'))" matRipple (click)="ongetBack()" ><<&nbsp;Back</button>
     <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="endorsementSection && (cancelEndorse && IsChargeOrRefund!='REFUND' && IsChargeOrRefund!='CHARGE')" matRipple [routerLink]="['/Home/policies/Endorsements']" routerLinkActive="router-link-active">Proceed</button>
     <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="checkRefundMandatories()" matRipple (click)="onCashPayment()">Submit</button>
 </div>

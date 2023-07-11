@@ -45,6 +45,7 @@ export class ProductFormComponent implements OnInit {
 	regionList: any[]=[];maxDate:Date;
 	notificationList:any[]=[];maxDobDate:Date;
 	taxExcemptedList: any[]=[];
+	typeValue: string
 
 
 	constructor(private product: SharedService, private datePipe: DatePipe, private route: ActivatedRoute,
@@ -63,6 +64,7 @@ export class ProductFormComponent implements OnInit {
 		this.insuranceId = this.userDetails.Result.InsuranceId;
 		this.userType = this.userDetails.Result.UserType;
 		this.brokerbranchCode = this.userDetails.Result.BrokerBranchCode;
+		this.typeValue = sessionStorage.getItem('typeValue')
 		this.notificationList = [
 			{ CodeDesc: '-Select-', Code: '' },
 			{ CodeDesc: 'SMS', Code: 'Sms' },
@@ -869,6 +871,7 @@ export class ProductFormComponent implements OnInit {
 		}
 		if(data.vrngst=='' || data.vrngst== undefined || data.vrngst==null){data.vrngst=null};
 		console.log('MOVKK', this.mobileCodeList.label)
+		if(this.typeValue=='B2C' && this.loginId=='guest') data.Clientstatus = 'Y';
 		let ReqObj = {
 			"BrokerBranchCode": this.brokerbranchCode,
 			"CustomerReferenceNo": this.customerReferenceNo,
@@ -956,7 +959,11 @@ export class ProductFormComponent implements OnInit {
 				}
 				else {
 					sessionStorage.removeItem('customerReferenceNo');
-					this.router.navigate(['/Home/customer/'])
+					if(sessionStorage.getItem('typeValue')=='B2C'){
+						sessionStorage.setItem('customerReferenceNo',data?.Result?.SuccessId)
+						this.router.navigate(['./Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+					}
+					else this.router.navigate(['/Home/customer/'])
 				}
 			},
 
@@ -965,6 +972,6 @@ export class ProductFormComponent implements OnInit {
 	}
 	getBack(){
 		sessionStorage.removeItem('customerReferenceNo');
-					this.router.navigate(['/Home/customer/'])
+		this.router.navigate(['/Home/customer/'])
 	}
 }

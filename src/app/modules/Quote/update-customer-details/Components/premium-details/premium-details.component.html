@@ -1,9 +1,9 @@
 <div>
-    <div class="maan-grid document-grid maan-grid-column-2">
 
-    </div>
+    
 
-    <div class="d-flex justify-content-between p-1 card-header">
+
+    <div class="d-flex justify-content-between p-1 card-header mt-2">
 
         <div>
             <span class="spancommon span_font_size">Coverage Details</span>
@@ -30,9 +30,6 @@
         </div>
 
     </div>
-
-
-
     <div class="maan-grid customer-grid maan-grid-column-1">
         <div class="maan-grid-item" *ngIf="endorsementSection">
             <div class="maan-grid-item-title">
@@ -199,7 +196,7 @@
                     </div>
                 </div>
             </div>
-            <div class="maan-grid-item-body">
+            <div class="maan-grid-item-body" style="padding-left: 70px !important;padding-right: 40px !important;">
                 <ul class="list-group">
                     <li class="customList">
                         <div class="row mt-1">
@@ -326,9 +323,9 @@
             <div class="maan-grid-item-title">
                 <div class="d-flex justify-content-between">
 
-                    <div><span><i class="fas fa-home mx-1 mt-3"></i>
+                    <div><span><i class="fas fa-home mx-1"></i>
                         </span> <b font-style="24px;">Driver Details</b> </div>
-                    <div class="mr-3"> <button class="maan-btn maan-btn-blue maan-button-data"  *ngIf="(endorsementSection && enableDriverDetails) || !endorsementSection" (click)="AddNew()"><i class="fas fa-plus mx-1"></i>&nbsp;Add New </button></div>
+                    <div class="mr-3"> <button class="maan-btn maan-btn-blue maan-button-data" style="bottom:0.2rem"  *ngIf="(endorsementSection && enableDriverDetails) || !endorsementSection" (click)="AddNew()"><i class="fas fa-plus mx-1"></i>&nbsp;Add New </button></div>
                 </div>
             </div>
             
@@ -432,7 +429,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="maan-grid-item-body">
+                <div class="maan-grid-item-body" style="padding-left: 70px !important;padding-right: 40px !important;">
                     <div class="row" *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
                         <div class="product_Section col-md-6 col-lg-4 ml-1" *ngIf="commonDocTypeList.length!=0">
                             <div class="text-center">
@@ -558,7 +555,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="maan-grid-item-body">
+                <div class="maan-grid-item-body" style="padding-left: 70px !important;padding-right: 40px !important;">
                     <div class="row customFlow">
                         <div class="col-md-6 col-lg-6 offset-3"  *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
                             <input style="display: none;" type="file" (change)="onUploadListDocuments($event,null,'direct',j)" #doc>
@@ -584,7 +581,7 @@
                                     <th scope="col">
                                         <span class="spancommon">
                                             <ng-container *ngIf="productId=='5'">Chassis Number</ng-container>
-                                            <ng-container *ngIf="productId=='4'">Passenger Name</ng-container>
+                                            <ng-container *ngIf="productId=='4'">Passpport No</ng-container>
                                             <ng-container *ngIf="productId!='4' && productId!='5'">ID</ng-container>
                                         </span>
                                     </th>
@@ -645,7 +642,7 @@
                                     <th scope="col">
                                         <span class="spancommon">
                                             <ng-container *ngIf="productId=='5'">Chassis Number</ng-container>
-                                            <ng-container *ngIf="productId=='4'">Passenger Name</ng-container>
+                                            <ng-container *ngIf="productId=='4'">Passpport No</ng-container>
                                             <ng-container *ngIf="productId!='4' && productId!='5'">ID</ng-container>
                                         </span>
                                     </th>

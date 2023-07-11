@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 import { SharedService } from '../../../../../shared/shared.service';
 declare var $:any;
+import { cloneDeep } from 'lodash';
 
 @Component({
   selector: 'app-section-modification',
@@ -45,6 +46,15 @@ export class SectionModificationComponent implements OnInit {
   issuerSection: boolean=false;
   bdmCode: any=null;
   customerCode: any=null;
+  endrosementid: string;
+  Addsection:boolean=false;
+  Removesection:boolean=false;
+  newsection:boolean=true;
+  addproductList:any;
+  optedsection:any[]=[];
+  nonoptedsections:any[]=[];
+  optedTypeList:any[]=[];
+  optedlist:any[]=[];
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -70,6 +80,35 @@ export class SectionModificationComponent implements OnInit {
       }
       else{
         this.onproductdisplay();
+      }
+      let existEnd = JSON.parse(sessionStorage.getItem('endorseTypeId'));
+      if(existEnd){
+        console.log("Entered Data",existEnd)
+        this.endrosementid=existEnd?.EndtTypeId;
+        if(this.endrosementid){
+          if(this.endrosementid=='845'){
+            this.Addsection=true;
+            this.newsection=false;
+            this.getAddsectionDetails();
+          }
+          else if(this.endrosementid=='846'){
+            this.Removesection=true;
+            this.newsection=false;
+            this.getAddsectionDetails();
+          }
+        }
+        else{
+          this.newsection=true;
+          this.Removesection=false;
+          this.Addsection=false;
+
+        }
+      }
+      else{
+        this.newsection=true;
+        this.Removesection=false;
+        this.Addsection=false;
+
       }
     }
 
@@ -114,7 +153,7 @@ onproductdisplay(){
   let urlLink = `${this.ApiUrl1}master/dropdown/productsection`;
   this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
     (data: any) => {
-      console.log(data);
+      console.log('IIIIII',data);
       if(data.Result){
           let products = data.Result;
           if(products.length!=0){
@@ -318,6 +357,9 @@ getIndustryList() {
   checkSectionOpted(rowData){
     return this.selectedSections.some(ele=>ele==rowData.Code);
   }
+  // SectionOpted(rowData){
+  //   return this.optedsection.some(ele=>ele==rowData.SectionId);
+  // }
   checkSections(rowData){
     return rowData.checked;
   }
@@ -349,7 +391,159 @@ getIndustryList() {
     //     this.sectionError = false;
     //     this.selectedSections.push(rowData.Code);
     // }
-    console.log("Final Sections",this.selectedSections)
+    console.log("Final Sections",this.selectedSections,rowData)
   }
+
+  getAddsectionDetails(){
+    let i=0;let list
+    let ReqObj = {
+      "RequestReferenceNo": this.requestReferenceNo,
+      "ProductId":this.productId,
+      "InsuranceId": this.insuranceId,
+    }
+    let urlLink = `${this.CommonApiUrl}endorsment/sectionlist`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data?.Result){
+         this.addproductList=data.Result;
+         this.optedsection= this.addproductList.OptedSections;
+         this.optedTypeList = cloneDeep(data);
+         this.nonoptedsections=this.addproductList.NonOptedSections;
+         for(let r of this.optedsection){
+             list=r.SectionId;
+             this.optedlist.push(list);
+             i++;
+         }
+         console.log('opted Product List',this.optedlist);
+         console.log('Non opted Product List',this.nonoptedsections);
+        }
+            
+      },
+  
+      (err) => { },
+    );
+  }   
+
+
+  onChangeOptedSections(rowData,index,event){
+    console.log('Datass',event.checked);
+    //let entry = this.SectionOpted(rowData);
+   
+    if(event.checked == true){
+      let entry=this.optedsection.some(ele=>ele==rowData.SectionId);
+      console.log('IIIIIIIIIIII',entry);
+      if(!entry){
+        this.sectionError = false;
+        this.optedlist.push(rowData.SectionId)
+        //this.optedsection[index].checked = true;
+        //this.optedsection.push(rowData);
+      }
+    }
+    else if(event.checked==false){
+      console.log('OOOOOOOO',this.optedsection)
+      console.log('RRRRRRRRR',rowData.SectionId);
+      let entry = this.optedsection.some(ele=>ele==rowData.SectionId);
+      console.log('SSSSSSSS',entry);
+      if(!entry){
+        console.log(rowData.SectionId)
+        this.optedlist.splice(rowData.SectionId,index);
+      }
+     
+      // this.selectedSections = this.selectedSections.filter(ele=>ele!=rowData.Code);
+      // this.productList[index].checked = false;
+      // if(this.selectedSections.length==0) this.sectionError = true;
+    }
+    console.log("Final",this.selectedSections,rowData);
+    console.log("Final Sections",this.optedlist,rowData)
+  }
+
+
+  onSave(){
+    let promocode = null;
+    let appId = "1", loginId = "", brokerbranchCode = "";let createdBy = "";
+    let quoteStatus = sessionStorage.getItem('QuoteStatus');
+    if (quoteStatus == 'AdminRP' || quoteStatus == 'AdminRA' || quoteStatus == 'AdminRR') {
+      //createdBy = this.vehicleDetailsList[0].CreatedBy;
+    }
+    else {
+      createdBy = this.loginId;
+      if (this.userType != 'Issuer') {
+        this.brokerCode = this.agencyCode;
+        appId = "1"; loginId = this.loginId;
+        brokerbranchCode = this.brokerbranchCode;
+      }
+      else {
+        appId = this.loginId;
+        loginId = this.commonDetails[0].LoginId
+        brokerbranchCode = null;
+      }
+    }
+    this.applicationId = appId;
+    if (quoteStatus == 'AdminRP' || quoteStatus == 'AdminRA' || quoteStatus == 'AdminRR') {
+      if (this.applicationId != '01' && this.applicationId != '1') { this.issuerSection = true; }
+      else { this.issuerSection = false; }
+    }
+    else if (this.userType != 'Broker' && this.userType != 'User') { this.issuerSection = true; }
+    else this.issuerSection = false
+    this.subuserType = sessionStorage.getItem('typeValue');
+    if (quoteStatus == 'AdminRP' || quoteStatus == 'AdminRA' || quoteStatus == 'AdminRR') {
+    }
+    if (this.commonDetails[0].Promocode) {
+      promocode = this.commonDetails[0].Promocode;
+    }
+    else if (this.commonDetails[0].PromoCode) promocode = this.commonDetails[0].PromoCode;
+    if (this.commonDetails[0].CustomerCode != null && this.commonDetails[0].CustomerCode != undefined) this.customerCode = this.commonDetails[0].CustomerCode;
+    if (this.issuerSection) {
+      this.sourceType = this.commonDetails[0].SourceType;
+      this.bdmCode = this.commonDetails[0].BrokerCode;
+      this.brokerCode = this.commonDetails[0].BrokerCode;
+     brokerbranchCode = this.commonDetails[0].BrokerBranchCode;
+  
+    }
+    let ReqObj = { 
+      "BranchCode":this.branchCode,
+     "EndorsementDate": "07/07/2023",
+     "EndorsementEffectiveDate": "07/07/2023",
+     "EndorsementRemarks": "None",
+     "EndorsementType": this.endrosementid,
+    "EndorsementTypeDesc": "Add Section ",
+     "EndtCategoryDesc": "Financial",
+     "EndtCount": 1,
+     "EndtPrevPolicyNo": "P11/2023/100/1002/10/01212",
+     "EndtPrevQuoteNo": "Q03533",
+    "EndtSectionIds": [
+    "52","47"
+    ],
+  "EndtStatus": "P",
+  "InsuranceId": "100002",
+  "IsFinanceEndt": "Y",
+  "OrginalPolicyNo": "P11/2023/100/1002/10/01212",
+  "PolicyNo": "P11/2023/100/1002/10/01212-1",
+  "ProductId": "19",
+  "RequestReferenceNo": "SME-05532",
+  "SectionEndtModification": "Added"
+    }
+    let urlLink = `${this.motorApiUrl}api/slide/savecommondetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data.Result) {
+                let sections = data.Result?.SectionIds;
+                let refNo = data.Result?.RequestReferenceNo;
+                this.updateComponent.referenceNo = refNo;
+                sessionStorage.setItem('quoteReferenceNo',refNo);
+                let homeDetails = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
+                if (homeDetails) {
+                    if (homeDetails[0].SectionId == undefined || homeDetails[0].SectionId == "undefined") homeDetails[0]['SectionId'] = sections;
+                    else homeDetails[0].SectionId = sections;
+                    sessionStorage.setItem('homeCommonDetails', JSON.stringify(homeDetails))
+                    this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+                }
+        }
+      },
+      (err) => { },
+    );
+  }
+
 }
 

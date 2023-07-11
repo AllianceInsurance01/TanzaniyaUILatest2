@@ -26,7 +26,7 @@
             </ng-container>
             
         </mat-menu> -->
-        <a class="btn dropdown-toggle spancommon span_font_size subUser" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black;cursor:pointer;font-weight: 600;">
+        <a class="btn dropdown-toggle spancommon span_font_size subUser" role="button" [hidden]="(typeValue=='B2C' && loginId=='guest')" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black;cursor:pointer;font-weight: 600;">
             SubUserType - {{typeName}}
         </a>
         <div class="dropdown-menu subusermenu" id="subUserTypes" aria-labelledby="dropdownMenuLink">
@@ -65,7 +65,7 @@
             </ng-container>
         </mat-menu> -->
         <ng-container>
-            <a class="btn  dropdown-toggle spancommon span_font_size brnch"  [hidden]="typeValue=='SuperAdmin'" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black;cursor:pointer;font-weight: 600;">
+            <a class="btn  dropdown-toggle spancommon span_font_size brnch"  [hidden]="typeValue=='SuperAdmin' || (typeValue=='B2C' && loginId=='guest')" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black;cursor:pointer;font-weight: 600;">
                 Branch - {{branchName}}
             </a>
             <div class="dropdown-menu branchsubName" aria-labelledby="dropdownMenuLink1">
@@ -79,15 +79,19 @@
         </ng-container>
        
     </div>
-    <ng-container *ngIf="typeValue!='SuperAdmin'">
+    <ng-container *ngIf="typeValue!='SuperAdmin'  ">
         <button class="btn btn-success text-light btn-header" (click)="home()" style="border:none;color:black;cursor:pointer">
             <i style="font-size:12px;border:none" class="fa fa-home" aria-hidden="true" style="padding:1px;"></i><span
                 class="spancommon span_font_size"> &nbsp;{{productname}}</span>
         </button>
     </ng-container>
-    
 
-    <div class="dropdown logout">
+    <div class="dropdown userName">
+        <i class="fa fa-user" aria-hidden="true"></i>&nbsp;<span class="ml-5 spancommon span_font_size">{{loginId}}&nbsp;|&nbsp;</span>
+        <span class="ml-5 spancommon span_font_size" style="text-transform: capitalize;">{{userType}}&nbsp;|&nbsp;</span>
+    </div>
+    <div class="dropdown logout" [hidden]="(typeValue=='B2C' && loginId=='guest')">
+       
         <a class="spancommon span_font_size" (click)="onLog('Log out')" style="color:black;cursor:pointer;font-weight: 600;text-decoration: none;position: relative;right: 1.5rem;">
             Logout
         </a>
@@ -112,9 +116,8 @@
                             <img src="./assets/images/logo-2.png" class="bg-image-data">
                         </a>
                     </li>
-                    <div class="p-2 text-light" style="position: relative;"><i class="fa fa-check" aria-hidden="true"></i><span class="ml-5 spancommon span_font_size">{{loginId}}</span></div>
-                    <div class="p-2 text-light" style="position: relative;"><i class="fa fa-user" aria-hidden="true"></i><span class="ml-5 spancommon span_font_size" style="text-transform: capitalize;">{{userType}}</span></div>
-                        <ng-container *ngIf="menuSection && parentSection">
+                    
+                        <ng-container *ngIf="menuSection && parentSection && typeValue!='B2C'">
                             <ng-container *ngFor="let Menu of menu;let i=index">
                         
                                 <li (click)="navexpand(i)">
@@ -159,7 +162,7 @@
         </div>
     </mat-drawer>
     <mat-drawer-content>
-        <div class="main-content main p-2">
+        <div class="main-content main">
             <div class="bread_crumb main">
                 <app-breadcrumb [ngStyle]="{'font-family':' var(--our-font-family-new) !important'}"></app-breadcrumb>
 

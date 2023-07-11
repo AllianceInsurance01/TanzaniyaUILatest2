@@ -1,0 +1,51 @@
+.maan-grid-column-1 {
+    min-width: 300px;
+    min-height: 350px;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+}
+
+.customer-grid .maan-grid-item {
+    overflow: hidden;
+    /* border: 3px solid var(--theme1); */
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 24px 100px 0px;
+}
+
+.customer-grid .maan-grid-item-title {
+    padding: .5rem;
+    font: bolder;
+    font-size: 17px;
+    background-color: whitesmoke;
+    color: black;
+    font-weight: 600;
+}
+
+.customer-grid .maan-grid-item-body {
+    padding: 10px !important;
+}
+.customImage{
+    min-height:60vh !important;
+    background: url('../../../../assets/images/authenticate.webp') no-repeat !important;
+      background-position: center center !important;
+      background-size: 100% 75% !important;
+  
+  }
+.userImage{
+    min-height:60vh !important;
+    background: url('../../../../assets/images/userInfo.avif') no-repeat !important;
+      background-position: center center !important;
+      background-size: 100% 75% !important;
+}
+  .customHeading{
+    font-size: 27px;
+    font-weight: 600;
+    border-radius: 10px;
+    background-color: #0e2a58;
+    color: #fff;
+  }
+  .customAuthPanel{
+    padding: 15px;
+    background-color: #fff;
+    min-height: 50vh !important;
+    border-radius: 25px;
+  }

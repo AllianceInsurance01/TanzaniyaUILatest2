@@ -1,0 +1,148 @@
+<div class="row">
+    <div class="col-md-10 col-lg-10 col-xl-10 card offset-1">
+        <div class="row" *ngIf="!otpSection">
+            <div class="col-md-3 col-lg-3 col-xl-3">
+                <div class="userImage"></div>
+            </div>
+            <div class="col-md-9 col-lg-9 col-xl-9  customAuthPanel" >
+            <div class="card-header">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <span class="spancommon span_font_size">User Information</span>
+                    </div>
+                    <div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Identity Type</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="policyHolderTypeList"  [(ngModel)]="productItem.PolicyHolderTypeid" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="input-control-container">
+                                <label class="input-form-label">ID Number</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" (keypress)="omit_special_char($event)" class="input-form-control without-icon"  [(ngModel)]="productItem.IdNumber" maxlength="20">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Code</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="mobileCodeList"  [(ngModel)]="productItem.MobileCode" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-9 col-lg-9 col-xl-9">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Mobile No</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" maxlength="10" (keypress)="omit_special_char($event)" class="input-form-control without-icon"  [(ngModel)]="productItem.MobileNo">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Title</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="titleList" (change)="onTitleChange()" [(ngModel)]="productItem.Title" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>  
+                        <div class="col-md-9 col-lg-9 col-xl-9">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Customer Name</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" maxlength="150" (keypress)="omit_special_char($event)" class="input-form-control without-icon"  [(ngModel)]="productItem.ClientName">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-3 col-lg-3 col-xl-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Gender</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="genderList"  [(ngModel)]="productItem.Gender" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div> -->
+                        
+                        <!-- <div class="col-md-3 col-lg-3 col-xl-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Prefered Notification</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="notificationList"  [(ngModel)]="productItem.PreferredNotification" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div> -->
+                        <div class="col-md-5 col-lg-5 col-xl-5" *ngIf="showEmailSection">
+                            <mat-checkbox class="example-margin" [checked]="onCheckEmailNotification()" (change)="onSelectEmail($event.checked)"><span>Required Email Notification</span></mat-checkbox>
+                        </div>
+                        <div class="col-md-7 col-lg-7 col-xl-7" [hidden]="checkEmailYN!='Y'">
+                            <div class="input-control-container">
+                                <label class="input-form-label">EmailId</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text"  class="input-form-control without-icon" email [(ngModel)]="productItem.EmailId" #prmEmail="ngModel">
+                                </div>
+                                <div *ngIf="prmEmail.errors?.email || emailError" class="text-danger"> 
+                                    Please Enter Valid Email Id
+                               </div> 
+                            </div>
+                        </div>
+                    </div>
+                <div class="text-center mt-2">
+                        <button class="custom-btn btn-5 mr-2" (click)="ongetBack()" matRipple><<&nbsp;Back</button>&nbsp;
+                       <button class="custom-btn btn-6 maan-button-data mx-2" [disabled]="prmEmail.errors?.email" (click)="onSubmit(productItem)" style="width: 11rem" matRipple>Save</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="otpSection">
+            <div class="col-md-4 col-lg-4 col-xl-4">
+                <div class="customImage"></div>
+            </div>
+            <div class="col-md-7 col-lg-7 col-xl-7 offset-1 customAuthPanel" >
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <span class="mx-1">
+                                Otp Verification 
+                            </span>
+                        </div>
+                        <div>
+                            UserName - {{productItem?.ClientName}}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="text-end">
+                        <h5>Generated OTP ~ &nbsp;&nbsp; {{otpGenerated}}</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10 col-lg-10 col-10 offset-1">
+                            <div class="input-control-container">
+                                <label class="input-form-label">OTP Number</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text"  class="input-form-control without-icon" maxlength="10" [(ngModel)]="otpValue" name="otpValue" required appNumbersOnly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        Not Received OTP?
+                        <button class="btn btn-primary" (click)="generateOtp()" [disabled]="OtpBtnEnable">
+                            Resend OTP
+                            <span *ngIf="OtpBtnEnable">in ( {{ OtpBtnTime }} seconds)</span>
+                        </button>
+                    </div>
+                    <div class="text-center mt-4">
+                        
+                        <button class="custom-btn btn-6 maan-button-data mx-2" [disabled]="otpValue == ''" (click)="onOtpValidate()" style="width: 11rem" matRipple>Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

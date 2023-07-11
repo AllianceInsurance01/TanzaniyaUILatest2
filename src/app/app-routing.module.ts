@@ -5,6 +5,7 @@ import { BranchSelectionComponent } from './modules/branch-selection/branch-sele
 import { HomeLayoutComponent } from './layout/home-layout/home-layout.component'
 import { AuthGuard } from './Auth/auth.guard'
 import { CustomerRedirectComponent } from './modules/customer-redirect/customer-redirect.component';
+import { CustomerProductsComponent } from './modules/customer-products/customer-products.component';
 
 const routes: Routes = [
 	// {
@@ -34,6 +35,10 @@ const routes: Routes = [
 	{
 		path: 'customerRedirect',
 		component: CustomerRedirectComponent,
+	},
+	{
+		path: 'customerProducts',
+		component: CustomerProductsComponent,
 	},
 	// {
 	// 	path:'branch',
