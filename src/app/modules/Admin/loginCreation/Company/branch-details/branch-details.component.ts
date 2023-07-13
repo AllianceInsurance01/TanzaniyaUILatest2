@@ -31,19 +31,7 @@ export class BranchDetailsComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.columnHeader = [
-      { key: 'BranchName', display: 'Branch Name' },
-      { key: 'CityName', display: 'City Name' },
-      { key: 'EffectiveDateStart', display: 'EffectiveDate' },
-      { key: 'Status', display: 'Status' },
-      {
-        key: 'actions',
-        display: 'Action',
-        config: {
-          isEdit: true,
-        },
-      },
-    ];
+    
 
     this.getExistingbranch();
   }
@@ -119,9 +107,21 @@ export class BranchDetailsComponent implements OnInit {
     let urlLink = `${this.CommonApiUrl}master/getallbranchdetails`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
-        if(data.Result){
+        this.columnHeader = [
+          { key: 'BranchName', display: 'Branch Name' },
+          { key: 'CityName', display: 'City Name' },
+          { key: 'EffectiveDateStart', display: 'EffectiveDate' },
+          { key: 'Status', display: 'Status' },
+          {
+            key: 'actions',
+            display: 'Action',
+            config: {
+              isEdit: true,
+            },
+          },
+        ];
             this.branchData = data?.Result;
-        }
+            console.log("Final Branches",this.branchData)
       },
       (err) => { },
     );

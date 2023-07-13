@@ -73,7 +73,7 @@ export class LoginComponent {
     this.value_cancel = value_cancel;
     if (value_cancel === 'Cancel') {
       this.resetForm();
-      this.loginSection = true;
+      this.loginSection = false;
       this.loginfirst = false;
       this.changePasswordSection = false;
       this.forget = false;

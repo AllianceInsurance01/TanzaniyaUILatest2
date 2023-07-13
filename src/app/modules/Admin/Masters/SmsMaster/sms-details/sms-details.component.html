@@ -133,8 +133,8 @@
 
 
           <div class="col-12 col-md-4 col-lg-4">
+            <label class="input-form-label">Effective Date<span class="text-required" >*</span></label>
             <mat-form-field appearance="fill">
-                <mat-label>Effective Date</mat-label>
                 <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="onDateFormatInEdit" [(ngModel)]="SmsDetails.EffectiveDateStart">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>

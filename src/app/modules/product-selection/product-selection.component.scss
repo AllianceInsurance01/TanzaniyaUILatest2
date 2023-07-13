@@ -32,18 +32,14 @@
     z-index: 99;
     position: absolute;
     white-space: nowrap;
-    left: 50%;
+    left: 50% !important;
     transform: translateX(-50%);
 }
 .padd0 {
     padding-left: 0;
     padding-right: 0;
 }
-.InsuranceType {
-    width: 16.65% !important;
-    border-radius: 5px 5px 0 0;
-    opacity: 1!important;
-}
+
 .box-1 .topIco {
     margin-top: 35px!important;
 }
@@ -60,20 +56,7 @@
     color: #4d4d4d;
     text-transform: capitalize;
 }
-.InsuranceIcon, .ourProduct-sec .InsuranceIcon {
-    
-    margin: 10px auto;
-    box-shadow: 2px 2px 4px #00000026;
-    -moz-box-shadow: 2px 2px 4px #00000026;
-    -webkit-box-shadow: 2px 2px 4px #00000026;
-    border: 5px solid transparent;
-    border-radius: 50% !important;
-    border-color: transparent !important;
-    
-    background-color: #fff;
-    height: 125px;
-    width: 125px;
-}
+
 .InsuranceType:hover {
     transform: translateY(-5px);
     border-radius: 30px !important;
@@ -133,14 +116,73 @@
     background: url('../../../assets/images/money.webp') no-repeat center;
     background-size: 120px !important;
 }
-.InsuranceIcon1 {
-    border: 2px solid #ffde48!important;
-}
 
-.InsuranceType:hover .InsuranceIcon1{
-    border: 2px solid #4891ff!important;
+@media screen and (min-width:700px) and (max-width: 1456px) {
+    .display2{
+       display:none;
+        }
+        .InsuranceType {
+            width: 16.65% !important;
+            border-radius: 5px 5px 0 0;
+            opacity: 1!important;
+        }
+        .InsuranceIcon, .ourProduct-sec .InsuranceIcon {
     
-}
-.bwT {
-    background: rgba(275,275,275,.5) !important;
-}
+            margin: 10px auto;
+            box-shadow: 2px 2px 4px #00000026;
+            -moz-box-shadow: 2px 2px 4px #00000026;
+            -webkit-box-shadow: 2px 2px 4px #00000026;
+            border: 5px solid transparent;
+            border-radius: 50% !important;
+            border-color: transparent !important;
+            
+            background-color: #fff;
+            height: 125px;
+            width: 125px;
+        }
+        .InsuranceIcon1 {
+            border: 2px solid #ffde48!important;
+        }
+        
+        .InsuranceType:hover .InsuranceIcon1{
+            border: 2px solid #4891ff!important;
+        }
+        .bwT {
+            background: rgba(275,275,275,.5) !important;
+        }
+    }
+
+ @media screen and (min-width: 280px) and (max-width: 700px) {
+    .display1{
+        display:none;
+    }
+    .InsuranceType {
+        width: 44.5% !important;
+        border-radius: 5px 5px 0 0;
+        opacity: 1!important;
+    }
+    .InsuranceIcon, .ourProduct-sec .InsuranceIcon {
+    
+        margin: 10px auto;
+        box-shadow: 2px 2px 4px #00000026;
+        -moz-box-shadow: 2px 2px 4px #00000026;
+        -webkit-box-shadow: 2px 2px 4px #00000026;
+        border: 5px solid transparent;
+        border-radius: 50% !important;
+        border-color: transparent !important;
+        
+        background-color: #fff;
+        height: 85px;
+        width: 85px;
+    }
+    .InsuranceIcon1 {
+        border: 2px solid #ffde48!important;
+    }
+    
+    .InsuranceType:hover .InsuranceIcon1{
+        border: 2px solid #4891ff!important;
+    }
+    .bwT {
+        background: rgba(275,275,275,.5) !important;
+    }
+ }

@@ -19,9 +19,11 @@ export class SmsListComponent implements OnInit {
   public CommonApiUrl1: any = this.AppConfig.CommonApiUrl;
   BranchCode: any;
   branchList:any;
+  insuranceId: string;
   constructor(private router:Router,private sharedService:SharedService) {
     this.activeMenu = "City";
     this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
+    this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
   }
 
   ngOnInit(): void {
@@ -52,7 +54,7 @@ EditStatus(event){
 getSmsList()
 {
   let ReqObj = {
-    "InsuranceId": "100002"
+    "InsuranceId": this.insuranceId
   }
   let urlLink = `${this.CommonApiUrl1}master/dropdown/branchmaster`;
 this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -93,7 +95,7 @@ getExistingSms()
   {
     let entry = {
       "SNo":rowdata.Sno,
-      "InsuranceId":"100002",
+      "InsuranceId":this.insuranceId,
       "BranchCode":this.BranchCode
 
     }

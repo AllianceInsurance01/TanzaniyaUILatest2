@@ -62,10 +62,10 @@
                                 <button class="btn btn-warning" (click)="onAddSection()">Add New</button>
                             </div>
                         </div>
-                        <ng-container *ngIf="branchData.length!=0">
                             <app-grid-table [cols]="columnHeader" changeStatus="true" (OnStatus)="EditStatus($event)" [data]="branchData" [filterValue]="filterValue" (onEdit)="onEditSection($event)">
                             </app-grid-table>
-                        </ng-container>
+                            <!-- <app-grid-table [cols]="columnHeader" changeStatus="true" (OnStatus)="EditStatus($event)" [data]="branchData" [filterValue]="filterValue" (onEdit)="onEditSection($event)">
+                            </app-grid-table> -->
                         <div class="text-center">
                             <button class="btn btn-danger" (click)="ongetBack()">Back</button>
                         </div>

@@ -25,13 +25,13 @@ export class ExchangeListComponent implements OnInit {
   userDetails: any;
   constructor(public dialogService: MatDialog,private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,) {
-      this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
-      this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
+      // this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
+      // this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
       this.getExistingExchange();
       this.ExchangeId = sessionStorage.getItem('ExchangeId');
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       const user = this.userDetails?.Result;
-      this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+      if(this.insuranceId==undefined)this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
      }
 
   ngOnInit(): void {
@@ -100,7 +100,7 @@ onEdit(event){
 }
   getExistingExchange(){
     let ReqObj = {
-      "InsuranceId": "100002",
+      "InsuranceId": this.insuranceId,
     }
     let urlLink = `${this.CommonApiUrl1}master/getallexchangemaster`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(

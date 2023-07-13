@@ -22,13 +22,13 @@ export class NewExchangeDetailsComponent implements OnInit {
   constructor(
     private router:Router,private sharedService: SharedService,private datePipe:DatePipe) {
       this.minDate = new Date();
-    this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
+    //this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
     this.productId =  sessionStorage.getItem('companyProductId');
       let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if(userDetails){
       this.loginId = userDetails?.Result?.LoginId;
     }
-    this.insuranceId = userDetails?.Result?.LoginBranchDetails[0].InsuranceId;
+    if(this.insuranceId==undefined) this.insuranceId = userDetails?.Result?.LoginBranchDetails[0].InsuranceId;
     //this.insuranceId = userDetails.LoginBranchDetails[0].InsuranceId;
 
     this.exchangeDetails = new Exchange();
@@ -51,7 +51,7 @@ export class NewExchangeDetailsComponent implements OnInit {
   getEditExchangeDetails(){
     let ReqObj = {
       "ExchangeId": this.ExchangeId,
-      "InsuranceId":"100002"
+      "InsuranceId": this.insuranceId
     }
       let urlLink = `${this.CommonApiUrl}master/getexchangemaster`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -96,7 +96,7 @@ export class NewExchangeDetailsComponent implements OnInit {
   }
   getCurrencyList(){
     let ReqObj = {
-      "InsuranceId": "100002"
+      "InsuranceId": this.insuranceId
     }
     let urlLink = `${this.CommonApiUrl}master/dropdown/currency`;
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(

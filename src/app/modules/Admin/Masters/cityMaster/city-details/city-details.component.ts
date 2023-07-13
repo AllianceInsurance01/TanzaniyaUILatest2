@@ -106,7 +106,7 @@ export class CityDetailsComponent implements OnInit {
 
   getCountryList(){
     let ReqObj = {
-   "InsuranceId":"100002"
+   "InsuranceId": this.insuranceId
 
     }
     let urlLink = `${this.CommonApiUrl}master/dropdown/country`;
