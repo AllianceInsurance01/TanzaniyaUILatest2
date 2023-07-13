@@ -129,7 +129,7 @@ const routes: Routes = [
         path: 'personal-accident',
         component: PersonalQuoteDetailsComponent,
         data: {
-          title: "Vehicle-stepper",
+          title: "PersonalAccident-stepper",
         }
       },
       {

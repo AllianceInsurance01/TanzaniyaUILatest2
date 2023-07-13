@@ -1,8 +1,8 @@
 <div class="row p-0">
         <div class="col-12 col-md-12 col-lg-12 p-0">
-            <div class="maan-grid customer-grid maan-grid-column-1 p-0">
-                <div class="maan-grid-item" *ngIf="endorsementSection">
-                    <div class="maan-grid-item-title">
+            <div class="maan-grid customer-grid maan-grid-column-1 p-0  mt-3">
+                 <div class="maan-grid-item" *ngIf="endorsementSection">
+                    <div class="maan-grid-item-title p-0" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
                         <div class="d-flex justify-content-between">
                             <div>
                                 <span class="mx-1">
@@ -56,16 +56,37 @@
                     </div>
                 </div>
                 <div class="maan-grid-item" *ngIf="customerDetails">
-                    <div class="maan-grid-item-title">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <span class="mx-1">
-                                    <i class="fas fa-user mx-1"></i>
-                                </span> <span class="spancommon">Customer Details</span>
+                    <div class="display1">
+                        <div class="maan-grid-item-title p-0" style="margin: 0px !important;top:0rem;bottom: 0rem !important;padding-top: 9px !important;">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <span class="mx-1">
+                                        <i class="fas fa-user mx-1"></i>
+                                    </span> <span class="spancommon">Customer Details</span>
+                                </div>
+                                <div>
+                                    <button class="maan-btn maan-btn-blue spancommon" (click)="onchange()" style="letter-spacing:1px;bottom: 0.2rem !important;"><i class="fas fa-user mx-1 customer"></i>Change Customer</button>
+                                    <button class="maan-btn maan-btn-red edit" (click)="editChange()" style="margin-left:20px;bottom: 0.2rem !important;"><i class="fas fa-edit" style="color:lightblue"></i></button>
+                                </div>
                             </div>
-                            <div>
-                                <button class="maan-btn maan-btn-blue spancommon" (click)="onchange()" style="letter-spacing:1px;bottom: 0.2rem !important;"><i class="fas fa-user mx-1 customer"></i>Change Customer</button>
+                        </div>
+                    </div>
+                    <div class="display2 mt-2">
+                        <div>
+                            <div class="row" style="border-bottom: 2px solid #333b85;">
+                                <span>
+                                    <i class="fas fa-user mx-1"></i>
+                                    <span style="color:black; font-size:16px;">Customer Details</span>
+                                </span> 
+                            </div>
+                            <div class="d-flex justify-content-between mt-2">
+                                <div>
+                                    <button class="maan-btn maan-btn-blue spancommon" (click)="onchange()" style="letter-spacing:1px;bottom: 0.2rem !important;"><i class="fas fa-user mx-1 customer"></i>Change Customer</button>
+                                </div>
+                               <div>
                                 <button class="maan-btn maan-btn-red edit" (click)="editChange()" style="margin-left:20px;bottom: 0.2rem !important;"><i class="fas fa-edit" style="color:lightblue"></i></button>
+                               </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -117,7 +138,7 @@
                     </div>
                 </div>
                 <div class="maan-grid-item" *ngIf="issuerSection">
-                    <div class="maan-grid-item-title">
+                    <div class="maan-grid-item-title p-0" style="margin: 0px !important;top:0rem;bottom: 0rem !important;padding-top: 9px !important;">
                         <span class="mx-1">
                             <i class="fas fa-book mx-1"></i>
                         </span> <span class="spancommon">Policy Details</span>
@@ -141,7 +162,7 @@
                                     <label class="input-form-label">Customer Code</label><span class="text-danger">*</span>
                                     <div class="input-form-box">
                                         <input id="CustomerInput" class="input-form-control without-icon"  [disabled]="endorsementSection" [(ngModel)]="customerCode" type="text" (keyup)="onGetCustomerList('change',$event.target.value)" autocomplete="off" placeholder="Search here" data-toggle="dropdown" /><br>
-                                        <ul class="dropdown-menu dropdown-list-style CustomerInput" [ngClass]="{dropdownDisplay: showCustomerList, dropdownNotDisplay: !showCustomerList}">
+                                        <ul class="dropdown-menu dropdown-list-style CustomerInput"  [ngClass]="{dropdownDisplay: showCustomerList, dropdownNotDisplay: !showCustomerList}">
                                             <li *ngFor="let item of customerList" (click)="setCustomerValue(item.Code, item.Name)">
                                                 {{item.Code}} - {{ item.Name }}
                                             </li>
@@ -214,7 +235,7 @@
                     </div>
                 </div>
                 <div class="maan-grid-item">
-                    <div class="maan-grid-item-title">
+                    <div class="maan-grid-item-title p-0" style="margin: 0px !important;top:0rem;bottom: 0rem !important;padding-top: 9px !important;">
                         <span class="mx-1">
                             <i class="fas fa-book mx-1"></i>
                         </span> <span class="spancommon">Period Of Insurance</span>

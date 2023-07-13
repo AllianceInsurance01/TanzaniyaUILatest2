@@ -74,7 +74,7 @@ export class EmployersLiability{
                       key: 'EmpLiabilitySi',
                       defaultValue: '0',
                       props: {
-                        label: `SumInsured (${this.commonDetails[0].Currency})`,
+                        label: `SumInsured`,
                         disabled: this.checkDisable('EmpLiabilitySi'),
                         required: true,
                         options: [

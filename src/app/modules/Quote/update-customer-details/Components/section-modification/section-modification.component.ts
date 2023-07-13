@@ -55,6 +55,21 @@ export class SectionModificationComponent implements OnInit {
   nonoptedsections:any[]=[];
   optedTypeList:any[]=[];
   optedlist:any[]=[];
+  enableFieldsList: any;
+  endorsementSection: boolean = false;enableIndustry:boolean = false;
+  endorsementDate: any=null;
+  endorsementEffectiveDate: any=null;
+  endorsementRemarks: any=null;
+  endorsementType: any=null;
+  endorsementTypeDesc: any=null;
+  endtCategoryDesc: any=null;
+  endtCount: any=null;
+  endtPrevQuoteNo: any=null;
+  endtStatus: any=null;
+  endtPrevPolicyNo: any=null;
+  orginalPolicyNo: any=null;
+  isFinanceEndt: any=null;
+  endorsementDetails: any;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -83,32 +98,34 @@ export class SectionModificationComponent implements OnInit {
       }
       let existEnd = JSON.parse(sessionStorage.getItem('endorseTypeId'));
       if(existEnd){
+        this.endorsementSection = true;
+        this.endorsementDetails = existEnd;
         console.log("Entered Data",existEnd)
         this.endrosementid=existEnd?.EndtTypeId;
-        if(this.endrosementid){
-          if(this.endrosementid=='845'){
+        this.enableFieldsList = existEnd.FieldsAllowed;
+        let addSection = this.enableFieldsList.some(ele=>ele=='AddSection' || ele=='Add Section');
+        let removeSection = this.enableFieldsList.some(ele=>ele=='RemoveSection' || ele=='Remove Section');
+          if(addSection){
             this.Addsection=true;
             this.newsection=false;
             this.getAddsectionDetails();
           }
-          else if(this.endrosementid=='846'){
+          else if(removeSection){
             this.Removesection=true;
             this.newsection=false;
             this.getAddsectionDetails();
           }
-        }
         else{
           this.newsection=true;
           this.Removesection=false;
           this.Addsection=false;
-
         }
       }
       else{
         this.newsection=true;
         this.Removesection=false;
         this.Addsection=false;
-
+        this.endorsementSection = false;
       }
     }
 
@@ -282,8 +299,20 @@ getIndustryList() {
       this.sourceType = this.commonDetails[0].SourceType;
       this.bdmCode = this.commonDetails[0].BrokerCode;
       this.brokerCode = this.commonDetails[0].BrokerCode;
-     brokerbranchCode = this.commonDetails[0].BrokerBranchCode;
-  
+      brokerbranchCode = this.commonDetails[0].BrokerBranchCode;
+      
+    }
+    if(this.endorsementSection){
+      this.endorsementDate = this.endorsementDetails.EndorsementDate;
+      this.endorsementEffectiveDate = this.endorsementDetails?.EndorsementEffectiveDate;
+      this.endorsementRemarks = this.endorsementDetails?.EndorsementRemarks;
+      this.endorsementType = this.endorsementDetails?.EndorsementType;
+      this.endorsementTypeDesc = this.endorsementDetails?.EndorsementTypeDesc;
+      this.endtCategoryDesc = this.endorsementDetails?.EndtCategoryDesc;
+      this.endtCount = this.endorsementDetails?.EndtCount;
+      this.endtPrevQuoteNo = this.endorsementDetails?.EndtPrevQuoteNo;
+      this.endtStatus = this.endorsementDetails?.EndtStatus;this.orginalPolicyNo = this.endorsementDetails?.OrginalPolicyNo;
+      this.endtPrevPolicyNo = this.endorsementDetails?.EndtPrevPolicyNo;this.isFinanceEndt = this.endorsementDetails?.IsFinanceEndt;
     }
     let ReqObj = { 
         "AcexecutiveId": "",
@@ -316,18 +345,18 @@ getIndustryList() {
         "SubUsertype": this.subuserType,
         "RiskId":"1",
         "IndustryId": this.IndustryId,
-        "EndorsementDate": null,
-        "EndorsementEffectiveDate": null,
-        "EndorsementRemarks": null,
-        "EndorsementType": null,
-        "EndorsementTypeDesc": null,
-        "EndtCategoryDesc": null,
-        "EndtCount": null,
-        "EndtPrevPolicyNo": null,
-        "EndtPrevQuoteNo": null,
-        "EndtStatus": null,
-        "IsFinanceEndt": null,
-        "OrginalPolicyNo": null,
+        "EndorsementDate": this.endorsementDate,
+        "EndorsementEffectiveDate": this.endorsementEffectiveDate,
+        "EndorsementRemarks": this.endorsementRemarks,
+        "EndorsementType": this.endorsementType,
+        "EndorsementTypeDesc": this.endorsementTypeDesc,
+        "EndtCategoryDesc": this.endtCategoryDesc,
+        "EndtCount": this.endtCount,
+        "EndtPrevPolicyNo": this.endtPrevPolicyNo,
+        "EndtPrevQuoteNo":  this.endtPrevQuoteNo,
+        "EndtStatus": this.endtStatus,
+        "IsFinanceEndt": this.isFinanceEndt,
+        "OrginalPolicyNo": this.orginalPolicyNo,
         "Status": "Y"
     }
     let urlLink = `${this.motorApiUrl}api/slide/savecommondetails`;
@@ -341,6 +370,8 @@ getIndustryList() {
                 sessionStorage.setItem('quoteReferenceNo',refNo);
                 let homeDetails = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
                 if (homeDetails) {
+                    if(this.IndustryId)
+                    homeDetails[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
                     if (homeDetails[0].SectionId == undefined || homeDetails[0].SectionId == "undefined") homeDetails[0]['SectionId'] = sections;
                     else homeDetails[0].SectionId = sections;
                     sessionStorage.setItem('homeCommonDetails', JSON.stringify(homeDetails))
@@ -434,27 +465,23 @@ getIndustryList() {
       console.log('IIIIIIIIIIII',entry);
       if(!entry){
         this.sectionError = false;
-        this.optedlist.push(rowData.SectionId)
+        this.selectedSections.push(rowData.SectionId)
         //this.optedsection[index].checked = true;
         //this.optedsection.push(rowData);
       }
     }
     else if(event.checked==false){
-      console.log('OOOOOOOO',this.optedsection)
-      console.log('RRRRRRRRR',rowData.SectionId);
-      let entry = this.optedsection.some(ele=>ele==rowData.SectionId);
+      let entry = this.selectedSections.some(ele=>ele==rowData.SectionId);
       console.log('SSSSSSSS',entry);
       if(!entry){
         console.log(rowData.SectionId)
-        this.optedlist.splice(rowData.SectionId,index);
+        //this.selectedSections.splice(rowData.SectionId,index);
       }
      
       // this.selectedSections = this.selectedSections.filter(ele=>ele!=rowData.Code);
       // this.productList[index].checked = false;
       // if(this.selectedSections.length==0) this.sectionError = true;
     }
-    console.log("Final",this.selectedSections,rowData);
-    console.log("Final Sections",this.optedlist,rowData)
   }
 
 

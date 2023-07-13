@@ -62,6 +62,7 @@ export class MakePayementComponent implements OnInit {
   Sixth: boolean=false;
   successSection: boolean;
   tinyUrlInfo: boolean;
+  productName: any;
   constructor(private router:Router,private sharedService: SharedService,
     private updateComponent:UpdateCustomerDetailsComponent,
    private datePipe:DatePipe) {
@@ -80,6 +81,7 @@ export class MakePayementComponent implements OnInit {
     this.branchCode = this.userDetails.Result.BranchCode;
     this.branchList = this.userDetails.Result.LoginBranchDetails;
     this.productId = this.userDetails.Result.ProductId;
+    this.productName = this.userDetails.Result.ProductName
     this.subuserType = sessionStorage.getItem('typeValue');
     this.insuranceId = this.userDetails.Result.InsuranceId;
     let paymentId = sessionStorage.getItem('quotePaymentId');
@@ -358,7 +360,7 @@ export class MakePayementComponent implements OnInit {
   onRedirect(value:any){
     this.Menu=value;
     this.first = false;this.second = false;this.Third=false;this.Fourth=false;this.Fifth = false;
-    this.bankName = null;this.chequeDate=null;this.chequeNo = null;
+    this.bankName = null;this.chequeDate=null;this.chequeNo = null;this.Sixth=false;
     if(this.Menu=='VisionPay'){ this.first=true;}
     else if(this.Menu=='Pos'){ this.second=true;}
     else if(this.Menu=='1'){ this.Third=true; }

@@ -181,7 +181,7 @@ button:focus {
 
 
 * {
-    font-family: var(--our-font-family);
+    font-family: var(--our-font-family-new);
     -webkit-font-smoothing: antialiased !important;
 }
 
@@ -1786,7 +1786,6 @@ td {
 }
 
 .referal-status {
-    height: 11.9rem!important;
     padding: 5px!important;
     border-radius: 3px;
     background: #ffffff;
@@ -2392,7 +2391,7 @@ td {
 
 .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
     color: #3f51b5;
-    font-size: 1.22rem;
+    font-size: 1.1rem;
     font-family: var(--our-font-family-new) !important;
     font-weight: 600;
 }
@@ -2621,8 +2620,8 @@ p {
 }
 
 .form-label {
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem!important;
+    margin-bottom: 1.2rem !important;
+    font-size: 0.93rem!important;
     font-family: var(--our-font-family-new)!important;
     position: relative;
     top: 0.8rem;
@@ -2698,9 +2697,10 @@ p {
 
 
 .form-check{
-    display: block;
+    display: table-cell !important;
     min-height: 1.5rem;
-    padding-left: 1.5em;
+    padding-top: 0.9rem !important;
+    padding-left: 2.5em !important;
     margin-bottom: 0.125rem;
     margin-top: 15px !important;
 }

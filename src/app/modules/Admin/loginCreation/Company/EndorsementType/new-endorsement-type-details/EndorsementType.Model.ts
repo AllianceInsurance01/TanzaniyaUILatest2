@@ -16,5 +16,6 @@ export class ENdorsementType {
     "Status":null;
     "CalcTypeId":null;
     "RegulatoryCode":null;   
- 
+    "SectionModificationYn": null;
+    "SectionModificationType":null;
 }

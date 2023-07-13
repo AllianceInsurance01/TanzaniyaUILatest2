@@ -1,373 +1,374 @@
-<div class="maan-grid-item">
-    <div class="maan-grid-item-title">
-        <div class="d-flex justify-content-between">
-            <div>
-                <span class="mx-0">
-                    <span class="spancommon span_font_size" style="font-weight:600">Section Modification</span>
-                </span>
-            </div>
-            <div>
-                
-            </div>
-            <!-- <div *ngIf="formSection">
-                <button class="custom-btn btn-6 maan-button-data " matRipple (click)="viewSection=!viewSection;formSection=!formSection"><i class="fas fa-edit"></i>&nbsp;Edit</button>
-            </div> -->
-        </div>
-    </div>
-    <div class="maan-grid-item-body">
-          <div class="row" *ngIf="productId=='19'">
-              <div class="col-md-5 col-lg-5  col-xl-5 offset-1">
-                  <div class="input-control-container">
-                      <label class="input-form-label"><b>Ownership Status</b></label><span class="text-danger">*</span>
-                      <div class="input-form-radio-box">
-                          <div class="radio-toolbar">
-                              <input id="claims_Own" type="radio" name="rentOwnHome" [(ngModel)]="BuildingOwnerYn"  (change)="onOwnerYNChange()" value="Y">
-                              <label for="claims_Own" class="yes_alt"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/landlord.png">LANDLORD</label>
-                              <input id="claims_Rent" type="radio" name="rentOwnHome" [(ngModel)]="BuildingOwnerYn" (change)="onOwnerYNChange()" value="N">
-                              <label for="claims_Rent" class="no"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/rentHome.png">TENANT</label>
-                          </div>
+<div class="row p-0">
+  <div class="col-12 col-md-12 col-lg-12 p-0">
+      <div class="maan-grid customer-grid maan-grid-column-1 p-0  mt-3">
+          <div class="maan-grid-item">
+              <div class="maan-grid-item-title p-0" style="margin: 0px !important;top:0rem;bottom: 0rem !important;padding-top: 9px !important;">
+                  <div class="d-flex justify-content-between">
+                      <div>
+                          <span class="mx-1">
+                            <i class="fas fa-shield-alt mx-1"></i>
+                          </span> <span class="spancommon">Section Modification</span>
+                      </div>
+                      <div>
+                        
                       </div>
                   </div>
               </div>
-              <div class="col-md-6 col-lg-6 col-xl-6">
-                  <div class="input-control-container">
-                      <label class="input-form-label"><b>Cover Required</b></label><span class="text-danger">*</span>
-                      <div class="input-form-radio-box">
-                          <div class="radio-toolbar">
-                              <input id="Content" type="radio" name="Content" [(ngModel)]="coversRequired" value="C" (change)="onChangeCoversType()">
-                              <label for="Content" class="yes_alt"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/contents.png">&nbsp;CONTENTS</label>
-                              <ng-container *ngIf="BuildingOwnerYn=='Y'">
-                                  <input id="Building" type="radio" name="Content" [(ngModel)]="coversRequired" value="B" (change)="onChangeCoversType()">
-                                  <label for="Building" class="no"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/buildingSection.png">&nbsp;BUILDING</label>
-                                  <input id="Building_Contents" type="radio" name="Content" [(ngModel)]="coversRequired" value="BC" (change)="onChangeCoversType()">
-                                  <label for="Building_Contents" class="no"><img style="max-width: 30px;max-height: 10px;"  src="./assets/images/houseContents.png">&nbsp;BUILDING & CONTENTS</label>
+              <div class="maan-grid-item-body">
+                    <div class="row" *ngIf="productId=='19'">
+                        <div class="col-md-5 col-lg-5  col-xl-5 offset-1">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Ownership Status</label><span class="text-danger">*</span>
+                                <div class="input-form-radio-box">
+                                    <div class="radio-toolbar">
+                                        <input id="claims_Own" type="radio" name="rentOwnHome" [(ngModel)]="BuildingOwnerYn"  (change)="onOwnerYNChange()" value="Y">
+                                        <label for="claims_Own" class="yes_alt"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/landlord.png">LANDLORD</label>
+                                        <input id="claims_Rent" type="radio" name="rentOwnHome" [(ngModel)]="BuildingOwnerYn" (change)="onOwnerYNChange()" value="N">
+                                        <label for="claims_Rent" class="no"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/rentHome.png">TENANT</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Cover Required</label><span class="text-danger">*</span>
+                                <div class="input-form-radio-box">
+                                    <div class="radio-toolbar">
+                                        <input id="Content" type="radio" name="Content" [(ngModel)]="coversRequired" value="C" (change)="onChangeCoversType()">
+                                        <label for="Content" class="yes_alt"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/contents.png">&nbsp;CONTENTS</label>
+                                        <ng-container *ngIf="BuildingOwnerYn=='Y'">
+                                            <input id="Building" type="radio" name="Content" [(ngModel)]="coversRequired" value="B" (change)="onChangeCoversType()">
+                                            <label for="Building" class="no"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/buildingSection.png">&nbsp;BUILDING</label>
+                                            <input id="Building_Contents" type="radio" name="Content" [(ngModel)]="coversRequired" value="BC" (change)="onChangeCoversType()">
+                                            <label for="Building_Contents" class="no"><img style="max-width: 30px;max-height: 10px;"  src="./assets/images/houseContents.png">&nbsp;BUILDING & CONTENTS</label>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="productId=='19'">
+                        <div class="col-12 col-md-5 col-lg-5 offset-1">
+                            <div class="input-control-container">
+                                  <label class="input-form-label">Industry</label>&nbsp;<ng-container *ngIf="categoryDesc">({{categoryDesc}})</ng-container><span class="text-danger">*</span>
+                                  <ng-select class="custom" [items]="industryList" [disabled]="endorsementSection && !enableIndustry" [(ngModel)]="IndustryId" placeholder="Select Industry" (change)="onIndustryChange()" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                                  </ng-select>
+                            </div>
+                            <div class="input-form-error" *ngIf="industryError" style="position: relative;">
+                              <div class="error-text text-danger">
+                                  <span class="spancommon span_font_size"> Please Select Industry</span>
+                              </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-12 col-md-5 col-lg-5 input-control-container" *ngIf="categoryDesc">
+                            <label class="input-form-label">Category</label>
+                            <div class="input-form-box mt-2">
+                                <input type="text" style="position: relative;bottom: 0.35rem;" disabled class="input-form-control without-icon" maxlength="4" [(ngModel)]="categoryDesc" [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="row mt-4 mb-2" *ngIf="productId=='19' && newsection">
+                      <div class="col-md-10 col-lg-10  col-xl-10 offset-1">
+                        <div class="Choose-Section-Box padd0 bwT">
+                            <span class="heading">SELECT THE SECTIONS YOU WISH TO BUY</span>
+                            <div class="row mt-3" *ngIf="sectionError">
+                              <div class="text-center input-form-error">
+                                  <div class="error-text text-danger">
+                                      <span class="spancommon span_font_size"><b>Please Select Atleast One Section</b></span>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="row mt-3">
+                              <ng-container *ngFor="let g of productList;let i = index">
+                                  <ng-container *ngIf="g.Code=='47' && (coversRequired=='C' || coversRequired=='BC')">
+                                      <div class="col-md-6" >
+                                        <div >
+                                            <!-- {{g.CodeDesc}} -->
+                                            <div class="print-check">
+                                            <label class="custom-checkbox-container">
+                                            <input type="checkbox" [checked]="checkSections(g)">
+                                            <span class="checkmark">
+                                              <span class="text-light" *ngIf="g.checked==true"><i class="fa fa-check-circle"></i></span>
+                                              <span class="" *ngIf="g.checked==false"><i class="fa fa-minus-circle"></i></span>
+                                            </span>
+                                            <div class="description" [ngClass]="{customBg : g.checked==true}" (click)="onChangeSections(g,i)">
+                                              <div class="description-name">
+                                                <span>
+                                                {{g.CodeDesc}}
+                                                </span>
+                                              </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                        </div>
+                                      </div>
+                                  </ng-container>
+                                  <ng-container *ngIf="g.Code=='40' && (coversRequired=='B' || coversRequired=='BC')">
+                                    <div class="col-md-6" >
+                                      <div >
+                                          <!-- {{g.CodeDesc}} -->
+                                          <div class="print-check" >
+                                          <label class="custom-checkbox-container">
+                                          <input type="checkbox" [checked]="checkSections(g)">
+                                          <span class="checkmark">
+                                            <span class="text-light" *ngIf="g.checked==true"><i class="fas fa-check-circle"></i></span>
+                                            <span class="" *ngIf="g.checked==false"><i class="fas fa-minus-circle"></i></span>
+                                          </span>
+                                          <div class="description" [ngClass]="{customBg : g.checked==true}" (click)="onChangeSections(g,i)">
+                                            <div class="description-name">
+                                              <span>
+                                              {{g.CodeDesc}}
+                                              </span>
+                                            </div>
+                                          </div>
+                                      </label>
+                                  </div>
+                                      </div>
+                                    </div>
+                                  </ng-container>
+                                  <ng-container *ngIf="g.Code!='47' && g.Code!='40'">
+                                    <div class="col-md-6" >
+                                      <div >
+                                          <!-- {{g.CodeDesc}} -->
+                                          <div class="print-check" >
+                                          <label class="custom-checkbox-container">
+                                          <input type="checkbox"  [checked]="checkSections(g)">
+                                          <span class="checkmark">
+                                            <span class="" *ngIf="checkSections(g)"><i class="fa fa-check-circle"></i></span>
+                                            <span class="" *ngIf="!checkSections(g)"><i class="fa fa-minus-circle"></i></span>
+                                          </span>
+                                          <div class="description" [ngClass]="{customBg : g.checked==true}" (click)="onChangeSections(g,i)">
+                                            <div class="description-name">
+                                              <span>
+                                              {{g.CodeDesc}}
+                                              </span>
+                                            </div>
+                                          </div>
+                                          </label>
+                                      </div>
+                                      </div>
+                                    </div>
+                                  </ng-container>
                               </ng-container>
-                          </div>
+                            </div>
+                        </div>
                       </div>
-                  </div>
-              </div>
-          </div>
-          <div class="row" *ngIf="productId=='19'">
-              <div class="col-12 col-md-5 col-lg-5 offset-1">
-                  <div class="input-control-container">
-                    <label class="input-form-label">Industry</label>&nbsp;<ng-container *ngIf="categoryDesc">({{categoryDesc}})</ng-container><span class="text-danger">*</span>
-                    <div class="input-form-box" style="position: relative;top:.2rem">
-                        <ng-select class="custom" [items]="industryList"  [(ngModel)]="IndustryId" placeholder="Select Industry" (change)="onIndustryChange()" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
-                        </ng-select>
                     </div>
-                  </div>
-                  <div class="input-form-error" *ngIf="industryError" style="position: relative;">
-                    <div class="error-text text-danger">
-                        <span class="spancommon span_font_size"> Please Select Industry</span>
-                    </div>
-                  </div>
-              </div>
-              <!-- <div class="col-12 col-md-5 col-lg-5 input-control-container" *ngIf="categoryDesc">
-                  <label class="input-form-label">Category</label>
-                  <div class="input-form-box mt-2">
-                      <input type="text" style="position: relative;bottom: 0.35rem;" disabled class="input-form-control without-icon" maxlength="4" [(ngModel)]="categoryDesc" [ngModelOptions]="{standalone: true}">
-                  </div>
-              </div> -->
-          </div>
-          <div class="row mt-4 mb-2" *ngIf="productId=='19' && newsection">
-            <div class="col-md-10 col-lg-10  col-xl-10 offset-1">
-              <div class="Choose-Section-Box padd0 bwT">
-                  <span class="heading">SELECT THE SECTIONS YOU WISH TO BUY</span>
-                  <div class="row mt-3" *ngIf="sectionError">
-                    <div class="text-center input-form-error">
-                        <div class="error-text text-danger">
-                            <span class="spancommon span_font_size"><b>Please Select Atleast One Section</b></span>
-                        </div>
-                    </div>
-                  </div>
-                  <div class="row mt-3">
-                    <ng-container *ngFor="let g of productList;let i = index">
-                        <ng-container *ngIf="g.Code=='47' && (coversRequired=='C' || coversRequired=='BC')">
-                            <div class="col-md-6" >
-                              <div >
-                                  <!-- {{g.CodeDesc}} -->
-                                  <div class="print-check">
-                                  <label class="custom-checkbox-container">
-                                  <input type="checkbox" [checked]="checkSections(g)">
-                                  <span class="checkmark">
-                                    <span class="text-light" *ngIf="g.checked==true"><i class="fa fa-check-circle"></i></span>
-                                    <span class="" *ngIf="g.checked==false"><i class="fa fa-minus-circle"></i></span>
-                                  </span>
-                                  <div class="description" [ngClass]="{customBg : g.checked==true}" (click)="onChangeSections(g,i)">
-                                    <div class="description-name">
-                                      <span>
-                                      {{g.CodeDesc}}
-                                      </span>
-                                    </div>
-                                  </div>
-                              </label>
-                          </div>
-                              </div>
-                            </div>
-                        </ng-container>
-                        <ng-container *ngIf="g.Code=='40' && (coversRequired=='B' || coversRequired=='BC')">
-                          <div class="col-md-6" >
-                            <div >
-                                <!-- {{g.CodeDesc}} -->
-                                <div class="print-check" >
-                                <label class="custom-checkbox-container">
-                                <input type="checkbox" [checked]="checkSections(g)">
-                                <span class="checkmark">
-                                  <span class="text-light" *ngIf="g.checked==true"><i class="fas fa-check-circle"></i></span>
-                                  <span class="" *ngIf="g.checked==false"><i class="fas fa-minus-circle"></i></span>
-                                </span>
-                                <div class="description" [ngClass]="{customBg : g.checked==true}" (click)="onChangeSections(g,i)">
-                                  <div class="description-name">
-                                    <span>
-                                    {{g.CodeDesc}}
-                                    </span>
-                                  </div>
-                                </div>
-                            </label>
-                        </div>
-                            </div>
-                          </div>
-                        </ng-container>
-                        <ng-container *ngIf="g.Code!='47' && g.Code!='40'">
-                          <div class="col-md-6" >
-                            <div >
-                                <!-- {{g.CodeDesc}} -->
-                                <div class="print-check" >
-                                <label class="custom-checkbox-container">
-                                <input type="checkbox"  [checked]="checkSections(g)">
-                                <span class="checkmark">
-                                  <span class="" *ngIf="checkSections(g)"><i class="fa fa-check-circle"></i></span>
-                                  <span class="" *ngIf="!checkSections(g)"><i class="fa fa-minus-circle"></i></span>
-                                </span>
-                                <div class="description" [ngClass]="{customBg : g.checked==true}" (click)="onChangeSections(g,i)">
-                                  <div class="description-name">
-                                    <span>
-                                    {{g.CodeDesc}}
-                                    </span>
-                                  </div>
-                                </div>
-                                </label>
-                            </div>
-                            </div>
-                          </div>
-                        </ng-container>
-                    </ng-container>
-                  </div>
-              </div>
-            </div>
-          </div>
-        
-            
-          <div class="row mt-2" *ngIf="productId=='19' && Addsection">
-            <div class="col-7">
-              <div class="row mt-4 mb-2" *ngIf="productId=='19' && Addsection">
-                <div class="col-md-11 col-lg-11  col-xl-11 offset-1">
-                  <div class="Choose-Section-Box padd0 bwT">
-                      <span class="heading" style="left:30%;">Non Opted Sections</span>
-                      <div class="row mt-3">
-                        <ng-container *ngFor="let g of nonoptedsections;let i = index">
-                              <div class="col-md-6">
-                                <div>
-                                  <!-- {{g.CodeDesc}} -->
-                                  <div class="print-check">
-                                  <label class="custom-checkbox-container">
-                                  <input type="checkbox" [checked]="checkSections(g)" >
-                                  <span class="checkmark" *ngIf="Addsection">
-                                    <mat-checkbox class="example-margin" (change)="onChangeOptedSections(g,i,$event)"></mat-checkbox>
-                                  </span>
-                                  <div class="description" [ngClass]="{customBg : g.checked==true}">
-                                    <div class="description-name">
-                                      <span>
-                                      {{g.SectionName}}
-                                      </span>
-                                    </div>
-                                  </div>
-                              </label>
-                          </div>
-                              </div>
-                              </div>
-                      </ng-container>
-                        </div>
-                  </div>
-                  </div>
-              </div>
-             </div>
-                   <div class="col-5">
-                    <div class="row mt-4 mb-2" *ngIf="productId=='19' && Addsection">
-                      <div class="col-md-11 col-lg-11  col-xl-11">
-                        <div class="Choose-Section-Box padd0 bwT">
-                            <span class="heading" style="left: 78%">Opted Sections</span>
-                            <div class="row mt-3">
-                              <ng-container *ngFor="let g of optedsection;let i = index">
-                                    <div class="col-md-11" style="margin-left:10px;">
-                                      <div>
-                                        <!-- {{g.CodeDesc}} -->
-                                        <div class="print-check">
-                                        <label class="custom-checkbox-container">
-                                        <input type="checkbox" [checked]="checkSections(g)">
-        
-                                        <div class="description">
-                                          <div class="description-name">
-                                            <span>
-                                            {{g.SectionName}}
-                                            </span>
-                                          </div>
-                                          <!-- <i class="fa fa-close topright" style="font-size:24px;cursor:pointer;right:7px !important"></i> -->
-                                        </div>
-                                    </label>
-                                </div>
-                                    </div>
-                                    </div>
-                            </ng-container>
-                              </div>
-                        </div>
-                        </div>
-                    </div>
-                    <!-- <div class="row mb-1" *ngIf="productId=='19' && Addsection">
-                      <div class="col-12 mb-2">
-                             <div style="border-radius: 26px;
-                             box-shadow: 5px 5px 10px lightgray, -5px -5px 10px lightgray;width:60%;margin:auto;text-align: center;height: max-content;">
-                               <div class="text-center" class="mb-2">
-                                 Opted Sections
-                               </div>
-                               <div class="row mt-1 mb-1">
-                                 <ng-container *ngFor="let g of optedsection;let i = index">
-                                  <div class="col-md-6">
-                                    <div>
-                                     
-                                      <div class="print-check">
-                                      <label class="custom-checkbox-container">
-                                     
-                                     
-                                      <div class="description" [ngClass]="{customBg : g.checked==true}" (click)="onChangeSections(g,i)">
-                                        <div class="description-name">
-                                          <span>
-                                          {{g.SectionName}}
-                                          </span>
-                                        </div>
-                                      </div>
-                                  </label>
-                              </div>
-                                  </div>
-                                  </div>
-                                   
-                                   </ng-container>
-                               </div>
-                             </div>
-                      </div>
-                 </div> -->
-                   </div>
                   
-          </div>
-
-
-
-          <div class="row mt-2" *ngIf="productId=='19' && Removesection">
-            <div class="col-7">
-              <div class="row mt-4 mb-2" *ngIf="productId=='19' && Removesection">
-                <div class="col-md-11 col-lg-11  col-xl-11 offset-1">
-                  <div class="Choose-Section-Box padd0 bwT">
-                      <span class="heading" style="left:30%;">Non Opted Sections</span>
-                      <div class="row mt-3">
-                          <ng-container *ngFor="let g of nonoptedsections;let i = index">
-                              <div class="col-md-6">
-                                <div>
-                                  <!-- {{g.CodeDesc}} -->
-                                  <div class="print-check">
-                                  <label class="custom-checkbox-container">
-                                  <div class="description" [ngClass]="{customBg : g.checked==true}" >
-                                    <div class="description-name">
-                                      <span>
-                                      {{g.SectionName}}
-                                      </span>
-                                    </div>
-                                  </div>
-                              </label>
-                                </div>
-                              </div>
-                              </div>
-                          </ng-container>
-                        </div>
-                  </div>
-                  </div>
-              </div>
-             </div>
-                   <div class="col-5">
-                    <div class="row mt-4 mb-2" *ngIf="productId=='19' && Removesection">
-                      <div class="col-md-11 col-lg-11  col-xl-11">
-                        <div class="Choose-Section-Box padd0 bwT">
-                            <span class="heading" style="left: 78%">Opted Sections</span>
-                            <div class="row mt-3">
-                              <ng-container *ngFor="let g of optedsection;let i = index">
-                                    <div class="col-md-11" style="margin-left:10px;">
-                                      <div>
-                                        <!-- {{g.CodeDesc}} -->
-                                        <div class="print-check">
-                                        <label class="custom-checkbox-container">
-                                        <input type="checkbox" [checked]="checkSections(g)">
-        
-                                        <div class="description" [ngClass]="{customBg : g.checked==true}" (click)="onChangeSections(g,i)">
-                                          <div class="description-name">
-                                            <span>
-                                            {{g.SectionName}}
+                      
+                    <div class="row mt-2" *ngIf="productId=='19' && Addsection">
+                      <div class="col-7">
+                        <div class="row mt-4 mb-2" *ngIf="productId=='19' && Addsection">
+                          <div class="col-md-11 col-lg-11  col-xl-11 offset-1">
+                            <div class="Choose-Section-Box padd0 bwT">
+                                <span class="heading" style="left:30%;">Non Opted Sections</span>
+                                <div class="row mt-3">
+                                  <ng-container *ngFor="let g of nonoptedsections;let i = index">
+                                        <div class="col-md-6">
+                                          <div>
+                                            <!-- {{g.CodeDesc}} -->
+                                            <div class="print-check">
+                                            <label class="custom-checkbox-container">
+                                            <input type="checkbox" [checked]="checkSections(g)" >
+                                            <span class="checkmark" *ngIf="Addsection">
+                                              <mat-checkbox class="example-margin" (change)="onChangeOptedSections(g,i,$event)"></mat-checkbox>
                                             </span>
-                                          </div>
-                                          <i class="fa fa-close topright" style="font-size:24px;cursor:pointer;right:7px !important"></i>
+                                            <div class="description" [ngClass]="{customBg : g.checked==true}">
+                                              <div class="description-name">
+                                                <span>
+                                                {{g.SectionName}}
+                                                </span>
+                                              </div>
+                                            </div>
+                                        </label>
+                                    </div>
                                         </div>
-                                    </label>
-                                </div>
-                                    </div>
-                                    </div>
-                            </ng-container>
+                                        </div>
+                                </ng-container>
+                                  </div>
+                            </div>
+                            </div>
+                        </div>
+                      </div>
+                            <div class="col-5">
+                              <div class="row mt-4 mb-2" *ngIf="productId=='19' && Addsection">
+                                <div class="col-md-11 col-lg-11  col-xl-11">
+                                  <div class="Choose-Section-Box padd0 bwT">
+                                      <span class="heading" style="left: 78%">Opted Sections</span>
+                                      <div class="row mt-3">
+                                        <ng-container *ngFor="let g of optedsection;let i = index">
+                                              <div class="col-md-11" style="margin-left:10px;">
+                                                <div>
+                                                  <!-- {{g.CodeDesc}} -->
+                                                  <div class="print-check">
+                                                  <label class="custom-checkbox-container">
+                                                  <input type="checkbox" [checked]="checkSections(g)">
+                  
+                                                  <div class="description">
+                                                    <div class="description-name">
+                                                      <span>
+                                                      {{g.SectionName}}
+                                                      </span>
+                                                    </div>
+                                                    <!-- <i class="fa fa-close topright" style="font-size:24px;cursor:pointer;right:7px !important"></i> -->
+                                                  </div>
+                                              </label>
+                                          </div>
+                                              </div>
+                                              </div>
+                                      </ng-container>
+                                        </div>
+                                  </div>
+                                  </div>
                               </div>
-                        </div>
-                        </div>
-                    </div>
-                    <!-- <div class="row mb-1" *ngIf="productId=='19' && Addsection">
-                      <div class="col-12 mb-2">
-                             <div style="border-radius: 26px;
-                             box-shadow: 5px 5px 10px lightgray, -5px -5px 10px lightgray;width:60%;margin:auto;text-align: center;height: max-content;">
-                               <div class="text-center" class="mb-2">
-                                 Opted Sections
-                               </div>
-                               <div class="row mt-1 mb-1">
-                                 <ng-container *ngFor="let g of optedsection;let i = index">
-                                  <div class="col-md-6">
-                                    <div>
-                                     
-                                      <div class="print-check">
-                                      <label class="custom-checkbox-container">
-                                     
-                                     
-                                      <div class="description" [ngClass]="{customBg : g.checked==true}" (click)="onChangeSections(g,i)">
-                                        <div class="description-name">
-                                          <span>
-                                          {{g.SectionName}}
-                                          </span>
+                              <!-- <div class="row mb-1" *ngIf="productId=='19' && Addsection">
+                                <div class="col-12 mb-2">
+                                      <div style="border-radius: 26px;
+                                      box-shadow: 5px 5px 10px lightgray, -5px -5px 10px lightgray;width:60%;margin:auto;text-align: center;height: max-content;">
+                                        <div class="text-center" class="mb-2">
+                                          Opted Sections
+                                        </div>
+                                        <div class="row mt-1 mb-1">
+                                          <ng-container *ngFor="let g of optedsection;let i = index">
+                                            <div class="col-md-6">
+                                              <div>
+                                              
+                                                <div class="print-check">
+                                                <label class="custom-checkbox-container">
+                                              
+                                              
+                                                <div class="description" [ngClass]="{customBg : g.checked==true}" (click)="onChangeSections(g,i)">
+                                                  <div class="description-name">
+                                                    <span>
+                                                    {{g.SectionName}}
+                                                    </span>
+                                                  </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                            </div>
+                                            </div>
+                                            
+                                            </ng-container>
                                         </div>
                                       </div>
-                                  </label>
-                              </div>
-                                  </div>
-                                  </div>
-                                   
-                                   </ng-container>
-                               </div>
-                             </div>
-                      </div>
-                 </div> -->
-                   </div> 
-          </div>
-        
-         
+                                </div>
+                          </div> -->
+                            </div>
+                            
+                    </div>
 
-               
-         
-        
-    </div>
-    <div class="text-center mt-2">
-      <button class="custom-btn btn-5 mr-2" [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/customer-details']" routerLinkActive="router-link-active" matRipple><<&nbsp;Back</button>&nbsp;
-      <button class="custom-btn btn-6 maan-button-data" (click)="onFormSubmit()" [disabled]="checkDisable()"  matRipple><i class="fas fa-check"></i>&nbsp;Proceed</button> 
-    </div>
+
+
+                    <div class="row mt-2" *ngIf="productId=='19' && Removesection">
+                      <div class="col-7">
+                        <div class="row mt-4 mb-2" *ngIf="productId=='19' && Removesection">
+                          <div class="col-md-11 col-lg-11  col-xl-11 offset-1">
+                            <div class="Choose-Section-Box padd0 bwT">
+                                <span class="heading" style="left:30%;">Non Opted Sections</span>
+                                <div class="row mt-3">
+                                    <ng-container *ngFor="let g of nonoptedsections;let i = index">
+                                        <div class="col-md-6">
+                                          <div>
+                                            <!-- {{g.CodeDesc}} -->
+                                            <div class="print-check">
+                                            <label class="custom-checkbox-container">
+                                            <div class="description" [ngClass]="{customBg : g.checked==true}" >
+                                              <div class="description-name">
+                                                <span>
+                                                {{g.SectionName}}
+                                                </span>
+                                              </div>
+                                            </div>
+                                        </label>
+                                          </div>
+                                        </div>
+                                        </div>
+                                    </ng-container>
+                                  </div>
+                            </div>
+                            </div>
+                        </div>
+                      </div>
+                            <div class="col-5">
+                              <div class="row mt-4 mb-2" *ngIf="productId=='19' && Removesection">
+                                <div class="col-md-11 col-lg-11  col-xl-11">
+                                  <div class="Choose-Section-Box padd0 bwT">
+                                      <span class="heading" style="left: 78%">Opted Sections</span>
+                                      <div class="row mt-3">
+                                        <ng-container *ngFor="let g of optedsection;let i = index">
+                                              <div class="col-md-11" style="margin-left:10px;">
+                                                <div>
+                                                  <!-- {{g.CodeDesc}} -->
+                                                  <div class="print-check">
+                                                  <label class="custom-checkbox-container">
+                                                  <input type="checkbox" [checked]="checkSections(g)">
+                  
+                                                  <div class="description" [ngClass]="{customBg : g.checked==true}" (click)="onChangeSections(g,i)">
+                                                    <div class="description-name">
+                                                      <span>
+                                                      {{g.SectionName}}
+                                                      </span>
+                                                    </div>
+                                                    <i class="fa fa-close topright" style="font-size:24px;cursor:pointer;right:7px !important"></i>
+                                                  </div>
+                                              </label>
+                                          </div>
+                                              </div>
+                                              </div>
+                                      </ng-container>
+                                        </div>
+                                  </div>
+                                  </div>
+                              </div>
+                              <!-- <div class="row mb-1" *ngIf="productId=='19' && Addsection">
+                                <div class="col-12 mb-2">
+                                      <div style="border-radius: 26px;
+                                      box-shadow: 5px 5px 10px lightgray, -5px -5px 10px lightgray;width:60%;margin:auto;text-align: center;height: max-content;">
+                                        <div class="text-center" class="mb-2">
+                                          Opted Sections
+                                        </div>
+                                        <div class="row mt-1 mb-1">
+                                          <ng-container *ngFor="let g of optedsection;let i = index">
+                                            <div class="col-md-6">
+                                              <div>
+                                              
+                                                <div class="print-check">
+                                                <label class="custom-checkbox-container">
+                                              
+                                              
+                                                <div class="description" [ngClass]="{customBg : g.checked==true}" (click)="onChangeSections(g,i)">
+                                                  <div class="description-name">
+                                                    <span>
+                                                    {{g.SectionName}}
+                                                    </span>
+                                                  </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                            </div>
+                                            </div>
+                                            
+                                            </ng-container>
+                                        </div>
+                                      </div>
+                                </div>
+                          </div> -->
+                            </div> 
+                    </div>
+                  
+                  
+
+                        
+                  
+                  
+              </div>
+              <div class="text-center mt-2 mb-2">
+                <button class="custom-btn btn-5 mr-2" [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/customer-details']" routerLinkActive="router-link-active" matRipple><<&nbsp;Back</button>&nbsp;
+                <button class="custom-btn btn-6 maan-button-data" (click)="onFormSubmit()" [disabled]="checkDisable()"  matRipple><i class="fas fa-check"></i>&nbsp;Proceed</button> 
+              </div>
+          </div>
+      </div>
+  </div>
 </div>
     

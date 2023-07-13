@@ -24,138 +24,473 @@ export class MachineryBreakDown{
           props: { label: 'Machinery BreakDown' },
           fieldGroup: [
             {
-              fieldGroupClassName: 'row',
+              fieldGroupClassName: 'row mt-2',
               fieldGroup: [
                 {
-                 className: 'offset-1 col-5',
-                  type: 'commaSeparator',
+                  className: 'col-12',
+                  type: 'table',
+                  fieldGroup: [
+                    {
+                        fieldGroup:[
+                          {props:{label:`Select`}},
+                          {props:{label:`Items to be Insured`}},
+                          {props:{label:`Sum Insured`}},
+                        ]
+                    },
+                    {
+                      fieldGroup:[
+                            {
+                              fieldGroup:[
+                                {
+                                  className:'customCheckbox',
+                                  key: 'PowerPlantSIYN',
+                                  type: 'checkbox',
+                                  templateOptions: {
+                                    type: 'checkbox',
+                                    label: '',
+                                    required: false,
+                                    disabled: this.checkDisable('MakutiYn'),
+                                    name: 'PowerPlantSIYN',
+                                    options: [],
+                                  }
+                                },
+                                {
+                                  className: "mt-1",
+                                  type: 'display',
+                
+                                  templateOptions: {
+                                    label: `Power Plant`,
+                                    required: false,
+                
+                                  },
+                                },
+                                {
+                                  type: 'commaSeparator',
+                                  key: 'PowerPlantSi',
+                                  templateOptions: {
+                                    disabled: this.checkDisable('PowerPlantSi')
+                                  },
+                                  validators: {
+                                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                                  },
+                                  hooks: {
+                                  },
                   
-                  key: 'PowerPlantSi',
-                  templateOptions: {
-                    label: `Power Plant Suminsured (${this.commonDetails[0].Currency})`,
-                    disabled: this.checkDisable('PowerPlantSi')
-                  },
-                  validators: {
-                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                  },
-                  hooks: {
-                  },
-  
-                  expressions: {
-                    
-                  },
+                                  expressions: {
+                                    disabled: '!model.PowerPlantSIYN'
+                                  },
+                                }
+                              ]
+                            },
+                            {
+                              fieldGroup:[
+                                {
+                                  className:'customCheckbox',
+                                  key: 'ElecMachinesSIYN',
+                                  type: 'checkbox',
+                                  templateOptions: {
+                                    type: 'checkbox',
+                                    label: '',
+                                    required: false,
+                                    disabled: this.checkDisable('ElecMachinesSIYN'),
+                                    name: 'ElecMachinesSIYN',
+                                    options: [],
+                                  }
+                                },
+                                {
+                                  className: "mt-1",
+                                  type: 'display',
+                
+                                  templateOptions: {
+                                    label: `Electrical Machines`,
+                                    required: false,
+                
+                                  },
+                                },
+                                {
+                                  type: 'commaSeparator',
+                                  key: 'ElecMachinesSi',
+                                  templateOptions: {
+                                    disabled: this.checkDisable('ElecMachinesSi')
+                                  },
+                                  validators: {
+                                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                                  },
+                                  hooks: {
+                                  },
+                  
+                                  expressions: {
+                                    disabled: '!model.ElecMachinesSIYN'
+                                  },
+                                }
+                              ]
+                            },
+                            {
+                              fieldGroup:[
+                                {
+                                  className:'customCheckbox',
+                                  key: 'EquipmentSIYN',
+                                  type: 'checkbox',
+                                  templateOptions: {
+                                    type: 'checkbox',
+                                    label: '',
+                                    required: false,
+                                    disabled: this.checkDisable('EquipmentSIYN'),
+                                    name: 'EquipmentSIYN',
+                                    options: [],
+                                  }
+                                },
+                                {
+                                  className: "mt-1",
+                                  type: 'display',
+                
+                                  templateOptions: {
+                                    label: `Equipments Suminsured`,
+                                    required: false,
+                
+                                  },
+                                },
+                                {
+                                  type: 'commaSeparator',
+                                  key: 'EquipmentSi',
+                                  templateOptions: {
+                                    disabled: this.checkDisable('EquipmentSi')
+                                  },
+                                  validators: {
+                                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                                  },
+                                  hooks: {
+                                  },
+                  
+                                  expressions: {
+                                    disabled: '!model.EquipmentSIYN'
+                                  },
+                                }
+                              ]
+                            },
+                            {
+                              fieldGroup:[
+                                {
+                                  className:'customCheckbox',
+                                  key: 'MachineEquipSIYN',
+                                  type: 'checkbox',
+                                  templateOptions: {
+                                    type: 'checkbox',
+                                    label: '',
+                                    required: false,
+                                    disabled: this.checkDisable('MachineEquipSIYN'),
+                                    name: 'MachineEquipSIYN',
+                                    options: [],
+                                  }
+                                },
+                                {
+                                  className: "mt-1",
+                                  type: 'display',
+                
+                                  templateOptions: {
+                                    label: `Electronic Equipment Suminsured`,
+                                    required: false,
+                
+                                  },
+                                },
+                                {
+                                  type: 'commaSeparator',
+                                  key: 'MachineEquipSi',
+                                  templateOptions: {
+                                    disabled: this.checkDisable('MachineEquipSi')
+                                  },
+                                  validators: {
+                                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                                  },
+                                  hooks: {
+                                  },
+                  
+                                  expressions: {
+                                    disabled: '!model.MachineEquipSIYN'
+                                  },
+                                }
+                              ]
+                            },
+                            {
+                              fieldGroup:[
+                                {
+                                  className:'customCheckbox',
+                                  key: 'GeneralMachineSIYN',
+                                  type: 'checkbox',
+                                  templateOptions: {
+                                    type: 'checkbox',
+                                    label: '',
+                                    required: false,
+                                    disabled: this.checkDisable('GeneralMachineSIYN'),
+                                    name: 'GeneralMachineSIYN',
+                                    options: [],
+                                  }
+                                },
+                                {
+                                  className: "mt-1",
+                                  type: 'display',
+                
+                                  templateOptions: {
+                                    label: `General Machines Suminsured`,
+                                    required: false,
+                
+                                  },
+                                },
+                                {
+                                  type: 'commaSeparator',
+                                  key: 'GeneralMachineSi',
+                                  templateOptions: {
+                                    disabled: this.checkDisable('GeneralMachineSi')
+                                  },
+                                  validators: {
+                                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                                  },
+                                  hooks: {
+                                  },
+                  
+                                  expressions: {
+                                    disabled: '!model.GeneralMachineSIYN'
+                                  },
+                                }
+                              ]
+                            },
+                            {
+                              fieldGroup:[
+                                {
+                                  className:'customCheckbox',
+                                  key: 'ManuUnitsSIYN',
+                                  type: 'checkbox',
+                                  templateOptions: {
+                                    type: 'checkbox',
+                                    label: '',
+                                    required: false,
+                                    disabled: this.checkDisable('ManuUnitsSIYN'),
+                                    name: 'ManuUnitsSIYN',
+                                    options: [],
+                                  }
+                                },
+                                {
+                                  className: "mt-1",
+                                  type: 'display',
+                
+                                  templateOptions: {
+                                    label: `Manufacturing Units Suminsured`,
+                                    required: false,
+                
+                                  },
+                                },
+                                {
+                                  type: 'commaSeparator',
+                                  key: 'ManuUnitsSi',
+                                  templateOptions: {
+                                    disabled: this.checkDisable('ManuUnitsSi')
+                                  },
+                                  validators: {
+                                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                                  },
+                                  hooks: {
+                                  },
+                  
+                                  expressions: {
+                                    disabled: '!model.ManuUnitsSIYN'
+                                  },
+                                }
+                              ]
+                            },
+                            {
+                              fieldGroup:[
+                                {
+                                  className:'customCheckbox',
+                                  key: 'BoilerPlantsSIYN',
+                                  type: 'checkbox',
+                                  templateOptions: {
+                                    type: 'checkbox',
+                                    label: '',
+                                    required: false,
+                                    disabled: this.checkDisable('BoilerPlantsSIYN'),
+                                    name: 'BoilerPlantsSIYN',
+                                    options: [],
+                                  }
+                                },
+                                {
+                                  className: "mt-1",
+                                  type: 'display',
+                
+                                  templateOptions: {
+                                    label: `Boiler And Pressure Plants`,
+                                    required: false,
+                
+                                  },
+                                },
+                                {
+                                  type: 'commaSeparator',
+                                  key: 'BoilerPlantsSi',
+                                  templateOptions: {
+                                    disabled: this.checkDisable('BoilerPlantsSi')
+                                  },
+                                  validators: {
+                                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                                  },
+                                  hooks: {
+                                  },
+                  
+                                  expressions: {
+                                    disabled: '!model.BoilerPlantsSIYN'
+                                  },
+                                }
+                              ]
+                            },
+                      ]
+                    }
+                  ]
                 },
-                {
-                 className: 'offset-1 col-5',
-                  type: 'commaSeparator',
-                  key: 'ElecMachinesSi',
-                  templateOptions: {
-                    label: `Electrical Machines Suminsured (${this.commonDetails[0].Currency})`,
-                    disabled: this.checkDisable('ElecMachinesSi')
-                  },
-                  validators: {
-                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                  },
-                  hooks: {
-                  },
-  
-                  expressions: {
-                    
-                  },
-                },
-                {
-                 className: 'offset-1 col-5',
-                  type: 'commaSeparator',
-                  key: 'EquipmentSi',
-                  templateOptions: {
-                    label: `Equipments Suminsured (${this.commonDetails[0].Currency})`,
-                    disabled: this.checkDisable('EquipmentSi')
-                  },
-                  validators: {
-                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                  },
-                  hooks: {
-                  },
-  
-                  expressions: {
-                   
-                  },
-                },
-                {
-                 className: 'offset-1 col-5',
-                  type: 'commaSeparator',
-                  key: 'MachineEquipSi',
-                  templateOptions: {
-                    label: `Electronic Equipment Suminsured (${this.commonDetails[0].Currency})`,
-                    disabled: this.checkDisable('MachineEquipSi')
-                  },
-                  validators: {
-                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                  },
-                  hooks: {
-                  },
-  
-                  expressions: {
-                   
-                  },
-                },
-                {
-                 className: 'offset-1 col-5',
-                  type: 'commaSeparator',
-                  key: 'GeneralMachineSi',
-                  templateOptions: {
-                    label: `General Machines Suminsured (${this.commonDetails[0].Currency})`,
-                    disabled: this.checkDisable('GeneralMachineSi')
-                  },
-                  validators: {
-                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                  },
-                  hooks: {
-                  },
-  
-                  expressions: {
-                    
-                  },
-                },
-                {
-                 className: 'offset-1 col-5',
-                  type: 'commaSeparator',
-                  key: 'ManuUnitsSi',
-                  templateOptions: {
-                    label: `Manufacturing Units Suminsured (${this.commonDetails[0].Currency})`,
-                    disabled: this.checkDisable('ManuUnitsSi')
-                  },
-                  validators: {
-                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                  },
-                  hooks: {
-                  },
-  
-                  expressions: {
-                    
-                  },
-                },
-                {
-                 className: 'offset-1 col-5',
-                  type: 'commaSeparator',
-                  key: 'BoilerPlantsSi',
-                  templateOptions: {
-                    label: `Boiler And Pressure Plants  Suminsured (${this.commonDetails[0].Currency})`,
-                    disabled: this.checkDisable('BoilerPlantsSi')
-                  },
-                  validators: {
-                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                  },
-                  hooks: {
-                  },
-  
-                  expressions: {
-                    
-                  },
-                },
-  
               ]
             },
+            // {
+            //   fieldGroupClassName: 'row',
+            //   fieldGroup: [
+            //     {
+            //       className: 'col-6 col-lg-6 col-md-6 offset-2',
+            //       key: 'PowerPlantSIYN',
+            //       type: 'checkbox',
+            //       templateOptions: {
+            //         type: 'checkbox',
+            //         label: 'Power Plant',
+            //         required: true,
+            //         disabled: this.checkDisable('MakutiYn'),
+            //         name: 'PowerPlantSIYN',
+            //         options: [],
+            //       }
+            //     },
+            //     {
+            //      className: 'col-4',
+            //       type: 'commaSeparator',
+            //       key: 'PowerPlantSi',
+            //       templateOptions: {
+            //         label: `Power Plant Suminsured`,
+            //         disabled: this.checkDisable('PowerPlantSi')
+            //       },
+            //       validators: {
+            //         validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+            //       },
+            //       hooks: {
+            //       },
+  
+            //       expressions: {
+            //         hidden: 'model.PowerPlantSIYN ==true'
+            //       },
+            //     },
+            //     {
+            //      className: 'col-4',
+            //       type: 'commaSeparator',
+            //       key: 'ElecMachinesSi',
+            //       templateOptions: {
+            //         label: `Electrical Machines Suminsured`,
+            //         disabled: this.checkDisable('ElecMachinesSi')
+            //       },
+            //       validators: {
+            //         validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+            //       },
+            //       hooks: {
+            //       },
+  
+            //       expressions: {
+                    
+            //       },
+            //     },
+            //     {
+            //      className: 'col-4',
+            //       type: 'commaSeparator',
+            //       key: 'EquipmentSi',
+            //       templateOptions: {
+            //         label: `Equipments Suminsured`,
+            //         disabled: this.checkDisable('EquipmentSi')
+            //       },
+            //       validators: {
+            //         validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+            //       },
+            //       hooks: {
+            //       },
+  
+            //       expressions: {
+                   
+            //       },
+            //     },
+            //     {
+            //      className: 'col-4',
+            //       type: 'commaSeparator',
+            //       key: 'MachineEquipSi',
+            //       templateOptions: {
+            //         label: `Electronic Equipment Suminsured`,
+            //         disabled: this.checkDisable('MachineEquipSi')
+            //       },
+            //       validators: {
+            //         validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+            //       },
+            //       hooks: {
+            //       },
+  
+            //       expressions: {
+                   
+            //       },
+            //     },
+            //     {
+            //      className: 'col-4',
+            //       type: 'commaSeparator',
+            //       key: 'GeneralMachineSi',
+            //       templateOptions: {
+            //         label: `General Machines Suminsured`,
+            //         disabled: this.checkDisable('GeneralMachineSi')
+            //       },
+            //       validators: {
+            //         validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+            //       },
+            //       hooks: {
+            //       },
+  
+            //       expressions: {
+                    
+            //       },
+            //     },
+            //     {
+            //      className: 'col-4',
+            //       type: 'commaSeparator',
+            //       key: 'ManuUnitsSi',
+            //       templateOptions: {
+            //         label: `Manufacturing Units Suminsured`,
+            //         disabled: this.checkDisable('ManuUnitsSi')
+            //       },
+            //       validators: {
+            //         validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+            //       },
+            //       hooks: {
+            //       },
+  
+            //       expressions: {
+                    
+            //       },
+            //     },
+            //     {
+            //      className: 'col-4',
+            //       type: 'commaSeparator',
+            //       key: 'BoilerPlantsSi',
+            //       templateOptions: {
+            //         label: `Boiler And Pressure Plants  Suminsured`,
+            //         disabled: this.checkDisable('BoilerPlantsSi')
+            //       },
+            //       validators: {
+            //         validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+            //       },
+            //       hooks: {
+            //       },
+  
+            //       expressions: {
+                    
+            //       },
+            //     },
+  
+            //   ]
+            // },
   
           ],
         }

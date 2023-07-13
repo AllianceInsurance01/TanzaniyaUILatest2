@@ -371,3 +371,99 @@ th.mat-header-cell {
     font-size: 13px!important;
     font-weight: 500;
 }
+.example-containers {
+    display: flex;
+    flex-direction: column;
+    height:90%;
+    font-weight: 500;
+    font-size:14px;
+  }
+ 
+  
+  .mobile-label {
+    display: none;
+  }
+
+
+@media screen and (min-width: 280px) and (max-width: 700px) {
+    .display1{
+       display:none;
+        }
+        .services
+        {
+        /* overflow:auto;
+        margin:0 auto; */
+        border:1px solid blue;
+        }
+ 
+        table {
+            width:20% !important;
+           
+          }
+          .mdc-data-table__table{
+            max-width: 20% !important;
+          }
+          .mobile-label {
+            display: inline-block;
+                font-weight: bold;
+          }
+        th.mat-header-cell {
+            font-size: 13px!important;
+            font-weight: 500;
+            display: none !important;
+        }
+        .customCell{
+            width: 100%!important;
+            font-size: 16px;
+        }
+        .customCellInner{
+            max-width: 600px !important;
+            font-size: 16px;
+        }
+        .mdc-data-table__cell {
+           padding: 0px !important;
+            /* padding: 0 24px 0 16px; */
+        }
+         
+          .mat-mdc-table .mdc-data-table__header-row {
+              display: none !important;
+          }
+        
+          .mat-row .mat-mdc-row{
+              height: unset;
+              display: flex !important;
+              flex-direction: column;
+          }
+          /* .example-element-detail {
+             height:40px;
+             width:200px;
+          } */
+          .btn-circle{
+            width: 20px;
+            height: 20px;
+            padding: 1px 0;
+            border-radius: 15px;
+            /* text-align: center; */
+            /* color: #fff; */
+            background-color: #333b85;
+            font-size: 12px;
+            line-height: 1.42857;
+        }
+        ::ng-deep .popover-body {
+            width:250px !important;
+            height: 50%;
+        }
+         label{
+            line-height: 1rem!important;
+         }
+         ::ng-deep .modal-content {
+            width: 100% !important;
+        }
+    }
+
+@media screen and (min-width:700px) and (max-width: 1456px) {
+        .display2{
+           display:none;
+            }
+          
+        }

@@ -1,6 +1,6 @@
-<div>
+
     <div class="col-12">
-        <div class="maan-grid customer-grid maan-grid-column-1">
+        <div class="maan-grid customer-grid maan-grid-column-1 p-0  mt-3">
             <div class="maan-grid-item" *ngIf="endorsementSection">
                 <div class="maan-grid-item-title">
                     <div class="d-flex justify-content-between">
@@ -57,8 +57,8 @@
                     </div>
                 </div>
             </div>
-            <div class="maan-grid-item" *ngIf="customerDetails">
-                <div class="maan-grid-item-title">
+            <div class="maan-grid-item"   *ngIf="customerDetails">
+                <div class="maan-grid-item-title" style="margin: 0px !important;top:0rem;bottom: 0rem !important;padding-top: 9px !important;">
                     <div class="d-flex justify-content-between">
                         <div>
                             <span class="mx-1">
@@ -489,7 +489,7 @@
                 </ng-container>
             </div>
         </div>
-        <div class="maan-grid-item" *ngIf="!addSection">
+        <div class="maan-grid-item" *ngIf="vehicleDetailsList.length!=0 && vehicleDetailsList.length!=1">
             <div class="maan-grid-item-title">
                 <div class="d-flex justify-content-between">
                     <div>
@@ -506,7 +506,7 @@
                 <div class="row p-0 mt-2">
                     <div class="col-12 col-md-12">
                         <ng-container *ngIf="vehicleDetailsList.length!=0">
-                            <app-grid-table [cols]="customerHeader" [data]="vehicleDetailsList" [Currency]="currencyValue" [filterValue]="filterValue" (onEdit)="onEditCovers($event)" (onDelete)="onDeleteVehicleWish($event)">
+                            <app-grid-table [cols]="customerHeader" [data]="vehicleDetailsList" [Currency]="currencyValue" [filterValue]="filterValue" (onEdit)="onEditVehicle($event)" (onDelete)="onDeleteVehicleWish($event)">
                             </app-grid-table>
                         </ng-container>
                         <ng-container *ngIf="vehicleDetailsList.length==0">
@@ -574,5 +574,4 @@
             <button class="custom-btn btn-6 mx-2 maan-button-data" *ngIf="checkActiveVehicles()" matRipple (click)="onProceed()">Proceed</button>
         </div>
     </div>
-</div>
-</div>
+    </div>

@@ -27,7 +27,7 @@ export class FireAlliedPerils{
                 fieldGroupClassName: 'row',
                 fieldGroup: [
                   {
-                    className: 'col-5 offset-1',
+                    className: 'col-4 col-lg-4 col-md-4 offset-2',
                     type: 'select',
                     key: 'IndemityPeriod',
                     props: {
@@ -42,27 +42,15 @@ export class FireAlliedPerils{
                     },
                   },
       
-                  {
-                    className: 'col-5 offset-1',
-                    key: 'MakutiYn',
-                    type: 'radio',
-                    templateOptions: {
-                      type: 'radio',
-                      label: 'Makuti',
-                      required: true,
-                      disabled: this.checkDisable('MakutiYn'),
-                      name: 'MakutiYn',
-                      options: [{ value: 'Y', label: 'Yes' },{ value: 'N', label: 'No' }],
-                    }
-                  },
+                  
                   
                   {
-                    className: 'col-5 offset-1',
+                    className: 'col-4 col-lg-4 col-md-4',
                     type: 'commaSeparator',
                     key: 'BuildingSuminsured',
       
                     props: {
-                      label: `Building Value (${this.commonDetails[0].Currency})`,
+                      label: `Building Value`,
                       disabled: this.checkDisable('BuildingSuminsured'),
                       required: true,
                       options: [
@@ -78,7 +66,19 @@ export class FireAlliedPerils{
                     expressions: {
                     },
                   },
-      
+                  {
+                    className: 'col-6 col-lg-6 col-md-6 offset-2',
+                    key: 'MakutiYn',
+                    type: 'radio',
+                    templateOptions: {
+                      type: 'radio',
+                      label: 'Makuti',
+                      required: true,
+                      disabled: this.checkDisable('MakutiYn'),
+                      name: 'MakutiYn',
+                      options: [{ value: 'Y', label: 'Yes' },{ value: 'N', label: 'No' }],
+                    }
+                  },
                 ]
               }
             ]

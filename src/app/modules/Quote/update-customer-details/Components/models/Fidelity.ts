@@ -72,7 +72,7 @@ export class Fidelity{
                       className: 'col-sm-4',
                       key: 'FidEmpSi',
                       props: {
-                        label: `Sum Insured (${this.commonDetails[0].Currency})`,
+                        label: `Sum Insured`,
                         disabled: this.checkDisable('FidEmpSi'),
                         required: true,
                         options: [

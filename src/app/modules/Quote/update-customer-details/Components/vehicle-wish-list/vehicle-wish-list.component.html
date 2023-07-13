@@ -13,7 +13,7 @@
     </div>
 </div>
 <div class="maan-grid-item">
-    <div class="maan-grid-item-title" *ngIf="customerData.length!=0">
+    <div class="maan-grid-item-title display1" *ngIf="customerData.length!=0">
         <div class="d-flex justify-content-between">
             <div>
                 <span class="mx-1">
@@ -22,6 +22,26 @@
             </div>
             <div *ngIf="!searchSection && statusValue!='RA' && (!endorsementSection || (endorsementSection && enableAddVehicle)) && !checkDisableField()">
                 <button class="maan-btn maan-btn-blue maan-button-data" style="bottom: 0.2rem !important;" (click)="searchSection=!searchSection" matRipple><i class="fas fa-plus"></i>&nbsp;Add New</button>&nbsp;
+                <button class="maan-btn maan-btn-green maan-btn-data ml-1" matRipple (click)="onEnableUploadSection()" style="white-space: nowrap;bottom: 0.2rem !important;"><i class="fas fa-upload"></i>&nbsp;Upload Vehicle Details</button>
+            </div>
+        </div>
+    </div>
+    <div class="display2 mb-0" *ngIf="customerData.length!=0">
+        <div class="row mt-2">
+            <div class="col-12 mt-2" style="border-bottom: 2px solid #333b85;">
+                <span>
+                    <i class="fas fa-car mx-1"></i>
+                    <span style="font-size: 16px;">Vehicle to Insure</span>
+                </span>
+            </div>
+            
+        </div>
+        <div class="d-flex justify-content-between mt-2">
+            <div *ngIf="!searchSection && statusValue!='RA' && (!endorsementSection || (endorsementSection && enableAddVehicle)) && !checkDisableField()">
+                <button class="maan-btn maan-btn-blue maan-button-data" style="bottom: 0.2rem !important; width:100px!important" (click)="searchSection=!searchSection" matRipple><i class="fas fa-plus"></i>&nbsp;Add New</button>&nbsp;
+               
+            </div>
+            <div *ngIf="!searchSection && statusValue!='RA' && (!endorsementSection || (endorsementSection && enableAddVehicle)) && !checkDisableField()">
                 <button class="maan-btn maan-btn-green maan-btn-data ml-1" matRipple (click)="onEnableUploadSection()" style="white-space: nowrap;bottom: 0.2rem !important;"><i class="fas fa-upload"></i>&nbsp;Upload Vehicle Details</button>
             </div>
         </div>
@@ -47,7 +67,7 @@
     </div>
 </div>
 <div class="maan-grid-item" *ngIf="searchSection">
-    <div class="maan-grid-item-title">
+    <div class="maan-grid-item-title display1">
         <div class="d-flex justify-content-between">
             <div>
                 <span class="mx-1">
@@ -60,6 +80,26 @@
                 <button class="maan-btn maan-btn-green maan-btn-data ml-1" matRipple (click)="onEnableUploadSection()" style="white-space: nowrap;"><i class="fas fa-upload"></i>&nbsp;Upload Vehicle Details</button>
             </div>
         </div>
+    </div>
+    <div class="display2">
+        <div class="row mt-2">
+            <div class="col-12 mt-2" style="border-bottom: 2px solid #333b85;">
+                <span class="mx-1">
+                    <i class="fas fa-car mx-1"></i>
+                </span>
+                <span class="spancommon span_font_size">Vehicle Search</span>
+            </div>
+            
+        </div>
+        <div class="d-flex justify-content-between mt-2">
+            <div *ngIf="searchSection">
+                <button class="maan-btn maan-btn-blue maan-btn-data ml-1" matRipple (click)="onCreateVehicle()" style="white-space: nowrap;"><i class="fas fa-plus"></i>&nbsp;Create Vehicle Details</button>&nbsp;
+               
+            </div>
+            <div *ngIf="searchSection">
+                <button class="maan-btn maan-btn-green maan-btn-data ml-1" matRipple (click)="onEnableUploadSection()" style="white-space: nowrap;"><i class="fas fa-upload"></i>&nbsp;Upload Vehicle Details</button>
+                </div>
+            </div>
     </div>
     <div class="maan-grid-item-body" *ngIf="searchSection">
         <div class="row" *ngIf="searchSection">

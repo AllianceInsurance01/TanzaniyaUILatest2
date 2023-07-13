@@ -3,3 +3,18 @@
     background-color: #333a84 !important;
     border-color: #7d82b1 !important;
 }
+@media screen and (min-width:700px) and (max-width: 1456px) {
+    .display2{
+       display:none;
+        }
+      
+    }
+
+ @media screen and (min-width: 280px) and (max-width: 700px) {
+    .display1{
+        display:none;
+         }
+         .vision-grid-column-2{
+            grid-template-columns:none !important;
+         }
+ }

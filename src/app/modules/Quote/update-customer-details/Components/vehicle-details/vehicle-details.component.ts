@@ -178,6 +178,7 @@ export class VehicleDetailsComponent implements OnInit {
           key: 'actions',
           display: 'Action',
           config: {
+            isEdit : true,
             isRemove: true,
           },
         }
@@ -324,6 +325,10 @@ export class VehicleDetailsComponent implements OnInit {
   }
   onChangeBodyType(){
     if(this.bodyTypeValue=='7') this.cityValue='';
+  }
+  onEditVehicle(rowData){
+    sessionStorage.setItem('editVehicleId',String(rowData.Vehicleid));
+    window.location.reload();
   }
   getMotorTypeList(type,motorValue,vehicleUsage){
     let ReqObj = {

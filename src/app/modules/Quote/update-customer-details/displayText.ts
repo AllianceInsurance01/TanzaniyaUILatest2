@@ -5,7 +5,7 @@ import { FieldType } from '@ngx-formly/core';
  selector: 'display',
  template: `
  <div style="margin-top: 10px !important;margin-left: 10px !important;line-height: 1.5!important;">
-        <h5>{{field.templateOptions.label}}</h5>
+        <span>{{field.templateOptions.label}}</span>
  </div>
 
  `,

@@ -25,18 +25,20 @@ export class ProductData {
     IdProofType:string = '';
     IdNo:string = '';IndustryName:any;
     JobJoiningMonth:string = '';NatureOfBusinessId:any;
-    BetweenDiscontinued:string="N";
-	EthicalWorkInvolved:string='N';
+    BetweenDiscontinued:string="N";MoneyInSafeBusinessSIYN:boolean=false;
+	MoneyOutSafeBusinessSIYN:boolean=false;MoneyInPremisesSIYN:boolean=false;
+	CashInTransitSIYN:boolean=false;CashInHandEmployeesSIYN:boolean=false;MoneyAnnualcarrySuminsuredSIYN:boolean=false;
+	EthicalWorkInvolved:string='N';PowerPlantSIYN:boolean=false;CashInSafeSIYN:boolean=false;
 	BuildingOwnerYn:any=null;InbuildConstructType:any=null;OutbuildConstructType:any=null;
-	BuildingBuildYear:any='';BuildingFloors:any='';
+	BuildingBuildYear:any='';BuildingFloors:any='';ElecMachinesSIYN:boolean=false;
 	IndustryId:any='';CategoryId:any='';BreakDownCoverYN:any='No';MoneyCoverYN:any="No";
 	FidelityCoverYN:any="No";WcYN:any="No";LiabilityYN:any="No";GoodsYN:any="No";
-	ElecEquipSuminsured:any='0';MoneySinglecarrySuminsured:any='0';
+	ElecEquipSuminsured:any='0';MoneySinglecarrySuminsured:any='0';EquipmentSIYN:boolean=false;
 	BuildingSuminsured:any='0';ContentSuminsured:any='0';TotalExcludedEmployees:any;
-	GoodsTurnoverSuminsured:any='0';GoodsSinglecarrySuminsured:any='0';
-	EmpliabilityExcessSuminsured:any='0';EmpliabilityAnnualSuminsured:any='0';
-	FidelityAnnualSuminsured:any='0';FidelityAnyoccuSuminsured:any='0';
-	MoneyAnnualcarrySuminsured:any='0';MoneyInsafeSuminsured:any='0';
+	GoodsTurnoverSuminsured:any='0';GoodsSinglecarrySuminsured:any='0';GeneralMachineSIYN:boolean=false;
+	EmpliabilityExcessSuminsured:any='0';EmpliabilityAnnualSuminsured:any='0';MachineEquipSIYN:boolean=false
+	FidelityAnnualSuminsured:any='0';FidelityAnyoccuSuminsured:any='0';BoilerPlantsSIYN:boolean=false;
+	MoneyAnnualcarrySuminsured:any='0';MoneyInsafeSuminsured:any='0';ManuUnitsSIYN:boolean=false;
 	CashInHandDirectors:any='0';CashInTransit:any='0';CashInHandEmployees:any='0';
 	CashInSafe:any='0';CashInPremises:any='0';RevenueFromStamps:any='0';MoneyInSafeBusiness:any='0';
 	MoneyOutSafeBusiness:any='0';MoneyInPremises:any='0';MoneyInLocker:any='0';

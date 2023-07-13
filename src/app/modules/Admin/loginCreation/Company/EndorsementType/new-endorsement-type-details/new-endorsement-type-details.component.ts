@@ -91,7 +91,7 @@ export class NewEndorsementTypeDetailsComponent {
 
       console.log('uuuuuu',this.endorsementDetails)
       this.endorsementDetails.EndtFeeYn = 'N';this.endorsementDetails.Status = 'Y';
-      
+      this.endorsementDetails.SectionModificationYn = 'N';
     }
     console.log('tttttttt',this.endorsementDetails)
    }
@@ -142,6 +142,11 @@ export class NewEndorsementTypeDetailsComponent {
   }
   onChangeEndFeeYN(){
     if(this.endorsementDetails?.EndtFeeYn=='N') {this.endorsementDetails.CalcType = null;this.endorsementDetails.EndtFeePercent=null;}
+  }
+  onChangeSectionModificationYn(){
+    if(this.endorsementDetails?.SectionModificationYn=='N') {
+      this.endorsementDetails.SectionModificationType = null;
+    }
   }
   onRedirect(value){
     if(value=='Product') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails'])

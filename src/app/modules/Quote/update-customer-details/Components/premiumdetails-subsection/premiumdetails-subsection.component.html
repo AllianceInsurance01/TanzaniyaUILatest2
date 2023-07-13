@@ -1,5 +1,5 @@
-<div class="maan-grid-item">
-    <div class="maan-grid-item-title">
+<div class="maan-grid-item mt-3 p-0">
+    <div class="maan-grid-item-title display1" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
         <div class="d-flex justify-content-between">
             <div>
                 <span class="mx-1">
@@ -10,6 +10,17 @@
             <div class="mr-3"> 
                 <button class="maan-btn maan-btn-blue maan-button-data" (click)="openmodel(mymodal)" style="bottom:0.2rem"><span>Cover Details</span></button></div>
         </div>
+        </div>
+        <div class="display2">
+            <div class="row mt-2" style="border-bottom: 2px solid #333b85;">
+                <span>
+                    <i class="fas fa-user mx-1"></i>
+                <span class="spancommon span_font_size">Customer & Product Details</span>
+            </span>
+            </div>
+            <div class="mt-2">
+                <button class="maan-btn maan-btn-blue maan-button-data" (click)="openmodel(mymodal)" style="bottom:0.2rem"><span>Cover Details</span></button>
+            </div>
         </div>
         <div class="maan-grid-item-body" style="padding-left: 70px !important;padding-right: 40px !important;">
             <div class="row mt-1" *ngIf="!endrosement">
@@ -64,29 +75,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-3">
-                    <div class="input-control-container">
-                        <label class="input-form-label">Total Premium</label>
-                        <ng-container *ngIf="!endrosement">
-                            <div class="input-form-radio-box">
-                                <span class="spancommon span_font_size">{{columnHeader?.OverallPremiumFc|commaseparator}}<span>
-                                    &nbsp;({{columnHeader?.Currency}})</span></span>
-        
-                            </div>
-                           
-                        </ng-container>
-                        <ng-container *ngIf="endrosement && columnHeader.TotalEndtPremium!=undefined && columnHeader.TotalEndtPremium!=0 && columnHeader.TotalEndtPremium!=null">
-                            <span class="spancommon span_font_size">Total Endorsement Premium<span>:
-                                <ng-container *ngIf="columnHeader?.TotalEndtPremium!=0 && columnHeader?.TotalEndtPremium!=null ">
-                                    {{columnHeader?.TotalEndtPremium|commaseparator}}&nbsp;({{columnHeader?.Currency}})
-                                </ng-container>
-                                <ng-container *ngIf="columnHeader?.TotalEndtPremium==0 || columnHeader?.TotalEndtPremium==null">
-                                    {{columnHeader?.TotalEndtPremium}}&nbsp;({{columnHeader?.Currency}})
-                                </ng-container>
-                            </span></span>
-                        </ng-container>
-                    </div>
-                </div>
                 <div class="col-12 col-md-3" style="position: inherit;overflow: revert;">
                     <div class="input-control-container">
                         <label class="input-form-label">Policy Start Date</label>
@@ -105,6 +93,30 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12 col-md-3">
+                    <div class="input-control-container">
+                        <label class="input-form-label" style="font-size: 0.9rem !important;"><b>Total Premium</b></label>
+                        <ng-container *ngIf="!endrosement">
+                            <div class="input-form-radio-box">
+                                <span class="spancommon span_font_size text-primary" style="font-size: 0.9rem !important;">{{columnHeader?.OverallPremiumFc|commaseparator}}<span>
+                                    &nbsp;({{columnHeader?.Currency}})</span></span>
+        
+                            </div>
+                           
+                        </ng-container>
+                        <ng-container *ngIf="endrosement && columnHeader.TotalEndtPremium!=undefined && columnHeader.TotalEndtPremium!=0 && columnHeader.TotalEndtPremium!=null">
+                            <span class="spancommon span_font_size"><b>Total Endorsement Premium</b><span>:
+                                <ng-container *ngIf="columnHeader?.TotalEndtPremium!=0 && columnHeader?.TotalEndtPremium!=null ">
+                                    {{columnHeader?.TotalEndtPremium|commaseparator}}&nbsp;({{columnHeader?.Currency}})
+                                </ng-container>
+                                <ng-container *ngIf="columnHeader?.TotalEndtPremium==0 || columnHeader?.TotalEndtPremium==null">
+                                    {{columnHeader?.TotalEndtPremium}}&nbsp;({{columnHeader?.Currency}})
+                                </ng-container>
+                            </span></span>
+                        </ng-container>
+                    </div>
+                </div>
+                
             </div>
         </div>
 

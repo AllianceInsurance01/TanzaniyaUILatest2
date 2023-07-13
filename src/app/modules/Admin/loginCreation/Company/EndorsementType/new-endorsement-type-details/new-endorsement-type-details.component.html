@@ -61,7 +61,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-12 col-md-6 col-lg-6">
+                            <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Endorsement Type Name<span class="text-required">*</span></label>
                                     <div class="input-form-box">
@@ -69,15 +69,117 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-6">
+                            <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Category<span class="text-required">*</span></label>
                                     <ng-select class="input-form-select" disabled appendTo="body" [items]="categoryList" [(ngModel)]="endorsementDetails.EndtTypeCategoryId" bindValue="Code" bindLabel="CodeDesc">
                                     </ng-select>
                                 </div>
                             </div>
-                           
-                              
+                            <div class="col-12 col-md-4 col-lg-4" >
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Fields To be Enabled<span class="text-required">*</span></label>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="fieldList" [multiple]="true" [(ngModel)]="endorsementDetails.EndtDependantIds" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Priority<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="endorsementDetails.Priority" maxlength="3">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="endorsementDetails.CoreAppCode" maxlength="10">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Endorsement Fee Required?<span class="text-required">*</span></label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="orginwarehouse_Yes1" type="radio" name="originatingWarehouse1" [(ngModel)]="endorsementDetails.EndtFeeYn" (change)="onChangeEndFeeYN()" value="Y">
+                                            <label for="orginwarehouse_Yes1">Yes</label>
+                                            <input type="radio" id="orginwarehouse_No1" name="originatingWarehouse1" [(ngModel)]="endorsementDetails.EndtFeeYn" (change)="onChangeEndFeeYN()" value="N">
+                                            <label for="orginwarehouse_No1">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12 col-md-4 col-lg-4" *ngIf="endorsementDetails.EndtFeeYn=='Y'">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Calculation Type<span class="text-required">*</span></label>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="calcTypeList" [(ngModel)]="endorsementDetails.CalcTypeId" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4" *ngIf="endorsementDetails.CalcTypeId && endorsementDetails.EndtFeeYn=='Y'">
+                                    <div class="input-control-container" >
+                                        <label class="input-form-label" *ngIf="endorsementDetails.CalcTypeId=='A'">Amount<span class="text-required">*</span></label>
+                                        <label class="input-form-label"  *ngIf="endorsementDetails.CalcTypeId=='P'">Percentage<span class="text-required">*</span></label>
+                                        <label class="input-form-label"  *ngIf="endorsementDetails.CalcTypeId=='M'">Mile<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" [(ngModel)]="endorsementDetails.EndtFeePercent" maxlength="10">
+                                        </div>
+                                    </div>
+                            </div>
+                            
+                            <div class="col-12 col-md-4 col-lg-4 mt-2">
+                                <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                                <mat-form-field appearance="fill">
+                                    <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="endorsementDetails.EffectiveDateStart">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Regulatory Code<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="endorsementDetails.RegulatoryCode" maxlength="10">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <textarea cols="120" rows="2" class="input-form-control without-icon" [(ngModel)]="endorsementDetails.Remarks" maxlength="200"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">EndtTypeDescription<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <textarea cols="120" rows="2" class="input-form-control without-icon" [(ngModel)]="endorsementDetails.EndtTypeDesc" maxlength="200"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-5 col-lg-5">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Status <span class="text-required">*</span></label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="endorsementDetails.Status" value="P">
+                                            <label for="orginwarehouse_Pending">Pending</label>
+                                            <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="endorsementDetails.Status" value="Y">
+                                            <label for="orginwarehouse_Yes">Active</label>
+                                            <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="endorsementDetails.Status" value="N">
+                                            <label for="orginwarehouse_No">DeActive</label>
+                                            <input type="radio" id="orginwarehouse_Referral" name="originatingWarehouse" [(ngModel)]="endorsementDetails.Status" value="R">
+                                            <label for="orginwarehouse_Referral">Referral</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <!--<div class="col-12 col-md-6 col-lg-6 mt-2">
                                 <label class="input-form-label">Fields To be Enabled<span class="text-required">*</span></label>
                                 <select
@@ -101,110 +203,10 @@
                                      formControlName="myItems">
                                  </ng-multiselect-dropdown>
                             </div>-->
-                        <div class="col-12 col-md-6 col-lg-6" >
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Fields To be Enabled<span class="text-required">*</span></label>
-                                    <ng-select class="input-form-select" appendTo="body" [items]="fieldList" [multiple]="true" [(ngModel)]="endorsementDetails.EndtDependantIds" bindValue="Code" bindLabel="CodeDesc">
-                                    </ng-select>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Priority<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="endorsementDetails.Priority" maxlength="3">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="endorsementDetails.CoreAppCode" maxlength="10">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Endorsement Fee Required?<span class="text-required">*</span></label>
-                                    <div class="input-form-radio-box">
-                                        <div class="radio-toolbar">
-                                            <input id="orginwarehouse_Yes1" type="radio" name="originatingWarehouse1" [(ngModel)]="endorsementDetails.EndtFeeYn" (change)="onChangeEndFeeYN()" value="Y">
-                                            <label for="orginwarehouse_Yes1">Yes</label>
-                                            <input type="radio" id="orginwarehouse_No1" name="originatingWarehouse1" [(ngModel)]="endorsementDetails.EndtFeeYn" (change)="onChangeEndFeeYN()" value="N">
-                                            <label for="orginwarehouse_No1">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6" *ngIf="endorsementDetails.EndtFeeYn=='Y'">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Calculation Type<span class="text-required">*</span></label>
-                                    <ng-select class="input-form-select" appendTo="body" [items]="calcTypeList" [(ngModel)]="endorsementDetails.CalcTypeId" bindValue="Code" bindLabel="CodeDesc">
-                                    </ng-select>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6" *ngIf="endorsementDetails.CalcTypeId && endorsementDetails.EndtFeeYn=='Y'">
-                                    <div class="input-control-container" >
-                                        <label class="input-form-label" *ngIf="endorsementDetails.CalcTypeId=='A'">Amount<span class="text-required">*</span></label>
-                                        <label class="input-form-label"  *ngIf="endorsementDetails.CalcTypeId=='P'">Percentage<span class="text-required">*</span></label>
-                                        <label class="input-form-label"  *ngIf="endorsementDetails.CalcTypeId=='M'">Mile<span class="text-required">*</span></label>
-                                        <div class="input-form-box">
-                                            <input type="text" class="input-form-control without-icon" [(ngModel)]="endorsementDetails.EndtFeePercent" maxlength="10">
-                                        </div>
-                                    </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Status <span class="text-required">*</span></label>
-                                    <div class="input-form-radio-box">
-                                        <div class="radio-toolbar">
-                                            <input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="endorsementDetails.Status" value="P">
-                                            <label for="orginwarehouse_Pending">Pending</label>
-                                            <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="endorsementDetails.Status" value="Y">
-                                            <label for="orginwarehouse_Yes">Active</label>
-                                            <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="endorsementDetails.Status" value="N">
-                                            <label for="orginwarehouse_No">DeActive</label>
-                                            <input type="radio" id="orginwarehouse_Referral" name="originatingWarehouse" [(ngModel)]="endorsementDetails.Status" value="R">
-                                            <label for="orginwarehouse_Referral">Referral</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6 mt-2">
-                                <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
-                                <mat-form-field appearance="fill">
-                                    <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="endorsementDetails.EffectiveDateStart">
-                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
-                                </mat-form-field>
-                            </div>
+                            
+                            
 
-                            <div class="col-12 col-md-6 col-lg-6">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Regulatory Code<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="endorsementDetails.RegulatoryCode" maxlength="10">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-lg-6">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Remarks<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <textarea cols="120" rows="2" class="input-form-control without-icon" [(ngModel)]="endorsementDetails.Remarks" maxlength="200"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-md-6 col-lg-6">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">EndtTypeDescription<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <textarea cols="120" rows="2" class="input-form-control without-icon" [(ngModel)]="endorsementDetails.EndtTypeDesc" maxlength="200"></textarea>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                         <div class="text-center mt-2">
                             <button class="btn btn-danger" (click)="ongetBack()">Back</button>

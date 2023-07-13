@@ -16,4 +16,6 @@ export class ENdorsementType {
     "EffectiveDateStart":null;
     "Remarks":null;
     "CalcType":null;
+    "SectionModificationYn":null;
+    "SectionModificationType":null;
 }

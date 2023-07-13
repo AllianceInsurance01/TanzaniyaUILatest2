@@ -27,12 +27,12 @@ export class HouseHoldContents{
               fieldGroupClassName: 'row',
               fieldGroup: [
                 {
-                  className: 'offset-2 col-7',
+                  className: 'offset-3 col-6',
                   type: 'commaSeparator',
                   key: 'ContentSuminsured',
     
                   props: {
-                    label: `Contents Value (${this.commonDetails[0].Currency})`,
+                    label: `Contents Value`,
                     disabled: this.checkDisable('ContentSuminsured'),
                     required: true,
                     options: [

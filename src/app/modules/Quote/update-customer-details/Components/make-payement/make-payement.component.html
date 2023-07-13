@@ -1,14 +1,3 @@
-<div class="d-flex justify-content-between">
-
-    <div class="maan-grid-item-title">
-        <span class="mx-0">
-            <span class="spancommon span_font_size" style="font-weight:600">Premium Information</span>
-        </span>
-    </div>
-    <div>
-    </div>
-
-</div>
 <div class="maan-grid customer-grid maan-grid-column-1">
     <div class="maan-grid-item" *ngIf="endorsementSection">
         <div class="maan-grid-item-title">
@@ -66,9 +55,9 @@
             </div>
         </div>
         </div>
-    <div class="maan-grid-item" *ngIf="!cancelEndorse">
-        <div class="maan-grid-item-title">
-            <div class="d-flex justify-content-between">
+    <div class="maan-grid-item mt-2" *ngIf="!cancelEndorse">
+        <div class="maan-grid-item-title" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
+            <div class="d-flex justify-content-between display1">
                 <div>
                     <span class="mx-1">
                         <i class="fas fa-user mx-1"></i>
@@ -81,11 +70,23 @@
 
                 </div>
             </div>
+            <div class="d-flex justify-content-between display2">
+                <div>
+                    <span class="mx-1">
+                        <i class="fas fa-user mx-1"></i>
+                    </span> <span class="spancommon span_font_size">Customer Details</span>
+                </div>
+                <div>
+                    <ng-container>
+                        <!-- RefNo - {{customerDetails?.CustomerReferenceNo}} -->
+                    </ng-container>
 
+                </div>
+            </div>
         </div>
-        <div class="maan-grid-item-body">
+        <div class="maan-grid-item-body" style="padding-left: 70px !important;padding-right: 40px !important;">
             <div class="row mt-1">
-                <div class="col-12 col-md-3 ">
+                <div class="col-12 col-md-2 " >
                     <div class="input-control-container">
                         <label class="input-form-label">Customer Name</label>
                         <div class="input-form-radio-box">
@@ -93,7 +94,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-md-2" style="margin-left: 30px">
                     <div class="input-control-container">
                         <label class="input-form-label">Customer ID</label>
                         <div class="input-form-radio-box">
@@ -101,7 +102,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-md-2" style="margin-left: 30px">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Product Name</label>
+                        <div class="input-form-radio-box">
+                            <span class="spancommon span_font_size">{{productName}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-2" style="margin-left: 30px">
                     <div class="input-control-container">
                         <label class="input-form-label">Customer Type</label>
                         <div class="input-form-radio-box">
@@ -109,7 +118,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-md-2" style="margin-left: 30px">
                     <div class="input-control-container">
                         <label class="input-form-label">Mobile Number</label>
                         <div class="input-form-radio-box">
@@ -117,9 +126,458 @@
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>
+    <div class="maan-grid-item" style="margin: 0px !important;top:0rem;bottom: 0rem !important;" *ngIf="Emilist1.length!=0 && EmiYn=='Y'">
+        <div class="maan-grid-item-title">
+            <div class="d-flex justify-content-between display1">
+                <div>
+                    <span class="mx-1">
+                        <i class="fas fa-user mx-1"></i>
+                    </span> EMI Details
+                </div>
+                <div>
+                    <ng-container>
+                        <!-- RefNo - {{customerDetails?.CustomerReferenceNo}} -->
+                    </ng-container>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between display2">
+                <div>
+                    <span class="mx-1">
+                        <i class="fas fa-user mx-1"></i>
+                    </span> EMI Details
+                </div>
+                <div>
+                    <ng-container>
+                        <!-- RefNo - {{customerDetails?.CustomerReferenceNo}} -->
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="maan-grid-item-body" style="padding-left: 70px !important;padding-right: 40px !important;">
+            <div class="col-md-12 col-lg-12" *ngIf="Emilist1.length!=0 && EmiYn=='Y'">
+                <table class="firstclass" style="width:100%;">
+                    <thead>
+                        <!-- <tr>
+                            <th colspan="4" class="text-center" id="first">3Months</th>
+                            <th colspan="4" class="text-center" id="6">6Months</th>
+                            <th colspan="4" class="text-center" id="9">9Months</th>
+                        </tr> -->
+                        <tr class="firstclass">
+                            <th scope="col" colspan="3"></th>
+                            <th scope="col" colspan="2" style="text-align:center;">Installment Amount ({{currencyCode}})</th>
+                        </tr>
+                        <tr class="firstclass">
+                            <th scope="col" class="title text-center">EMI Month</th>
+                            <th scope="col" class="title text-center">Installment Type</th>
+                            <th scope="col" class="title text-center">Due Date</th>
+                            <th scope="col" *ngIf="yearlySection" id="second" class="text-center">12 Months</th>
+                            <th scope="col" *ngIf="nineMonthSection" id="third" class="title text-center">9 Months</th>
+                            <th scope="col" *ngIf="sixMonthSection" id="fourth" class="text-center">6 Months</th>
+                            <th scope="col" *ngIf="threeMonthSection" id="fifth" class="text-center"> 3 Months</th>
+                            <th scope="col" class="title text-center">EMI Status</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <ng-container>
+                            <tr *ngFor="let list of Emilist1;let i=index" class="firstclass">
+                                <td class="title">{{list.NoOfInstallment}}</td>
+                                <td class="title">{{list.InstallmentDesc}}</td>
+                                <td class="title"> {{list.DueDate}}</td>
+                                <td *ngIf="yearlySection" class="premiumText" id="second">{{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="nineMonthSection" class="premiumText" id="third">{{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="sixMonthSection" class="premiumText" id="fourth"> {{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="threeMonthSection" class="premiumText" id="fifth">{{list.DueAmount|commaseparator}}</td>
+                                <td class="title p-2" *ngIf="list.PaymentStatus=='Pending'">
+                                    <span class="realistic-marker-highlight p-1">{{list.PaymentStatus}}</span>
+                                </td>
+                                <td class="title" *ngIf="list.PaymentStatus!='Pending'">
+                                    {{list.PaymentStatus}}
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <div class="maan-grid-item" *ngIf="(!policySection && !endorsementSection && !successSection)|| (endorsementSection && IsChargeOrRefund=='CHARGE' && !policySection)">
+        <div class="maan-grid-item-title display1" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
+            <span class="mx-0">
+                <span class="spancommon span_font_size" style="font-weight:600">Payment Options</span>
+                <span class="spancommon span_font_size" style="font-weight:600;float: right;">Total Premium&nbsp;
+                    <ng-container *ngIf="totalPremium==0 || totalPremium=='' || totalPremium==null">
+                        <span>:&nbsp; 0 </span>
+                    </ng-container>
+                        <ng-container *ngIf="totalPremium!=0 && totalPremium!='' && totalPremium!=null">
+                            <span >:&nbsp;{{totalPremium|commaseparator}}&nbsp;</span>({{currencyCode}})
+                        </ng-container></span>
+                    
+            </span>
+        </div>
+        <div class="maan-grid-item-title display2" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
+            <div class="row">
+                <div class="col-6 mt-1">
+                    <span class="spancommon span_font_size" style="font-weight:600">Payment Options</span>
+                </div>
+                <div class="col-6 mt-1">
+                    <span class="spancommon span_font_size" style="font-weight:600;float: right;">Total Premium&nbsp;
+                        <ng-container *ngIf="totalPremium==0 || totalPremium=='' || totalPremium==null">
+                            <span>:&nbsp; 0 </span>
+                        </ng-container>
+                            <ng-container *ngIf="totalPremium!=0 && totalPremium!='' && totalPremium!=null">
+                                <span >:&nbsp;{{totalPremium|commaseparator}}&nbsp;</span>({{currencyCode}})
+                            </ng-container>
+                    </span>
+                </div>  
+            </div>
+        </div>
+        <div class="maan-grid-item-body" style="padding-left: 70px !important;padding-right: 40px !important;">
+           <div class="row">
+                <div class="col-md-3 col-lg-3 col-xl-3">
+                    <ng-container *ngFor="let type of paymentTypeList;let i = index">
+                        <div class="radio-toolbar menu-bar">
+                            <input [id]="'menu'+i" type="radio" [name]="'menu'+i" (click)="onRedirect(type.Code)" [value]="type.Code" [(ngModel)]="activeMenu">
+                            <label [for]="'menu'+i" class="labeltag spancommon span_font_size">{{type.CodeDesc}}</label>
+            
+                            <!-- <input type="radio" id="menu6" value="Pos" (click)="onRedirect('Pos')" [(ngModel)]="activeMenu">
+                        <label for="menu6" class="labeltag">Pos</label>
+                        <input type="radio" id="menu1" name="menu" (click)="onRedirect('Section')" value="Section" [(ngModel)]="activeMenu">
+                        <label for="menu1" class="labeltag">Cash</label>
+                        <input type="radio" id="menu2" name="menu" value="Cheque" (click)="onRedirect('Cheque')" [(ngModel)]="activeMenu">
+                        <label for="menu2" class="labeltag">Cheque</label>
+                        <input type="radio" id="menu10" name="menu" value="Bank" (click)="onRedirect('Bank')" [(ngModel)]="activeMenu">
+                        <label for="menu10" class="labeltag">Bank</label> -->
+                            <!-- <input type="radio" id="menu3" name="menu" value="SubCover" (click)="onRedirect('SubCover')" [(ngModel)]="activeMenu">
+                      <label for="menu3">SubCover</label> -->
+            
+                        </div>
+                    </ng-container>     
+                </div> 
+                <div class="col-md-9 col-lg-9 col-xl-9">
+                    <div class="card" *ngIf="first" style="width: 100%;border: 2px solid #eaecf1;border-radius: 0.7rem;outline: none;box-sizing: border-box;transition: all .3s;height: auto;background: rgb(255,255,255);box-shadow: 1px 2px 2px #1f26875e;backdrop-filter: blur(18.5px);">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <span class="spancommon span_font_size">Vision Pay</span>
+                                </div>
+                                <div>
+            
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 spancommon span_font_size">
+                                    Payment Using Vision Pay @ You are about to be redirected to payment Gateway
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple [routerLink]="['/Home/existingQuotes']">Make Payment</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" *ngIf="second" style="width: 100%;border: 2px solid #eaecf1;border-radius: 0.7rem;outline: none;box-sizing: border-box;transition: all .3s;height: auto;background: rgb(255,255,255);box-shadow: 1px 2px 2px #1f26875e;backdrop-filter: blur(18.5px);">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <span class="spancommon span_font_size">Point of Sale</span>
+                                </div>
+                                <div>
+            
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 spancommon span_font_size">
+                                    Use this point,When you are the agent of Tanzania Insurance to collect premium using the POS(Point Of Sale Terminal) provided by either Tanzania Insurance or Your Own.
+                                </div>
+                                <div class="col-12 spancommon span_font_size">
+                                    Please Note the details You Fill Below,confirm you have received the payment corresponding liabilities with Tanzania Insurance must be paid by you or Your Company
+                                </div>
+                                <div class="col-12 spancommon span_font_size">
+                                    Completing this Step would issue the Policy & not reversible
+                                </div>
+                            </div>
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <span class="spancommon span_font_size">Point of Sale Payment Details</span>
+                                    </div>
+                                    <div>
+            
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ml-3">
+                                <div class="col-md-4 col-lg-4 col-xl-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Type Of Card</label>
+                                        <div class="input-form-box">
+                                            <input type="text" maxlength="20" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-xl-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">POS Reference No</label>
+                                        <div class="input-form-box">
+                                            <input type="text" maxlength="20" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-xl-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Approved Id</label>
+                                        <div class="input-form-box">
+                                            <input type="text" maxlength="20" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-xl-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Bank Name</label>
+                                        <ng-select class="input-form-select" appendTo="body" [items]="bankList"  [(ngModel)]="bankName" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-xl-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Card No(Last 4 Digits)</label>
+                                        <div class="input-form-box">
+                                            <input type="text" maxlength="20" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple [routerLink]="['/Home/existingQuotes']">Make Payment</button>
+                            </div>
+                        </div>
+            
+                    </div>
+                    <div class="card" *ngIf="Third" style="width: 100%;border: 2px solid #eaecf1;border-radius: 0.7rem;outline: none;box-sizing: border-box;transition: all .3s;height: auto;background: rgb(255,255,255);box-shadow: 1px 2px 2px #1f26875e;backdrop-filter: blur(18.5px);">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <span class="spancommon span_font_size">Cash</span>
+                                </div>
+                                <div>
+            
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 spancommon span_font_size">
+                                    Payment Using Cash Transaction
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Payee Name</label>
+                                        <div class="input-form-box">
+                                            <input type="text" [(ngModel)]="payeeName" maxlength="100" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Amount</label>
+                                        <div class="input-form-box">
+                                            <input type="text" [(ngModel)]="payAmount" (keydown)="onAmountChange($event)" (keyup)="CommaFormatted()"  maxlength="50" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" *ngIf="Fourth" style="width: 100%;border: 2px solid #eaecf1;border-radius: 0.7rem;outline: none;box-sizing: border-box;transition: all .3s;height: auto;background: rgb(255,255,255);box-shadow: 1px 2px 2px #1f26875e;backdrop-filter: blur(18.5px);">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <span class="spancommon span_font_size">Cheque</span>
+                                </div>
+                                <div>
+            
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 spancommon span_font_size" style="color: #0056b3!important;">
+                                    <b>Payment Using Cheque Transaction</b>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Bank Name</label>
+                                        <ng-select class="input-form-select" appendTo="body" [items]="bankList"  [(ngModel)]="bankName" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">MICR No</label>
+                                        <div class="input-form-box">
+                                            <input type="text" [(ngModel)]="micrNo"  maxlength="100" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Cheque No</label>
+                                        <div class="input-form-box">
+                                            <input type="text" [(ngModel)]="chequeNo" maxlength="20" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Cheque Date</label>
+                                        <mat-form-field appearance="fill">
+                                            <!-- <mat-label>Departure Date<span class="text-danger">*</span></mat-label> -->
+                                            <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="chequeDate" [ngModelOptions]="{standalone: true}">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Amount</label>
+                                        <div class="input-form-box">
+                                            <input type="text" [(ngModel)]="payAmount"  maxlength="50" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" *ngIf="Fifth" style="width: 100%;border: 2px solid #eaecf1;border-radius: 0.7rem;outline: none;box-sizing: border-box;transition: all .3s;height: auto;background: rgb(255,255,255);box-shadow: 1px 2px 2px #1f26875e;backdrop-filter: blur(18.5px);">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <span class="spancommon span_font_size">Bank</span>
+                                </div>
+                                <div>
+            
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 spancommon span_font_size">
+                                    <b>Payment Using Bank Transaction</b>
+                                </div>
+                            </div>
+                            <div class="row ml-3">
+                                <div class="col-md-4 col-lg-4 col-xl-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Bank Name</label>
+                                        <ng-select class="input-form-select" appendTo="body" [items]="bankList" [(ngModel)]="bankName" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-xl-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Branch Name</label>
+                                        <div class="input-form-box">
+                                            <input type="text" maxlength="20" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-xl-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Date Of Collection</label>
+                                        <div class="input-form-box">
+                                            <input type="date" maxlength="20" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-xl-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Transaction Id</label>
+                                        <div class="input-form-box">
+                                            <input type="text" maxlength="20" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-xl-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Transaction Date</label>
+                                        <div class="input-form-box">
+                                            <input type="date" maxlength="20" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple [routerLink]="['/Home/existingQuotes']">Make Payment</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" *ngIf="Sixth" style="width: 100%;border: 2px solid #eaecf1;border-radius: 0.7rem;outline: none;box-sizing: border-box;transition: all .3s;height: auto;background: rgb(255,255,255);box-shadow: 1px 2px 2px #1f26875e;backdrop-filter: blur(18.5px);">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <span class="spancommon span_font_size">Online Payment</span>
+                                </div>
+                                <div>
+            
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 spancommon span_font_size">
+                                    Payment Using Online Transaction
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Payee Name</label>
+                                        <div class="input-form-box">
+                                            <input type="text" [(ngModel)]="payeeName" maxlength="100" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xl-6">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Amount</label>
+                                        <div class="input-form-box">
+                                            <input type="text" [(ngModel)]="payAmount" (keydown)="onAmountChange($event)" (keyup)="CommaFormatted()"  maxlength="50" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
+                            </div>
+                        </div>
+                    </div> 
+                </div>   
+           </div>
+            
+            
+        </div>
+    </div>
+    
 </div>
 <!--<div class="maan-grid document-grid maan-grid-column-2">
     <div class="maan-grid-item">
@@ -288,429 +746,6 @@
         </li>
     </ul>
 </div> -->
-<div class="maan-grid customer-grid maan-grid-column-1" *ngIf="Emilist1.length!=0 && EmiYn=='Y'">
-    <div class="maan-grid-item" >
-        <div class="maan-grid-item-title">
-            <div class="d-flex justify-content-between">
-                <div>
-                    <span class="mx-1">
-                        <i class="fas fa-user mx-1"></i>
-                    </span> EMI Details
-                </div>
-                <div>
-                    <ng-container>
-                        <!-- RefNo - {{customerDetails?.CustomerReferenceNo}} -->
-                    </ng-container>
-                </div>
-            </div>
-
-        </div>
-        <div class="maan-grid-item-body">
-            <div class="col-md-12 col-lg-12" *ngIf="Emilist1.length!=0 && EmiYn=='Y'">
-                <table class="firstclass" style="width:100%;">
-                    <thead>
-                        <!-- <tr>
-                            <th colspan="4" class="text-center" id="first">3Months</th>
-                            <th colspan="4" class="text-center" id="6">6Months</th>
-                            <th colspan="4" class="text-center" id="9">9Months</th>
-                        </tr> -->
-                        <tr class="firstclass">
-                            <th scope="col" colspan="3"></th>
-                            <th scope="col" colspan="2" style="text-align:center;">Installment Amount ({{currencyCode}})</th>
-                        </tr>
-                        <tr class="firstclass">
-                            <th scope="col" class="title text-center">EMI Month</th>
-                            <th scope="col" class="title text-center">Installment Type</th>
-                            <th scope="col" class="title text-center">Due Date</th>
-                            <th scope="col" *ngIf="yearlySection" id="second" class="text-center">12 Months</th>
-                            <th scope="col" *ngIf="nineMonthSection" id="third" class="title text-center">9 Months</th>
-                            <th scope="col" *ngIf="sixMonthSection" id="fourth" class="text-center">6 Months</th>
-                            <th scope="col" *ngIf="threeMonthSection" id="fifth" class="text-center"> 3 Months</th>
-                            <th scope="col" class="title text-center">EMI Status</th>
-                        </tr>
-
-                    </thead>
-                    <tbody>
-                        <ng-container>
-                            <tr *ngFor="let list of Emilist1;let i=index" class="firstclass">
-                                <td class="title">{{list.NoOfInstallment}}</td>
-                                <td class="title">{{list.InstallmentDesc}}</td>
-                                <td class="title"> {{list.DueDate}}</td>
-                                <td *ngIf="yearlySection" class="premiumText" id="second">{{list.DueAmount|commaseparator}}</td>
-                                <td *ngIf="nineMonthSection" class="premiumText" id="third">{{list.DueAmount|commaseparator}}</td>
-                                <td *ngIf="sixMonthSection" class="premiumText" id="fourth"> {{list.DueAmount|commaseparator}}</td>
-                                <td *ngIf="threeMonthSection" class="premiumText" id="fifth">{{list.DueAmount|commaseparator}}</td>
-                                <td class="title p-2" *ngIf="list.PaymentStatus=='Pending'">
-                                    <span class="realistic-marker-highlight p-1">{{list.PaymentStatus}}</span>
-                                </td>
-                                <td class="title" *ngIf="list.PaymentStatus!='Pending'">
-                                    {{list.PaymentStatus}}
-                                </td>
-                            </tr>
-                        </ng-container>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-    </div>
-</div>
-<div class="card mt-4" *ngIf="(!policySection && !endorsementSection && !successSection)|| (endorsementSection && IsChargeOrRefund=='CHARGE' && !policySection)" style="border: none;">
-    <div class="d-flex justify-content-between">
-        <div class="maan-grid-item-title">
-            <span class="mx-0">
-                <span class="spancommon span_font_size" style="font-weight:600">Payment Options</span>
-                <span class="spancommon span_font_size" style="font-weight:600;float: right;">Total Premium&nbsp;
-                    <ng-container *ngIf="totalPremium==0 || totalPremium=='' || totalPremium==null">
-                        <span>:&nbsp; 0 </span>
-                    </ng-container>
-                        <ng-container *ngIf="totalPremium!=0 && totalPremium!='' && totalPremium!=null">
-                            <span >:&nbsp;{{totalPremium|commaseparator}}&nbsp;</span>({{currencyCode}})
-                        </ng-container></span>
-                    
-            </span>
-        </div>
-    </div>
-
-    <div class="card p-1" style="border: none;">
-        <div class="vision-grid vision-grid-column-2">
-            <div class="vision-grid-item" style="overflow: hidden;width: 100%;border: 2px solid #eaecf1;border-radius: 0.7rem;outline: none;box-sizing: border-box;transition: all .3s;background: rgb(255,255,255); box-shadow: 1px 2px 2px #1f26875e;backdrop-filter: blur(18.5px);">
-                <ng-container *ngFor="let type of paymentTypeList;let i = index">
-                    <div class="radio-toolbar menu-bar">
-                        <input [id]="'menu'+i" type="radio" [name]="'menu'+i" (click)="onRedirect(type.Code)" [value]="type.Code" [(ngModel)]="activeMenu">
-                        <label [for]="'menu'+i" class="labeltag spancommon span_font_size">{{type.CodeDesc}}</label>
-
-                        <!-- <input type="radio" id="menu6" value="Pos" (click)="onRedirect('Pos')" [(ngModel)]="activeMenu">
-                    <label for="menu6" class="labeltag">Pos</label>
-                    <input type="radio" id="menu1" name="menu" (click)="onRedirect('Section')" value="Section" [(ngModel)]="activeMenu">
-                    <label for="menu1" class="labeltag">Cash</label>
-                    <input type="radio" id="menu2" name="menu" value="Cheque" (click)="onRedirect('Cheque')" [(ngModel)]="activeMenu">
-                    <label for="menu2" class="labeltag">Cheque</label>
-                    <input type="radio" id="menu10" name="menu" value="Bank" (click)="onRedirect('Bank')" [(ngModel)]="activeMenu">
-                    <label for="menu10" class="labeltag">Bank</label> -->
-                        <!-- <input type="radio" id="menu3" name="menu" value="SubCover" (click)="onRedirect('SubCover')" [(ngModel)]="activeMenu">
-                  <label for="menu3">SubCover</label> -->
-
-                    </div>
-                </ng-container>
-
-            </div>
-            <div class="vision-grid-item">
-                <div class="card" *ngIf="first" style="width: 100%;border: 2px solid #eaecf1;border-radius: 0.7rem;outline: none;box-sizing: border-box;transition: all .3s;height: auto;background: rgb(255,255,255);box-shadow: 1px 2px 2px #1f26875e;backdrop-filter: blur(18.5px);">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <span class="spancommon span_font_size">Vision Pay</span>
-                            </div>
-                            <div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 spancommon span_font_size">
-                                Payment Using Vision Pay @ You are about to be redirected to payment Gateway
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple [routerLink]="['/Home/existingQuotes']">Make Payment</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" *ngIf="second" style="width: 100%;border: 2px solid #eaecf1;border-radius: 0.7rem;outline: none;box-sizing: border-box;transition: all .3s;height: auto;background: rgb(255,255,255);box-shadow: 1px 2px 2px #1f26875e;backdrop-filter: blur(18.5px);">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <span class="spancommon span_font_size">Point of Sale</span>
-                            </div>
-                            <div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 spancommon span_font_size">
-                                Use this point,When you are the agent of Tanzania Insurance to collect premium using the POS(Point Of Sale Terminal) provided by either Tanzania Insurance or Your Own.
-                            </div>
-                            <div class="col-12 spancommon span_font_size">
-                                Please Note the details You Fill Below,confirm you have received the payment corresponding liabilities with Tanzania Insurance must be paid by you or Your Company
-                            </div>
-                            <div class="col-12 spancommon span_font_size">
-                                Completing this Step would issue the Policy & not reversible
-                            </div>
-                        </div>
-                        <div class="card-header">
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <span class="spancommon span_font_size">Point of Sale Payment Details</span>
-                                </div>
-                                <div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row ml-3">
-                            <div class="col-md-4 col-lg-4 col-xl-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Type Of Card</label>
-                                    <div class="input-form-box">
-                                        <input type="text" maxlength="20" class="input-form-control without-icon">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-lg-4 col-xl-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">POS Reference No</label>
-                                    <div class="input-form-box">
-                                        <input type="text" maxlength="20" class="input-form-control without-icon">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-lg-4 col-xl-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Approved Id</label>
-                                    <div class="input-form-box">
-                                        <input type="text" maxlength="20" class="input-form-control without-icon">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-lg-4 col-xl-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Bank Name</label>
-                                    <ng-select class="input-form-select" appendTo="body" [items]="bankList"  [(ngModel)]="bankName" bindValue="Code" bindLabel="CodeDesc">
-                                    </ng-select>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-lg-4 col-xl-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Card No(Last 4 Digits)</label>
-                                    <div class="input-form-box">
-                                        <input type="text" maxlength="20" class="input-form-control without-icon">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple [routerLink]="['/Home/existingQuotes']">Make Payment</button>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="card" *ngIf="Third" style="width: 100%;border: 2px solid #eaecf1;border-radius: 0.7rem;outline: none;box-sizing: border-box;transition: all .3s;height: auto;background: rgb(255,255,255);box-shadow: 1px 2px 2px #1f26875e;backdrop-filter: blur(18.5px);">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <span class="spancommon span_font_size">Cash</span>
-                            </div>
-                            <div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 spancommon span_font_size">
-                                Payment Using Cash Transaction
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 col-lg-6 col-xl-6">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Payee Name</label>
-                                    <div class="input-form-box">
-                                        <input type="text" [(ngModel)]="payeeName" maxlength="100" class="input-form-control without-icon">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6 col-xl-6">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Amount</label>
-                                    <div class="input-form-box">
-                                        <input type="text" [(ngModel)]="payAmount" (keydown)="onAmountChange($event)" (keyup)="CommaFormatted()"  maxlength="50" class="input-form-control without-icon">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" *ngIf="Fourth" style="width: 100%;border: 2px solid #eaecf1;border-radius: 0.7rem;outline: none;box-sizing: border-box;transition: all .3s;height: auto;background: rgb(255,255,255);box-shadow: 1px 2px 2px #1f26875e;backdrop-filter: blur(18.5px);">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <span class="spancommon span_font_size">Cheque</span>
-                            </div>
-                            <div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 spancommon span_font_size" style="color: #0056b3!important;">
-                                <b>Payment Using Cheque Transaction</b>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 col-lg-6 col-xl-6">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Bank Name</label>
-                                    <ng-select class="input-form-select" appendTo="body" [items]="bankList"  [(ngModel)]="bankName" bindValue="Code" bindLabel="CodeDesc">
-                                    </ng-select>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6 col-xl-6">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">MICR No</label>
-                                    <div class="input-form-box">
-                                        <input type="text" [(ngModel)]="micrNo"  maxlength="100" class="input-form-control without-icon">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6 col-xl-6">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Cheque No</label>
-                                    <div class="input-form-box">
-                                        <input type="text" [(ngModel)]="chequeNo" maxlength="20" class="input-form-control without-icon">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6 col-xl-6">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Cheque Date</label>
-                                    <mat-form-field appearance="fill">
-                                        <!-- <mat-label>Departure Date<span class="text-danger">*</span></mat-label> -->
-                                        <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="chequeDate" [ngModelOptions]="{standalone: true}">
-                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker></mat-datepicker>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6 col-xl-6">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Amount</label>
-                                    <div class="input-form-box">
-                                        <input type="text" [(ngModel)]="payAmount"  maxlength="50" class="input-form-control without-icon">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" *ngIf="Fifth" style="width: 100%;border: 2px solid #eaecf1;border-radius: 0.7rem;outline: none;box-sizing: border-box;transition: all .3s;height: auto;background: rgb(255,255,255);box-shadow: 1px 2px 2px #1f26875e;backdrop-filter: blur(18.5px);">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <span class="spancommon span_font_size">Bank</span>
-                            </div>
-                            <div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 spancommon span_font_size">
-                                <b>Payment Using Bank Transaction</b>
-                            </div>
-                        </div>
-                        <div class="row ml-3">
-                            <div class="col-md-4 col-lg-4 col-xl-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Bank Name</label>
-                                    <ng-select class="input-form-select" appendTo="body" [items]="bankList" [(ngModel)]="bankName" bindValue="Code" bindLabel="CodeDesc">
-                                    </ng-select>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-lg-4 col-xl-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Branch Name</label>
-                                    <div class="input-form-box">
-                                        <input type="text" maxlength="20" class="input-form-control without-icon">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-lg-4 col-xl-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Date Of Collection</label>
-                                    <div class="input-form-box">
-                                        <input type="date" maxlength="20" class="input-form-control without-icon">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-lg-4 col-xl-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Transaction Id</label>
-                                    <div class="input-form-box">
-                                        <input type="text" maxlength="20" class="input-form-control without-icon">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-lg-4 col-xl-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Transaction Date</label>
-                                    <div class="input-form-box">
-                                        <input type="date" maxlength="20" class="input-form-control without-icon">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple [routerLink]="['/Home/existingQuotes']">Make Payment</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card" *ngIf="Sixth" style="width: 100%;border: 2px solid #eaecf1;border-radius: 0.7rem;outline: none;box-sizing: border-box;transition: all .3s;height: auto;background: rgb(255,255,255);box-shadow: 1px 2px 2px #1f26875e;backdrop-filter: blur(18.5px);">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <span class="spancommon span_font_size">Online Payment</span>
-                            </div>
-                            <div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 spancommon span_font_size">
-                                Payment Using Online Transaction
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 col-lg-6 col-xl-6">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Payee Name</label>
-                                    <div class="input-form-box">
-                                        <input type="text" [(ngModel)]="payeeName" maxlength="100" class="input-form-control without-icon">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-6 col-xl-6">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Amount</label>
-                                    <div class="input-form-box">
-                                        <input type="text" [(ngModel)]="payAmount" (keydown)="onAmountChange($event)" (keyup)="CommaFormatted()"  maxlength="50" class="input-form-control without-icon">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="row" *ngIf="successSection">
     <div class="col-6 offset-3 spancommon span_font_size">
         <div class="card mt-4">

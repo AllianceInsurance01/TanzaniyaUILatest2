@@ -39,6 +39,7 @@
 }
 .dropdownDisplay{
     display: block !important;
+    z-index: 200 !important;
 }
 .Choose-Section-Box {
     padding: 10px !important;
@@ -74,3 +75,15 @@
     padding-left: 0;
     padding-right: 0;
   }
+  @media screen and (min-width:700px) and (max-width: 1456px) {
+    .display2{
+       display:none;
+        }
+      
+    }
+
+ @media screen and (min-width: 280px) and (max-width: 700px) {
+    .display1{
+        display:none;
+         }
+ }

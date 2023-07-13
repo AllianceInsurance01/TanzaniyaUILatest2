@@ -31,7 +31,7 @@ export class Burglary{
                     fieldGroupClassName: 'row',
                     fieldGroup: [
                       {
-                        className: 'col-6',
+                        className: 'col-4',
                         type: 'select',
                         key: 'NatureOfTradeId',
                         props: {
@@ -58,7 +58,7 @@ export class Burglary{
                       // },
                       {
                         key: 'InsuranceForId',
-                        className: 'col-6',
+                        className: 'col-4',
                         type: 'multicheckbox',
                         props: {
                           label: 'Insurance For',
@@ -69,7 +69,7 @@ export class Burglary{
                         },
                       },
                       {
-                        className: 'col-6',
+                        className: 'col-4',
                         key: 'BuildingOwnerYn',
                         type: 'radio',
                         templateOptions: {
@@ -82,7 +82,7 @@ export class Burglary{
                         }
                       },
                       {
-                        className: 'col-6',
+                        className: 'col-4',
                         type: 'input',
                         key: 'BuildingBuildYear',
                         props: {
@@ -105,7 +105,7 @@ export class Burglary{
                         },
                       },
                       {
-                        className: 'col-6',
+                        className: 'col-4',
                         type: 'input',
                         key: 'OccupiedYear',
                         props: {
@@ -127,7 +127,7 @@ export class Burglary{
                         },
                       },
                       {
-                        className: 'col-6',
+                        className: 'col-4',
                         type: 'select',
                         key: 'WallType',
                         props: {
@@ -140,7 +140,7 @@ export class Burglary{
                         }
                       },
                       {
-                        className: 'col-6',
+                        className: 'col-4',
                         type: 'select',
                         key: 'InternalWallType',
                         props: {
@@ -153,7 +153,7 @@ export class Burglary{
                         }
                       },
                       {
-                        className: 'col-6',
+                        className: 'col-4',
                         type: 'select',
                         key: 'RoofType',
                         props: {
@@ -166,7 +166,7 @@ export class Burglary{
                         }
                       },
                       {
-                        className: 'col-6',
+                        className: 'col-4',
                         type: 'select',
                         key: 'CeilingType',
                         props: {
@@ -189,7 +189,7 @@ export class Burglary{
                       fieldGroupClassName: 'row',
                       fieldGroup:[
                         {
-                          className: 'col-6',
+                          className: 'col-4',
                           type: 'input',
                           key: 'Address',
                           props: {
@@ -204,7 +204,7 @@ export class Burglary{
                           }
                         },
                         {
-                          className: 'col-6',
+                          className: 'col-4',
                           type: 'select',
                           key: 'RegionCode',
                           props: {
@@ -220,7 +220,7 @@ export class Burglary{
                           },
                         },
                         {
-                          className: 'col-6',
+                          className: 'col-4',
                           type: 'select',
                           key: 'DistrictCode',
                           props: {
@@ -233,7 +233,7 @@ export class Burglary{
                           }
                         },
                         {
-                          className: 'col-6',
+                          className: 'col-4',
                           type: 'input',
                           key: 'WatchmanGuardHours',
                           props: {
@@ -266,7 +266,7 @@ export class Burglary{
                     fieldGroupClassName: 'row',
                     fieldGroup: [
                       {
-                        className: 'col-6',
+                        className: 'col-4',
                         type: 'input',
                         key: 'AccessibleWindows',
                         props: {
@@ -288,7 +288,7 @@ export class Burglary{
                         },
                       },
                       {
-                        className: 'col-6',
+                        className: 'col-4',
                         type: 'input',
                         key: 'ShowWindow',
                         props: {
@@ -310,7 +310,7 @@ export class Burglary{
                         },
                       },
                       {
-                        className: 'col-6',
+                        className: 'col-4',
                         type: 'input',
                         key: 'FrontDoors',
                         props: {
@@ -332,7 +332,7 @@ export class Burglary{
                         },
                       },
                       {
-                        className: 'col-6',
+                        className: 'col-4',
                         type: 'input',
                         key: 'BackDoors',
                         props: {
@@ -354,7 +354,7 @@ export class Burglary{
                         },
                       },
                       {
-                        className: 'col-6',
+                        className: 'col-4',
                         type: 'input',
                         key: 'TrapDoors',
                         props: {
@@ -376,7 +376,7 @@ export class Burglary{
                         },
                       },
                       {
-                        className: 'col-6',
+                        className: 'col-4',
                         type: 'select',
                         key: 'WindowsMaterialId',
                         props: {
@@ -389,7 +389,7 @@ export class Burglary{
                         }
                       },
                       {
-                        className: 'col-6',
+                        className: 'col-4',
                         type: 'select',
                         key: 'DoorsMaterialId',
                         props: {
@@ -402,7 +402,7 @@ export class Burglary{
                         }
                       },
                       {
-                        className: 'col-6',
+                        className: 'col-4',
                         type: 'select',
                         key: 'NightLeftDoor',
                         props: {
@@ -415,7 +415,7 @@ export class Burglary{
                         }
                       },
                       {
-                        className: 'col-6',
+                        className: 'col-4',
                         type: 'select',
                         key: 'BuildingOccupied',
                         props: {
@@ -444,7 +444,7 @@ export class Burglary{
                           {
                               fieldGroup:[
                                 {props:{label:`Description`}},
-                                {props:{label:`Sum Insured (${this.commonDetails[0].Currency})`}},
+                                {props:{label:`Sum Insured`}},
                                 {props:{label:`First Loss SumInsured (%)`}},
                               ]
                           },

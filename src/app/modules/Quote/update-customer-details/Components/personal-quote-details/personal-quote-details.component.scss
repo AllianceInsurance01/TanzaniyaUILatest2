@@ -3,16 +3,22 @@
     grid-gap: 30px;
 }
 
-.customer-grid .maan-grid-item {
-    overflow: hidden;
-    /* border: 3px solid var(--theme1); */
-    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
-}
-.mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
+// .customer-grid .maan-grid-item {
+//     overflow: hidden;
+//     /* border: 3px solid var(--theme1); */
+//     box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+// }
+.mdc-tab__text-label {
     color: #3f51b5;
     font-size: 0.8rem !important;
     font-family: var(--our-font-family-new)!important;
     font-weight: 600;
+}
+::ng-deep .mat-tab-label .mat-tab-label-content {
+    font-size:  0.8rem !important;
+}
+.table{
+    margin-top: 15px !important;
 }
 .customRowBg {
     max-height: 70px;
@@ -30,14 +36,14 @@
     margin-top: 5px;
 }
 
-.customer-grid .maan-grid-item-title {
-    padding: .5rem;
-    font: bolder;
-    font-size: 17px;
-    background-color: whitesmoke;
-    color: black;
-    font-weight: 600;
-}
+// .customer-grid .maan-grid-item-title {
+//     padding: .5rem;
+//     font: bolder;
+//     font-size: 17px;
+//     background-color: whitesmoke;
+//     color: black;
+//     font-weight: 600;
+// }
 
 .list-group .list-group-item {
     display: flex;
@@ -58,8 +64,16 @@
 .modal-content {
     box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
-
-
+.form-label{
+    font-size: 0.93rem !important;
+    margin-bottom: 1.2rem !important;
+}
+.invalid-feedback {
+    margin-top: 0.8rem !important;
+}
+.mdc-tab__text-label {
+    font-size: 1.05rem !important;
+}
 /*.radio-toolbar .label{
   padding: 5px !important;
 }*/
