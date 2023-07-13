@@ -74,7 +74,7 @@ tr.example-detail-row {
     display: none;
   }
 
-  @media screen and (min-width: 750px) and (max-width: 1456px) {
+  @media screen and (min-width: 750px) and (max-width: 20000px) {
     .example-containers{
         display:none;
     }
@@ -111,7 +111,7 @@ tr.example-detail-row {
     }
     .example-element-detail{
         height: 100% !important;
-        width: 500px !important;
+        width: 100% !important;
     }
     .example-element-details{
         height: 0px !important;
