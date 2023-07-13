@@ -6,7 +6,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@200;400&family=Poppins:wght@300&display=swap');
 .navbar-motor {
-  background: linear-gradient(to bottom, #8fbcda -18%, #2a7fb0 127%);
+  background: linear-gradient(to bottom, #596a75 -18%, #2a7fb0 127%);
 }
 
 .navbar-motor .navbar-nav .nav-link {
@@ -18,7 +18,7 @@
   content: '';
   display: block;
   height: 2px;
-  background: orangered;
+  background: rgb(31, 56, 70) ;
   transition: width .3s;
 }
 
@@ -92,7 +92,6 @@
     width: 100% !important;
     padding-right: 25px !important;
     border-radius: 10px !important;
-    max-height: 70px !important;
   }
   @-webkit-keyframes animate-preloader {
     0% {
