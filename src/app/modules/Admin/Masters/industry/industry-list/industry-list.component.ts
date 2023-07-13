@@ -48,7 +48,6 @@ export class IndustryListComponent implements OnInit {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     const user = this.userDetails?.Result;
     this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
-    this.insuranceId = "100002";
     this.columnHeader = [
       { key: 'IndustryName', display: 'Industry Name' },
       { key: 'Remarks', display: 'Remarks' },
@@ -119,7 +118,7 @@ getBranchList(){
         console.log(data);
         if(data.Result){
        this.productList = data?.Result;
-        let obj =[]
+        let obj =[{ProductId:"99999",ProductName:"ALL"}]
         this.productList = obj.concat(data?.Result);
         this.getCatogery();
 

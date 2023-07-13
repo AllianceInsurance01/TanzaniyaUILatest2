@@ -22,10 +22,13 @@ export class CityListComponent implements OnInit {
   public AppConfig:any = (Mydatas as any).default
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
+  insuranceId: string;
+  productId: string;
   constructor(private router:Router,private sharedService:SharedService) {
     this.activeMenu = "City";
     this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
-
+    this.insuranceId = sessionStorage.getItem('countryInsurance');
+    this.productId =  sessionStorage.getItem('companyProductId');
 
     /*this.stateList = [
       { "Code":"01","CodeDesc":"TamilNadu"},
@@ -114,7 +117,7 @@ EditStatus(event){
   }
   getCountryList(){
     let ReqObj = {
-   "InsuranceId":"100002"
+   "InsuranceId": this.insuranceId
 
     }
     let urlLink = `${this.CommonApiUrl}master/dropdown/country`;

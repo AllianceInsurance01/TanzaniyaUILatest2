@@ -29,7 +29,7 @@ export class NewVehicleUsageDetailsComponent implements OnInit {
   constructor(private router :Router,
     private sharedService: SharedService,private datePipe:DatePipe) {
       this.minDate = new Date();
-      this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
+      //this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
     this.productId =  sessionStorage.getItem('companyProductId');
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       const user = this.userDetails?.Result;
@@ -46,7 +46,6 @@ export class NewVehicleUsageDetailsComponent implements OnInit {
 
 
     let Vehicle:any = JSON.parse(sessionStorage.getItem('VehicleUsageId'));
-      console.log("Vehicle Obj",Vehicle)
       this.VehicleUsageId = Vehicle?.VehicleUsageId;
       this.branchValue = Vehicle?.BranchCode;
     //   if(this.VehicleUsageId)  

@@ -43,7 +43,6 @@ export class IndustryDetailsComponent implements OnInit {
       this.loginId = userDetails?.Result?.LoginId;
     }
     this.insuranceId = userDetails.Result.LoginBranchDetails[0].InsuranceId;
-    this.insuranceId = "100002";
     this.Industrydetails = new Industry();
 
 

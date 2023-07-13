@@ -29,8 +29,8 @@ import { ProductDialogComponent } from './productDialog/productDialog.component'
   declarations: [
     ProductListComponent,
     AddProductDetailsComponent,
-    ProductDialogComponent
- 
+    ProductDialogComponent,
+    BranchDetailsComponent
     //ProductCheckComponent
     //ProductNewComponent
   ],

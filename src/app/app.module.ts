@@ -44,7 +44,6 @@ import { MaterialModule } from './shared/material/material.module'
 import { BreadcrumbComponent } from './modules/breadcrumb/breadcrumb.component'
 import { NgSelectFormlyComponent } from './ngselect.type';
 import { CustomerRedirectComponent } from './modules/customer-redirect/customer-redirect.component';
-import { BranchDetailsComponent } from './modules/Admin/loginCreation/Company/branch-details/branch-details.component'
 import { FooterComponent } from './layout/components/footer/footer.component';
 import { CustomerProductsComponent } from './modules/customer-products/customer-products.component';
 
@@ -59,7 +58,6 @@ import { CustomerProductsComponent } from './modules/customer-products/customer-
 		BreadcrumbComponent,
 		BranchSelectionComponent,
 		ProductSelectionComponent,
-		BranchDetailsComponent,
 		NgSelectFormlyComponent, FormlyFieldStepper, CustomerRedirectComponent, CustomerProductsComponent],
 	imports: [
 		CommonModule,

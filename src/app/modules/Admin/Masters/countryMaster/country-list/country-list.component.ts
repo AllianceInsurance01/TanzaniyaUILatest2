@@ -57,7 +57,8 @@ export class CountryListComponent implements OnInit {
       (data: any) => {
         console.log(data);
         if(data.Result){
-          this.insuranceList = data.Result;
+          let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+          this.insuranceList = defaultObj.concat(data.Result);
           let insurance = sessionStorage.getItem('countryInsurance');
           if(insurance){
             this.InsuranceId = insurance;
