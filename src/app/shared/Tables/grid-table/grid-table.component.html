@@ -1,4 +1,4 @@
-<div style="background: transparent;">
+<div style="background: transparent;" class="example-container">
     <div class="input-form-box" id="gridstyle" >
         <input type="text" class="input-form-control with-icon" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
         <span class="input-form-icon">
@@ -183,5 +183,255 @@
         </table>
     </ng-container>
 </div>
+
+
+
+<div style="background: transparent;" class="example-containers mat-elevation-z8 mt-2">
+    <div class="input-form-box" id="gridstyle" >
+        <input type="text" class="input-form-control with-icon" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        <span class="input-form-icon">
+            <i class="fas fa-filter"></i>
+        </span>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort [matSortActive]="sortProperty" [matSortDirection]="sortDirection" matSortDisableClear>
+        <ng-container *ngFor="let col of columnHeader; let i = index;" [matColumnDef]="col.key" [sticky]="i===0" [stickyEnd]="i === 10">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header mat-header-cell">
+                <ng-container *ngIf="columnHeader[i]['display']=='Premium'">
+                    {{ columnHeader[i]["display"] }} &nbsp; ({{Currency}})
+                </ng-container>
+                <ng-container *ngIf="columnHeader[i]['display']=='Endorsement Premium'">
+                    Premium &nbsp; ({{Currency}})
+                </ng-container>
+                <ng-container *ngIf="columnHeader[i]['display']=='EndorsementStatus'">
+                    Status
+                </ng-container>
+                <ng-container *ngIf="columnHeader[i]['display']!='Premium' && columnHeader[i]['display']!='Endorsement Premium' && columnHeader[i]['display']!='EndorsementStatus'">
+                    {{ columnHeader[i]["display"] }}
+                </ng-container>
+            </th>
+            <td mat-cell *matCellDef="let element" [ngClass]="[element?.Active == true && i==0 ? 'cutomBg1' : 'cutomBg2',col.key=='Status' && element[col.key]=='D' ? 'deletedBg' : 'cutomBg2']">
+                <ng-container *ngIf="!col.config; else hasConfig">
+                    
+                    <ng-container *ngIf="col.key=='Status'">
+                        <span *ngIf="element[col.key]=='Y'">Active</span>
+                        <span *ngIf="element[col.key]=='RP'">Referral Pending</span>
+                        <span *ngIf="element[col.key]=='RR'">Referral Rejected</span>
+                        <span *ngIf="element[col.key]=='RA'">Referral Approved</span>
+                        <span *ngIf="element[col.key]=='RE'">Referral ReQuote</span>
+                        <span *ngIf="element[col.key]=='P'">Pending</span>
+                        <span *ngIf="element[col.key]=='E'">Endorsement</span>
+                        <span *ngIf="element[col.key]=='D'">Removed</span>
+                        <span *ngIf="element[col.key]=='N'">DeActive</span>
+                    </ng-container>
+                    <ng-container *ngIf="columnHeader[i]['display']=='EndorsementStatus'">
+                            <span *ngIf="element[col.key]=='P'">Pending</span>
+                            <span *ngIf="element[col.key]=='N'">Cancelled</span>
+                            <span *ngIf="element[col.key]=='C' && element?.endorsementTypeId!=842">Completed</span>
+                            <span *ngIf="element[col.key]=='C' && element?.endorsementTypeId==842">Cancelled</span>
+                            <span *ngIf="endorsementSection && element[col.key]==null">Base policy</span>
+                    </ng-container>
+                    <ng-container *ngIf="col.key!='Status'  && columnHeader[i]['display']!='EndorsementStatus'">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="mobile-label"> 
+                                    <ng-container *ngIf="columnHeader[i]['display']=='Premium'">
+                                        {{ columnHeader[i]["display"] }} &nbsp; ({{Currency}})
+                                    </ng-container>
+                                    <ng-container *ngIf="columnHeader[i]['display']=='Endorsement Premium'">
+                                        Premium &nbsp; ({{Currency}})
+                                    </ng-container>
+                                    <ng-container *ngIf="columnHeader[i]['display']=='EndorsementStatus'">
+                                        Status
+                                    </ng-container>
+                                    <ng-container *ngIf="columnHeader[i]['display']!='Premium' && columnHeader[i]['display']!='Endorsement Premium' && columnHeader[i]['display']!='EndorsementStatus'">
+                                        {{ columnHeader[i]["display"] }}
+                                    </ng-container>
+                                    
+                                </span>
+                            </div>
+                            <div>
+                                {{ element[col.key]}}
+                            </div>
+                        </div>
+                       
+                        <!-- {{ element[col.key] }} -->
+                    </ng-container>
+
+                </ng-container>
+                <ng-template #hasConfig>
+                    <ng-container *ngIf="col.config.isChecked">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="mobile-label"> 
+                                    {{ columnHeader[i]["display"] }}
+                            </span>
+                            </div>
+                            <div>
+                                <mat-checkbox class="example-margin" [(ngModel)]="element[col.config.model]" (change)="onSelectCustomer.emit(element)"></mat-checkbox>
+                            </div>
+                            </div>
+                        
+                    </ng-container>
+                    <ng-container *ngIf="col.config.select">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="mobile-label"> 
+                                    {{ columnHeader[i]["display"] }}
+                            </span>
+                            </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" id="customRadio{{element[col.key]}}" name="example" [value]="element[col.key]" [checked]="onCheckCustomer(element)" (change)="onSelect(element)">
+                            <label class="custom-control-label" for="customRadio{{element[col.key]}}"></label>
+                        </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="col.config.isEdit">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="mobile-label"> 
+                                    {{ columnHeader[i]["display"] }}
+                            </span>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary btn-sm" (click)="onEdit.emit(element)">
+                                    <i class="fas fa-marker"></i>
+                                  </button>&nbsp;
+                            </div>
+                            </div>
+                      
+                    </ng-container>
+                    <ng-container *ngIf="col.config.isEndorseEdit">
+                        <ng-container *ngIf="element?.endorsementStatus">
+                            <ng-container *ngIf="element?.endorsementStatus=='C'">
+                                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <!-- <button mat-menu-item (click)="onOpenCoverAction.emit({data:element,name:'Certificate'})">
+                                        <span>Certificate</span>
+                                    </button> -->
+                                    <button mat-menu-item (click)="onGetSchedule.emit({data:element,name:'Schedule'})">
+                                        <span>Schedule</span>
+                                    </button>
+                                    <!-- <button mat-menu-item>
+                                        <span>Policy Wording</span>
+                                    </button> -->
+                                </mat-menu>
+                            </ng-container>
+                            <ng-container *ngIf="element.endorsementStatus==null">
+                                        N/A
+                            </ng-container>
+                            <ng-container *ngIf="element.endorsementStatus!='C' && element.endorsementStatus!=null">
+                                <button class="btn btn-primary btn-sm" (click)="onEdit.emit(element)">
+                                    <i class="fas fa-marker"></i>
+                                  </button>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="element?.endorsementStatus==undefined">
+                            <ng-container *ngIf="((this.endorsementSection && !this.enableAddVehicle) || (this.endorsementSection && this.enableAddVehicle && element['EndorsementYn']=='Y'))">
+                                <button class="btn btn-primary btn-sm" (click)="onEdit.emit(element)" *ngIf="element.endorsementStatus!=null">
+                                     <i class="fas fa-marker"></i>
+                                  </button>
+                                  <ng-container *ngIf="element.endorsementStatus==null">
+                                            N/A
+                                  </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="(this.endorsementSection && this.enableAddVehicle && element['EndorsementYn']!='Y')">
+                                N/A
+                            </ng-container>
+                            
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="col.config.Edit">
+                        <!--<button class="btn btn-primary btn-sm" (click)="onEdits.emit(element)"> </button>-->
+                        <textarea cols="15" rows="2" maxlength="30" [(ngModel)]="ClausesDesc"></textarea>
+                        <!--<i class="fas fa-marker"></i>-->
+
+                    </ng-container>
+                    <ng-container *ngIf="col.config.isConfigure">
+                        <button class="btn btn-primary btn-sm" (click)="onConfigure.emit(element)">
+                        <i class="fas fa-cog"></i>
+                      </button>
+                    </ng-container>
+                    <ng-container *ngIf="col.config.isRemove">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <span class="mobile-label"> 
+                                    {{ columnHeader[i]["display"] }}
+                            </span>
+                            </div>
+                            <div>
+                                <button class="btn btn-danger btn-sm" (click)="onDelete.emit(element)">
+                                    <i class="fas fa-trash"></i>
+                                  </button>
+                            </div>
+                            </div>
+                       
+                    </ng-container>
+
+                    <ng-container *ngIf="col.config.isViews">
+                        <button class="circle btn btn-primary btn-sm" (click)="onViews.emit(element)">
+                          <i class="fas fa-eye"></i>
+                        </button>&nbsp;
+                    </ng-container>
+                    <ng-container *ngIf="col.config.isOpenGridAction">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item>
+                                <span>Lc Details</span>
+                            </button>
+                            <button mat-menu-item (click)="onOpenCoverAction.emit({data:element,name:'Certificate'})">
+                                <span>Certificate</span>
+                            </button>
+                            <button mat-menu-item (click)="onOpenCoverAction.emit({data:element,name:'Schedule'})">
+                                <span>Schedule</span>
+                            </button>
+                            <button mat-menu-item>
+                                <span>Policy Wording</span>
+                            </button>
+                        </mat-menu>
+                    </ng-container>
+                    <ng-container *ngIf="col.config.isCoverRatingEdit">
+                        <ng-container *ngIf="element.SubCoverYn=='N'">
+                            <button class="btn btn-primary btn-sm" (click)="onCoverRatingEdit.emit(element)">
+                                <i class="fas fa-cog"></i>
+                              </button>
+                        </ng-container>
+                        <ng-container *ngIf="element.SubCoverYn!='N'">
+                           N/A
+                        </ng-container>
+                    </ng-container>
+
+               <!-- subCover-->  <ng-container *ngIf="col.config.isSubCoverRatingEdit">
+                        <ng-container *ngIf="element.SubCoverYn=='Y'">
+                            <button class="btn btn-primary btn-sm" (click)="onSubCoverRatingEdit.emit(element)">
+                                <i class="fas fa-cog"></i>
+                              </button>
+                        </ng-container>
+                        <ng-container *ngIf="element.SubCoverYn!='Y'">
+                           N/A
+                        </ng-container>
+                    </ng-container>
+                </ng-template>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="keys"></tr>
+        <tr mat-row *matRowDef="let row; columns: keys" style="height: 100%;width:100%;overflow: scroll;display: flex !important;flex-direction: column; border-top:1px solid navy; border-bottom:1px solid navy;font-size:14px;" class="mt-2"></tr>
+    </table>
+    <ng-container *ngIf="!dataSource.data.length">
+        <table>
+            <tr>
+                <td class="p-3" style="text-align: center" [attr.colspan]="columnHeader?.length">
+                    No Records Found!
+                </td>
+            </tr>
+        </table>
+    </ng-container>
+</div>
+
+
 <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
 </mat-paginator>

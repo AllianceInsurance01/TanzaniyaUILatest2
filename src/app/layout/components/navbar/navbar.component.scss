@@ -267,3 +267,10 @@ display: block;
         top: 1rem!important;
     }
   }
+  @media screen and (min-width: 280px) and (max-width: 600px) {
+    .bread_crumb{
+        width: calc(100% - 22px)!important;
+        position: relative!important;
+        left: 56px!important;
+        }
+  }

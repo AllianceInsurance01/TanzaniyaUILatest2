@@ -35,3 +35,42 @@
     background-color: #fd7e14 !important;
     color: #fff !important;
 }
+
+
+@media screen and (min-width: 750px) and (max-width: 1456px) {
+    .example-containers{
+        display:none;
+    }
+  }
+  
+  @media screen and (min-width: 280px) and (max-width: 750px) {
+    .example-container{ display: none; } 
+    .mobile-label {
+      //width: 80px;
+      display: inline-block;
+          font-weight: bold;
+    }
+    .mat-mdc-table .mdc-data-table__header-row {
+        display: none !important;
+    }
+    .mat-row .mat-mdc-row{
+        height: unset;
+        display: flex !important;
+        flex-direction: column;
+    }
+    .example-element-detail{
+        height: 100% !important;
+        width: 500px !important;
+    }
+    .example-element-details{
+        height: 0px !important;
+        width: 0px !important;
+    }
+    tr.example-detail-row {
+        height:60% !important;
+    }
+    .mdc-data-table__row .mdc-data-table__cell {
+        padding: 10px !important;
+    }
+
+  }
