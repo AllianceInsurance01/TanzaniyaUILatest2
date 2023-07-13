@@ -57,32 +57,37 @@
         </div>
     <div class="maan-grid-item mt-2" *ngIf="!cancelEndorse">
         <div class="maan-grid-item-title" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
-            <div class="d-flex justify-content-between display1">
-                <div>
-                    <span class="mx-1">
-                        <i class="fas fa-user mx-1"></i>
-                    </span> <span class="spancommon span_font_size">Customer Details</span>
-                </div>
-                <div>
-                    <ng-container>
-                        <!-- RefNo - {{customerDetails?.CustomerReferenceNo}} -->
-                    </ng-container>
-
-                </div>
-            </div>
-            <div class="d-flex justify-content-between display2">
-                <div>
-                    <span class="mx-1">
-                        <i class="fas fa-user mx-1"></i>
-                    </span> <span class="spancommon span_font_size">Customer Details</span>
-                </div>
-                <div>
-                    <ng-container>
-                        <!-- RefNo - {{customerDetails?.CustomerReferenceNo}} -->
-                    </ng-container>
-
+            <div class="display1">
+                <div class="d-flex justify-content-between ">
+                    <div>
+                        <span class="mx-1">
+                            <i class="fas fa-user mx-1"></i>
+                        </span> <span class="spancommon span_font_size">Customer Details</span>
+                    </div>
+                    <div>
+                        <ng-container>
+                            <!-- RefNo - {{customerDetails?.CustomerReferenceNo}} -->
+                        </ng-container>
+    
+                    </div>
                 </div>
             </div>
+           <div class="display2">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <span class="mx-1">
+                            <i class="fas fa-user mx-1"></i>
+                        </span> <span class="spancommon span_font_size">Customer Details</span>
+                    </div>
+                    <div>
+                        <ng-container>
+                            <!-- RefNo - {{customerDetails?.CustomerReferenceNo}} -->
+                        </ng-container>
+
+                    </div>
+                </div>
+           </div>
+            
         </div>
         <div class="maan-grid-item-body" style="padding-left: 70px !important;padding-right: 40px !important;">
             <div class="row mt-1">
@@ -207,36 +212,41 @@
         </div>
     </div>
     <div class="maan-grid-item" *ngIf="(!policySection && !endorsementSection && !successSection)|| (endorsementSection && IsChargeOrRefund=='CHARGE' && !policySection)">
-        <div class="maan-grid-item-title display1" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
-            <span class="mx-0">
-                <span class="spancommon span_font_size" style="font-weight:600">Payment Options</span>
-                <span class="spancommon span_font_size" style="font-weight:600;float: right;">Total Premium&nbsp;
-                    <ng-container *ngIf="totalPremium==0 || totalPremium=='' || totalPremium==null">
-                        <span>:&nbsp; 0 </span>
-                    </ng-container>
-                        <ng-container *ngIf="totalPremium!=0 && totalPremium!='' && totalPremium!=null">
-                            <span >:&nbsp;{{totalPremium|commaseparator}}&nbsp;</span>({{currencyCode}})
-                        </ng-container></span>
-                    
-            </span>
-        </div>
-        <div class="maan-grid-item-title display2" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
-            <div class="row">
-                <div class="col-6 mt-1">
+        <div class="display1">
+            <div class="maan-grid-item-title " style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
+                <span class="mx-0">
                     <span class="spancommon span_font_size" style="font-weight:600">Payment Options</span>
-                </div>
-                <div class="col-6 mt-1">
                     <span class="spancommon span_font_size" style="font-weight:600;float: right;">Total Premium&nbsp;
                         <ng-container *ngIf="totalPremium==0 || totalPremium=='' || totalPremium==null">
                             <span>:&nbsp; 0 </span>
                         </ng-container>
                             <ng-container *ngIf="totalPremium!=0 && totalPremium!='' && totalPremium!=null">
                                 <span >:&nbsp;{{totalPremium|commaseparator}}&nbsp;</span>({{currencyCode}})
-                            </ng-container>
-                    </span>
-                </div>  
+                            </ng-container></span>
+                        
+                </span>
             </div>
         </div>
+        <div class="display2">
+            <div class="maan-grid-item-title" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
+                <div class="row">
+                    <div class="col-6 mt-1">
+                        <span class="spancommon span_font_size" style="font-weight:600">Payment Options</span>
+                    </div>
+                    <div class="col-6 mt-1">
+                        <span class="spancommon span_font_size" style="font-weight:600;float: right;">Total Premium&nbsp;
+                            <ng-container *ngIf="totalPremium==0 || totalPremium=='' || totalPremium==null">
+                                <span>:&nbsp; 0 </span>
+                            </ng-container>
+                                <ng-container *ngIf="totalPremium!=0 && totalPremium!='' && totalPremium!=null">
+                                    <span >:&nbsp;{{totalPremium|commaseparator}}&nbsp;</span>({{currencyCode}})
+                                </ng-container>
+                        </span>
+                    </div>  
+                </div>
+            </div>
+        </div>
+        
         <div class="maan-grid-item-body" style="padding-left: 70px !important;padding-right: 40px !important;">
            <div class="row">
                 <div class="col-md-3 col-lg-3 col-xl-3">
