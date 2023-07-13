@@ -26,3 +26,35 @@ table {
     padding: 0px 10px !important;
 
 }
+
+
+
+
+@media screen and (min-width: 750px) and (max-width: 1456px) {
+  .example-containers{
+      display:none;
+  }
+}
+
+@media screen and (min-width: 280px) and (max-width: 750px) {
+  .example-container{ display: none; } 
+  .mobile-label {
+    //width: 80px;
+    display: inline-block;
+        font-weight: bold;
+  }
+  .mat-mdc-table .mdc-data-table__header-row {
+      display: none !important;
+  }
+ 
+  .mat-row .mat-mdc-row{
+      height: unset;
+      display: flex !important;
+      flex-direction: column;
+  }
+  .example-element-detail {
+     height:40px;
+     width:200px;
+  }
+
+}

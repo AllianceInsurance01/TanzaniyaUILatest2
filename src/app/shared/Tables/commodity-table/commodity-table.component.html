@@ -209,5 +209,169 @@
      <!--Reject My Model Popup-->
 
 </div>
+<div class="example-containers mat-elevation-z8" style="overflow-y: scroll;">
+    <div class="input-form-box" id="gridstyle" >
+        <input type="text" class="input-form-control with-icon" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        <span class="input-form-icon">
+            <i class="fas fa-filter"></i>
+        </span>
+    </div>
+    <mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
+              <div>
+              <ng-container *ngFor="let col of columnHeader; let i = index" [matColumnDef]="col.key">
+                <div>
+                    <mat-header-cell *matHeaderCellDef>  {{ columnHeader[i]["display"] }}</mat-header-cell>
+                    <mat-cell *matCellDef="let element"> 
+                        <ng-container *ngIf="!col.config; else hasConfig">
+                           
+                                <div class="col-6">
+                                    <span class="mobile-label"> {{ columnHeader[i]["display"] }}</span>
+                                </div>
+                                <div class="col-6">
+                                    {{ element[col.key]}}
+                                </div>
+                           
+                        </ng-container>
+                        <ng-template #hasConfig>
+                            <ng-container *ngIf="col.config.isView">
+                                <div class="col-6">
+                                <span class="mobile-label"> {{ columnHeader[i]["display"] }}</span>
+                                </div>
+                                <button class="circle btn btn-warning btn-sm" (click)="onView.emit(element)">
+                                    <i class="fas fa-eye" style='color: blue'></i>
+                                </button>&nbsp;
+                               
+                            </ng-container>
+                            <ng-container *ngIf="col.config.isEdit">
+                               
+                                <button class="circle btn btn-primary btn-sm" (click)="onEdit.emit(element)">
+                                    <i class="fas fa-marker"></i>
+                                </button>&nbsp;
+                            </ng-container>
+        
+                          <ng-container *ngIf="col.config.isMail">
+                            
+                            <span class="mobile-label"> {{ columnHeader[i]["display"] }}</span>
+                           
+                           
+                            <button class="circle btn btn-primary btn-sm" (click)="onMail.emit(element)">
+                              <i class="fa fa-envelope"></i>
+                            </button>
+                            &nbsp;
+                        </ng-container>
+                         
+                          <ng-container *ngIf="col.config.isViews">
+                            <button class="circle btn btn-primary btn-sm" (click)="onViews.emit(element)">
+                              <i class="fas fa-eye"></i>
+                            </button>&nbsp;
+                        </ng-container>
+                          <ng-container *ngIf="col.config.isFollowup">
+                            <button class="circle btn btn-primary btn-sm" (click)="onFollowup.emit(element)" style="background-color:grey">
+                              <i class="fa-solid fa-user"></i>
+                            </button>&nbsp;
+                        </ng-container>
+                        <ng-container *ngIf="col.config.isSms">
+                          <button class="circle btn btn-primary btn-sm" (click)="onSms.emit(element)">
+                            <i class="fas fa-sms" style="font-size:22px;color:lightgray"></i>
+                          </button>&nbsp;
+                      </ng-container>
+                            <ng-container *ngIf="col.config.isActive">
+                                <button class="circle btn btn-warning btn-sm" (click)="onActive.emit(element)">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </ng-container>
+                            <ng-container *ngIf="col.config.isReject">
+                                <button class="circle btn btn-danger btn-sm" (click)="onReject.emit(element)">
+                                    <i class='fa fa-times' style='color: yellow'></i>
+                                </button>
+                            </ng-container>
+        
+        
+                    <ng-container *ngIf="col.config.isMoreView">
+                                <button mat-icon-button (click)="element.isClicked = !element.isClicked;onPassData(element);expandedElement = expandedElement === element ? null : element">
+                      <mat-icon>keyboard_arrow_down</mat-icon> 
+                    </button>
+                    </ng-container>
+        
+        
+                    <ng-container *ngIf="col.config.isMoreVechView">
+                        <button mat-icon-button (click)="element.isClicked = !element.isClicked;onPassData(element);expandedvech = expandedvech === element ? null : element">
+              <mat-icon>keyboard_arrow_down</mat-icon> 
+               
+                        </button>
+                       
+            </ng-container>
+        
+                            <ng-container *ngIf="col.config.isMoView && element.SubCovers!=null">
+                                <button mat-icon-button (click)="element.isClicked = !element.isClicked;onPassData(element);expandedElement = expandedElement === element ? null : element">
+                      <mat-icon>keyboard_arrow_down</mat-icon>
+                    </button>
+                            </ng-container>
+        
+                            
+                            <ng-container *ngIf="col.config.isPolicyConfig">
+                                <button mat-button [matMenuTriggerFor]="menu">
+                                    <i class="fas fa-cog"></i>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item (click)="onSchedule.emit(element)"><i class="fas fa-file"></i>&nbsp;Schedule</button>
+                                    <button mat-menu-item><i class="fas fa-file"></i>&nbsp;Credit Note</button>
+                                    <button mat-menu-item><i class="fas fa-file"></i>&nbsp;Debit Note</button>
+                                    <button mat-menu-item (click)="onGetEndorsements.emit(element)"><i class="fas fa-address-card"></i>&nbsp;Endorsement</button>
+                                    <button mat-menu-item (click)="onView.emit(element)"><i class="fas fa-eye"></i>&nbsp;View Quote Details</button>
+                                    <button mat-menu-item><i class="fas fa-credit-card"></i>&nbsp;Pay EMI</button>
+                                </mat-menu>
+                            </ng-container>
+                            <ng-container *ngIf="col.config.isCollapse">
+                                <button class="btn btn-light btnVehicle" shape="round" size="tiny" (click)="element.isClicked = !element.isClicked;onPassData(element);expandedElement = expandedElement === element ? null : element;">
+                            <ng-container *ngIf="element.CommodityNotInResponse">
+                      New
+                    </ng-container>
+                    {{col.config.isCollapseName}}
+                    <i [ngClass]="minus?'fas fa-plus-circle':'fas fa-minus-circle'" ></i>
+                    </button>
+                            </ng-container>
+                            <ng-container *ngIf="col.config.isMenuAction">
+                                <button class="text-warning" mat-icon-button [matMenuTriggerFor]="menus" aria-label="Example icon-button with a menu">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                                <mat-menu #menus="matMenu">
+                                    <ng-container *ngFor="let item of col.config.menuList">
+                                        <button mat-menu-item>
+                        <span>{{item.name}}</span>
+                      </button>
+                                    </ng-container>
+                                </mat-menu>
+                            </ng-container>
+                        </ng-template>
+                      
+                    </mat-cell>
+                </div>
+              </ng-container>
+              <ng-container matColumnDef="expandedDetail">
+                <mat-cell *matCellDef="let element" [attr.colspan]="columnHeader.length">
+                    <div [ngClass]="{'example-element-detail' : element === expandedElement, 'example-element-details': element !== expandedElement}" [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'">
+                        <!--class="example-element-detail" -->
+                        <ng-container>
+                            <app-inner-table [cols]="innerColumnHeader" [data]="element.MotorList" (isActionBtn)="isActionBtn.emit($event)">
+                            </app-inner-table>
+                        </ng-container>
+                    </div>
+                </mat-cell>
+            </ng-container>
+            </div>
+    
+      
+  
+      <mat-header-row *matHeaderRowDef="keys" style="font-size:14px;"></mat-header-row>
+     
+      <mat-row *matRowDef="let element; columns: keys" class="mt-2" [class.example-expanded-row]="expandedElement === element"  style="overflow:scroll;
+      display: flex !important;
+      flex-direction: column; border-top:1px solid navy; border-bottom:1px solid navy;font-size:14px;"></mat-row>
+    
+       <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>
+    </mat-table>
+   
+  </div>
 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
 </mat-paginator>

@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="card-body">
-        <div class="row mb-2">
+        <div class="row mb-2 display1">
             <div>
                 <div class="input-control-container" style="position:absolute;">
                     <div class="input-form-box">
@@ -23,6 +23,21 @@
             </div>
             <div  *ngIf="searchValue.length > 2 ? '...' : ''">
                 <button class="custom-btn btn-6 maan-button-data fa_search" matRipple style="position: absolute!important;left: 20rem;top: 4rem!important;" (click)="onCustomerSearch()"><i class="fas fa-search" style="position: relative!important;top: 0.1rem!important;right: 0.2rem;"></i>&nbsp;Search </button>
+            </div>
+        </div>
+        <div class="row mb-2 display2">
+            <div class="col-12">
+                <div class="input-control-container">
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control with-icon" [(ngModel)]="searchValue" placeholder="Search By TIN No / Passport / Driving License">
+                        <span class="input-form-icon">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div  *ngIf="searchValue.length > 2 ? '...' : ''" class="col-12">
+                <button class="custom-btn btn-6 maan-button-data fa_search" matRipple style="position: absolute!important;top: 4rem!important;" (click)="onCustomerSearch()"><i class="fas fa-search" style="position: relative!important;top: 0.1rem!important;right: 0.2rem;"></i>&nbsp;Search </button>
             </div>
         </div>
         <ng-container *ngIf="customerData.length!=0">
