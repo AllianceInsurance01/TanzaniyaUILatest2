@@ -7,19 +7,6 @@
     <div class="maan-grid-item-body">
         <div class="row p-2">
             <div class="col-12 col-md-4 col-lg-4 col-xl-4">
-                <label class="customLabel spancommon span_font_size">Type Of Plan</label>
-                <div class="input-form-radio-box mt-1">
-                    <div class="radio-toolbar" style="position: relative;top: 1rem;right: 0.8rem;">
-                        <input id="rent" type="radio" formControlName="PlanTypeId" name="PlanTypeId" value="1">
-                        <label for="rent" class="no spancommon span_font_size">Individual</label>&nbsp;
-                        <input id="rent_yes" type="radio" formControlName="PlanTypeId" name="PlanTypeId" value="2">
-                        <label for="rent_yes" class="no spancommon span_font_size">Student</label>&nbsp;
-                        <input id="rent_no" type="radio" formControlName="PlanTypeId" name="PlanTypeId" value="3">
-                        <label for="rent_no" class="no spancommon span_font_size" style="position: absolute;bottom: 0.2rem;">Family</label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
                 <div class="input-control-container">
                     <label class="input-form-label">Destination Country</label>
                     <ng-select class="input-form-select" appendTo="body" [items]="countryList" (change)="premiunDropdown(null)" formControlName="SourceCountry" bindValue="Code" bindLabel="CodeDesc">
@@ -28,16 +15,35 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4" *ngIf="TravelForm.controls.SourceCountry.value!='' && TravelForm.controls.SourceCountry.value!=null">
                 <div class="input-control-container">
                     <label class="input-form-label">Premium Plan</label><span class="text-danger">*</span>
-                    <ng-container *ngIf="TravelForm.controls.SectionId.value !='' && TravelForm.controls.SectionId.value !=null"> &nbsp;
-                        <a style="text-decoration:underline;color: rgb(18, 174, 236);cursor: pointer;" (click)="viewplanBenifits()">View Plan Benefits</a></ng-container>
-                    <ng-select class="input-form-select" appendTo="body" [items]="premiumList" formControlName="SectionId" bindValue="Code" bindLabel="CodeDesc">
+                    
+                    <ng-select class="input-form-select" appendTo="body" (change)="getPlanTypeList(null)" [items]="premiumList" formControlName="SectionId" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                     <div class="input-form-error">
                     </div>
                 </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 col-xl-4" *ngIf="TravelForm.controls.SectionId.value!='' && TravelForm.controls.SectionId.value!=null">
+                <label class="customLabel spancommon span_font_size">Type Of Plan</label>
+                    <ng-container *ngIf="TravelForm.controls.SectionId.value !='' && TravelForm.controls.SectionId.value !=null"> &nbsp;
+                    <a style="text-decoration:underline;color: rgb(18, 174, 236);cursor: pointer;" (click)="viewplanBenifits()">View Plan Benefits</a></ng-container>
+                <ng-select class="input-form-select" appendTo="body" [items]="planTypeList" formControlName="PlanTypeId" bindValue="Code" bindLabel="CodeDesc">
+                </ng-select>
+                <!-- <div class="input-form-radio-box mt-1">
+                    <div class="radio-toolbar" style="position: relative;top: 1rem;right: 0.8rem;">
+                        <ng-container *ngFor="let type of planTypeList;let i=index">
+                            <input [id]="'planType'+i" type="radio" formControlName="PlanTypeId" name="PlanTypeId" [value]="type.Code">
+                            <label [for]="'planType'+i" class="no spancommon span_font_size">{{type.CodeDesc}}</label>&nbsp;
+                        </ng-container> -->
+                       
+                        <!-- <input id="rent_yes" type="radio" formControlName="PlanTypeId" name="PlanTypeId" value="2">
+                        <label for="rent_yes" class="no spancommon span_font_size">Student</label>&nbsp;
+                        <input id="rent_no" type="radio" formControlName="PlanTypeId" name="PlanTypeId" value="3">
+                        <label for="rent_no" class="no spancommon span_font_size" style="position: absolute;bottom: 0.2rem;">Family</label> -->
+                    <!-- </div>
+                </div> -->
             </div>
         </div>
         <div class="maan-grid-item">

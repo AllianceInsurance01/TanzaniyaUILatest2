@@ -45,6 +45,7 @@ export class TravelQuoteDetailsComponent implements OnInit {
   questionSection: boolean = false; uwQuestionList: any[] = [];
   requestReferenceNo: string;
   passengerError: boolean = false;
+  planTypeList: any[]=[];
 
   constructor(private router: Router, private updateComponent: UpdateCustomerDetailsComponent,
     private sharedService: SharedService, private datePipe: DatePipe
@@ -91,9 +92,9 @@ export class TravelQuoteDetailsComponent implements OnInit {
   public createForm() {
 
     this.TravelForm = new FormGroup({
-      PlanTypeId: new FormControl('', Validators.required),
-      SourceCountry: new FormControl(''),
-      SectionId: new FormControl(''),
+      PlanTypeId: new FormControl(null, Validators.required),
+      SourceCountry: new FormControl(null),
+      SectionId: new FormControl(null),
       HavePromoCode: new FormControl('N', Validators.required),
       PromoCode: new FormControl('', Validators.required),
       SportsCoverYn: new FormControl('N', Validators.required),
@@ -118,7 +119,8 @@ export class TravelQuoteDetailsComponent implements OnInit {
     this.commissionValue = customerDatas?.CommissionType;
     this.TravelForm.controls['PlanTypeId'].setValue(customerDatas.PlanTypeId);
     this.TravelForm.controls['SourceCountry'].setValue(customerDatas.DestinationCountry);
-    this.premiunDropdown(customerDatas.SectionId)
+    this.premiunDropdown(customerDatas.SectionId);
+    this.getPlanTypeList(customerDatas.PlanTypeId);
     this.TravelForm.controls['HavePromoCode'].setValue(customerDatas.HavePromoCode);
     this.TravelForm.controls['PromoCode'].setValue(customerDatas.PromoCode);
     this.TravelForm.controls['SportsCoverYn'].setValue(customerDatas.SportsCoverYn);
@@ -155,11 +157,11 @@ export class TravelQuoteDetailsComponent implements OnInit {
               let entry = { "GroupId": age.Code, "GroupMembers": "0", "GroupDesc": age.CodeDesc };
               this.travelGroupList.push(entry)
               i += 1;
-              if (i == this.ageList.length) this.planType();
+              if (i == this.ageList.length) this.getCountryList();
             }
           }
           else {
-            this.planType();
+            this.getCountryList();
           }
 
         }
@@ -179,7 +181,7 @@ export class TravelQuoteDetailsComponent implements OnInit {
         if (data.Result) {
           this.planList = data.Result;
 
-          this.getCountryList();
+          
         }
 
       },
@@ -196,7 +198,8 @@ export class TravelQuoteDetailsComponent implements OnInit {
       (data: any) => {
         console.log(data);
         if (data.Result) {
-          this.countryList = data.Result;
+          let obj = [{"Code":null,"CodeDesc":"- - Select - -"}]
+          this.countryList = obj.concat(data.Result);
           if (this.travelDetails) {
             this.setValues(this.travelDetails);
           }
@@ -225,8 +228,37 @@ export class TravelQuoteDetailsComponent implements OnInit {
       (data: any) => {
         console.log(data);
         if (data.Result) {
-          this.premiumList = data.Result;
+          let obj = [{"Code":null,"CodeDesc":"- - Select - -"}]
+          this.premiumList = obj.concat(data.Result);
           this.TravelForm.controls['SectionId'].setValue(value);
+        }
+      },
+      (err) => { },
+    );
+  }
+  getPlanTypeList(value){
+    let loginId = null;
+    if(this.userType!='Issuer'){
+      loginId=this.loginId;
+    }
+    else{
+      loginId = this.updateComponent.brokerLoginId;
+    }
+    let ReqObj = {
+      "InsuranceId": this.insuranceId,
+      "ProductId": this.productId,
+      "BranchCode": this.branchCode,
+      "SectionId": this.TravelForm.controls['SectionId'].value,
+      "LoginId":loginId
+    }
+    let urlLink = `${this.CommonApiUrl}dropdown/plantype`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if (data.Result) {
+          let obj = [{"Code":null,"CodeDesc":"- - Select - -"}]
+          this.planTypeList = obj.concat(data.Result);
+          this.TravelForm.controls['PlanTypeId'].setValue(value);
         }
       },
       (err) => { },
