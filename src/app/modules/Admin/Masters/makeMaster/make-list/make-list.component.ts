@@ -27,6 +27,7 @@ export class MakeListComponent implements OnInit {
   userDetails: any;
   branchList:any[]=[];
   branchValue: any;
+  insuranceList: any[]=[];
 
   constructor(private router:Router,private sharedService: SharedService/*, private dialogService: NbDialogService,private toastrService:NbToastrService */)
  {  this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
@@ -38,6 +39,11 @@ export class MakeListComponent implements OnInit {
 }
 
   ngOnInit(): void {
+    let makeObj = JSON.parse(sessionStorage.getItem('MakeId'));
+    if(makeObj){
+      this.insuranceId = makeObj?.InsuranceId;
+      this.branchValue = makeObj?.BranchCode;
+    }
     this.columnHeader = [
       //{ key: 'MakeId', display: 'Make Id' },
       { key: 'MakeNameEn', display: 'Make Name En' },
@@ -52,7 +58,7 @@ export class MakeListComponent implements OnInit {
       },
     ];
 
-    this.getBranchList();
+    this.getCompanyList();
 
     //this.getExistingColor();
   }
@@ -70,12 +76,33 @@ export class MakeListComponent implements OnInit {
     if(value=='Make') this.router.navigate(['/Admin/companyList/companyConfigure/MakeList']);
     if(value=='Model') this.router.navigate(['/Admin/companyList/companyConfigure/ModelList']);
   }
+  getCompanyList(){
+    let ReqObj = {
+      "BrokerCompanyYn":"N",
+      "Limit":"0",
+      "Offset":""
+    }
+    let urlLink = `${this.ApiUrl1}master/getallinscompanydetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+          this.insuranceList = defaultObj.concat(data.Result);
+          if(this.insuranceId){this.getBranchList('direct');}
+        }
+  
+      },
+      (err) => { },
+    );
+  }
   onAddColor(){
     //sessionStorage.removeItem('MakeId');
     let ReqObj = {
       "MakeId":null,
+      "InsuranceId":this.insuranceId,
       "BranchCode": this.branchValue,
-        }
+    }
     sessionStorage.setItem('MakeId', JSON.stringify(ReqObj));
 
     this.router.navigate(['/Admin/makeMaster/newMakeDetails'])
@@ -84,8 +111,9 @@ export class MakeListComponent implements OnInit {
 
     let ReqObj = {
       "MakeId": event.MakeId,
+      "InsuranceId":this.insuranceId,
       "BranchCode": this.branchValue,
-        }
+    }
     sessionStorage.setItem('MakeId', JSON.stringify(ReqObj));
    //sessionStorage.setItem('MakeId',event.MakeId);
    this.router.navigate(['/Admin/makeMaster/newMakeDetails'])
@@ -95,7 +123,7 @@ export class MakeListComponent implements OnInit {
       "MakeId": event.MakeId,
       "Status": event.ChangedStatus,
       "InsuranceId": this.insuranceId,
-      "BranchCode": "99999",
+      "BranchCode": this.branchValue,
       "EffectiveDateStart":event.ChangedEffectiveDate
     }
     let urlLink = `${this.CommonApiUrl}master/motormake/changestatus`;
@@ -124,10 +152,10 @@ export class MakeListComponent implements OnInit {
     );
   }
 
-  getBranchList(){
+  getBranchList(type){
+    if(type=='change'){this.branchValue=null;this.MakeData=[];}
     let ReqObj = {
       "InsuranceId": this.insuranceId
-
     }
     let urlLink = `${this.CommonApiUrl}master/dropdown/branchmaster`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(

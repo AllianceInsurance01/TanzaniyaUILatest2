@@ -18,7 +18,7 @@ export class ModelListComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   public columnHeader: any[] = [];
-  ModelData: any[]=[];
+  ModelData: any[]=[];insuranceList:any[]=[];
   BranchCode: any;
   title:string|any;
   ModelList: any[]=[];MakeValue:any;
@@ -48,11 +48,28 @@ export class ModelListComponent implements OnInit {
         },
       },
     ];
-
-    this.getModelList();
-    this.getBranchList();
+    this.getCompanyList();
   }
-
+  getCompanyList(){
+    let ReqObj = {
+      "BrokerCompanyYn":"N",
+      "Limit":"0",
+      "Offset":""
+    }
+    let urlLink = `${this.ApiUrl1}master/getallinscompanydetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+          this.insuranceList = defaultObj.concat(data.Result);
+          if(this.insuranceId){this.getBranchList('direct');}
+        }
+  
+      },
+      (err) => { },
+    );
+  }
   onRedirect(value){
     if(value=='Product') this.router.navigate(['/Admin/companyList/companyConfigure'])
     if(value=='Dropdown') this.router.navigate(['/Admin/companyList/companyConfigure/existingDropdowns'])
@@ -76,7 +93,7 @@ export class ModelListComponent implements OnInit {
     });*/
     let ReqObj = {
       "MakeId": this.MakeId,
-      //"InsuranceId":"100002",
+      "InsuranceId":this.insuranceId,
       "BranchCode": this.branchValue,
       "ModelId": null,
       "BodyId": null
@@ -92,8 +109,8 @@ export class ModelListComponent implements OnInit {
   getModelList(){
     let ReqObj = {
 
-"InsuranceId" :this.insuranceId,
-"BranchCode" : "99999"
+      "InsuranceId" :this.insuranceId,
+      "BranchCode" : "99999"
 
     }
     let urlLink = `${this.CommonApiUrl}master/dropdown/motormake`;
@@ -117,7 +134,7 @@ export class ModelListComponent implements OnInit {
 
   getExistingModel(){
     let ReqObj = {
-      //"InsuranceId":100002,
+      "InsuranceId": this.insuranceId,
       "BranchCode":this.branchValue,
       "MakeId":this.MakeId
 
@@ -144,7 +161,7 @@ export class ModelListComponent implements OnInit {
     let entry = {
       "MakeId" :this.MakeId,
       "BranchCode" :this.branchValue,
-      "InsuranceId":"100002",
+      "InsuranceId":this.insuranceId,
       "ModelId":rowdata.ModelId,
       "BodyId":rowdata.BodyId,
     }
@@ -154,7 +171,8 @@ export class ModelListComponent implements OnInit {
   }
 
 
-  getBranchList(){
+  getBranchList(type){
+    if(type=='change'){this.ModelData = [];this.branchValue=null;this.MakeId=null}
     let ReqObj = {
       "InsuranceId": this.insuranceId
 
@@ -165,9 +183,10 @@ export class ModelListComponent implements OnInit {
       if(data.Result){
         let obj = [{Code:"99999",CodeDesc:"ALL"}];
         this.branchList = obj.concat(data?.Result);
-        let docObj = JSON.parse(sessionStorage.getItem(''))
+        let docObj = JSON.parse(sessionStorage.getItem('editModelId'))
         if(docObj){
           this.branchValue = docObj?.BranchCode;
+          this.insuranceId = docObj?.InsuranceId;
           this.getModelList()
           //this.getCompanyProductList();
         //this.getIndustryList()
@@ -188,7 +207,7 @@ export class ModelListComponent implements OnInit {
   EditStatus(event){
     let ReqObj = {
       "MakeId":event.MakeId,
-      "InsuranceId":"100002",
+      "InsuranceId":this.insuranceId,
       "BranchCode":event.BranchCode,
       "ModelId":event.ModelId,
       "BodyId":event.BodyId,

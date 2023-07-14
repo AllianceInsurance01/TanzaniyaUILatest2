@@ -45,16 +45,18 @@ export class NewmodelDetailsComponent implements OnInit {
       this.insuranceId = userDetails?.Result?.LoginBranchDetails[0].InsuranceId;
     }
     this.ModelDetails = new Model();
+    let modelObj = JSON.parse(sessionStorage.getItem('editModelId'));
+    this.insuranceId = modelObj?.InsuranceId;
+    this.ModelId = modelObj?.ModelId;
+    this.MakeId = modelObj.MakeId;
+    this.BodyId = modelObj.BodyId;
+    this.branchValue= modelObj.BranchCode;
     this.getModelList();
     this.getBranchList();
 
   }
   ngOnInit(): void {
     let modelObj = JSON.parse(sessionStorage.getItem('editModelId'));
-    this.ModelId = modelObj?.ModelId;
-    this.MakeId = modelObj.MakeId;
-    this.BodyId = modelObj.BodyId;
-    this.branchValue= modelObj.BranchCode;
     if(this.ModelId!=null && this.ModelId!=undefined){
       this.getEditModelDetails();
     }
@@ -101,7 +103,7 @@ export class NewmodelDetailsComponent implements OnInit {
     console.log("MakeId",this.MakeId)
     let ReqObj =  {
       "InsuranceId":this.insuranceId,
-      "BranchCode":"99999",
+      "BranchCode":this.branchValue,
       "MakeId":String(this.MakeId),
       "ModelId":this.ModelId,
       "BodyId":this.BodyId
@@ -236,7 +238,7 @@ onSaveModel() {
   "batchId": this.ModelDetails.batchId,
 
   }
-  let urlLink = `${this.ApiUrl1}master/savemakemodel`;
+  let urlLink = `${this.CommonApiUrl}master/savemakemodel`;
 
   if (ReqObj.EffectiveDateStart != '' && ReqObj.EffectiveDateStart != null && ReqObj.EffectiveDateStart != undefined) {
     ReqObj['EffectiveDateStart'] =  this.datePipe.transform(ReqObj.EffectiveDateStart, "dd/MM/yyyy")
