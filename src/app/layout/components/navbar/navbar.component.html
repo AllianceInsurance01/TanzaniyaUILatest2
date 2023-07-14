@@ -1,31 +1,14 @@
 <mat-toolbar class="mat-elevation-z6 top-tool-bar position-fixed menu-mat-toolbar main" style="z-index: 3">
-
-    <!--Toggle-->
-    <div class="main">
+     <div class="main">
         <div class="topbar">
             <div class="toggle">
                 <i class="fa-solid fa-bars" (click)="toggle()" style="font-size: 1.4rem;"></i>
-                <!-- <ion-icon name="menu-outline" (click)="toggle()"></ion-icon> -->
             </div>
 
         </div>
     </div>
     <span class="example-spacer"></span>
-    <!--DropDown Subuser-->
     <div class="dropdown subuser">
-        <!-- <label>SubUserType</label>
-        <ng-select class="input-form-select" name="ColumnsId" [(ngModel)]="typeName" placeholder="SubUserType" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
-            <ng-option *ngFor="let opt of typeList" [value]="opt.CodeDesc">{{opt.DisplayName}}</ng-option>
-        </ng-select> -->
-        <!-- <button mat-button [matMenuTriggerFor]="menu">SubUserType - {{typeName}}</button>
-        <mat-menu #menu="matMenu">
-            <ng-container *ngIf="typeList.length!=0">
-                <ng-container *ngFor="let type of typeList">
-                    <button mat-menu-item (click)="finaliseTypeValue(type,'change')">{{type?.DisplayName}}</button>
-                </ng-container>
-            </ng-container>
-            
-        </mat-menu> -->
         <a class="btn dropdown-toggle spancommon span_font_size subUser" role="button" [hidden]="(typeValue=='B2C' && loginId=='guest')" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black;cursor:pointer;font-weight: 600;">
             SubUserType - {{typeName}}
         </a>
@@ -35,35 +18,6 @@
     </div>
     &nbsp;&nbsp;
     <div class="dropdown branchName">
-        <!-- <label>Branch</label>
-        <ng-container *ngIf="userType=='Issuer'">
-            <ng-select class="input-form-select" name="ColumnsId" [(ngModel)]="branchName" placeholder="Select Branch" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
-                <ng-option *ngFor="let opt of branchList" [value]="opt.BranchCode">{{opt.BranchName}}</ng-option>
-            </ng-select>
-        </ng-container>
-        <ng-container *ngIf="userType!='Issuer'">
-            <ng-select class="input-form-select" name="ColumnsId" [(ngModel)]="branchName" placeholder="Select Branch" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
-                <ng-option *ngFor="let opt of branchList" [value]="opt.BrokerBranchCode">{{opt.BrokerBranchName}}</ng-option>
-            </ng-select>
-        </ng-container> -->
-        <!-- <button mat-button [matMenuTriggerFor]="menu">Branch - {{branchName}}</button>
-        <mat-menu #menu="matMenu">
-            <ng-container *ngIf="userType=='Issuer'">
-                <ng-container *ngIf="branchList.length!=0">
-                    <ng-container *ngFor="let type of branchList">
-                        <button mat-menu-item (click)="finaliseTypeValue(type,'change')">{{type.BranchName}}</button>
-                    </ng-container>
-                </ng-container>
-            </ng-container>
-            <ng-container *ngIf="userType=='Issuer'">
-                <ng-container *ngIf="branchList.length!=0">
-                    <ng-container *ngFor="let type of branchList">
-                        <button mat-menu-item (click)="finaliseTypeValue(type,'change')">{{type.BrokerBranchName}}</button>
-                    </ng-container>
-                </ng-container>
-                
-            </ng-container>
-        </mat-menu> -->
         <ng-container>
             <a class="btn  dropdown-toggle spancommon span_font_size brnch"  [hidden]="typeValue=='SuperAdmin' || (typeValue=='B2C' && loginId=='guest')" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black;cursor:pointer;font-weight: 600;">
                 Branch - {{branchName}}
@@ -96,79 +50,132 @@
             Logout
         </a>
     </div>
-    <!-- <div>
-        <i class="fas fa-ellipsis-vertical" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="position: relative;right: 0.8rem;"></i>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item spancommon" href="#">Your Profile</a>
-            <a class="dropdown-item spancommon" href="#">Setting</a>
-        </div>
-    </div> -->
 </mat-toolbar>
-
-<mat-drawer-container class="nav-container" autosize>
-    <mat-drawer #drawer class="example-sidenav" mode="side" opened="true">
-        <div class="container">
-            <div class="navigation">
-                <ul id="dropdown2" class="scrollbar">
-                    <li class="bg_Logo">
-                        <!--Logo-->
-                        <a class="logo" (click)="onRoute()" style="pointer-events: none;">
-                            <img src="./assets/images/logo-2.png" class="bg-image-data">
-                        </a>
-                    </li>
-                    
-                        <ng-container *ngIf="menuSection && parentSection && typeValue!='B2C'">
-                            <ng-container *ngFor="let Menu of menu;let i=index">
+<div class="display1">
+    <mat-drawer-container class="nav-container" autosize>
+        <mat-drawer #drawer class="example-sidenav" mode="side" opened="true">
+            <div class="container">
+                <div class="navigation">
+                    <ul id="dropdown2" class="scrollbar">
+                        <li class="bg_Logo">
+                            <a class="logo" (click)="onRoute()" style="pointer-events: none;">
+                                <img src="./assets/images/logo-2.png" class="bg-image-data">
+                            </a>
+                        </li>
                         
-                                <li (click)="navexpand(i)">
-                                    <a>
-                                        <span class="icon"><i [ngClass]="Menu?.faIcon"  [routerLink]="Menu?.link" style="cursor:pointer;color: white;"></i></span>
-                                        <span class="title" [routerLink]="Menu?.link" style="cursor:pointer;color: white;">{{Menu?.label}}&nbsp;
+                            <ng-container *ngIf="menuSection && parentSection && typeValue!='B2C'">
+                                <ng-container *ngFor="let Menu of menu;let i=index">
+                            
+                                    <li (click)="navexpand(i)">
+                                        <a>
+                                            <span class="icon"><i [ngClass]="Menu?.faIcon"  [routerLink]="Menu?.link" style="cursor:pointer;color: white;"></i></span>
+                                            <span class="title" [routerLink]="Menu?.link" style="cursor:pointer;color: white;">{{Menu?.label}}&nbsp;
+                                                
+                                            </span>
                                             
-                                        </span>
-                                        
-                                        <ng-container *ngIf="Menu?.items?.length>0">
-                                            <!-- <div *ngIf="i!=currentIndex"> -->
-                                                <i class="fas fa-angle-right" style="position: relative;top: 1.34rem;cursor: pointer;color: white;"></i>
-                                            <!-- </div>
-                                            <div *ngIf="expanded && i==currentIndex">
-                                                <i class="fas fa-angle-down" style="position: relative;top: 1.34rem;cursor: pointer;color: white;"></i>
-                                            </div> -->
-                                        </ng-container>
-                                        
-                                    </a>
-                                </li>
-                                
+                                            <ng-container *ngIf="Menu?.items?.length>0">
+                                                    <i class="fas fa-angle-right" style="position: relative;top: 1.34rem;cursor: pointer;color: white;"></i>
+                                               
+                                            </ng-container>
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                </ng-container>
                             </ng-container>
-                        </ng-container>
-                        <ng-container class="menu-item-open" *ngIf="!parentSection">
-                                <li style="font-size: 100%;" (click)="clearSubSelection()">
-                                    <a style="font-size: 1rem;">
-                                        <span class="icon" style="position: relative;cursor: pointer;color: white;"><i class="fa fa-arrow-left" ></i> Back</span> 
-                                    </a>
-                                </li>
-                                <li *ngFor="let Label of submenuList" class="dropdownlinklabel" style="cursor:pointer">
-                                    <a>
-                                        <span class="icon"><i class="fa fa-address-book"  [routerLink]="Label?.link" style="cursor:pointer;color: white;"></i></span>
-                                        <span class="title" [routerLink]="Label.link"
-                                        style="position: relative;cursor: pointer;color: white;">{{Label.label}}</span>
-                                    </a>
-                                </li>
-                        </ng-container>
+                            <ng-container class="menu-item-open" *ngIf="!parentSection">
+                                    <li style="font-size: 100%;" (click)="clearSubSelection()">
+                                        <a style="font-size: 1rem;">
+                                            <span class="icon" style="position: relative;cursor: pointer;color: white;"><i class="fa fa-arrow-left" ></i> Back</span> 
+                                        </a>
+                                    </li>
+                                    <li *ngFor="let Label of submenuList" class="dropdownlinklabel" style="cursor:pointer">
+                                        <a>
+                                            <span class="icon"><i class="fa fa-address-book"  [routerLink]="Label?.link" style="cursor:pointer;color: white;"></i></span>
+                                            <span class="title" [routerLink]="Label.link"
+                                            style="position: relative;cursor: pointer;color: white;">{{Label.label}}</span>
+                                        </a>
+                                    </li>
+                            </ng-container>
+                            
                         
-                    
-                </ul>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </mat-drawer>
-    <mat-drawer-content>
-        <div class="main-content main">
-            <div class="bread_crumb main">
-                <app-breadcrumb [ngStyle]="{'font-family':' var(--our-font-family-new) !important'}"></app-breadcrumb>
-
-                <router-outlet></router-outlet>
+        </mat-drawer>
+        <mat-drawer-content>
+            <div class="main-content main">
+                <div class="bread_crumb main">
+                    <app-breadcrumb [ngStyle]="{'font-family':' var(--our-font-family-new) !important'}"></app-breadcrumb>
+    
+                    <router-outlet></router-outlet>
+                </div>
             </div>
-        </div>
-        <app-footer></app-footer>
-    </mat-drawer-content>
-</mat-drawer-container>
+            <app-footer></app-footer>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</div>
+<div class="display2">
+    <mat-drawer-container class="nav-container" autosize>
+        <mat-drawer #drawer class="example-sidenav" mode="over" [opened]="openSideNav">
+            <div class="container">
+                <div class="navigation">
+                    <ul id="dropdown2" class="scrollbar">
+                        <li class="bg_Logo">
+                            <a class="logo" (click)="onRoute()" style="pointer-events: none;">
+                                <img src="./assets/images/logo-2.png" class="bg-image-data">
+                            </a>
+                        </li>
+                        
+                            <ng-container *ngIf="menuSection && parentSection && typeValue!='B2C'">
+                                <ng-container *ngFor="let Menu of menu;let i=index">
+                            
+                                    <li (click)="navexpand(i)">
+                                        <a>
+                                            <span class="icon"><i [ngClass]="Menu?.faIcon"  [routerLink]="Menu?.link" style="cursor:pointer;color: white;"></i></span>
+                                            <span class="title" [routerLink]="Menu?.link" style="cursor:pointer;color: white;">{{Menu?.label}}&nbsp;
+                                                
+                                            </span>
+                                            
+                                            <ng-container *ngIf="Menu?.items?.length>0">
+                                                    <i class="fas fa-angle-right" style="position: relative;top: 1.34rem;cursor: pointer;color: white;"></i>
+                                               
+                                            </ng-container>
+                                            
+                                        </a>
+                                    </li>
+                                    
+                                </ng-container>
+                            </ng-container>
+                            <ng-container class="menu-item-open" *ngIf="!parentSection">
+                                    <li style="font-size: 100%;" (click)="clearSubSelection()">
+                                        <a style="font-size: 1rem;">
+                                            <span class="icon" style="position: relative;cursor: pointer;color: white;"><i class="fa fa-arrow-left" ></i> Back</span> 
+                                        </a>
+                                    </li>
+                                    <li *ngFor="let Label of submenuList" class="dropdownlinklabel" style="cursor:pointer">
+                                        <a>
+                                            <span class="icon"><i class="fa fa-address-book"  [routerLink]="Label?.link" style="cursor:pointer;color: white;"></i></span>
+                                            <span class="title" [routerLink]="Label.link"
+                                            style="position: relative;cursor: pointer;color: white;">{{Label.label}}</span>
+                                        </a>
+                                    </li>
+                            </ng-container>
+                            
+                        
+                    </ul>
+                </div>
+            </div>
+        </mat-drawer>
+        <mat-drawer-content>
+            <div class="main-content main">
+                <div class="bread_crumb main">
+                    <app-breadcrumb [ngStyle]="{'font-family':' var(--our-font-family-new) !important'}"></app-breadcrumb>
+    
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+            <app-footer></app-footer>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</div>

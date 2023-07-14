@@ -38,7 +38,7 @@ export class NavbarComponent implements OnInit {
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   typeList: any[] = []; typeValue: any;parentSection:boolean = true;
   branchName: any; menuSection: boolean = true;
-  typeName: any;
+  typeName: any;openSideNav:boolean=false;
   constructor(
     private authService: AuthService,
     private service: HttpService,
@@ -347,6 +347,7 @@ export class NavbarComponent implements OnInit {
     this.onTypeChange(changeType);
   }
   selectedItem(rowData) {
+    this.openSideNav = false;
     console.log("rowData", rowData);
     sessionStorage.removeItem('vehicleDetailsList');
     sessionStorage.removeItem('customerReferenceNo')
@@ -403,6 +404,7 @@ export class NavbarComponent implements OnInit {
   }
   toggle() {
     //Menu toggle
+    this.openSideNav = !this.openSideNav;
     let toggle:any = document.querySelector('.navigation');
     let navigation:any = document.querySelector('.navigation');
     let main:any= document.querySelector('.main');
@@ -412,6 +414,11 @@ export class NavbarComponent implements OnInit {
       main.classList.toggle('active');
       breadcrumb.classList.toggle('active');
     }
+    // if(!this.openSideNav){
+    //   navigation.classList.remove('active');
+    //   main.classList.remove('active');
+    //   breadcrumb.classList.remove('active');
+    // }
     // var $: any;
     // let toggle: HTMLElement = document.getElementsByClassName('toggle')[0] as HTMLElement;
     // let navigation = document.querySelector('.navigation');

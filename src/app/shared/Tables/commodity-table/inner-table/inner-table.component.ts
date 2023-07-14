@@ -44,10 +44,15 @@ export class InnerTableComponent implements OnInit {
   }
 
   ngOnChanges() {
-    if(this.tableData.length!=0){
-      this.currencyCode = this.tableData[0].Currency;
+    if(this.tableData){
+      this.tableData = this.tableData.filter(ele=>ele.Status!='D');
+    
+      if(this.tableData.length!=0){
+        if(this.tableData[0].Currency)
+        this.currencyCode = this.tableData[0].Currency;
+      }
     }
-    this.tableData = this.tableData.filter(ele=>ele.Status!='D');
+    
     this.dataSource = new MatTableDataSource(this.tableData);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
