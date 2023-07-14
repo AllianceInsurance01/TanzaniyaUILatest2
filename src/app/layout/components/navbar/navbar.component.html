@@ -1,57 +1,58 @@
-<mat-toolbar class="mat-elevation-z6 top-tool-bar position-fixed menu-mat-toolbar main" style="z-index: 3">
-     <div class="main">
-        <div class="topbar">
-            <div class="toggle">
-                <i class="fa-solid fa-bars" (click)="toggle()" style="font-size: 1.4rem;"></i>
-            </div>
 
-        </div>
-    </div>
-    <span class="example-spacer"></span>
-    <div class="dropdown subuser">
-        <a class="btn dropdown-toggle spancommon span_font_size subUser" role="button" [hidden]="(typeValue=='B2C' && loginId=='guest')" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black;cursor:pointer;font-weight: 600;">
-            SubUserType - {{typeName}}
-        </a>
-        <div class="dropdown-menu subusermenu" id="subUserTypes" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item spancommon span_font_size" *ngFor="let type of typeList" (click)="finaliseTypeValue(type,'change')" [value]="type.CodeDesc">{{type.DisplayName}}</a>
-        </div>
-    </div>
-    &nbsp;&nbsp;
-    <div class="dropdown branchName">
-        <ng-container>
-            <a class="btn  dropdown-toggle spancommon span_font_size brnch"  [hidden]="typeValue=='SuperAdmin' || (typeValue=='B2C' && loginId=='guest')" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black;cursor:pointer;font-weight: 600;">
-                Branch - {{branchName}}
-            </a>
-            <div class="dropdown-menu branchsubName" aria-labelledby="dropdownMenuLink1">
-                <ng-container *ngIf="userType=='Issuer'">
-                    <a class="dropdown-item spancommon span_font_size" *ngFor="let branch of branchList" (click)="finaliseBranchValue(branch,null)" [value]="branch.BranchCode" style="color:black;cursor:pointer">{{branch.BranchName}}</a>
-                </ng-container>
-                <ng-container *ngIf="userType!='Issuer'">
-                    <a class="dropdown-item spancommon span_font_size" *ngFor="let branch of branchList" (click)="finaliseBranchValue(branch,null)" [value]="branch.BrokerBranchCode" style="color:black;cursor:pointer;font-weight: 600;">{{branch.BrokerBranchName}}</a>
-                </ng-container>
-            </div>
-        </ng-container>
-       
-    </div>
-    <ng-container *ngIf="typeValue!='SuperAdmin'  ">
-        <button class="btn btn-success text-light btn-header" (click)="home()" style="border:none;color:black;cursor:pointer">
-            <i style="font-size:12px;border:none" class="fa fa-home" aria-hidden="true" style="padding:1px;"></i><span
-                class="spancommon span_font_size"> &nbsp;{{productname}}</span>
-        </button>
-    </ng-container>
-
-    <div class="dropdown userName">
-        <i class="fa fa-user" aria-hidden="true"></i>&nbsp;<span class="ml-5 spancommon span_font_size">{{loginId}}&nbsp;|&nbsp;</span>
-        <span class="ml-5 spancommon span_font_size" style="text-transform: capitalize;">{{userType}}&nbsp;|&nbsp;</span>
-    </div>
-    <div class="dropdown logout" [hidden]="(typeValue=='B2C' && loginId=='guest')">
-       
-        <a class="spancommon span_font_size" (click)="onLog('Log out')" style="color:black;cursor:pointer;font-weight: 600;text-decoration: none;position: relative;right: 1.5rem;">
-            Logout
-        </a>
-    </div>
-</mat-toolbar>
-<div class="display1">
+<!-- <div class="display1">
+    <mat-toolbar class="mat-elevation-z6 top-tool-bar position-fixed menu-mat-toolbar main" style="z-index: 3">
+        <div class="main">
+           <div class="topbar">
+               <div class="toggle">
+                   <i class="fa-solid fa-bars" (click)="toggle()" style="font-size: 1.4rem;"></i>
+               </div>
+   
+           </div>
+       </div>
+       <span class="example-spacer"></span>
+       <div class="dropdown subuser">
+           <a class="btn dropdown-toggle spancommon span_font_size subUser" role="button" [hidden]="(typeValue=='B2C' && loginId=='guest')" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black;cursor:pointer;font-weight: 600;">
+               SubUserType - {{typeName}}
+           </a>
+           <div class="dropdown-menu subusermenu" id="subUserTypes" aria-labelledby="dropdownMenuLink">
+               <a class="dropdown-item spancommon span_font_size" *ngFor="let type of typeList" (click)="finaliseTypeValue(type,'change')" [value]="type.CodeDesc">{{type.DisplayName}}</a>
+           </div>
+       </div>
+       &nbsp;&nbsp;
+       <div class="dropdown branchName">
+           <ng-container>
+               <a class="btn  dropdown-toggle spancommon span_font_size brnch"  [hidden]="typeValue=='SuperAdmin' || (typeValue=='B2C' && loginId=='guest')" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black;cursor:pointer;font-weight: 600;">
+                   Branch - {{branchName}}
+               </a>
+               <div class="dropdown-menu branchsubName" aria-labelledby="dropdownMenuLink1">
+                   <ng-container *ngIf="userType=='Issuer'">
+                       <a class="dropdown-item spancommon span_font_size" *ngFor="let branch of branchList" (click)="finaliseBranchValue(branch,null)" [value]="branch.BranchCode" style="color:black;cursor:pointer">{{branch.BranchName}}</a>
+                   </ng-container>
+                   <ng-container *ngIf="userType!='Issuer'">
+                       <a class="dropdown-item spancommon span_font_size" *ngFor="let branch of branchList" (click)="finaliseBranchValue(branch,null)" [value]="branch.BrokerBranchCode" style="color:black;cursor:pointer;font-weight: 600;">{{branch.BrokerBranchName}}</a>
+                   </ng-container>
+               </div>
+           </ng-container>
+          
+       </div>
+       <ng-container *ngIf="typeValue!='SuperAdmin'  ">
+           <button class="btn btn-success text-light btn-header" (click)="home()" style="border:none;color:black;cursor:pointer">
+               <i style="font-size:12px;border:none" class="fa fa-home" aria-hidden="true" style="padding:1px;"></i><span
+                   class="spancommon span_font_size"> &nbsp;{{productname}}</span>
+           </button>
+       </ng-container>
+   
+       <div class="dropdown userName">
+           <i class="fa fa-user" aria-hidden="true"></i>&nbsp;<span class="ml-5 spancommon span_font_size">{{loginId}}&nbsp;|&nbsp;</span>
+           <span class="ml-5 spancommon span_font_size" style="text-transform: capitalize;">{{userType}}&nbsp;|&nbsp;</span>
+       </div>
+       <div class="dropdown logout" [hidden]="(typeValue=='B2C' && loginId=='guest')">
+          
+           <a class="spancommon span_font_size" (click)="onLog('Log out')" style="color:black;cursor:pointer;font-weight: 600;text-decoration: none;position: relative;right: 1.5rem;">
+               Logout
+           </a>
+       </div>
+   </mat-toolbar>
     <mat-drawer-container class="nav-container" autosize>
         <mat-drawer #drawer class="example-sidenav" mode="side" opened="true">
             <div class="container">
@@ -114,10 +115,63 @@
             <app-footer></app-footer>
         </mat-drawer-content>
     </mat-drawer-container>
-</div>
-<div class="display2">
+</div> -->
+<!-- <div class="display2"> -->
+    <mat-toolbar class="mat-elevation-z6 top-tool-bar position-fixed menu-mat-toolbar main" style="z-index: 3">
+        <div class="main">
+           <div class="topbar">
+               <div class="toggle">
+                   <i class="fa-solid fa-bars" (click)="toggle()" style="font-size: 1.4rem;"></i>
+               </div>
+   
+           </div>
+       </div>
+       <span class="example-spacer"></span>
+       <div class="dropdown subuser">
+           <a class="btn dropdown-toggle spancommon span_font_size subUser" role="button" [hidden]="(typeValue=='B2C' && loginId=='guest')" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black;cursor:pointer;font-weight: 600;">
+               SubUserType - {{typeName}}
+           </a>
+           <div class="dropdown-menu subusermenu" id="subUserTypes" aria-labelledby="dropdownMenuLink">
+               <a class="dropdown-item spancommon span_font_size" *ngFor="let type of typeList" (click)="finaliseTypeValue(type,'change')" [value]="type.CodeDesc">{{type.DisplayName}}</a>
+           </div>
+       </div>
+       &nbsp;&nbsp;
+       <div class="dropdown branchName">
+           <ng-container>
+               <a class="btn  dropdown-toggle spancommon span_font_size brnch"  [hidden]="typeValue=='SuperAdmin' || (typeValue=='B2C' && loginId=='guest')" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:black;cursor:pointer;font-weight: 600;">
+                   Branch - {{branchName}}
+               </a>
+               <div class="dropdown-menu branchsubName" aria-labelledby="dropdownMenuLink1">
+                   <ng-container *ngIf="userType=='Issuer'">
+                       <a class="dropdown-item spancommon span_font_size" *ngFor="let branch of branchList" (click)="finaliseBranchValue(branch,null)" [value]="branch.BranchCode" style="color:black;cursor:pointer">{{branch.BranchName}}</a>
+                   </ng-container>
+                   <ng-container *ngIf="userType!='Issuer'">
+                       <a class="dropdown-item spancommon span_font_size" *ngFor="let branch of branchList" (click)="finaliseBranchValue(branch,null)" [value]="branch.BrokerBranchCode" style="color:black;cursor:pointer;font-weight: 600;">{{branch.BrokerBranchName}}</a>
+                   </ng-container>
+               </div>
+           </ng-container>
+          
+       </div>
+       <ng-container *ngIf="typeValue!='SuperAdmin'  ">
+           <button class="btn btn-success text-light btn-header" (click)="home()" style="border:none;color:black;cursor:pointer">
+               <i style="font-size:12px;border:none" class="fa fa-home" aria-hidden="true" style="padding:1px;"></i><span
+                   class="spancommon span_font_size"> &nbsp;{{productname}}</span>
+           </button>
+       </ng-container>
+   
+       <div class="dropdown userName">
+           <i class="fa fa-user" aria-hidden="true"></i>&nbsp;<span class="ml-5 spancommon span_font_size">{{loginId}}&nbsp;|&nbsp;</span>
+           <span class="ml-5 spancommon span_font_size" style="text-transform: capitalize;">{{userType}}&nbsp;|&nbsp;</span>
+       </div>
+       <div class="dropdown logout" [hidden]="(typeValue=='B2C' && loginId=='guest')">
+          
+           <a class="spancommon span_font_size" (click)="onLog('Log out')" style="color:black;cursor:pointer;font-weight: 600;text-decoration: none;position: relative;right: 1.5rem;">
+               Logout
+           </a>
+       </div>
+   </mat-toolbar>
     <mat-drawer-container class="nav-container" autosize>
-        <mat-drawer #drawer class="example-sidenav" mode="over" [opened]="openSideNav">
+        <mat-drawer #drawer class="example-sidenav" mode="side" opened="true">
             <div class="container">
                 <div class="navigation">
                     <ul id="dropdown2" class="scrollbar">
@@ -178,4 +232,4 @@
             <app-footer></app-footer>
         </mat-drawer-content>
     </mat-drawer-container>
-</div>
+<!-- </div> -->
