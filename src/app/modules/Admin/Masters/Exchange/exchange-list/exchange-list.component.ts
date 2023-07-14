@@ -23,11 +23,12 @@ export class ExchangeListComponent implements OnInit {
   public ExchangeData:any []=[];countryValue:any;
   public CommonApiUrl1: any = this.AppConfig.CommonApiUrl;
   userDetails: any;
+  insuranceList: any[]=[];
   constructor(public dialogService: MatDialog,private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,) {
       // this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
       // this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
-      this.getExistingExchange();
+      
       this.ExchangeId = sessionStorage.getItem('ExchangeId');
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       const user = this.userDetails?.Result;
@@ -35,7 +36,10 @@ export class ExchangeListComponent implements OnInit {
      }
 
   ngOnInit(): void {
-    sessionStorage.removeItem('ExchangeId')
+    let exchangeObj:any = JSON.parse(sessionStorage.getItem('ExchangeId'));
+    if(exchangeObj){
+      this.insuranceId = exchangeObj?.InsuranceId
+    }
     this.columnHeader = [
       { key: 'ExchangeRate', display: 'Exchange Rate' },
       { key: 'CoreAppCode', display: 'Core App Code' },
@@ -50,8 +54,28 @@ export class ExchangeListComponent implements OnInit {
         },
       }
     ];
+    this.getCompanyList();
 
+}
+getCompanyList(){
+  let ReqObj = {
+    "BrokerCompanyYn":"N",
+    "Limit":"0",
+    "Offset":""
+  }
+  let urlLink = `${this.ApiUrl1}master/getallinscompanydetails`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      console.log(data);
+      if(data.Result){
+        let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+        this.insuranceList = defaultObj.concat(data.Result);
+        if(this.insuranceId){this.getExistingExchange();}
+      }
 
+    },
+    (err) => { },
+  );
 }
 EditStatus(event){
   let ReqObj = {
@@ -90,11 +114,13 @@ onAddExchange(){
     "ExchangeId": null,
   }*/
   //sessionStorage.setItem('ExchangeId', event.ExchangeId );
-  sessionStorage.removeItem('ExchangeId')
+  let obj = {"ExchangeId":null,"InsuranceId":this.insuranceId}
+  sessionStorage.setItem('ExchangeId', JSON.stringify(obj));
   this.router.navigate(['/Admin/exchangeMaster/newExchangeDetails'])
 }
 onEdit(event){
-  sessionStorage.setItem('ExchangeId', event.ExchangeId);
+  let obj = {"ExchangeId":event.ExchangeId,"InsuranceId":this.insuranceId}
+  sessionStorage.setItem('ExchangeId', JSON.stringify(obj));
   this.router.navigate(['/Admin/exchangeMaster/newExchangeDetails'])
 
 }

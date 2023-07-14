@@ -21,6 +21,7 @@ export class ExistingOccupationsComponent implements OnInit {
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   branchList: any[]=[];branchValue:any;userDetails:any;
   pro: any;
+  insuranceList: { InsuranceId: string; CompanyName: string; }[];
   constructor(private router:Router,private sharedService: SharedService) {
 
      //this.productId =  sessionStorage.getItem('companyProductId');
@@ -33,7 +34,9 @@ export class ExistingOccupationsComponent implements OnInit {
     const user = this.userDetails?.Result;
     this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
     console.log('PPPPPPPPPPPP',this.productId);
-    this.getBranchList();
+    let docObj = JSON.parse(sessionStorage.getItem('addDetails'))
+    if(docObj){ this.branchValue = docObj?.branch;this.insuranceId=docObj?.InsuranceId}
+    this.getCompanyList();
    }
 
   ngOnInit(): void {
@@ -88,7 +91,28 @@ export class ExistingOccupationsComponent implements OnInit {
       (err) => { },
     );
   }
-  getBranchList(){
+  getCompanyList(){
+    let ReqObj = {
+      "BrokerCompanyYn":"N",
+      "Limit":"0",
+      "Offset":""
+    }
+    let urlLink = `${this.ApiUrl1}master/getallinscompanydetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+          this.insuranceList = defaultObj.concat(data.Result);
+          if(this.insuranceId){this.getBranchList('direct');}
+        }
+  
+      },
+      (err) => { },
+    );
+  }
+  getBranchList(type){
+    if(type=='change'){this.branchValue=null;this.productValue=null;}
     let ReqObj = {
       "InsuranceId": this.insuranceId
     }
@@ -123,14 +147,14 @@ export class ExistingOccupationsComponent implements OnInit {
     (data: any) => {
       if(data.Result){
         //this.productList = data?.Result;
-          let obj = []
+          let obj = [{Code:"99999",CodeDesc:"ALL"}]
           this.productList = obj.concat(data?.Result);
 
           let docObj = JSON.parse(sessionStorage.getItem('addDetails'))
         if(docObj){ this.productValue = docObj?.CodeDesc;
           console.log('LLLLLLLLLL',this.productValue);
           this.getExistingOccupations();}
-        else{ this.productValue='14'; this.getExistingOccupations();}
+        else{ this.productValue="99999"; this.getExistingOccupations();}
           //if(!this.productValue){ this.productValue = "14"; this.getExistingOccupations()}
           //this.getExistingOccupations();
           /*let docObj = JSON.parse(sessionStorage.getItem('addDocDetails'))
@@ -189,7 +213,7 @@ export class ExistingOccupationsComponent implements OnInit {
             this.occupationData = data?.Result;
             if(this.productValue!=undefined && this.productValue!=null){
 
-              let docObj = {"CodeDesc":this.productValue,"branch":this.branchValue};
+              let docObj = {"CodeDesc":this.productValue,"branch":this.branchValue,"InsuranceId":this.insuranceId};
               sessionStorage.setItem('addDetails',JSON.stringify(docObj));
              }
             //this.getProductList()
@@ -203,7 +227,7 @@ export class ExistingOccupationsComponent implements OnInit {
     let entry = {
       "OccupationId" : null,
       "BranchCode" : this.branchValue,
-      "ProductId":this.productValue
+      "ProductId":this.productValue,"InsuranceId":this.insuranceId
     }
     sessionStorage.setItem('editOccupationId',JSON.stringify(entry));
     //sessionStorage.removeItem('editOccupationId');
@@ -213,7 +237,7 @@ export class ExistingOccupationsComponent implements OnInit {
     let entry = {
       "OccupationId" : event.OccupationId,
       "BranchCode" : event.BranchCode,
-      "ProductId":event.ProductId
+      "ProductId":event.ProductId,"InsuranceId":this.insuranceId
     }
     sessionStorage.setItem('editOccupationId',JSON.stringify(entry));
     sessionStorage.setItem('produc',event.ProductId)

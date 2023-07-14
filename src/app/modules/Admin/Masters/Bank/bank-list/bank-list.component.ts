@@ -17,10 +17,13 @@ export class BankListComponent implements OnInit {
   public columnHeader: any[] = [];
   public insuranceId:any;
   public AppConfig: any = (Mydatas as any).default;
+  public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl1: any = this.AppConfig.CommonApiUrl;
   public BankData:any []=[];
   public branchList:any;branchValue:any;
   userDetails:any;
+  companyId: any=null;
+  insuranceList: { InsuranceId: string; CompanyName: string; }[];
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,/*private toastrService:NbToastrService,*/) {
       this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
@@ -32,7 +35,12 @@ export class BankListComponent implements OnInit {
      }
 
   ngOnInit(): void {
-
+    let bankObj = JSON.parse(sessionStorage.getItem('BankCode'))
+    if(bankObj!=undefined && bankObj!=null && bankObj!="undefined"){
+      this.companyId = bankObj?.CompanyId;
+      this.branchValue = bankObj?.BranchCode
+    }
+    else this.companyId = this.insuranceId
     this.columnHeader = [
       { key: 'BankFullName', display: 'Bank Full Name' },
       { key: 'BankShortName', display: 'Bank Short Name' },
@@ -46,7 +54,7 @@ export class BankListComponent implements OnInit {
         },
       }
     ];
-    this.getBranchList();
+    this.getCompanyList();
 }
 createHyperLink(params): any {
   if (!params.data) { return; }
@@ -63,9 +71,34 @@ createHyperLink(params): any {
 get homeUrl(): string {
   return 'home';
 }
-getBranchList(){
+getCompanyList(){
   let ReqObj = {
-    "InsuranceId": this.insuranceId
+    "BrokerCompanyYn":"N",
+    "Limit":"0",
+    "Offset":""
+  }
+  let urlLink = `${this.ApiUrl1}master/getallinscompanydetails`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      console.log(data);
+      if(data.Result){
+        let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+        this.insuranceList = defaultObj.concat(data.Result);
+        if(this.companyId) this.getBranchList('direct');
+      }
+
+    },
+    (err) => { },
+  );
+}
+getBranchList(type){
+  if(type=='change'){
+    this.branchValue = null;
+    this.BankData = [];
+  }
+ 
+  let ReqObj = {
+    "InsuranceId": this.companyId
   }
   let urlLink = `${this.CommonApiUrl1}master/dropdown/branchmaster`;
 this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -74,6 +107,7 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       let obj = [{Code:"99999",CodeDesc:"ALL"}];
       this.branchList = obj.concat(data?.Result);
       if(!this.branchValue){ this.branchValue = "99999"; this.getExistingBank() }
+      else{this.getExistingBank()}
     }
   },
   (err) => { },
@@ -84,6 +118,7 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     let ReqObj = {
       "BankCode" :null,
       "BranchCode": this.branchValue,
+      "CompanyId": this.companyId
     }
     sessionStorage.setItem('BankCode',JSON.stringify(ReqObj));
     this.router.navigate(['/Admin/bankMaster/newBankDetails'])
@@ -92,13 +127,14 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     let ReqObj = {
       "BankCode" :event.BankCode,
       "BranchCode": this.branchValue,
+      "CompanyId": this.companyId
     }
     sessionStorage.setItem('BankCode',JSON.stringify(ReqObj));
     this.router.navigate(['/Admin/bankMaster/newBankDetails'])
   }
   EditStatus(event){
     let ReqObj = {
-      "InsuranceId":this.insuranceId,
+      "InsuranceId":this.companyId,
       "BranchCode":this.branchValue,
       "BankCode" :event.BankCode,
       "Status":event.ChangedStatus,
@@ -131,7 +167,7 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
   }
   getExistingBank(){
     let ReqObj = {
-      "InsuranceId": this.insuranceId,
+      "InsuranceId": this.companyId,
       "BranchCode":this.branchValue,
     }
     let urlLink = `${this.CommonApiUrl1}master/getallbankdetails`;

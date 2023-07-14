@@ -5,12 +5,21 @@
                 <div>
                     Exchange
                 </div>
-                <div>
+                <div *ngIf="insuranceId">
                     <button class="btn btn-warning" (click)="onAddExchange()">Add New</button>
                 </div>
             </div>
         </div>
         <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 col-lg-4 col-xl-4 ml-3">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Insurance Company<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="insuranceId" (change)="getExistingExchange()" [items]="insuranceList" bindValue="InsuranceId" bindLabel="CompanyName">
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
             <ng-container *ngIf="ExchangeData">
                 <app-grid-table [cols]="columnHeader" changeStatus="true" (OnStatus)="EditStatus($event)" [data]="ExchangeData" [filterValue]="filterValue" (onEdit)="onEdit($event)">
                 </app-grid-table>

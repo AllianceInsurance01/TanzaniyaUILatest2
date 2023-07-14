@@ -48,6 +48,8 @@ export class NewOccupationDetailsComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    let docObj = JSON.parse(sessionStorage.getItem('addDetails'))
+    if(docObj){ this.insuranceId = docObj?.InsuranceId;}
     this.getBranchList();
     this.getProductList();
     this.getCategoryList();
@@ -65,7 +67,7 @@ export class NewOccupationDetailsComponent implements OnInit {
         /*let obj = [{Code:"99999",CodeDesc:"ALL"}];
         this.branchList = obj.concat(data?.Result);
         if(!this.branchValue){ this.branchValue = "99999"; this.getExistingOccupations() }*/
-        let obj = []
+        let obj = [{Code:"99999",CodeDesc:"ALL"}]
         this.productList = obj.concat(data?.Result);
         let docObj = JSON.parse(sessionStorage.getItem('addDetails'))
         if(docObj){ this.productId = docObj?.CodeDesc;}
