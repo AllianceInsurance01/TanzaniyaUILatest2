@@ -3197,3 +3197,15 @@ input[type="radio"]{
     font-size: 12px !important;
     line-height: 1.42857 !important;
 }
+
+@media screen and (min-width: 750px) and (max-width: 20000px) {
+    .display2{
+        display:none;
+    }
+  }
+
+  @media screen and (min-width: 280px) and (max-width: 750px) {
+    .display1{
+        display:none;
+         }
+    }
