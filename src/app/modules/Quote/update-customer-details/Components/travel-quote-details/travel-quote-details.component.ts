@@ -113,14 +113,14 @@ export class TravelQuoteDetailsComponent implements OnInit {
   }
   setValues(customerDatas) {
     console.log("Travel Details",this.travelDetails)
+    if(this.userType=='Issuer') this.updateComponent.brokerLoginId = customerDatas?.LoginId;
     this.travelName = customerDatas.travelName;
     this.BelongingCountryId = customerDatas.CountryId;
     this.executiveValue = customerDatas?.AcExecutiveId;
     this.commissionValue = customerDatas?.CommissionType;
     this.TravelForm.controls['PlanTypeId'].setValue(customerDatas.PlanTypeId);
     this.TravelForm.controls['SourceCountry'].setValue(customerDatas.DestinationCountry);
-    this.premiunDropdown(customerDatas.SectionId);
-    this.getPlanTypeList(customerDatas.PlanTypeId);
+    this.premiunDropdown(customerDatas.SectionId,'direct',);
     this.TravelForm.controls['HavePromoCode'].setValue(customerDatas.HavePromoCode);
     this.TravelForm.controls['PromoCode'].setValue(customerDatas.PromoCode);
     this.TravelForm.controls['SportsCoverYn'].setValue(customerDatas.SportsCoverYn);
@@ -209,7 +209,7 @@ export class TravelQuoteDetailsComponent implements OnInit {
       (err) => { },
     );
   }
-  premiunDropdown(value) {
+  premiunDropdown(value,type) {
     let loginId = null;
     if(this.userType!='Issuer'){
       loginId=this.loginId;
@@ -231,12 +231,14 @@ export class TravelQuoteDetailsComponent implements OnInit {
           let obj = [{"Code":null,"CodeDesc":"- - Select - -"}]
           this.premiumList = obj.concat(data.Result);
           this.TravelForm.controls['SectionId'].setValue(value);
+          if(type=='direct'){this.getPlanTypeList('direct')}
         }
       },
       (err) => { },
     );
   }
-  getPlanTypeList(value){
+  getPlanTypeList(type){
+    if(type=='change') this.TravelForm.controls['PlanTypeId'].setValue(null);
     let loginId = null;
     if(this.userType!='Issuer'){
       loginId=this.loginId;
@@ -258,7 +260,7 @@ export class TravelQuoteDetailsComponent implements OnInit {
         if (data.Result) {
           let obj = [{"Code":null,"CodeDesc":"- - Select - -"}]
           this.planTypeList = obj.concat(data.Result);
-          this.TravelForm.controls['PlanTypeId'].setValue(value);
+          //this.TravelForm.controls['PlanTypeId'].setValue(value);
         }
       },
       (err) => { },

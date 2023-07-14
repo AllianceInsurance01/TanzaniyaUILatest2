@@ -5,11 +5,11 @@
         </span> <span class="spancommon span_font_size">Travel Quote Details</span>
     </div>
     <div class="maan-grid-item-body">
-        <div class="row p-2">
+        <div class="row p-2" style="padding-left: 40px !important;padding-right: 40px !important;">
             <div class="col-12 col-md-4 col-lg-4 col-xl-4">
                 <div class="input-control-container">
                     <label class="input-form-label">Destination Country</label>
-                    <ng-select class="input-form-select" appendTo="body" [items]="countryList" (change)="premiunDropdown(null)" formControlName="SourceCountry" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="input-form-select" appendTo="body" [items]="countryList" (change)="premiunDropdown(null,'change')" formControlName="SourceCountry" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                     <div class="input-form-error">
                     </div>
@@ -19,7 +19,7 @@
                 <div class="input-control-container">
                     <label class="input-form-label">Premium Plan</label><span class="text-danger">*</span>
                     
-                    <ng-select class="input-form-select" appendTo="body" (change)="getPlanTypeList(null)" [items]="premiumList" formControlName="SectionId" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="input-form-select" appendTo="body" (change)="getPlanTypeList('change')" [items]="premiumList" formControlName="SectionId" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                     <div class="input-form-error">
                     </div>
