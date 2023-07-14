@@ -720,7 +720,7 @@ onFidelitySave(){
       this.employeeList[this.currentEmployeeIndex]['LocationId'] = this.empLocation;
       this.employeeList[this.currentEmployeeIndex]['EmployeeName'] = this.employeeName;
       this.employeeList[this.currentEmployeeIndex]['OccupationId'] = this.occupationType;
-      this.employeeList[this.currentEmployeeIndex]['locationName'] = this.LocationList.find(ele=>ele.Code==this.empLocation).CodeDesc;
+      this.employeeList[this.currentEmployeeIndex]['LocationName'] = this.LocationList.find(ele=>ele.Code==this.empLocation).CodeDesc;
       this.employeeList[this.currentEmployeeIndex]['OccupationDesc'] = this.employeeOccupationList.find(ele=>ele.Code==this.occupationType).CodeDesc;
       this.employeeList[this.currentEmployeeIndex]['DateOfBirth'] = this.datePipe.transform(this.empDob, "dd/MM/yyyy");
       this.employeeList[this.currentEmployeeIndex]['DateOfJoiningYear'] = this.empJoiningDate;
@@ -820,7 +820,7 @@ onFidelitySave(){
         let empList = [],i=0;
         for(let emp of this.employeeList){
           let entry = emp;
-          if(emp.LocationName==undefined) emp['locationName'] = this.LocationList.find(ele=>ele.Code==emp['LocationId']).CodeDesc;
+          if(emp.LocationName==undefined) emp['LocationName'] = this.LocationList.find(ele=>ele.Code==emp['LocationId']).CodeDesc;
           entry['EmployeeId'] = String(i+1);
           empList.push(entry);
           i+=1;
