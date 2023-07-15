@@ -67,6 +67,7 @@ export class PremiumDetailsComponent implements OnInit {
   address2: any;
   preferredNotification: any;
   individualDocumentList: any;
+  PinCode: any;
   constructor(private sharedService: SharedService,
     private router:Router,public dialogService: MatDialog,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe) {
@@ -165,6 +166,7 @@ export class PremiumDetailsComponent implements OnInit {
             this.dateOfBirth = this.customerDetails?.DobOrRegDate;
             this.emailId = this.customerDetails?.Email1;
             this.preferredNotification = this.customerDetails?.PreferredNotification;
+            this.PinCode = this.customerDetails?.PinCode;
             this.mobileNo = this.customerDetails?.MobileNo1;
             this.idNumber = this.customerDetails?.IdNumber;
             if(this.customerDetails.AppointmentDate!='' && this.customerDetails.AppointmentDate!=null){
@@ -1117,7 +1119,7 @@ toggle(index: number) {
           "MobileCodeDesc1":"1",
           "WhatsappDesc":"1",
           "WhatsappNo": this.mobileNo,
-          "PinCode":  this.customerDetails?.PinCode,
+          "PinCode":  this.PinCode,
           "StateCode":  this.customerDetails?.StateCode,
           "StateName":  this.customerDetails?.StateName,
           "Status": this.customerDetails?.Clientstatus,
