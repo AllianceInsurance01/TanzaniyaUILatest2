@@ -16,15 +16,21 @@
                 {{benefit.PolicyTypeDesc}}&nbsp;|&nbsp;{{benefit.PlanTypeDesc}}
             </div>
             <div class="maan-grid-item-body">
-                <ng-container *ngIf="benefit.CoverDetails.length!=0">
-                    <app-commodity-table [cols]="PolicyHeader" [data]="benefit.CoverDetails" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onAdd)="onInnerData($event)">
-                    </app-commodity-table>
-                </ng-container>
-                <ng-container *ngIf="benefit.CoverDetails.length==0">
-                    <div class="text-center spancommon span_font_size">
-                        No Quote Available
+                <div class="row">
+                    <div class="col-11 col-lg-10 col-md-10 col-xl-10 offset-1">
+                        <ng-container *ngIf="benefit.CoverDetails.length!=0">
+                            <app-commodity-table [cols]="PolicyHeader" [data]="benefit.CoverDetails" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onAdd)="onInnerData($event)">
+                            </app-commodity-table>
+                        </ng-container>
+                        <ng-container *ngIf="benefit.CoverDetails.length==0">
+                            <div class="text-center spancommon span_font_size">
+                                No Quote Available
+                            </div>
+                        </ng-container>
                     </div>
-                </ng-container>
+                </div>
+                
+               
                 <!-- <table>
                     <th>
                         CoverDesc

@@ -28,14 +28,15 @@ export class WarrantyListComponent implements OnInit {
   productValue: any;
   userDetails: any; sectionValue:any;
   sectionList: any[];
+  insuranceList: { InsuranceId: string; CompanyName: string; }[];
   constructor(private router: Router, private sharedService: SharedService) {
     let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if (userDetails) {
 
-      this.insuranceId = userDetails?.Result?.InsuranceId;
+      // this.insuranceId = userDetails?.Result?.InsuranceId;
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       const user = this.userDetails?.Result;
-      this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+      // this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
     }
   }
 
@@ -58,10 +59,12 @@ export class WarrantyListComponent implements OnInit {
 
 
     let obj =  JSON.parse(sessionStorage.getItem('WarrantyId'));
+    console.log('KKKKKKKKKKKK',obj)
     if(obj){
       this.branchValue=obj.BranchCode
       this.productValue=obj.ProductId
       this.sectionValue=obj.SectionId
+      this.insuranceId=obj.InsuranceId
       if(this.sectionValue=='99999'){
         this.sectionYn='N'
       }
@@ -69,13 +72,15 @@ export class WarrantyListComponent implements OnInit {
         this.sectionYn='Y'
       }
     }
+    this.getCompanyList();
     //sessionStorage.removeItem('WarrantyId')
 
-    this.getBranchList();
-    this.getCompanyProductList();
+    // this.getBranchList();
+    // this.getCompanyProductList();
 
   }
-  getBranchList() {
+  getBranchList(type) {
+    if(type=='change'){this.WarrantyData=[];this.branchValue=null;this.productValue=null;this.sectionYn='N';this.sectionValue=null;}
     let ReqObj = {
       "InsuranceId": this.insuranceId
     }
@@ -86,14 +91,36 @@ export class WarrantyListComponent implements OnInit {
 
           let obj = [{ Code: "99999", CodeDesc: "ALL" }];
           this.branchList = obj.concat(data?.Result);
-          if (!this.branchValue) { this.branchValue = "99999"; this.getExistingWarranty()}
+          if (!this.branchValue) { this.branchValue = "99999";this.getCompanyProductList('change')}
         }
 
       },
       (err) => { },
     );
   }
-  getCompanyProductList() {
+
+  getCompanyList(){
+    let ReqObj = {
+      "BrokerCompanyYn":"N",
+      "Limit":"0",
+      "Offset":""
+    }
+    let urlLink = `${this.ApiUrl1}master/getallinscompanydetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+          this.insuranceList = defaultObj.concat(data.Result);
+          if(this.insuranceId){this.getBranchList('direct'); this.getCompanyProductList('direct');}
+        }
+  
+      },
+      (err) => { },
+    );
+  }
+  getCompanyProductList(type) {
+    if(type=='change'){this.WarrantyData=[];this.productValue=null;this.sectionYn='N';this.sectionValue=null;}
     let ReqObj = {
       "InsuranceId": this.insuranceId,
 
@@ -112,7 +139,7 @@ export class WarrantyListComponent implements OnInit {
             this.productValue = docObj?.ProductId;
             console.log('LLLLLLLLLL',this.sectionValue);
             this.getSectionList(); this.getExistingWarranty() }
-          else{ this.productValue='5'; this.getSectionList(); this.getExistingWarranty() }
+          else{ this.productValue=''; this.getSectionList(); this.getExistingWarranty() }
 
 
           /*if (!this.productValue) { this.productValue = "5";
@@ -163,7 +190,8 @@ export class WarrantyListComponent implements OnInit {
       "WarrantyId": null,
       "BranchCode": this.branchValue,
       "ProductId": this.productValue,
-      "SectionId": this.sectionValue
+      "SectionId": this.sectionValue,
+      "InsuranceId": this.insuranceId,
     }
     sessionStorage.setItem('WarrantyId', JSON.stringify(ReqObj));
     this.router.navigate(['/Admin/warrantyMaster/newWarrantyDetails'])
@@ -191,7 +219,7 @@ export class WarrantyListComponent implements OnInit {
           this.WarrantyData = data?.Result;
 
           if(this.sectionValue!=undefined && this.sectionValue!=null){
-            let docObj = {"Section":this.sectionValue,"Product": this.productValue};
+            let docObj = {"Section":this.sectionValue,"Product": this.productValue,"Insuranceid":this.insuranceId};
             sessionStorage.setItem('addDocDetailsObj',JSON.stringify(docObj));
           }
         }
@@ -206,7 +234,8 @@ export class WarrantyListComponent implements OnInit {
       "WarrantyId": event.WarrantyId,
       "BranchCode": this.branchValue,
       "ProductId": this.productValue,
-      "SectionId": this.sectionValue
+      "SectionId": this.sectionValue,
+      "InsuranceId": this.insuranceId,
     }
     sessionStorage.setItem('WarrantyId', JSON.stringify(ReqObj));
     this.router.navigateByUrl('/Admin/warrantyMaster/newWarrantyDetails');

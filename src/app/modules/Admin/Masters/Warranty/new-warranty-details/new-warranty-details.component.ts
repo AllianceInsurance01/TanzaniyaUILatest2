@@ -44,19 +44,20 @@ export class NewWarrantyDetailsComponent implements OnInit {
     let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if (userDetails) {
 
-      this.insuranceId = userDetails?.Result?.InsuranceId;
+      // this.insuranceId = userDetails?.Result?.InsuranceId;
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       const user = this.userDetails?.Result;
-      this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+      // this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
       this.loginId = userDetails?.Result?.LoginId;
     }
     this.WarrantyDetails = new Warranty();
-    this.getCompanyProductList();
+   
     let docObj = JSON.parse(sessionStorage.getItem('WarrantyId'))
     if (docObj) {
-      this.productValue = docObj?.ProductId,
+      // this.productValue = docObj?.ProductId,
         this.branchValue = docObj?.BranchCode,
         this.sectionValue = docObj?.SectionId;
+        this.insuranceId=docObj?.InsuranceId;
     };
     this.getTypeId()
   }
@@ -88,6 +89,8 @@ export class NewWarrantyDetailsComponent implements OnInit {
             this.WarrantyId = warranty?.WarrantyId;
             this.branchValue = warranty?.BranchCode;
             this.productValue = warranty?.ProductId;
+            console.log('IIIIIIIII',this.productValue);
+            this.getCompanyProductList();
             if (this.WarrantyId) this.getEditWarrantyDetails();
             else this.WarrantyId = null;
           }
