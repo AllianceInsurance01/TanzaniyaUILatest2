@@ -18,6 +18,7 @@ export class ExisitingDropdownsComponent implements OnInit {
   public CommonApiUrl1:any = this.AppConfig.CommonApiUrl;
   public ApiUrl1:any = this.AppConfig.ApiUrl1;tableList:any;
   TypeList:any[]=[];TypeValue:any;
+  insuranceList: { InsuranceId: string; CompanyName: string; }[];
 
 
   public branchList:any;branchValue:any;BranchCode:any;insuranceId:any;
@@ -27,8 +28,8 @@ export class ExisitingDropdownsComponent implements OnInit {
     this.insuranceName = sessionStorage.getItem('insuranceName');
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     const user = this.userDetails?.Result;
-    this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
-this.getBranchList()
+    // this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+// this.getBranchList()
    }
 
   ngOnInit(): void {
@@ -46,38 +47,39 @@ this.getBranchList()
         },
       }
     ];
+    this.getCompanyList();
     //this.getBranchList();
-    this.getList();
+    //this.getList();
 
   }
 
-  getBranchList(){
-    let ReqObj = {
-      "InsuranceId": this.insuranceId
-  }
-    let urlLink = `${this.CommonApiUrl1}master/dropdown/branchmaster`;
-  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-    (data: any) => {
-      if(data.Result){
-        let obj = [{Code:"99999",CodeDesc:"ALL"}];
-        this.branchList = obj.concat(data?.Result);
-        let docObj = JSON.parse(sessionStorage.getItem('CategoryId'))
-        if(docObj){
-          this.branchValue = docObj?.BranchCode;
+  // getBranchList(){
+  //   let ReqObj = {
+  //     "InsuranceId": this.insuranceId
+  // }
+  //   let urlLink = `${this.CommonApiUrl1}master/dropdown/branchmaster`;
+  // this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+  //   (data: any) => {
+  //     if(data.Result){
+  //       let obj = [{Code:"99999",CodeDesc:"ALL"}];
+  //       this.branchList = obj.concat(data?.Result);
+  //       let docObj = JSON.parse(sessionStorage.getItem('CategoryId'))
+  //       if(docObj){
+  //         this.branchValue = docObj?.BranchCode;
 
-        }
-        else{
-          this.branchValue="99999";
+  //       }
+  //       else{
+  //         this.branchValue="99999";
 
 
-        }
+  //       }
 
-        //if(!this.branchValue){ this.branchValue = "99999"; this.getCompanyProductList() }
-      }
-    },
-    (err) => { },
-  );
-  }
+  //       //if(!this.branchValue){ this.branchValue = "99999"; this.getCompanyProductList() }
+  //     }
+  //   },
+  //   (err) => { },
+  // );
+  // }
 
 
   /*getBranchList(){
@@ -96,10 +98,29 @@ this.getBranchList()
     (err) => { },
   );
   }*/
-
-  getList(){
+  getCompanyList(){
+    let ReqObj = {
+      "BrokerCompanyYn":"N",
+      "Limit":"0",
+      "Offset":""
+    }
+    let urlLink = `${this.ApiUrl1}master/getallinscompanydetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+          this.insuranceList = defaultObj.concat(data.Result);
+          if(this.insuranceId){this.getList('direct');}
+        }
+  
+      },
+      (err) => { },
+    );
+  }
+  getList(type){
+    if(type=='change'){this.dropdownData=[];}
     let ReqObj ={
-      "BranchCode": this.branchValue,
       "InsuranceId": this.insuranceId
     }
     let urlLink = `${this.CommonApiUrl1}master/dropdown/lovlist`;
@@ -108,18 +129,16 @@ this.getBranchList()
       if(data.Result){
         let obj = [{Code:"99999",CodeDesc:"ALL"}];
         this.TypeList = data?.Result;
-        let docObj = JSON.parse(sessionStorage.getItem('addDocDetailsObj'))
+        let docObj = JSON.parse(sessionStorage.getItem('addDocDetailsObj'));
+        console.log('IIIIIIIIIIII',docObj)
         if(docObj){
           console.log('iiiiiiiii',this.TypeValue)
           this.TypeValue = docObj?.ItemType;
-          this.getExistingDropdown()
-
+          this.getExistingDropdown();
        }
         else{
           this.TypeValue="--Select--"
-          this.getExistingDropdown()
-
-
+          this.getExistingDropdown();
         }
         //if(!this.branchValue){ this.branchValue = "99999"; this.getCompanyProductList() }
       }
@@ -130,8 +149,8 @@ this.getBranchList()
 
   getExistingDropdown(){
     let ReqObj = {
-      "BranchCode":this.branchValue,
-      "InsuranceId": "100002",
+      // "BranchCode":this.branchValue,
+      "InsuranceId": this.insuranceId,
       "ItemType": this.TypeValue
     }
     let urlLink = `${this.CommonApiUrl1}master/getalllovdetails
@@ -141,8 +160,9 @@ this.getBranchList()
         console.log(data);
         if(data.Result){
             this.dropdownData = data?.Result;
+            console.log('KKKKKKKKKKKK',this.dropdownData)
             if(this.TypeValue!=undefined && this.TypeValue!=null){
-              let docObj = {"ItemType":this.TypeValue};
+              let docObj = {"ItemType":this.TypeValue,"insuranceid":this.insuranceId};
               sessionStorage.setItem('addDocDetailsObj',JSON.stringify(docObj));
             }
         }
@@ -159,7 +179,8 @@ this.getBranchList()
         "BranchCode":"99999",
         "ItemId": null,
         "ItemCode":null,
-        "ItemType": this.TypeValue
+        "ItemType": this.TypeValue,
+        "InsuranceId":this.insuranceId
       }
       console.log("Edit Req Obj",event);
       sessionStorage.setItem('ItemId', JSON.stringify(ReqObj));
@@ -170,7 +191,8 @@ this.getBranchList()
       "BranchCode": "99999",
       "ItemCode": event.ItemCode,
       "ItemType": this.TypeValue,
-      "ItemId":event.ItemId
+      "ItemId":event.ItemId,
+      "InsuranceId":this.insuranceId
     }
     console.log("Edit Req Obj",event);
     sessionStorage.setItem('ItemId', JSON.stringify(ReqObj));

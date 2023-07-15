@@ -30,7 +30,7 @@ export class CurrencyDetailsComponent implements OnInit {
     private sharedService: SharedService,private datePipe:DatePipe, private router: Router) {
       this.minDate = new Date();
       this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
-      this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
+      // this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
     this.productId =  sessionStorage.getItem('companyProductId');
       let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if(userDetails){
@@ -38,7 +38,8 @@ export class CurrencyDetailsComponent implements OnInit {
     }
     this.CurrencyDetails = new currency();
     this.CurrencyId = sessionStorage.getItem('editCurrencyId');
-    console.log(this.CurrencyId)
+    console.log(this.CurrencyId);
+    this.insuranceId=sessionStorage.getItem('insuranceid');
   }
 
 

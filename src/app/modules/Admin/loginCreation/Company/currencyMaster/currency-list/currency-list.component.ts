@@ -22,10 +22,11 @@ export class CurrencyListComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl1: any = this.AppConfig.CommonApiUrl;
   dialogService: any;
+  insuranceList: { InsuranceId: string; CompanyName: string; }[];
   constructor(private router:Router, private sharedService: SharedService) {
     this.activeMenu = "Currency";
     this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
-    this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
+    // this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
     this.CurrencyId =  sessionStorage.getItem('CurrencyId');
     this.stateList = [
       { "Code":"01","CodeDesc":"TamilNadu"},
@@ -50,7 +51,8 @@ export class CurrencyListComponent implements OnInit {
         },
       }
     ];
-    this.getExistingCurrency();
+    this.getCompanyList();
+    //this.getExistingCurrency();
 
    }
 
@@ -111,11 +113,13 @@ export class CurrencyListComponent implements OnInit {
   onEditCurrency(rowdata){
 
     sessionStorage.setItem('editCurrencyId',rowdata.CurrencyId);
+    sessionStorage.setItem('Insuranceid',this.insuranceId);
     this.router.navigate(['/Admin/companyList/companyConfigure/currencyList/newCurrencyDetails']);
 
   }
   onAddNew(){
     sessionStorage.removeItem('editCurrencyId');
+    sessionStorage.setItem('Insuranceid',this.insuranceId);
     this.router.navigate(['/Admin/companyList/companyConfigure/currencyList/newCurrencyDetails']);
 
     //this.router.navigate(['/Admin/loginCreation/Company/currencyMaster/currency-details'])
@@ -124,7 +128,8 @@ export class CurrencyListComponent implements OnInit {
     this.router.navigate(['/Admin/countryMaster/']);
   }
 
-  getExistingCurrency(){
+  getExistingCurrency(type){
+
     let ReqObj = {
       "InsuranceId": this.insuranceId,
     }
@@ -135,6 +140,28 @@ export class CurrencyListComponent implements OnInit {
         if(data.Result){
             this.currencyData = data?.Result;
         }
+      },
+      (err) => { },
+    );
+  }
+
+  getCompanyList(){
+    let ReqObj = {
+      "BrokerCompanyYn":"N",
+      "Limit":"0",
+      "Offset":""
+    }
+    let urlLink = `${this.ApiUrl1}master/getallinscompanydetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+          this.insuranceList = defaultObj.concat(data.Result);
+          if(this.insuranceId) {this.getExistingCurrency('direct')}
+           //{this.getBranchList('direct'); this.getCompanyProductList('direct');}
+        }
+  
       },
       (err) => { },
     );
