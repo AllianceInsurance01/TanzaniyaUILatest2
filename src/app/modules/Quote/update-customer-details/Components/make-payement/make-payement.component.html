@@ -761,13 +761,16 @@
             <div class="card-body" *ngIf="!tinyUrlInfo">
                 <div class="row">
                     <div class="col-10 offset-1 spancommon span_font_size">
-                        <h4 class="spancommon span_font_size" style="font-weight: 600;text-align: center;">Payment Completed Successfully</h4><br>
-                        <h4 class="spancommon span_font_size" style="font-weight: 600;text-align: center;">Additional Information Required to Generate Policy</h4>
+                        <h4 class="spancommon span_font_size" style="font-weight: 600;text-align: center;font-size: 1.4rem !important;">Payment Completed Successfully</h4><br>
+                        <h4 class="spancommon span_font_size" style="font-weight: 600;text-align: center;" *ngIf="subuserType=='B2C'">Additional Information Required to Generate Policy</h4>
                     </div>
                 </div>
-                <div class="text-center mt-2" *ngIf="!tinyUrlInfo">
+                <div class="text-center mt-2" *ngIf="!tinyUrlInfo && subuserType=='B2C'">
                     <button class="custom-btn btn-6 maan-button-data mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/premium-details']">Proceed</button>
                     <button class="custom-btn btn-8 maan-button-data mx-2" matRipple (click)="finalTinyUrlInfo()">Provide Later</button>
+                </div>
+                <div class="text-center mt-2" *ngIf="!tinyUrlInfo && subuserType!='B2C'">
+                    <button class="custom-btn btn-6 maan-button-data mx-2" matRipple [routerLink]="['/Home/policies']">Proceed</button>
                 </div>
             </div>
         </div>

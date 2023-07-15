@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from '../../../../../shared/shared.service';
 import { UpdateCustomerDetailsComponent } from '../../update-customer-details.component';
 import { DatePipe } from '@angular/common';
@@ -65,7 +65,7 @@ export class MakePayementComponent implements OnInit {
   productName: any;
   redirectUrl: string;
   constructor(private router:Router,private sharedService: SharedService,
-    private updateComponent:UpdateCustomerDetailsComponent,
+    private updateComponent:UpdateCustomerDetailsComponent,private route:ActivatedRoute,
    private datePipe:DatePipe) {
     this.minDate = new Date();
     sessionStorage.removeItem('buyPolicyDetails');
@@ -74,6 +74,7 @@ export class MakePayementComponent implements OnInit {
     let quoteRefNo = sessionStorage.getItem('quoteReferenceNo');
     if(quoteRefNo) this.requestReferenceNo = quoteRefNo;
     this.quoteNo = sessionStorage.getItem('quoteNo');
+    this.updateComponent.quoteNo = this.quoteNo;
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
     this.userType = this.userDetails?.Result?.UserType;
@@ -115,6 +116,16 @@ export class MakePayementComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.route.queryParamMap.subscribe((params: any) => {
+      console.log("Params",params.params)
+      let quoteNo = params?.params?.QuoteNo;
+      let type = params?.params?.type;
+      if(quoteNo){
+        this.quoteNo = quoteNo;
+        this.updateComponent.quoteNo = this.quoteNo;
+        if(type!='cancel') this.successSection = true;
+      }
+    })
     if(this.customerDetails){
       this.title = this.customerDetails?.TitleDesc;
       this.clientName = this.customerDetails?.ClientName;
@@ -500,6 +511,7 @@ export class MakePayementComponent implements OnInit {
     this.successSection = true;
     this.tinyUrlInfo = false;
   }
+
   finalTinyUrlInfo(){
     this.tinyUrlInfo = true;
   }

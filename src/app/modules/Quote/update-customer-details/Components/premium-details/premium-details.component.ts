@@ -114,6 +114,7 @@ export class PremiumDetailsComponent implements OnInit {
     }
      this.quoteRefNo = sessionStorage.getItem('quoteReferenceNo');
      this.quoteNo = sessionStorage.getItem('quoteNo');
+     this.updateComponent.quoteNo = this.quoteNo;
      var d= new Date();
      var year = d.getFullYear();
      var month = d.getMonth();
