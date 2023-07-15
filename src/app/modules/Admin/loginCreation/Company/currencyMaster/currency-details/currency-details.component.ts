@@ -39,7 +39,7 @@ export class CurrencyDetailsComponent implements OnInit {
     this.CurrencyDetails = new currency();
     this.CurrencyId = sessionStorage.getItem('editCurrencyId');
     console.log(this.CurrencyId);
-    this.insuranceId=sessionStorage.getItem('insuranceid');
+    this.insuranceId=sessionStorage.getItem('Insuranceid');
   }
 
 
