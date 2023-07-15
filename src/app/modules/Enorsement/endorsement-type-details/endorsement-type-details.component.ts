@@ -825,7 +825,8 @@ export class EndorsementTypeDetailsComponent {
                   this.noOfDays = Math.round(Math.abs((Number(momentDate)  - Number(formattedDatecurrent) )/oneday)+1);
                 
               }
-              if(veh.PolicyEndDate){
+              if(type=='cancel') endDate = this.endorseEffectiveDate;
+              else if(veh.PolicyEndDate){
                   endDate = veh.PolicyEndDate;
               }
              
