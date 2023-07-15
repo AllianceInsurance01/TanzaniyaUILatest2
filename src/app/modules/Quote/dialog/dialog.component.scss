@@ -7,3 +7,6 @@ table {
     white-space: pre-wrap !important;
     padding: 0px 2px !important;
 }
+::ng-deep .cdk-overlay-container {
+  z-index: 1000;
+}

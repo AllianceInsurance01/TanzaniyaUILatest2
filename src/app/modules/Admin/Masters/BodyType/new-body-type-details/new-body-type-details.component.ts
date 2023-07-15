@@ -42,6 +42,7 @@ export class NewBodyTypeDetailsComponent implements OnInit {
     let obj = JSON.parse(sessionStorage.getItem('BodyId'))
     if(obj){
       this.BodyTypeId = obj.BodyId;
+      this.insuranceId = obj.InsuranceId
     }
     
     this.BodyTypeDetails = new BodyType();
@@ -78,6 +79,7 @@ export class NewBodyTypeDetailsComponent implements OnInit {
         if(type){
           console.log("bodytype Obj",type)
           this.BodyTypeId = type?.BodyId;
+          this.insuranceId = type.InsuranceId;
           this.branchValue = type?.BranchCode;
           this.BodyTypeDetails.BranchCode = type?.BranchCode;
           this.BodyTypeDetails.SectionId = type?.SectionId

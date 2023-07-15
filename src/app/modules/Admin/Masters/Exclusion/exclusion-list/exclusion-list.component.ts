@@ -26,13 +26,15 @@ export class ExclusionListComponent implements OnInit {
   public sectionList: any;
   public productValue: any;
   public productList: any;
+  insuranceList: { InsuranceId: string; CompanyName: string; }[];
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe) {
-      this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
-      this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
+      //this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
+      // this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       const user = this.userDetails?.Result;
       this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+
      }
 
   ngOnInit(): void {
@@ -53,6 +55,7 @@ export class ExclusionListComponent implements OnInit {
 
     let obj =  JSON.parse(sessionStorage.getItem('ExclusionId'));
       if(obj){
+        this.insuranceId = obj.InsuranceId;
         this.branchValue=obj.BranchCode
         this.productValue=obj.ProductId
         this.sectionValue=obj.SectionId
@@ -64,10 +67,31 @@ export class ExclusionListComponent implements OnInit {
         }
       }
       //sessionStorage.removeItem('ExclusionId')
-    this.getBranchList();
-    this.getCompanyProductList();
+      this.getCompanyList();
+    
   }
-  getBranchList(){
+  getCompanyList(){
+    let ReqObj = {
+      "BrokerCompanyYn":"N",
+      "Limit":"0",
+      "Offset":""
+    }
+    let urlLink = `${this.ApiUrl1}master/getallinscompanydetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+          this.insuranceList = defaultObj.concat(data.Result);
+          if(this.insuranceId){this.getBranchList('direct'); this.getCompanyProductList('direct');}
+        }
+  
+      },
+      (err) => { },
+    );
+  }
+  getBranchList(type){
+    if(type=='change'){this.ExclusionData=[];this.branchValue=null;this.productValue=null;this.sectionYn='N';this.sectionValue=null;}
     let ReqObj = {
       "InsuranceId": this.insuranceId
     }
@@ -77,8 +101,9 @@ export class ExclusionListComponent implements OnInit {
       if(data.Result){
         let obj = [{Code:"99999",CodeDesc:"ALL"}];
         this.branchList = obj.concat(data?.Result);
-        if(!this.branchValue){ this.branchValue = "99999"; }
-      }
+        if(!this.branchValue){
+           this.branchValue = "99999"; }
+        }
     },
     (err) => { },
   );
@@ -202,7 +227,8 @@ export class ExclusionListComponent implements OnInit {
     (err) => { },
   );
   }
-  getCompanyProductList(){
+  getCompanyProductList(type){
+    if(type=='change'){this.ExclusionData=[];this.productValue=null;this.sectionYn='N';this.sectionValue=null;}
     let ReqObj ={
       "InsuranceId":this.insuranceId,
       "Limit":"0",
@@ -219,12 +245,10 @@ export class ExclusionListComponent implements OnInit {
         // if(!this.productValue){ this.productValue = "5";
         // this.getSectionList();
         // this.getExistingExclusion() }
-        let docObj = JSON.parse(sessionStorage.getItem('ExclusionId'))
-        if(docObj){ this.sectionValue = docObj?.SectionId;
-          this.productValue = docObj?.ProductId;
+        if(this.productValue){
           console.log('LLLLLLLLLL',this.sectionValue);
           this.getSectionList(); this.getExistingExclusion()  }
-        else{ this.productValue='5'; this.getSectionList(); this.getExistingExclusion()  }
+        else{ this.productValue='99999'; this.getSectionList(); this.getExistingExclusion()  }
         }
 
       },

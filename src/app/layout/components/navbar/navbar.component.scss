@@ -33,25 +33,7 @@
     color: #0056b3!important;
     font-weight: 600;
 }
-.navigation {
-    position: fixed;
-    width: 12% !important;
-    height: 100%;
-    background:#333b85!important;
-    border-left: 0px solid var(--blue);
-    transition: .5s;
-    overflow-x: hidden;
-    left: 0;
-    bottom: 0px;
-    border-radius: 0.55rem;
-    box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
-}
-.navigation.active{
-    width: 41px !important;
-}
-.navigation.active.navigation ul li a{
-    width: 200px !important;
-}
+
 
 .navigation #dropdown2 {
     position: absolute;
@@ -165,19 +147,10 @@ li:hover .logo::after{
 .main{
     transition: .5s;
 }
-.main.active{
-    width: calc(100% - 56px);
-    left: 56px;
-}
 .mat-toolbar-single-row.active{
-    width: calc(100% - 78px)!important;
-    left: 58px!important;
+    width: calc(100%)!important;
 }
-.bread_crumb.active{
-    width: calc(100% - 22px)!important;
-    position: relative!important;
-    left:56px !important;
-}
+
 
 .topbar{
     width: 100%;
@@ -218,6 +191,7 @@ li:hover .logo::after{
     display: none;
 }
 mat-drawer-content{
+    width: 100% !important;
     margin-left: 0px !important;
     overflow-x: hidden !important;
 }
@@ -268,9 +242,114 @@ display: block;
     }
   }
   @media screen and (min-width: 280px) and (max-width: 600px) {
-    .bread_crumb{
+    
+  }
+  @media screen and (min-width: 750px) and (max-width: 1456px) {
+    .navigation {
+        position: fixed;
+        width: 12% !important;
+        height: 100%;
+        background:#333b85!important;
+        border-left: 0px solid var(--blue);
+        transition: .5s;
+        overflow-x: hidden;
+        left: 0;
+        bottom: 0px;
+        border-radius: 0.55rem;
+        box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+    }
+    .display2{
+        display:none;
+    }
+    .bread_crumb {
+        width: calc(100% - 164px)!important;
+        position: relative!important;
+        left: 168px!important;
+    }
+    .bread_crumb.active{
         width: calc(100% - 22px)!important;
         position: relative!important;
-        left: 56px!important;
-        }
+        left:56px !important;
+    }
+    .main-content {
+        margin-top: 70px;
+        padding-left: 15px !important;
+        padding-right: 25px !important;
+        min-height: 83.5% !important;
+    }
+    .mat-toolbar-single-row {
+        display: flex!important;
+        box-sizing: border-box!important;
+        padding: 0 0px!important;
+        width: calc(100% - 200px)!important;
+        flex-direction: row!important;
+        align-items: center!important;
+        white-space: nowrap!important;
+        left: 12%;
+    }
+    .main.active{
+        width: calc(100% - 56px);
+        left: 56px;
+    }
+    .mat-toolbar-single-row.active{
+        width: calc(100% - 78px)!important;
+        left: 58px!important;
+    }
+    .navigation.active{
+        width: 41px !important;
+    }
+    .navigation.active.navigation ul li a{
+        width: 200px !important;
+    }
+  }
+  
+  @media screen and (min-width: 280px) and (max-width: 750px) {
+    .navigation {
+        position: fixed;
+        width: 45% !important;
+        height: 100%;
+        background:#333b85!important;
+        border-left: 0px solid var(--blue);
+        transition: .5s;
+        overflow-x: hidden;
+        left: 0;
+        bottom: 0px;
+        border-radius: 0.55rem;
+        box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+    }
+    .display1{
+        display:none;
+    }
+    .bread_crumb {
+        width: calc(100%)!important;
+        position: relative!important;
+    }
+    .bread_crumb.active{
+        width: calc(100% )!important;
+        position: relative!important;
+    }
+    .main-content {
+        margin-top: 70px;
+        min-height: 83.5% !important;
+    }
+    .mat-toolbar-single-row {
+        display: flex!important;
+        box-sizing: border-box!important;
+        padding: 0 0px!important;
+        width: calc(100% - 200px)!important;
+        flex-direction: row!important;
+        align-items: center!important;
+        white-space: nowrap!important;
+        left: 0%;
+    }
+    .main.active{
+        width: calc(100% - 56px);
+        left: 56px;
+    }
+    .mat-toolbar-single-row.active{
+        width: calc(100%)!important;
+    }
+    .navigation.active.navigation ul li a{
+        width: 200px !important;
+    }
   }

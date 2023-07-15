@@ -48,6 +48,7 @@ export class NewmakeDetailsComponent implements OnInit {
     let Makeurl: any = JSON.parse(sessionStorage.getItem('MakeId'));
 
     console.log("Sno Obj", Makeurl)
+    this.insuranceId = Makeurl?.InsuranceId;
     this.MakeId= Makeurl?.MakeId;
     this.BranchCode= Makeurl?.BranchCode;
 
@@ -79,7 +80,7 @@ export class NewmakeDetailsComponent implements OnInit {
 
   getBranchList() {
     let ReqObj = {
-      "InsuranceId":"100002"
+      "InsuranceId":this.insuranceId
     }
     let urlLink = `${this.CommonApiUrl}master/dropdown/branchmaster`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -108,7 +109,7 @@ export class NewmakeDetailsComponent implements OnInit {
     console.log("Make ID",this.MakeId);
     let ReqObj =  {
       "MakeId":this.MakeId,
-"InsuranceId":"100002",
+"InsuranceId":this.insuranceId,
 "BranchCode":this.BranchCode
 
   }
@@ -136,7 +137,7 @@ export class NewmakeDetailsComponent implements OnInit {
 }
 getMakeList(){
   let ReqObj = {
- "InsuranceId":"100002"
+ "InsuranceId":this.insuranceId
 
   }
   let urlLink = `${this.CommonApiUrl}master/dropdown/branchmaster`;
@@ -165,7 +166,7 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       //"EffectiveDateEnd":this.MakeDetails.EffectiveDateEnd,
       "EntryDate":this.MakeDetails.EntryDate,
       "Status":this.MakeDetails.Status,
-      "InsuranceId":"100002",
+      "InsuranceId": this.insuranceId,
       "BranchCode":this.BranchCode,
       "CreatedBy":this.loginId
 

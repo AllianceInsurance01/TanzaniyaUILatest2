@@ -23,6 +23,7 @@ export class BodyTypeListComponent implements OnInit {
   public branchList:any;branchValue:any;
   userDetails: any;
   insuranceList: any[]=[];
+  insuranceTypeList: any[]=[];
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe) {
       this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
@@ -38,6 +39,7 @@ export class BodyTypeListComponent implements OnInit {
     if(obj){
       this.branchValue = obj.BranchCode;
       this.SectionId = obj.SectionId
+      this.insuranceId = obj.InsuranceId
     }
     this.columnHeader = [
       { key: 'BodyNameEn', display: 'Body Name' },
@@ -52,11 +54,32 @@ export class BodyTypeListComponent implements OnInit {
         },
       }
     ];
-    this.getBranchList();
+    this.getCompanyList();
 
 
 }
-getBranchList(){
+getCompanyList(){
+  let ReqObj = {
+    "BrokerCompanyYn":"N",
+    "Limit":"0",
+    "Offset":""
+  }
+  let urlLink = `${this.ApiUrl1}master/getallinscompanydetails`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      console.log(data);
+      if(data.Result){
+        let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+        this.insuranceList = defaultObj.concat(data.Result);
+        if(this.insuranceId){this.getBranchList('direct');}
+      }
+
+    },
+    (err) => { },
+  );
+}
+getBranchList(type){
+  if(type=='change'){this.BodyTypeData=[];this.branchValue=null;}
   let ReqObj = {
     "InsuranceId": this.insuranceId
   }
@@ -84,7 +107,7 @@ getSectionTypeList(){
     (data: any) => {
       if(data.Result){
         let obj = [{Code:"99999",CodeDesc:"ALL"}];
-        this.insuranceList = obj.concat(data?.Result);
+        this.insuranceTypeList = obj.concat(data?.Result);
         if(!this.SectionId){ this.SectionId = "99999"; this.getExistingBodyType() }
         else{
           this.getExistingBodyType()
@@ -152,7 +175,8 @@ EditStatus(event){
     let ReqObj = {
       "BodyId": null,
       "BranchCode": this.branchValue,
-      "SectionId": this.SectionId
+      "SectionId": this.SectionId,
+      "InsuranceId": this.insuranceId
     }
     sessionStorage.setItem('BodyId', JSON.stringify(ReqObj));
     this.router.navigate(['/Admin/bodyTypeMaster/newBodyTypeDetails'])
@@ -162,7 +186,8 @@ EditStatus(event){
     let ReqObj = {
       "BodyId": event.BodyId,
       "BranchCode": this.branchValue,
-      "SectionId": this.SectionId
+      "SectionId": this.SectionId,
+      "InsuranceId": this.insuranceId
     }
     sessionStorage.setItem('BodyId', JSON.stringify(ReqObj));
     this.router.navigateByUrl('/Admin/bodyTypeMaster/newBodyTypeDetails');

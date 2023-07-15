@@ -936,7 +936,7 @@
 </div>
 <div class="text-center my-2 mt-3" >
     <!-- <button class="custom-btn btn-6 mx-2" matRipple>Download Form</button> -->
-    <button class="custom-btn btn-5 mx-2" *ngIf="(!policySection && !successSection)  || (cancelEndorse && (IsChargeOrRefund=='REFUND' || IsChargeOrRefund=='CHARGE'))" matRipple (click)="ongetBack()" ><<&nbsp;Back</button>
+    <button class="custom-btn btn-5 mx-2" *ngIf="(!policySection && !successSection)  || (!policySection && cancelEndorse && (IsChargeOrRefund=='REFUND' || IsChargeOrRefund=='CHARGE'))" matRipple (click)="ongetBack()" ><<&nbsp;Back</button>
     <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="endorsementSection && (cancelEndorse && IsChargeOrRefund!='REFUND' && IsChargeOrRefund!='CHARGE')" matRipple [routerLink]="['/Home/policies/Endorsements']" routerLinkActive="router-link-active">Proceed</button>
     <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="checkRefundMandatories()" matRipple (click)="onCashPayment()">Submit</button>
 </div>

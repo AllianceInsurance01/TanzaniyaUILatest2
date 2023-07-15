@@ -32,12 +32,17 @@ export class NewExchangeDetailsComponent implements OnInit {
     //this.insuranceId = userDetails.LoginBranchDetails[0].InsuranceId;
 
     this.exchangeDetails = new Exchange();
-    this.getCurrencyList();
+    
     }
 
   ngOnInit(): void {
-
-    this.ExchangeId = sessionStorage.getItem('ExchangeId');
+    let obj = JSON.parse(sessionStorage.getItem('ExchangeId'))
+    if(obj){
+      this.ExchangeId = obj.ExchangeId;
+      this.insuranceId = obj.InsuranceId;
+      
+    }
+    this.getCurrencyList();
     if(this.ExchangeId!=null && this.ExchangeId!=undefined){
       this.getEditExchangeDetails();
     }

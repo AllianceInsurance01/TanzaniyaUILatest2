@@ -22,6 +22,7 @@ export class ColorListComponent implements OnInit {
   ColorData: any[]=[];
   BranchCode: any;userDetails:any;
   title:string|any;
+  insuranceList: { InsuranceId: string; CompanyName: string; }[];
   constructor(private router:Router,private sharedService: SharedService) {
     //this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -30,6 +31,10 @@ export class ColorListComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    let Obj = JSON.parse(sessionStorage.getItem('editColorDetails'));
+    if(Obj){
+      this.insuranceId = Obj?.InsuranceId;
+    }
     this.columnHeader = [
       { key: 'ColorCode', display: 'Color Code' },
       { key: 'ColorDesc', display: 'Color Desc' },
@@ -44,7 +49,27 @@ export class ColorListComponent implements OnInit {
       },
     ];
 
-    this.getExistingColor();
+    this.getCompanyList();
+  }
+  getCompanyList(){
+    let ReqObj = {
+      "BrokerCompanyYn":"N",
+      "Limit":"0",
+      "Offset":""
+    }
+    let urlLink = `${this.ApiUrl1}master/getallinscompanydetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+          this.insuranceList = defaultObj.concat(data.Result);
+          if(this.insuranceId){this.getExistingColor();}
+        }
+  
+      },
+      (err) => { },
+    );
   }
   onRedirect(value){
     if(value=='Product') this.router.navigate(['/Admin/companyList/companyConfigure'])
@@ -63,11 +88,19 @@ export class ColorListComponent implements OnInit {
 
 
   onAddColor(){
-    sessionStorage.removeItem('ColorId');
+    let obj = {
+      "InsuranceId": this.insuranceId,
+      'ColorId':null
+    }
+    sessionStorage.setItem('editColorDetails',JSON.stringify(obj));
     this.router.navigate(['/Admin/colorMaster/newColorDetails'])
   }
   onEditColor(event){
-    sessionStorage.setItem('ColorId', event.ColorId);
+    let obj = {
+      "InsuranceId": this.insuranceId,
+      'ColorId':event.ColorId
+    }
+    sessionStorage.setItem('editColorDetails',JSON.stringify(obj));
     this.router.navigate(['/Admin/colorMaster/newColorDetails'])
     
   }

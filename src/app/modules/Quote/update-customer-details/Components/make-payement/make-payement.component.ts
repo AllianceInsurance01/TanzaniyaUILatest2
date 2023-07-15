@@ -63,6 +63,7 @@ export class MakePayementComponent implements OnInit {
   successSection: boolean;
   tinyUrlInfo: boolean;
   productName: any;
+  redirectUrl: string;
   constructor(private router:Router,private sharedService: SharedService,
     private updateComponent:UpdateCustomerDetailsComponent,
    private datePipe:DatePipe) {
@@ -85,6 +86,8 @@ export class MakePayementComponent implements OnInit {
     this.subuserType = sessionStorage.getItem('typeValue');
     this.insuranceId = this.userDetails.Result.InsuranceId;
     let paymentId = sessionStorage.getItem('quotePaymentId');
+    this.redirectUrl = "aHR0cHM6Ly90ei5zZWxjb20ub25saW5lL3BheW1lbnRndy9jaGVja291dC9XbXRLVmpWbVVGWmtWRTFTY2xGWlVIbEpWR1ZFYTFWbFlqQmFkWHBEWmtJelpFOXdlR1JSTUhZNGQwTjBZa2hZVTFFMVJVNXZTbmwwYWs1cGNHd3dhV3BrYWxZMGFGVkdZbUpWUFE9PS8=";
+    this.decodeUrl();
     console.log("Payment Id",paymentId)
       if(paymentId){
         this.getPaymentTypeList();
@@ -123,6 +126,9 @@ export class MakePayementComponent implements OnInit {
       else if(this.customerDetails.PolicyHolderType=='2'){this.customerType="Corporate";}
     }
     this.getEditQuoteDetails();
+  }
+  decodeUrl(){
+    console.log(atob(this.redirectUrl))
   }
   getEditQuoteDetails(){
     let ReqObj = {
@@ -432,12 +438,18 @@ export class MakePayementComponent implements OnInit {
      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         if(data.Result){
+
           if(data.Result.PolicyNo){
             this.paymentDetails = data.Result;
             this.policyNo = data.Result.PolicyNo;
             this.policySection = true;
             //this.updateTiraDetails();
             
+          }
+          else if(data.Result.paymentUrl){
+            this.redirectUrl = data.Result.paymentUrl;
+            console.log("Url",atob(this.redirectUrl))
+            window.location.href =  atob(this.redirectUrl)
           }
         } 
       },

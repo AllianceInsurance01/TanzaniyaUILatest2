@@ -38,7 +38,12 @@ export class NewcolorDetailsComponent implements OnInit {
       this.loginId = userDetails?.Result?.LoginId;
       this.insuranceId = userDetails?.Result?.LoginBranchDetails[0].InsuranceId;
     }
-    this.ColorId = sessionStorage.getItem('ColorId');
+    let Obj = JSON.parse(sessionStorage.getItem('editColorDetails'));
+    if(Obj){
+      this.insuranceId = Obj?.InsuranceId;
+      this.ColorId = Obj?.ColorId
+    }
+    else this.ColorId = null;
     this.ColorDetails = new Color();
   //this.getEditColorDetails();
   }
@@ -128,6 +133,7 @@ export class NewcolorDetailsComponent implements OnInit {
   }
 
 onSaveColor() {
+  if(this.ColorDetails.RegulatoryCode==undefined) this.ColorDetails.RegulatoryCode = null;
   let ReqObj = {
 
     "ColorId":this.ColorId,

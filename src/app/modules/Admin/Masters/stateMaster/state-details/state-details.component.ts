@@ -145,6 +145,7 @@ export class StateDetailsComponent implements OnInit {
   );
   }
   onProceed(){
+    if(this.stateDetails.RegionCode==undefined) this.stateDetails.RegionCode = null;
     let ReqObj = {
       "StateId": this.StateId,
       "StateShortCode": this.stateDetails.StateShortCode,

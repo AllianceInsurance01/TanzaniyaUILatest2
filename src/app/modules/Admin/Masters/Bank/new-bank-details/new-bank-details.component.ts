@@ -32,14 +32,14 @@ export class NewBankDetailsComponent implements OnInit {
       this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     const user = this.userDetails?.Result;
-    this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
-    this.loginId = this.userDetails?.Result?.LoginId;
+    // this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+    // this.loginId = this.userDetails?.Result?.LoginId;
 
     this.productId =  sessionStorage.getItem('companyProductId');
       let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if(userDetails){
       this.loginId = userDetails?.Result?.LoginId;
-      this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+      //this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
     }
 
     this.BankDetails = new Bank();
@@ -54,6 +54,13 @@ export class NewBankDetailsComponent implements OnInit {
       this.BankDetails = new Bank();
       if(this.BankDetails?.Status==null)  this.BankDetails.Status = 'N';
     }
+    let Exclucsion:any = JSON.parse(sessionStorage.getItem('BankCode'));
+    if(Exclucsion){
+      console.log("Sess BankCode Obj",Exclucsion)
+      this.BankId = Exclucsion?.BankCode;
+      this.insuranceId = Exclucsion?.CompanyId;
+      this.branchValue = Exclucsion?.BranchCode;
+    }
    this.getBranchList();
   }
   getBranchList(){
@@ -66,15 +73,7 @@ export class NewBankDetailsComponent implements OnInit {
       if(data.Result){
         let obj = [{Code:"99999",CodeDesc:"ALL"}];
         this.branchList = obj.concat(data?.Result);
-        let Exclucsion:any = JSON.parse(sessionStorage.getItem('BankCode'));
-        if(Exclucsion){
-          console.log("Sess BankCode Obj",Exclucsion)
-          this.BankId = Exclucsion?.BankCode;
-          this.BankDetails.BranchCode = Exclucsion?.BranchCode;
-          this.branchValue = Exclucsion?.BranchCode;
-          if(this.BankId)  this.getEditBankDetails();
-          else this.BankId = null;
-        }
+        if(this.BankId)  this.getEditBankDetails();
         else this.BankId = null;
       }
     },
