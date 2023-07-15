@@ -3202,10 +3202,28 @@ input[type="radio"]{
     .display2{
         display:none;
     }
+    .maan-grid {
+        display:block;
+    }
   }
 
-  @media screen and (min-width: 280px) and (max-width: 750px) {
-    .display1{
-        display:none;
-         }
+@media screen and (min-width: 280px) and (max-width: 750px) {
+.display1{
+    display:none;
+        }
+}
+@media screen and (min-width: 768px) and (max-width: 1180px) {
+    .customer-grid .maan-grid-item-title{
+        font-size: 16px;
     }
+    .input-control-container .input-form-radio-box {
+        padding-top: 3px!important;
+        /* margin: 3px 0; */
+    }
+    .input-control-container .input-form-label {
+        font-weight: 400;
+        font-family: var(--our-font-family-new);
+        font-size: 12px !important;
+        letter-spacing: .3px;
+    }
+}

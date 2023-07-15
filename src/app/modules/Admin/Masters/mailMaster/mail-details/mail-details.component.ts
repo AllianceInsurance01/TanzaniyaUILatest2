@@ -61,7 +61,7 @@ userDetails:any;
 
    }
   ongetBack(){
-    this.router.navigate(['/Admin/countryMaster/cityList'])
+    this.router.navigate(['/Admin/companyList/companyConfigure'])
   }
   onProceed(){
     this.router.navigate(['/Admin/countryMaster/cityList'])

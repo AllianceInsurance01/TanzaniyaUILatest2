@@ -70,13 +70,13 @@ export class PoliciesComponent implements OnInit {
         { key: 'PolicyTypeDesc', display: 'Policy Type' },
         { key: 'OverallPremiumFc', display: 'Premium' },
 
-        {
-          key: 'actions',
-          display: 'Schedule',
-          config: {
-            isSchedule: true,
-          },
-        },
+        // {
+        //   key: 'actions',
+        //   display: 'Schedule',
+        //   config: {
+        //     isSchedule: true,
+        //   },
+        // },
 
       ];
     }

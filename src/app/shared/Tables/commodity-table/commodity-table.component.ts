@@ -59,6 +59,7 @@ export class CommodityTableComponent implements OnInit {
 
   public selectedData:any;
   expandedSymbol: string = null;
+  selectedIndex: any=null;
 
   constructor(
     private router: Router,
@@ -129,16 +130,21 @@ export class CommodityTableComponent implements OnInit {
       return  `with: ${reason}`;
     }
   }
-  onPassData(element:any){
+  onPassData(element:any,index){
+   
+    element.isClicked = !element.isClicked;
     if(element.isClicked){
+      this.selectedIndex = index;
       this.onAdd.emit(element);
       this.add.emit(element);
       this.selectedData = element;
       this.minus=false;
     }
     else{
+      this.selectedIndex = null;
       this.minus=true;
     }
+    
   }
 
 

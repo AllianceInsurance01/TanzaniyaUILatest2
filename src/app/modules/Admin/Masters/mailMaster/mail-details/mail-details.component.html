@@ -125,8 +125,9 @@
       </div>
       <div class="row">
           <div class="col-12 col-md-4 col-lg-4">
+            <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
               <mat-form-field appearance="fill">
-                  <mat-label>Effective Date</mat-label>
+                  
                   <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="onDateFormatInEdit" [(ngModel)]="MailDetails.EffectiveDateStart">
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
@@ -165,14 +166,9 @@
       </div>
   </div>
   <div>
-      <div class="d-flex justify-content-end">
-          <div>
-
-          </div>
-          <div>
-              <!--<button class="btn btn-danger" (click)="dismiss()">Cancel</button>-->
+      <div class="text-center mb-2 mt-2">
+              <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>&nbsp;
               <button  class="ml-2 btn btn-primary" (click)="onSaveMail()">Submit</button>
-          </div>
       </div>
   </div>
 </div>

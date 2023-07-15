@@ -56,7 +56,19 @@
     .display1{
         display:none;
          }
-         .vision-grid-column-2{
-            grid-template-columns:none !important;
-         }
+    .vision-grid-column-2{
+    grid-template-columns:none !important;
+    }
+    .maan-btn {
+    width: 8rem !important;
+    height: 2rem !important;
+    font-size: .60rem;
+    border-radius: 5em;
+    border: none;
+    outline: none;
+    background: var(--theme1);
+    box-shadow: 0 0 1px 0 var(--clr-light),0 0 0 var(--clr-dark);
+    font-family: var(--our-font-family-new)!important;
+    position: relative;
+}
  }

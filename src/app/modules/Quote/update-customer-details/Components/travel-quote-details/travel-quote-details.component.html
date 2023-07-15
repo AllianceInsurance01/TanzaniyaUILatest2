@@ -62,19 +62,19 @@
                     </div>
                 </div>
                 <div class="row p2">
-                    <div class="col-12 col-md-5 col-lg-5 offset-1" *ngFor="let group of travelGroupList;let i=index">
+                    <div class="col-11 col-md-5 col-lg-5 offset-1" *ngFor="let group of travelGroupList;let i=index">
                         <div class="input-control-container">
                             <label class="input-form-label">{{group.GroupDesc}}</label><br>
                             <div class="row mb-2">
-                                <div class="col-md-2 col-lg-2 col-xl-2 mt-3">
+                                <div class="col-3 col-md-2 col-lg-2 col-xl-2 mr-2 ">
                                     <button class="yes" *ngIf="group.GroupMembers!='0'" (click)="onchangeContents('sub',i)"><i class="fas fa-minus mx-1"></i></button>
                                 </div>
-                                <div class="col-md-5 col-lg-5 col-xl-5 p-0 mt-2">
+                                <div class="col-3 col-md-5 col-lg-5 col-xl-5 p-0 mt-2">
                                     <div class="text-center valueRadiate">
                                         <h5><b> &nbsp;{{group.GroupMembers}}</b></h5>
                                     </div>
                                 </div>
-                                <div class="col-md-2 col-lg-2 col-xl-2 mt-3">
+                                <div class="col-3 col-md-2 col-lg-2 col-xl-2 mt-3">
                                     <button class="yes" (click)="onchangeContents('add',i)"><i class="fas fa-plus mx-1"></i></button>
                                 </div>
                             </div>

@@ -507,7 +507,7 @@ export class ProductFormComponent implements OnInit {
 		var k;  
 		k = event.charCode;  //         k = event.keyCode;  (Both can be used)
 		return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || (k >= 48 && k <= 57)); 
-		}
+	}
 	getTitleList() {
 		let ReqObj = {
 			"InsuranceId": this.insuranceId,

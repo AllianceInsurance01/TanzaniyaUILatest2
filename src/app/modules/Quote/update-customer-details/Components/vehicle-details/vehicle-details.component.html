@@ -75,7 +75,8 @@
                     </div>
 
                 </div>
-                <div class="maan-grid-item-body" style="padding-left: 70px !important;padding-right: 40px !important;">
+                <div class="maan-grid-item-body customerdetails">
+                    <!--style="padding-left: 70px !important;padding-right: 40px !important;"-->
                     <div class="row mt-1">
                         <div class="col-12 col-md-3 ">
                             <div class="input-control-container">
@@ -112,10 +113,12 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    
+                </div>
                 </div>
             </div>
             <div class="maan-grid-item" id="slider_0" *ngIf="motorDetails && !finalSection">
+                <div class="display1">
                 <div class="maan-grid-item-title">
                     <div class="d-flex justify-content-between">
                         <div>
@@ -132,11 +135,28 @@
                     </div>
 
                 </div>
-                <div class="maan-grid-item-body" >
-                    <ul class="list-group" style="padding-left: 70px !important;padding-right: 20px !important;">
+               </div>
+               <div class="display2" style="font-size: 17px;
+               background-color: #fff!important;
+               color: #000;font-weight: 600;">
+                 <div class="row mt-2 ml-4" style="border-bottom: 2px solid #333b85;">
+                    <span>
+                        <i class="fas fa-car mx-1"></i>
+                        <span style="font-family: var(--our-font-family-new) !important;">Motor Details</span>
+                    </span>
+                 </div>
+                 <div class="mt-2 ml-4">
+                    <ng-container>
+                        <span class="spancommon">Chassis No - {{motorDetails?.Chassisnumber}}</span>
+                    </ng-container>
+                 </div>
+               </div>
+                <div class="maan-grid-item-body">
+                    <ul class="list-group motordetails">
+                        <!--style="padding-left: 70px !important;padding-right: 20px !important;"-->
                         <li class="customList">
                             <div class="row mt-1">
-                                <div class="col-12 col-md-3 ">
+                                <div class="col-12 col-md-3">
                                     <div class="input-control-container">
                                         <label class="input-form-label">Make</label>
                                         <div class="input-form-radio-box">
@@ -245,6 +265,7 @@
                             </div>
                         </li>
                     </ul>
+               
                 </div>
             </div>
             <div class="maan-grid-item" id="slider_0">
@@ -255,112 +276,235 @@
                         </span>
                         <span style="font-family: var(--our-font-family-new) !important;">Policy Details</span>
                     </div>
-                    <div class="maan-grid-item-body" style="padding-left: 40px !important;padding-right: 40px !important;">
-                        <div class="row">
-                            <div class="col-12 col-md-4">
-                                <div class="input-control-container" style="padding-left: 40px !important;padding-right: 20px !important;">
-                                    <label class="input-form-label">Insurance Type</label><span class="text-danger">*</span>
-                                    <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="typeList" [(ngModel)]="typeValue" (change)="getMotorTypeList('change',null,null)" bindValue="Code" bindLabel="CodeDesc">
-                                    </ng-select>
+                    <div>
+                        <div class="maan-grid-item-body smallclass">
+                            <!--style="padding-left: 40px !important;padding-right: 40px !important;"-->
+                            <div class="row">
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container policyfield">
+                                        <!--style="padding-left: 40px !important;padding-right: 20px !important;"-->
+                                        <label class="input-form-label">Insurance Type</label><span class="text-danger">*</span>
+                                        <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="typeList" [(ngModel)]="typeValue" (change)="getMotorTypeList('change',null,null)" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container policyfield2">
+                                        <!-- style="padding-left: 20px !important;padding-right: 20px !important;"-->
+                                        <label class="input-form-label">Insurance Class</label><span class="text-danger">*</span>
+                                        <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="classList" [(ngModel)]="classValue" (change)="onChangeClassType()" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container smallclass">
+                                        <!--style="padding-left: 40px !important;padding-right: 40px !important;"-->
+                                        <label class="input-form-label">Body Type</label><span class="text-danger">*</span>
+                                        <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="motorTypeList" [(ngModel)]="bodyTypeValue" (change)="onChangeBodyType()" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4">
-                                <div class="input-control-container" style="padding-left: 20px !important;padding-right: 20px !important;">
-                                    <label class="input-form-label">Insurance Class</label><span class="text-danger">*</span>
-                                    <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="classList" [(ngModel)]="classValue" (change)="onChangeClassType()" bindValue="Code" bindLabel="CodeDesc">
-                                    </ng-select>
+                            <div class="row">
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container policyfield">
+                                        <!--style="padding-left: 40px !important;padding-right: 20px !important;"-->
+                                        <label class="input-form-label">Motor Usage</label><span class="text-danger">*</span>
+                                        <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="motorUsageList" [(ngModel)]="motorUsageValue" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <div class="input-control-container" style="padding-left: 40px !important;padding-right: 40px !important;">
-                                    <label class="input-form-label">Body Type</label><span class="text-danger">*</span>
-                                    <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="motorTypeList" [(ngModel)]="bodyTypeValue" (change)="onChangeBodyType()" bindValue="Code" bindLabel="CodeDesc">
-                                    </ng-select>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container policyfield2">
+                                        <!--style="padding-left: 20px !important;padding-right: 20px !important;"-->
+                                        <label class="input-form-label">Claims YN?</label>
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar">
+                                                <input id="claims_Yes" type="radio" name="claimsYN" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="claimsYN" value="Y">
+                                                <label for="claims_Yes" class="yes">Yes</label>
+                                                <input id="claims_No" type="radio" name="claimsYN" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="claimsYN" value="N">
+                                                <label for="claims_No" class="no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-md-4 ">
-                                <div class="input-control-container" style="padding-left: 40px !important;padding-right: 20px !important;">
-                                    <label class="input-form-label">Motor Usage</label><span class="text-danger">*</span>
-                                    <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="motorUsageList" [(ngModel)]="motorUsageValue" bindValue="Code" bindLabel="CodeDesc">
-                                    </ng-select>
+                                <div class="col-12 col-md-4 col-lg-4 smallclass">
+                                    <!--style="padding-left: 40px !important;padding-right: 40px !important;"-->
+                                    <div class="input-control-container" *ngIf="typeValue=='10'">
+                                        <label class="input-form-label">GPS Tracking Enabled?</label>
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar">
+                                                <input id="orginwarehouse_Yes" type="radio" name="gpsTracking" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="gpsYn" value="Y">
+                                                <label for="orginwarehouse_Yes" class="yes">Yes</label>
+                                                <input id="orginwarehouse_No" type="radio" name="gpsTracking" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="gpsYn" value="N">
+                                                <label for="orginwarehouse_No" class="no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                
                             </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container" style="padding-left: 20px !important;padding-right: 20px !important;">
-                                    <label class="input-form-label">Claims YN?</label>
-                                    <div class="input-form-radio-box">
-                                        <div class="radio-toolbar">
-                                            <input id="claims_Yes" type="radio" name="claimsYN" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="claimsYN" value="Y">
-                                            <label for="claims_Yes" class="yes">Yes</label>
-                                            <input id="claims_No" type="radio" name="claimsYN" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="claimsYN" value="N">
-                                            <label for="claims_No" class="no">No</label>
+    
+                            <div class="row">
+                                <div class="col-12 col-md-4" *ngIf="classValue=='1' || classValue=='2'">
+                                    <div class="input-control-container policyfield">
+                                        <!--style="padding-left: 40px !important;padding-right: 20px !important;"-->
+                                        <label class="input-form-label">Vehicle Sum Insured ({{currencyValue}}) &nbsp;<span class="text-danger">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" digitOnly [disabled]="((endorsementSection && !enableVehicleSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="vehicleSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="CommaFormatted()" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4" *ngIf="classValue=='1' || classValue=='2'">
+                                    <div class="input-control-container policyfield2">
+                                        <!--style="padding-left: 20px !important;padding-right: 20px !important;"-->
+                                        <label class="input-form-label">Accessories Sum Insured ({{currencyValue}})</label>
+                                        <div class="input-form-box">
+                                            <input type="text" digitOnly [disabled]="((endorsementSection && !enableAccessoriesSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="accessoriesSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="accessoriesCommaFormatted()" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4" *ngIf="classValue=='1' || classValue=='2'">
+                                    <div class="input-control-container smallclass">
+                                        <!--style="padding-left: 40px !important;padding-right: 40px !important;"!-->
+                                        <label class="input-form-label">WindShield Sum Insured ({{currencyValue}})</label>
+                                        <div class="input-form-box">
+                                            <input type="text" digitOnly [disabled]="((endorsementSection && !enableWindshieldSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="windShieldSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="WindSICommaFormatted()" class="input-form-control without-icon">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4 col-lg-4" style="padding-left: 40px !important;padding-right: 40px !important;">
-                                <div class="input-control-container" *ngIf="typeValue=='10'">
-                                    <label class="input-form-label">GPS Tracking Enabled?</label>
-                                    <div class="input-form-radio-box">
-                                        <div class="radio-toolbar">
-                                            <input id="orginwarehouse_Yes" type="radio" name="gpsTracking" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="gpsYn" value="Y">
-                                            <label for="orginwarehouse_Yes" class="yes">Yes</label>
-                                            <input id="orginwarehouse_No" type="radio" name="gpsTracking" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="gpsYn" value="N">
-                                            <label for="orginwarehouse_No" class="no">No</label>
+                            <div class="row">
+                                <div class="col-12 col-md-4" *ngIf="classValue=='1' || classValue=='2'">
+                                    <div class="input-control-container policyfield">
+                                        <!--style="padding-left: 40px !important;padding-right: 20px !important;"-->
+                                        <label class="input-form-label">Extended TPPD Sum Insured ({{currencyValue}})</label>
+                                        <div class="input-form-box">
+                                            <input type="text" digitOnly [disabled]="((endorsementSection && !enableTppdSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="tppdSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="TppdCommaFormatted()" class="input-form-control without-icon">
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            
-                        </div>
-
-                        <div class="row">
-                            <div class="col-12 col-md-4" *ngIf="classValue=='1' || classValue=='2'">
-                                <div class="input-control-container" style="padding-left: 40px !important;padding-right: 20px !important;">
-                                    <label class="input-form-label">Vehicle Sum Insured ({{currencyValue}}) &nbsp;<span class="text-danger">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" digitOnly [disabled]="((endorsementSection && !enableVehicleSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="vehicleSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="CommaFormatted()" class="input-form-control without-icon">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4" *ngIf="classValue=='1' || classValue=='2'">
-                                <div class="input-control-container" style="padding-left: 20px !important;padding-right: 20px !important;">
-                                    <label class="input-form-label">Accessories Sum Insured ({{currencyValue}})</label>
-                                    <div class="input-form-box">
-                                        <input type="text" digitOnly [disabled]="((endorsementSection && !enableAccessoriesSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="accessoriesSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="accessoriesCommaFormatted()" class="input-form-control without-icon">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4" *ngIf="classValue=='1' || classValue=='2'">
-                                <div class="input-control-container" style="padding-left: 40px !important;padding-right: 40px !important;">
-                                    <label class="input-form-label">WindShield Sum Insured ({{currencyValue}})</label>
-                                    <div class="input-form-box">
-                                        <input type="text" digitOnly [disabled]="((endorsementSection && !enableWindshieldSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="windShieldSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="WindSICommaFormatted()" class="input-form-control without-icon">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-md-4" *ngIf="classValue=='1' || classValue=='2'">
-                                <div class="input-control-container" style="padding-left: 40px !important;padding-right: 20px !important;">
-                                    <label class="input-form-label">Extended TPPD Sum Insured ({{currencyValue}})</label>
-                                    <div class="input-form-box">
-                                        <input type="text" digitOnly [disabled]="((endorsementSection && !enableTppdSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="tppdSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="TppdCommaFormatted()" class="input-form-control without-icon">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4">
-                                <div class="input-control-container" style="padding-left: 20px !important;padding-right: 20px !important;">
-                                    <label class="input-form-label">TIRA Cover Note No (If Exist)</label>
-                                    <div class="input-form-box">
-                                        <input type="text" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="tiraCoverNoteNo" autocomplete="off" maxlength="15" class="input-form-control without-icon">
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container " [ngClass]="(classValue=='1' || classValue=='2')? 'policyfield2':'policyfield'">
+                                        <!--style="padding-left: 20px !important;padding-right: 20px !important;"-->
+                                        <label class="input-form-label">TIRA Cover Note No (If Exist)</label>
+                                        <div class="input-form-box">
+                                            <input type="text" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="tiraCoverNoteNo" autocomplete="off" maxlength="15" class="input-form-control without-icon">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- <div class="display2">
+                        <div class="maan-grid-item-body">
+                            <div class="row">
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Insurance Type</label><span class="text-danger">*</span>
+                                        <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="typeList" [(ngModel)]="typeValue" (change)="getMotorTypeList('change',null,null)" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Insurance Class</label><span class="text-danger">*</span>
+                                        <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="classList" [(ngModel)]="classValue" (change)="onChangeClassType()" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Body Type</label><span class="text-danger">*</span>
+                                        <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="motorTypeList" [(ngModel)]="bodyTypeValue" (change)="onChangeBodyType()" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-4 ">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Motor Usage</label><span class="text-danger">*</span>
+                                        <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="motorUsageList" [(ngModel)]="motorUsageValue" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Claims YN?</label>
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar">
+                                                <input id="claims_Yes" type="radio" name="claimsYN" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="claimsYN" value="Y">
+                                                <label for="claims_Yes" class="yes">Yes</label>
+                                                <input id="claims_No" type="radio" name="claimsYN" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="claimsYN" value="N">
+                                                <label for="claims_No" class="no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container" *ngIf="typeValue=='10'">
+                                        <label class="input-form-label">GPS Tracking Enabled?</label>
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar">
+                                                <input id="orginwarehouse_Yes" type="radio" name="gpsTracking" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="gpsYn" value="Y">
+                                                <label for="orginwarehouse_Yes" class="yes">Yes</label>
+                                                <input id="orginwarehouse_No" type="radio" name="gpsTracking" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="gpsYn" value="N">
+                                                <label for="orginwarehouse_No" class="no">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+    
+                            <div class="row">
+                                <div class="col-12 col-md-4" *ngIf="classValue=='1' || classValue=='2'">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Vehicle Sum Insured ({{currencyValue}}) &nbsp;<span class="text-danger">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" digitOnly [disabled]="((endorsementSection && !enableVehicleSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="vehicleSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="CommaFormatted()" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4" *ngIf="classValue=='1' || classValue=='2'">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Accessories Sum Insured ({{currencyValue}})</label>
+                                        <div class="input-form-box">
+                                            <input type="text" digitOnly [disabled]="((endorsementSection && !enableAccessoriesSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="accessoriesSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="accessoriesCommaFormatted()" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4" *ngIf="classValue=='1' || classValue=='2'">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">WindShield Sum Insured ({{currencyValue}})</label>
+                                        <div class="input-form-box">
+                                            <input type="text" digitOnly [disabled]="((endorsementSection && !enableWindshieldSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="windShieldSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="WindSICommaFormatted()" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-4" *ngIf="classValue=='1' || classValue=='2'">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Extended TPPD Sum Insured ({{currencyValue}})</label>
+                                        <div class="input-form-box">
+                                            <input type="text" digitOnly [disabled]="((endorsementSection && !enableTppdSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="tppdSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="TppdCommaFormatted()" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">TIRA Cover Note No (If Exist)</label>
+                                        <div class="input-form-box">
+                                            <input type="text" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="tiraCoverNoteNo" autocomplete="off" maxlength="15" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                 
                 </ng-container>
             </div>
             <div class="maan-grid-item" id="slider_0" *ngIf="!finalSection && vehicleDetailsList.length!=0">

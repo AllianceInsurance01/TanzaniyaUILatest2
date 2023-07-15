@@ -7,7 +7,10 @@
     .display2{
        display:none;
         }
-      
+        .smallclass{
+            padding-left: 70px !important;
+            padding-right: 40px !important;
+        }
     }
 
  @media screen and (min-width: 280px) and (max-width: 700px) {
@@ -17,4 +20,8 @@
          .vision-grid-column-2{
             grid-template-columns:none !important;
          }
+         .smallclass{
+            padding-left: 5px;
+            padding-right:none !important;
+        }
  }

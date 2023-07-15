@@ -133,7 +133,7 @@ let Sno
     Sno=null;
   }
   let ReqObj = {
-    "SNo":Sno,
+    "SNo":"1",
     "InsuranceId":this.insuranceId,
     "BranchCode":this.BranchCode,
     "SenderId":this.SmsDetails.SenderId,
@@ -179,7 +179,7 @@ let Sno
 
                   this.Sno=data.Result.SuccessId
 
-                  this.router.navigate(['/Admin/smsMaster'])
+                  this.router.navigate(['/Admin/companyList/companyConfigure'])
 
         }
         else if(data.ErrorMessage){
@@ -207,9 +207,8 @@ let Sno
       (err) => { },
     );
 }
-ongetBack()
-{
-
+ongetBack(){
+  this.router.navigate(['/Admin/companyList/companyConfigure'])
 }
 onRedirect(value){
   if(value == 'State'){

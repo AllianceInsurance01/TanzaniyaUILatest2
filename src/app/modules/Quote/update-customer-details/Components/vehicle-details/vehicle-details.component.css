@@ -7,6 +7,101 @@
  ul li {
     list-style: none !important;
  }
+ @media screen and (min-width: 280px) and (max-width: 750px) {
+    .customer-grid .maan-grid-item-title{
+        font-size: 16px;
+     }
+     .input-control-container .input-form-radio-box {
+         padding-top: 3px!important;
+         /* margin: 3px 0; */
+     }
+     .input-control-container .input-form-label {
+         font-weight: 400;
+         font-family: var(--our-font-family-new);
+         font-size: 12px !important;
+         letter-spacing: .3px;
+     }
+     .smallclass{
+        padding-left: none !important;
+        padding-right: none !important;
+     }
+     .policyfield{
+        padding-left: none !important;
+        padding-right: none !important;
+     }
+     .policyfield2{
+        padding-left: none !important;
+        padding-right: none !important;
+     }
+     .motordetails{
+        padding-left: 5px !important;
+        padding-right: none !important;
+     }
+     .customerdetails{
+        padding-left: none !important;
+        padding-right: none !important;
+     }
+ }
+ @media screen and (min-width: 768px) and (max-width: 1180px) {
+    .customer-grid .maan-grid-item-title{
+        font-size: 16px;
+     }
+     .input-control-container .input-form-radio-box {
+         padding-top: 3px!important;
+         /* margin: 3px 0; */
+     }
+     .input-control-container .input-form-label {
+         font-weight: 400;
+         font-family: var(--our-font-family-new);
+         font-size: 12px !important;
+         letter-spacing: .3px;
+     }
+     .smallclass{
+        padding-left: none !important;
+        padding-right: none !important;
+     }
+     .policyfield{
+        padding-left: none !important;
+        padding-right: none !important;
+     }
+     .policyfield2{
+        padding-left: none !important;
+        padding-right: none !important;
+     }
+     .motordetails{
+        padding-left: 5px !important;
+        padding-right: none !important;
+     }
+     .customerdetails{
+        padding-left: 5px !important;
+        padding-right: none !important;
+     }
+     
+}
+
+
+@media screen and (min-width: 1180px) and (max-width: 20000px) {
+         .maan-grid {
+            display:block;
+        }
+        .smallclass{
+            padding-left: 40px !important;
+            padding-right: 40px !important;
+         }
+         .policyfield{
+            padding-left: 40px !important;
+            padding-right: 20px !important;
+         }
+         .policyfield2{
+            padding-left: 20px !important;padding-right: 20px !important;
+         }
+         .motordetails{
+            padding-left: 70px !important;padding-right: 20px !important;
+         }
+         .customerdetails{
+            padding-left: 70px !important;padding-right: 40px !important;
+         }
+    }
 
 
 

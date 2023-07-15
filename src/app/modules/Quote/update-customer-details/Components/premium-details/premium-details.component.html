@@ -176,6 +176,7 @@
                             </ng-select>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -320,13 +321,29 @@
 
 
         <div class="maan-grid-item" *ngIf="productId==5">
-            <div class="maan-grid-item-title">
-                <div class="d-flex justify-content-between">
-
-                    <div><span><i class="fas fa-home mx-1"></i>
-                        </span> <b font-style="24px;">Driver Details</b> </div>
-                    <div class="mr-3"> <button class="maan-btn maan-btn-blue maan-button-data" style="bottom:0.2rem"  *ngIf="(endorsementSection && enableDriverDetails) || !endorsementSection" (click)="AddNew()"><i class="fas fa-plus mx-1"></i>&nbsp;Add New </button></div>
+            <div class="display1">
+                <div class="maan-grid-item-title">
+                    <div class="d-flex justify-content-between">
+    
+                        <div><span><i class="fas fa-home mx-1"></i>
+                            </span> <b font-style="24px">Driver Details</b> </div>
+                        <div class="mr-3"> <button class="maan-btn maan-btn-blue maan-button-data" style="bottom:0.2rem"  *ngIf="(endorsementSection && enableDriverDetails) || !endorsementSection" (click)="AddNew()"><i class="fas fa-plus mx-1"></i>&nbsp;Add New </button></div>
+                    </div>
                 </div>
+            </div>
+            <div class="display2" style="font-size: 17px;
+            background-color: #fff!important;
+            color: #000;font-weight: 600;">
+                <div class="row" style="border-bottom:2px solid #333b85;">
+                    <span><i class="fas fa-home mx-1"></i>
+                        <b font-style="24px">Driver Details</b>
+                    </span> 
+                </div>
+              
+                <div class="mt-2">
+                    <button class="maan-btn maan-btn-blue maan-button-data" style="bottom:0.2rem"  *ngIf="(endorsementSection && enableDriverDetails) || !endorsementSection" (click)="AddNew()"><i class="fas fa-plus mx-1"></i>&nbsp;Add New </button>
+                </div>
+
             </div>
             
             <div class="row mt-3 table table_expand">
