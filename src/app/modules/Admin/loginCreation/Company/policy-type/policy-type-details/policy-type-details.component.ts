@@ -133,7 +133,7 @@ onSavepolicy() {
     "PolicyTypeName":this.policyType.PolicyTypeName,
     "EffectiveDateStart":this.policyType.EffectiveDateStart,
     "Remarks":this.policyType.Remarks,
-       "InsuranceId":"100002",
+       "InsuranceId":this.insuranceId,
         "ProductId":this.productId,
         "CreatedBy":this.loginId,
             "Status":this.policyType.Status

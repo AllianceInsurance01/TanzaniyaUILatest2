@@ -70,12 +70,18 @@
                         </div>
                     </div> -->
                         <div class="row mb-2">
-                            <div class="col-md-3 col-xl-3 col-lg-3">
-
+                            <div class="col-md-4 col-lg-4 col-xl-4 ml-3">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Insurance Company<span class="text-required">*</span></label>
+                                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="insuranceId" (change)="getExistingCurrency('change')" [items]="insuranceList" bindValue="InsuranceId" bindLabel="CompanyName">
+                                    </ng-select>
+                                </div>
                             </div>
-                            <div class="col-md-4 col-xl-4 col-lg-4 offset-5 pl-5">
+                            <div class="col-md-4 col-xl-4 col-lg-4 mt-4 offset-3">
                                 <button class="btn btn-warning" (click)="onAddNew()">Add New Currency</button>
                             </div>
+
+
                         </div>
                         <ng-container *ngIf="currencyData">
                             <app-grid-table [cols]="currencyHeader" changeStatus="true" (OnStatus)="EditStatus($event)" [data]="currencyData" [filterValue]="filterValue" (onEdit)="onEditCurrency($event)" (onConfigure)="onConfigure($event)">

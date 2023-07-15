@@ -39,7 +39,7 @@ export class NewDropdownDetailsComponent implements OnInit {
     let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if(userDetails){
       this.loginId = userDetails?.Result?.LoginId;
-      this.insuranceId = userDetails?.Result?.LoginBranchDetails[0].InsuranceId;
+      // this.insuranceId = userDetails?.Result?.LoginBranchDetails[0].InsuranceId;
     }
     //this.DropdownId = sessionStorage.getItem('ItemId');
     this.DropDownDetails = new Dropdown();
@@ -75,7 +75,8 @@ export class NewDropdownDetailsComponent implements OnInit {
     console.log("Sno Obj",  DropDown)
 
     this.ItemId = DropDown?.ItemId;
-    this.ItemCode=DropDown?.ItemCode
+    this.ItemCode=DropDown?.ItemCode;
+    this.insuranceId=DropDown?.InsuranceId;
     //this.branchValue =  DropDown?.BranchCode;
     this.ItemValue= DropDown?.ItemType;
 

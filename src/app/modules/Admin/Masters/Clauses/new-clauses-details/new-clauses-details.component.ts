@@ -45,7 +45,7 @@ export class NewClausesDetailsComponent implements OnInit {
     this.productId =  sessionStorage.getItem('companyProductId');
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     const user = this.userDetails?.Result;
-    this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+    // this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
     this.loginId = this.userDetails?.Result?.LoginId;
     this.ClausesDetails = new Clauses();
     let docObj = JSON.parse(sessionStorage.getItem('ClausesId'))
@@ -53,6 +53,7 @@ export class NewClausesDetailsComponent implements OnInit {
       this.productValue = docObj?.ProductId,
         this.branchValue = docObj?.BranchCode,
         this.sectionValue = docObj?.SectionId;
+        this.insuranceId=docObj?.InsuranceId;
     };
     this.getTypeId();
    }

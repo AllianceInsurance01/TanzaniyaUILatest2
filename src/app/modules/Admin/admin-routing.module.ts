@@ -207,6 +207,15 @@ const routes: Routes = [
       breadcrumb: 'Dropdown Master',
 	  }
 	},
+  {
+    path: 'RegionMaster',
+    loadChildren: () => import('./Masters/region/region.module').then(m => m.RegionModule),
+    data: {
+      preload: true,
+      title: "Region Master",
+      breadcrumb: 'Region Master',
+	  }
+	},
 	{
     path: 'mailMaster',
     loadChildren: () => import('./Masters/mailMaster/mail.module').then(m => m.MailModule),
