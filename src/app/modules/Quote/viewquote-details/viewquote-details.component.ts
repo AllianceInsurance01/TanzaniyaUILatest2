@@ -739,7 +739,7 @@ export class VieQuoteDetailsComponent implements OnInit {
       InsCompanyId: this.insuranceId,
       QuoteNo: this.quoteNo,
     };
-    let urlLink = `${this.ApiUrl1}document/getdoclist`;
+    let urlLink = `${this.CommonApiUrl}document/getdoclist`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         if (data?.Result) {

@@ -60,8 +60,11 @@ export class RegionListComponent implements OnInit {
           let docObj = JSON.parse(sessionStorage.getItem('addCountry'))
           if(docObj){ this.CountryValue = docObj?.ItemType;
             console.log('LLLLLLLLLL',this.CountryValue);
-            this.getExistingRegion()}
-          else{ this.CountryValue='10'; this.getExistingRegion();}
+            this.getExistingRegion()
+          }
+          else{ this.CountryValue='10'; 
+           this.getExistingRegion();
+        }
 
        
           //if(!this.CountryValue){ this.CountryValue = "99999"; this.getExistingRegion() }
@@ -83,30 +86,32 @@ export class RegionListComponent implements OnInit {
       "CountryId": this.CountryValue,
     }
     sessionStorage.setItem('RegionCode', JSON.stringify(ReqObj));
+    this.router.navigate(['Admin/countryMaster/regionList/newRegionDetails']);
     // this.dialogService.open(NewRegiondetailsComponent, {
     //   context: {
     //     title: 'Region Details'
     //   },
     // });
 
-    const dialogRef = this.dialogService.open(NewRegiondetailsComponent,{
-      data: {
-        title:'Region Details',
-        CountryCode:this.CountryValue
-             //imageUrl: data.Result.ImgUrl
-      }
-    });
+    // const dialogRef = this.dialogService.open(NewRegiondetailsComponent,{
+    //   data: {
+    //     title:'Region Details',
+    //     CountryCode:this.CountryValue
+    //          //imageUrl: data.Result.ImgUrl
+    //   }
+    // });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log(`Dialog result: ${result}`);
+    // });
   }
   onEditSection(event){
     let ReqObj = {
       "RegionCode" :event.RegionCode,
-      "CountryId": this.CountryValue
+      "CountryId":event.CountryId
     }
     sessionStorage.setItem('RegionCode',JSON.stringify(ReqObj));
+    this.router.navigate(['Admin/countryMaster/regionList/newRegionDetails']);
     /*this.dialogService.open(NewRegiondetailsComponent, {
       context: {
         title: 'Region Details',
@@ -114,19 +119,19 @@ export class RegionListComponent implements OnInit {
         CountryId: this.CountryValue
       },
     });*/
-    console.log('hhh',event.RegionCode)
-    const dialogRef = this.dialogService.open(NewRegiondetailsComponent,{
+    // console.log('hhh',event.RegionCode)
+    // const dialogRef = this.dialogService.open(NewRegiondetailsComponent,{
       
-      data: {
-        title: 'Region Details',
-        RegionId:event.RegionCode,
-        CountryId: this.CountryValue
-      }
-    });
+    //   data: {
+    //     title: 'Region Details',
+    //     RegionId:event.RegionCode,
+    //     CountryId: this.CountryValue
+    //   }
+    // });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log(`Dialog result: ${result}`);
+    // });
   }
   onRedirect(value){
     if(value == 'State'){

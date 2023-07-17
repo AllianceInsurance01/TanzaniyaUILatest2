@@ -216,6 +216,24 @@ const routes: Routes = [
       breadcrumb: 'Region Master',
 	  }
 	},
+  {
+    path: 'PlanTypeMaster',
+    loadChildren: () => import('./Masters/plantypeMaster/plantypelist/plantypelist.module').then(m => m.PlanTypeModule),
+    data: {
+      preload: true,
+      title: "Plan Type Master",
+      breadcrumb: 'Plan Type Master',
+	  }
+	},
+  {
+    path: 'ProductGroupMaster',
+    loadChildren: () => import('./Masters/productgroupMaster/productgrouplist/productgrouplist.module').then(m => m.ProductGroupModule),
+    data: {
+      preload: true,
+      title: "Product Group Master",
+      breadcrumb: 'Product Group Master',
+	  }
+	},
 	{
     path: 'mailMaster',
     loadChildren: () => import('./Masters/mailMaster/mail.module').then(m => m.MailModule),

@@ -1,0 +1,46 @@
+<div class="vision-grid-item">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-between">
+                <div>
+                Product Group Master
+                </div>
+                <div>
+                    <button class="btn btn-warning" (click)="onAddSection()">Add New</button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body row mt-2">
+            <div class="col-md-4 col-lg-4 col-xl-4 ml-3">
+                <div class="input-control-container">
+                    <label class="input-form-label">Insurance Company<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="insuranceId" (change)="getBranchList('change')" [items]="insuranceList" bindValue="InsuranceId" bindLabel="CompanyName">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 col-xl-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Branch<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" appendTo="body" [items]="branchList"
+                        [(ngModel)]="branchValue" (change)="getCompanyProductList('change')" bindValue="Code"
+                        bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4 col-xl-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">ProductId<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" appendTo="body" [items]="productList"
+                        [(ngModel)]="productValue"
+                        bindValue="ProductId" bindLabel="ProductName" (change)="getExistingClauses()">
+                    </ng-select>
+                </div>
+            </div>
+            <ng-container *ngIf="tableData">
+                <app-grid-table [cols]="columnHeader" [data]="tableData" [filterValue]="filterValue" (onEdit)="onEditSection($event)">
+                </app-grid-table>
+            </ng-container>
+        </div>
+    </div>
+</div>

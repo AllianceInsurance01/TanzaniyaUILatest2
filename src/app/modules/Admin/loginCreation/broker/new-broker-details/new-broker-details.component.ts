@@ -43,7 +43,7 @@ export class NewBrokerDetailsComponent implements OnInit {
       this.loginId = userDetails?.Result?.LoginId;
       this.branchCode = userDetails?.Result?.BranchCode;
 
-      this.insuranceId = userDetails?.Result.LoginBranchDetails[0].InsuranceId;
+      // this.insuranceId = userDetails?.Result.LoginBranchDetails[0].InsuranceId;
     }
     this.subUser = sessionStorage.getItem('typeValue');
     // this.loginInformation = this.brokerDetails?.LoginInformation;
@@ -54,6 +54,7 @@ export class NewBrokerDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     let com = sessionStorage.getItem('editBroker');
+     this.insuranceId=sessionStorage.getItem('InsuranceId')
     if (com) {
       this.editsSection = false;
       

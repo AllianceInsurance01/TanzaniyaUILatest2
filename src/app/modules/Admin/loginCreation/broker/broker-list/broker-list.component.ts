@@ -29,10 +29,11 @@ export class BrokerListComponent implements OnInit {
     this.productId =  sessionStorage.getItem('companyProductId');
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     const user = this.userDetails?.Result;
-    this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+    // this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
     this.loginId = user.LoginId;
     this.subUserType = sessionStorage.getItem('typeValue');
     let channelId =  sessionStorage.getItem('brokerChannelId');
+    this.insuranceId= sessionStorage.getItem('InsuranceId');
     if(channelId) this.channelId = channelId;
     this.getCompanyList();
     this.geChannelList();
@@ -124,10 +125,12 @@ export class BrokerListComponent implements OnInit {
   }
   onAddNew(){
     sessionStorage.removeItem('editBroker');
+    sessionStorage.setItem('InsuranceId',this.insuranceId);
     this.router.navigate(['/Admin/brokersList/newBrokerDetails']);
   }
   onEdit(rowData){
     sessionStorage.setItem('editBroker',rowData.LoginId);
+    sessionStorage.setItem('InsuranceId',this.insuranceId);
     this.router.navigate(['/Admin/brokersList/newBrokerDetails']);
     // this.dialogService.open(NewCompanyDetailsComponent, {
     //   context: {
