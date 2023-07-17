@@ -24,7 +24,7 @@
 
                 <ng-template #hasConfig>
                     <ng-container *ngIf="col.config.isView">
-                        <button class="circle btn btn-warning btn-sm" (click)="onView.emit(element)">
+                        <button class="circle btn btn-warning btn-sm" *ngIf="element.QuoteNo!=null" (click)="onView.emit(element)">
                             <i class="fas fa-eye" style='color: blue'></i>
                         </button>&nbsp;
                     </ng-container>
