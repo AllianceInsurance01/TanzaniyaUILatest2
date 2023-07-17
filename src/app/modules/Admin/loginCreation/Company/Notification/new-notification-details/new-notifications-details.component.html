@@ -195,11 +195,10 @@
                 <div class="col-md-4 col-lg-4 col-xl-4"  *ngIf="NotificationDetails.SmsRequired == 'Y' ">
                     <div class="input-control-container">
                         <label class="input-form-label">ToSmsno<span class="text-required">*</span></label>
-                     <div class="input-form-box">
                         <ng-select class="input-form-select" appendTo="body" [(ngModel)]="NotificationDetails.ToSmsno" [items]="NotifList" bindValue="Code" bindLabel="CodeDesc">
                         </ng-select>
                         <!-- <input type="text" class="input-form-control without-icon" [(ngModel)]="NotificationDetails.ToSmsno" maxlength="100"> -->
-                      </div>
+                      
                    </div>
                 </div>
                       <div class="col-md-6 col-lg-4 col-xl-4 " *ngIf="NotificationDetails.SmsRequired == 'Y' ">
@@ -251,11 +250,11 @@
                             <div class="col-md-6 col-lg-4 col-xl-4 " *ngIf="NotificationDetails.WhatsappRequired == 'Y' ">
                                 <div class="input-control-container">
                                     <label class="input-form-label">To Messengerno<span class="text-required">*</span></label>
-                                 <div class="input-form-box">
+                                
                                     <ng-select class="input-form-select" appendTo="body" [(ngModel)]="NotificationDetails.ToMessengerno" [items]="NotifList" bindValue="Code" bindLabel="CodeDesc">
                                     </ng-select>
                                       <!-- <input type="text" class="input-form-control without-icon" [(ngModel)]="NotificationDetails.ToMessengerno" maxlength="100"> -->
-                                  </div>
+                                  
                                </div>
                             </div>
                             <div class="col-md-6 col-lg-4 col-xl-4" *ngIf="NotificationDetails.WhatsappRequired == 'Y' ">
