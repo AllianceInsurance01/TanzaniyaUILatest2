@@ -129,16 +129,17 @@ EditStatus(event){
         let docObj = JSON.parse(sessionStorage.getItem('addCityDetails'))
 
         if(docObj){this.CountryValue = docObj?.Country;
-          this.getStateList();
+          this.getStateList('direct');
         }
-        else{this.CountryValue='TZA'; this.getStateList(); } 
+        else{this.CountryValue='TZA'; this.getStateList('direct'); } 
         //if(!this.CountryValue){ this.CountryValue = "99999"; this.getStateList() }
       }
     },
     (err) => { },
   );
   }
-  getStateList(){
+  getStateList(type){
+    if(type=='change') {this.cityData=[]}
     let ReqObj = {
       "CountryId":this.CountryValue,
     }

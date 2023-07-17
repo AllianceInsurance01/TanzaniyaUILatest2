@@ -931,7 +931,7 @@ a {
     line-height: inherit;*/
 }
 .content{
-    width: 80% !important;
+   // width: 80% !important;
 }
 .content-wrap {
     width: 1000px;
@@ -2528,6 +2528,7 @@ p {
 }
 
 .bg-image-data {
+    height: 50px;
     width: 10rem;
     position: relative;
     top: 0rem;
