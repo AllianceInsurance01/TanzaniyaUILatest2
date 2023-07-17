@@ -150,7 +150,8 @@ onSaveNotification() {
         "Status": this.NotificationDetails.Status,
         "CreatedBy": this.loginId,
         "CoreAppCode": this.NotificationDetails.CoreAppCode,
-        "RegulatoryCode":this.NotificationDetails.RegulatoryCode
+        "RegulatoryCode":this.NotificationDetails.RegulatoryCode,
+        "SmsRegards": this.NotificationDetails.SmsRegards
   }
   let urlLink = `${this.ApiUrl1}master/insertnotiftemplate`;
 
