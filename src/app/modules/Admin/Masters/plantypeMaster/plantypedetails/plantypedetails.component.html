@@ -1,0 +1,100 @@
+<div class="vision-grid-item">
+    <div class="card">
+        <div class="card-header">Plan Type Master</div>
+        <div class="card-body">
+            <div class="row mt-2">
+
+                <div class="col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Branch Code<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" disabled appendTo="body" [items]="branchList" [(ngModel)]="branchvalue"  bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Product<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" disabled appendTo="body" [items]="productList" [(ngModel)]="productId"  bindValue="ProductId" bindLabel="ProductName">
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="input-control-container">
+                        <label class="input-form-label">PlanType Description<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <textarea cols="120" rows="2" class="input-form-control without-icon" [(ngModel)]="plantypeDetails.PlanTypeDescription" maxlength="200"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <input type="text" class="input-form-control without-icon" [(ngModel)]="plantypeDetails.CoreAppCode" maxlength="100">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 col-xl-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Section</label>
+                        <ng-select class="input-form-select" disabled appendTo="body" [items]="sectionList" [(ngModel)]="sectionvalue" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                </div>
+            
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Regulatory Code<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <input type="text" class="input-form-control without-icon" [(ngModel)]="plantypeDetails.RegulatoryCode" maxlength="100">
+                        </div>
+                    </div>
+                </div>
+             
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                      <label class="input-form-label">EffectiveDateStart<span class="text-required">*</span></label>
+                        <mat-form-field appearance="fill">
+                            <!--<mat-label>EffectiveDateStart<span class="text-danger">*</span></mat-label>-->
+                            <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="plantypeDetails.EffectiveDateStart">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Status</label>
+                        <div class="input-form-radio-box">
+                            <div class="radio-toolbar">
+                                <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse"  value="Y" [(ngModel)]="plantypeDetails.Status">
+                                <label for="orginwarehouse_Yes">Active</label>
+                                <input type="radio" id="orginwarehouse_No" name="originatingWarehouse"  value="N" [(ngModel)]="plantypeDetails.Status" >
+                                <label for="orginwarehouse_No">DeActive</label>
+                                <input type="radio" id="orginwarehouse_Referral" name="originatingWarehouse"  value="R" [(ngModel)]="plantypeDetails.Status">
+                                <label for="orginwarehouse_Referral">Referral</label>
+                                <input type="radio" id="orginwarehouse_Pending" name="originatingWarehouse"  value="P" [(ngModel)]="plantypeDetails.Status">
+                                <label for="orginwarehouse_Pending">Pending</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <textarea cols="120" rows="2" class="input-form-control without-icon" [(ngModel)]="plantypeDetails.Remarks" maxlength="200"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="text-center mt-2">
+                <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>
+                <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

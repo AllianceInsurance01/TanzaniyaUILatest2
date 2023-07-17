@@ -17,7 +17,7 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 export class NewRegiondetailsComponent implements OnInit {
 
   @Input() title: any; @Input() RegionId:any; @Input() CountryId:any;
-  public activeMenu:any;statusValue:any="YES";
+statusValue:any="YES";
   public minDate:Date;insuranceId: string;productId: string;
   public loginId :any;CountryValue:any;
   public regionDetails :any ={};countryList:any;
@@ -25,9 +25,11 @@ export class NewRegiondetailsComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   userDetails: any;
+  public activeMenu:any='Region';
 
   constructor(
-    private sharedService: SharedService,private datePipe:DatePipe,public dialogRef: MatDialogRef<NewRegiondetailsComponent>,public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any) {
+    // private sharedService: SharedService,private datePipe:DatePipe,public dialogRef: MatDialogRef<NewRegiondetailsComponent>,public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any,
+    private sharedService: SharedService,private datePipe:DatePipe,private router:Router) {
       this.minDate = new Date();
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     const user = this.userDetails?.Result;
@@ -43,14 +45,11 @@ export class NewRegiondetailsComponent implements OnInit {
 
 
   ngOnInit(): void {
-
-    this.CountryId = this.data?.CountryId;
-
-
-    this.RegionId  =this.data?.RegionId;
-    console.log("RegionId",this.RegionId);
   
-   
+    let regionobj=JSON.parse(sessionStorage.getItem('RegionCode'));
+    this.CountryId = regionobj?.CountryId;
+    this.RegionId = regionobj?.RegionCode;
+    console.log("RegionId",this.RegionId);
     console.log('ttttt',this.regionDetails.CountryId);
     if(this.RegionId!=null && this.RegionId!=undefined){
       this.getEditregionDetails();
@@ -58,7 +57,7 @@ export class NewRegiondetailsComponent implements OnInit {
     else{
       this.RegionId = null;
       this.regionDetails = new Region();
-      if(this.regionDetails?.Status==null)  this.regionDetails.Status = 'N';
+      if(this.regionDetails?.Status==null)  this.regionDetails.Status = 'Y';
     }
   }
 
@@ -73,7 +72,7 @@ export class NewRegiondetailsComponent implements OnInit {
       if(data.Result){
         let obj = [];
         this.countryList = obj.concat(data?.Result);
-        this.regionDetails.CountryId = this.data?.CountryCode;
+        this.regionDetails.CountryId = this.CountryId;
       }
     },
     (err) => { },
@@ -127,8 +126,8 @@ export class NewRegiondetailsComponent implements OnInit {
   }
   ongetBack(){
     //this.ref.close();
-    this.dialogRef.close();
-    //this.router.navigate(['/Admin/countryMaster/regionList'])
+    // this.dialogRef.close();
+    this.router.navigate(['/Admin/countryMaster/regionList'])
   }
   onProceed(){
     let ReqObj = {
@@ -170,6 +169,7 @@ export class NewRegiondetailsComponent implements OnInit {
           //         'Region Details',
           //         config);
           //      this.ref.close();
+          this.router.navigate(['/Admin/countryMaster/regionList']);
         }
         else if(data.ErrorMessage){
             if(res.ErrorMessage){
@@ -195,5 +195,22 @@ export class NewRegiondetailsComponent implements OnInit {
       },
       (err) => { },
     );
+  }
+  onRedirect(value){
+    if(value == 'State'){
+      this.router.navigate(['/Admin/countryMaster/stateList']);
+    }
+    else if(value == 'City'){
+      this.router.navigate(['/Admin/countryMaster/cityList']);
+    }
+    else if(value == 'Country'){
+      this.router.navigate(['/Admin/countryMaster/newCountryDetails']);
+    }
+    else if(value == 'Currency'){
+      this.router.navigate(['/Admin/countryMaster/currencyList']);
+    }
+    else if(value == 'Region'){
+      this.router.navigate(['/Admin/countryMaster/regionList']);
+    }
   }
 }

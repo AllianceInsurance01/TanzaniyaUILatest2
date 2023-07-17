@@ -155,7 +155,8 @@ export class PremiaConfigListComponent implements OnInit {
   getallPremia(){
     let ReqObj={
       "InsuranceId":this.insuranceId,
-      "BranchCode":"99999"
+      "BranchCode":"99999",
+      "ProductId":this.productId
     }
 let urlLink = `${this.CommonApiUrl}master/getallpremiaconfig`;
 
