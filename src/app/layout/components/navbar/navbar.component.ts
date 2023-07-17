@@ -1,14 +1,19 @@
 declare var $:any;
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { navItems } from './_nav';
 import { navSubItem } from './_nav_oc';
 import { navQuoteSubMenu } from './_nav_oc_quote';
 import { LoginService } from '../../../modules/login/login.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { HttpService } from 'src/app/shared/Services/http.service';
 import * as Mydatas from '../../../app-config.json';
 import { AuthService } from 'src/app/Auth/auth.service';
 import { SharedService } from 'src/app/shared/Services/shared.service';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { delay, filter } from 'rxjs';
+import { MatSidenav } from '@angular/material/sidenav';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+@UntilDestroy()
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -22,6 +27,8 @@ export class NavbarComponent implements OnInit {
   public menu: any[] = []; branchList: any[] = [];
   productName: any; userDetails: any;submenuList:any[]=[];
   productname: any; currentIndex: any = null;
+  @ViewChild(MatSidenav)
+  sidenav!: MatSidenav;
   config = {
     classname: 'my-custom-class',
     listBackgroundColor: `#fff`,
@@ -42,7 +49,7 @@ export class NavbarComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private service: HttpService,
-    private loginService: LoginService,
+    private loginService: LoginService,private observer: BreakpointObserver,
     private router: Router, private SharedService: SharedService
   ) {
     //this.menu = navItems;
@@ -69,6 +76,31 @@ export class NavbarComponent implements OnInit {
       $("#dropdownMenuLink1").on('click', function (evt) {  
         console.log("evt***",evt);
         $('.branchsubName').toggle();
+      });
+  }
+  ngAfterViewInit() {
+    this.observer
+      .observe(['(max-width: 800px)'])
+      .pipe(delay(1), untilDestroyed(this))
+      .subscribe((res:any) => {
+        if (res.matches) {
+          this.sidenav.mode = 'over';
+          this.sidenav.close();
+        } else {
+          this.sidenav.mode = 'side';
+          this.sidenav.open();
+        }
+      });
+
+    this.router.events
+      .pipe(
+        untilDestroyed(this),
+        filter((e) => e instanceof NavigationEnd)
+      )
+      .subscribe(() => {
+        if (this.sidenav.mode === 'over') {
+          this.sidenav.close();
+        }
       });
   }
   home() {
@@ -443,3 +475,4 @@ export class NavbarComponent implements OnInit {
       item.addEventListener('mouseover', activeLink));
   }
 }
+

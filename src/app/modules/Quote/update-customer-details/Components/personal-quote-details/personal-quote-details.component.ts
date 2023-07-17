@@ -138,7 +138,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
     this.productId = this.userDetails.Result.ProductId;
     this.insuranceId = this.userDetails.Result.InsuranceId;
      this.updateComponent.showStepperSection = false;
-    if (this.productId != '3' && this.productId != '19' && this.productId!='39') {
+    if (this.productId != '3' && this.productId != '19' && this.productId!='39' && this.productId!='16') {
       this.getOccupationList(null);
     }
     this.productItem = new ProductData();
@@ -1100,30 +1100,62 @@ export class PersonalQuoteDetailsComponent implements OnInit {
     else if(this.productId=='39'){
       let fireData = new MachineryBreakDown();
       let entry = [];
-      this.fields[0] = fireData?.fields;
-      let referenceNo = sessionStorage.getItem('quoteReferenceNo');
-      if (referenceNo) {
-        this.requestReferenceNo = referenceNo;
-        this.setCommonFormValues();
+      let checkYnHooks ={ onInit: (field: FormlyFieldConfig) => {
+        field.formControl.valueChanges.subscribe(() => {
+            this.checkMachineryYNChanges()
+        });
+      }};
+      let groupList = fireData?.fields.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
+      let i=0;
+      for(let group of groupList){
+         group.fieldGroup[0].hooks = checkYnHooks;
+         i+=1;
+         if(i==groupList.length){ 
+          this.fields[0] = fireData?.fields;
+           this.checkMachineryYNChanges();
+           let referenceNo = sessionStorage.getItem('quoteReferenceNo');
+            if (referenceNo) {
+              this.requestReferenceNo = referenceNo;
+              this.setCommonFormValues();
+            }
+            else {
+                this.productItem = new ProductData();
+                this.formSection = true; this.viewSection = false;
+            }
+        }
       }
-      else {
-          this.productItem = new ProductData();
-          this.formSection = true; this.viewSection = false;
-      }
+
     }
     else if(this.productId=='16'){
       let fireData = new Money();
       let entry = [];
-      this.fields[0] = fireData?.fields;
-      // let referenceNo = sessionStorage.getItem('quoteReferenceNo');
-      // if (referenceNo) {
-      //   this.requestReferenceNo = referenceNo;
-      //   this.setCommonFormValues();
-      // }
-      // else {
-      //     this.productItem = new ProductData();
-      //     this.formSection = true; this.viewSection = false;
-      // }
+      let checkYnHooks ={ onInit: (field: FormlyFieldConfig) => {
+        field.formControl.valueChanges.subscribe(() => {
+            this.checkMoneyYNChanges()
+        });
+      }};
+      let groupList:any = fireData?.fields.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
+      let i=0;
+        for(let group of groupList){
+           group.fieldGroup[0].hooks = checkYnHooks;
+           i+=1;
+           if(i==groupList.length){
+            this.fields[0] = fireData?.fields;
+            let referenceNo = sessionStorage.getItem('quoteReferenceNo');
+            this.checkMoneyYNChanges();
+            if (referenceNo) {
+              this.requestReferenceNo = referenceNo;
+              this.setCommonFormValues();
+            }
+            else {
+                this.productItem = new ProductData();
+                this.formSection = true; this.viewSection = false;
+            }
+          }
+        }
+      
+      console.log("Final Fields",groupList);
+      
     }
     this.BenifitList = [
       { Code: 1, CodeDescription: '12 Months' },
@@ -1305,29 +1337,49 @@ export class PersonalQuoteDetailsComponent implements OnInit {
   } 
 checkMachineryYNChanges(){
   console.log("Form",this.productItem,this.fields)
-  let fields = this.fields[0].fieldGroup;
-    for(let field of fields){
-      if(field.props.label=='Machinery BreakDown'){
-          let tableData = field.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
-          tableData[0].fieldGroup[2].templateOptions['disabled'] = !this.productItem.PowerPlantSIYN;
-          tableData[1].fieldGroup[2].templateOptions['disabled'] = !this.productItem.ElecMachinesSIYN;
-          tableData[2].fieldGroup[2].templateOptions['disabled'] = !this.productItem.EquipmentSIYN;
-          tableData[3].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MachineEquipSIYN;
-          tableData[4].fieldGroup[2].templateOptions['disabled'] = !this.productItem.GeneralMachineSIYN;
-          tableData[5].fieldGroup[2].templateOptions['disabled'] = !this.productItem.ManuUnitsSIYN;
-          tableData[6].fieldGroup[2].templateOptions['disabled'] = !this.productItem.BoilerPlantsSIYN;
-          if(!this.productItem.PowerPlantSIYN){this.productItem.PowerPlantSi = '0'; this.form?.controls['PowerPlantSi']?.setValue('0')}
-          if(!this.productItem.ElecMachinesSIYN) {this.productItem.ElecMachinesSi = '0'; this.form?.controls['ElecMachinesSi']?.setValue('0')}
-          if(!this.productItem.EquipmentSIYN) { this.productItem.EquipmentSi = '0'; this.form?.controls['EquipmentSi']?.setValue('0')}
-          if(!this.productItem.MachineEquipSIYN) { this.productItem.MachineEquipSi = '0'; this.form?.controls['MachineEquipSi']?.setValue('0')}
-          if(!this.productItem.GeneralMachineSIYN) { this.productItem.GeneralMachineSi = '0'; this.form?.controls['GeneralMachineSi']?.setValue('0')}
-          if(!this.productItem.ManuUnitsSIYN) { this.productItem.ManuUnitsSi = '0'; this.form?.controls['ManuUnitsSi']?.setValue('0')}
-          if(!this.productItem.BoilerPlantsSIYN) { this.productItem.BoilerPlantsSi = '0'; this.form?.controls['BoilerPlantsSi']?.setValue('0')}
+  if(this.productId=='19'){
+    let fields = this.fields[0].fieldGroup;
+      for(let field of fields){
+        if(field.props.label=='Machinery BreakDown'){
+            let tableData = field.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
+            tableData[0].fieldGroup[2].templateOptions['disabled'] = !this.productItem.PowerPlantSIYN;
+            tableData[1].fieldGroup[2].templateOptions['disabled'] = !this.productItem.ElecMachinesSIYN;
+            tableData[2].fieldGroup[2].templateOptions['disabled'] = !this.productItem.EquipmentSIYN;
+            tableData[3].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MachineEquipSIYN;
+            tableData[4].fieldGroup[2].templateOptions['disabled'] = !this.productItem.GeneralMachineSIYN;
+            tableData[5].fieldGroup[2].templateOptions['disabled'] = !this.productItem.ManuUnitsSIYN;
+            tableData[6].fieldGroup[2].templateOptions['disabled'] = !this.productItem.BoilerPlantsSIYN;
+            if(!this.productItem.PowerPlantSIYN){this.productItem.PowerPlantSi = '0'; this.form?.controls['PowerPlantSi']?.setValue('0')}
+            if(!this.productItem.ElecMachinesSIYN) {this.productItem.ElecMachinesSi = '0'; this.form?.controls['ElecMachinesSi']?.setValue('0')}
+            if(!this.productItem.EquipmentSIYN) { this.productItem.EquipmentSi = '0'; this.form?.controls['EquipmentSi']?.setValue('0')}
+            if(!this.productItem.MachineEquipSIYN) { this.productItem.MachineEquipSi = '0'; this.form?.controls['MachineEquipSi']?.setValue('0')}
+            if(!this.productItem.GeneralMachineSIYN) { this.productItem.GeneralMachineSi = '0'; this.form?.controls['GeneralMachineSi']?.setValue('0')}
+            if(!this.productItem.ManuUnitsSIYN) { this.productItem.ManuUnitsSi = '0'; this.form?.controls['ManuUnitsSi']?.setValue('0')}
+            if(!this.productItem.BoilerPlantsSIYN) { this.productItem.BoilerPlantsSi = '0'; this.form?.controls['BoilerPlantsSi']?.setValue('0')}
+        }
       }
-    }
+  }
+  else{
+    let tableData = this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
+    tableData[0].fieldGroup[2].templateOptions['disabled'] = !this.productItem.PowerPlantSIYN;
+    tableData[1].fieldGroup[2].templateOptions['disabled'] = !this.productItem.ElecMachinesSIYN;
+    tableData[2].fieldGroup[2].templateOptions['disabled'] = !this.productItem.EquipmentSIYN;
+    tableData[3].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MachineEquipSIYN;
+    tableData[4].fieldGroup[2].templateOptions['disabled'] = !this.productItem.GeneralMachineSIYN;
+    tableData[5].fieldGroup[2].templateOptions['disabled'] = !this.productItem.ManuUnitsSIYN;
+    tableData[6].fieldGroup[2].templateOptions['disabled'] = !this.productItem.BoilerPlantsSIYN;
+    if(!this.productItem.PowerPlantSIYN){this.productItem.PowerPlantSi = '0'; this.form?.controls['PowerPlantSi']?.setValue('0')}
+    if(!this.productItem.ElecMachinesSIYN) {this.productItem.ElecMachinesSi = '0'; this.form?.controls['ElecMachinesSi']?.setValue('0')}
+    if(!this.productItem.EquipmentSIYN) { this.productItem.EquipmentSi = '0'; this.form?.controls['EquipmentSi']?.setValue('0')}
+    if(!this.productItem.MachineEquipSIYN) { this.productItem.MachineEquipSi = '0'; this.form?.controls['MachineEquipSi']?.setValue('0')}
+    if(!this.productItem.GeneralMachineSIYN) { this.productItem.GeneralMachineSi = '0'; this.form?.controls['GeneralMachineSi']?.setValue('0')}
+    if(!this.productItem.ManuUnitsSIYN) { this.productItem.ManuUnitsSi = '0'; this.form?.controls['ManuUnitsSi']?.setValue('0')}
+    if(!this.productItem.BoilerPlantsSIYN) { this.productItem.BoilerPlantsSi = '0'; this.form?.controls['BoilerPlantsSi']?.setValue('0')}
+  }
 }
 checkMoneyYNChanges(){
-  let fields = this.fields[0].fieldGroup;
+  if(this.productId=='19'){
+    let fields = this.fields[0].fieldGroup;
     for(let field of fields){
       if(field.props.label=='Money'){
           let tableData = field.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
@@ -1348,6 +1400,27 @@ checkMoneyYNChanges(){
          
       }
     }
+  }
+  else{
+    console.log("Moneyyyyyyyyyy",this.fields[0].fieldGroup)
+    let tableData = this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
+    
+    tableData[0].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyInSafeBusinessSIYN;
+    tableData[1].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyOutSafeBusinessSIYN;
+    tableData[2].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyInPremisesSIYN;
+    tableData[3].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInTransitSIYN;
+    tableData[4].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInHandEmployeesSIYN;
+    tableData[5].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInSafeSIYN;
+    tableData[6].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyAnnualcarrySuminsuredSIYN;
+    if(!this.productItem.MoneyInSafeBusinessSIYN){this.productItem.MoneyInSafeBusiness = '0'; this.form?.controls['MoneyInSafeBusiness']?.setValue('0')}
+    if(!this.productItem.MoneyOutSafeBusinessSIYN) {this.productItem.MoneyOutSafeBusiness = '0'; this.form?.controls['MoneyOutSafeBusiness']?.setValue('0')}
+    if(!this.productItem.MoneyInPremisesSIYN) { this.productItem.MoneyInPremises = '0'; this.form?.controls['MoneyInPremises']?.setValue('0')}
+    if(!this.productItem.CashInTransitSIYN) { this.productItem.CashInTransit = '0'; this.form?.controls['CashInTransit']?.setValue('0')}
+    if(!this.productItem.CashInHandEmployeesSIYN) { this.productItem.CashInHandEmployees = '0'; this.form?.controls['CashInHandEmployees']?.setValue('0')}
+    if(!this.productItem.CashInSafeSIYN) { this.productItem.CashInSafe = '0'; this.form?.controls['CashInSafe']?.setValue('0')}
+    if(!this.productItem.MoneyAnnualcarrySuminsuredSIYN) { this.productItem.MoneyAnnualcarrySuminsured = '0'; this.form?.controls['MoneyAnnualcarrySuminsured']?.setValue('0')}
+    console.log("Tablessssss",tableData)
+  }
 }
 getBurglaryDetails(sections){
   let sectionId = null;
@@ -1437,13 +1510,13 @@ getMoneyDetails(sections){
         this.productItem.MoneyInPremises = details?.MoneyInPremises;
         this.productItem.MoneyInSafeBusiness = details?.MoneyInSafeBusiness;
         this.productItem.MoneyOutSafeBusiness = details?.MoneyOutSafeBusiness;
-        if(this.productItem.CashInHandEmployees!=null && this.productItem.CashInHandEmployees!='0' && this.productItem.CashInHandEmployees!='0.0') this.productItem.CashInHandEmployeesSIYN = true;
-        if(this.productItem.CashInSafe!=null && this.productItem.CashInSafe!='0' && this.productItem.CashInSafe!='0.0') this.productItem.CashInSafeSIYN = true;
-        if(this.productItem.CashInTransit!=null && this.productItem.CashInTransit!='0' && this.productItem.CashInTransit!='0.0') this.productItem.CashInTransitSIYN = true;
-        if(this.productItem.MoneyAnnualcarrySuminsured!=null && this.productItem.MoneyAnnualcarrySuminsured!='0' && this.productItem.MoneyAnnualcarrySuminsured!='0.0') this.productItem.MoneyAnnualcarrySuminsuredSIYN = true;
-        if(this.productItem.MoneyInPremises!=null && this.productItem.MoneyInPremises!='0' && this.productItem.MoneyInPremises!='0.0') this.productItem.MoneyInPremisesSIYN = true;
-        if(this.productItem.MoneyInSafeBusiness!=null && this.productItem.MoneyInSafeBusiness!='0' && this.productItem.MoneyInSafeBusiness!='0.0') this.productItem.MoneyInSafeBusinessSIYN = true;
-        if(this.productItem.MoneyOutSafeBusiness!=null && this.productItem.MoneyOutSafeBusiness!='0' && this.productItem.MoneyOutSafeBusiness!='0.0') this.productItem.MoneyOutSafeBusinessSIYN = true;
+        if(this.productItem.CashInHandEmployees!=null && this.productItem.CashInHandEmployees!='0' && this.productItem.CashInHandEmployees!='' && this.productItem.CashInHandEmployees!='0.0') this.productItem.CashInHandEmployeesSIYN = true;
+        if(this.productItem.CashInSafe!=null && this.productItem.CashInSafe!='0' && this.productItem.CashInSafe!='' && this.productItem.CashInSafe!='0.0') this.productItem.CashInSafeSIYN = true;
+        if(this.productItem.CashInTransit!=null && this.productItem.CashInTransit!='0' && this.productItem.CashInTransit!='' && this.productItem.CashInTransit!='0.0') this.productItem.CashInTransitSIYN = true;
+        if(this.productItem.MoneyAnnualcarrySuminsured!=null && this.productItem.MoneyAnnualcarrySuminsured!='0' && this.productItem.MoneyAnnualcarrySuminsured!='' && this.productItem.MoneyAnnualcarrySuminsured!='0.0') this.productItem.MoneyAnnualcarrySuminsuredSIYN = true;
+        if(this.productItem.MoneyInPremises!=null && this.productItem.MoneyInPremises!='0' && this.productItem.MoneyInPremises!='' && this.productItem.MoneyInPremises!='0.0') this.productItem.MoneyInPremisesSIYN = true;
+        if(this.productItem.MoneyInSafeBusiness!=null && this.productItem.MoneyInSafeBusiness!='0' && this.productItem.MoneyInSafeBusiness!='' && this.productItem.MoneyInSafeBusiness!='0.0') this.productItem.MoneyInSafeBusinessSIYN = true;
+        if(this.productItem.MoneyOutSafeBusiness!=null && this.productItem.MoneyOutSafeBusiness!='0'&& this.productItem.MoneyOutSafeBusiness!='' && this.productItem.MoneyOutSafeBusiness!='0.0') this.productItem.MoneyOutSafeBusinessSIYN = true;
         this.checkMoneyYNChanges();
         this.sectionCount +=1;
         if(sections.length==this.sectionCount){
@@ -1475,13 +1548,13 @@ getMachineryBreakDownDetails(sections){
         this.productItem.MachineEquipSi = details?.MachineEquipSi;
         this.productItem.ManuUnitsSi = details?.ManuUnitsSi;
         this.productItem.PowerPlantSi = details?.PowerPlantSi;
-        if(this.productItem.BoilerPlantsSi!=null && this.productItem.BoilerPlantsSi!='0' && this.productItem.BoilerPlantsSi!='0.0') this.productItem.BoilerPlantsSIYN = true;
-        if(this.productItem.ElecMachinesSi!=null && this.productItem.ElecMachinesSi!='0' && this.productItem.ElecMachinesSi!='0.0') this.productItem.ElecMachinesSIYN = true;
-        if(this.productItem.EquipmentSi!=null && this.productItem.EquipmentSi!='0' && this.productItem.EquipmentSi!='0.0') this.productItem.EquipmentSIYN = true;
-        if(this.productItem.GeneralMachineSi!=null && this.productItem.GeneralMachineSi!='0' && this.productItem.GeneralMachineSi!='0.0') this.productItem.GeneralMachineSIYN = true;
-        if(this.productItem.MachineEquipSi!=null && this.productItem.MachineEquipSi!='0' && this.productItem.MachineEquipSi!='0.0') this.productItem.MachineEquipSIYN = true;
-        if(this.productItem.ManuUnitsSi!=null && this.productItem.ManuUnitsSi!='0' && this.productItem.ManuUnitsSi!='0.0') this.productItem.ManuUnitsSIYN = true;
-        if(this.productItem.PowerPlantSi!=null && this.productItem.PowerPlantSi!='0' && this.productItem.PowerPlantSi!='0.0') this.productItem.PowerPlantSIYN = true;
+        if(this.productItem.BoilerPlantsSi!=null && this.productItem.BoilerPlantsSi!='0' && this.productItem.BoilerPlantsSi!='' && this.productItem.BoilerPlantsSi!='0.0') this.productItem.BoilerPlantsSIYN = true;
+        if(this.productItem.ElecMachinesSi!=null && this.productItem.ElecMachinesSi!='0' && this.productItem.ElecMachinesSi!='' && this.productItem.ElecMachinesSi!='0.0') this.productItem.ElecMachinesSIYN = true;
+        if(this.productItem.EquipmentSi!=null && this.productItem.EquipmentSi!='0' && this.productItem.EquipmentSi!='' && this.productItem.EquipmentSi!='0.0') this.productItem.EquipmentSIYN = true;
+        if(this.productItem.GeneralMachineSi!=null && this.productItem.GeneralMachineSi!='0' && this.productItem.GeneralMachineSi!='' && this.productItem.GeneralMachineSi!='0.0') this.productItem.GeneralMachineSIYN = true;
+        if(this.productItem.MachineEquipSi!=null && this.productItem.MachineEquipSi!='0' && this.productItem.MachineEquipSi!='' && this.productItem.MachineEquipSi!='0.0') this.productItem.MachineEquipSIYN = true;
+        if(this.productItem.ManuUnitsSi!=null && this.productItem.ManuUnitsSi!='0' && this.productItem.ManuUnitsSi!='' && this.productItem.ManuUnitsSi!='0.0') this.productItem.ManuUnitsSIYN = true;
+        if(this.productItem.PowerPlantSi!=null && this.productItem.PowerPlantSi!='0' && this.productItem.PowerPlantSi!='' && this.productItem.PowerPlantSi!='0.0') this.productItem.PowerPlantSIYN = true;
         this.checkMachineryYNChanges();
         this.sectionCount +=1;
         if(sections.length==this.sectionCount){
@@ -3832,7 +3905,7 @@ getOccupationList(sections) {
                           }
                     }
               }
-              if (this.productId != '19' && this.productId != '3' && this.productId != '32' && this.productId!='14') this.fields[0].fieldGroup[0].fieldGroup[2].props.options = defaultObj.concat(this.occupationList);
+              if (this.productId != '19' && this.productId != '3' && this.productId != '32' && this.productId!='14' && this.productId!='16') this.fields[0].fieldGroup[0].fieldGroup[2].props.options = defaultObj.concat(this.occupationList);
               if(this.productId=='14'){
                 let fireData = new EmployersLiability();
                 let entry = [];
@@ -3973,13 +4046,13 @@ setCommonFormValues(){
             this.productItem.MoneyInPremises = details?.MoneyInPremises;
             this.productItem.MoneyInSafeBusiness = details?.MoneyInSafeBusiness;
             this.productItem.MoneyOutSafeBusiness = details?.MoneyOutSafeBusiness;
-            if(this.productItem.CashInHandEmployees!=null && this.productItem.CashInHandEmployees!='0' && this.productItem.CashInHandEmployees!='0.0') this.productItem.CashInHandEmployeesSIYN = true;
-            if(this.productItem.CashInSafe!=null && this.productItem.CashInSafe!='0' && this.productItem.CashInSafe!='0.0') this.productItem.CashInSafeSIYN = true;
-            if(this.productItem.CashInTransit!=null && this.productItem.CashInTransit!='0' && this.productItem.CashInTransit!='0.0') this.productItem.CashInTransitSIYN = true;
-            if(this.productItem.MoneyAnnualcarrySuminsured!=null && this.productItem.MoneyAnnualcarrySuminsured!='0' && this.productItem.MoneyAnnualcarrySuminsured!='0.0') this.productItem.MoneyAnnualcarrySuminsuredSIYN = true;
-            if(this.productItem.MoneyInPremises!=null && this.productItem.MoneyInPremises!='0' && this.productItem.MoneyInPremises!='0.0') this.productItem.MoneyInPremisesSIYN = true;
-            if(this.productItem.MoneyInSafeBusiness!=null && this.productItem.MoneyInSafeBusiness!='0' && this.productItem.MoneyInSafeBusiness!='0.0') this.productItem.MoneyInSafeBusinessSIYN = true;
-            if(this.productItem.MoneyOutSafeBusiness!=null && this.productItem.MoneyOutSafeBusiness!='0' && this.productItem.MoneyOutSafeBusiness!='0.0') this.productItem.MoneyOutSafeBusinessSIYN = true;
+            if(this.productItem.CashInHandEmployees!=null && this.productItem.CashInHandEmployees!='0' && this.productItem.CashInHandEmployees!='' && this.productItem.CashInHandEmployees!='0.0') this.productItem.CashInHandEmployeesSIYN = true;
+            if(this.productItem.CashInSafe!=null && this.productItem.CashInSafe!='0' && this.productItem.CashInSafe!='' && this.productItem.CashInSafe!='0.0') this.productItem.CashInSafeSIYN = true;
+            if(this.productItem.CashInTransit!=null && this.productItem.CashInTransit!='0' && this.productItem.CashInTransit!='' && this.productItem.CashInTransit!='0.0') this.productItem.CashInTransitSIYN = true;
+            if(this.productItem.MoneyAnnualcarrySuminsured!=null && this.productItem.MoneyAnnualcarrySuminsured!='0' && this.productItem.MoneyAnnualcarrySuminsured!='' && this.productItem.MoneyAnnualcarrySuminsured!='0.0') this.productItem.MoneyAnnualcarrySuminsuredSIYN = true;
+            if(this.productItem.MoneyInPremises!=null && this.productItem.MoneyInPremises!='0' && this.productItem.MoneyInPremises!='' && this.productItem.MoneyInPremises!='0.0') this.productItem.MoneyInPremisesSIYN = true;
+            if(this.productItem.MoneyInSafeBusiness!=null && this.productItem.MoneyInSafeBusiness!='0' && this.productItem.MoneyInSafeBusiness!='' && this.productItem.MoneyInSafeBusiness!='0.0') this.productItem.MoneyInSafeBusinessSIYN = true;
+            if(this.productItem.MoneyOutSafeBusiness!=null && this.productItem.MoneyOutSafeBusiness!='0' && this.productItem.MoneyOutSafeBusiness!='' && this.productItem.MoneyOutSafeBusiness!='0.0') this.productItem.MoneyOutSafeBusinessSIYN = true;
             this.checkMoneyYNChanges();
           }
           else if(this.productId=='39'){
@@ -3990,13 +4063,13 @@ setCommonFormValues(){
               this.productItem.MachineEquipSi = details?.MachineEquipSi;
               this.productItem.ManuUnitsSi = details?.ManuUnitsSi;
               this.productItem.PowerPlantSi = details?.PowerPlantSi;
-              if(this.productItem.BoilerPlantsSi!=null && this.productItem.BoilerPlantsSi!='0' && this.productItem.BoilerPlantsSi!='0.0') this.productItem.BoilerPlantsSIYN = true;
-              if(this.productItem.ElecMachinesSi!=null && this.productItem.ElecMachinesSi!='0' && this.productItem.ElecMachinesSi!='0.0') this.productItem.ElecMachinesSIYN = true;
-              if(this.productItem.EquipmentSi!=null && this.productItem.EquipmentSi!='0' && this.productItem.EquipmentSi!='0.0') this.productItem.EquipmentSIYN = true;
-              if(this.productItem.GeneralMachineSi!=null && this.productItem.GeneralMachineSi!='0' && this.productItem.GeneralMachineSi!='0.0') this.productItem.GeneralMachineSIYN = true;
-              if(this.productItem.MachineEquipSi!=null && this.productItem.MachineEquipSi!='0' && this.productItem.MachineEquipSi!='0.0') this.productItem.MachineEquipSIYN = true;
-              if(this.productItem.ManuUnitsSi!=null && this.productItem.ManuUnitsSi!='0' && this.productItem.ManuUnitsSi!='0.0') this.productItem.ManuUnitsSIYN = true;
-              if(this.productItem.PowerPlantSi!=null && this.productItem.PowerPlantSi!='0' && this.productItem.PowerPlantSi!='0.0') this.productItem.PowerPlantSIYN = true;
+              if(this.productItem.BoilerPlantsSi!=null && this.productItem.BoilerPlantsSi!='0' && this.productItem.BoilerPlantsSi!='' && this.productItem.BoilerPlantsSi!='0.0') this.productItem.BoilerPlantsSIYN = true;
+              if(this.productItem.ElecMachinesSi!=null && this.productItem.ElecMachinesSi!='0' && this.productItem.ElecMachinesSi!='' && this.productItem.ElecMachinesSi!='0.0') this.productItem.ElecMachinesSIYN = true;
+              if(this.productItem.EquipmentSi!=null && this.productItem.EquipmentSi!='0' && this.productItem.EquipmentSi!='' && this.productItem.EquipmentSi!='0.0') this.productItem.EquipmentSIYN = true;
+              if(this.productItem.GeneralMachineSi!=null && this.productItem.GeneralMachineSi!='0' && this.productItem.GeneralMachineSi!='' && this.productItem.GeneralMachineSi!='0.0') this.productItem.GeneralMachineSIYN = true;
+              if(this.productItem.MachineEquipSi!=null && this.productItem.MachineEquipSi!='0' && this.productItem.MachineEquipSi!='' && this.productItem.MachineEquipSi!='0.0') this.productItem.MachineEquipSIYN = true;
+              if(this.productItem.ManuUnitsSi!=null && this.productItem.ManuUnitsSi!='0' && this.productItem.ManuUnitsSi!='' && this.productItem.ManuUnitsSi!='0.0') this.productItem.ManuUnitsSIYN = true;
+              if(this.productItem.PowerPlantSi!=null && this.productItem.PowerPlantSi!='0' && this.productItem.PowerPlantSi!='' && this.productItem.PowerPlantSi!='0.0') this.productItem.PowerPlantSIYN = true;
               this.checkMachineryYNChanges();
           }
           else if(this.productId=='1'){
