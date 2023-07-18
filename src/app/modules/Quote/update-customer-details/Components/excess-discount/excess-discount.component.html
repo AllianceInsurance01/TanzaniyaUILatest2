@@ -2081,180 +2081,181 @@
                             </div>
                         </li>
                     </ul>
+                    <div class="maan-grid-item" *ngIf="!statusValue">
+                        <div class="maan-grid-item-body">
+                            <div class="row my-2">
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-3 mt-3">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Do You Like to Move this Quote to Referral
+                                                Manually?</label>
+                                            <div class="custom-radio-btn" style="position: relative;top: 1rem;right: 0.3rem;">
+                                                <div class="radio-toolbar">
+                                                    <input id="referral_Yes" type="radio" [(ngModel)]="isMannualReferal" name="referral" value="Y">
+                                                    <label for="referral_Yes" class="yes">Yes</label>
+                                                    <input type="radio" id="referral_No" [(ngModel)]="isMannualReferal" name="referral" value="N">
+                                                    <label for="referral_No" class="no">No</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ng-container *ngIf="isMannualReferal == 'Y'">
+                                    <div class="col-12 col-md-4">
+                                        <div class="mb-3 mt-3">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Remarks</label>
+                                                <div class="input-form-box">
+                                                    <textarea class="input-form-control without-icon" [(ngModel)]="remarks" style="height: 45px;"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <!-- <div class="col-12 col-md-6" *ngIf="isMannualReferal != 'Y' && gridshow">
+                                    <div class="mb-3 mt-3">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Do You Like to Choose EMI Option?</label>
+                                            <div class="custom-radio-btn" style="position: relative;top: 1rem;right: 0.3rem;">
+                                                <div class="radio-toolbar">
+                                                    <input id="emi_Yes" type="radio" [(ngModel)]="emiYN" (change)="onEmiYNChange()" name="emiYN" value="Y">
+                                                    <label for="emi_Yes" class="yes">Yes</label>&nbsp;
+                                                    <input type="radio" id="emi_No" [(ngModel)]="emiYN" (change)="onEmiYNChange()" name="emiYN" value="N">
+                                                    <label for="emi_No" class="no">No</label>&nbsp;
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <!-- <div class="col-md-12 col-lg-12" *ngIf="emiSection && Emilist1.length!=0 && emiYN=='Y'">
+                                <table class="firstclass" style="width:50%;">
+                                    <thead>
+                                        <tr class="firstclass">
+                                            <th scope="col" colspan="3"></th>
+                                            <th scope="col" colspan="4" style="text-align:center;" class="spancommon span_font_size">Installment Amount ({{localCurrency}})
+                                            </th>
+                                        </tr>
+                                        <tr class="firstclass">
+                                            <th scope="col" class="spancommon span_font_size" style="text-align:center;">EMI Month
+                                            </th>
+                                            <th scope="col" class="spancommon span_font_size" style="text-align:center;">
+                                                Installment Type</th>
+                                            <th scope="col" class="spancommon span_font_size" style="text-align:center;">Due Date
+                                            </th>
+                                            <th scope="col" class="spancommon span_font_size" *ngIf="yearlySection" id="first" style="text-align:center">(12 Months)
+                                            </th>
+                                            <th scope="col" class="spancommon span_font_size" *ngIf="nineMonthSection" id="second" style="text-align:center">(9 Months)
+                                            </th>
+                                            <th scope="col" class="spancommon span_font_size" id="third" style="text-align:center" *ngIf="sixMonthSection">(6 Months)
+                                            </th>
+                                            <th scope="col" class="spancommon span_font_size" id="fourth" style="text-align:center" *ngIf="threeMonthSection">(3 Months)
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ng-container>
+                                            <tr *ngFor="let list of Emilist1;let i=index" class="firstclass">
+                                                <td class="spancommon span_font_size" style="text-align:center;">
+                                                    {{list.EmiMonth}}</td>
+                                                <td class="spancommon span_font_size" style="text-align:center;">
+                                                    {{list.InstallmentDesc}}</td>
+                                                <td class="spancommon span_font_size" style="text-align:center;">
+                                                    {{list.DueDate}}</td>
+                                                <td class="spancommon span_font_size" *ngIf="yearlySection" id="first" style="text-align:center;">
+                                                    {{list.yearlyAmount | commaseparator}}</td>
+                                                <td class="spancommon span_font_size" *ngIf="nineMonthSection" id="second" style="text-align:center;">
+                                                    {{list.nineAmount|commaseparator}}</td>
+                                                <td class="spancommon span_font_size" *ngIf="sixMonthSection" id="third" style="text-align:center;">
+                                                    {{list.sixAmount | commaseparator}}</td>
+                                                <td class="spancommon span_font_size" *ngIf="threeMonthSection" style="text-align:center;" id="fourth">
+                                                    {{list.threeAmount | commaseparator}}</td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                
+                                </table>
+                
+                            </div>
+                            <div class="col-12 col-md-6" *ngIf="isMannualReferal != 'Y' && emiYN=='Y'">
+                                <div class="mb-3 mt-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label spancommon span_font_size">EMI Period</label>
+                                        <div class="custom-radio-btn">
+                                            <div class="radio-toolbar" style="position: relative;top: 0.5rem;">
+                                                <input id="emi_None" type="radio" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="N">
+                                                <label for="emi_None" class="spancommon span_font_size yes">None</label>&nbsp;
+                                                <ng-container *ngIf="yearlySection || nineMonthSection || sixMonthSection || threeMonthSection">
+                                                    <input type="radio" id="emi_three" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="3">
+                                                    <label for="emi_three" class="spancommon span_font_size yes">3
+                                                        Months</label>&nbsp;
+                                                </ng-container>
+                                                <ng-container *ngIf="yearlySection || nineMonthSection || sixMonthSection">
+                                                    <input type="radio" id="emi_six" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="6">
+                                                    <label for="emi_six" class="spancommon span_font_size yes">6
+                                                        Months</label>&nbsp;
+                                                </ng-container>
+                                                <ng-container *ngIf="yearlySection || nineMonthSection">
+                                                    <input type="radio" id="emi_nine" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="9">
+                                                    <label for="emi_nine" class="spancommon span_font_size yes">9
+                                                        Months</label>&nbsp;
+                                                </ng-container>
+                                                <ng-container *ngIf="yearlySection">
+                                                    <input type="radio" id="emi_twelve" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="9">
+                                                    <label for="emi_twelve" class="spancommon span_font_size yes">12
+                                                        Months</label>&nbsp;
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            
+                        </div>
+                    </div>
+                    <div class="maan-grid-item mt-4" *ngIf="statusValue && adminSection">
+                        <div class="col-12 col-md-4 ml-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Referral Status</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [disabled]="!adminSection" [(ngModel)]="statusValue" [items]="statusList" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                
+                        <div class="col-12 col-md-6">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                                <div class="input-form-box">
+                                    <textarea cols="120" rows="2" [(ngModel)]="remarks" [disabled]="!adminSection" class="input-form-control without-icon" maxlength="600"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 ml-4" *ngIf="statusValue=='RR'">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Rejected Reason</label>
+                                <div class="input-form-box">
+                                    <input type="text" [(ngModel)]="rejectedReason" [disabled]="!adminSection" class="input-form-control without-icon">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                
+                        <div class="col-12 col-lg-7 col-xl-7 col-md-7">
+                            <div class="text-center my-3" style="margin-right: 25px;">
+                                <button class="custom-btn btn-5 mx-2" matRipple (click)="ongetBack()"><<&nbsp;Back</button>
+                                <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="!adminSection && statusValue == 'RA'" (click)="onFormSubmit()">Proceed</button>
+                                <button class="custom-btn btn-6 maan-button-data  mx-2" matRipple *ngIf="adminSection || (endorsementSection && endorseCovers)" (click)="onUpdateFactor('calculate')">Calculate</button>
+                                <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="!adminSection && statusValue != 'RA'" (click)="onFormSubmit()">Buy Policy</button>
+                                <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="adminSection" (click)="onUpdateFactor('')">Proceed</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
             
         </div>
-        <div class="maan-grid-item" *ngIf="!statusValue">
-            <div class="maan-grid-item-body">
-                <div class="row my-2">
-                    <div class="col-12 col-md-6">
-                        <div class="mb-3 mt-3">
-                            <div class="input-control-container">
-                                <label class="input-form-label">Do You Like to Move this Quote to Referral
-                                    Manually?</label>
-                                <div class="custom-radio-btn" style="position: relative;top: 1rem;right: 0.3rem;">
-                                    <div class="radio-toolbar">
-                                        <input id="referral_Yes" type="radio" [(ngModel)]="isMannualReferal" name="referral" value="Y">
-                                        <label for="referral_Yes" class="yes">Yes</label>
-                                        <input type="radio" id="referral_No" [(ngModel)]="isMannualReferal" name="referral" value="N">
-                                        <label for="referral_No" class="no">No</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <ng-container *ngIf="isMannualReferal == 'Y'">
-                        <div class="col-12 col-md-4">
-                            <div class="mb-3 mt-3">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Remarks</label>
-                                    <div class="input-form-box">
-                                        <textarea class="input-form-control without-icon" [(ngModel)]="remarks" style="height: 45px;"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </ng-container>
-                    <!-- <div class="col-12 col-md-6" *ngIf="isMannualReferal != 'Y' && gridshow">
-                        <div class="mb-3 mt-3">
-                            <div class="input-control-container">
-                                <label class="input-form-label">Do You Like to Choose EMI Option?</label>
-                                <div class="custom-radio-btn" style="position: relative;top: 1rem;right: 0.3rem;">
-                                    <div class="radio-toolbar">
-                                        <input id="emi_Yes" type="radio" [(ngModel)]="emiYN" (change)="onEmiYNChange()" name="emiYN" value="Y">
-                                        <label for="emi_Yes" class="yes">Yes</label>&nbsp;
-                                        <input type="radio" id="emi_No" [(ngModel)]="emiYN" (change)="onEmiYNChange()" name="emiYN" value="N">
-                                        <label for="emi_No" class="no">No</label>&nbsp;
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                </div>
-                <!-- <div class="col-md-12 col-lg-12" *ngIf="emiSection && Emilist1.length!=0 && emiYN=='Y'">
-                    <table class="firstclass" style="width:50%;">
-                        <thead>
-                            <tr class="firstclass">
-                                <th scope="col" colspan="3"></th>
-                                <th scope="col" colspan="4" style="text-align:center;" class="spancommon span_font_size">Installment Amount ({{localCurrency}})
-                                </th>
-                            </tr>
-                            <tr class="firstclass">
-                                <th scope="col" class="spancommon span_font_size" style="text-align:center;">EMI Month
-                                </th>
-                                <th scope="col" class="spancommon span_font_size" style="text-align:center;">
-                                    Installment Type</th>
-                                <th scope="col" class="spancommon span_font_size" style="text-align:center;">Due Date
-                                </th>
-                                <th scope="col" class="spancommon span_font_size" *ngIf="yearlySection" id="first" style="text-align:center">(12 Months)
-                                </th>
-                                <th scope="col" class="spancommon span_font_size" *ngIf="nineMonthSection" id="second" style="text-align:center">(9 Months)
-                                </th>
-                                <th scope="col" class="spancommon span_font_size" id="third" style="text-align:center" *ngIf="sixMonthSection">(6 Months)
-                                </th>
-                                <th scope="col" class="spancommon span_font_size" id="fourth" style="text-align:center" *ngIf="threeMonthSection">(3 Months)
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <ng-container>
-                                <tr *ngFor="let list of Emilist1;let i=index" class="firstclass">
-                                    <td class="spancommon span_font_size" style="text-align:center;">
-                                        {{list.EmiMonth}}</td>
-                                    <td class="spancommon span_font_size" style="text-align:center;">
-                                        {{list.InstallmentDesc}}</td>
-                                    <td class="spancommon span_font_size" style="text-align:center;">
-                                        {{list.DueDate}}</td>
-                                    <td class="spancommon span_font_size" *ngIf="yearlySection" id="first" style="text-align:center;">
-                                        {{list.yearlyAmount | commaseparator}}</td>
-                                    <td class="spancommon span_font_size" *ngIf="nineMonthSection" id="second" style="text-align:center;">
-                                        {{list.nineAmount|commaseparator}}</td>
-                                    <td class="spancommon span_font_size" *ngIf="sixMonthSection" id="third" style="text-align:center;">
-                                        {{list.sixAmount | commaseparator}}</td>
-                                    <td class="spancommon span_font_size" *ngIf="threeMonthSection" style="text-align:center;" id="fourth">
-                                        {{list.threeAmount | commaseparator}}</td>
-                                </tr>
-                            </ng-container>
-                        </tbody>
-    
-                    </table>
-    
-                </div>
-                <div class="col-12 col-md-6" *ngIf="isMannualReferal != 'Y' && emiYN=='Y'">
-                    <div class="mb-3 mt-3">
-                        <div class="input-control-container">
-                            <label class="input-form-label spancommon span_font_size">EMI Period</label>
-                            <div class="custom-radio-btn">
-                                <div class="radio-toolbar" style="position: relative;top: 0.5rem;">
-                                    <input id="emi_None" type="radio" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="N">
-                                    <label for="emi_None" class="spancommon span_font_size yes">None</label>&nbsp;
-                                    <ng-container *ngIf="yearlySection || nineMonthSection || sixMonthSection || threeMonthSection">
-                                        <input type="radio" id="emi_three" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="3">
-                                        <label for="emi_three" class="spancommon span_font_size yes">3
-                                            Months</label>&nbsp;
-                                    </ng-container>
-                                    <ng-container *ngIf="yearlySection || nineMonthSection || sixMonthSection">
-                                        <input type="radio" id="emi_six" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="6">
-                                        <label for="emi_six" class="spancommon span_font_size yes">6
-                                            Months</label>&nbsp;
-                                    </ng-container>
-                                    <ng-container *ngIf="yearlySection || nineMonthSection">
-                                        <input type="radio" id="emi_nine" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="9">
-                                        <label for="emi_nine" class="spancommon span_font_size yes">9
-                                            Months</label>&nbsp;
-                                    </ng-container>
-                                    <ng-container *ngIf="yearlySection">
-                                        <input type="radio" id="emi_twelve" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="9">
-                                        <label for="emi_twelve" class="spancommon span_font_size yes">12
-                                            Months</label>&nbsp;
-                                    </ng-container>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-    
-            </div>
-        </div>
-        <div class="maan-grid-item mt-4" *ngIf="statusValue && adminSection">
-            <div class="col-12 col-md-4 ml-4">
-                <div class="input-control-container">
-                    <label class="input-form-label">Referral Status</label><span class="text-danger">*</span>
-                    <ng-select class="input-form-select" appendTo="body" [disabled]="!adminSection" [(ngModel)]="statusValue" [items]="statusList" bindValue="Code" bindLabel="CodeDesc">
-                    </ng-select>
-                </div>
-            </div>
-    
-            <div class="col-12 col-md-6">
-                <div class="input-control-container">
-                    <label class="input-form-label">Remarks<span class="text-required">*</span></label>
-                    <div class="input-form-box">
-                        <textarea cols="120" rows="2" [(ngModel)]="remarks" [disabled]="!adminSection" class="input-form-control without-icon" maxlength="600"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-4 ml-4" *ngIf="statusValue=='RR'">
-                <div class="input-control-container">
-                    <label class="input-form-label">Rejected Reason</label>
-                    <div class="input-form-box">
-                        <input type="text" [(ngModel)]="rejectedReason" [disabled]="!adminSection" class="input-form-control without-icon">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-    
-            <div class="col-12">
-                <div class="text-center my-3">
-                    <button class="custom-btn btn-5 mx-2" matRipple (click)="ongetBack()"><<&nbsp;Back</button>
-                    <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="!adminSection && statusValue == 'RA'" (click)="onFormSubmit()">Proceed</button>
-                    <button class="custom-btn btn-6 maan-button-data  mx-2" matRipple *ngIf="adminSection || (endorsementSection && endorseCovers)" (click)="onUpdateFactor('calculate')">Calculate</button>
-                    <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="!adminSection && statusValue != 'RA'" (click)="onFormSubmit()">Buy Policy</button>
-                    <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="adminSection" (click)="onUpdateFactor('')">Proceed</button>
-                </div>
-            </div>
-        </div>
+        
     </div>
 </div>
 

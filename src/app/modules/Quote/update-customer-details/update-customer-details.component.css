@@ -305,3 +305,23 @@
     height: auto;
     margin-top: 100px;
 }
+
+@media screen and (min-width:700px) and (max-width: 1456px) {
+    .display2{
+        display:none;
+    }
+    .customBody{
+        border-bottom: 0px solid grey !important;
+        padding: 0px 25px 0px 25px !important;
+    }
+   
+    }
+
+ @media screen and (min-width: 280px) and (max-width: 700px) {
+    .display1{
+        display:none;
+    }
+    .customBody{
+        border-bottom: 0px solid grey !important;
+    }
+ }

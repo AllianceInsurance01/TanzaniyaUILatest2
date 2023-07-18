@@ -246,7 +246,7 @@ export class MakePayementComponent implements OnInit {
                   "PolicyNo": this.endorsePolicyNo
                 }
                 this.policySection = true;
-                //this.updateTiraDetails();
+                this.updateTiraDetails();
                 
           }
       },
@@ -455,7 +455,7 @@ export class MakePayementComponent implements OnInit {
             this.paymentDetails = data.Result;
             this.policyNo = data.Result.PolicyNo;
             this.policySection = true;
-            //this.updateTiraDetails();
+            this.updateTiraDetails();
             
           }
           else if(data.Result.paymentUrl){

@@ -3178,7 +3178,7 @@ getMotorUsageList(vehicleValue){
                                         //sessionStorage.removeItem('vehicleDetailsList');
                                         window.location.reload();
                                       }
-                                      else if(!this.endorsementSection) this.updateReferralStatus();
+                                      else this.updateReferralStatus();
                                     }
                                   }
                                 },
