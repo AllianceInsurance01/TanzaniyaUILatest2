@@ -32,6 +32,7 @@ export class ExistingEndorsementsComponent {
     this.insuranceId = this.userDetails.Result.InsuranceId;
     this.policyNo = sessionStorage.getItem('endorsePolicyNo');
     sessionStorage.removeItem('endorseTypeId');
+    sessionStorage.removeItem('endorseStartDate')
     sessionStorage.removeItem('homeCommonDetails')
   }
   ngOnInit(){
@@ -79,6 +80,7 @@ export class ExistingEndorsementsComponent {
   }
   onCreateEndorsement(){
     sessionStorage.removeItem('endorseTypeId');
+    sessionStorage.setItem('endorseStartDate',this.quoteData[0].policyStartDate);
       this.router.navigate(['/Home/policies/Endorsements/endorsementTypes'])
   }
   onGetSchedule(rowData){
@@ -131,12 +133,14 @@ export class ExistingEndorsementsComponent {
       "QuoteNo": rowData.quoteNo, 
       "PolicyNo": rowData.policyNo
     }
+    sessionStorage.setItem('endorseStartDate',this.quoteData[0].policyStartDate);
     sessionStorage.setItem('endorseTypeId',JSON.stringify(obj));
     sessionStorage.setItem('quoteReferenceNo',rowData.requestReferenceNo)
     this.router.navigate(['/Home/policies/Endorsements/endorsementTypes'])
   }
   ongetBack(){
     sessionStorage.removeItem('endorseTypeId');
+    sessionStorage.removeItem('endorseStartDate');
     this.router.navigate(['/Home/policies'])
   }
 }
