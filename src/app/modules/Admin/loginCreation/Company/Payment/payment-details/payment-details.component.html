@@ -61,10 +61,24 @@
                      <div class="card-body">
 
                         <div class="row mt-2">
-                            <div class="col-12 col-lg-6 col-xl-6">
+                            <div class="col-12 col-lg-4 col-xl-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Branch<span class="text-required">*</span></label>
                                     <ng-select class="input-form-select" appendTo="body" disabled [items]="branchList" [(ngModel)]="branchValue" bindValue="Code" bindLabel="CodeDesc" >
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-4 col-xl-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">User Type<span class="text-required">*</span></label>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="paymentUsertype" [(ngModel)]="paymentdetalis.UserType" (change)="getsubusertype('change')" bindValue="ItemValue" bindLabel="ItemValue">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-4 col-xl-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Sub User Type<span class="text-required">*</span></label>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="SubUserType" [(ngModel)]="paymentdetalis.SubUserType" bindValue="ItemValue" bindLabel="ItemValue">
                                     </ng-select>
                                 </div>
                             </div>
@@ -110,6 +124,19 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">OnlineYn<span class="text-required">*</span></label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="OnlineYn_Yes" type="radio" name="OnlineYn" [(ngModel)]="paymentdetalis.OnlineYn" value="Y">
+                                            <label for="OnlineYn_Yes">Yes</label>
+                                            <input type="radio" id="OnlineYn_No" name="OnlineYn" [(ngModel)]="paymentdetalis.OnlineYn" value="N">
+                                            <label for="OnlineYn_No">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         <div class="col-12 col-md-4 col-lg-4">
                             <div class="input-control-container">
                                 <label class="input-form-label">Status<span class="text-required">*</span></label>
@@ -123,7 +150,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-4 col-lg-4">
                             <div class="input-control-container">
                                 <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
                                 <mat-form-field appearance="fill">

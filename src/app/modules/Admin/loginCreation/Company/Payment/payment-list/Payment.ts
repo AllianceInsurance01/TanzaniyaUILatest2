@@ -12,4 +12,5 @@ export class Payment
     "Status": null;
     "SubUserType": null;
     "UserType": null;
+    "OnlineYn":null;
 }
