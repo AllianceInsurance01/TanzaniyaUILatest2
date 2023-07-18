@@ -823,13 +823,11 @@ export class EndorsementTypeDetailsComponent {
                   const formattedDatecurrent = new Date(veh.PolicyStartDate);
                   console.log(formattedDate);
                   this.noOfDays = Math.round(Math.abs((Number(momentDate)  - Number(formattedDatecurrent) )/oneday)+1);
-                
               }
               if(type=='cancel') endDate = this.endorseEffectiveDate;
               else if(veh.PolicyEndDate){
                   endDate = veh.PolicyEndDate;
               }
-             
               let createdBy="";
               let quoteStatus = sessionStorage.getItem('QuoteStatus');
               if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){

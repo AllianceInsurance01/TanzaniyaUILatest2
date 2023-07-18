@@ -311,9 +311,8 @@ export class CustomerDetailsComponent implements OnInit {
         this.enableFieldsList = endorseObj.FieldsAllowed;
         this.endorseEffectiveDate = endorseObj?.EffectiveDate;
         if(this.endorsementId!=42){
-            this.enablePolicyStart = this.enableFieldsList.some(ele=>ele=='policyStartDate');
-            this.enablePolicyEnd = this.enableFieldsList.some(ele=>ele=='policyEndDate');
-            this.enableAddVehicle = this.enableFieldsList.some(ele=>ele=='policyEndDate');
+            this.enablePolicyStart = this.enableFieldsList.some(ele=>ele=='policyStartDate' || ele=='PolicyStartDate');
+            this.enablePolicyEnd = this.enableFieldsList.some(ele=>ele=='policyEndDate' || ele=='PolicyEndDate');
             this.enableCurrency = this.enableFieldsList.some(ele=>ele=='Currency');
         }
         else{
@@ -2219,6 +2218,7 @@ export class CustomerDetailsComponent implements OnInit {
                   vehicle['Currency'] = this.currencyCode;
                   vehicle['ExchangeRate'] = this.exchangeRate;
                   vehicle['Vehicleid'] = String(k+1);
+                  k=k+1;
                   vehicle['Active'] = false;
                   vehicleList.push(vehicle);
                   j+=1;

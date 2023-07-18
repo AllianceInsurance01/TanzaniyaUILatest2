@@ -1,6 +1,6 @@
 <div class="row p-0">
         <div class="col-12 col-md-12 col-lg-12 p-0">
-            <div class="maan-grid customer-grid maan-grid-column-1 p-0  mt-3">
+            <div class="maan-grid customer-grid maan-grid-column-1 p-0  mt-3" >
                  <div class="maan-grid-item" *ngIf="endorsementSection">
                     <div class="maan-grid-item-title p-0" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
                         <div class="d-flex justify-content-between">
@@ -137,13 +137,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="maan-grid-item" *ngIf="issuerSection">
+                <div class="maan-grid-item" *ngIf="issuerSection" style="z-index: 100 !important;overflow: visible !important;">
                     <div class="maan-grid-item-title p-0" style="margin: 0px !important;top:0rem;bottom: 0rem !important;padding-top: 9px !important;">
                         <span class="mx-1">
                             <i class="fas fa-book mx-1"></i>
                         </span> <span class="spancommon">Policy Details</span>
                     </div>
-                    <div class="maan-grid-item-body">
+                    <div class="maan-grid-item-body" style="z-index: 100 !important;">
                         <div class="row">
                            <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection">
                                 <div class="input-control-container">
@@ -162,7 +162,7 @@
                                     <label class="input-form-label">Customer Code</label><span class="text-danger">*</span>
                                     <div class="input-form-box">
                                         <input id="CustomerInput" class="input-form-control without-icon"  [disabled]="endorsementSection" [(ngModel)]="customerCode" type="text" (keyup)="onGetCustomerList('change',$event.target.value)" autocomplete="off" placeholder="Search here" data-toggle="dropdown" /><br>
-                                        <ul class="dropdown-menu dropdown-list-style CustomerInput"  [ngClass]="{dropdownDisplay: showCustomerList, dropdownNotDisplay: !showCustomerList}">
+                                        <ul class="dropdown-menu dropdown-list-style CustomerInput" appendTo="body"   [ngClass]="{dropdownDisplay: showCustomerList, dropdownNotDisplay: !showCustomerList}">
                                             <li *ngFor="let item of customerList" (click)="setCustomerValue(item.Code, item.Name)">
                                                 {{item.Code}} - {{ item.Name }}
                                             </li>
@@ -234,7 +234,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="maan-grid-item">
+                <div class="maan-grid-item" style="z-index: 100 !important;">
                     <div class="maan-grid-item-title p-0" style="margin: 0px !important;top:0rem;bottom: 0rem !important;padding-top: 9px !important;">
                         <span class="mx-1">
                             <i class="fas fa-book mx-1"></i>

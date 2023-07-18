@@ -1646,19 +1646,7 @@ input:checked+.slider:before {
     height: 42px;
 }
 
-.mat-table {
-    table-layout: auto;
-    white-space: normal;
-    border: 2px solid #eaecf1;
-    outline: none;
-    box-sizing: border-box;
-    transition: all .3s;
-    height: max-content;
-    background: rgb(255, 255, 255);
-    box-shadow: 1px 2px 2px #1f26875e !important;
-    backdrop-filter: blur(18.5px);
-    list-style-type: none;
-}
+
 
 th.mat-header-cell {
     font-size: 1rem!important;
@@ -1962,6 +1950,7 @@ td {
 
 .mat-mdc-table {
     box-shadow: inset 0px 0px 2px #b8b9be, inset 1px 1px 5px #fff!important;
+    white-space: nowrap !important;
 }
 
 .customRowBg {

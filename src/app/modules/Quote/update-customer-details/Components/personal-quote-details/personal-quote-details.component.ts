@@ -138,7 +138,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
     this.productId = this.userDetails.Result.ProductId;
     this.insuranceId = this.userDetails.Result.InsuranceId;
      this.updateComponent.showStepperSection = false;
-    if (this.productId != '3' && this.productId != '19' && this.productId!='39' && this.productId!='16') {
+    if (this.productId != '3' && this.productId != '19' && this.productId!='39' && this.productId!='16' && this.productId!='1') {
       this.getOccupationList(null);
     }
     this.productItem = new ProductData();
@@ -1080,7 +1080,6 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         });
       } }
       this.fields[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].hooks = regionHooks;
-      
        this.getNatureTradeList();
        this.getInsuranceForList();
        this.getWallMaterialList();
@@ -1090,6 +1089,15 @@ export class PersonalQuoteDetailsComponent implements OnInit {
        this.getRegionList();
        this.getWindowConsMaterialList();
        this.getDoorsMaterilalList(); this.getNightLeftDoorList(); this.getBuildingOccupiedList();
+       let referenceNo = sessionStorage.getItem('quoteReferenceNo');
+      if (referenceNo) {
+        this.requestReferenceNo = referenceNo;
+        this.setCommonFormValues();
+      }
+      else {
+          this.productItem = new ProductData();
+          this.formSection = true; this.viewSection = false;
+      }
     }
     else if(this.productId=='6'){
       let fireData = new FireAlliedPerils();
@@ -2464,6 +2472,7 @@ getBuildingOccupiedList(){
                 for(let field of fields){
                   if(field.props.label=='Burglary'){
                       field.fieldGroup[0].fieldGroup[2].fieldGroup[0].fieldGroup[8].props.options = defaultObj.concat(this.buildingOccupiedList);
+                      
                   }
                 }
              }
@@ -3905,7 +3914,7 @@ getOccupationList(sections) {
                           }
                     }
               }
-              if (this.productId != '19' && this.productId != '3' && this.productId != '32' && this.productId!='14' && this.productId!='16') this.fields[0].fieldGroup[0].fieldGroup[2].props.options = defaultObj.concat(this.occupationList);
+              if (this.productId != '19' && this.productId != '3' && this.productId != '1' && this.productId != '32' && this.productId!='14' && this.productId!='16') this.fields[0].fieldGroup[0].fieldGroup[2].props.options = defaultObj.concat(this.occupationList);
               if(this.productId=='14'){
                 let fireData = new EmployersLiability();
                 let entry = [];
@@ -3965,7 +3974,7 @@ getOccupationList(sections) {
                   this.formSection = true; this.viewSection = false;
                 }
               }
-
+              
               console.log("Final Form Fields", this.fields)
 
               // if(this.customerReferenceNo){

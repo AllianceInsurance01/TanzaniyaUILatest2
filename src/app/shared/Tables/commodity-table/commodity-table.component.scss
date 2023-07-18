@@ -19,7 +19,19 @@ th.mat-header-cell {
 table {
     width: 100%;
 }
-
+.mat-table {
+    table-layout: auto;
+    white-space: nowrap !important;
+    border: 2px solid #eaecf1;
+    outline: none;
+    box-sizing: border-box;
+    transition: all .3s;
+    height: max-content;
+    background: rgb(255, 255, 255);
+    box-shadow: 1px 2px 2px #1f26875e !important;
+    backdrop-filter: blur(18.5px);
+    list-style-type: none;
+}
 .mat-table th,
 .mat-table td {
     white-space: nowrap !important;
