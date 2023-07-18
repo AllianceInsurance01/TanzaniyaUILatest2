@@ -82,10 +82,9 @@ export class EndorsementTypeDetailsComponent {
         }
       } 
       if(date2<date1 || date2==date1){
-        alert("Equal");
         this.minDate = new Date();
       }
-      else{alert("Not Equal");this.minDate = new Date(date2);}
+      else{this.minDate = new Date(date2);}
     }
     else this.minDate = new Date();
   }
