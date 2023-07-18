@@ -46,6 +46,7 @@ export class TravelPassengerDetailsComponent implements OnInit {
   country: any;groupId:any;adultTrashSection:boolean=false;seniorTrashSection:boolean=false;
   postBoxNo: any;superSeniorTrashSection:boolean=false;grandSeniorTrashSection:boolean=false;
   validRecordsList: any;
+  p: Number = 1;
 
   constructor(private router:Router,private updateComponent:UpdateCustomerDetailsComponent,
     private datePipe:DatePipe,private sharedService: SharedService,) {
