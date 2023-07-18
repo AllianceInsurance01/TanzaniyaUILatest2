@@ -17,7 +17,7 @@
                 </ng-container>
             </th>
 
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element;let j = dataIndex;">
                 <ng-container *ngIf="!col.config; else hasConfig">
                     {{ element[col.key]}}
                 </ng-container>
@@ -68,8 +68,9 @@
                     <!--need to delete-->
             <ng-container *ngIf="col.config.isMoreView">
                         <button mat-icon-button (click)="onPassData(element);expandedElement = expandedElement === element ? null : element">
-              <mat-icon>keyboard_arrow_down</mat-icon> <!--keyboard_arrow_down-->
+              <mat-icon>keyboard_arrow_down</mat-icon> 
             </button>
+            
             </ng-container>
 
 
@@ -108,12 +109,13 @@
                         </mat-menu>
                     </ng-container>
                     <ng-container *ngIf="col.config.isCollapse">
-                        <button class="btn btn-light btnVehicle" shape="round" size="tiny" (click)="onPassData(element,i);expandedElement = expandedElement === element ? null : element;">
+                        <button class="btn btn-light btnVehicle" shape="round" size="tiny" (click)="onPassData(element,j);expandedElement = expandedElement === element ? null : element;">
                     <ng-container *ngIf="element.CommodityNotInResponse">
               New
             </ng-container>
             {{col.config.isCollapseName}}
-            <i [ngClass]="selectedIndex!=i ?'fas fa-plus-circle':'fas fa-minus-circle'" ></i>
+            
+            <i [ngClass]="selectedIndex!=j ?'fas fa-plus-circle':'fas fa-minus-circle'" ></i>
             </button>
                     </ng-container>
                     <ng-container *ngIf="col.config.isMenuAction">

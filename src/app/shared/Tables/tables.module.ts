@@ -13,6 +13,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { DigitOnlyModule } from '@uiowa/digit-only';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxCollapseModule } from 'ngx-collapse';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { NgxCollapseModule } from 'ngx-collapse';
     DirectivesModule,
     NgxCollapseModule,
     DigitOnlyModule,
-    PipesModule
+    PipesModule,
+    MatIconModule
 
 
   ],
