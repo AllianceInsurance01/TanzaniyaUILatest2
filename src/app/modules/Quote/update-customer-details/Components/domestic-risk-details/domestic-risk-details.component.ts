@@ -682,6 +682,7 @@ onFidelitySave(){
     if(this.productId=='32') SectionId = '43';
     this.fidelityList[this.currentFidelityIndex]['RiskId'] = this.empLocation;
     this.fidelityList[this.currentFidelityIndex]['LocationId'] = this.empLocation;
+    this.fidelityList[this.currentFidelityIndex]['LocationName'] = this.LocationList.find(ele=>ele.Code==this.empLocation).CodeDesc;
     this.fidelityList[this.currentFidelityIndex]['Createdby'] = this.loginId;
     this.fidelityList[this.currentFidelityIndex]['Address'] = this.empAddress;
     this.fidelityList[this.currentFidelityIndex]['EmployeeName'] = this.employeeName;
@@ -740,6 +741,7 @@ onFidelitySave(){
         let empList = [],i=0;
         for(let emp of this.fidelityList){
           let entry = emp;
+          if(emp.LocationName==undefined) emp['LocationName'] = this.LocationList.find(ele=>ele.Code==emp['LocationId']).CodeDesc;
           entry['EmployeeId'] = String(i+1);
           empList.push(entry);
           i+=1;
