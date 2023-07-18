@@ -25,6 +25,8 @@ export class PaymentDetailsComponent implements OnInit {
   PaymentMasterId:any;
   branchList: { Code: string; CodeDesc: string; }[];
   branchValue: any;
+  paymentUsertype:any[]=[];
+  SubUserType:any[]=[];
   constructor(
     private router: Router, private sharedService: SharedService, private datePipe: DatePipe) {
     this.minDate = new Date();
@@ -51,10 +53,12 @@ export class PaymentDetailsComponent implements OnInit {
       if(this.paymentdetalis?.CashYn==null) this.paymentdetalis.CashYn = 'N';
       if(this.paymentdetalis?.ChequeYn==null) this.paymentdetalis.ChequeYn = 'N';
       if(this.paymentdetalis?.CreditYn==null) this.paymentdetalis.CreditYn = 'N';
+      if(this.paymentdetalis.OnlineYn==null) this.paymentdetalis.OnlineYn = 'N';
 
       this.paymentdetalis.CreatedBy = this.loginId;
     }
     this.getBranchList();
+    this.getusertype();
   }
   getEditPaymentDetails() {
     let ReqObj = {
@@ -80,6 +84,10 @@ export class PaymentDetailsComponent implements OnInit {
             if (this.paymentdetalis?.EffectiveDateEnd != null) {
               this.paymentdetalis.EffectiveDateEnd = this.onDateFormatInEdit(this.paymentdetalis?.EffectiveDateEnd)
             }
+            if(this.paymentdetalis.SubUserType!=null && this.paymentdetalis.SubUserType!=undefined){
+                 this.getsubusertype('direct');
+            }
+            
           }
         }
       },
@@ -169,8 +177,9 @@ export class PaymentDetailsComponent implements OnInit {
       "ProductId":this.productId,
       "PaymentMasterId":this.PaymentMasterId,
       "Status":this.paymentdetalis.Status,
-      "SubUserType": "b2b",
-      "UserType": "broker"
+      "SubUserType":this.paymentdetalis.SubUserType,
+      "UserType":this.paymentdetalis.UserType,
+      "OnlineYn":this.paymentdetalis.OnlineYn
     }
     let urlLink = `${this.CommonApiUrl}master/insertpayment`;
     if (ReqObj.EffectiveDateStart != '' && ReqObj.EffectiveDateStart != null && ReqObj.EffectiveDateStart != undefined) {
@@ -228,5 +237,43 @@ export class PaymentDetailsComponent implements OnInit {
     if(value=='Benefit') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/productbenefit'])
     if(value=='EndorsementField') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/endorsementfield'])
     if(value=='Endorsement') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/endorsementType'])
+  }
+
+  getusertype(){
+    let ReqObj = {
+      "InsuranceId":this.insuranceId,
+     "BranchCode":this.branchValue,
+        "ItemType":"USER_TYPE"
+    }
+    let urlLink = `${this.CommonApiUrl}master/getalllovdetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+            this.paymentUsertype= data?.Result;
+        }
+      },
+      (err) => { },
+    );
+  }
+  getsubusertype(type){
+    if(type=='change'){
+           this.paymentdetalis.SubUserType='';
+    }
+    let ReqObj = {
+      "InsuranceId":this.insuranceId,
+     "BranchCode":this.branchValue,
+        "ItemType":this.paymentdetalis.UserType
+    }
+    let urlLink = `${this.CommonApiUrl}master/getalllovdetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+            this.SubUserType= data?.Result;
+        }
+      },
+      (err) => { },
+    );
   }
 }
