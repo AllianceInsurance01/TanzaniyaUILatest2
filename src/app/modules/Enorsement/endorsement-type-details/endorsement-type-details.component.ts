@@ -53,6 +53,7 @@ export class EndorsementTypeDetailsComponent {
   endorsementDate: any;
   productItem: ProductData;
   emiYN: any;
+  enableFinancialList: boolean=false;
   constructor(private router:Router,private sharedService: SharedService,private datePipe: DatePipe) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -277,14 +278,18 @@ export class EndorsementTypeDetailsComponent {
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
             let endorsementList = data.EndorsementTypes;
-            let financialList = endorsementList.filter(ele=>ele.EndorsementCategory==2)
-            this.financialList = financialList.concat(this.financialList);
+            let financialList = endorsementList.filter(ele=>ele.EndorsementCategory==2);
+            if(financialList.length!=0){
+              let filterList = financialList.filter(ele=>ele.EndtType!='842');
+              if(filterList.length!=0) this.enableFinancialList = true;
+              this.financialList = financialList.concat(this.financialList);
+            }
+            else this.financialList = [];
             //this.financialList = endorsementList.filter(ele=>ele.EndorsementCategory==2)
-           let nonFinancialList = endorsementList.filter(ele=>ele.EndorsementCategory==1)
-           this.nonFinancialList = nonFinancialList.concat(this.nonFinancialList);
+            let nonFinancialList = endorsementList.filter(ele=>ele.EndorsementCategory==1)
+            this.nonFinancialList = nonFinancialList.concat(this.nonFinancialList);
             let existEnd = JSON.parse(sessionStorage.getItem('endorseTypeId'));
             if(existEnd){
-              console.log("Entered Data",existEnd)
                 let endType = existEnd?.EndtTypeId;
                 let entry = this.financialList.find(ele=>ele.EndtType==endType);
                 let nonFinancialEntry = this.nonFinancialList.find(ele=>ele.EndtType==endType);
@@ -296,11 +301,10 @@ export class EndorsementTypeDetailsComponent {
                     this.effectiveDate = dates[2]+'-'+dates[1]+'-'+dates[0]
                   }
                 } 
-                console.log("Effect Date",this.effectiveDate)
                 this.remarks = existEnd?.Remarks;
                 console.log("EndTypeId",endType)
                 console.log("Entry",entry);
-                if(endType==42) this.cancelYN='Y';
+                if(endType==42 || endType==842) this.cancelYN='Y';
                 else if(entry){this.endorsementId = entry.EndtType;this.selectedEndorsement=entry}
                 else if(nonFinancialEntry){this.endorsementId = nonFinancialEntry.EndtType;this.selectedEndorsement=nonFinancialEntry};
             }
@@ -397,6 +401,10 @@ export class EndorsementTypeDetailsComponent {
           else if(this.productId=='3'){
             this.getBuildingDetails(res.requestReferenceNo,'cancel');
           }
+          else if(this.productId=='4'){
+            this.requestReferenceNo = res.requestReferenceNo;
+            this.getTravelDetails(res.requestReferenceNo,'cancel');
+          }
           //this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
           //this.router.navigate([''])
         }
@@ -447,6 +455,87 @@ export class EndorsementTypeDetailsComponent {
             }
            
           }
+        }
+      },
+      (err) => { },
+    );
+  }
+  getTravelDetails(refNo,type){
+    let ReqObj = {
+      "RequestReferenceNo": refNo,
+      "TravelId": "1"
+      }
+    let urlLink = `${this.motorApiUrl}api/gettraveldetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+            let customerDatas = data.Result;
+           this.saveTravelDetails(customerDatas,type);
+      },
+      (err) => { },
+    );
+  }
+  saveTravelDetails(customerDatas,type){
+    let ReqObj = {
+
+      "AcExecutiveId": customerDatas.AcExecutiveId,
+      "ApplicationId": customerDatas.ApplicationId,
+      "CommissionType": customerDatas.CommissionType,
+      "BrokerCode": customerDatas.BrokerCode,
+      "LoginId": customerDatas.LoginId,
+      "SubUserType": customerDatas.SubUserType,
+      "CustomerReferenceNo": customerDatas.CustomerReferenceNo,
+      "RequestReferenceNo": customerDatas?.RequestReferenceNo,
+      "BranchCode": customerDatas?.BranchCode,
+      "ProductId": customerDatas?.ProductId,
+      "UserType": this.userType,
+      "BrokerBranchCode": customerDatas.BrokerBranchCode,
+      "BdmCode": customerDatas?.BdmCode,
+      "CreatedBy": customerDatas?.CreatedBy,
+      "CustomerCode": customerDatas?.CustomerCode,
+      "InsuranceId": this.insuranceId,
+      "SourceType": customerDatas?.SourceType,
+      "SectionId": customerDatas?.SectionId,
+      "TravelCoverId": customerDatas.TravelCoverId,
+      "Currency": customerDatas?.Currency,
+      "ExchangeRate": customerDatas?.ExchangeRate,
+      "PlanTypeId": customerDatas?.PlanTypeId,
+      "SourceCountry": customerDatas.SourceCountry,
+      "DestinationCountry": customerDatas.DestinationCountry,
+      "TotalPassengers": customerDatas?.TotalPassengers,
+      "TravelId": customerDatas.TravelId,
+      "HavePromoCode": customerDatas.HavePromoCode,
+      "PromoCode": customerDatas.PromoCode,
+      "SportsCoverYn": customerDatas.SportsCoverYn,
+      "TerrorismCoverYn": customerDatas.TerrorismCoverYn,
+      "CovidCoverYn": customerDatas.CovidCoverYn,
+      "TravelCoverDuration": customerDatas.TravelCoverDuration,
+      "TravelEndDate": customerDatas.TravelEndDate,
+      "TravelStartDate": customerDatas.TravelStartDate,
+      "GroupDetails": customerDatas.GroupDetails
+    }
+    console.log("Received Obj",ReqObj)
+    let urlLink = `${this.motorApiUrl}api/savetraveldetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        let res: any = data;
+        if (data.ErrorMessage.length != 0) {
+          if (res.ErrorMessage) {
+          }
+        }
+        else {
+          let entry = data?.Result;
+          entry['TravelStartDate'] = ReqObj?.TravelStartDate;
+          entry['TravelEndDate'] = ReqObj?.TravelEndDate;
+          entry['TotalPassengers'] = ReqObj?.TotalPassengers;
+          entry['SectionId'] = ReqObj?.SectionId;
+          entry['Currency'] = ReqObj?.Currency;
+          entry['DestinationCountry'] = data?.Result?.DestinationCountryDesc;
+          entry['NoofDays'] = ReqObj?.TravelCoverDuration;
+          this.requestReferenceNo = data.Result.RequestReferenceNo;
+          sessionStorage.setItem('quoteReferenceNo', this.requestReferenceNo);
+          this.onTravelCalculate(data.Result,customerDatas,type);
+
+
         }
       },
       (err) => { },
@@ -684,6 +773,68 @@ export class EndorsementTypeDetailsComponent {
         }
       })
   }
+  onTravelCalculate(coverListObj,customerData,type){
+    if(type=='cancel'){
+      this.coverModificationYN = "Y";
+    }
+      let createdBy = this.loginId
+      let groupList = coverListObj?.GroupDetails;
+      let vehicleList = [];
+      if (groupList.length != 0) {
+        let i = 0;
+        for (let group of groupList) {
+          let ReqObj = {
+            "InsuranceId": this.insuranceId,
+            "BranchCode": customerData.BranchCode,
+            "AgencyCode": customerData.AgencyCode,
+            "SectionId": coverListObj?.SectionId,
+            "ProductId": this.productId,
+            "MSRefNo": coverListObj?.MSRefNo,
+            "VehicleId": group.TravelId,
+            "CdRefNo": coverListObj?.CdRefNo,
+            "VdRefNo": coverListObj?.VdRefNo,
+            "CreatedBy": createdBy,
+            "productId": this.productId,
+            "Passengers": group.GroupMembers,
+            "RequestReferenceNo": coverListObj?.RequestReferenceNo,
+            "CoverModification":'Y'
+          }
+          let urlLink = `${this.CommonApiUrl}calculator/calc`;
+          this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+            (data: any) => {
+              let entry = data;
+  
+              entry['DestinationCountry'] = coverListObj.DestinationCountry;
+              entry['TravelStartDate'] = coverListObj.TravelStartDate;
+              entry['TravelEndDate'] = coverListObj.TravelEndDate;
+              let groupEntry = groupList.filter(ele => ele.GroupId == data?.VehicleId);
+              if (groupEntry) {
+                entry['Passengers'] = groupEntry[0].GroupMembers;
+                entry['TravelId'] = entry.VehicleId;
+              }
+              vehicleList.push(entry);
+              i += 1;
+              console.log("iiiiiiiii ", i)
+              if (i == groupList.length) {
+                console.log("grouppppppppppppppppppp");
+                sessionStorage.setItem('quoteReferenceNo', coverListObj.RequestReferenceNo)
+                if(type!='cancel'){
+                  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
+                }
+                else{
+                  this.getCancellationEndorse(coverListObj,customerData);
+                }
+                // this.vehicleDetailsList = vehicleList;
+                // console.log("Final Vehicle Details",vehicleList);
+                // this.checkSelectedCovers();
+  
+              }
+            },
+            (err) => { },
+          );
+        }
+      }
+  }
   onCalculate(buildDetails,customerData,type) {
     let createdBy=""
     if(type=='cancel'){
@@ -696,7 +847,9 @@ export class EndorsementTypeDetailsComponent {
         }
         else createdBy = this.loginId;
         if (buildDetails.length != 0) {
+          console.log("Details",buildDetails)
           this.requestReferenceNo = buildDetails[0].RequestReferenceNo;
+          
           sessionStorage.setItem('quoteReferenceNo', buildDetails[0].RequestReferenceNo);
           let i = 0;
           for (let build of buildDetails) {
@@ -754,7 +907,6 @@ export class EndorsementTypeDetailsComponent {
       (data: any) => {
         console.log(data);
         if(data.Result){
-          
           sessionStorage.setItem('quoteNo',data?.Result?.QuoteDetails?.QuoteNo);
           this.quoteNo = data?.Result?.QuoteDetails?.QuoteNo;
           this.emiYN = data?.Result?.QuoteDetails?.EmiYn;

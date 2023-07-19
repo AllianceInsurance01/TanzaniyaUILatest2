@@ -194,7 +194,7 @@
             <i class="fas fa-filter"></i>
         </span>
     </div>
-    <table mat-table [dataSource]="dataSource" matSort [matSortActive]="sortProperty" [matSortDirection]="sortDirection" matSortDisableClear>
+    <table mat-table [dataSource]="dataSource" matSort [matSortActive]="sortProperty" style="white-space: normal !important;" [matSortDirection]="sortDirection" matSortDisableClear>
         <ng-container *ngFor="let col of columnHeader; let i = index;" [matColumnDef]="col.key" [sticky]="i===0" [stickyEnd]="i === 10">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header mat-header-cell">
                 <ng-container *ngIf="columnHeader[i]['display']=='Premium'">

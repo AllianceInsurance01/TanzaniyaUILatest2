@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="row p-0 mt-2">
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-4 col-lg-4">
                             <div class="input-control-container">
                                 <label class="input-form-label">First Name</label><span class="text-danger">*</span>
                                 <div class="input-form-box">
@@ -50,7 +50,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-2 col-lg-2">
+                        <div class="col-12 col-md-4 col-lg-4">
                             <div class="input-control-container">
                                 <label class="input-form-label">Gender</label>
                                 <div class="input-form-radio-box">
@@ -74,7 +74,7 @@
                                 </div>
                             </div> -->
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                        <div class="col-12 col-md-4 col-lg-4 col-xl-4">
                             <div class="input-control-container">
                                 <label class="input-form-label">RelationShip</label><span class="text-danger">*</span>
                                 <ng-select class="input-form-select" [items]="passenger.relationship" appendTo="body" [(ngModel)]="passenger.RelationId" bindValue="Code" bindLabel="CodeDesc">
@@ -83,7 +83,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6 mt-2">
+                        <div class="col-12 col-md-4 col-lg-4 col-xl-4 mt-2">
                             <label class="input-form-label">Date Of Birth</label><span class="text-danger">*</span>
                             <mat-form-field appearance="fill">
                                 <input matInput [matDatepicker]="picker" [min]="passenger.minDate" [max]="passenger.maxDate" (dateChange)="onDobChange(i)" [(ngModel)]="passenger.Dob" [ngModelOptions]="{standalone: true}">
@@ -91,7 +91,7 @@
                                 <mat-datepicker #picker></mat-datepicker>
                             </mat-form-field>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-4 col-lg-4 col-xl-4">
                             <div class="input-control-container">
                                 <label class="input-form-label">Nationality</label><span class="text-danger">*</span>
                                 <ng-select class="input-form-select" [items]="countryList" appendTo="body" [(ngModel)]="passenger.Nationality" bindValue="Code" bindLabel="CodeDesc">
@@ -100,7 +100,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-4 col-lg-4 col-xl-4">
                             <div class="input-control-container">
                                 <label class="input-form-label">Passport No</label><span class="text-danger">*</span>
                                 <div class="input-form-box">
