@@ -1,6 +1,6 @@
 <div class="col-md-12 col-lg-12 col-12 mt-2 p-0">
     <div class="maan-grid customer-grid maan-grid-column-1 p-0  mt-3">
-        <div class="maan-grid-item customFlow p-0"  *ngIf="coverSection">
+        <div class="maan-grid-item customFlow paddingbig"  *ngIf="coverSection">
             
                 <div class="maan-grid-item-title p-0" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
                     <div class="d-flex justify-content-between">
@@ -1023,7 +1023,7 @@
                                             <tr mat-footer-row *matFooterRowDef="keys"></tr>
                                         </table>
                                     </div>
-                                    <div class="display2 col-12" style="overflow:scroll !important">
+                                    <div class="display2 col-12">
                                     
                                         <table mat-table [dataSource]="menu.CoverList" style="width:60% !important;" multiTemplateDataRows matSort>
                                             <ng-container matColumnDef="header-row-first-group">
@@ -2239,7 +2239,10 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row botomdisplay">
                     <div class="row">
+
                         <div class="col-12 col-lg-7 col-xl-7 col-md-7">
                             <div class="text-center my-3" style="margin-right: 25px;">
                                 <button class="custom-btn btn-5 mx-2" matRipple (click)="ongetBack()"><<&nbsp;Back</button>

@@ -49,16 +49,17 @@ export class NewExclusionDetailsComponent implements OnInit {
 
     const user = this.userDetails?.Result;
     //this.insuranceId = user?.Result?.LoginBranchDetails[0].InsuranceId;
-    this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+    // this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
     this.loginId = this.userDetails?.Result?.LoginId;
     this.ExclusionDetails = new Exclusion();
-    this.getCompanyProductList();
+   
     if(this.ExclusionDetails?.Status==null)  this.ExclusionDetails.Status = 'N';
     let docObj = JSON.parse(sessionStorage.getItem('ExclusionId'))
     if (docObj) {
       this.productValue = docObj?.ProductId,
         this.branchValue = docObj?.BranchCode,
         this.sectionValue = docObj?.SectionId;
+        this.insuranceId = docObj?.InsuranceId;
     };
     this.getTypeId()
    }
@@ -96,6 +97,7 @@ export class NewExclusionDetailsComponent implements OnInit {
           this.ExclusionId = Exclucsion?.ExclusionId;
           this.branchValue = Exclucsion?.BranchCode;
           this.productValue = Exclucsion?.ProductId;
+          this.getCompanyProductList();
           //this.sectionValue =Exclucsion?.SectionId;
           if(this.ExclusionId)  this.getEditExclusionDetails();
           else this.ExclusionId = null;

@@ -148,7 +148,8 @@ export class ExclusionListComponent implements OnInit {
       "ExclusionId": null,
       "BranchCode": this.branchValue,
       "ProductId": this.productValue,
-      "SectionId": this.sectionValue
+      "SectionId": this.sectionValue,
+      "InsuranceId":this.insuranceId,
     }
     sessionStorage.setItem('ExclusionId', JSON.stringify(ReqObj));
     this.router.navigate(['/Admin/exclusionMaster/newExclusionDetails'])
@@ -162,7 +163,7 @@ export class ExclusionListComponent implements OnInit {
     "InsuranceId":this.insuranceId,
      "BranchCode":this.branchValue,
      "ProductId":this.productValue,
-     "SectionId":this.sectionValue
+     "SectionId":this.sectionValue,
     }
     let urlLink = `${this.CommonApiUrl1}master/getallexclusion`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
