@@ -1712,7 +1712,7 @@ export class CustomerDetailsComponent implements OnInit {
                                       Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
                                       Details[0]['CustomerCode'] = this.customerCode;
                                       Details[0]['LoginId'] = this.brokerLoginId;
-                                      if(this.IndustryId)
+                                      if(this.IndustryId && this.industryList.length!=0)
                                       Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
                                     }
                                     else{
@@ -1722,7 +1722,7 @@ export class CustomerDetailsComponent implements OnInit {
                                       Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
                                       Details[0]['CustomerCode'] = this.customerCode;
                                       Details[0]['LoginId'] = this.loginId;
-                                      if(this.IndustryId)
+                                      if(this.IndustryId && this.industryList.length!=0)
                                       Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
                                     }
                                     sessionStorage.setItem('homeCommonDetails',JSON.stringify(Details))
