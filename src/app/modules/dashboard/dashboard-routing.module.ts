@@ -183,12 +183,12 @@ const routes: Routes = [
     }
    },
    {
-    path:'PendingPolicies',
+    path:'pendingPolicies',
    loadChildren: () => import('../../shared/CommonGrids/pending-policies/pending-policies.module').then(m => m.PendingPoliciesModule),
    data:{
      preload: true,
-    title: 'Pending Policies',
-      breadcrumb:'Pending Policies'
+    title: 'pending Policies',
+      breadcrumb:'pending Policies'
    }
   },
    {

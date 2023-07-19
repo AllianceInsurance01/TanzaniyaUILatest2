@@ -31,6 +31,7 @@ export class IndustryListComponent implements OnInit {
   productValue: any;
   CategoryList:any[]=[];
   CategoryValue:any;
+  insuranceList: { InsuranceId: string; CompanyName: string; }[];
   constructor(private router:Router,private sharedService:SharedService,) {
     this.minDate = new Date();
     //this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
@@ -44,10 +45,10 @@ export class IndustryListComponent implements OnInit {
     }*/
 
     this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
-    this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
+    // this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     const user = this.userDetails?.Result;
-    this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+    // this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
     this.columnHeader = [
       { key: 'IndustryName', display: 'Industry Name' },
       { key: 'Remarks', display: 'Remarks' },
@@ -68,12 +69,37 @@ export class IndustryListComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.getBranchList();
+    this.getCompanyList();
+    //this.getBranchList();
 
     //this.getExistingTinyUrl()
   }
+  getCompanyList(){
+    let ReqObj = {
+      "BrokerCompanyYn":"N",
+      "Limit":"0",
+      "Offset":""
+    }
+    let urlLink = `${this.ApiUrl1}master/getallinscompanydetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+          this.insuranceList = defaultObj.concat(data.Result);
+          if(this.insuranceId){this.getBranchList('direct');}
+        }
+  
+      },
+      (err) => { },
+    );
+  }
 
-getBranchList(){
+getBranchList(type){
+  if(type=='change'){
+    this.tinyUrlData=[];
+    this.branchValue='';
+  }
     let ReqObj = {
       "InsuranceId": this.insuranceId
 
@@ -221,7 +247,8 @@ getBranchList(){
       "CategoryId": this.CategoryValue,
       "BranchCode": this.branchValue,
       "ProductId":this.productValue,
-      "IndustryId":event.IndustryId
+      "IndustryId":event.IndustryId,
+      "InsuranceId": this.insuranceId
     }
     console.log('branch',this.branchValue,this.productId,event.CategoryId)
     sessionStorage.setItem('CategoryId', JSON.stringify(ReqObj));
@@ -236,7 +263,8 @@ getBranchList(){
       "CategoryId":this.CategoryValue,
       "BranchCode":this.branchValue,
       "ProductId":this.productValue,
-      "IndustryId":null
+      "IndustryId":null,
+      "InsuranceId": this.insuranceId
 
     }
     sessionStorage.setItem('CategoryId', JSON.stringify(ReqObj));

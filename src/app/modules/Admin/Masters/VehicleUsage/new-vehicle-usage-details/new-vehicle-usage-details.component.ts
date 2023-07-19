@@ -33,7 +33,7 @@ export class NewVehicleUsageDetailsComponent implements OnInit {
     this.productId =  sessionStorage.getItem('companyProductId');
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       const user = this.userDetails?.Result;
-    this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+    // this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
       this.loginId = this.userDetails?.Result?.LoginId;
 
     this.VehicleUsageId = sessionStorage.getItem('VehicleUsageId');
@@ -48,6 +48,7 @@ export class NewVehicleUsageDetailsComponent implements OnInit {
     let Vehicle:any = JSON.parse(sessionStorage.getItem('VehicleUsageId'));
       this.VehicleUsageId = Vehicle?.VehicleUsageId;
       this.branchValue = Vehicle?.BranchCode;
+      this.insuranceId= Vehicle?.InsuranceId;
     //   if(this.VehicleUsageId)  
     //   {
     //     this.getVehicleUsageDetails();

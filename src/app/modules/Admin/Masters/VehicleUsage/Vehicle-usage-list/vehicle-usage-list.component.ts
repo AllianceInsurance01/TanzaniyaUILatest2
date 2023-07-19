@@ -20,6 +20,7 @@ export class VehicleUsageListComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl1: any = this.AppConfig.CommonApiUrl;
   public branchList:any;branchValue:any;userDetails:any;
+  insuranceList: { InsuranceId: string; CompanyName: string; }[];
 
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,) {
@@ -27,8 +28,8 @@ export class VehicleUsageListComponent implements OnInit {
       // this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       const user = this.userDetails?.Result;
-    this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
-    this.getBranchList();
+    // this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+    //this.getBranchList();
      }
 
   ngOnInit(): void {
@@ -46,10 +47,15 @@ export class VehicleUsageListComponent implements OnInit {
         },
       }
     ];
+    this.getCompanyList();
    
 
 }
-getBranchList(){
+getBranchList(type){
+  if(type=='change'){
+    this.tableData=[];
+    this.branchValue='';
+  }
   let ReqObj = {
     "InsuranceId":this.insuranceId
 
@@ -107,7 +113,8 @@ EditStatus(event){
   onAddSection(){
     let ReqObj = {
       "VehicleUsageId": null,
-      "BranchCode": this.branchValue
+      "BranchCode": this.branchValue,
+      "InsuranceId":this.insuranceId
     }
     sessionStorage.setItem('VehicleUsageId', JSON.stringify(ReqObj));
     this.router.navigate(['/Admin/vehicleUsageMaster/newVehicleUsageDetails'])
@@ -134,10 +141,32 @@ EditStatus(event){
     );
 
   }
+
+  getCompanyList(){
+    let ReqObj = {
+      "BrokerCompanyYn":"N",
+      "Limit":"0",
+      "Offset":""
+    }
+    let urlLink = `${this.ApiUrl1}master/getallinscompanydetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+          this.insuranceList = defaultObj.concat(data.Result);
+          if(this.insuranceId){this.getBranchList('direct');}
+        }
+  
+      },
+      (err) => { },
+    );
+  }
   public onEditSection(event) {
     let ReqObj = {
       "VehicleUsageId": event.VehicleUsageId,
-      "BranchCode": this.branchValue
+      "BranchCode": this.branchValue,
+      "InsuranceId":this.insuranceId
     }
     sessionStorage.setItem('VehicleUsageId', JSON.stringify(ReqObj));
     this.router.navigateByUrl('/Admin/vehicleUsageMaster/newVehicleUsageDetails');

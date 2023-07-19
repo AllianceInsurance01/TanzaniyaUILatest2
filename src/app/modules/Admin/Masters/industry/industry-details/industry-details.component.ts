@@ -42,7 +42,7 @@ export class IndustryDetailsComponent implements OnInit {
     if (userDetails) {
       this.loginId = userDetails?.Result?.LoginId;
     }
-    this.insuranceId = userDetails.Result.LoginBranchDetails[0].InsuranceId;
+    // this.insuranceId = userDetails.Result.LoginBranchDetails[0].InsuranceId;
     this.Industrydetails = new Industry();
 
 
@@ -56,6 +56,7 @@ export class IndustryDetailsComponent implements OnInit {
       this.CategoryId = tinyurl?.CategoryId;
       this.branchValue = tinyurl?.BranchCode;
       this.IndustryId = tinyurl?.IndustryId;
+      this.insuranceId = tinyurl?.InsuranceId;
 
       this.productId=tinyurl?.ProductId;
 

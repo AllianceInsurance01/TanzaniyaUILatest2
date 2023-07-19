@@ -471,11 +471,34 @@ th.mat-header-cell {
          ::ng-deep .modal-content {
             width: 100% !important;
         }
+        .paddingbig{
+            padding:none !important;
+        }
+        .accordion {
+            width: 100%;
+            margin: auto;
+            background: #fff;
+            border-radius: 4px;
+            position: relative;
+            padding-left: 10px!important;
+            right: 10px !important;
+            top: 0.5rem;
+        }
+        .botomdisplay{
+            margin-bottom: 40px !important;
+        }
+      
     }
 
 @media screen and (min-width:700px) and (max-width: 1456px) {
         .display2{
            display:none;
+            }
+            .paddingbig{
+                padding:0!important;
+            }
+            .botomdisplay{
+                margin-bottom: none !important;
             }
           
         }
