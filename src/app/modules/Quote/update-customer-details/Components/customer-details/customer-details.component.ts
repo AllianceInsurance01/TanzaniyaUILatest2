@@ -75,6 +75,7 @@ export class CustomerDetailsComponent implements OnInit {
   endMaxDate: Date;
   brokerBranchCodeError: boolean;
   endorsementDetails: any;
+  countryId: any;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       
@@ -88,6 +89,7 @@ export class CustomerDetailsComponent implements OnInit {
     this.userType = this.userDetails?.Result?.UserType;
     this.agencyCode = this.userDetails.Result.OaCode;
     this.branchCode = this.userDetails.Result.BranchCode;
+    this.countryId = this.userDetails.Result.CountryId;
     this.brokerbranchCode = this.userDetails.Result.BrokerBranchCode;
     this.productId = this.userDetails.Result.ProductId;
     this.PackageYn= this.userDetails.Result.PackageYn
@@ -1712,7 +1714,7 @@ export class CustomerDetailsComponent implements OnInit {
                                       Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
                                       Details[0]['CustomerCode'] = this.customerCode;
                                       Details[0]['LoginId'] = this.brokerLoginId;
-                                      if(this.IndustryId && this.industryList.length!=0)
+                                      if(this.IndustryId && this.industryList!=null)
                                       Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
                                     }
                                     else{
@@ -1722,7 +1724,7 @@ export class CustomerDetailsComponent implements OnInit {
                                       Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
                                       Details[0]['CustomerCode'] = this.customerCode;
                                       Details[0]['LoginId'] = this.loginId;
-                                      if(this.IndustryId && this.industryList.length!=0)
+                                      if(this.IndustryId && this.industryList!=null)
                                       Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
                                     }
                                     sessionStorage.setItem('homeCommonDetails',JSON.stringify(Details))
@@ -1745,7 +1747,7 @@ export class CustomerDetailsComponent implements OnInit {
                                     Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
                                     Details[0]['CustomerCode'] = this.customerCode;
                                     Details[0]['LoginId'] = this.brokerLoginId;
-                                    if(this.IndustryId)
+                                    if(this.IndustryId && this.industryList!=null)
                                       Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
                                   }
                                   else{
@@ -1755,7 +1757,7 @@ export class CustomerDetailsComponent implements OnInit {
                                     Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
                                     Details[0]['CustomerCode'] = this.customerCode;
                                     Details[0]['LoginId'] = this.loginId;
-                                    if(this.IndustryId)
+                                    if(this.IndustryId && this.industryList!=null)
                                       Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
                                   }
                                   sessionStorage.setItem('homeCommonDetails',JSON.stringify(Details))
@@ -1835,7 +1837,7 @@ export class CustomerDetailsComponent implements OnInit {
           Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
           Details[0]['CustomerCode'] = this.customerCode;
           Details[0]['LoginId'] = this.brokerLoginId;
-          if(this.IndustryId)
+          if(this.IndustryId && this.industryList!=null)
           Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
         }
         else{
@@ -1845,7 +1847,7 @@ export class CustomerDetailsComponent implements OnInit {
           Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
           Details[0]['CustomerCode'] = this.customerCode;
           Details[0]['LoginId'] = this.loginId;
-          if(this.IndustryId)
+          if(this.IndustryId && this.industryList!=null)
           Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
         }
         sessionStorage.setItem('homeCommonDetails',JSON.stringify(Details))
@@ -1958,7 +1960,7 @@ export class CustomerDetailsComponent implements OnInit {
                 if (homeDetails) {
                     if (homeDetails[0].SectionId == undefined || homeDetails[0].SectionId == "undefined") homeDetails[0]['SectionId'] = sections;
                     else homeDetails[0].SectionId = sections;
-                    if(this.IndustryId)
+                    if(this.IndustryId && this.industryList!=null)
                     homeDetails[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
                     sessionStorage.setItem('homeCommonDetails', JSON.stringify(homeDetails))
                     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);

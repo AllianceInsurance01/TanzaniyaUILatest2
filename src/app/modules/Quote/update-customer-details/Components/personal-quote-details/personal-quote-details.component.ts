@@ -118,6 +118,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
   sectionCount: number;
   currencyCode: any;
   industryName: any;
+  countryId: any;
   constructor(private formlyJsonschema: FormlyJsonschema, private sharedService: SharedService, private datePipe: DatePipe,
     private router: Router, private http: HttpClient, private updateComponent: UpdateCustomerDetailsComponent) {
     this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -135,6 +136,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
     this.branchCode = this.userDetails.Result.BranchCode;
     console.log('branchCode', this.branchCode);
     this.branchList = this.userDetails.Result.LoginBranchDetails;
+    this.countryId = this.userDetails.Result.CountryId;
     this.productId = this.userDetails.Result.ProductId;
     this.insuranceId = this.userDetails.Result.InsuranceId;
      this.updateComponent.showStepperSection = false;
@@ -2309,7 +2311,7 @@ getCeilingMaterialList() {
 }
 getRegionList() {
   let ReqObj = {
-    "CountryId": 'TZA'
+    "CountryId": this.countryId
   }
   let urlLink = `${this.CommonApiUrl}master/dropdown/region`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
