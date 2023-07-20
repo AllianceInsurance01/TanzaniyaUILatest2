@@ -2352,7 +2352,7 @@ onFidelitySave(){
             let personalList = res.Result.PersonalDetails;
             if(personalList.length!=0){
               if(this.endorsementSection){
-                this.personalAccidentSection = !this.enableFieldsList.some(ele=>ele=='PersonalAccidentSuminsured');
+                this.personalAccidentSection = !this.enableFieldsList.some(ele=>ele=='PersonalAccidentSuminsured' || ele=='OccupationType');
               }
               else this.personalAccidentSection = true;
               let i=0;
@@ -2427,7 +2427,7 @@ onFidelitySave(){
             let personalList = res.Result.PersonalDetails;
             if(personalList.length!=0){
               if(this.endorsementSection){
-                this.personalIntermeditySection = !this.enableFieldsList.some(ele=>ele=='PersonalIntermediarySuminsured');
+                this.personalIntermeditySection = !this.enableFieldsList.some(ele=>ele=='PersonalIntermediarySuminsured' || ele=='OccupationType');
               }
               else this.personalIntermeditySection = true;
               for(let entry of personalList){

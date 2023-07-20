@@ -118,6 +118,8 @@ export class NavbarComponent implements OnInit {
     sessionStorage.removeItem('TravelQuoteRefNo')
     sessionStorage.removeItem('QuoteStatus');
     sessionStorage.removeItem('endorsePolicyNo');
+    sessionStorage.removeItem('quoteNo');
+    sessionStorage.removeItem('updatebar');
     if (this.expanded === false) {
       this.currentIndex = i;
       this.expanded = true;
@@ -390,6 +392,8 @@ export class NavbarComponent implements OnInit {
     sessionStorage.removeItem('QuoteStatus');
     sessionStorage.removeItem('endorsePolicyNo');
     sessionStorage.removeItem('endorseTypeId');
+    sessionStorage.removeItem('quoteNo');
+    sessionStorage.removeItem('updatebar');
     // if(rowData.label=='New Quote'){
 
     // }
