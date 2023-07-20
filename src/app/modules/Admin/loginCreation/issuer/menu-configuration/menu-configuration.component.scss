@@ -91,6 +91,12 @@
     user-select: none;
     transition: all .2s;
     font-size: 90%;
+    border-bottom:1px solid lightblue;
+    text-align:center;
+    //box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    // background: white;
+    // padding:16px;
+    // border-radius: 5px;
 }
 
 
@@ -165,15 +171,17 @@
   background-color: skyblue;
   color:darkblue;
   display: block;
-
-
 }
-.custom-checkbox-container input:not(:checked)~.description{
+.custom-checkbox-container input:not(:checked)~.description:not(:checked){
   background-color:#fff;
   color:red;
-  display:inline-block;
+  display:block;
 
-
+}
+.custom-checkbox-container input:not(:checked)~.description:hover {
+    background-color: skyblue;
+    color:darkblue;
+    display: block;
 }
 
 /*.custom-checkbox-container input:checked {

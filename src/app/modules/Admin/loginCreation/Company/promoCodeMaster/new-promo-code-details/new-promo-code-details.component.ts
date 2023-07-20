@@ -412,10 +412,11 @@ this.onAddFactorList();
         if(data.Result){
           this.promoDetails = data.Result;
           this.PromocodeType= this.promoDetails.PromocodeType;
+          this.FactorTypeId=this.promoDetails.FactorTypeId;
           this.getFactorTypeList();
           this.getBasedonList();
           this.getTaxTypeList();
-           this.FactorTypeId=this.promoDetails.FactorTypeId;
+          
            this.pro=this.promoDetails.PromocodeId;
 
            this.basedOnColumnValue=this.promoDetails.CoverBasedOn;

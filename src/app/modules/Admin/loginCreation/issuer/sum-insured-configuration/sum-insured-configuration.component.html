@@ -15,12 +15,12 @@
                 <table class="table table-headerRow styled-table">
                     <tr>
                         <th class="tbl-header">Select</th>
-                        <th class="tbl-header">Field Name</th>
-                        <!--<th class="tbl-header">Column Name</th>-->
                         <th class="tbl-header">Product</th>
+                        <!--<th class="tbl-header">Column Name</th>-->
+                        <th class="tbl-header">Field Name</th>
                         <th class="tbl-header">Min SumInsured</th>
                         <th class="tbl-header">Max SumInsured</th>
-                        <th class="tbl-header" *ngIf="IssuerType=='high' || IssuerType=='both'">Referrals</th>
+                        <!-- <th class="tbl-header" *ngIf="IssuerType=='high' || IssuerType=='both'">Referrals</th> -->
                         <th class="tbl-header">Endorsements</th>
                     </tr>
                     <tr *ngFor="let row of productList | paginate:{itemsPerPage: 5, currentPage:p} ;let i = index">
@@ -54,9 +54,9 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="tbl-content text-center" *ngIf="IssuerType=='high' || IssuerType=='both'">
+                        <!-- <td class="tbl-content text-center" *ngIf="IssuerType=='high' || IssuerType=='both'">
                             <button class="btn btn-outline btn-warning m-2" (click)="showReferral(row)"><i class="fa fa-book"></i></button>
-                        </td>
+                        </td> -->
                         <td class="tbl-content text-center">
                             <button class="btn btn-outline btn-warning m-2" (click)="showEndorsement(row)"><i class="fa fa-address-book"></i></button>
                         </td>

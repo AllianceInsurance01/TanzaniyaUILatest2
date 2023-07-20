@@ -30,6 +30,7 @@ export class IssuerDetailsComponent implements OnInit {
   loginId: any;editSection:boolean = false;
   userDetails: any;EndList:any[]=[];
   EndrosementType: any;
+  issuerId: string;
   constructor(private router:Router,private sharedService:SharedService,
     private datePipe:DatePipe) {
     this.minDate = new Date();
@@ -117,11 +118,11 @@ export class IssuerDetailsComponent implements OnInit {
       );
   }
   ngOnInit(): void {
-    let issuerId = sessionStorage.getItem('editIssuerLoginId');
-    if(issuerId){
+    this.issuerId = sessionStorage.getItem('editIssuerLoginId');
+    if(this.issuerId){
       this.editSection = true;
 
-      this.getEditIssuerDetails(issuerId);
+      this.getEditIssuerDetails(this.issuerId);
     }
     else{
 
@@ -445,7 +446,9 @@ export class IssuerDetailsComponent implements OnInit {
               if(this.issuerType=='high' || this.issuerType == 'both'){
                 this.router.navigate(['/Admin/issuerList/productReferralConfguration'])
               }
-              else this.router.navigate(['/Admin/issuerList/issuerMenuCongifuration'])
+              else {
+                // sessionStorage.setItem('editIssuerLoginId',this.issuerId);
+                this.router.navigate(['/Admin/issuerList/issuerMenuCongifuration'])}
 
           }
           else if(data.ErrorMessage){

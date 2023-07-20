@@ -1930,7 +1930,10 @@
         
                                                     <tbody *ngFor="let clause of ClausesData|paginate:{itemsPerPage: 10, currentPage:p,id: 'p'}; let i=index;">
                                                         <tr>
-                                                            <td><input type="checkbox" (change)="onCheckUser(i,$event)" checked="checked"> </td>
+                                                            <td>
+                                                                <input type="checkbox" (change)="onCheckUser(i,$event,clause)" [checked]="clause.TypeId == 'D' ? true : false"> 
+                                                                <!-- <input type="checkbox"  *ngIf="clause.TypeId=='O'" (change)="onCheckUser(i,$event,clause)">  -->
+                                                            </td>
         
                                                             <td>
                                                                 <div class="input-control-container">
@@ -1990,7 +1993,7 @@
         
                                                     <tbody *ngFor="let clause of ExclusionData|paginate:{itemsPerPage: 10, currentPage:s,id: 's'} ; let i=index;">
                                                         <tr>
-                                                            <td><input type="checkbox" (change)="onUser(i,$event)" checked="checked"> </td>
+                                                            <td><input type="checkbox" (change)="onUser(i,$event)" [checked]="clause.TypeId == 'D' ? true : false"> </td>
         
                                                             <td>
                                                                 <div class="input-control-container">
@@ -2051,7 +2054,7 @@
         
                                                     <tbody *ngFor="let clause of WarrantyData|paginate:{itemsPerPage: 10, currentPage:pa, id:'pa'}; let i=index;">
                                                         <tr>
-                                                            <td><input type="checkbox" (change)="onCheck(i,$event)" checked="checked"> </td>
+                                                            <td><input type="checkbox" (change)="onCheck(i,$event)" [checked]="clause.TypeId == 'D' ? true : false"> </td>
         
                                                             <td>
                                                                 <div class="input-control-container">

@@ -478,16 +478,18 @@ export class ExistingQuotesComponent implements OnInit {
 
     onViews(rowData)
     {
-      this.router.navigate(['/Home/viewQuotes']);
+      this.router.navigate(['/Home/MotorDocument']);
       let quoteObj = {
         "QuoteNo": rowData.QuoteNo,
-        "PolicyNo":null,
-        "from":'Existing',
+        // "PolicyNo":null,
+        // "from":'Existing',
         "CustomerReferenceNo": rowData.CustomerReferenceNo,
         "RequestReferenceNo": rowData.RequestReferenceNo,
+        "pageFrom": 'Existing'
         //"QuoteNo":rowData.QuoteNo
       }
-      sessionStorage.setItem('FromDetails',JSON.stringify(quoteObj));
+      //sessionStorage.setItem('FromDetails',JSON.stringify(quoteObj));
+      sessionStorage.setItem('editCustomer',JSON.stringify(quoteObj));
     }
 
 

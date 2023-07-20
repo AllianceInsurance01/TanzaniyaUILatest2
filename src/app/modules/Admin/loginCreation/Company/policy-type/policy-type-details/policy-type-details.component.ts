@@ -26,6 +26,7 @@ export class PolicyTypeDetailsComponent implements OnInit {
     productId:any;
  policyType:any;
   loginId: any;
+  policyidYes: string;
 
 
   constructor(private router:Router,private sharedService: SharedService,
@@ -51,11 +52,18 @@ export class PolicyTypeDetailsComponent implements OnInit {
 
    if(this.policyTypeNmae!=null && this.policyTypeNmae!=undefined){
       //this.getEditCityDetails();
-      this.getEditPolicyDetails()
+      this.getEditPolicyDetails();
+      if(this.policyTypeNmae == '99999'){
+        this.policyidYes='Y';
+      }
+      else{
+        this.policyidYes='N';
+      }
     }
     else{
       this.policyType= new Policy();
       if(this.policyType?.Status==null)  this.policyType.Status = 'Y';
+      if(this.policyidYes == null) this.policyidYes='N';
 
       //this.policyTypeNmae= policyObj?.PolicyTypeId;
       //this.insuranceId = policyObj.InsuranceId;
@@ -127,9 +135,16 @@ export class PolicyTypeDetailsComponent implements OnInit {
   );
 }
 onSavepolicy() {
+  let policytypeid:any;
+  if(this.policyidYes=='Y'){
+    policytypeid='99999'
+  }
+  else{
+    policytypeid=this.policyType.PolicyTypeId
+  }
   let ReqObj = {
 
-    "PolicyTypeId":this.policyType.PolicyTypeId,
+    "PolicyTypeId":policytypeid,
     "PolicyTypeName":this.policyType.PolicyTypeName,
     "EffectiveDateStart":this.policyType.EffectiveDateStart,
     "Remarks":this.policyType.Remarks,

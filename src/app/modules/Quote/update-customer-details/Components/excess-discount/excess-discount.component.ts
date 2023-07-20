@@ -3692,14 +3692,20 @@ this.viewCondition(i);
     this.clause = false;
     this.clauses = false;
   }
-  onCheckUser(i, event) {
+  onCheckUser(i, event,clause) {
 
-    const checked = event.target.unchecked; // stored checked value true or false
+    const checked = event.target.checked; // stored checked value true or false
      if (checked) {
-      this.common1.push({ SubId: i });
-
+      //this.common1.push({ SubId: i });
+      let index = this.ClausesData.find(ele => ele.SubId == clause.SubId);
+      console.log('BBBBBBBBBBBB',this.ClausesData);
+          
+      if(index){
+        this.common1.push(index);
+        console.log('OOOOOOOOOOOOOO',this.common1);
+      }
        // push the Id in array if checked
-        } else {
+        } else if(!checked) {
           /*let index = this.common1.findIndex(SubId =>SubId == Id);//Find the index of stored id
           this.common1.splice(index,1);*/
           //this.common1.splice(this.common1.findIndex(Id  => Id.SubId == i),1);
@@ -4053,4 +4059,7 @@ addItem(){
    }
 
 
+   onCheckEndorseSelect(rowData){
+    
+  }
 }

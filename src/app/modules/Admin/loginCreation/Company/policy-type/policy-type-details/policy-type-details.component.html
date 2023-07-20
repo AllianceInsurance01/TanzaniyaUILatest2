@@ -74,7 +74,20 @@
                   <div class="card-header">Policy Details</div>
                   <div class="card-body">
                       <div class="row mt-2">
-                          <div class="col-12 col-md-6 col-lg-6">
+                        <div class="col-12 col-md-4 col-lg-4">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Default Setup<span class="text-required">*</span></label>
+                                <div class="input-form-radio-box">
+                                    <div class="radio-toolbar">
+                                        <input id="Default_Yes" type="radio" name="Default"  [(ngModel)]="policyidYes"  value="Y">
+                                        <label for="Default_Yes">Yes</label>
+                                        <input type="radio" id="Default_No" name="Default"  [(ngModel)]="policyidYes"  value="N">
+                                        <label for="Default_No">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                          <div class="col-12 col-md-4 col-lg-4">
                               <div class="input-control-container">
                                   <label class="input-form-label">Policy Type Name<span class="text-required">*</span></label>
                                   <div class="input-form-box">
@@ -82,7 +95,7 @@
                                   </div>
                               </div>
                           </div>
-                          <div class="col-12 col-md-6 col-lg-6">
+                          <div class="col-12 col-md-4 col-lg-4">
                               <div class="input-control-container">
                                 <label class="input-form-label">Effective Date Start<span class="text-required">*</span></label>
                                   <mat-form-field appearance="fill">
@@ -95,7 +108,7 @@
                           </div>
                       </div>
                       <div class="row">
-                          <div class="col-12 col-md-6 col-lg-6">
+                          <div class="col-12 col-md-4 col-lg-4">
                               <div class="input-control-container">
                                   <label class="input-form-label">Status<span class="text-required">*</span></label>
                                   <div class="input-form-radio-box">
@@ -112,7 +125,7 @@
                                   </div>
                               </div>
                           </div>
-                          <div class="col-12 col-md-6 col-lg-6">
+                          <div class="col-12 col-md-4 col-lg-4">
                               <div class="input-control-container">
                                   <label class="input-form-label">Remarks<span class="text-required">*</span></label>
                                   <div class="input-form-box">

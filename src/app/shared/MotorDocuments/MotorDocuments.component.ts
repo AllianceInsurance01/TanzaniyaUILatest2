@@ -232,14 +232,15 @@ export class MotorDocumentsComponent implements OnInit {
             this.VechileTira();
             this.payment();
             this.Documentview();
+            this.onCustomerSearch();
            }
 
            if(this.ReferenceNo){
             this.onRating()
            }
-       if(this.searchValue){
-         this.onCustomerSearch();
-       }
+      //  if(this.searchValue){
+      //    this.onCustomerSearch();
+      //  }
  
 
        this.customerData=[{
@@ -302,7 +303,8 @@ export class MotorDocumentsComponent implements OnInit {
         sessionStorage.setItem('searchVaue',this.searchValue);
         this.router.navigate(['/Home/search']);
       } 
-      else{ this.router.navigate(['Home/policies'])}
+      else if(this.pageFrom=='policy'){ this.router.navigate(['Home/policies'])}
+      else if(this.pageFrom == 'Existing') { this.router.navigate(['/Home/existingQuotes'])}
     }
 
     onViews(row:any){
@@ -362,13 +364,7 @@ export class MotorDocumentsComponent implements OnInit {
          else{
            app="1"
          }
-         /*if(this.search=='EntryDate'){
-     
-           let dob:any = this.datePipe.transform(this.dob, "dd/MM/yyyy");
-           this.searchValue=dob;
-           //this.onDateFormatInEdit(this.searchValue);
-         }*/
-         if(this.searchValue){
+         //if(this.searchValue){
            //this.customerData = [];
            let ReqObj = {
             "ApplicationId": app,
@@ -404,7 +400,7 @@ export class MotorDocumentsComponent implements OnInit {
              },
              (err) => { },
            );
-         }
+         //}
        }
 
 

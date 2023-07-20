@@ -33,12 +33,13 @@ export class PaymentListComponent implements OnInit {
    }
   ngOnInit(): void {
     this.columnHeader = [
-      { key: 'CashYn', display: 'Cash Y/N' },
-      { key: 'CreditYn', display: 'Credit Y/N' },
-      { key: 'ChequeYn', display: 'Cheque Y/N' },
+      { key: 'CashYn', display: 'Cash Y/N'},
+      { key: 'CreditYn', display: 'Credit Y/N'},
+      { key: 'ChequeYn', display: 'Cheque Y/N'},
+      { key: 'UserType', display: 'UserType'},
+      { key: 'SubUserType', display: 'SubUserType'},
       { key: 'EffectiveDateStart', display: 'Effective Date' },
-
-      { key: 'Status', display: 'Status' },
+      { key: 'Status', display: 'Status'},
       {
         key: 'actions',
         display: 'Action',

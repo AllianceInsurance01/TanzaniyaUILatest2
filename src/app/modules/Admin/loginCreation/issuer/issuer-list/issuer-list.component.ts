@@ -91,7 +91,7 @@ export class IssuerListComponent implements OnInit {
   }
   onEdit(rowData){
 
-    sessionStorage.removeItem('issuerInsuranceId')
+    sessionStorage.setItem('issuerInsuranceId',rowData.InsuranceId);
       sessionStorage.setItem('editIssuerLoginId',rowData.LoginId);
       sessionStorage.setItem('ReferralId',rowData.ReferralIds);
       this.router.navigate(['/Admin/issuerList/newIssuerDetails'])

@@ -33,7 +33,7 @@ export class MenuConfigurationComponent implements OnInit {
         this.issuerType = issuerDetails?.issuerType;
         this.issuerLoginId = issuerDetails?.loginId;
     }
-    if(issuerId){
+    if(issuerId || this.issuerType){
       this.issuerId = issuerId;
       this.getIssuerMenuList();
     }
@@ -393,11 +393,63 @@ export class MenuConfigurationComponent implements OnInit {
 
 
   }
-  onChange(){
-    this.IsDesti=true;
-    if(this.IsDesti){
-        this.IsDesti=false
+  onChange(item,i){
+    console.log('PPPPPPPPPPPP',item);
+    console.log('New Items Index',i);
+    let index = this.userList.find(ele => ele.id == item.id)
+    console.log('UUUUUUUUUUU',index);
+    if(index){
+      this.userList[i].IsDesti=true;
+      console.log('YYYYYYYYYY',this.userList[i].IsDesti);
+      console.log('MMMMMMMMMMM',this.userList);
     }
+    else{
+      this.userList[i].IsDesti=false;
+    }
+   
+  }
+  onChangeissuer(item,i){
+    console.log('INSUUUUUUUUU',item);
+    console.log('New Items Index',i);
+    let index = this.issuerList.find(ele => ele.id == item.id)
+    console.log('UUUUUUUUUUU',index);
+    if(index){
+      this.issuerList[i].IsDesti=true;
+      console.log('YYYYYYYYYY',this.issuerList[i].IsDesti);
+      console.log('MMMMMMMMMMM',this.issuerList);
+    }
+    else{
+      this.issuerList[i].IsDesti=false;
+    }
+  }
+  onChangeissuerexclude(item,i){
+    console.log('INSUUUUUUUUU',item);
+    console.log('New Items Index',i);
+    let index = this.includedIssuerList.find(ele => ele.id == item.id)
+    console.log('UUUUUUUUUUU',index);
+    if(index){
+      this.includedIssuerList[i].IsDesti=true;
+      console.log('YYYYYYYYYY',this.includedIssuerList[i].IsDesti);
+      console.log('MMMMMMMMMMM',this.includedIssuerList);
+    }
+    else{
+      this.includedIssuerList[i].IsDesti=false;
+    }
+  }
+  onExcludeChange(item,i){
+    console.log('PPPPPPPPPPPP',item);
+    console.log('New Items Index',i);
+    let index = this.includedUserList.find(ele => ele.id == item.id)
+    console.log('UUUUUUUUUUU',index);
+    if(index){
+      this.includedUserList[i].IsDesti=true;
+      console.log('YYYYYYYYYY',this.includedUserList[i].IsDesti);
+      console.log('MMMMMMMMMMM',this.includedUserList);
+    }
+    else{
+      this.includedUserList[i].IsDesti=false;
+    }
+   
   }
   unselect(): void {
     this.IsDesti = undefined;
@@ -406,7 +458,7 @@ export class MenuConfigurationComponent implements OnInit {
     for (var i = 0; i < this.userList.length; i++) {
       this.userList[i].isSelected = this.IsDesti;
     }
-    this. getMenuIds();
+    this.getMenuIds();
   }
   getIssuerMenuList(){
       let ReqObj = {
@@ -417,9 +469,11 @@ export class MenuConfigurationComponent implements OnInit {
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
           console.log(data);
-          if(data.Result){
-              this.userList = data.Result.UserList;
-              this.issuerList = data.Result.AdminList;
+          if(data?.Result){
+              this.userList = data?.Result?.UserList;
+              console.log('User List',this.userList);
+              this.issuerList = data?.Result?.AdminList;
+              console.log('Issuer List',this.issuerList);
               this.getMenuIds();
           }
         },
@@ -427,50 +481,70 @@ export class MenuConfigurationComponent implements OnInit {
     );
   }
   getMenuIds(){
+    // let i=0; let j=0;
       let ReqObj = { "LoginId":this.issuerLoginId}
       let urlLink = `${this.CommonApiUrl}admin/getmenuids`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
-          console.log(data);
+          console.log('pppppppppp',data);
           if(data.Result){
             let menuList:any[]=[];
-            menuList= data.Result.MenuId;
+            menuList= data.Result?.MenuId;
             if(menuList.length!=0){
-              for(let entry of menuList){
-                const result = (this.userList.find(x => x.id === entry) ) ? true : false;
+              console.log('IN Menu User Id',this.userList);
+              for(let entry of menuList){           
+              
+                const result = (this.userList?.find(x => x.id === entry) ) ? true : false;
                 if(result){
-                  let index = this.userList.findIndex(ele=>ele.id==entry);
+                  if(this.userList.length!=0){
+                  let index = this.userList?.findIndex(ele=>ele.id==entry);
+                  console.log('ooooooooooooooooo',index);
+                  if(index>0){
                   this.includedUserList.push(this.userList[index]);
                   this.userList.splice(index,1);
-
+                  console.log("Checked",result);
+                  }
                    }
+                  }
                 else{
-                  let index = this.issuerList.findIndex(ele=>ele.id==entry);
-                  this.includedIssuerList.push(this.issuerList[index]);
-                  this.issuerList.splice(index,1);
+                  if(this.issuerList.length!=0){
+                  let index = this.issuerList?.findIndex(ele=>ele.id==entry);
+                  console.log('mmmmmmmmmmmm',index);
+                  if(index>0){
+                    this.includedIssuerList.push(this.issuerList[index]);
+                    this.issuerList.splice(index,1);
+                    console.log("unChecked",result);
+                  }
+                  
+                  }
                 }
-                console.log("Checked",result);
+                
               }
+           
+           
             }
           }
         },
         (err) => { },
         );
   }
-  onSelected(arrayaside: string) {
-    let index = 0;
+  onSelected(arrayaside: string) {  
+    console.log('SSSSSSSSSSS',arrayaside);
     if (arrayaside === 'right') {
         console.log("User List",this.userList)
       let filteredList = this.userList.filter(ele=>ele?.IsDesti==true);
-        console.log(filteredList);
+        console.log('iiiiiiiiiii',filteredList);
+        console.log('lllllllllll',this.userList[0].IsDesti);
         if(filteredList.length!=0){
+          let index = 0;
             for(let entry of filteredList){
                 entry.IsDesti = false;
                 this.includedUserList = [entry].concat(this.includedUserList);
                 this.userList = this.userList.filter(item => item.id != entry.id);
-
-
-
+                index+=1;
+                if(index==filteredList.length){
+                  console.log("Final User",this.userList);
+                }
             }
         }
     //   let obj:any = this.userList[index];
@@ -489,6 +563,7 @@ export class MenuConfigurationComponent implements OnInit {
               this.includedUserList = this.includedUserList.filter(item => item.id != entry.id);
           }
       }
+      
     //   let obj:any = this.includedUserList[index];
     //   if(obj){
     //     this.userList.push(obj);
@@ -499,7 +574,7 @@ export class MenuConfigurationComponent implements OnInit {
   onIssuerSelected(arrayaside: string){
     if (arrayaside === 'right') {
         let filteredList = this.issuerList.filter(ele=>ele.IsDesti==true);
-          console.log(filteredList);
+          console.log('lllllllllll',this.issuerList[0].IsDesti);
           if(filteredList.length!=0){
             let i=0;
               for(let entry of filteredList){

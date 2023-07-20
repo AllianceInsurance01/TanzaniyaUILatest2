@@ -817,6 +817,7 @@ onSelectendorse(rowData,event){
               this.referralSection = false;
               this.endorseSection = false;
               this.getProductList();
+              this.router.navigate(['/Admin/issuerList/issuerMenuCongifuration']);
               
               //.referralSection = false;
            //this.router.navigate(['/Admin/userList/UserproductList']);
