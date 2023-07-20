@@ -31,22 +31,16 @@
 //     border-left: 10px solid green;
 //     color: black !important;
 // }
+.mdc-data-table__table {
+    min-width: 100%;
+    border: 0;
+     white-space: normal !important; 
+    border-spacing: 0;
+    table-layout: fixed;
+}
 .deletedBg{
     background-color: #fd7e14 !important;
     color: #fff !important;
-}
-.mat-table {
-    table-layout: auto;
-    white-space: nowrap !important;
-    border: 2px solid #eaecf1;
-    outline: none;
-    box-sizing: border-box;
-    transition: all .3s;
-    height: max-content;
-    background: rgb(255, 255, 255);
-    box-shadow: 1px 2px 2px #1f26875e !important;
-    backdrop-filter: blur(18.5px);
-    list-style-type: none;
 }
 
 @media screen and (min-width: 750px) and (max-width: 20000px) {

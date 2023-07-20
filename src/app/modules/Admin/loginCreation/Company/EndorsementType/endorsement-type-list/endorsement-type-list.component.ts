@@ -103,8 +103,6 @@ export class EndorsementTypeListComponent {
        //console.log('dddddddddd',res?.Result.EndorsementMasterListRes)
         if(res?.Result[0].EndorsementMasterListRes){
             this.endorseData = res?.Result[0]?.EndorsementMasterListRes;
-          console.log('eeeeeeee',this.endorseData)
-
           if(this.categoryId!=undefined && this.categoryId!=null){
             let docObj = {"ItemType":this.categoryId};
             sessionStorage.setItem('addDocDetailsObj',JSON.stringify(docObj));
