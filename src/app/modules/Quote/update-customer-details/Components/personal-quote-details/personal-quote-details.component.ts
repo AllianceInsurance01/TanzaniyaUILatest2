@@ -3916,7 +3916,7 @@ getOccupationList(sections) {
                           }
                     }
               }
-              if (this.productId != '19' && this.productId != '3' && this.productId != '1' && this.productId != '32' && this.productId!='14' && this.productId!='16') this.fields[0].fieldGroup[0].fieldGroup[2].props.options = defaultObj.concat(this.occupationList);
+              if (this.productId != '19' && this.productId != '3' && this.productId!='6' && this.productId != '1' && this.productId != '32' && this.productId!='14' && this.productId!='16') this.fields[0].fieldGroup[0].fieldGroup[2].props.options = defaultObj.concat(this.occupationList);
               if(this.productId=='14'){
                 let fireData = new EmployersLiability();
                 let entry = [];
@@ -3963,7 +3963,8 @@ getOccupationList(sections) {
                   this.fields[0].fieldGroup[4].fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.occupationList);
                 }
               }
-              if (this.productId != '3' && this.productId != '19' && this.productId!='14' && this.productId!='32') {
+              else if (this.productId == '6') this.setCommonFormValues();
+              if (this.productId != '3' && this.productId != '6' && this.productId != '19' && this.productId!='14' && this.productId!='32') {
 
                 let referenceNo = sessionStorage.getItem('quoteReferenceNo');
                 if (referenceNo) {
