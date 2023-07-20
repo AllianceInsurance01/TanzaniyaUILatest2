@@ -191,6 +191,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   accessoriesTypeError: boolean;
   sumInsuredError: boolean;
   totalAccSIError: boolean;
+  enableAllSection: boolean = false;
   constructor(private router: Router,private datePipe:DatePipe,private modalService: NgbModal,
      private sharedService: SharedService,) {
     let homeObj = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
@@ -205,7 +206,6 @@ export class DomesticRiskDetailsComponent implements OnInit {
     if (homeObj && this.productId!='19') {
       this.item = homeObj[0].SectionId;
       this.InbuildConstructType=homeObj[0].InbuildConstructType
-      console.log("item received", this.item)
       if(this.item) this.setTabSections();
     }
     else{
@@ -267,6 +267,9 @@ export class DomesticRiskDetailsComponent implements OnInit {
         this.orgPolicyNo = sessionStorage.getItem('endorsePolicyNo')
         this.endorsementId = endorseObj.EndtTypeId;
         this.enableFieldsList = endorseObj.FieldsAllowed;
+        let enableAllSection = this.enableFieldsList.some(ele=>ele=='domesticRiskDetails');
+        if(enableAllSection) this.enableAllSection=true;
+        else this.enableAllSection = false;
         this.endorsePolicyNo = endorseObj?.PolicyNo;
         this.endorseCategory = endorseObj.Category;
         this.endorsementName = endorseObj?.EndtName;
@@ -317,12 +320,12 @@ export class DomesticRiskDetailsComponent implements OnInit {
   }*/
   checkEndorseDisable(type){
       if(this.endorsementSection){
-            if(type=='building') return this.buildingSection;
-            else if(type=='content') return this.contentRiskSection;
-            else if(type=='personalAccident') return this.personalAccidentSection;
-            else if(type == 'personalIndeminity') return this.personalIntermeditySection;
-            else if(type=='allRisk') return this.allRiskSection;
-            else if(type == 'electronic') return this.electronicEquipSection;
+            if(type=='building') return (!this.buildingSection && !this.enableAllSection);
+            else if(type=='content') return (!this.contentRiskSection && !this.enableAllSection);
+            else if(type=='personalAccident') return (!this.personalAccidentSection && !this.enableAllSection);
+            else if(type == 'personalIndeminity') return (!this.personalIntermeditySection && !this.enableAllSection);
+            else if(type=='allRisk') return (!this.allRiskSection && !this.enableAllSection);
+            else if(type == 'electronic') return (!this.electronicEquipSection && !this.enableAllSection);
       }
       else return false;
   }
@@ -499,12 +502,12 @@ export class DomesticRiskDetailsComponent implements OnInit {
   }
   enableAddNewBtn(type){
     if(this.endorsementSection){
-      if(type=='building') return this.buildingSection;
-      else if(type=='content') return this.contentRiskSection;
-      else if(type=='personalAccident') return this.personalAccidentSection;
-      else if(type == 'personalIndeminity') return this.personalIntermeditySection;
-      else if(type=='allRisk') return this.allRiskSection;
-      else if(type == 'electronic') return this.electronicEquipSection;
+      if(type=='building') return (!this.buildingSection && !this.enableAllSection) ;
+      else if(type=='content') return (!this.contentRiskSection && !this.enableAllSection);
+      else if(type=='personalAccident') return (!this.personalAccidentSection && !this.enableAllSection);
+      else if(type == 'personalIndeminity') return (!this.personalIntermeditySection && !this.enableAllSection);
+      else if(type=='allRisk') return (!this.allRiskSection && !this.enableAllSection);
+      else if(type == 'electronic') return (!this.electronicEquipSection && !this.enableAllSection);
     }
     else return false;
   }
