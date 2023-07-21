@@ -1565,6 +1565,20 @@ getMachineryBreakDownDetails(sections){
       console.log(data);
       if (data.Result) {
         let details = data?.Result;
+        if(details?.EndorsementDate){
+          this.endorsementDate = details?.EndorsementDate;
+          this.endorsementEffectiveDate = details?.EndorsementEffectiveDate;
+          this.endorsementRemarks = details?.EndorsementRemarks;
+          this.endorsementType = details?.EndorsementType;
+          this.endorsementTypeDesc = details?.EndorsementTypeDesc;
+          this.endtCategoryDesc = details?.EndtCategoryDesc;
+          this.endtCount = details?.EndtCount;
+          this.endtPrevPolicyNo = details?.EndtPrevPolicyNo;
+          this.endtPrevQuoteNo = details?.EndtPrevQuoteNo;
+          this.endtStatus = details?.EndtStatus;
+          this.isFinanceEndt = details?.IsFinanceEndt;
+          this.orginalPolicyNo = details?.OrginalPolicyNo;
+        }
         this.productItem.BoilerPlantsSi = details?.BoilerPlantsSi;
         this.productItem.ElecMachinesSi = details?.ElecMachinesSi;
         this.productItem.EquipmentSi = details?.EquipmentSi;
@@ -3394,7 +3408,19 @@ onSaveMachineryDetails(type,formType){
     "GeneralMachineSi": this.productItem?.GeneralMachineSi,
     "MachineEquipSi": this.productItem?.MachineEquipSi,
     "ManuUnitsSi": this.productItem?.ManuUnitsSi,
-    "PowerPlantSi": this.productItem?.PowerPlantSi
+    "PowerPlantSi": this.productItem?.PowerPlantSi,
+    "EndorsementDate": this.endorsementDate,
+    "EndorsementEffectiveDate": this.endorsementEffectiveDate,
+    "EndorsementRemarks": this.endorsementRemarks,
+    "EndorsementType": this.endorsementType,
+    "EndorsementTypeDesc": this.endorsementTypeDesc,
+    "EndtCategoryDesc": this.endtCategoryDesc,
+    "EndtCount": this.endtCount,
+    "EndtPrevPolicyNo": this.endtPrevPolicyNo,
+    "EndtPrevQuoteNo": this.endtPrevQuoteNo,
+    "EndtStatus": this.endtStatus,
+    "IsFinanceEndt": this.isFinanceEndt,
+    "OrginalPolicyNo": this.orginalPolicyNo,
   }
   let urlLink = `${this.motorApiUrl}api/slide9/savemachinerybreakdown`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -3649,6 +3675,18 @@ onSaveFidelityDetails(type,formType){
         emp['ProductId'] = this.productId;
         emp['RequestReferenceNo'] = this.requestReferenceNo;
         emp['RiskId'] = "1";
+        emp['EndorsementDate'] = this.endorsementDate;
+        emp['EndorsementEffectiveDate'] = this.endorsementEffectiveDate;
+        emp['EndorsementRemarks'] = this.endorsementRemarks;
+        emp['EndorsementType'] = this.endorsementType;
+        emp['EndorsementTypeDesc'] = this.endorsementTypeDesc;
+        emp['EndtCategoryDesc'] = this.endtCategoryDesc;
+        emp['EndtCount'] = this.endtCount;
+        emp['EndtPrevPolicyNo'] = this.endtPrevPolicyNo;
+        emp['EndtPrevQuoteNo'] = this.endtPrevQuoteNo;
+        emp['EndtStatus'] = this.endtStatus;
+        emp['IsFinanceEndt'] = this.isFinanceEndt;
+        emp['OrginalPolicyNo'] = this.orginalPolicyNo;
         if(this.productId=='14') emp['SectionId'] = "45";
         else if(this.productId=='32' || this.productId=='19') emp['SectionId'] = "43";
         i+=1;
@@ -4095,6 +4133,21 @@ setCommonFormValues(){
           }
           else if(this.productId=='32'){
             if(data.Result.length!=0){
+              let entry = data.Result[0];
+              if(entry.EndorsementDate){
+                  this.endorsementDate = entry?.EndorsementDate;
+                  this.endorsementEffectiveDate = entry?.EndorsementEffectiveDate;
+                  this.endorsementRemarks = entry?.EndorsementRemarks;
+                  this.endorsementType = entry?.EndorsementType;
+                  this.endorsementTypeDesc = entry?.EndorsementTypeDesc;
+                  this.endtCategoryDesc = entry?.EndtCategoryDesc;
+                  this.endtCount = entry?.EndtCount;
+                  this.endtPrevPolicyNo = entry?.EndtPrevPolicyNo;
+                  this.endtPrevQuoteNo = entry?.EndtPrevQuoteNo;
+                  this.endtStatus = entry?.EndtStatus;
+                  this.isFinanceEndt = entry?.IsFinanceEndt;
+                  this.orginalPolicyNo = entry?.OrginalPolicyNo;
+              }
               this.productItem.fidelityList = data.Result;
               this.formSection = true; this.viewSection = false;
             }
