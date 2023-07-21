@@ -1158,7 +1158,7 @@
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-6 input-control-container">
                                         <label class="input-form-label">Occupation</label><span class="text-danger">*</span>
-                                        <div class="input-form-box" style="position: relative;top:.2rem">
+                                        <div class="input-form-box" style="position: relative;">
                                             <ng-select class="custom" [items]="employeeOccupationList" [disabled]="checkEndorseDisable('employee')" [(ngModel)]="occupationType" placeholder="Select Occupation" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
                                             </ng-select>
                                         </div>
@@ -1215,7 +1215,7 @@
                                                 </ng-select>
                                             </div>
                                             <div class="col-md-4 col-lg-4 p-0 input-form-box mt-1">
-                                                <input type="text" placeholder="YYYY" [disabled]="checkEndorseDisable('employee')" class="input-form-control without-icon" maxlength="4" [(ngModel)]="empJoiningDate" [ngModelOptions]="{standalone: true}">    
+                                                <input type="text" placeholder="YYYY" [disabled]="checkEndorseDisable('employee')" style="margin-left: 10px;" class="input-form-control without-icon" maxlength="4" [(ngModel)]="empJoiningDate" [ngModelOptions]="{standalone: true}">    
                                             </div>
                                         </div>
                                         <!-- <mat-form-field appearance="fill">

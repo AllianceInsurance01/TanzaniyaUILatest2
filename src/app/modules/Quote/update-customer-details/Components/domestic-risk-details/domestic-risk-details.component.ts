@@ -948,6 +948,7 @@ onFidelitySave(){
       this.Cotentrisk[this.currentContentIndex]['SerialNoDesc'] = this.serialNoDesc;
       this.Cotentrisk[this.currentContentIndex]['ContentRiskDesc'] = this.contentRiskDesc;
       this.Cotentrisk[this.currentContentIndex]['ItemId'] = this.contentId;
+      this.Cotentrisk[this.currentContentIndex]['LocationName'] = this.LocationList.find(ele=>ele.Code==this.LocationId).CodeDesc;
       this.LocationId = null;this.currentContentIndex=null;this.contentSI=null;this.serialNoDesc=null;this.contentRiskDesc=null;this.contentId=null;
       this.editContentSection = false;
       this.enableContentEditSection = false;
@@ -2938,7 +2939,7 @@ onFidelitySave(){
   tabClick(event){
     console.log("Source Event",event,event.tab.textLabel);
     if(event.index!=0){
-    if(this.productId!='19' && this.selectedTab!=1) this.onSave(event.tab.textLabel)
+    if(this.productId!='19' && this.selectedTab!=1 && this.LocationList.length==0) this.onSave(event.tab.textLabel)
     }
   }
   getBack(){

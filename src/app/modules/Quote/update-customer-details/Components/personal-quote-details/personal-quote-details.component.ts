@@ -1520,6 +1520,20 @@ getMoneyDetails(sections){
         this.productItem.MoneyInPremises = details?.MoneyInPremises;
         this.productItem.MoneyInSafeBusiness = details?.MoneyInSafeBusiness;
         this.productItem.MoneyOutSafeBusiness = details?.MoneyOutSafeBusiness;
+        if(details?.EndorsementDate){
+          this.endorsementDate = details?.EndorsementDate;
+          this.endorsementEffectiveDate = details?.EndorsementEffectiveDate;
+          this.endorsementRemarks = details?.EndorsementRemarks;
+          this.endorsementType = details?.EndorsementType;
+          this.endorsementTypeDesc = details?.EndorsementTypeDesc;
+          this.endtCategoryDesc = details?.EndtCategoryDesc;
+          this.endtCount = details?.EndtCount;
+          this.endtPrevPolicyNo = details?.EndtPrevPolicyNo;
+          this.endtPrevQuoteNo = details?.EndtPrevQuoteNo;
+          this.endtStatus = details?.EndtStatus;
+          this.isFinanceEndt = details?.IsFinanceEndt;
+          this.orginalPolicyNo = details?.OrginalPolicyNo;
+        }
         if(this.productItem.CashInHandEmployees!=null && this.productItem.CashInHandEmployees!='0' && this.productItem.CashInHandEmployees!='' && this.productItem.CashInHandEmployees!='0.0') this.productItem.CashInHandEmployeesSIYN = true;
         if(this.productItem.CashInSafe!=null && this.productItem.CashInSafe!='0' && this.productItem.CashInSafe!='' && this.productItem.CashInSafe!='0.0') this.productItem.CashInSafeSIYN = true;
         if(this.productItem.CashInTransit!=null && this.productItem.CashInTransit!='0' && this.productItem.CashInTransit!='' && this.productItem.CashInTransit!='0.0') this.productItem.CashInTransitSIYN = true;
@@ -3495,18 +3509,19 @@ onSaveBurglaryDetails(type,formType){
     "BuildingOccupied": this.productItem?.BuildingOccupied,
     "RoofType": this.productItem?.RoofType,
     "RequestReferenceNo": reqRefNo,
-    "EndorsementDate": null,
-    "EndorsementEffectiveDate": null,
-    "EndorsementRemarks": null,
-    "EndorsementType": null,
-    "EndorsementTypeDesc": null,
-    "EndtCategoryDesc": null,
-    "EndtCount": null,
-    "EndtPrevPolicyNo": null,
-    "EndtPrevQuoteNo": null,
-    "EndtStatus": null,
-    "IsFinanceEndt": null,
-    "OrginalPolicyNo": null,
+    "EndorsementDate": this.endorsementDate,
+    "EndorsementEffectiveDate": this.endorsementEffectiveDate,
+    "EndorsementRemarks": this.endorsementRemarks,
+    "EndorsementType": this.endorsementType,
+    "EndorsementTypeDesc": this.endorsementTypeDesc,
+    "EndtCategoryDesc": this.endtCategoryDesc,
+    "EndtCount": this.endtCount,
+    "EndtPrevPolicyNo": this.endtPrevPolicyNo,
+    "EndtPrevQuoteNo": this.endtPrevQuoteNo,
+    "EndtStatus": this.endtStatus,
+    "IsFinanceEndt": this.isFinanceEndt,
+    "OrginalPolicyNo": this.orginalPolicyNo,
+    "PolicyNo": this.endorsePolicyNo,
     "Status": "Y"
   }
   let urlLink = `${this.motorApiUrl}api/slide3/saveburglaryandhouse`;
@@ -3543,7 +3558,19 @@ onSaveMoneyDetails(type,formType){
     "MoneyAnnualcarrySuminsured": this.productItem?.MoneyAnnualcarrySuminsured,
     "MoneyInPremises": this.productItem?.MoneyInPremises,
     "MoneyInSafeBusiness": this.productItem?.MoneyInSafeBusiness,
-    "MoneyOutSafeBusiness": this.productItem?.MoneyOutSafeBusiness
+    "MoneyOutSafeBusiness": this.productItem?.MoneyOutSafeBusiness,
+    "EndorsementDate": this.endorsementDate,
+    "EndorsementEffectiveDate": this.endorsementEffectiveDate,
+    "EndorsementRemarks": this.endorsementRemarks,
+    "EndorsementType": this.endorsementType,
+    "EndorsementTypeDesc": this.endorsementTypeDesc,
+    "EndtCategoryDesc": this.endtCategoryDesc,
+    "EndtCount": this.endtCount,
+    "EndtPrevPolicyNo": this.endtPrevPolicyNo,
+    "EndtPrevQuoteNo": this.endtPrevQuoteNo,
+    "EndtStatus": this.endtStatus,
+    "IsFinanceEndt": this.isFinanceEndt,
+    "OrginalPolicyNo": this.orginalPolicyNo,
   }
   let urlLink = `${this.motorApiUrl}api/slide10/savemoneydetails`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -3553,8 +3580,8 @@ onSaveMoneyDetails(type,formType){
             this.updateComponent.quoteRefNo = data?.Result[0]?.RequestReferenceNo;
             sessionStorage.setItem('quoteReferenceNo', this.requestReferenceNo);
             if(type=='proceed'){
-            this.commonDetails[0]['SectionId'] = ['41'];
-            sessionStorage.setItem('homeCommonDetails', JSON.stringify(this.commonDetails))
+              this.commonDetails[0]['SectionId'] = ['41'];
+              sessionStorage.setItem('homeCommonDetails', JSON.stringify(this.commonDetails))
             }
              this.onCalculate(data.Result,type,formType);
           }
@@ -3572,6 +3599,18 @@ onSaveEmployeeDetails(type,formType){
           emp['ProductId'] = this.productId;
           emp['RequestReferenceNo'] = this.requestReferenceNo;
           emp['RiskId'] = "1";
+          emp['EndorsementDate'] = this.endorsementDate;
+          emp['EndorsementEffectiveDate'] = this.endorsementEffectiveDate;
+          emp['EndorsementRemarks'] = this.endorsementRemarks;
+          emp['EndorsementType'] = this.endorsementType;
+          emp['EndorsementTypeDesc'] = this.endorsementTypeDesc;
+          emp['EndtCategoryDesc'] = this.endtCategoryDesc;
+          emp['EndtCount'] = this.endtCount;
+          emp['EndtPrevPolicyNo'] = this.endtPrevPolicyNo;
+          emp['EndtPrevQuoteNo'] = this.endtPrevQuoteNo;
+          emp['EndtStatus'] = this.endtStatus;
+          emp['IsFinanceEndt'] = this.isFinanceEndt;
+          emp['OrginalPolicyNo'] = this.orginalPolicyNo;
           if(this.productId=='14' || this.productId=='19') emp['SectionId'] = "45";
           else if(this.productId=='32') emp['SectionId'] = "43";
           i+=1;
@@ -4030,6 +4069,21 @@ setCommonFormValues(){
           let details = data?.Result;
           if(this.productId=='14'){
             if(data.Result.length!=0){
+              let entry = data.Result[0];
+              if(entry.EndorsementDate){
+                  this.endorsementDate = entry?.EndorsementDate;
+                  this.endorsementEffectiveDate = entry?.EndorsementEffectiveDate;
+                  this.endorsementRemarks = entry?.EndorsementRemarks;
+                  this.endorsementType = entry?.EndorsementType;
+                  this.endorsementTypeDesc = entry?.EndorsementTypeDesc;
+                  this.endtCategoryDesc = entry?.EndtCategoryDesc;
+                  this.endtCount = entry?.EndtCount;
+                  this.endtPrevPolicyNo = entry?.EndtPrevPolicyNo;
+                  this.endtPrevQuoteNo = entry?.EndtPrevQuoteNo;
+                  this.endtStatus = entry?.EndtStatus;
+                  this.isFinanceEndt = entry?.IsFinanceEndt;
+                  this.orginalPolicyNo = entry?.OrginalPolicyNo;
+              }
               this.productItem.employeeList = data.Result;
               this.formSection = true; this.viewSection = false;
             }
@@ -4051,6 +4105,20 @@ setCommonFormValues(){
             }
           }
           else if(this.productId=='16'){
+            if(details?.EndorsementDate){
+              this.endorsementDate = details?.EndorsementDate;
+              this.endorsementEffectiveDate = details?.EndorsementEffectiveDate;
+              this.endorsementRemarks = details?.EndorsementRemarks;
+              this.endorsementType = details?.EndorsementType;
+              this.endorsementTypeDesc = details?.EndorsementTypeDesc;
+              this.endtCategoryDesc = details?.EndtCategoryDesc;
+              this.endtCount = details?.EndtCount;
+              this.endtPrevPolicyNo = details?.EndtPrevPolicyNo;
+              this.endtPrevQuoteNo = details?.EndtPrevQuoteNo;
+              this.endtStatus = details?.EndtStatus;
+              this.isFinanceEndt = details?.IsFinanceEndt;
+              this.orginalPolicyNo = details?.OrginalPolicyNo;
+            }
             this.productItem.CashInHandEmployees = details?.CashInHandEmployees;
             this.productItem.CashInSafe = details?.CashInSafe;
             this.productItem.CashInTransit = details?.CashInTransit;
@@ -4068,6 +4136,20 @@ setCommonFormValues(){
             this.checkMoneyYNChanges();
           }
           else if(this.productId=='39'){
+              if(details?.EndorsementDate){
+                this.endorsementDate = details?.EndorsementDate;
+                this.endorsementEffectiveDate = details?.EndorsementEffectiveDate;
+                this.endorsementRemarks = details?.EndorsementRemarks;
+                this.endorsementType = details?.EndorsementType;
+                this.endorsementTypeDesc = details?.EndorsementTypeDesc;
+                this.endtCategoryDesc = details?.EndtCategoryDesc;
+                this.endtCount = details?.EndtCount;
+                this.endtPrevPolicyNo = details?.EndtPrevPolicyNo;
+                this.endtPrevQuoteNo = details?.EndtPrevQuoteNo;
+                this.endtStatus = details?.EndtStatus;
+                this.isFinanceEndt = details?.IsFinanceEndt;
+                this.orginalPolicyNo = details?.OrginalPolicyNo;
+              }
               this.productItem.BoilerPlantsSi = details?.BoilerPlantsSi;
               this.productItem.ElecMachinesSi = details?.ElecMachinesSi;
               this.productItem.EquipmentSi = details?.EquipmentSi;
@@ -4085,6 +4167,20 @@ setCommonFormValues(){
               this.checkMachineryYNChanges();
           }
           else if(this.productId=='1'){
+            if(details?.EndorsementDate){
+              this.endorsementDate = details?.EndorsementDate;
+              this.endorsementEffectiveDate = details?.EndorsementEffectiveDate;
+              this.endorsementRemarks = details?.EndorsementRemarks;
+              this.endorsementType = details?.EndorsementType;
+              this.endorsementTypeDesc = details?.EndorsementTypeDesc;
+              this.endtCategoryDesc = details?.EndtCategoryDesc;
+              this.endtCount = details?.EndtCount;
+              this.endtPrevPolicyNo = details?.EndtPrevPolicyNo;
+              this.endtPrevQuoteNo = details?.EndtPrevQuoteNo;
+              this.endtStatus = details?.EndtStatus;
+              this.isFinanceEndt = details?.IsFinanceEndt;
+              this.orginalPolicyNo = details?.OrginalPolicyNo;
+            }
             this.productItem.AccessibleWindows = details?.AccessibleWindows;
             this.productItem.Address = details?.Address;
             this.productItem.BackDoors = details?.BackDoors;

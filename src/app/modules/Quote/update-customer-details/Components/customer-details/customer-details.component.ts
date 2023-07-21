@@ -1860,6 +1860,23 @@ export class CustomerDetailsComponent implements OnInit {
     
   }
   saveCommonDetails(commonDetails){
+    let endorsementDate=null,EndorsementEffectiveDate=null,EndorsementRemarks=null,
+    EndorsementType=null,EndorsementTypeDesc=null,EndtCategoryDesc=null,EndtCount=null,
+    EndtPrevPolicyNo=null,EndtPrevQuoteNo=null,EndtStatus=null,IsFinanceEndt=null,OrginalPolicyNo=null;
+    if(this.endorsementDetails){
+      endorsementDate = this.endorsementDetails['EndorsementDate'];
+      EndorsementEffectiveDate = this.endorsementDetails['EndorsementEffectiveDate'];
+      EndorsementRemarks = this.endorsementDetails['EndorsementRemarks'];
+      EndorsementType = this.endorsementDetails['EndorsementType'];
+      EndorsementTypeDesc = this.endorsementDetails['EndorsementTypeDesc'];
+      EndtCategoryDesc = this.endorsementDetails['EndtCategoryDesc'];
+      EndtCount = this.endorsementDetails['EndtCount'];
+      EndtPrevPolicyNo = this.endorsementDetails['EndtPrevPolicyNo'];
+      EndtPrevQuoteNo = this.endorsementDetails['EndtPrevQuoteNo'];
+      EndtStatus = this.endorsementDetails['EndtStatus'];
+      IsFinanceEndt = this.endorsementDetails['IsFinanceEndt'];
+      OrginalPolicyNo = this.endorsementDetails['OrginalPolicyNo'];
+    }
     let promocode = null;
     let appId = "1", loginId = "", brokerbranchCode = "";let createdBy = "";
     let quoteStatus = sessionStorage.getItem('QuoteStatus');
@@ -1933,18 +1950,18 @@ export class CustomerDetailsComponent implements OnInit {
         "SubUsertype": sessionStorage.getItem('typeValue'),
         "RiskId":"1",
         "IndustryId": this.IndustryId,
-        "EndorsementDate": null,
-        "EndorsementEffectiveDate": null,
-        "EndorsementRemarks": null,
-        "EndorsementType": null,
-        "EndorsementTypeDesc": null,
-        "EndtCategoryDesc": null,
-        "EndtCount": null,
-        "EndtPrevPolicyNo": null,
-        "EndtPrevQuoteNo": null,
-        "EndtStatus": null,
-        "IsFinanceEndt": null,
-        "OrginalPolicyNo": null,
+        "EndorsementDate": endorsementDate,
+        "EndorsementEffectiveDate": EndorsementEffectiveDate,
+        "EndorsementRemarks": EndorsementRemarks,
+        "EndorsementType": EndorsementType,
+        "EndorsementTypeDesc": EndorsementTypeDesc,
+        "EndtCategoryDesc": EndtCategoryDesc,
+        "EndtCount": EndtCount,
+        "EndtPrevPolicyNo": EndtPrevPolicyNo,
+        "EndtPrevQuoteNo": EndtPrevQuoteNo,
+        "EndtStatus": EndtStatus,
+        "IsFinanceEndt": IsFinanceEndt,
+        "OrginalPolicyNo": OrginalPolicyNo,
         "Status": "Y"
     }
     let urlLink = `${this.motorApiUrl}api/slide/savecommondetails`;
