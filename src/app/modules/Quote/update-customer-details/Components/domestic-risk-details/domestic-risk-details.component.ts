@@ -810,7 +810,7 @@ onFidelitySave(){
                   }
                 }
                 else{
-                  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+                 this.checkValidation();
                 }
             },
             (err) => { },
@@ -893,7 +893,7 @@ onFidelitySave(){
               }
               else{
                 if(this.productId=='19' && this.eight)  this.selectedTab +=1; 
-                else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+                else this.checkValidation();
               }
         
             },
@@ -957,6 +957,20 @@ onFidelitySave(){
 
   valuechange(row) {
     this.newname = row.LocationName;
+  }
+  checkValidation(){
+    let ReqObj = {
+      "QuoteNo": this.quoteNo
+    }
+    let urlLink = `${this.motorApiUrl}api/additionalinfovali`;
+        this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+          (data: any) => {
+            if (data?.Message=='Success') {
+              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+            }
+          },
+          (err) => { },
+        ); 
   }
   onValueChange(event) {
     console.log("SumInsured", event);
@@ -1339,7 +1353,7 @@ onFidelitySave(){
                 this.fourth = true;
                 this.selectedTab = this.selectedTab+1;
               }
-              else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+              else this.checkValidation();
             }
           }
           else if(type=='PA'){
@@ -1348,7 +1362,7 @@ onFidelitySave(){
               this.selectedTab = this.selectedTab+1;
             }
             else{
-              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+              this.checkValidation();
             }
           }
           else if(type=='A'){
@@ -1357,14 +1371,14 @@ onFidelitySave(){
               this.selectedTab = this.selectedTab+1;
             }
             else{
-              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+              this.checkValidation();
             }
           }
           else if(type=='PI'){
-            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+            this.checkValidation();
           }
           else if(type='E'){
-            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+            this.checkValidation();
           }
 
       }
@@ -1512,7 +1526,7 @@ onFidelitySave(){
               this.selectedTab = 1;
             }
             else{
-              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+              this.checkValidation();
             }
           }
         }
@@ -1566,8 +1580,8 @@ onFidelitySave(){
               this.quote = data.Result.RequestReferenceNo;
             }
 
-
-            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+            this.checkValidation();
+            
 
           }
 
