@@ -462,7 +462,7 @@
                         </div> -->
                     </div>
                     <div class="text-center mt-2">
-                        <button class="custom-btn btn-5 mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
 
                         <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="onSaveContentRisk()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
@@ -587,7 +587,7 @@
                     </div>
 
                     <div class="text-center mt-3">
-                        <button class="custom-btn btn-5 maan-btn-red  custom-btn btn-5 mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5 maan-btn-red  custom-btn btn-5 mx-2" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
 
                         <button class="custom-btn btn-6  maan-button-data mx-2" matRipple (click)="onSavePersonalAccident()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
@@ -687,7 +687,7 @@
                     </div>
 
                     <div class="text-center">
-                        <button class="custom-btn btn-5  mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5  mx-2" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
 
                         <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="onSaveAllRisk()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
@@ -806,7 +806,7 @@
                         </div>
                     </div>
                     <div class="text-center mt-3">
-                        <button class="custom-btn btn-5 mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
                         <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="onSavePersonalIntermedity()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
                     <div class="d-flex justify-content-end">
@@ -907,7 +907,7 @@
 
 
                       <div class="text-center">
-                        <button class="custom-btn btn-5  mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5  mx-2" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
 
                         <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="onSaveElectronic()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
@@ -1128,7 +1128,7 @@
                             </div>
                         </div>
                         <div class="text-center mt-2" >
-                            <button class="custom-btn btn-5 mx-2" *ngIf="!enableEmployeeUploadSection" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                            <button class="custom-btn btn-5 mx-2" *ngIf="!enableEmployeeUploadSection" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
     
                             <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="employeeList.length!=0 && !enableEmployeeUploadSection" matRipple (click)="onSaveEmployeeDetails('direct')" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                         </div>
@@ -1497,7 +1497,7 @@
                             </div>
                         </div>
                         <div class="text-center mt-2" >
-                            <button class="custom-btn btn-5 mx-2" *ngIf="!enableFidelityUploadSection" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                            <button class="custom-btn btn-5 mx-2" *ngIf="!enableFidelityUploadSection" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
                             <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="fidelityList.length!=0 && !enableFidelityUploadSection" matRipple (click)="onSaveFidelityDetails('direct')" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                         </div>
                     </div>

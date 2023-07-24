@@ -66,6 +66,7 @@ export class EndorsementTypeDetailsComponent {
     this.subuserType = sessionStorage.getItem('typeValue');
     sessionStorage.removeItem('vehicleDetailsList')
     sessionStorage.removeItem('homeCommonDetails')
+    sessionStorage.removeItem('QuoteStatus');
     this.policyNo = sessionStorage.getItem('endorsePolicyNo');
     this.productItem = new ProductData();
     let startDate = sessionStorage.getItem('endorseStartDate');
@@ -382,7 +383,6 @@ export class EndorsementTypeDetailsComponent {
           if(this.selectedEndorsement.EndorsementCategory==1) category = 'Non-Financial';
           if(this.selectedEndorsement.EndorsementCategory==2) category = 'Financial';
         if(EndtType==42 || EndtType == 842){
-          
           let obj = {
             "EndtTypeId":EndtType,
             "FieldsAllowed":[],

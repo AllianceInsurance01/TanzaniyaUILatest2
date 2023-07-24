@@ -107,7 +107,7 @@
                             </div>
                            
                         </ng-container>
-                        <ng-container *ngIf="endrosement && columnHeader.TotalEndtPremium!=undefined && columnHeader.TotalEndtPremium!=0 && columnHeader.TotalEndtPremium!=null">
+                        <ng-container *ngIf="endrosement && columnHeader?.TotalEndtPremium!=undefined && columnHeader?.TotalEndtPremium!=0 && columnHeader?.TotalEndtPremium!=null">
                             <span class="spancommon span_font_size"><b>Total Endorsement Premium</b><span>:
                                 <ng-container *ngIf="columnHeader?.TotalEndtPremium!=0 && columnHeader?.TotalEndtPremium!=null ">
                                     {{columnHeader?.TotalEndtPremium|commaseparator}}&nbsp;({{columnHeader?.Currency}})

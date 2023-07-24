@@ -119,6 +119,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
   currencyCode: any;
   industryName: any;
   countryId: any;
+  sectionList: any[]=[];
   constructor(private formlyJsonschema: FormlyJsonschema, private sharedService: SharedService, private datePipe: DatePipe,
     private router: Router, private http: HttpClient, private updateComponent: UpdateCustomerDetailsComponent) {
     this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -3051,15 +3052,17 @@ onSubmit(productData) {
     // if((this.productItem.BuildingOwnerYn=='N' || this.productItem.BuildingOwnerYn==null) && this.productId=='3'){
     //   this.productItem.BuildingSuminsured = null;
     // }
-
+    if(this.endorsementSection && this.enableFieldsList.some(ele=>ele=='BuildingSuminsured')){
+      sectionId = this.sectionList;
+    }
     if (this.productItem.ElecEquipSuminsured != '0' && this.productItem.ElecEquipSuminsured != '' && this.productItem.ElecEquipSuminsured != null) {
-      sectionId.push('41');
+      if (!sectionId.some(ele => ele == '41')) sectionId.push('41');
     }
     else {
       this.productItem.ElecEquipSuminsured = '0';
     }
     if (this.productItem.CashInSafe != '0' && this.productItem.CashInSafe != '' && this.productItem.CashInSafe != null) {
-      sectionId.push('42');
+      if (!sectionId.some(ele => ele == '42')) sectionId.push('42');
     }
     if (this.productItem.CashInTransit != '0' && this.productItem.CashInTransit != '' && this.productItem.CashInTransit != null) {
       if (!sectionId.some(ele => ele == '42')) sectionId.push('42');
@@ -3081,7 +3084,7 @@ onSubmit(productData) {
     }
     if (this.productItem.FidelityAnnualSuminsured != '0' && this.productItem.FidelityAnnualSuminsured != '' && this.productItem.FidelityAnnualSuminsured != null &&
       this.productItem.FidelityAnyoccuSuminsured != '0' && this.productItem.FidelityAnyoccuSuminsured != '' && this.productItem.FidelityAnyoccuSuminsured != null) {
-      sectionId.push('43');
+        if (!sectionId.some(ele => ele == '43')) sectionId.push('43');
     }
     else {
       this.productItem.FidelityAnnualSuminsured = '0';
@@ -3089,14 +3092,14 @@ onSubmit(productData) {
     }
 
     if (this.productItem.TpliabilityAnyoccuSuminsured != '0' && this.productItem.TpliabilityAnyoccuSuminsured != '' && this.productItem.TpliabilityAnyoccuSuminsured != null) {
-      sectionId.push('44');
+      if (!sectionId.some(ele => ele == '44')) sectionId.push('44');
     }
     else {
       this.productItem.TpliabilityAnyoccuSuminsured = '0';
     }
     if (this.productItem.EmpliabilityExcessSuminsured != '0' && this.productItem.EmpliabilityExcessSuminsured != '' && this.productItem.EmpliabilityExcessSuminsured != null &&
       this.productItem.EmpliabilityExcessSuminsured != '0' && this.productItem.EmpliabilityExcessSuminsured != '' && this.productItem.EmpliabilityExcessSuminsured != null) {
-      sectionId.push('45');
+        if (!sectionId.some(ele => ele == '45')) sectionId.push('45');
     }
     else {
       this.productItem.EmpliabilityExcessSuminsured = '0';
@@ -3104,7 +3107,7 @@ onSubmit(productData) {
     }
     if (this.productItem.GoodsTurnoverSuminsured != '0' && this.productItem.GoodsTurnoverSuminsured != '' && this.productItem.GoodsTurnoverSuminsured != null &&
       this.productItem.GoodsSinglecarrySuminsured != '0' && this.productItem.GoodsSinglecarrySuminsured != '' && this.productItem.GoodsSinglecarrySuminsured != null) {
-      sectionId.push('46');
+        if (!sectionId.some(ele => ele == '46')) sectionId.push('46');
     }
     else {
       this.productItem.GoodsTurnoverSuminsured = '0';
@@ -3112,14 +3115,14 @@ onSubmit(productData) {
     }
     if (this.productId != '3') {
       if (this.productItem.BuildingSuminsured != '0' && this.productItem.BuildingSuminsured != null && this.productItem.BuildingSuminsured != '') {
-        sectionId.push('40');
+        if (!sectionId.some(ele => ele == '40')) sectionId.push('40');
       }
       else {
         if (this.coversRequired == 'B' || this.coversRequired == 'BC') sectionId.push('40');
         this.productItem.BuildingSuminsured = null;
       }
       if (this.productItem.ContentSuminsured != '0' && this.productItem.ContentSuminsured != undefined && this.productItem.ContentSuminsured != null && this.productItem.ContentSuminsured != '') {
-        sectionId.push('47');
+        if (!sectionId.some(ele => ele == '47')) sectionId.push('47');
       }
       else {
         if (this.coversRequired == 'C' || this.coversRequired == 'BC') sectionId.push('47');
@@ -3128,14 +3131,14 @@ onSubmit(productData) {
     }
     else {
       if (this.productItem.BuildingSuminsured != '0' && this.productItem.BuildingSuminsured != null && this.productItem.BuildingSuminsured != '') {
-        sectionId.push('1');
+        if (!sectionId.some(ele => ele == '1')) sectionId.push('1');
       }
       else {
         if (this.coversRequired == 'B' || this.coversRequired == 'BC') sectionId.push('1');
         this.productItem.BuildingSuminsured = null;
       }
       if (this.productItem.ContentSuminsured != '0' && this.productItem.ContentSuminsured != undefined && this.productItem.ContentSuminsured != null && this.productItem.ContentSuminsured != '') {
-        sectionId.push('47');
+        if (!sectionId.some(ele => ele == '47')) sectionId.push('47');
       }
       else {
         if (this.coversRequired == 'C' || this.coversRequired == 'BC') sectionId.push('47');
@@ -3143,19 +3146,19 @@ onSubmit(productData) {
       }
     }
     if (this.productItem.PersonalAccidentSuminsured != '0' && this.productItem.PersonalAccidentSuminsured != null && this.productItem.PersonalAccidentSuminsured != '') {
-      sectionId.push('35');
+      if (!sectionId.some(ele => ele == '35')) sectionId.push('35');
     }
     else {
       this.productItem.PersonalAccidentSuminsured = '0';
     }
     if (this.productItem.PersonalIntermediarySuminsured != '0' && this.productItem.PersonalIntermediarySuminsured != null && this.productItem.PersonalIntermediarySuminsured != '') {
-      sectionId.push('36');
+      if (!sectionId.some(ele => ele == '36')) sectionId.push('36');
     }
     else {
       this.productItem.PersonalIntermediarySuminsured = '0';
     }
     if (this.productItem.AllriskSumInsured != '0' && this.productItem.AllriskSumInsured != null && this.productItem.AllriskSumInsured != '') {
-      sectionId.push('3');
+      if (!sectionId.some(ele => ele == '3')) sectionId.push('3');
     }
     else {
       this.productItem.AllriskSumInsured = '0';
@@ -3166,7 +3169,7 @@ onSubmit(productData) {
       if (this.productItem.InsuranceForId != null) {
         insuranceForList = Object.keys(this.productItem.InsuranceForId);
       }
-      sectionId.push('52')
+      if (!sectionId.some(ele => ele == '52')) sectionId.push('52')
     }
     let createdBy = "";
     let quoteStatus = sessionStorage.getItem('QuoteStatus');
@@ -4335,6 +4338,7 @@ setSMEFormValues(type) {
       if (this.productId != '3' && this.productId != '19') this.getIndustryList();
       if (this.productId == '3' || this.productId == '19') {
         let sectionId = customerDatas?.SectionId;
+        this.sectionList = sectionId;
         let contents = sectionId.some(ele => ele == '47');
         let building = sectionId.some(ele => ele == '1' || ele == '40');
         if (building && contents) this.coversRequired = 'BC';

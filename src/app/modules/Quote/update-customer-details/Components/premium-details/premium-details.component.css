@@ -47,7 +47,7 @@ tr{
     position: relative;
     /* left: 1.5rem; */
 }
-@media screen and (min-width: 750px) and (max-width: 1456px) {
+@media screen and (min-width: 750px) and (max-width: 20000px) {
     .display2{
         display:none;
     }

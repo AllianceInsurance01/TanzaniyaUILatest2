@@ -306,7 +306,7 @@
     margin-top: 100px;
 }
 
-@media screen and (min-width:700px) and (max-width: 1456px) {
+@media screen and (min-width:700px) and (max-width: 20000px) {
     .display2{
         display:none;
     }

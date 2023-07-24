@@ -210,7 +210,7 @@ tbody:last-child tr:last-child td:last-child {
 tbody:first-child tr:first-child td:last-child {
     border-radius: 0 13px 0 0;
 }
-@media screen and (min-width:750px) and (max-width: 1456px) {
+@media screen and (min-width:750px) and (max-width: 20000px) {
     .display2{
         display:none;
         }
