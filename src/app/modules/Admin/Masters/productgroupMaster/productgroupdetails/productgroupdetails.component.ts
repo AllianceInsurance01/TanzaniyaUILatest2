@@ -74,7 +74,7 @@ export class ProductGroupDetails implements OnInit {
      "BranchCode":this.branchvalue,
       "CompanyId":this.insuranceId
       }
-      let urlLink = `${this.ApiUrl1}master/getproductgroupbyid`;
+      let urlLink = `${this.CommonApiUrl}master/getproductgroupbyid`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
           console.log(data);

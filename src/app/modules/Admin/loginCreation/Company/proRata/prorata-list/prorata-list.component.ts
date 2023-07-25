@@ -49,7 +49,7 @@ export class ProRataListComponent implements OnInit {
     let ReqObj = {
       "CreatedBy": this.loginId,
       "EffectiveDateStart": this.effectiveDateStart,
-      "InsuranceId": "100002",
+      "InsuranceId": this.insuranceId,
       "ProductId": this.productId,
       "ProrataDetails": this.ProrataList
     }
