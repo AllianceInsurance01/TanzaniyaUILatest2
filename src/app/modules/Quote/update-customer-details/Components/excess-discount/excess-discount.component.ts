@@ -205,6 +205,7 @@ emiyn="N";
   CoverHeader:any[]=[];
   CoverName: any;
   endorseAddOnCovers: any;
+  storedVehicleData: any;
   constructor(public sharedService: SharedService,private router:Router,private modalService: NgbModal,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe,public dialog: MatDialog) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -228,13 +229,13 @@ emiyn="N";
         this.endorsementId = endorseObj.EndtTypeId;
         this.endorseEffectiveDate = endorseObj?.EffectiveDate;
         this.enableFieldsList = endorseObj.FieldsAllowed;
-        let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='removeVehicle');
+        let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='SIModification' || ele=='AddCovers' || ele=='removeVehicle');
         if(entry) this.coverModificationYN = 'Y';
         else this.coverModificationYN = 'N';
         console.log("Enable Obj",this.enableFieldsList)
         if(this.endorsementId!=42){
           this.endorseCovers = this.enableFieldsList.some(ele=>ele=='Covers');
-          this.endorseAddOnCovers = this.enableFieldsList.some(ele=>ele=='AddOnCovers');
+          this.endorseAddOnCovers = this.enableFieldsList.some(ele=>ele=='AddOnCovers' || ele=='SIModification' || ele=='AddCovers');
           this.enableRemoveVehicle = this.enableFieldsList.some(ele=>ele=='removeVehicle');
         }
         else{
@@ -573,7 +574,7 @@ getCoverList(coverListObj){
       let effectiveDate=null,policyEndDate,coverModificationYN='N';
       if(this.endorsementSection){
         effectiveDate = this.endorseEffectiveDate;
-        let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='removeVehicle');
+        let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='SIModification' || ele=='AddCovers' || ele=='removeVehicle');
         if(entry) coverModificationYN = 'Y';
         else coverModificationYN = 'N';
       }
@@ -1229,7 +1230,7 @@ getMotorUsageList(vehicleValue){
         (data: any) => {
           if(data.Result){
             console.log("Final Cal Response",data.Result);
-
+              this.storedVehicleData = data.Result;
               this.vehicleData = data.Result;
 
               if(this.vehicleData[0].HavePromoCode){
@@ -1516,7 +1517,7 @@ getMotorUsageList(vehicleValue){
             let effectiveDate=null,coverModificationYN='N'
             if(this.endorsementSection){
                 effectiveDate = this.endorseEffectiveDate;
-                let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='removeVehicle');
+                let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='SIModification' || ele=='AddCovers' || ele=='removeVehicle');
                 if(entry) coverModificationYN = 'Y';
                 else coverModificationYN = 'N';
             }
@@ -1829,7 +1830,7 @@ getMotorUsageList(vehicleValue){
             this.endorsementId = cover.Endorsements[0].EndorsementId;
             this.endorseEffectiveDate = cover.EffectiveDate;
             this.enableFieldsList = fieldList;
-            let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='removeVehicle');
+            let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='SIModification' || ele=='AddCovers' || ele=='removeVehicle');
             if(this.coverModificationYN=='N'){
               if(entry) this.coverModificationYN = 'Y';
               else this.coverModificationYN = 'N';
@@ -1840,10 +1841,23 @@ getMotorUsageList(vehicleValue){
           (this.endorsementSection && (cover.UserOpt=='Y' || cover.isSelected=='D' || cover.isSelected=='O')) ){
             cover['selected']= true;
             this.onSelectCover(cover,true,veh.Vehicleid,veh,'coverList','direct');
+            if(this.endorseAddOnCovers || this.endorseCovers){
+              if(cover.ModifiedYN==undefined){
+                cover['Modifiable']='N';
+                cover['ModifiedYN'] = 'N';
+              };
+            }
           }
           else{
             console.log("Not Selected 1",cover);
             cover['selected']= false;
+            if(this.endorseAddOnCovers || this.endorseCovers){
+              if(cover.ModifiedYN==undefined){
+                cover['Modifiable']='N';
+                cover['ModifiedYN'] = 'Y';
+              };
+            }
+              
           }
           if(cover.SubCovers!=null){
             let k=0;
@@ -1922,7 +1936,7 @@ getMotorUsageList(vehicleValue){
           }
       }
       else{
-        if(this.endorsementSection && this.endorsementId==844){
+        if(this.endorsementSection && this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers')){
           this.router.navigate(['/Home/policies/Endorsements/endorsementTypes']);
         }
         else{
@@ -1980,6 +1994,13 @@ getMotorUsageList(vehicleValue){
                   console.log("Selected 2",cover);
                 }
               }
+              else if(this.endorseAddOnCovers || this.endorseCovers){
+                if(cover.ModifiedYN==undefined){
+                  cover['Modifiable']='N';
+                  cover['ModifiedYN'] = 'Y';
+                }
+                
+              }
 
             }
             j+=1;
@@ -2015,7 +2036,7 @@ getMotorUsageList(vehicleValue){
 
   }
   onSelectCover(rowData,event,vehicleId,vehicleData,type,directType){
-    console.log("Cover Selected received",type,this.selectedCoverList)
+    
    
     if(type=='coverList'){
         let vehicle:any;
@@ -2052,8 +2073,13 @@ getMotorUsageList(vehicleValue){
               if(this.coverModificationYN=='Y'){
                 rowData['DifferenceYN'] = 'Y'
               }
+              
               if(directType=='change' && this.endorsementSection){
+                if((this.endorseAddOnCovers || this.endorseCovers) && (rowData.Modifiable==undefined || rowData.Modifiable!='N')){
+                  rowData['ModifiedYN'] = 'Y';
+                }
                 if(rowData.Endorsements!=null){
+                    
                   if(this.coverModificationYN=='Y'){
                     if(rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax<0){
                       vehicle['totalLcPremium'] = vehicle['totalLcPremium'] - rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax;
@@ -2077,6 +2103,10 @@ getMotorUsageList(vehicleValue){
                 }
               }
               else if(vehicle?.totalPremium){
+                rowData['Modifiable']='N';
+                if(this.endorseAddOnCovers || this.endorseCovers){
+                  rowData['ModifiedYN'] = 'N';
+                }
                 if(rowData.Endorsements!=null){
                   if(this.coverModificationYN!='Y'){
                     vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxLC;
@@ -2091,6 +2121,10 @@ getMotorUsageList(vehicleValue){
                 
               }
               else{
+                rowData['Modifiable']='N';
+                if(this.endorseAddOnCovers || this.endorseCovers){
+                  rowData['ModifiedYN'] = 'N';
+                }
                 if(rowData.Endorsements!=null){
                   if(this.coverModificationYN!='Y'){
                     if(!vehicle?.totalLcPremium) {vehicle['totalLcPremium'] = 0;vehicle['totalPremium']=0;}
@@ -2293,12 +2327,18 @@ getMotorUsageList(vehicleValue){
 
               }
               this.selectedCoverList.push(element);
+              if(this.endorseAddOnCovers || this.endorseCovers){
+                rowData['ModifiedYN'] = 'Y';
+              }
               console.log("Selected Cover",this.selectedCoverList)
             }
           if(this.coverModificationYN=='Y'){
                 rowData['DifferenceYN'] = 'Y'
           }
           if(directType=='change' && this.endorsementSection){
+            if((this.endorseAddOnCovers || this.endorseCovers) && (rowData.Modifiable==undefined || rowData.Modifiable!='N')){
+              rowData['ModifiedYN'] = 'Y';
+            }
             if(rowData.Endorsements!=null){
               if(this.coverModificationYN=='Y'){
                 if(rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax<0){
@@ -2324,6 +2364,9 @@ getMotorUsageList(vehicleValue){
             
           }
           else if(vehicle?.totalPremium){
+            if(this.endorseAddOnCovers || this.endorseCovers){
+              rowData['ModifiedYN'] = 'N';
+            }
             if(rowData.Endorsements!=null){
               if(this.coverModificationYN!='Y'){
                 vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxLC;
@@ -2337,6 +2380,9 @@ getMotorUsageList(vehicleValue){
           
           }
           else{
+            if(this.endorseAddOnCovers || this.endorseCovers){
+              rowData['ModifiedYN'] = 'N';
+            }
             if(rowData.Endorsements!=null){
               if(this.coverModificationYN!='Y'){
                 vehicle['totalLcPremium'] = rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxLC;
@@ -2358,6 +2404,7 @@ getMotorUsageList(vehicleValue){
           }
         }
         else{
+          
           let entry = this.selectedCoverList.filter(ele=>ele.Id==vehicleId);
           if(entry){
             let sectionEntry = entry.find(ele=>ele.SectionId==rowData.SectionId);
@@ -2368,6 +2415,9 @@ getMotorUsageList(vehicleValue){
               if(this.coverModificationYN=='Y') rowData['DifferenceYN'] = 'N';
               if(directType=='change' && this.endorsementSection){
                 if(!vehicle?.totalLcPremium) {vehicle['totalLcPremium'] = 0;vehicle['totalPremium']=0;}
+                if(rowData.Modifiable==undefined || rowData.Modifiable!='N'){
+                  rowData['Modifiable']='Y';
+                }
                 if(rowData.Endorsements!=null){
                     if(this.coverModificationYN=='Y'){
                       vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax;
@@ -2386,6 +2436,7 @@ getMotorUsageList(vehicleValue){
                 
               }
               else if(vehicle?.totalPremium){
+                rowData['Modifiable']='N';
                 if(rowData.Endorsements!=null){
                   vehicle['totalLcPremium'] = vehicle['totalLcPremium'] - rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxLC;
                   vehicle['totalPremium'] =  vehicle['totalPremium']-rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax;
@@ -2394,7 +2445,7 @@ getMotorUsageList(vehicleValue){
                   vehicle['totalLcPremium'] = vehicle['totalLcPremium'] - rowData.PremiumIncludedTaxLC;
                   vehicle['totalPremium'] =  vehicle['totalPremium']-rowData.PremiumIncludedTax;
                 }
-              
+                
               }
               // vehicle['totalPremium'] = vehicle['totalPremium'] - rowData.PremiumIncludedTax;
               // vehicle['totalLcPremium'] = vehicle['totalLcPremium'] - rowData.PremiumIncludedTaxLC;
@@ -2405,13 +2456,21 @@ getMotorUsageList(vehicleValue){
         }
 
     }
-    console.log("Final Covers",this.vehicleDetailsList,this.selectedCoverList)
+    console.log("Final Covers",this.vehicleDetailsList,this.selectedCoverList,this.storedVehicleData)
   }
   checkCoverSelection(vehicleData,coverData){
     if(this.endorsementSection){
-        if(this.endorseCovers){alert("Entered one"); return true}
-        else if(vehicleData.EndorsementYN=='Y'){alert("Entered two"); return true}
-        else return false;    
+      if(this.endorseCovers){
+          if(!this.adminSection && coverData.ModifiedYN =='N') return false;
+          else if(!this.adminSection) return true;
+          else return false;
+      }
+      else if(vehicleData.EndorsementYN=='Y') return false;
+      else if(this.endorseAddOnCovers && coverData.ModifiedYN =='Y'){
+          return false;
+      }
+      else if(this.endorseAddOnCovers && this.adminSection )return false;
+      else return true;    
     }
     else return false;
   }

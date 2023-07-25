@@ -304,8 +304,6 @@ export class EndorsementTypeDetailsComponent {
                   }
                 } 
                 this.remarks = existEnd?.Remarks;
-                console.log("EndTypeId",endType)
-                console.log("Entry",entry);
                 if(endType==42 || endType==842) this.cancelYN='Y';
                 else if(entry){this.endorsementId = entry.EndtType;this.selectedEndorsement=entry}
                 else if(nonFinancialEntry){this.endorsementId = nonFinancialEntry.EndtType;this.selectedEndorsement=nonFinancialEntry};
@@ -429,7 +427,7 @@ export class EndorsementTypeDetailsComponent {
             //   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
             // }
             // else{
-            if(this.selectedEndorsement.FieldsAllowed.some(ele=>ele=='AddOnCovers')){
+            if(this.selectedEndorsement.FieldsAllowed.some(ele=>ele=='AddOnCovers' || ele=='Covers')){
               if(this.productId=='5'){
                 this.getVehicleDetails(res.requestReferenceNo,'other');
               }

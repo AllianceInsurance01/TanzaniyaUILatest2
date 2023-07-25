@@ -535,13 +535,13 @@
                                                                             <div></div>
                                                                             <div>
                                                                                 <ng-container *ngIf="coverModificationYN=='Y'  && element.DifferenceYN=='Y'" >
-                                                                                        0
+                                                                                    {{ element[col.key]|commaseparator }}
                                                                                 </ng-container>
                                                                                 <ng-container *ngIf="coverModificationYN=='Y' && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=0 && element.DifferenceYN=='N'">
                                                                                     {{ element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC |commaseparator }}
                                                                                 </ng-container>
                                                                                 <ng-container *ngIf="coverModificationYN=='N' && !element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC  && (element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC==null || element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC==0)">
-                                                                                    0
+                                                                                    {{ element[col.key]|commaseparator }}
                                                                                 </ng-container>
                                                                                 <ng-container *ngIf="coverModificationYN=='N' && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=0">
                                                                                     {{ element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC |commaseparator }}
