@@ -490,6 +490,7 @@
                                             <th class="tbl-header spancommon span_font_size">Occupation</th>
                                             <th class="tbl-header spancommon span_font_size">Name</th>
                                             <th class="tbl-header spancommon span_font_size">Salary &nbsp;({{currencyValue}})</th>
+                                            <th class="tbl-header spancommon span_font_size">NationalityID</th>
                                             <th class="tbl-header spancommon span_font_size">Date Of Birth</th>
                                             <!-- <th class="tbl-header spancommon span_font_size">Height(cm)</th>
                                             <th class="tbl-header spancommon span_font_size">Weight(Kg)</th> -->
@@ -527,6 +528,11 @@
                                             <td class="tbl-content" style="position: relative;top: 0.2rem;">
                                                 <div class="input-form-box">
                                                     <input type="text" style="min-width: 200px;" class="input-form-control without-icon" [disabled]="checkEndorseDisable('personalAccident')" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'personalAccident')" maxlength="50" [(ngModel)]="row.Salary" [ngModelOptions]="{standalone: true}">
+                                                </div>
+                                            </td>
+                                            <td class="tbl-content" style="position: relative;top: 0.2rem;">
+                                                <div class="input-form-box">
+                                                    <input type="text" style="min-width: 200px;" class="input-form-control without-icon" [disabled]="checkEndorseDisable('personalAccident')" [(ngModel)]="row.NationalityID" [ngModelOptions]="{standalone: true}">
                                                 </div>
                                             </td>
                                             <td class="tbl-content" style="position: relative;bottom: 0.4rem;">
@@ -712,6 +718,7 @@
                                             <th class="tbl-header spancommon span_font_size">Occupation</th>
                                             <th class="tbl-header spancommon span_font_size">Name</th>
                                             <th class="tbl-header spancommon span_font_size">Salary &nbsp;({{currencyValue}})</th>
+                                            <th class="tbl-header spancommon span_font_size">NationalityID</th>
                                             <th class="tbl-header spancommon span_font_size">Date Of Birth</th>
                                             <!-- <th class="tbl-header spancommon span_font_size">Height(cm)</th>
                                             <th class="tbl-header spancommon span_font_size">Weight(Kg)</th> -->
@@ -749,6 +756,11 @@
                                                     <input type="text" [disabled]="checkEndorseDisable('personalIndeminity')" style="min-width: 166px;position: relative;left: 1.5rem;bottom: 0.3rem;"  class="input-form-control without-icon" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'personalIndemenity')" maxlength="50" [(ngModel)]="row.Salary" [ngModelOptions]="{standalone: true}">
                                                 </div>
                                                 <!--(keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'personalInt')"-->
+                                            </td>
+                                            <td class="tbl-content" style="position: relative;top: 0.2rem;">
+                                                <div class="input-form-box">
+                                                    <input type="text" style="min-width: 200px;" class="input-form-control without-icon" [disabled]="checkEndorseDisable('personalIndeminity')" [(ngModel)]="row.NationalityID" [ngModelOptions]="{standalone: true}">
+                                                </div>
                                             </td>
                                             <td class="tbl-content" >
                                                 <mat-form-field appearance="fill" style="position: relative;left: 1.5rem;bottom: 0.2rem;">
@@ -941,7 +953,7 @@
                                             <span class="spancommon span_font_size" style="font-weight:600">Upload Employee Details</span>
                                         </ng-container>
                                     </div>
-                                    <div class="headcommon mr-3"  *ngIf="enableEmployeeUploadSection"> <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data"><i class="fas fa-download mx-1"></i>Sample</button></div>
+                                    <div class="headcommon mr-3"  *ngIf="enableEmployeeUploadSection"> <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data" (click)="employeedownload()"><i class="fas fa-download mx-1"></i>Sample</button></div>
                                     <div *ngIf="!enableEmployeeUploadSection">Currency&nbsp;({{currencyValue}})</div>
                                 </div>
                                 <div  *ngIf="employeeList.length==0 && !enableEmployeeUploadSection" >
@@ -1310,7 +1322,7 @@
                                             <span class="spancommon span_font_size" style="font-weight:600">Upload Fidelity Details</span>
                                         </ng-container>
                                     </div>
-                                    <div class="headcommon mr-3"  *ngIf="enableFidelityUploadSection"> <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data"><i class="fas fa-download mx-1"></i>Sample</button></div>
+                                    <div class="headcommon mr-3"  *ngIf="enableFidelityUploadSection"> <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data" (click)="employeedownload()"><i class="fas fa-download mx-1"></i>Sample</button></div>
                                     <div *ngIf="!enableEmployeeUploadSection">Currency&nbsp;({{currencyValue}})</div>
                                 </div>
                                 <div  *ngIf="fidelityList.length==0 && !enableFidelityUploadSection" >

@@ -822,7 +822,7 @@
                                                     <ng-template #hasConfig>
                                                         <ng-container *ngIf="col.config.isChecked">
                                                             &nbsp;&nbsp;
-                                                            <mat-checkbox class="example-margin text-center" [checked]="canbeChecked(element)" [disabled]="(element.isSelected=='D' && !endorseCovers) || (endorsementSection && !endorseCovers && menu?.EndorsementYn!='Y')" [name]="element[col.config.model]" (change)="onSelectCover(element,$event.checked,menu.Vehicleid,menu,'coverList','change')">
+                                                            <mat-checkbox class="example-margin text-center" [checked]="canbeChecked(element)" [disabled]="(element.isSelected=='D' && !endorseCovers) ||  checkCoverSelection(menu,element)" [name]="element[col.config.model]" (change)="onSelectCover(element,$event.checked,menu.Vehicleid,menu,'coverList','change')">
                                                             </mat-checkbox>
                                                         </ng-container>
                                                         <ng-container *ngIf="col.config.isExpand">
@@ -1675,7 +1675,7 @@
 
                                                                     <span class="mobile-label"> {{ columnHeader[i]["display"] }}</span>
                                                             
-                                                                <mat-checkbox style="margin-left:100px;" class="example-margin" [checked]="canbeChecked(element)" [disabled]="element.isSelected=='D' || (endorsementSection && !endorseCovers && menu?.EndorsementYn!='Y')" [name]="element[col.config.model]" (change)="onSelectCover(element,$event.checked,menu.Vehicleid,menu,'coverList','change')">
+                                                                <mat-checkbox style="margin-left:100px;" class="example-margin" [checked]="canbeChecked(element)" [disabled]="element.isSelected=='D' ||  checkCoverSelection(menu,element)" [name]="element[col.config.model]" (change)="onSelectCover(element,$event.checked,menu.Vehicleid,menu,'coverList','change')">
                                                                 </mat-checkbox>
                                                         </ng-container>
                                                         <ng-container *ngIf="col.config.isExpand">

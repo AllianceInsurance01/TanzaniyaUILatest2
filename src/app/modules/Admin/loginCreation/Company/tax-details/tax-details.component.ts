@@ -16,6 +16,7 @@ export class TaxDetailsComponent implements OnInit {
   activeMenu = "Tax";insuranceName:any;insuranceId:any;productId:any;loginId:any;
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;calculationTypes2:any[]=[];
+  taxforlist:any[]=[]; changeorrefundlist:any[]=[];
   public CommonApiUrl1: any = this.AppConfig.CommonApiUrl;
   taxList: any[]=[];effectiveDateEnd:any;effectiveDateStart:any;
   minDate: Date;branchList:any[]=[];branchValue:any;
@@ -51,7 +52,9 @@ export class TaxDetailsComponent implements OnInit {
         if(data.Result){
           let obj = [{Code:"99999",CodeDesc:"ALL"}];
           this.branchList = obj.concat(data?.Result);
-          if(!this.branchValue){ this.branchValue = "99999"; this.getTaxDetails() }
+          if(!this.branchValue){ this.branchValue = "99999"; this.getTaxDetails();
+          // this.getTaxFor(); this.getChangeorrefund();
+           }
         }
       },
       (err) => { },
@@ -70,6 +73,8 @@ export class TaxDetailsComponent implements OnInit {
         "TaxName": null,
         "Value": null,
         "Delete":null,
+        "TaxFor":null,
+        "ChargeOrRefund":null
       }
     );
     this.taxList.push()
@@ -104,10 +109,14 @@ export class TaxDetailsComponent implements OnInit {
                   "TaxName": null,
                   "Value": null,
                   "Delete":null,
+                  "ChargeOrRefund":null,
+                  "TaxFor":null
+
                 }
               ]
             }
-
+            this.getTaxFor(); 
+            this.getChangeorrefund();
         }
       },
       (err) => { },
@@ -316,4 +325,35 @@ export class TaxDetailsComponent implements OnInit {
     if(value=='EndorsementField') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/endorsementfield'])
     if(value=='Benefit') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/productbenefit'])
   }
+
+  getTaxFor(){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId,
+      "BranchCode":this.branchValue
+    }
+    let urlLink = `${this.CommonApiUrl1}dropdown/taxfor`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      if(data.Result){
+        this.taxforlist = data?.Result;
+      }
+    },
+    (err) => { },
+  );
+}
+getChangeorrefund(){
+  let ReqObj = {
+    "InsuranceId": this.insuranceId,
+    "BranchCode":this.branchValue
+  }
+  let urlLink = `${this.CommonApiUrl1}dropdown/taxpaymenttype`;
+this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+  (data: any) => {
+    if(data.Result){
+      this.changeorrefundlist = data?.Result;
+    }
+  },
+  (err) => { },
+);
+}
 }

@@ -3125,7 +3125,7 @@ onSubmit(productData) {
         if (!sectionId.some(ele => ele == '47')) sectionId.push('47');
       }
       else {
-        if (this.coversRequired == 'C' || this.coversRequired == 'BC') sectionId.push('47');
+        if (this.coversRequired == 'C' || this.coversRequired == 'BC') if (!sectionId.some(ele => ele == '47')) sectionId.push('47');
         this.productItem.ContentSuminsured = '0';
       }
     }
@@ -3141,7 +3141,7 @@ onSubmit(productData) {
         if (!sectionId.some(ele => ele == '47')) sectionId.push('47');
       }
       else {
-        if (this.coversRequired == 'C' || this.coversRequired == 'BC') sectionId.push('47');
+        if (this.coversRequired == 'C' || this.coversRequired == 'BC')  if (!sectionId.some(ele => ele == '47')) sectionId.push('47');
         this.productItem.ContentSuminsured = '0';
       }
     }

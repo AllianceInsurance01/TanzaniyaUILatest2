@@ -281,8 +281,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
     }
     let homeObj = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
     if (homeObj) {
-      this.getContentList();
-      this.getallriskList();
+      
     }
     /*this.jsonList = [
       {
@@ -531,6 +530,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
           if(this.item==undefined || this.item == null){
               this.item = this.sumInsuredDetails?.ProductSuminsuredDetails?.SectionId;
               this.setTabSections();
+              this.getContentList();
+              this.getallriskList();
           }
           if(this.sumInsuredDetails){
             // if(this.first) this.contentSumInsured = this.sumInsuredDetails.ProductSuminsuredDetails.ContentSuminsured;
@@ -738,6 +739,26 @@ onFidelitySave(){
       this.empAddress = null;this.employeeName = null;this.occupationType = null;this.empJoiningMonth = null;
       this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;
     }
+  }
+  employeedownload(){
+    let ReqObj = {
+      "CompanyId": this.insuranceId,
+      "ProductId": this.productId,
+    }
+    let urlLink = `${this.ApiUrl1}eway/vehicle/sample/download/`
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', data?.Result);
+        link.setAttribute('download', data?.Result.xls);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    },
+      (err) => { },
+    );
   }
   onSaveFidelityDetails(type){
     if(this.fidelityList.length!=0){
@@ -1147,6 +1168,7 @@ onFidelitySave(){
               "Height": null,
               "OccupationId": entry.OccupationId,
               "PersonName": entry.PersonName,
+              "NationalityId": entry.NationalityID,
               "Salary": salary,
               "Weight": null,
               "RiskId": entry.RiskId,
@@ -1228,6 +1250,7 @@ onFidelitySave(){
               "Height": entry.Height,
               "OccupationId": entry.OccupationId,
               "PersonName": entry.PersonName,
+              "NationalityId": entry.NationalityID,
               "Salary": salary,
               "Weight": entry.Weight,
               "RiskId": entry.RiskId,
@@ -2396,6 +2419,7 @@ onFidelitySave(){
                 "Height": null,
                 "OccupationId": this.accidentOccupationId,
                 "OccupationDesc": this.accidentOccupation,
+                "NationalityId": null,
                 "PersonName": null,
                 "Salary": null,
                 "Weight": null,
@@ -2412,6 +2436,7 @@ onFidelitySave(){
               "Height": null,
               "OccupationId": this.accidentOccupationId,
               "OccupationDesc": this.accidentOccupation,
+              "NationalityId": null,
               "PersonName": null,
               "Salary": null,
               "Weight": null,
@@ -2469,6 +2494,7 @@ onFidelitySave(){
                 "OccupationId": this.liabilityOccupationId,
                 "OccupationDesc": this.liabilityOccupation,
                 "PersonName": null,
+                "NationalityId": null,
                 "Salary": null,
                 "Weight": null,
                 "RiskId": null,
@@ -2484,6 +2510,7 @@ onFidelitySave(){
               "Height": null,
               "OccupationId": this.liabilityOccupationId,
               "OccupationDesc": this.liabilityOccupation,
+              "NationalityId": null,
               "PersonName": null,
               "Salary": null,
               "Weight": null,
@@ -2847,6 +2874,7 @@ onFidelitySave(){
       "Height": null,
       "OccupationId": this.accidentOccupationId,
       "OccupationDesc": this.accidentOccupation,
+      "NationalityId": null,
       "PersonName": null,
       "Salary": null,
       "Weight": null,
@@ -2921,6 +2949,7 @@ onFidelitySave(){
       "Height": null,
       "OccupationId": this.liabilityOccupationId,
       "OccupationDesc": this.liabilityOccupation,
+      "NationalityId": null,
       "PersonName": null,
       "Salary": null,
       "Weight": null,

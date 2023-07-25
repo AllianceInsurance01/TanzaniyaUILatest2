@@ -98,8 +98,9 @@
                 </div>
                 <div class="col-12 col-md-3">
                     <div class="input-control-container">
-                        <label class="input-form-label" style="font-size: 0.9rem !important;"><b>Total Premium</b></label>
+                        
                         <ng-container *ngIf="!endrosement">
+                            <label class="input-form-label" style="font-size: 0.9rem !important;"><b>Total Premium</b></label>
                             <div class="input-form-radio-box">
                                 <span class="spancommon span_font_size text-primary" style="font-size: 0.9rem !important;">{{columnHeader?.OverallPremiumFc|commaseparator}}<span>
                                     &nbsp;({{columnHeader?.Currency}})</span></span>
@@ -108,14 +109,15 @@
                            
                         </ng-container>
                         <ng-container *ngIf="endrosement && columnHeader?.TotalEndtPremium!=undefined && columnHeader?.TotalEndtPremium!=0 && columnHeader?.TotalEndtPremium!=null">
-                            <span class="spancommon span_font_size"><b>Total Endorsement Premium</b><span>:
+                            <label class="input-form-label" style="font-size: 0.9rem !important;"><b>Total Endorsement Premium</b></label>
+                            <span>:
                                 <ng-container *ngIf="columnHeader?.TotalEndtPremium!=0 && columnHeader?.TotalEndtPremium!=null ">
                                     {{columnHeader?.TotalEndtPremium|commaseparator}}&nbsp;({{columnHeader?.Currency}})
                                 </ng-container>
                                 <ng-container *ngIf="columnHeader?.TotalEndtPremium==0 || columnHeader?.TotalEndtPremium==null">
                                     {{columnHeader?.TotalEndtPremium}}&nbsp;({{columnHeader?.Currency}})
                                 </ng-container>
-                            </span></span>
+                            </span>
                         </ng-container>
                     </div>
                 </div>
