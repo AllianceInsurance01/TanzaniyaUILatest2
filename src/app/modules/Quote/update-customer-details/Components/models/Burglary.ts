@@ -37,6 +37,7 @@ export class Burglary{
                         props: {
                           label: 'Nature Of Trade',
                           required: true,
+                          disabled: this.checkDisable('NatureOfTrade'),
                           options: []
                         },
                         expressions: {
@@ -62,6 +63,7 @@ export class Burglary{
                         type: 'multicheckbox',
                         props: {
                           label: 'Insurance For',
+                          disabled: this.checkDisable('InsuranceForId'),
                           required: true,
                           options: [
   
@@ -113,6 +115,7 @@ export class Burglary{
                           placeholder: "YYYY",
                           required: false,
                           maxLength: 4,
+                          disabled: this.checkDisable('OccupiedYear'),
                           pattern: /[0-9]+/gm,
                           options: [
                           ],
@@ -133,6 +136,7 @@ export class Burglary{
                         props: {
                           label: 'External Wall Type',
                           required: false,
+                          disabled: this.checkDisable('WallType'),
                           options: []
                         },
                         expressions: {
@@ -145,6 +149,7 @@ export class Burglary{
                         key: 'InternalWallType',
                         props: {
                           label: 'Internal Wall Type',
+                          disabled: this.checkDisable('InternalWallType'),
                           required: false,
                           options: []
                         },
@@ -158,6 +163,7 @@ export class Burglary{
                         key: 'RoofType',
                         props: {
                           label: 'Roof Type',
+                          disabled: this.checkDisable('RoofType'),
                           required: false,
                           options: []
                         },
@@ -171,6 +177,7 @@ export class Burglary{
                         key: 'CeilingType',
                         props: {
                           label: 'Ceiling Type',
+                          disabled: this.checkDisable('CeilingType'),
                           required: false,
                           options: []
                         },
@@ -194,6 +201,7 @@ export class Burglary{
                           key: 'Address',
                           props: {
                             label: 'Address',
+                            disabled: this.checkDisable('Address'),
                             required: false,
                             maxLength: 100,
                             options: [
@@ -209,6 +217,7 @@ export class Burglary{
                           key: 'RegionCode',
                           props: {
                             label: 'Region',
+                            disabled: this.checkDisable('RegionCode'),
                             required: false,
                             options: []
                           },
@@ -225,6 +234,7 @@ export class Burglary{
                           key: 'DistrictCode',
                           props: {
                             label: 'District',
+                            disabled: this.checkDisable('DistrictCode'),
                             required: false,
                             options: []
                           },
@@ -240,6 +250,7 @@ export class Burglary{
                             label: 'Watchman Guard Premises(Hours)',
                             placeholder: "Premises Time Limit in Hours",
                             required: false,
+                            disabled: this.checkDisable('WatchmanGuardHours'),
                             maxLength: 2,
                             pattern: /[0-9]+/gm,
                             options: [
@@ -271,6 +282,7 @@ export class Burglary{
                         key: 'AccessibleWindows',
                         props: {
                           label: 'Accessible Windows',
+                          disabled: this.checkDisable('AccessibleWindows'),
                           placeholder: "Number Of Accessible Windows",
                           required: false,
                           maxLength: 2,
@@ -295,6 +307,7 @@ export class Burglary{
                           label: 'Show Windows',
                           placeholder: "Number Of Show Windows",
                           required: false,
+                          disabled: this.checkDisable('ShowWindow'),
                           maxLength: 2,
                           pattern: /[0-9]+/gm,
                           options: [
@@ -317,6 +330,7 @@ export class Burglary{
                           label: 'Front Door',
                           placeholder: "Number Of Front Door",
                           required: false,
+                          disabled: this.checkDisable('FrontDoors'),
                           maxLength: 2,
                           pattern: /[0-9]+/gm,
                           options: [
@@ -338,6 +352,7 @@ export class Burglary{
                         props: {
                           label: 'Back Door',
                           placeholder: "Number Of Back Door",
+                          disabled: this.checkDisable('BackDoors'),
                           required: false,
                           maxLength: 2,
                           pattern: /[0-9]+/gm,
@@ -360,6 +375,7 @@ export class Burglary{
                         props: {
                           label: 'Skylights and Trap Doors',
                           placeholder: "",
+                          disabled: this.checkDisable('TrapDoors'),
                           required: false,
                           maxLength: 2,
                           pattern: /[0-9]+/gm,
@@ -381,6 +397,7 @@ export class Burglary{
                         key: 'WindowsMaterialId',
                         props: {
                           label: 'Windows Construction Material',
+                          disabled: this.checkDisable('WindowsMaterialId'),
                           required: true,
                           options: []
                         },
@@ -394,6 +411,7 @@ export class Burglary{
                         key: 'DoorsMaterialId',
                         props: {
                           label: 'Doors Construction Material',
+                          disabled: this.checkDisable('DoorsMaterialId'),
                           required: true,
                           options: []
                         },
@@ -407,6 +425,7 @@ export class Burglary{
                         key: 'NightLeftDoor',
                         props: {
                           label: 'In Night by which door are the premises Left',
+                          disabled: this.checkDisable('NightLeftDoor'),
                           required: true,
                           options: []
                         },
@@ -420,6 +439,7 @@ export class Burglary{
                         key: 'BuildingOccupied',
                         props: {
                           label: 'Building occupied',
+                          disabled: this.checkDisable('BuildingOccupied'),
                           required: true,
                           options: []
                         },
@@ -468,7 +488,7 @@ export class Burglary{
                                         key: 'StockInTradeSi',
                       
                                         templateOptions: {
-                                          disabled: this.checkDisable('StockInTradeSi'),
+                                          disabled: this.checkDisable('SumInsured'),
                                           required: false,
                                           options: [
                       
@@ -488,6 +508,7 @@ export class Burglary{
                       
                                         templateOptions: {
                                           required: false,
+                                          disabled: this.checkDisable('SumInsured'),
                                           options: [
                       
                                           ],
@@ -522,7 +543,7 @@ export class Burglary{
                                         key: 'GoodsSi',
                       
                                         templateOptions: {
-                                          disabled: this.checkDisable('GoodsSi'),
+                                          disabled: this.checkDisable('SumInsured'),
                                           required: false,
                                           options: [
                       
@@ -541,6 +562,7 @@ export class Burglary{
                                         key: 'GoodsLossPercent',
                                         
                                         templateOptions: {
+                                          disabled: this.checkDisable('SumInsured'),
                                           required: false,
                                           options: [
                       
@@ -575,7 +597,7 @@ export class Burglary{
                                         key: 'FurnitureSi',
                       
                                         templateOptions: {
-                                          disabled: this.checkDisable('FurnitureSi'),
+                                          disabled: this.checkDisable('SumInsured'),
                                           required: false,
                                           options: [
                       
@@ -594,6 +616,7 @@ export class Burglary{
                                         key: 'FurnitureLossPercent',
                                         
                                         templateOptions: {
+                                          disabled: this.checkDisable('SumInsured'),
                                           required: false,
                                           options: [
                       
@@ -628,7 +651,7 @@ export class Burglary{
                                           key: 'ApplianceSi',
                         
                                           templateOptions: {
-                                            disabled: this.checkDisable('ApplianceSi'),
+                                            disabled: this.checkDisable('SumInsured'),
                                             required: false,
                                             options: [
                         
@@ -647,6 +670,7 @@ export class Burglary{
                                           key: 'ApplianceLossPercent',
                                          
                                           templateOptions: {
+                                            disabled: this.checkDisable('SumInsured'),
                                             required: false,
                                             options: [
                         
@@ -681,7 +705,7 @@ export class Burglary{
                                         key: 'CashValueablesSi',
                       
                                         templateOptions: {
-                                          disabled: this.checkDisable('CashValueablesSi'),
+                                          disabled: this.checkDisable('SumInsured'),
                                           required: false,
                                           options: [
                       
@@ -700,6 +724,7 @@ export class Burglary{
                                         key: 'CashValueablesLossPercent',
                                         
                                         templateOptions: {
+                                          disabled: this.checkDisable('SumInsured'),
                                           required: false,
                                           options: [
                       

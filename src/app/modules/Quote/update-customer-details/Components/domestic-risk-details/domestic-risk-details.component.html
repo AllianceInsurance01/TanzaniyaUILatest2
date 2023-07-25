@@ -462,7 +462,7 @@
                         </div> -->
                     </div>
                     <div class="text-center mt-2">
-                        <button class="custom-btn btn-5 mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
 
                         <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="onSaveContentRisk()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
@@ -490,6 +490,7 @@
                                             <th class="tbl-header spancommon span_font_size">Occupation</th>
                                             <th class="tbl-header spancommon span_font_size">Name</th>
                                             <th class="tbl-header spancommon span_font_size">Salary &nbsp;({{currencyValue}})</th>
+                                            <th class="tbl-header spancommon span_font_size">NationalityID</th>
                                             <th class="tbl-header spancommon span_font_size">Date Of Birth</th>
                                             <!-- <th class="tbl-header spancommon span_font_size">Height(cm)</th>
                                             <th class="tbl-header spancommon span_font_size">Weight(Kg)</th> -->
@@ -527,6 +528,11 @@
                                             <td class="tbl-content" style="position: relative;top: 0.2rem;">
                                                 <div class="input-form-box">
                                                     <input type="text" style="min-width: 200px;" class="input-form-control without-icon" [disabled]="checkEndorseDisable('personalAccident')" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'personalAccident')" maxlength="50" [(ngModel)]="row.Salary" [ngModelOptions]="{standalone: true}">
+                                                </div>
+                                            </td>
+                                            <td class="tbl-content" style="position: relative;top: 0.2rem;">
+                                                <div class="input-form-box">
+                                                    <input type="text" style="min-width: 200px;" class="input-form-control without-icon" [disabled]="checkEndorseDisable('personalAccident')" [(ngModel)]="row.NationalityID" [ngModelOptions]="{standalone: true}">
                                                 </div>
                                             </td>
                                             <td class="tbl-content" style="position: relative;bottom: 0.4rem;">
@@ -587,7 +593,7 @@
                     </div>
 
                     <div class="text-center mt-3">
-                        <button class="custom-btn btn-5 maan-btn-red  custom-btn btn-5 mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5 maan-btn-red  custom-btn btn-5 mx-2" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
 
                         <button class="custom-btn btn-6  maan-button-data mx-2" matRipple (click)="onSavePersonalAccident()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
@@ -687,7 +693,7 @@
                     </div>
 
                     <div class="text-center">
-                        <button class="custom-btn btn-5  mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5  mx-2" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
 
                         <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="onSaveAllRisk()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
@@ -712,6 +718,7 @@
                                             <th class="tbl-header spancommon span_font_size">Occupation</th>
                                             <th class="tbl-header spancommon span_font_size">Name</th>
                                             <th class="tbl-header spancommon span_font_size">Salary &nbsp;({{currencyValue}})</th>
+                                            <th class="tbl-header spancommon span_font_size">NationalityID</th>
                                             <th class="tbl-header spancommon span_font_size">Date Of Birth</th>
                                             <!-- <th class="tbl-header spancommon span_font_size">Height(cm)</th>
                                             <th class="tbl-header spancommon span_font_size">Weight(Kg)</th> -->
@@ -749,6 +756,11 @@
                                                     <input type="text" [disabled]="checkEndorseDisable('personalIndeminity')" style="min-width: 166px;position: relative;left: 1.5rem;bottom: 0.3rem;"  class="input-form-control without-icon" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'personalIndemenity')" maxlength="50" [(ngModel)]="row.Salary" [ngModelOptions]="{standalone: true}">
                                                 </div>
                                                 <!--(keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'personalInt')"-->
+                                            </td>
+                                            <td class="tbl-content" style="position: relative;top: 0.2rem;">
+                                                <div class="input-form-box">
+                                                    <input type="text" style="min-width: 200px;" class="input-form-control without-icon" [disabled]="checkEndorseDisable('personalIndeminity')" [(ngModel)]="row.NationalityID" [ngModelOptions]="{standalone: true}">
+                                                </div>
                                             </td>
                                             <td class="tbl-content" >
                                                 <mat-form-field appearance="fill" style="position: relative;left: 1.5rem;bottom: 0.2rem;">
@@ -806,7 +818,7 @@
                         </div>
                     </div>
                     <div class="text-center mt-3">
-                        <button class="custom-btn btn-5 mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
                         <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="onSavePersonalIntermedity()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
                     <div class="d-flex justify-content-end">
@@ -907,7 +919,7 @@
 
 
                       <div class="text-center">
-                        <button class="custom-btn btn-5  mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5  mx-2" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
 
                         <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="onSaveElectronic()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
@@ -941,7 +953,7 @@
                                             <span class="spancommon span_font_size" style="font-weight:600">Upload Employee Details</span>
                                         </ng-container>
                                     </div>
-                                    <div class="headcommon mr-3"  *ngIf="enableEmployeeUploadSection"> <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data"><i class="fas fa-download mx-1"></i>Sample</button></div>
+                                    <div class="headcommon mr-3"  *ngIf="enableEmployeeUploadSection"> <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data" (click)="employeedownload()"><i class="fas fa-download mx-1"></i>Sample</button></div>
                                     <div *ngIf="!enableEmployeeUploadSection">Currency&nbsp;({{currencyValue}})</div>
                                 </div>
                                 <div  *ngIf="employeeList.length==0 && !enableEmployeeUploadSection" >
@@ -1128,7 +1140,7 @@
                             </div>
                         </div>
                         <div class="text-center mt-2" >
-                            <button class="custom-btn btn-5 mx-2" *ngIf="!enableEmployeeUploadSection" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                            <button class="custom-btn btn-5 mx-2" *ngIf="!enableEmployeeUploadSection" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
     
                             <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="employeeList.length!=0 && !enableEmployeeUploadSection" matRipple (click)="onSaveEmployeeDetails('direct')" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                         </div>
@@ -1158,7 +1170,7 @@
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-6 input-control-container">
                                         <label class="input-form-label">Occupation</label><span class="text-danger">*</span>
-                                        <div class="input-form-box" style="position: relative;top:.2rem">
+                                        <div class="input-form-box" style="position: relative;">
                                             <ng-select class="custom" [items]="employeeOccupationList" [disabled]="checkEndorseDisable('employee')" [(ngModel)]="occupationType" placeholder="Select Occupation" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
                                             </ng-select>
                                         </div>
@@ -1215,7 +1227,7 @@
                                                 </ng-select>
                                             </div>
                                             <div class="col-md-4 col-lg-4 p-0 input-form-box mt-1">
-                                                <input type="text" placeholder="YYYY" [disabled]="checkEndorseDisable('employee')" class="input-form-control without-icon" maxlength="4" [(ngModel)]="empJoiningDate" [ngModelOptions]="{standalone: true}">    
+                                                <input type="text" placeholder="YYYY" [disabled]="checkEndorseDisable('employee')" style="margin-left: 10px;" class="input-form-control without-icon" maxlength="4" [(ngModel)]="empJoiningDate" [ngModelOptions]="{standalone: true}">    
                                             </div>
                                         </div>
                                         <!-- <mat-form-field appearance="fill">
@@ -1310,7 +1322,7 @@
                                             <span class="spancommon span_font_size" style="font-weight:600">Upload Fidelity Details</span>
                                         </ng-container>
                                     </div>
-                                    <div class="headcommon mr-3"  *ngIf="enableFidelityUploadSection"> <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data"><i class="fas fa-download mx-1"></i>Sample</button></div>
+                                    <div class="headcommon mr-3"  *ngIf="enableFidelityUploadSection"> <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data" (click)="employeedownload()"><i class="fas fa-download mx-1"></i>Sample</button></div>
                                     <div *ngIf="!enableEmployeeUploadSection">Currency&nbsp;({{currencyValue}})</div>
                                 </div>
                                 <div  *ngIf="fidelityList.length==0 && !enableFidelityUploadSection" >
@@ -1497,7 +1509,7 @@
                             </div>
                         </div>
                         <div class="text-center mt-2" >
-                            <button class="custom-btn btn-5 mx-2" *ngIf="!enableFidelityUploadSection" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                            <button class="custom-btn btn-5 mx-2" *ngIf="!enableFidelityUploadSection" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
                             <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="fidelityList.length!=0 && !enableFidelityUploadSection" matRipple (click)="onSaveFidelityDetails('direct')" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                         </div>
                     </div>

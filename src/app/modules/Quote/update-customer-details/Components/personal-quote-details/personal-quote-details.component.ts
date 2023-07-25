@@ -119,6 +119,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
   currencyCode: any;
   industryName: any;
   countryId: any;
+  sectionList: any[]=[];
   constructor(private formlyJsonschema: FormlyJsonschema, private sharedService: SharedService, private datePipe: DatePipe,
     private router: Router, private http: HttpClient, private updateComponent: UpdateCustomerDetailsComponent) {
     this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -1520,6 +1521,20 @@ getMoneyDetails(sections){
         this.productItem.MoneyInPremises = details?.MoneyInPremises;
         this.productItem.MoneyInSafeBusiness = details?.MoneyInSafeBusiness;
         this.productItem.MoneyOutSafeBusiness = details?.MoneyOutSafeBusiness;
+        if(details?.EndorsementDate){
+          this.endorsementDate = details?.EndorsementDate;
+          this.endorsementEffectiveDate = details?.EndorsementEffectiveDate;
+          this.endorsementRemarks = details?.EndorsementRemarks;
+          this.endorsementType = details?.EndorsementType;
+          this.endorsementTypeDesc = details?.EndorsementTypeDesc;
+          this.endtCategoryDesc = details?.EndtCategoryDesc;
+          this.endtCount = details?.EndtCount;
+          this.endtPrevPolicyNo = details?.EndtPrevPolicyNo;
+          this.endtPrevQuoteNo = details?.EndtPrevQuoteNo;
+          this.endtStatus = details?.EndtStatus;
+          this.isFinanceEndt = details?.IsFinanceEndt;
+          this.orginalPolicyNo = details?.OrginalPolicyNo;
+        }
         if(this.productItem.CashInHandEmployees!=null && this.productItem.CashInHandEmployees!='0' && this.productItem.CashInHandEmployees!='' && this.productItem.CashInHandEmployees!='0.0') this.productItem.CashInHandEmployeesSIYN = true;
         if(this.productItem.CashInSafe!=null && this.productItem.CashInSafe!='0' && this.productItem.CashInSafe!='' && this.productItem.CashInSafe!='0.0') this.productItem.CashInSafeSIYN = true;
         if(this.productItem.CashInTransit!=null && this.productItem.CashInTransit!='0' && this.productItem.CashInTransit!='' && this.productItem.CashInTransit!='0.0') this.productItem.CashInTransitSIYN = true;
@@ -1551,6 +1566,20 @@ getMachineryBreakDownDetails(sections){
       console.log(data);
       if (data.Result) {
         let details = data?.Result;
+        if(details?.EndorsementDate){
+          this.endorsementDate = details?.EndorsementDate;
+          this.endorsementEffectiveDate = details?.EndorsementEffectiveDate;
+          this.endorsementRemarks = details?.EndorsementRemarks;
+          this.endorsementType = details?.EndorsementType;
+          this.endorsementTypeDesc = details?.EndorsementTypeDesc;
+          this.endtCategoryDesc = details?.EndtCategoryDesc;
+          this.endtCount = details?.EndtCount;
+          this.endtPrevPolicyNo = details?.EndtPrevPolicyNo;
+          this.endtPrevQuoteNo = details?.EndtPrevQuoteNo;
+          this.endtStatus = details?.EndtStatus;
+          this.isFinanceEndt = details?.IsFinanceEndt;
+          this.orginalPolicyNo = details?.OrginalPolicyNo;
+        }
         this.productItem.BoilerPlantsSi = details?.BoilerPlantsSi;
         this.productItem.ElecMachinesSi = details?.ElecMachinesSi;
         this.productItem.EquipmentSi = details?.EquipmentSi;
@@ -3023,15 +3052,17 @@ onSubmit(productData) {
     // if((this.productItem.BuildingOwnerYn=='N' || this.productItem.BuildingOwnerYn==null) && this.productId=='3'){
     //   this.productItem.BuildingSuminsured = null;
     // }
-
+    if(this.endorsementSection && this.enableFieldsList.some(ele=>ele=='BuildingSuminsured')){
+      sectionId = this.sectionList;
+    }
     if (this.productItem.ElecEquipSuminsured != '0' && this.productItem.ElecEquipSuminsured != '' && this.productItem.ElecEquipSuminsured != null) {
-      sectionId.push('41');
+      if (!sectionId.some(ele => ele == '41')) sectionId.push('41');
     }
     else {
       this.productItem.ElecEquipSuminsured = '0';
     }
     if (this.productItem.CashInSafe != '0' && this.productItem.CashInSafe != '' && this.productItem.CashInSafe != null) {
-      sectionId.push('42');
+      if (!sectionId.some(ele => ele == '42')) sectionId.push('42');
     }
     if (this.productItem.CashInTransit != '0' && this.productItem.CashInTransit != '' && this.productItem.CashInTransit != null) {
       if (!sectionId.some(ele => ele == '42')) sectionId.push('42');
@@ -3053,7 +3084,7 @@ onSubmit(productData) {
     }
     if (this.productItem.FidelityAnnualSuminsured != '0' && this.productItem.FidelityAnnualSuminsured != '' && this.productItem.FidelityAnnualSuminsured != null &&
       this.productItem.FidelityAnyoccuSuminsured != '0' && this.productItem.FidelityAnyoccuSuminsured != '' && this.productItem.FidelityAnyoccuSuminsured != null) {
-      sectionId.push('43');
+        if (!sectionId.some(ele => ele == '43')) sectionId.push('43');
     }
     else {
       this.productItem.FidelityAnnualSuminsured = '0';
@@ -3061,14 +3092,14 @@ onSubmit(productData) {
     }
 
     if (this.productItem.TpliabilityAnyoccuSuminsured != '0' && this.productItem.TpliabilityAnyoccuSuminsured != '' && this.productItem.TpliabilityAnyoccuSuminsured != null) {
-      sectionId.push('44');
+      if (!sectionId.some(ele => ele == '44')) sectionId.push('44');
     }
     else {
       this.productItem.TpliabilityAnyoccuSuminsured = '0';
     }
     if (this.productItem.EmpliabilityExcessSuminsured != '0' && this.productItem.EmpliabilityExcessSuminsured != '' && this.productItem.EmpliabilityExcessSuminsured != null &&
       this.productItem.EmpliabilityExcessSuminsured != '0' && this.productItem.EmpliabilityExcessSuminsured != '' && this.productItem.EmpliabilityExcessSuminsured != null) {
-      sectionId.push('45');
+        if (!sectionId.some(ele => ele == '45')) sectionId.push('45');
     }
     else {
       this.productItem.EmpliabilityExcessSuminsured = '0';
@@ -3076,7 +3107,7 @@ onSubmit(productData) {
     }
     if (this.productItem.GoodsTurnoverSuminsured != '0' && this.productItem.GoodsTurnoverSuminsured != '' && this.productItem.GoodsTurnoverSuminsured != null &&
       this.productItem.GoodsSinglecarrySuminsured != '0' && this.productItem.GoodsSinglecarrySuminsured != '' && this.productItem.GoodsSinglecarrySuminsured != null) {
-      sectionId.push('46');
+        if (!sectionId.some(ele => ele == '46')) sectionId.push('46');
     }
     else {
       this.productItem.GoodsTurnoverSuminsured = '0';
@@ -3084,50 +3115,50 @@ onSubmit(productData) {
     }
     if (this.productId != '3') {
       if (this.productItem.BuildingSuminsured != '0' && this.productItem.BuildingSuminsured != null && this.productItem.BuildingSuminsured != '') {
-        sectionId.push('40');
+        if (!sectionId.some(ele => ele == '40')) sectionId.push('40');
       }
       else {
         if (this.coversRequired == 'B' || this.coversRequired == 'BC') sectionId.push('40');
         this.productItem.BuildingSuminsured = null;
       }
       if (this.productItem.ContentSuminsured != '0' && this.productItem.ContentSuminsured != undefined && this.productItem.ContentSuminsured != null && this.productItem.ContentSuminsured != '') {
-        sectionId.push('47');
+        if (!sectionId.some(ele => ele == '47')) sectionId.push('47');
       }
       else {
-        if (this.coversRequired == 'C' || this.coversRequired == 'BC') sectionId.push('47');
+        if (this.coversRequired == 'C' || this.coversRequired == 'BC') if (!sectionId.some(ele => ele == '47')) sectionId.push('47');
         this.productItem.ContentSuminsured = '0';
       }
     }
     else {
       if (this.productItem.BuildingSuminsured != '0' && this.productItem.BuildingSuminsured != null && this.productItem.BuildingSuminsured != '') {
-        sectionId.push('1');
+        if (!sectionId.some(ele => ele == '1')) sectionId.push('1');
       }
       else {
         if (this.coversRequired == 'B' || this.coversRequired == 'BC') sectionId.push('1');
         this.productItem.BuildingSuminsured = null;
       }
       if (this.productItem.ContentSuminsured != '0' && this.productItem.ContentSuminsured != undefined && this.productItem.ContentSuminsured != null && this.productItem.ContentSuminsured != '') {
-        sectionId.push('47');
+        if (!sectionId.some(ele => ele == '47')) sectionId.push('47');
       }
       else {
-        if (this.coversRequired == 'C' || this.coversRequired == 'BC') sectionId.push('47');
+        if (this.coversRequired == 'C' || this.coversRequired == 'BC')  if (!sectionId.some(ele => ele == '47')) sectionId.push('47');
         this.productItem.ContentSuminsured = '0';
       }
     }
     if (this.productItem.PersonalAccidentSuminsured != '0' && this.productItem.PersonalAccidentSuminsured != null && this.productItem.PersonalAccidentSuminsured != '') {
-      sectionId.push('35');
+      if (!sectionId.some(ele => ele == '35')) sectionId.push('35');
     }
     else {
       this.productItem.PersonalAccidentSuminsured = '0';
     }
     if (this.productItem.PersonalIntermediarySuminsured != '0' && this.productItem.PersonalIntermediarySuminsured != null && this.productItem.PersonalIntermediarySuminsured != '') {
-      sectionId.push('36');
+      if (!sectionId.some(ele => ele == '36')) sectionId.push('36');
     }
     else {
       this.productItem.PersonalIntermediarySuminsured = '0';
     }
     if (this.productItem.AllriskSumInsured != '0' && this.productItem.AllriskSumInsured != null && this.productItem.AllriskSumInsured != '') {
-      sectionId.push('3');
+      if (!sectionId.some(ele => ele == '3')) sectionId.push('3');
     }
     else {
       this.productItem.AllriskSumInsured = '0';
@@ -3138,7 +3169,7 @@ onSubmit(productData) {
       if (this.productItem.InsuranceForId != null) {
         insuranceForList = Object.keys(this.productItem.InsuranceForId);
       }
-      sectionId.push('52')
+      if (!sectionId.some(ele => ele == '52')) sectionId.push('52')
     }
     let createdBy = "";
     let quoteStatus = sessionStorage.getItem('QuoteStatus');
@@ -3380,7 +3411,19 @@ onSaveMachineryDetails(type,formType){
     "GeneralMachineSi": this.productItem?.GeneralMachineSi,
     "MachineEquipSi": this.productItem?.MachineEquipSi,
     "ManuUnitsSi": this.productItem?.ManuUnitsSi,
-    "PowerPlantSi": this.productItem?.PowerPlantSi
+    "PowerPlantSi": this.productItem?.PowerPlantSi,
+    "EndorsementDate": this.endorsementDate,
+    "EndorsementEffectiveDate": this.endorsementEffectiveDate,
+    "EndorsementRemarks": this.endorsementRemarks,
+    "EndorsementType": this.endorsementType,
+    "EndorsementTypeDesc": this.endorsementTypeDesc,
+    "EndtCategoryDesc": this.endtCategoryDesc,
+    "EndtCount": this.endtCount,
+    "EndtPrevPolicyNo": this.endtPrevPolicyNo,
+    "EndtPrevQuoteNo": this.endtPrevQuoteNo,
+    "EndtStatus": this.endtStatus,
+    "IsFinanceEndt": this.isFinanceEndt,
+    "OrginalPolicyNo": this.orginalPolicyNo,
   }
   let urlLink = `${this.motorApiUrl}api/slide9/savemachinerybreakdown`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -3495,18 +3538,19 @@ onSaveBurglaryDetails(type,formType){
     "BuildingOccupied": this.productItem?.BuildingOccupied,
     "RoofType": this.productItem?.RoofType,
     "RequestReferenceNo": reqRefNo,
-    "EndorsementDate": null,
-    "EndorsementEffectiveDate": null,
-    "EndorsementRemarks": null,
-    "EndorsementType": null,
-    "EndorsementTypeDesc": null,
-    "EndtCategoryDesc": null,
-    "EndtCount": null,
-    "EndtPrevPolicyNo": null,
-    "EndtPrevQuoteNo": null,
-    "EndtStatus": null,
-    "IsFinanceEndt": null,
-    "OrginalPolicyNo": null,
+    "EndorsementDate": this.endorsementDate,
+    "EndorsementEffectiveDate": this.endorsementEffectiveDate,
+    "EndorsementRemarks": this.endorsementRemarks,
+    "EndorsementType": this.endorsementType,
+    "EndorsementTypeDesc": this.endorsementTypeDesc,
+    "EndtCategoryDesc": this.endtCategoryDesc,
+    "EndtCount": this.endtCount,
+    "EndtPrevPolicyNo": this.endtPrevPolicyNo,
+    "EndtPrevQuoteNo": this.endtPrevQuoteNo,
+    "EndtStatus": this.endtStatus,
+    "IsFinanceEndt": this.isFinanceEndt,
+    "OrginalPolicyNo": this.orginalPolicyNo,
+    "PolicyNo": this.endorsePolicyNo,
     "Status": "Y"
   }
   let urlLink = `${this.motorApiUrl}api/slide3/saveburglaryandhouse`;
@@ -3543,7 +3587,19 @@ onSaveMoneyDetails(type,formType){
     "MoneyAnnualcarrySuminsured": this.productItem?.MoneyAnnualcarrySuminsured,
     "MoneyInPremises": this.productItem?.MoneyInPremises,
     "MoneyInSafeBusiness": this.productItem?.MoneyInSafeBusiness,
-    "MoneyOutSafeBusiness": this.productItem?.MoneyOutSafeBusiness
+    "MoneyOutSafeBusiness": this.productItem?.MoneyOutSafeBusiness,
+    "EndorsementDate": this.endorsementDate,
+    "EndorsementEffectiveDate": this.endorsementEffectiveDate,
+    "EndorsementRemarks": this.endorsementRemarks,
+    "EndorsementType": this.endorsementType,
+    "EndorsementTypeDesc": this.endorsementTypeDesc,
+    "EndtCategoryDesc": this.endtCategoryDesc,
+    "EndtCount": this.endtCount,
+    "EndtPrevPolicyNo": this.endtPrevPolicyNo,
+    "EndtPrevQuoteNo": this.endtPrevQuoteNo,
+    "EndtStatus": this.endtStatus,
+    "IsFinanceEndt": this.isFinanceEndt,
+    "OrginalPolicyNo": this.orginalPolicyNo,
   }
   let urlLink = `${this.motorApiUrl}api/slide10/savemoneydetails`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -3553,8 +3609,8 @@ onSaveMoneyDetails(type,formType){
             this.updateComponent.quoteRefNo = data?.Result[0]?.RequestReferenceNo;
             sessionStorage.setItem('quoteReferenceNo', this.requestReferenceNo);
             if(type=='proceed'){
-            this.commonDetails[0]['SectionId'] = ['41'];
-            sessionStorage.setItem('homeCommonDetails', JSON.stringify(this.commonDetails))
+              this.commonDetails[0]['SectionId'] = ['41'];
+              sessionStorage.setItem('homeCommonDetails', JSON.stringify(this.commonDetails))
             }
              this.onCalculate(data.Result,type,formType);
           }
@@ -3572,6 +3628,18 @@ onSaveEmployeeDetails(type,formType){
           emp['ProductId'] = this.productId;
           emp['RequestReferenceNo'] = this.requestReferenceNo;
           emp['RiskId'] = "1";
+          emp['EndorsementDate'] = this.endorsementDate;
+          emp['EndorsementEffectiveDate'] = this.endorsementEffectiveDate;
+          emp['EndorsementRemarks'] = this.endorsementRemarks;
+          emp['EndorsementType'] = this.endorsementType;
+          emp['EndorsementTypeDesc'] = this.endorsementTypeDesc;
+          emp['EndtCategoryDesc'] = this.endtCategoryDesc;
+          emp['EndtCount'] = this.endtCount;
+          emp['EndtPrevPolicyNo'] = this.endtPrevPolicyNo;
+          emp['EndtPrevQuoteNo'] = this.endtPrevQuoteNo;
+          emp['EndtStatus'] = this.endtStatus;
+          emp['IsFinanceEndt'] = this.isFinanceEndt;
+          emp['OrginalPolicyNo'] = this.orginalPolicyNo;
           if(this.productId=='14' || this.productId=='19') emp['SectionId'] = "45";
           else if(this.productId=='32') emp['SectionId'] = "43";
           i+=1;
@@ -3610,6 +3678,18 @@ onSaveFidelityDetails(type,formType){
         emp['ProductId'] = this.productId;
         emp['RequestReferenceNo'] = this.requestReferenceNo;
         emp['RiskId'] = "1";
+        emp['EndorsementDate'] = this.endorsementDate;
+        emp['EndorsementEffectiveDate'] = this.endorsementEffectiveDate;
+        emp['EndorsementRemarks'] = this.endorsementRemarks;
+        emp['EndorsementType'] = this.endorsementType;
+        emp['EndorsementTypeDesc'] = this.endorsementTypeDesc;
+        emp['EndtCategoryDesc'] = this.endtCategoryDesc;
+        emp['EndtCount'] = this.endtCount;
+        emp['EndtPrevPolicyNo'] = this.endtPrevPolicyNo;
+        emp['EndtPrevQuoteNo'] = this.endtPrevQuoteNo;
+        emp['EndtStatus'] = this.endtStatus;
+        emp['IsFinanceEndt'] = this.isFinanceEndt;
+        emp['OrginalPolicyNo'] = this.orginalPolicyNo;
         if(this.productId=='14') emp['SectionId'] = "45";
         else if(this.productId=='32' || this.productId=='19') emp['SectionId'] = "43";
         i+=1;
@@ -4030,6 +4110,21 @@ setCommonFormValues(){
           let details = data?.Result;
           if(this.productId=='14'){
             if(data.Result.length!=0){
+              let entry = data.Result[0];
+              if(entry.EndorsementDate){
+                  this.endorsementDate = entry?.EndorsementDate;
+                  this.endorsementEffectiveDate = entry?.EndorsementEffectiveDate;
+                  this.endorsementRemarks = entry?.EndorsementRemarks;
+                  this.endorsementType = entry?.EndorsementType;
+                  this.endorsementTypeDesc = entry?.EndorsementTypeDesc;
+                  this.endtCategoryDesc = entry?.EndtCategoryDesc;
+                  this.endtCount = entry?.EndtCount;
+                  this.endtPrevPolicyNo = entry?.EndtPrevPolicyNo;
+                  this.endtPrevQuoteNo = entry?.EndtPrevQuoteNo;
+                  this.endtStatus = entry?.EndtStatus;
+                  this.isFinanceEndt = entry?.IsFinanceEndt;
+                  this.orginalPolicyNo = entry?.OrginalPolicyNo;
+              }
               this.productItem.employeeList = data.Result;
               this.formSection = true; this.viewSection = false;
             }
@@ -4041,6 +4136,21 @@ setCommonFormValues(){
           }
           else if(this.productId=='32'){
             if(data.Result.length!=0){
+              let entry = data.Result[0];
+              if(entry.EndorsementDate){
+                  this.endorsementDate = entry?.EndorsementDate;
+                  this.endorsementEffectiveDate = entry?.EndorsementEffectiveDate;
+                  this.endorsementRemarks = entry?.EndorsementRemarks;
+                  this.endorsementType = entry?.EndorsementType;
+                  this.endorsementTypeDesc = entry?.EndorsementTypeDesc;
+                  this.endtCategoryDesc = entry?.EndtCategoryDesc;
+                  this.endtCount = entry?.EndtCount;
+                  this.endtPrevPolicyNo = entry?.EndtPrevPolicyNo;
+                  this.endtPrevQuoteNo = entry?.EndtPrevQuoteNo;
+                  this.endtStatus = entry?.EndtStatus;
+                  this.isFinanceEndt = entry?.IsFinanceEndt;
+                  this.orginalPolicyNo = entry?.OrginalPolicyNo;
+              }
               this.productItem.fidelityList = data.Result;
               this.formSection = true; this.viewSection = false;
             }
@@ -4051,6 +4161,20 @@ setCommonFormValues(){
             }
           }
           else if(this.productId=='16'){
+            if(details?.EndorsementDate){
+              this.endorsementDate = details?.EndorsementDate;
+              this.endorsementEffectiveDate = details?.EndorsementEffectiveDate;
+              this.endorsementRemarks = details?.EndorsementRemarks;
+              this.endorsementType = details?.EndorsementType;
+              this.endorsementTypeDesc = details?.EndorsementTypeDesc;
+              this.endtCategoryDesc = details?.EndtCategoryDesc;
+              this.endtCount = details?.EndtCount;
+              this.endtPrevPolicyNo = details?.EndtPrevPolicyNo;
+              this.endtPrevQuoteNo = details?.EndtPrevQuoteNo;
+              this.endtStatus = details?.EndtStatus;
+              this.isFinanceEndt = details?.IsFinanceEndt;
+              this.orginalPolicyNo = details?.OrginalPolicyNo;
+            }
             this.productItem.CashInHandEmployees = details?.CashInHandEmployees;
             this.productItem.CashInSafe = details?.CashInSafe;
             this.productItem.CashInTransit = details?.CashInTransit;
@@ -4068,6 +4192,20 @@ setCommonFormValues(){
             this.checkMoneyYNChanges();
           }
           else if(this.productId=='39'){
+              if(details?.EndorsementDate){
+                this.endorsementDate = details?.EndorsementDate;
+                this.endorsementEffectiveDate = details?.EndorsementEffectiveDate;
+                this.endorsementRemarks = details?.EndorsementRemarks;
+                this.endorsementType = details?.EndorsementType;
+                this.endorsementTypeDesc = details?.EndorsementTypeDesc;
+                this.endtCategoryDesc = details?.EndtCategoryDesc;
+                this.endtCount = details?.EndtCount;
+                this.endtPrevPolicyNo = details?.EndtPrevPolicyNo;
+                this.endtPrevQuoteNo = details?.EndtPrevQuoteNo;
+                this.endtStatus = details?.EndtStatus;
+                this.isFinanceEndt = details?.IsFinanceEndt;
+                this.orginalPolicyNo = details?.OrginalPolicyNo;
+              }
               this.productItem.BoilerPlantsSi = details?.BoilerPlantsSi;
               this.productItem.ElecMachinesSi = details?.ElecMachinesSi;
               this.productItem.EquipmentSi = details?.EquipmentSi;
@@ -4085,6 +4223,20 @@ setCommonFormValues(){
               this.checkMachineryYNChanges();
           }
           else if(this.productId=='1'){
+            if(details?.EndorsementDate){
+              this.endorsementDate = details?.EndorsementDate;
+              this.endorsementEffectiveDate = details?.EndorsementEffectiveDate;
+              this.endorsementRemarks = details?.EndorsementRemarks;
+              this.endorsementType = details?.EndorsementType;
+              this.endorsementTypeDesc = details?.EndorsementTypeDesc;
+              this.endtCategoryDesc = details?.EndtCategoryDesc;
+              this.endtCount = details?.EndtCount;
+              this.endtPrevPolicyNo = details?.EndtPrevPolicyNo;
+              this.endtPrevQuoteNo = details?.EndtPrevQuoteNo;
+              this.endtStatus = details?.EndtStatus;
+              this.isFinanceEndt = details?.IsFinanceEndt;
+              this.orginalPolicyNo = details?.OrginalPolicyNo;
+            }
             this.productItem.AccessibleWindows = details?.AccessibleWindows;
             this.productItem.Address = details?.Address;
             this.productItem.BackDoors = details?.BackDoors;
@@ -4186,6 +4338,7 @@ setSMEFormValues(type) {
       if (this.productId != '3' && this.productId != '19') this.getIndustryList();
       if (this.productId == '3' || this.productId == '19') {
         let sectionId = customerDatas?.SectionId;
+        this.sectionList = sectionId;
         let contents = sectionId.some(ele => ele == '47');
         let building = sectionId.some(ele => ele == '1' || ele == '40');
         if (building && contents) this.coversRequired = 'BC';

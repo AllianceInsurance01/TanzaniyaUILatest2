@@ -281,8 +281,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
     }
     let homeObj = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
     if (homeObj) {
-      this.getContentList();
-      this.getallriskList();
+      
     }
     /*this.jsonList = [
       {
@@ -531,6 +530,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
           if(this.item==undefined || this.item == null){
               this.item = this.sumInsuredDetails?.ProductSuminsuredDetails?.SectionId;
               this.setTabSections();
+              this.getContentList();
+              this.getallriskList();
           }
           if(this.sumInsuredDetails){
             // if(this.first) this.contentSumInsured = this.sumInsuredDetails.ProductSuminsuredDetails.ContentSuminsured;
@@ -739,6 +740,26 @@ onFidelitySave(){
       this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;
     }
   }
+  employeedownload(){
+    let ReqObj = {
+      "CompanyId": this.insuranceId,
+      "ProductId": this.productId,
+    }
+    let urlLink = `${this.ApiUrl1}eway/vehicle/sample/download/`
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', data?.Result);
+        link.setAttribute('download', data?.Result.xls);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    },
+      (err) => { },
+    );
+  }
   onSaveFidelityDetails(type){
     if(this.fidelityList.length!=0){
         let empList = [],i=0;
@@ -810,7 +831,7 @@ onFidelitySave(){
                   }
                 }
                 else{
-                  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+                 this.checkValidation();
                 }
             },
             (err) => { },
@@ -893,7 +914,7 @@ onFidelitySave(){
               }
               else{
                 if(this.productId=='19' && this.eight)  this.selectedTab +=1; 
-                else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+                else this.checkValidation();
               }
         
             },
@@ -948,6 +969,7 @@ onFidelitySave(){
       this.Cotentrisk[this.currentContentIndex]['SerialNoDesc'] = this.serialNoDesc;
       this.Cotentrisk[this.currentContentIndex]['ContentRiskDesc'] = this.contentRiskDesc;
       this.Cotentrisk[this.currentContentIndex]['ItemId'] = this.contentId;
+      this.Cotentrisk[this.currentContentIndex]['LocationName'] = this.LocationList.find(ele=>ele.Code==this.LocationId).CodeDesc;
       this.LocationId = null;this.currentContentIndex=null;this.contentSI=null;this.serialNoDesc=null;this.contentRiskDesc=null;this.contentId=null;
       this.editContentSection = false;
       this.enableContentEditSection = false;
@@ -956,6 +978,20 @@ onFidelitySave(){
 
   valuechange(row) {
     this.newname = row.LocationName;
+  }
+  checkValidation(){
+    let ReqObj = {
+      "QuoteNo": this.quoteNo
+    }
+    let urlLink = `${this.motorApiUrl}api/additionalinfovali`;
+        this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+          (data: any) => {
+            if (data?.Message=='Success') {
+              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+            }
+          },
+          (err) => { },
+        ); 
   }
   onValueChange(event) {
     console.log("SumInsured", event);
@@ -1132,6 +1168,7 @@ onFidelitySave(){
               "Height": null,
               "OccupationId": entry.OccupationId,
               "PersonName": entry.PersonName,
+              "NationalityId": entry.NationalityID,
               "Salary": salary,
               "Weight": null,
               "RiskId": entry.RiskId,
@@ -1213,6 +1250,7 @@ onFidelitySave(){
               "Height": entry.Height,
               "OccupationId": entry.OccupationId,
               "PersonName": entry.PersonName,
+              "NationalityId": entry.NationalityID,
               "Salary": salary,
               "Weight": entry.Weight,
               "RiskId": entry.RiskId,
@@ -1338,7 +1376,7 @@ onFidelitySave(){
                 this.fourth = true;
                 this.selectedTab = this.selectedTab+1;
               }
-              else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+              else this.checkValidation();
             }
           }
           else if(type=='PA'){
@@ -1347,7 +1385,7 @@ onFidelitySave(){
               this.selectedTab = this.selectedTab+1;
             }
             else{
-              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+              this.checkValidation();
             }
           }
           else if(type=='A'){
@@ -1356,14 +1394,14 @@ onFidelitySave(){
               this.selectedTab = this.selectedTab+1;
             }
             else{
-              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+              this.checkValidation();
             }
           }
           else if(type=='PI'){
-            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+            this.checkValidation();
           }
           else if(type='E'){
-            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+            this.checkValidation();
           }
 
       }
@@ -1511,7 +1549,7 @@ onFidelitySave(){
               this.selectedTab = 1;
             }
             else{
-              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+              this.checkValidation();
             }
           }
         }
@@ -1565,8 +1603,8 @@ onFidelitySave(){
               this.quote = data.Result.RequestReferenceNo;
             }
 
-
-            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+            this.checkValidation();
+            
 
           }
 
@@ -2381,6 +2419,7 @@ onFidelitySave(){
                 "Height": null,
                 "OccupationId": this.accidentOccupationId,
                 "OccupationDesc": this.accidentOccupation,
+                "NationalityId": null,
                 "PersonName": null,
                 "Salary": null,
                 "Weight": null,
@@ -2397,6 +2436,7 @@ onFidelitySave(){
               "Height": null,
               "OccupationId": this.accidentOccupationId,
               "OccupationDesc": this.accidentOccupation,
+              "NationalityId": null,
               "PersonName": null,
               "Salary": null,
               "Weight": null,
@@ -2454,6 +2494,7 @@ onFidelitySave(){
                 "OccupationId": this.liabilityOccupationId,
                 "OccupationDesc": this.liabilityOccupation,
                 "PersonName": null,
+                "NationalityId": null,
                 "Salary": null,
                 "Weight": null,
                 "RiskId": null,
@@ -2469,6 +2510,7 @@ onFidelitySave(){
               "Height": null,
               "OccupationId": this.liabilityOccupationId,
               "OccupationDesc": this.liabilityOccupation,
+              "NationalityId": null,
               "PersonName": null,
               "Salary": null,
               "Weight": null,
@@ -2832,6 +2874,7 @@ onFidelitySave(){
       "Height": null,
       "OccupationId": this.accidentOccupationId,
       "OccupationDesc": this.accidentOccupation,
+      "NationalityId": null,
       "PersonName": null,
       "Salary": null,
       "Weight": null,
@@ -2906,6 +2949,7 @@ onFidelitySave(){
       "Height": null,
       "OccupationId": this.liabilityOccupationId,
       "OccupationDesc": this.liabilityOccupation,
+      "NationalityId": null,
       "PersonName": null,
       "Salary": null,
       "Weight": null,
@@ -2938,7 +2982,7 @@ onFidelitySave(){
   tabClick(event){
     console.log("Source Event",event,event.tab.textLabel);
     if(event.index!=0){
-    if(this.productId!='19' && this.selectedTab!=1) this.onSave(event.tab.textLabel)
+    if(this.productId!='19' && this.selectedTab!=1 && this.LocationList.length==0) this.onSave(event.tab.textLabel)
     }
   }
   getBack(){

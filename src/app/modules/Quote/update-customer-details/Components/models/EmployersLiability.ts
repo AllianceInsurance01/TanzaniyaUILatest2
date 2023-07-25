@@ -40,7 +40,7 @@ export class EmployersLiability{
                       className: 'col-sm-4',
                       props: {
                         label: `Occupation`,
-                        disabled: this.checkDisable('LiabilityOccupationId'),
+                        disabled: this.checkDisable('OccupationType'),
                         required: true,
                         options: [
         
@@ -101,8 +101,15 @@ export class EmployersLiability{
     checkDisable(fieldName) {
         console.log("Disable Check", fieldName);
         if (this.endorsementSection) {
-          let entry = this.enableFieldsList.some(ele => ele == fieldName);
-          return !entry;
+          let occupationEntry = this.enableFieldsList.some(ele => ele == 'OccupationType');
+          if (occupationEntry) {
+              return false;
+          }
+          else{
+            let entry = this.enableFieldsList.some(ele => ele == fieldName);
+            return !entry;
+          }
+          
         }
         else return false;
       

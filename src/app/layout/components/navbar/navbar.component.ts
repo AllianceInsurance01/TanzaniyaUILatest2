@@ -110,6 +110,7 @@ export class NavbarComponent implements OnInit {
     else this.router.navigate(['/product']);
   }
   navexpand(i: any) {
+    
     sessionStorage.removeItem('vehicleDetailsList');
     sessionStorage.removeItem('customerReferenceNo')
     sessionStorage.removeItem('quoteReferenceNo');
@@ -120,6 +121,7 @@ export class NavbarComponent implements OnInit {
     sessionStorage.removeItem('endorsePolicyNo');
     sessionStorage.removeItem('quoteNo');
     sessionStorage.removeItem('updatebar');
+    sessionStorage.removeItem('endorseTypeId')
     if (this.expanded === false) {
       this.currentIndex = i;
       this.expanded = true;
@@ -394,6 +396,7 @@ export class NavbarComponent implements OnInit {
     sessionStorage.removeItem('endorseTypeId');
     sessionStorage.removeItem('quoteNo');
     sessionStorage.removeItem('updatebar');
+    sessionStorage.removeItem('endorseTypeId')
     // if(rowData.label=='New Quote'){
 
     // }

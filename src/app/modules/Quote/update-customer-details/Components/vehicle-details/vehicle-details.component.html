@@ -504,7 +504,6 @@
                             </div>
                         </div>
                     </div> -->
-                 
                 </ng-container>
             </div>
             <div class="maan-grid-item" id="slider_0" *ngIf="!finalSection && vehicleDetailsList.length!=0">
@@ -567,7 +566,7 @@
                 </div>
             </div>
         
-        <div class="maan-grid-item">
+        <div class="maan-grid-item" *ngIf="uwQuestionList.length!=0">
             <div class="maan-grid-item-title">
                 <div class="d-flex justify-content-between">
                     <div>
@@ -590,7 +589,7 @@
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12">
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item" *ngFor="let ques of this.uwQuestionList;let i=index">
+                                <li class="list-group-item" *ngFor="let ques of uwQuestionList;let i=index">
                                     <div class="row p-0 w-100 customRow">
                                         <div class="col-md-8 col-lg-8 col-xl-8 mt-3 customFont">
                                             <span class="spancommon span_font_size">{{ques.UwQuestionDesc}}</span>

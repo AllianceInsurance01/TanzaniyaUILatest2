@@ -64,8 +64,10 @@ export class EndorsementTypeDetailsComponent {
     this.userType = this.userDetails?.Result?.UserType;
     this.insuranceId = this.userDetails.Result.InsuranceId;
     this.subuserType = sessionStorage.getItem('typeValue');
-    sessionStorage.removeItem('vehicleDetailsList')
+    sessionStorage.removeItem('vehicleDetailsList');
     sessionStorage.removeItem('homeCommonDetails')
+    sessionStorage.removeItem('QuoteStatus');
+    sessionStorage.removeItem('quoteNo')
     this.policyNo = sessionStorage.getItem('endorsePolicyNo');
     this.productItem = new ProductData();
     let startDate = sessionStorage.getItem('endorseStartDate');
@@ -373,7 +375,7 @@ export class EndorsementTypeDetailsComponent {
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         let category = "";
-        let entry = this.selectedEndorsement.FieldsAllowed.some(ele=>ele=='Covers');
+        let entry = this.selectedEndorsement.FieldsAllowed.some(ele=>ele=='Covers' || ele=='AddOnCovers');
         if(entry) this.coverModificationYN = 'Y';
         else this.coverModificationYN = 'N';
         let res = data.Result[0];
@@ -382,7 +384,6 @@ export class EndorsementTypeDetailsComponent {
           if(this.selectedEndorsement.EndorsementCategory==1) category = 'Non-Financial';
           if(this.selectedEndorsement.EndorsementCategory==2) category = 'Financial';
         if(EndtType==42 || EndtType == 842){
-          
           let obj = {
             "EndtTypeId":EndtType,
             "FieldsAllowed":[],
@@ -428,7 +429,7 @@ export class EndorsementTypeDetailsComponent {
             //   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
             // }
             // else{
-            if(this.selectedEndorsement.EndtType==844){
+            if(this.selectedEndorsement.FieldsAllowed.some(ele=>ele=='AddOnCovers')){
               if(this.productId=='5'){
                 this.getVehicleDetails(res.requestReferenceNo,'other');
               }
@@ -570,8 +571,8 @@ export class EndorsementTypeDetailsComponent {
           this.endorsementType = customerDatas?.EndorsementType;
           this.endorsementTypeDesc = customerDatas?.EndorsementTypeDesc;
           this.endtCategoryDesc = customerDatas?.EndtCategoryDesc;
-        this.endtCount = customerDatas?.EndtCount;
-        this.endtPrevPolicyNo = customerDatas?.EndtPrevPolicyNo;
+          this.endtCount = customerDatas?.EndtCount;
+          this.endtPrevPolicyNo = customerDatas?.EndtPrevPolicyNo;
           this.endtPrevQuoteNo = customerDatas?.EndtPrevQuoteNo;
           this.endtStatus = customerDatas?.EndtStatus;
           this.isFinanceEndt = customerDatas?.IsFinanceEndt;

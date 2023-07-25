@@ -49,7 +49,7 @@ export class MachineryBreakDown{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('MakutiYn'),
+                                    disabled: this.checkDisable('SumInsured'),
                                     name: 'PowerPlantSIYN',
                                     options: [],
                                   }
@@ -68,7 +68,7 @@ export class MachineryBreakDown{
                                   type: 'commaSeparator',
                                   key: 'PowerPlantSi',
                                   templateOptions: {
-                                    disabled: this.checkDisable('PowerPlantSi')
+                                    disabled: this.checkDisable('SumInsured'),
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -92,7 +92,7 @@ export class MachineryBreakDown{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('ElecMachinesSIYN'),
+                                    disabled: this.checkDisable('SumInsured'),
                                     name: 'ElecMachinesSIYN',
                                     options: [],
                                   }
@@ -111,7 +111,7 @@ export class MachineryBreakDown{
                                   type: 'commaSeparator',
                                   key: 'ElecMachinesSi',
                                   templateOptions: {
-                                    disabled: this.checkDisable('ElecMachinesSi')
+                                    disabled: this.checkDisable('SumInsured'),
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -135,7 +135,7 @@ export class MachineryBreakDown{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('EquipmentSIYN'),
+                                    disabled: this.checkDisable('SumInsured'),
                                     name: 'EquipmentSIYN',
                                     options: [],
                                   }
@@ -154,7 +154,7 @@ export class MachineryBreakDown{
                                   type: 'commaSeparator',
                                   key: 'EquipmentSi',
                                   templateOptions: {
-                                    disabled: this.checkDisable('EquipmentSi')
+                                    disabled: this.checkDisable('SumInsured'),
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -178,7 +178,7 @@ export class MachineryBreakDown{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('MachineEquipSIYN'),
+                                    disabled: this.checkDisable('SumInsured'),
                                     name: 'MachineEquipSIYN',
                                     options: [],
                                   }
@@ -197,7 +197,7 @@ export class MachineryBreakDown{
                                   type: 'commaSeparator',
                                   key: 'MachineEquipSi',
                                   templateOptions: {
-                                    disabled: this.checkDisable('MachineEquipSi')
+                                    disabled: this.checkDisable('SumInsured'),
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -221,7 +221,7 @@ export class MachineryBreakDown{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('GeneralMachineSIYN'),
+                                    disabled: this.checkDisable('SumInsured'),
                                     name: 'GeneralMachineSIYN',
                                     options: [],
                                   }
@@ -240,7 +240,7 @@ export class MachineryBreakDown{
                                   type: 'commaSeparator',
                                   key: 'GeneralMachineSi',
                                   templateOptions: {
-                                    disabled: this.checkDisable('GeneralMachineSi')
+                                    disabled: this.checkDisable('SumInsured'),
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -264,7 +264,7 @@ export class MachineryBreakDown{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('ManuUnitsSIYN'),
+                                    disabled: this.checkDisable('SumInsured'),
                                     name: 'ManuUnitsSIYN',
                                     options: [],
                                   }
@@ -283,7 +283,7 @@ export class MachineryBreakDown{
                                   type: 'commaSeparator',
                                   key: 'ManuUnitsSi',
                                   templateOptions: {
-                                    disabled: this.checkDisable('ManuUnitsSi')
+                                    disabled: this.checkDisable('SumInsured'),
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -307,7 +307,7 @@ export class MachineryBreakDown{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('BoilerPlantsSIYN'),
+                                    disabled: this.checkDisable('SumInsured'),
                                     name: 'BoilerPlantsSIYN',
                                     options: [],
                                   }
@@ -326,7 +326,7 @@ export class MachineryBreakDown{
                                   type: 'commaSeparator',
                                   key: 'BoilerPlantsSi',
                                   templateOptions: {
-                                    disabled: this.checkDisable('BoilerPlantsSi')
+                                    disabled: this.checkDisable('SumInsured'),
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]

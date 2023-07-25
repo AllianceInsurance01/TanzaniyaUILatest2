@@ -50,7 +50,7 @@ export class Money{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('MoneyInSafeBusinessSIYN'),
+                                    disabled: this.checkDisable('SumInsured'),
                                     name: 'MoneyInSafeBusinessSIYN',
                                     options: [],
                                   }
@@ -69,7 +69,7 @@ export class Money{
                                   type: 'commaSeparator',
                                   key: 'MoneyInSafeBusiness',
                                   templateOptions: {
-                                    disabled: this.checkDisable('MoneyInSafeBusiness')
+                                    disabled: this.checkDisable('SumInsured')
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -93,7 +93,7 @@ export class Money{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('MoneyOutSafeBusinessSIYN'),
+                                    disabled: this.checkDisable('SumInsured'),
                                     name: 'MoneyOutSafeBusinessSIYN',
                                     options: [],
                                   }
@@ -112,7 +112,7 @@ export class Money{
                                   type: 'commaSeparator',
                                   key: 'MoneyOutSafeBusiness',
                                   templateOptions: {
-                                    disabled: this.checkDisable('MoneyOutSafeBusiness')
+                                    disabled: this.checkDisable('SumInsured')
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -136,7 +136,7 @@ export class Money{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('MoneyInPremisesSIYN'),
+                                    disabled: this.checkDisable('SumInsured'),
                                     name: 'MoneyInPremisesSIYN',
                                     options: [],
                                   }
@@ -155,7 +155,7 @@ export class Money{
                                   type: 'commaSeparator',
                                   key: 'MoneyInPremises',
                                   templateOptions: {
-                                    disabled: this.checkDisable('MoneyInPremises')
+                                    disabled: this.checkDisable('SumInsured')
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -179,7 +179,7 @@ export class Money{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('CashInTransitSIYN'),
+                                    disabled: this.checkDisable('SumInsured'),
                                     name: 'CashInTransitSIYN',
                                     options: [],
                                   }
@@ -198,7 +198,7 @@ export class Money{
                                   type: 'commaSeparator',
                                   key: 'CashInTransit',
                                   templateOptions: {
-                                    disabled: this.checkDisable('CashInTransit')
+                                    disabled: this.checkDisable('SumInsured')
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -222,7 +222,7 @@ export class Money{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('CashInHandEmployeesSIYN'),
+                                    disabled: this.checkDisable('SumInsured'),
                                     name: 'CashInHandEmployeesSIYN',
                                     options: [],
                                   }
@@ -241,7 +241,7 @@ export class Money{
                                   type: 'commaSeparator',
                                   key: 'CashInHandEmployees',
                                   templateOptions: {
-                                    disabled: this.checkDisable('CashInHandEmployees')
+                                    disabled: this.checkDisable('SumInsured')
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -265,7 +265,7 @@ export class Money{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('CashInSafeSIYN'),
+                                    disabled: this.checkDisable('SumInsured'),
                                     name: 'CashInSafeSIYN',
                                     options: [],
                                   }
@@ -284,7 +284,7 @@ export class Money{
                                   type: 'commaSeparator',
                                   key: 'CashInSafe',
                                   templateOptions: {
-                                    disabled: this.checkDisable('CashInSafe')
+                                    disabled: this.checkDisable('SumInsured')
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -308,7 +308,7 @@ export class Money{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('MoneyAnnualcarrySuminsuredSIYN'),
+                                    disabled: this.checkDisable('SumInsured'),
                                     name: 'MoneyAnnualcarrySuminsuredSIYN',
                                     options: [],
                                   }
@@ -327,7 +327,7 @@ export class Money{
                                   type: 'commaSeparator',
                                   key: 'MoneyAnnualcarrySuminsured',
                                   templateOptions: {
-                                    disabled: this.checkDisable('MoneyAnnualcarrySuminsured')
+                                    disabled: this.checkDisable('SumInsured')
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]

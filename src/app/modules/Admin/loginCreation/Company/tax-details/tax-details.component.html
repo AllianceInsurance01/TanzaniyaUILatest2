@@ -113,6 +113,8 @@
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Tax Code</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Description</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Amount</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">TaxFor</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">ChargeOrRefund</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Status</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Remove</th>
                                 </tr>
@@ -141,6 +143,16 @@
                                         <div class="input-control-container">
                                             <input type="text" style="width: 120px;" maxlength="20" [(ngModel)]="row.Value" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;">
                                         </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <ng-select class="custom" name="TaxType" [(ngModel)]="row.TaxFor" placeholder="Select Tax For" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                            <ng-option *ngFor="let opt of taxforlist" [value]="opt.Code" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;">{{opt.CodeDesc}}</ng-option>
+                                        </ng-select>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <ng-select class="custom" name="RefundType" [(ngModel)]="row.ChargeOrRefund" placeholder="Select Change Or Refund Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                            <ng-option *ngFor="let change of changeorrefundlist" [value]="change.Code" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;">{{change.CodeDesc}}</ng-option>
+                                        </ng-select>
                                     </td>
                                     <td class="tbl-content">
                                         <div class="input-form-radio-box">

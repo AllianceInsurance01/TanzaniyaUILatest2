@@ -87,9 +87,6 @@ export class NewEndorsementTypeDetailsComponent {
       this.endorsementDetails.Priority=null;
       this.endorsementDetails.EndtTypeDesc=null;
       this.endorsementDetails.EndtType=null;
-
-
-      console.log('uuuuuu',this.endorsementDetails)
       this.endorsementDetails.EndtFeeYn = 'N';this.endorsementDetails.Status = 'Y';
       this.endorsementDetails.SectionModificationYn = 'N';
     }
