@@ -72,6 +72,8 @@ export class ProductData {
 	fidelityList: any[]=[];StockLossPercent:any='';
 	GoodsLossPercent:any='';FurnitureLossPercent:any='';
 	ApplianceLossPercent:any='';CashValueablesLossPercent:any='';
+	MiningPlantSi:any='0';NonminingPlantSi:any='0';GensetsSi:any='0';
+	
 	constructor(data?) {
 		this.id = data?.id ?? ''
 		this.CustomerName = data?.CustomerName ?? '';
@@ -175,5 +177,9 @@ export class ProductData {
 		this.FurnitureLossPercent = data?.FurnitureLossPercent ?? '';
 		this.ApplianceLossPercent = data?.ApplianceLossPercent ?? '';
 		this.CashValueablesLossPercent = data?.CashValueablesLossPercent ?? '';
+		this.MiningPlantSi  = data?.MiningPlantSi ?? '0';
+		this.NonminingPlantSi = data?.NonminingPlantSi ?? '0';
+		this.GensetsSi = data?.GensetsSi ?? '0';
+		this.EquipmentSi = data?.EquipmentSi ?? '0';
 	}
 }

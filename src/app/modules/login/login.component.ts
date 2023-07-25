@@ -392,6 +392,11 @@ export class LoginComponent {
           sessionStorage.setItem('menuSection', 'navMenu');
           this.userType = data.Result.UserType;
           if ((data.Result.UserType == 'Issuer' || data.Result.UserType == 'Broker' || data.Result.UserType == 'User') && data.Result.SubUserType!='SuperAdmin') {
+
+            let currencyId=data?.Result?.CurrencyId;
+            console.log('IIIIIIIIIIIIIIII',currencyId);
+            sessionStorage.setItem('CurrencyidLogin',currencyId);
+
             let branchList: any[] = data?.Result?.LoginBranchDetails;
             if (branchList.length != 0 && branchList.length > 1) {
               console.log("Entered Branch", branchList)
