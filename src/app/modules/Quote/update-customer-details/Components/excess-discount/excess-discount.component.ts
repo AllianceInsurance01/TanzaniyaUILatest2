@@ -228,7 +228,7 @@ emiyn="N";
         this.endorsementId = endorseObj.EndtTypeId;
         this.endorseEffectiveDate = endorseObj?.EffectiveDate;
         this.enableFieldsList = endorseObj.FieldsAllowed;
-        let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='SIModification' || ele=='AddCovers' || ele=='removeVehicle');
+        let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='AddCovers' || ele=='removeVehicle');
         if(entry) this.coverModificationYN = 'Y';
         else this.coverModificationYN = 'N';
         console.log("Enable Obj",this.enableFieldsList)
@@ -573,7 +573,7 @@ getCoverList(coverListObj){
       let effectiveDate=null,policyEndDate,coverModificationYN='N';
       if(this.endorsementSection){
         effectiveDate = this.endorseEffectiveDate;
-        let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='SIModification' || ele=='AddCovers' || ele=='removeVehicle');
+        let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='AddCovers' || ele=='removeVehicle');
         if(entry) coverModificationYN = 'Y';
         else coverModificationYN = 'N';
       }
@@ -1516,7 +1516,7 @@ getMotorUsageList(vehicleValue){
             let effectiveDate=null,coverModificationYN='N'
             if(this.endorsementSection){
                 effectiveDate = this.endorseEffectiveDate;
-                let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='SIModification' || ele=='AddCovers' || ele=='removeVehicle');
+                let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='AddCovers' || ele=='removeVehicle');
                 if(entry) coverModificationYN = 'Y';
                 else coverModificationYN = 'N';
             }
@@ -1838,7 +1838,7 @@ getMotorUsageList(vehicleValue){
             this.endorsementId = cover.Endorsements[0].EndorsementId;
             this.endorseEffectiveDate = cover.EffectiveDate;
             this.enableFieldsList = fieldList;
-            let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='SIModification' || ele=='AddCovers' || ele=='removeVehicle');
+            let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='AddCovers' || ele=='removeVehicle');
             if(this.coverModificationYN=='N'){
               if(entry) this.coverModificationYN = 'Y';
               else this.coverModificationYN = 'N';
