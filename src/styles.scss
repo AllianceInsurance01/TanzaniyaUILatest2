@@ -20,6 +20,9 @@
 // install the framework and custom global styles
 @import "node_modules/@ng-select/ng-select/themes/default.theme.css";
 // @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+
 :root {
     --theme1: #333b85;
     --theme2: #de3131;
@@ -3047,7 +3050,7 @@ p {
 ::-webkit-scrollbar-thumb {
     background-color: #d6dee1;
     border-radius: 20px;
-    border: 6px solid transparent;
+    border: 2px solid transparent !important;
     background-clip: content-box;
 }
   ::-webkit-scrollbar-thumb:hover {
@@ -3188,6 +3191,14 @@ input[type="radio"]{
     line-height: 1.42857 !important;
 }
 
+.invalid-feedback {
+    display: none;
+    width: 100%;
+    margin-top: 10px !important;
+    font-size: .875em;
+    color: #dc3545;
+}
+
 @media screen and (min-width: 750px) and (max-width: 20000px) {
     .display2{
         display:none;
@@ -3217,3 +3228,17 @@ input[type="radio"]{
         letter-spacing: .3px;
     }
 }
+
+// ::-webkit-scrollbar-thumb {
+//     background-color: #d6dee1;
+//     border-radius: 20px;
+//     border: 1px solid transparent !important;
+//     // border:none !important;
+//     background-clip: content-box;
+    
+//   }
+  ::-webkit-scrollbar {
+    // max-width:15px !important;
+    // max-height: 40px !important;
+  }
+

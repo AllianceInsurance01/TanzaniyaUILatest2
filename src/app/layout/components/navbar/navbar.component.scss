@@ -190,10 +190,10 @@ li:hover .logo::after{
 .responsive{
     display: none;
 }
-mat-drawer-content{
-    width: 100% !important;
-    margin-left: 0px !important;
-    overflow-x: hidden !important;
+.mat-drawer-content{
+  // overflow-y:scroll !important;
+  overflow-y:none !important;
+ 
 }
 .navigation::-webkit-scrollbar {
     display: none;
@@ -389,9 +389,15 @@ mat-toolbar {
     color: #fffefe !important;
   }
   mat-sidenav-container {
-    height: calc(100vh - 65px);
+    min-height: calc(100% - 65px);
   }
   
+
+
+  .mainContent{
+    min-height: 100%;
+    overflow-y: scroll !important;
+  }
   .menu-button {
     width: 100%;
     display: flex;
@@ -714,4 +720,11 @@ mat-toolbar {
 
   .navbar-mobile .dropdown>.dropdown-active {
     display: block;
+  }
+  .mat-elevation-z8{
+    /* box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f; */
+    box-shadow: none !important;
+  }
+  .content{
+    padding:0px !important;
   }
