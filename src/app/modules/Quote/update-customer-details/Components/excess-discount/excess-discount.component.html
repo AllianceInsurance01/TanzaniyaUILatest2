@@ -205,7 +205,7 @@
                                             <i class="fas fa-filter"></i>
                                         </span>
                                     </div> -->
-                                    <div class="col-md-12 col-lg-12 p-3 display1" style="overflow-x: scroll !important;">
+                                    <div class="col-md-12 col-lg-12 p-3 display1"><!--style="overflow-x: scroll !important;"-->
                                         <table mat-table [dataSource]="menu.CoverList" class="outerTable" multiTemplateDataRows matSort >
                                             <ng-container matColumnDef="header-row-first-group">
                                                 <th mat-header-cell *matHeaderCellDef class="outerHead mat-header-cell" [style.text-align]="center" [attr.colspan]="5">
@@ -1993,7 +1993,7 @@
         
                                                     <tbody *ngFor="let clause of ExclusionData|paginate:{itemsPerPage: 10, currentPage:s,id: 's'} ; let i=index;">
                                                         <tr>
-                                                            <td><input type="checkbox" (change)="onUser(i,$event)" [checked]="clause.TypeId == 'D' ? true : false"> </td>
+                                                            <td><input type="checkbox" (change)="onUser(i,$event,clause)" [checked]="clause.TypeId == 'D' ? true : false"> </td>
         
                                                             <td>
                                                                 <div class="input-control-container">
@@ -2054,7 +2054,7 @@
         
                                                     <tbody *ngFor="let clause of WarrantyData|paginate:{itemsPerPage: 10, currentPage:pa, id:'pa'}; let i=index;">
                                                         <tr>
-                                                            <td><input type="checkbox" (change)="onCheck(i,$event)" [checked]="clause.TypeId == 'D' ? true : false"> </td>
+                                                            <td><input type="checkbox" (change)="onCheck(i,$event,clause)" [checked]="clause.TypeId == 'D' ? true : false"> </td>
         
                                                             <td>
                                                                 <div class="input-control-container">
