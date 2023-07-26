@@ -19,15 +19,54 @@
                 </div>
                 <div class="card-body">
                     <ng-container *ngIf="financialList.length!=0">
-                       
-                        <ul class="list-group">
+                        <ng-container *ngIf="financialCoversSection">
+                            <div class="row customHeader">
+                                <div class="spancommon span_font_size" style="color: #fff;font-weight:600;">
+                                    Cover Based Endorsement
+                                 </div>
+                            </div>
+                            <div class="row mt-2" style="margin-left: 10px;margin-right: 10px;">
+                                <ng-container *ngFor="let element of financialList;let i=index">
+                                    <div class="col-lg-6 col-md-6 col-xl-6 card p-1" *ngIf="element.EndtType==852 || element.EndtType==851 || element.EndtType==844">
+                                        <div class="custom-control custom-radio custom-control-inline p-2" style="cursor: pointer !important;">
+                                            <input type="radio" class="input-form-control" id="customRadio{{element.EndtType.toString()}}" name="example" [value]="element.EndtType" [checked]="checkEndorseSelection(element)" (change)="onChangeEndorsement(element)" />&nbsp;
+                                            <label class="input-form-label spancommon span_font_size mt-2" for="customRadio{{element.EndtType.toString()}}">{{ element.EndorsementDesc }}</label>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="financialSISection">
+                            <div class="row customHeader">
+                                <div class="spancommon span_font_size" style="color: #fff;font-weight:600;">
+                                    SumInsured Based Endorsement
+                                 </div>
+                            </div>
+                            <div class="row mt-2" style="margin-left: 10px;margin-right: 10px;">
+                                <ng-container *ngFor="let element of financialList;let i=index">
+                                    <div class="col-lg-6 col-md-6 col-xl-6 card p-1" *ngIf="element.EndtType==850">
+                                        
+                                        <div class="custom-control custom-radio custom-control-inline p-2" style="cursor: pointer !important;">
+                                            <input type="radio" class="input-form-control" id="customRadio{{element.EndtType.toString()}}" name="example" [value]="element.EndtType" [checked]="checkEndorseSelection(element)" (change)="onChangeEndorsement(element)" />&nbsp;
+                                            <label class="input-form-label spancommon span_font_size mt-2" for="customRadio{{element.EndtType.toString()}}">{{ element.EndorsementDesc }}</label>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                        <div class="row customHeader">
+                            <div class="spancommon span_font_size" style="color: #fff;font-weight:600;">
+                                Other Endorsement
+                             </div>
+                        </div>
+                        <ul class="list-group" style="margin-left: 10px;margin-right: 10px;">
                             
                                 <li class="list-group-item" >
                                     <div class="row">
                                         <ng-container *ngFor="let element of financialList;let i=index">
-                                            <div class="col-lg-12 col-md-12 col-xl-12 card p-1" *ngIf="element.EndtType!=42 && element.EndtType!=842">
+                                            <div class="col-lg-12 col-md-12 col-xl-12 card p-1" *ngIf="element.EndtType!=42 && element.EndtType!=842 && element.EndtType!=852 && element.EndtType!=851 && element.EndtType!=850 && element.EndtType!=844">
                                                 <ng-container *ngIf="element.EndtType!=42 && element.EndtType!=842">
-                                                    <div class="custom-control custom-radio custom-control-inline p-2">
+                                                    <div class="custom-control custom-radio custom-control-inline p-2" style="cursor: pointer !important;">
                                                         <input type="radio" class="input-form-control" id="customRadio{{element.EndtType.toString()}}" name="example" [value]="element.EndtType" [checked]="checkEndorseSelection(element)" (change)="onChangeEndorsement(element)" />&nbsp;
                                                         <label class="input-form-label spancommon span_font_size mt-2" for="customRadio{{element.EndtType.toString()}}">{{ element.EndorsementDesc }}</label>
                                                     </div>
@@ -72,7 +111,7 @@
                                     </div>
                                 </div>
                             </ng-container> -->
-                        </ng-container>
+                    </ng-container>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-xl-6 card p-0">
@@ -88,9 +127,13 @@
                                     <ng-container *ngFor="let element of nonFinancialList">
                                         <div class="col-lg-12 col-md-12 col-xl-12 card p-1" *ngIf="element.EndtType!=42 && element.EndtType!=842">
                                             <ng-container *ngIf="element.EndtType!=42 && element.EndtType!=842">
-                                                <mat-checkbox class="example-margin" [checked]="checkEndorseSelection(element)" (change)="onChangeEndorsement(element)">
+                                                <div class="custom-control custom-radio custom-control-inline p-2" style="cursor: pointer !important;">
+                                                    <input type="radio" class="input-form-control" id="customRadio{{element.EndtType.toString()}}" name="example" [value]="element.EndtType" [checked]="checkEndorseSelection(element)" (change)="onChangeEndorsement(element)" />&nbsp;
+                                                    <label class="input-form-label spancommon span_font_size mt-2" for="customRadio{{element.EndtType.toString()}}">{{ element.EndorsementDesc }}</label>
+                                                </div>
+                                                <!-- <mat-checkbox class="example-margin" [checked]="checkEndorseSelection(element)" (change)="onChangeEndorsement(element)">
                                                         <label class="input-form-label spancommon span_font_size">{{ element.EndorsementDesc }}</label>
-                                                </mat-checkbox>
+                                                </mat-checkbox> -->
                                             </ng-container>
                                         </div>
                                         <!-- <div class="col-md-6 col-lg-6 col-xl-6">

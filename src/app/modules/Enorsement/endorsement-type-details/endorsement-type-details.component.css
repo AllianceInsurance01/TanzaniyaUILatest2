@@ -1,0 +1,8 @@
+.customHeader{
+    background-color: rgb(115, 139, 184);
+    border-bottom: 1px solid grey;
+    padding-left: 10px;
+    border-radius: 5px ;
+    margin-left:5px;
+    margin-right: 5px;
+}

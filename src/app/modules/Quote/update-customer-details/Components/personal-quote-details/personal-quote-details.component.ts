@@ -2959,7 +2959,6 @@ getIndemityPeriodList(){
         delete this.indemityPeriodList[i].CodeDesc;
         if (i == this.indemityPeriodList.length - 1) {
           if(this.productId=='6'){
-            console.log("Fieldsdd",this.fields)
                 this.fields[0].fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.indemityPeriodList);
                 let referenceNo = sessionStorage.getItem('quoteReferenceNo');
                 if (referenceNo) {

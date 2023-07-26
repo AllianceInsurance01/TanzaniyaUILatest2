@@ -25,8 +25,8 @@ export class EndorsementTypeDetailsComponent {
   public motorApiUrl:any = this.AppConfig.MotorApiUrl;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   public tempUrl: any = this.AppConfig.TempUrl;
-  remarksError: boolean;
-  quoteNo: any;
+  remarksError: boolean;financialCoversSection:boolean=false;
+  quoteNo: any;financialSISection:boolean=false;
   effectivePassError: boolean;
   vehicleList: any;
   applicationId: any;
@@ -285,6 +285,14 @@ export class EndorsementTypeDetailsComponent {
               let filterList = financialList.filter(ele=>ele.EndtType!='842');
               if(filterList.length!=0) this.enableFinancialList = true;
               this.financialList = financialList.concat(this.financialList);
+              let entry = this.financialList.some(ele=>ele.EndtType==852 || ele.EndtType==851 || ele.EndtType==844);
+              if(entry){
+                this.financialCoversSection = true;
+              }
+              let sIentry = this.financialList.some(ele=>ele.EndtType==850);
+              if(sIentry){
+                this.financialSISection = true;
+              }
             }
             else this.financialList = [];
             //this.financialList = endorsementList.filter(ele=>ele.EndorsementCategory==2)
