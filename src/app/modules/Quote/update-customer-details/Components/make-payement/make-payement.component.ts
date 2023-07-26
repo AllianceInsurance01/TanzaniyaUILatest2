@@ -93,10 +93,9 @@ export class MakePayementComponent implements OnInit {
       if(paymentId){
         this.getPaymentTypeList();
       }
-    if(sessionStorage.getItem('endorsePolicyNo')){
-      this.endorsementSection = true;
-      let endorseObj = JSON.parse(sessionStorage.getItem('endorseTypeId'))
+    let endorseObj = JSON.parse(sessionStorage.getItem('endorseTypeId'))
       if(endorseObj){
+        this.endorsementSection = true;
         this.orgPolicyNo = sessionStorage.getItem('endorsePolicyNo')
         this.endorseCategory = endorseObj.Category;
         this.endorsementName = endorseObj?.EndtName;
@@ -108,11 +107,9 @@ export class MakePayementComponent implements OnInit {
         else this.cancelEndorse = false;
         
       }
-    }
-    else{
-      this.endorsementSection = false;
-    }
-      
+      else{
+        this.endorsementSection = false;
+      }
   }
 
   ngOnInit(): void {

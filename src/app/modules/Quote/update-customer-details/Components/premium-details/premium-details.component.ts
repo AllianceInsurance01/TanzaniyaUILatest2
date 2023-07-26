@@ -376,6 +376,7 @@ export class PremiumDetailsComponent implements OnInit {
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
           if(data?.Result){
+
             this.Riskdetails = data?.Result?.RiskDetails
           for (let cover of this.Riskdetails) {
             let j = 0;
@@ -413,6 +414,23 @@ export class PremiumDetailsComponent implements OnInit {
             
           }
             let quoteDetails = data?.Result?.QuoteDetails;
+            if(quoteDetails){
+              if(quoteDetails.Endorsementeffdate!=null){
+                if(!JSON.parse(sessionStorage.getItem('endorseTypeId'))){
+                  let obj = {
+                    "EndtTypeId": quoteDetails?.EndtTypeId,
+                    "FieldsAllowed":[],
+                    "EffectiveDate":quoteDetails.Endorsementeffdate,
+                    "Remarks":quoteDetails.Endorsementeffdate,
+                    "Category": quoteDetails.Endtcategdesc,
+                    "EndtName": quoteDetails.EndtTypeDesc,
+                    "PolicyNo": quoteDetails?.policyNo
+                  }
+                  sessionStorage.setItem('endorseTypeId',JSON.stringify(obj));
+                  this.endorsementSection = true;
+                }
+              }
+            }
             this.quoteDetails = data?.Result?.QuoteDetails;
             this.listDocTypes = data.Result?.DocumentDetails;
             this.currencyCode = quoteDetails?.Currency;

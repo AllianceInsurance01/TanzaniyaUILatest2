@@ -530,9 +530,10 @@ export class DomesticRiskDetailsComponent implements OnInit {
           if(this.item==undefined || this.item == null){
               this.item = this.sumInsuredDetails?.ProductSuminsuredDetails?.SectionId;
               this.setTabSections();
-              this.getContentList();
-              this.getallriskList();
+              
           }
+          this.getContentList();
+              this.getallriskList();
           if(this.sumInsuredDetails){
             // if(this.first) this.contentSumInsured = this.sumInsuredDetails.ProductSuminsuredDetails.ContentSuminsured;
             // if(this.second) this.pASumInsured = this.sumInsuredDetails.ProductSuminsuredDetails.ContentSuminsured;
