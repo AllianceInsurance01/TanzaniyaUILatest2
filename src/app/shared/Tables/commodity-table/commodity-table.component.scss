@@ -90,6 +90,9 @@ tr.example-detail-row {
     .example-containers{
         display:none;
     }
+    ::-webkit-scrollbar-thumb {
+        border: 6px solid transparent !important;
+    }
   }
   
   @media screen and (min-width: 280px) and (max-width: 750px) {
