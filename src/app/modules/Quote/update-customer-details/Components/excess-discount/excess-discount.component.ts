@@ -2457,17 +2457,20 @@ getMotorUsageList(vehicleValue){
     console.log("Final Covers",this.vehicleDetailsList,this.selectedCoverList)
   }
   checkCoverSelection(vehicleData,coverData){
-    if(this.endorseCovers){
+    if(this.endorsementSection){
+      if(this.endorseCovers){
         if(!this.adminSection && coverData.ModifiedYN =='N') return false;
         else if(!this.adminSection) return true;
         else return false;
+      }
+      else if(vehicleData.EndorsementYN=='Y') return false;
+      else if(this.endorseAddOnCovers && coverData.ModifiedYN =='Y'){
+          return false;
+      }
+      else if(this.endorseAddOnCovers && this.adminSection )return false;
+      else return true;  
     }
-    else if(vehicleData.EndorsementYN=='Y') return false;
-    else if(this.endorseAddOnCovers && coverData.ModifiedYN =='Y'){
-        return false;
-    }
-    else if(this.endorseAddOnCovers && this.adminSection )return false;
-    else return true;  
+    else return false;
   }
   setDiscountDetails(rowData){
     this.beforeDiscount = rowData.PremiumBeforeDiscount;
