@@ -68,6 +68,7 @@ export class PremiumDetailsComponent implements OnInit {
   preferredNotification: any;
   individualDocumentList: any;
   PinCode: any;
+  endorsementType: any;
   constructor(private sharedService: SharedService,
     private router:Router,public dialogService: MatDialog,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe) {
@@ -416,6 +417,7 @@ export class PremiumDetailsComponent implements OnInit {
             let quoteDetails = data?.Result?.QuoteDetails;
             if(quoteDetails){
               if(quoteDetails.Endorsementeffdate!=null){
+                 this.endorsementType = quoteDetails.Endtcategdesc;
                 if(!JSON.parse(sessionStorage.getItem('endorseTypeId'))){
                   let obj = {
                     "EndtTypeId": quoteDetails?.EndtTypeId,

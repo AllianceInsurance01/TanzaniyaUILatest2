@@ -2250,7 +2250,7 @@
                             <div class="text-center my-3" style="margin-right: 25px;">
                                 <button class="custom-btn btn-5 mx-2" matRipple (click)="ongetBack()"><<&nbsp;Back</button>
                                 <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="!adminSection && statusValue == 'RA'" (click)="onFormSubmit()">Proceed</button>
-                                <button class="custom-btn btn-6 maan-button-data  mx-2" matRipple *ngIf="adminSection || (endorsementSection && endorseCovers)" (click)="onUpdateFactor('calculate')">Calculate</button>
+                                <button class="custom-btn btn-6 maan-button-data  mx-2" matRipple *ngIf="adminSection" (click)="onUpdateFactor('calculate')">Calculate</button>
                                 <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="!adminSection && statusValue != 'RA'" (click)="onFormSubmit()">Buy Policy</button>
                                 <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="adminSection" (click)="onUpdateFactor('')">Proceed</button>
                             </div>
