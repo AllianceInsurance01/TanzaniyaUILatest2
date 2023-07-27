@@ -325,12 +325,12 @@
         border-bottom: 0px solid grey !important;
     }
  }
- ::ng-deep .card{
+ .card{
     border-right:none !important;
     border-left:none !important;
     box-shadow:none !important;
 }
-::ng-deep .customBody{
+ .customBody{
     /* border-bottom: 0px solid grey!important; */
 
     border-right: none !important;

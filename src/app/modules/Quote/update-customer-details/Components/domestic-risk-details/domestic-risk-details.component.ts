@@ -224,8 +224,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
     if(this.productId=='5') this.buildingDetailsSection=false;
     else this.buildingDetailsSection = true;
     
-    this.getSumInsuredDetails();
-    this.Electronic();
+   
 
 
     //this.Section=false;
@@ -279,6 +278,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
         // }
       }
     }
+    this.getSumInsuredDetails();
+    this.Electronic();
     let homeObj = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
     if (homeObj) {
       

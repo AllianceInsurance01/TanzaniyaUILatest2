@@ -21,7 +21,7 @@
                                         <div *ngIf="sumInsured">
                                             Currency({{currencyValue}})
                                         </div>
-                                        <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('building') && building.length!=0"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNew()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
+                                        <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('building') && building.length!=0 && !checkEndorseDisable('building')"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNew()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
                                     </div>
                                     <!-- <span><u> Building Risk Details </u></span> -->
                                     <div  *ngIf="building.length==0">
@@ -29,7 +29,7 @@
                                             <div class="groupBtnMembers__desc groupBtnMembers__desc_top">
                                                 Enter All Location Details that you want to insure
                                             </div>
-                                                <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNew()"><i class="fa fa-plus-circle"></i>&nbsp; Add New</button>
+                                                <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNew()" *ngIf="!checkEndorseDisable('building')"><i class="fa fa-plus-circle"></i>&nbsp; Add New</button>
                                         </div>
                                     </div>
                                     <div  class="addMembers" *ngIf="building.length!=0">
@@ -37,8 +37,8 @@
                                             <div class="addMembers__header">
                                                 <div class="addMembers__name">{{entry.LocationName}}</div>
                                                 <div class="addMembers__edit">
-                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="delete(entry)"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
-                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditBuilding(i)"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="delete(entry)" *ngIf="!checkEndorseDisable('building')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditBuilding(i)" *ngIf="!checkEndorseDisable('building')"> <i class="fa fa-pencil"></i></button>&nbsp;
                                                    
                                                     
                                                 </div>
@@ -246,14 +246,14 @@
                                         <div>
                                             Currency&nbsp;({{currencyValue}})
                                         </div>
-                                        <div class="headcommon mr-3"  *ngIf="!enableAddNewBtn('content')  && Cotentrisk.length!=0"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="ContentAdd()">Add New </button></div>
+                                        <div class="headcommon mr-3"  *ngIf="!enableAddNewBtn('content')  && Cotentrisk.length!=0 && !checkEndorseDisable('content')"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="ContentAdd()">Add New </button></div>
                                     </div>
                                     <div  *ngIf="Cotentrisk.length==0">
                                         <div class="groupBtnMembers text-center">
                                             <div class="groupBtnMembers__desc groupBtnMembers__desc_top">
                                                 Enter All Content Details that you want to insure
                                             </div>
-                                                <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="ContentAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>
+                                                <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2"  *ngIf="!checkEndorseDisable('content')" (click)="ContentAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>
                                         </div>
                                     </div>
                                     <div  class="addMembers" *ngIf="Cotentrisk.length!=0">
@@ -261,8 +261,8 @@
                                             <div class="addMembers__header">
                                                 <div class="addMembers__name">{{getLocationName(entry.RiskId)}}</div>
                                                 <div class="addMembers__edit">
-                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="ContentDelete(entry)"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
-                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditContent(i)"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="ContentDelete(entry)" *ngIf="!checkEndorseDisable('content')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditContent(i)" *ngIf="!checkEndorseDisable('content')"> <i class="fa fa-pencil"></i></button>&nbsp;
                                                     
                                                     
                                                 </div>
@@ -644,7 +644,7 @@
                                             </td>
                                             <td class="tbl-content">
                                                 <div class="input-form-box">
-                                                    <input type="text" class="input-form-control without-icon" [disabled]="checkEndorseDisable('allRisk')" style="position: relative;top: 0.8rem!important;" maxlength="50" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'allRisk')" [(ngModel)]="row.SumInsured"
+                                                    <input type="text" class="input-form-control without-icon" [disabled]="checkEndorseDisable('allRisk')" style="min-width: 166px;position: relative;left: 1.5rem;bottom: 0.3rem;" maxlength="50" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'allRisk')" [(ngModel)]="row.SumInsured"
                                                         [ngModelOptions]="{standalone: true}">
                                                 </div>
                                             </td>
@@ -757,9 +757,9 @@
                                                 </div>
                                                 <!--(keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'personalInt')"-->
                                             </td>
-                                            <td class="tbl-content" style="position: relative;top: 0.2rem;">
+                                            <td class="tbl-content" style="position: relative;top: 0.65rem;">
                                                 <div class="input-form-box">
-                                                    <input type="text" style="min-width: 200px;" class="input-form-control without-icon" [disabled]="checkEndorseDisable('personalIndeminity')" [(ngModel)]="row.NationalityID" [ngModelOptions]="{standalone: true}">
+                                                    <input type="text" style="min-width: 166px;position: relative;left: 1.5rem;bottom: 0.3rem;" class="input-form-control without-icon" [disabled]="checkEndorseDisable('personalIndeminity')" [(ngModel)]="row.NationalityID" [ngModelOptions]="{standalone: true}">
                                                 </div>
                                             </td>
                                             <td class="tbl-content" >
