@@ -1141,7 +1141,7 @@ export class CustomerDetailsComponent implements OnInit {
       var day = d.getDate();
       this.endMinDate = new Date(this.policyStartDate);
       this.policyEndDate = new Date(year + 1, month, day-1);
-      this.endMaxDate = new Date(year + 1, month, day-1);
+      this.endMaxDate = new Date(year + 2, month, day-1);
       this.updateComponent.idNumber = this.idNumber
       this.updateComponent.policyStartDate = this.policyStartDate;
       //this.updateComponent.policyEndDate = this.policyEndDate;
