@@ -3378,6 +3378,18 @@ onSaveFireAlliedDetails(type,formType){
     "IndemityPeriod": this.productItem?.IndemityPeriod,
     "MakutiYn": this.productItem?.MakutiYn
   }
+  if (this.endorsementSection) {
+    if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {
+      ReqObj['Status'] = 'E';
+    }
+    else {
+      ReqObj['Status'] = this.productItem?.Status;
+    }
+    ReqObj['PolicyNo'] = this.endorsePolicyNo
+  }
+  else {
+    ReqObj['Status'] = 'Y';
+  }
   let urlLink = `${this.motorApiUrl}api/slide4/savefireandperils`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
@@ -3423,6 +3435,18 @@ onSaveMachineryDetails(type,formType){
     "EndtStatus": this.endtStatus,
     "IsFinanceEndt": this.isFinanceEndt,
     "OrginalPolicyNo": this.orginalPolicyNo,
+  }
+  if (this.endorsementSection) {
+    if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {
+      ReqObj['Status'] = 'E';
+    }
+    else {
+      ReqObj['Status'] = this.productItem?.Status;
+    }
+    ReqObj['PolicyNo'] = this.endorsePolicyNo
+  }
+  else {
+    ReqObj['Status'] = 'Y';
   }
   let urlLink = `${this.motorApiUrl}api/slide9/savemachinerybreakdown`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -3552,6 +3576,18 @@ onSaveBurglaryDetails(type,formType){
     "PolicyNo": this.endorsePolicyNo,
     "Status": "Y"
   }
+  if (this.endorsementSection) {
+    if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {
+      ReqObj['Status'] = 'E';
+    }
+    else {
+      ReqObj['Status'] = this.productItem?.Status;
+    }
+    ReqObj['PolicyNo'] = this.endorsePolicyNo
+  }
+  else {
+    ReqObj['Status'] = 'Y';
+  }
   let urlLink = `${this.motorApiUrl}api/slide3/saveburglaryandhouse`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
@@ -3600,6 +3636,18 @@ onSaveMoneyDetails(type,formType){
     "IsFinanceEndt": this.isFinanceEndt,
     "OrginalPolicyNo": this.orginalPolicyNo,
   }
+  if (this.endorsementSection) {
+    if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {
+      ReqObj['Status'] = 'E';
+    }
+    else {
+      ReqObj['Status'] = this.productItem?.Status;
+    }
+    ReqObj['PolicyNo'] = this.endorsePolicyNo
+  }
+  else {
+    ReqObj['Status'] = 'Y';
+  }
   let urlLink = `${this.motorApiUrl}api/slide10/savemoneydetails`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
@@ -3622,6 +3670,14 @@ onSaveEmployeeDetails(type,formType){
       this.employeeError = false;
       let i=0;
       for(let emp of this.productItem.employeeList){
+          if (this.endorsementSection) {
+            if (emp?.Status == undefined || emp?.Status == null || emp?.Status == 'Y') {
+              emp['Status'] = 'E';
+            }
+            else {
+              emp['Status'] = 'Y';
+            }
+          }
           emp['CreatedBy'] = this.loginId;
           emp['InsuranceId'] = this.insuranceId;
           emp['ProductId'] = this.productId;
@@ -3672,6 +3728,14 @@ onSaveFidelityDetails(type,formType){
     this.employeeError = false;
     let i=0;
     for(let emp of this.productItem.fidelityList){
+      if (this.endorsementSection) {
+        if (emp?.Status == undefined || emp?.Status == null || emp?.Status == 'Y') {
+          emp['Status'] = 'E';
+        }
+        else {
+          emp['Status'] = 'Y';
+        }
+      }
         emp['CreatedBy'] = this.loginId;
         emp['InsuranceId'] = this.insuranceId;
         emp['ProductId'] = this.productId;
@@ -3726,6 +3790,18 @@ onSaveContentRiskDetails(type,formType){
     "RiskId": "1",
     "SectionId": "47",
      "ContentSuminsured": this.productItem?.ContentSuminsured
+  }
+  if (this.endorsementSection) {
+    if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {
+      ReqObj['Status'] = 'E';
+    }
+    else {
+      ReqObj['Status'] = this.productItem?.Status;
+    }
+    ReqObj['PolicyNo'] = this.endorsePolicyNo
+  }
+  else {
+    ReqObj['Status'] = 'Y';
   }
   let urlLink = `${this.motorApiUrl}api/slide5/savecontent`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -4693,6 +4769,18 @@ onFormSubmit() {
       "IsFinanceEndt": this.isFinanceEndt,
       "OrginalPolicyNo": this.orginalPolicyNo,
       "PolicyNo": this.endorsePolicyNo
+    }
+    if (this.endorsementSection) {
+      if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {
+        ReqObj['Status'] = 'E';
+      }
+      else {
+        ReqObj['Status'] = this.productItem?.Status;
+      }
+      ReqObj['PolicyNo'] = this.endorsePolicyNo
+    }
+    else {
+      ReqObj['Status'] = 'Y';
     }
     let urlLink = `${this.motorApiUrl}api/saveeservicedetails`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(

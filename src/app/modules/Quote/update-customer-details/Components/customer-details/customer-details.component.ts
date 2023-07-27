@@ -77,6 +77,7 @@ export class CustomerDetailsComponent implements OnInit {
   endorsementDetails: any;
   countryId: any;
   cyrrencylogin: string;
+  currentStatus: any;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       
@@ -632,6 +633,7 @@ export class CustomerDetailsComponent implements OnInit {
               this.brokerBranchCode = entry?.BrokerBranchCode;
               this.customerCode = entry?.CustomerCode;
               this.brokerCode = entry?.BrokerCode;
+              this.currentStatus = entry?.Status;
               this.onSourceTypeChange('direct');
               let quoteStatus = sessionStorage.getItem('QuoteStatus');
               if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
@@ -1967,6 +1969,18 @@ export class CustomerDetailsComponent implements OnInit {
         "IsFinanceEndt": IsFinanceEndt,
         "OrginalPolicyNo": OrginalPolicyNo,
         "Status": "Y"
+    }
+    if (this.endorsementSection) {
+      if (this.currentStatus == undefined || this.currentStatus == null || this.currentStatus == 'Y') {
+        ReqObj['Status'] = 'E';
+      }
+      else {
+        ReqObj['Status'] = this.currentStatus;
+      }
+      ReqObj['PolicyNo'] = this.endorsePolicyNo
+    }
+    else {
+      ReqObj['Status'] = 'Y';
     }
     let urlLink = `${this.motorApiUrl}api/slide/savecommondetails`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
