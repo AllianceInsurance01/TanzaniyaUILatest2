@@ -67,7 +67,13 @@
                                                 <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button>
                                             </ng-container>
                                             <ng-container *ngIf="productId=='3' || productId=='19' || productId=='14' || productId=='32'">
-                                                <span class="spancommon" style="color:navy;font-size: 1rem;"> {{menu.SectionName}}
+                                                
+                                                 <span class="spancommon" style="color:navy;font-size: 1rem;">
+                                                    <ng-container *ngIf="enableSections">
+                                                        <mat-checkbox class="example-margin text-center"  [checked]="checkSelectedSections(menu)" [disabled]="checkSectionDisable(menu)" (change)="onSelectSections($event.checked,menu)">
+                                                        </mat-checkbox> 
+                                                    </ng-container> 
+                                                    {{menu.SectionName}}
                                                 </span>
                                                 <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
                                                 <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;

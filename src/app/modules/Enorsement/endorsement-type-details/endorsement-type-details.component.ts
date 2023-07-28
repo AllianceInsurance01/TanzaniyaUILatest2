@@ -381,7 +381,7 @@ export class EndorsementTypeDetailsComponent {
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         let category = "";
-        let entry = this.selectedEndorsement.FieldsAllowed.some(ele=>ele=='Covers' || ele=='AddOnCovers');
+        let entry = this.selectedEndorsement.FieldsAllowed.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='RemoveSection');
         if(entry) this.coverModificationYN = 'Y';
         else this.coverModificationYN = 'N';
         let res = data.Result[0];
@@ -435,7 +435,7 @@ export class EndorsementTypeDetailsComponent {
             //   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
             // }
             // else{
-            if(this.selectedEndorsement.FieldsAllowed.some(ele=>ele=='AddOnCovers' || ele=='Covers')){
+            if(this.selectedEndorsement.FieldsAllowed.some(ele=>ele=='AddOnCovers' || (ele=='Covers' && EndtType==852) || ele=='RemoveSection')){
               if(this.productId=='5'){
                 this.getVehicleDetails(res.requestReferenceNo,'other');
               }
