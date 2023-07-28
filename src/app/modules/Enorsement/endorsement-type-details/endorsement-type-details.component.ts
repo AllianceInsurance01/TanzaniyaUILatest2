@@ -381,7 +381,7 @@ export class EndorsementTypeDetailsComponent {
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         let category = "";
-        let entry = this.selectedEndorsement.FieldsAllowed.some(ele=>ele=='Covers' || ele=='AddOnCovers');
+        let entry = this.selectedEndorsement.FieldsAllowed.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='RemoveSection');
         if(entry) this.coverModificationYN = 'Y';
         else this.coverModificationYN = 'N';
         let res = data.Result[0];
@@ -435,7 +435,7 @@ export class EndorsementTypeDetailsComponent {
             //   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
             // }
             // else{
-            if(this.selectedEndorsement.FieldsAllowed.some(ele=>ele=='AddOnCovers' || ele=='Covers')){
+            if(this.selectedEndorsement.FieldsAllowed.some(ele=>ele=='AddOnCovers' || (ele=='Covers' && EndtType==852) || ele=='RemoveSection')){
               if(this.productId=='5'){
                 this.getVehicleDetails(res.requestReferenceNo,'other');
               }
@@ -518,8 +518,31 @@ export class EndorsementTypeDetailsComponent {
       "TravelCoverDuration": customerDatas.TravelCoverDuration,
       "TravelEndDate": customerDatas.TravelEndDate,
       "TravelStartDate": customerDatas.TravelStartDate,
-      "GroupDetails": customerDatas.GroupDetails
+      "GroupDetails": customerDatas.GroupDetails,
+      "EndorsementDate": this.endorsementDate,
+      "EndorsementEffectiveDate": this.endorsementEffectiveDate,
+      "EndorsementRemarks": this.endorsementRemarks,
+      "EndorsementType": this.endorsementType,
+      "EndorsementTypeDesc": this.endorsementTypeDesc,
+      "EndtCategoryDesc": this.endtCategoryDesc,
+      "EndtCount":this.endtCount,
+      "EndtPrevPolicyNo":this.endtPrevPolicyNo,
+      "EndtPrevQuoteNo": this.endtPrevQuoteNo,
+      "EndtStatus": this.endtStatus,
+      "IsFinanceEndt": this.isFinanceEndt,
+      "OrginalPolicyNo": this.orginalPolicyNo,
+      "PolicyNo": this.endorsePolicyNo
     }
+    if(type=='cancel'){
+      ReqObj['Status'] = 'D';
+    }
+     else if(this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y'){
+        ReqObj['Status'] = 'E';
+      }
+      else{
+        ReqObj['Status'] = this.productItem?.Status;
+      }
+      ReqObj['PolicyNo'] = this.endorsePolicyNo
     console.log("Received Obj",ReqObj)
     let urlLink = `${this.motorApiUrl}api/savetraveldetails`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(

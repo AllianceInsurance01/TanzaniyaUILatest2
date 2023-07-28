@@ -64,6 +64,8 @@ export class MakePayementComponent implements OnInit {
   tinyUrlInfo: boolean;
   productName: any;
   redirectUrl: string;
+  stickerNo: any;
+  CoverNoteNo: any;
   constructor(private router:Router,private sharedService: SharedService,
     private updateComponent:UpdateCustomerDetailsComponent,private route:ActivatedRoute,
    private datePipe:DatePipe) {
@@ -448,17 +450,18 @@ export class MakePayementComponent implements OnInit {
       (data: any) => {
         if(data.Result){
 
-          if(data.Result.PolicyNo){
-            this.paymentDetails = data.Result;
-            this.policyNo = data.Result.PolicyNo;
-            this.policySection = true;
-            this.updateTiraDetails();
-            
-          }
-          else if(data.Result.paymentUrl){
+          
+          if(data.Result.paymentUrl){
             this.redirectUrl = data.Result.paymentUrl;
             console.log("Url",atob(this.redirectUrl))
             window.location.href =  atob(this.redirectUrl)
+          }
+          else {
+            this.paymentDetails = data.Result;
+            this.policyNo = data?.Result?.PolicyNo;
+            this.policySection = true;
+            this.updateTiraDetails();
+            
           }
         } 
       },
@@ -473,11 +476,24 @@ export class MakePayementComponent implements OnInit {
      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         if(data?.Result){
-            if(data?.Result?.Response=='Success') this.policySection = true;
+            if(data?.Result?.Response=='Success') this.getTiraDetails();
         } 
       },
       (err) => { },
       );
+  }
+  getTiraDetails(){
+    let urlLink = `${this.CommonApiUrl}payment/gettira/${this.quoteNo}`;
+   this.sharedService.onGetMethodSync(urlLink).subscribe(
+    (data: any) => {
+      if(data?.Result){
+        this.policySection = true;
+          this.stickerNo = data?.Result?.StickerNumber;
+          this.CoverNoteNo = data?.Result?.CoverNoteNo;
+      } 
+    },
+    (err) => { },
+    );
   }
   CommaFormatted() {
 

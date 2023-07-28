@@ -205,6 +205,8 @@ emiyn="N";
   CoverHeader:any[]=[];
   CoverName: any;
   endorseAddOnCovers: any;
+  enableSections: any;
+  endorseSIModification: any;
   constructor(public sharedService: SharedService,private router:Router,private modalService: NgbModal,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe,public dialog: MatDialog) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -228,18 +230,23 @@ emiyn="N";
         this.endorsementId = endorseObj.EndtTypeId;
         this.endorseEffectiveDate = endorseObj?.EffectiveDate;
         this.enableFieldsList = endorseObj.FieldsAllowed;
-        let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='AddCovers' || ele=='removeVehicle');
+        let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='RemoveSection'  || ele=='AddOnCovers' || ele=='AddCovers' || ele=='removeVehicle');
         if(entry) this.coverModificationYN = 'Y';
         else this.coverModificationYN = 'N';
         console.log("Enable Obj",this.enableFieldsList)
         if(this.endorsementId!=42){
-          this.endorseCovers = this.enableFieldsList.some(ele=>ele=='Covers');
+          this.endorseCovers = this.enableFieldsList.some(ele=>ele=='Covers' && this.endorsementId==852);
+          this.endorseSIModification = this.enableFieldsList.some(ele=>ele=='Covers' && this.endorsementId==850);
           this.endorseAddOnCovers = this.enableFieldsList.some(ele=>ele=='AddOnCovers' || ele=='AddCovers');
           this.enableRemoveVehicle = this.enableFieldsList.some(ele=>ele=='removeVehicle');
+          this.enableSections = this.enableFieldsList.some(ele=>ele=='RemoveSection');
         }
         else{
+            this.endorseSIModification = false;
             this.endorseCovers = false;
             this.endorseAddOnCovers = false;
+            this.enableRemoveVehicle = false;
+            this.enableSections = false;
         }
       }
     }
@@ -573,7 +580,7 @@ getCoverList(coverListObj){
       let effectiveDate=null,policyEndDate,coverModificationYN='N';
       if(this.endorsementSection){
         effectiveDate = this.endorseEffectiveDate;
-        let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='AddCovers' || ele=='removeVehicle');
+        let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='RemoveSection' || ele=='AddOnCovers' || ele=='AddCovers' || ele=='removeVehicle');
         if(entry) coverModificationYN = 'Y';
         else coverModificationYN = 'N';
       }
@@ -1516,7 +1523,7 @@ getMotorUsageList(vehicleValue){
             let effectiveDate=null,coverModificationYN='N'
             if(this.endorsementSection){
                 effectiveDate = this.endorseEffectiveDate;
-                let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='AddCovers' || ele=='removeVehicle');
+                let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='RemoveSection' || ele=='AddOnCovers' || ele=='AddCovers' || ele=='removeVehicle');
                 if(entry) coverModificationYN = 'Y';
                 else coverModificationYN = 'N';
             }
@@ -1838,7 +1845,7 @@ getMotorUsageList(vehicleValue){
             this.endorsementId = cover.Endorsements[0].EndorsementId;
             this.endorseEffectiveDate = cover.EffectiveDate;
             this.enableFieldsList = fieldList;
-            let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='AddCovers' || ele=='removeVehicle');
+            let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='RemoveSection' || ele=='AddOnCovers' || ele=='AddCovers' || ele=='removeVehicle');
             if(this.coverModificationYN=='N'){
               if(entry) this.coverModificationYN = 'Y';
               else this.coverModificationYN = 'N';
@@ -1907,6 +1914,23 @@ getMotorUsageList(vehicleValue){
 
     }
   }
+  checkSelectedSections(rowData){
+      let coverList = rowData.CoverList;
+      return coverList.some(ele=>ele.UserOpt=='Y' || ele.isSelected=='D' || ele.isSelected=='O')
+  }
+  checkSectionDisable(rowData){
+    let coverList = rowData.CoverList;
+    return (!coverList.some(ele=>ele.UserOpt=='Y' || ele.isSelected=='D' || ele.isSelected=='O'))
+  }
+  onSelectSections(event,rowData){
+      let coverList:any[]=rowData.CoverList;
+        for(let cover of coverList){
+          if(cover.UserOpt=='Y' || cover.isSelected=='D' || cover.isSelected=='O'){
+            if(event){cover['selected']=true;this.onSelectCover(cover,true,rowData.Vehicleid,rowData,'coverList','change')}
+            else{cover['selected']=false; this.onSelectCover(cover,false,rowData.Vehicleid,rowData,'coverList','change')}
+          }
+        }
+  }
   ongetBack(){
     // if(this.statusValue=='RA'){
     //     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
@@ -1931,7 +1955,7 @@ getMotorUsageList(vehicleValue){
           }
       }
       else{
-        if(this.endorsementSection && this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers')){
+        if(this.endorsementSection && this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='RemoveSection')){
           this.router.navigate(['/Home/policies/Endorsements/endorsementTypes']);
         }
         else{
@@ -2463,6 +2487,7 @@ getMotorUsageList(vehicleValue){
         else if(!this.adminSection) return true;
         else return false;
       }
+      else if(this.endorseSIModification) return false;
       else if(vehicleData.EndorsementYN=='Y') return false;
       else if(this.endorseAddOnCovers && coverData.ModifiedYN =='Y'){
           return false;
