@@ -325,3 +325,13 @@
         border-bottom: 0px solid grey !important;
     }
  }
+ .card{
+    border-right:none !important;
+    border-left:none !important;
+    box-shadow:none !important;
+}
+ .customBody{
+    /* border-bottom: 0px solid grey!important; */
+
+    border-right: none !important;
+}

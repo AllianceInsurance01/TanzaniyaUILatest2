@@ -3552,6 +3552,18 @@ onSaveBurglaryDetails(type,formType){
     "PolicyNo": this.endorsePolicyNo,
     "Status": "Y"
   }
+  if (this.endorsementSection) {
+    if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {
+      ReqObj['Status'] = 'E';
+    }
+    else {
+      ReqObj['Status'] = this.productItem?.Status;
+    }
+    ReqObj['PolicyNo'] = this.endorsePolicyNo
+  }
+  else {
+    ReqObj['Status'] = 'Y';
+  }
   let urlLink = `${this.motorApiUrl}api/slide3/saveburglaryandhouse`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {

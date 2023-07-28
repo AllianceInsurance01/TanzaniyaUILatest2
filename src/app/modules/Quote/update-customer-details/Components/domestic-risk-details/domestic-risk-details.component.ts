@@ -224,8 +224,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
     if(this.productId=='5') this.buildingDetailsSection=false;
     else this.buildingDetailsSection = true;
     
-    this.getSumInsuredDetails();
-    this.Electronic();
+   
 
 
     //this.Section=false;
@@ -279,6 +278,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
         // }
       }
     }
+    this.getSumInsuredDetails();
+    this.Electronic();
     let homeObj = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
     if (homeObj) {
       
@@ -1169,7 +1170,7 @@ onFidelitySave(){
               "Height": null,
               "OccupationId": entry.OccupationId,
               "PersonName": entry.PersonName,
-              "NationalityId": entry.NationalityID,
+              "NationalityId": entry.NationalityId,
               "Salary": salary,
               "Weight": null,
               "RiskId": entry.RiskId,
@@ -1251,7 +1252,7 @@ onFidelitySave(){
               "Height": entry.Height,
               "OccupationId": entry.OccupationId,
               "PersonName": entry.PersonName,
-              "NationalityId": entry.NationalityID,
+              "NationalityId": entry.NationalityId,
               "Salary": salary,
               "Weight": entry.Weight,
               "RiskId": entry.RiskId,
