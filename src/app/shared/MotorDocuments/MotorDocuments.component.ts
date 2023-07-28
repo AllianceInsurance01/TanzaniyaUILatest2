@@ -45,6 +45,7 @@ export class MotorDocumentsComponent implements OnInit {
   VechileColumnHeader:any[]=[];
   PaymentInfo:any[]=[];
   DocumentInfo:any[]=[];
+  CommonDoc:any[]=[];
   Currency:any;
   OverallPremiumFc: any;
   pass: boolean;
@@ -604,7 +605,9 @@ Documentview(){
       console.log(data);
       if(data?.Result){
 
-          this.DocumentInfo=data?.Result;
+          this.DocumentInfo=data?.Result?.IndividualDocumentRes;
+          this.CommonDoc=data?.Result?.CommonDocumentRes;
+
 
           console.log('Document Info',this.DocumentInfo);
           //this.quoteno=data.Result.QuoteNo
