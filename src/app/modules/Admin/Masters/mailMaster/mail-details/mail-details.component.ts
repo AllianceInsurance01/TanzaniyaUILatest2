@@ -181,7 +181,7 @@ userDetails:any;
 getBranchList()
 {
   let ReqObj = {
-    "InsuranceId": "100002"
+    "InsuranceId": this.insuranceId
   }
   let urlLink = `${this.CommonApiUrl1}master/dropdown/branchmaster`;
 this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(

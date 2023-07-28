@@ -91,3 +91,9 @@ input{
   box-shadow: 1px 1px 1px #1f26875e;
   backdrop-filter: blur(18.5px);
 }
+
+@media screen and (min-width: 750px) and (max-width: 20000px) {
+  ::-webkit-scrollbar-thumb {
+      border: 6px solid transparent !important;
+  }
+}
