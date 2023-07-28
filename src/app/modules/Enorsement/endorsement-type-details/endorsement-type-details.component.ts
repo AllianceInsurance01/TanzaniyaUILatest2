@@ -518,8 +518,31 @@ export class EndorsementTypeDetailsComponent {
       "TravelCoverDuration": customerDatas.TravelCoverDuration,
       "TravelEndDate": customerDatas.TravelEndDate,
       "TravelStartDate": customerDatas.TravelStartDate,
-      "GroupDetails": customerDatas.GroupDetails
+      "GroupDetails": customerDatas.GroupDetails,
+      "EndorsementDate": this.endorsementDate,
+      "EndorsementEffectiveDate": this.endorsementEffectiveDate,
+      "EndorsementRemarks": this.endorsementRemarks,
+      "EndorsementType": this.endorsementType,
+      "EndorsementTypeDesc": this.endorsementTypeDesc,
+      "EndtCategoryDesc": this.endtCategoryDesc,
+      "EndtCount":this.endtCount,
+      "EndtPrevPolicyNo":this.endtPrevPolicyNo,
+      "EndtPrevQuoteNo": this.endtPrevQuoteNo,
+      "EndtStatus": this.endtStatus,
+      "IsFinanceEndt": this.isFinanceEndt,
+      "OrginalPolicyNo": this.orginalPolicyNo,
+      "PolicyNo": this.endorsePolicyNo
     }
+    if(type=='cancel'){
+      ReqObj['Status'] = 'D';
+    }
+     else if(this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y'){
+        ReqObj['Status'] = 'E';
+      }
+      else{
+        ReqObj['Status'] = this.productItem?.Status;
+      }
+      ReqObj['PolicyNo'] = this.endorsePolicyNo
     console.log("Received Obj",ReqObj)
     let urlLink = `${this.motorApiUrl}api/savetraveldetails`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
