@@ -469,11 +469,17 @@ this.onAddFactorList();
   }
 
   onSave(){
+    let FactorId:any;
     if(this.promoDetails.IsTaxExcempted=='N'){
       this.promoDetails.TaxExcemptionReference=null;
       this.promoDetails.TaxExcemptionType=null;
  }
-
+if(this.FactorTypeId!=null && this.FactorTypeId!=undefined && this.FactorTypeId!=''){
+  FactorId=this.FactorTypeId;
+}
+else{
+  FactorId=null;
+}
  if(this.promocode){
   this.promoDetails.PromocodeId=this.promocode;
  }
@@ -495,7 +501,7 @@ this.onAddFactorList();
 "Remarks":this.promoDetails.Remarks,
 "Status":this.promoDetails.Status,
 "ToolTip":this.promoDetails.ToolTip,
-"FactorTypeId":null,
+"FactorTypeId":FactorId,
 //this.promoDetails.FactorTypeId
 "PeriodFrom":this.promoDetails.PeriodFrom,
 "PeriodTo":this.promoDetails.PeriodTo,
@@ -555,7 +561,8 @@ this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/promoC
               this.SPromocode=data.Result.SuccessId;
               this.CoverId=data.Result.CoverId;
               this.open=true;
-              this.getFactorTypeDetails(null,this.promoDetails.FactorTypeId)
+              console.log('FACTORS',this.FactorTypeId);
+              this.getFactorTypeDetails(null,this.FactorTypeId)
               this.cover(this.SPromocode,this.CoverId)
 
 //this.cover()

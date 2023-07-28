@@ -381,6 +381,8 @@ label {
 
 ng-select input {
     border: none !important;
+    overflow: visible !important;
+    min-width: 300px !important;
 }
 
 .input-control-container .ng-select.ng-select-single .ng-select-container {
@@ -1323,6 +1325,7 @@ a {
     float: right;
     position: relative;
     bottom: 0.3rem;
+    margin:0px;
 }
 
 .exisiting {
@@ -3241,4 +3244,3 @@ input[type="radio"]{
     // max-width:15px !important;
     // max-height: 40px !important;
   }
-
