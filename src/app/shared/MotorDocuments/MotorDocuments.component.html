@@ -2249,8 +2249,8 @@
                           </div>
                       </div>
                       </div>
-                    
-                      <table class="table mt-2" id="capture_table" *ngIf="CommonDoc.length!=0">
+                    <ngcontainer *ngIf="CommonDoc.length!=0">
+                      <table class="table mt-2" id="capture_table">
                         <thead>
                             <tr>
                                 <th scope="col"><span class="spancommon">S.No</span></th>
@@ -2274,6 +2274,10 @@
                             </tr>
                         </tbody>
                     </table>
+                </ngcontainer>
+                <ng-container *ngIf="CommonDoc.length==0">
+                    No Records Found
+              </ng-container>
                     <div class="maan-grid-item-title" *ngIf="DocumentInfo">
                       <div class="d-flex justify-content-between">
                         <div>
@@ -2288,8 +2292,8 @@
                         </div>
                     </div>
                     </div>
-                  
-                    <table class="table mt-2" id="capture_table" *ngIf="DocumentInfo.length!=0">
+                  <ng-container *ngIf="DocumentInfo.length!=0">
+                    <table class="table mt-2" id="capture_table">
                       <thead>
                           <tr>
                               <th scope="col"><span class="spancommon">S.No</span></th>
@@ -2313,6 +2317,10 @@
                           </tr>
                       </tbody>
                   </table>
+                </ng-container>
+                <ng-container *ngIf="DocumentInfo.length==0">
+                      No Records Found
+                </ng-container>
                    </div>
 
                    <!--<div class="mt-4">

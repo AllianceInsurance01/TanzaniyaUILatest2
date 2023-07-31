@@ -151,11 +151,9 @@ export class ProductGroupListComponent implements OnInit {
 
   getCompanyList(){
     let ReqObj = {
-      "BrokerCompanyYn":"N",
-      "Limit":"0",
-      "Offset":""
+      "BrokerCompanyYn":"",
     }
-    let urlLink = `${this.ApiUrl1}master/getallinscompanydetails`;
+    let urlLink = `${this.ApiUrl1}master/dropdown/company`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
