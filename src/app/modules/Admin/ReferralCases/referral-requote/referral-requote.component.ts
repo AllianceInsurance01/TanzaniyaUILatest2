@@ -17,10 +17,12 @@ export class ReferralRequoteComponent {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public motorApiUrl:any = this.AppConfig.MotorApiUrl;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
+  brokerbranchCode: any;
   constructor(private router:Router,private sharedService: SharedService) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
     this.agencyCode = this.userDetails.Result.OaCode;
+    this.brokerbranchCode = this.userDetails.Result.BrokerBranchCode;
     this.branchCode = this.userDetails.Result.BranchCode;
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails?.Result?.UserType;
@@ -32,7 +34,6 @@ export class ReferralRequoteComponent {
         { key: 'ClientName', display: 'Customer Name' },
         { key: 'PolicyStartDate', display: 'Policy Start Date' },
         { key: 'PolicyEndDate', display: 'Policy End Date' },
-        
         {
           key: 'edit',
           display: 'Vehicle Details',
@@ -42,13 +43,7 @@ export class ReferralRequoteComponent {
             isCollapseName:'Vehicles'
           },
         },
-        {
-          key: 'actions',
-          display: 'Action',
-          config: {
-            isEdit: true,
-          },
-        },
+        { key: 'AdminRemarks', display: 'AdminRemarks' },
       ];
       this.innerColumnHeader =  [
         { key: 'Vehicleid', display: 'VehicleID' },
@@ -75,14 +70,7 @@ export class ReferralRequoteComponent {
         { key: 'ClientName', display: 'Customer Name' },
         { key: 'PolicyStartDate', display: 'Policy Start Date' },
         { key: 'PolicyEndDate', display: 'Policy End Date' },
-        { key: 'ReferalRemarks', display: 'ReferralRemarks' },
-        {
-          key: 'actions',
-          display: 'Action',
-          config: {
-            isEdit: true,
-          },
-        },
+        { key: 'AdminRemarks', display: 'AdminRemarks' },
       ];
       this.innerColumnHeader =  [
         { key: 'Vehicleid', display: 'VehicleID' },
@@ -101,14 +89,17 @@ export class ReferralRequoteComponent {
     this.getExistingQuotes();
   }
   getExistingQuotes(){
-    let appId = "1",loginId="";
-    if(this.userType=='Broker'){
-      appId = "1"; loginId = this.loginId;
-    }
-    else{
-      appId = this.loginId;
-    }
-    let ReqObj = {
+    let appId = "1",loginId="",brokerbranchCode="";
+      if(this.userType!='Issuer'){
+        appId = "1"; loginId = this.loginId;
+        brokerbranchCode = this.brokerbranchCode;
+      }
+      else{
+        appId = this.loginId;
+        brokerbranchCode = null;
+      }
+      let ReqObj = {
+          "BrokerBranchCode": brokerbranchCode,
           "BranchCode":this.branchCode,
           "InsuranceId": this.insuranceId,
           "LoginId":loginId,
@@ -121,7 +112,7 @@ export class ReferralRequoteComponent {
           "Limit":"0",
           "Offset":"1000"
    }
-    let urlLink = `${this.CommonApiUrl}quote/adminreferralrequote`;
+    let urlLink = `${this.CommonApiUrl}api/referralrequote`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
@@ -148,11 +139,12 @@ export class ReferralRequoteComponent {
       );
   }
   onEditQuotes(rowData){
-    sessionStorage.setItem('QuoteStatus','AdminRE');
+    sessionStorage.setItem('QuoteStatus','RE');
+    sessionStorage.removeItem('endorsePolicyNo');
+    sessionStorage.removeItem('endorseTypeId');
     sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
     sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
     sessionStorage.setItem('quoteNo',rowData.QuoteNo);
-    sessionStorage.removeItem('vehicleDetailsList')
     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
   }
 }

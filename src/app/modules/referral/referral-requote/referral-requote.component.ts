@@ -43,6 +43,7 @@ export class ReferralRequoteComponent {
             isCollapseName:'Vehicles'
           },
         },
+         { key: 'AdminRemarks', display: 'AdminRemarks' },
         {
           key: 'actions',
           display: 'Action',
@@ -76,7 +77,7 @@ export class ReferralRequoteComponent {
         { key: 'ClientName', display: 'Customer Name' },
         { key: 'PolicyStartDate', display: 'Policy Start Date' },
         { key: 'PolicyEndDate', display: 'Policy End Date' },
-        { key: 'ReferalRemarks', display: 'ReferralRemarks' },
+        { key: 'AdminRemarks', display: 'AdminRemarks' },
         {
           key: 'actions',
           display: 'Action',

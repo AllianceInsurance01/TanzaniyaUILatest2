@@ -35,7 +35,7 @@ export class Fidelity{
                     {
                       type: 'select',
                       key: 'LiabilityOccupationId',
-                      defaultValue: null,
+                      defaultValue: '',
                       className: 'col-sm-4',
                       props: {
                         label: `Occupation`,

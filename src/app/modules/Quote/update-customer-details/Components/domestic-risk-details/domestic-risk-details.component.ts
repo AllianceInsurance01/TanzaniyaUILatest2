@@ -399,13 +399,13 @@ export class DomesticRiskDetailsComponent implements OnInit {
         this.getOccupationList(eight)
        } 
        else this.eight = false;
-       const nine = this.item.find((Code) => Code == '41');
-        if (nine && this.productId!='19' && this.productId!='16') {
-          this.nine = true;
-        }
-        else {
-          this.nine = false;
-        }
+      //  const nine = this.item.find((Code) => Code == '41');
+      //   if (nine && this.productId!='19' && this.productId!='16') {
+      //     this.nine = true;
+      //   }
+      //   else {
+      //     this.nine = false;
+      //   }
     }
     
   }
@@ -747,7 +747,7 @@ onFidelitySave(){
       "CompanyId": this.insuranceId,
       "ProductId": this.productId,
     }
-    let urlLink = `${this.ApiUrl1}eway/vehicle/sample/download/`
+    let urlLink = `${this.ApiUrl1}eway/vehicle/sample/download`
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         console.log(data);

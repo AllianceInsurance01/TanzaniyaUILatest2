@@ -650,7 +650,7 @@
                                             </td>
                                             <td class="tbl-content" style="position: relative!important;top: 0.8rem!important;">
                                                 <div class="input-form-box">
-                                                    <textarea style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('allRisk')" (keyup)="onContentRiskDescChange('allRisk')" class="input-form-control without-icon" cols="40" rows="1" maxlength="500" [(ngModel)]="row.ContentRiskDesc" [ngModelOptions]="{standalone: true}"></textarea>
+                                                    <textarea style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('allRisk')" (keyup)="onContentRiskDescChange('allRisk')" style="min-width: 160px;position: relative;left: 1.2rem;bottom: 0.3rem;" class="input-form-control without-icon" cols="40" rows="1" maxlength="500" [(ngModel)]="row.ContentRiskDesc" [ngModelOptions]="{standalone: true}"></textarea>
                                                 </div>
                                             </td>
                                            
@@ -759,7 +759,7 @@
                                             </td>
                                             <td class="tbl-content" style="position: relative;top: 0.65rem;">
                                                 <div class="input-form-box">
-                                                    <input type="text" style="min-width: 166px;position: relative;left: 1.5rem;bottom: 0.3rem;" class="input-form-control without-icon" [disabled]="checkEndorseDisable('personalIndeminity')" [(ngModel)]="row.NationalityID" [ngModelOptions]="{standalone: true}">
+                                                    <input type="text" style="min-width: 166px;position: relative;left: 1.5rem;bottom: 0.3rem;" class="input-form-control without-icon" [disabled]="checkEndorseDisable('personalIndeminity')" [(ngModel)]="row.NationalityId" [ngModelOptions]="{standalone: true}">
                                                 </div>
                                             </td>
                                             <td class="tbl-content" >
@@ -1664,7 +1664,7 @@
                         </div>
                     </div>
                 </mat-tab>
-                <mat-tab label="Machinery Breakdown" [disabled]="!fourth" *ngIf="nine">
+                <!-- <mat-tab label="Machinery Breakdown" [disabled]="!fourth" *ngIf="nine">
                     <div class="row mt-2" *ngIf="!enableMachineryEditSection">
                         <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
                             <div class="boxForm">
@@ -1699,11 +1699,6 @@
                                         <div class="input-form-box" style="position: relative;top:.2rem">
                                             <input type="text" class="input-form-control without-icon" maxlength="50" [disabled]="checkEndorseDisable('machinery')" [(ngModel)]="MachineryName" [ngModelOptions]="{standalone: true}">
                                         </div>
-                                        <!-- <div class="input-form-error" *ngIf="buildingLocationError">
-                                            <div class="error-text text-danger">
-                                                Please Enter Valid Location Name
-                                            </div>
-                                        </div> -->
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-6 input-control-container">
                                         <label class="input-form-label">Brand</label><span class="text-danger">*</span>
@@ -1732,7 +1727,7 @@
                             </div>
                         </div>
                     </div>
-                </mat-tab>
+                </mat-tab> -->
                 <mat-tab label="Accessories" *ngIf="!buildingDetailsSection">
                     <!--table-->
                     <div>

@@ -29,36 +29,60 @@ export class RejectedQuotesComponent implements OnInit {
     this.insuranceId = this.userDetails.Result.InsuranceId;
     sessionStorage.removeItem('customerReferenceNo');
     sessionStorage.removeItem('vehicleDetailsList');
-    this.quoteHeader =  [
-      { key: 'QuoteNo', display: 'Quote No' },
-      { key: 'RequestReferenceNo', display: 'Reference No' },
-      { key: 'ClientName', display: 'Customer Name' },
-      {
-        key: 'edit',
-        display: 'Vehicle Details',
-        sticky: false,
-        config: {
-          isCollapse: true,
-          isCollapseName:'Vehicles'
+    if(this.productId=='5'){
+      this.quoteHeader =  [
+        { key: 'QuoteNo', display: 'Quote No' },
+        { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'ClientName', display: 'Customer Name' },
+        {
+          key: 'edit',
+          display: 'Vehicle Details',
+          sticky: false,
+          config: {
+            isCollapse: true,
+            isCollapseName:'Vehicles'
+          },
         },
-      },
-      { key: 'RejectReason', display: 'Rejected Reason' },
-    ];
-    this.innerColumnHeader =  [
-      { key: 'Vehicleid', display: 'VehicleID' },
-      { key: 'Registrationnumber', display: 'Registration No' },
-      { key: 'Chassisnumber', display: 'Chassis No' },
-      { key: 'Vehiclemake', display: 'Make' },
-      { key: 'Vehcilemodel', display: 'Model' },
-      // {
-      //   key: 'actions',
-      //   display: 'Action',
-      //   config: {
-      //     isEdit: true,
-      //   },
-      // },
-      
-    ];
+        { key: 'RejectReason', display: 'Rejected Reason' },
+      ];
+      this.innerColumnHeader =  [
+        { key: 'Vehicleid', display: 'VehicleID' },
+        { key: 'Registrationnumber', display: 'Registration No' },
+        { key: 'Chassisnumber', display: 'Chassis No' },
+        { key: 'Vehiclemake', display: 'Make' },
+        { key: 'Vehcilemodel', display: 'Model' },
+        // {
+        //   key: 'actions',
+        //   display: 'Action',
+        //   config: {
+        //     isEdit: true,
+        //   },
+        // },
+        
+      ];
+    }
+    else if(this.productId=='4'){
+      this.quoteHeader =  [
+        { key: 'QuoteNo', display: 'Quote No' },
+        { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'ClientName', display: 'Customer Name' },
+        { key: 'PolicyStartDate', display: 'Policy Start Date' },
+        { key: 'PolicyEndDate', display: 'Policy End Date' },
+        { key: 'Count', display: 'Passengers' },
+        { key: 'RejectReason', display: 'Rejected Reason' },
+      ];
+    }
+    else if(this.productId=='3'){
+      this.quoteHeader =  [
+        { key: 'QuoteNo', display: 'Quote No' },
+        { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'ClientName', display: 'Customer Name' },
+        { key: 'PolicyStartDate', display: 'Policy Start Date' },
+        { key: 'PolicyEndDate', display: 'Policy End Date' },
+        { key: 'Count', display: 'No.Of.Risk' },
+        { key: 'RejectReason', display: 'Rejected Reason' },
+      ];
+    }
   }
 
   ngOnInit(): void {
