@@ -73,7 +73,7 @@ export class ProductData {
 	GoodsLossPercent:any='';FurnitureLossPercent:any='';
 	ApplianceLossPercent:any='';CashValueablesLossPercent:any='';
 	MiningPlantSi:any='0';NonminingPlantSi:any='0';GensetsSi:any='0';
-	
+	ElectronicEquipSuminsured:any ='0';
 	constructor(data?) {
 		this.id = data?.id ?? ''
 		this.CustomerName = data?.CustomerName ?? '';
@@ -121,6 +121,7 @@ export class ProductData {
 		this.MoneyAnnualcarrySuminsured = data?.MoneyAnnualcarrySuminsured ?? '';
 		this.MoneyInsafeSuminsured = data?.MoneyInsafeSuminsured ?? '';
 		this.TpliabilityAnyoccuSuminsured = data?.TpliabilityAnyoccuSuminsured ?? '';
+		this.ElectronicEquipSuminsured = data?.ElectronicEquipSuminsured ?? '';
 		this.BreakDownCoverYN = data?.BreakDownCoverYN ?? 'No';
 		this.FidelityCoverYN = data?.FidelityCoverYN ?? 'No';
 		this.Status = data?.Status ?? 'Y';
