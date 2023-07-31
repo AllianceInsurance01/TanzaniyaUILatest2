@@ -31,7 +31,7 @@ export class PlantAllRisk{
                   type: 'commaSeparator',
                   key: 'MiningPlantSi',
                   props: {
-                    label: 'Over Ground Mining PlantSI',
+                    label: 'Over Ground Mining Plant SumInsured',
                     disabled: this.checkDisable('MiningPlantSi'),
                     required: true,
                     options: [
@@ -47,8 +47,8 @@ export class PlantAllRisk{
                   key: 'NonminingPlantSi',
     
                   props: {
-                    label: `Non Mining Plant / Farming EquipmentSI`,
-                     disabled: this.checkDisable('NonminingPlanSi'),
+                    label: `Non Mining Plant / Farming Equipment`,
+                     disabled: this.checkDisable('NonminingPlantSi'),
                     required: true,
                     options: [
     
@@ -68,7 +68,7 @@ export class PlantAllRisk{
                   type: 'commaSeparator',
                   key: 'GensetsSi',
                   templateOptions: {
-                    label: 'GensetsSI',
+                    label: 'Gensets SumInsured',
                     required: true,
                   },
                   validators: {

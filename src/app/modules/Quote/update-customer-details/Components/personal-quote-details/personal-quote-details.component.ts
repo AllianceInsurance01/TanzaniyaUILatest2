@@ -19,6 +19,10 @@ import { EmployersLiability } from '../models/EmployersLiability';
 import { RepeatTypeComponent } from '../../repeatArray.type';
 import { Fidelity } from '../models/Fidelity';
 import { Burglary } from '../models/Burglary';
+import { ElectronicEquipment } from '../newmodels/ElectronicEquipment';
+import { Moneys } from '../newmodels/Moneys';
+import { BussinessAllRisk } from '../newmodels/Bussinessallrisk';
+import { PlantAllRisk } from '../newmodels/Plantallrisk';
 export class ForceLengthValidators {
   static maxLength(maxLength: number) {
     return (control: FormControl): ValidationErrors => {
@@ -140,8 +144,9 @@ export class PersonalQuoteDetailsComponent implements OnInit {
     this.countryId = this.userDetails.Result.CountryId;
     this.productId = this.userDetails.Result.ProductId;
     this.insuranceId = this.userDetails.Result.InsuranceId;
+    console.log('OOOOOOOOOOOOO',this.insuranceId);
      this.updateComponent.showStepperSection = false;
-    if (this.productId != '3' && this.productId != '19' && this.productId!='39' && this.productId!='16' && this.productId!='1') {
+    if (this.productId != '3' && this.productId != '19' && this.productId!='39' && this.productId!='16' && this.productId!='1' && this.productId!='25' && this.productId!='21' && this.productId!='26') {
       this.getOccupationList(null);
     }
     this.productItem = new ProductData();
@@ -1137,7 +1142,8 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       }
 
     }
-    else if(this.productId=='16'){
+    else if(this.productId=='16' && this.insuranceId != '100004'){
+      console.log('MMMMMMMMMMMMMMMM',this.productId,this.insuranceId)
       let fireData = new Money();
       let entry = [];
       let checkYnHooks ={ onInit: (field: FormlyFieldConfig) => {
@@ -1167,6 +1173,94 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       
       console.log("Final Fields",groupList);
       
+    }
+
+    else if(this.productId=='16' && this.insuranceId == '100004'){
+      console.log('UUUUUUUUUUUUU',this.productId,this.insuranceId)
+      let fireData = new Moneys();
+      let entry = [];
+      let checkYnHooks ={ onInit: (field: FormlyFieldConfig) => {
+        field.formControl.valueChanges.subscribe(() => {
+            this.checkMoneyYNChanges()
+        });
+      }};
+      let groupList:any = fireData?.fields.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
+      let i=0;
+        for(let group of groupList){
+           group.fieldGroup[0].hooks = checkYnHooks;
+           i+=1;
+           if(i==groupList.length){
+            this.fields[0] = fireData?.fields;
+            let referenceNo = sessionStorage.getItem('quoteReferenceNo');
+            this.checkMoneyYNChanges();
+            if (referenceNo) {
+              this.requestReferenceNo = referenceNo;
+              this.setCommonFormValues();
+            }
+            else {
+                this.productItem = new ProductData();
+                this.formSection = true; this.viewSection = false;
+            }
+          }
+        }
+      
+      console.log("Final Fields",groupList);
+      
+    }
+    
+    else if(this.productId=='21'){
+      // let fireData = new FireAlliedPerils();
+      // let entry = [];
+      // this.fields[0] = fireData?.fields;
+      // this.getIndemityPeriodList();
+      let referenceNo = sessionStorage.getItem('quoteReferenceNo');
+      let fireData = new PlantAllRisk();
+      let entry = [];
+      this.fields[0] = fireData?.fields;
+      if (referenceNo) {
+        this.requestReferenceNo = referenceNo;
+        this.productItem = new ProductData();
+        this.setCommonFormValues();
+       
+      }
+      else {
+          this.productItem = new ProductData();
+          this.formSection = true; this.viewSection = false;
+      }
+    }
+    else if(this.productId=='26'){
+     
+      let fireData = new BussinessAllRisk();
+      let entry = [];
+      this.fields[0] = fireData?.fields;
+      let referenceNo = sessionStorage.getItem('quoteReferenceNo');
+      if (referenceNo) {
+        this.requestReferenceNo = referenceNo;
+        this.productItem = new ProductData();
+        this.setCommonFormValues();
+       
+      }
+      else {
+          this.productItem = new ProductData();
+          this.formSection = true; this.viewSection = false;
+      }
+    }
+    else if(this.productId=='25'){
+     
+      let fireData = new ElectronicEquipment();
+      let entry = [];
+      this.fields[0] = fireData?.fields;
+      let referenceNo = sessionStorage.getItem('quoteReferenceNo');
+      if (referenceNo) {
+        this.requestReferenceNo = referenceNo;
+        this.productItem = new ProductData();
+        this.setCommonFormValues();
+       
+      }
+      else {
+          this.productItem = new ProductData();
+          this.formSection = true; this.viewSection = false;
+      }
     }
     this.BenifitList = [
       { Code: 1, CodeDescription: '12 Months' },
@@ -1329,6 +1423,8 @@ export class PersonalQuoteDetailsComponent implements OnInit {
            if(sections.some(ele=>ele=='41')){ this.getMachineryBreakDownDetails(sections)}
            if(sections.some(ele=>ele=='42')){ this.getMoneyDetails(sections)}
            if(sections.some(ele=>ele=='52')){ this.getBurglaryDetails(sections) }
+           if(sections.some(ele=>ele=='3') && this.productId=='21' || this.productId == '26'){ this.getPlantallrisk(sections) }
+          //  if(sections.some(ele=>ele=='3') && this.productId=='21'){ this.getElectronicEquipment(sections) }
            if(sections.some(ele=>ele=='56' || ele=='3' || ele=='53' || ele=='54' )){ 
             this.sectionCount +=1;
             if(sections.length==this.sectionCount){
@@ -1412,7 +1508,7 @@ checkMoneyYNChanges(){
       }
     }
   }
-  else{
+  else if(this.productId == '16' && this.insuranceId != '100004'){
     console.log("Moneyyyyyyyyyy",this.fields[0].fieldGroup)
     let tableData = this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
     
@@ -1430,6 +1526,26 @@ checkMoneyYNChanges(){
     if(!this.productItem.CashInHandEmployeesSIYN) { this.productItem.CashInHandEmployees = '0'; this.form?.controls['CashInHandEmployees']?.setValue('0')}
     if(!this.productItem.CashInSafeSIYN) { this.productItem.CashInSafe = '0'; this.form?.controls['CashInSafe']?.setValue('0')}
     if(!this.productItem.MoneyAnnualcarrySuminsuredSIYN) { this.productItem.MoneyAnnualcarrySuminsured = '0'; this.form?.controls['MoneyAnnualcarrySuminsured']?.setValue('0')}
+    console.log("Tablessssss",tableData)
+  }
+  else if(this.productId == '16' && this.insuranceId == '100004'){
+    console.log("Moneyyyyyyyyyy",this.fields[0].fieldGroup)
+    let tableData = this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
+    
+    tableData[0].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyInSafeBusinessSIYN;
+    tableData[1].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyOutSafeBusinessSIYN;
+    tableData[2].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyInPremisesSIYN;
+    tableData[3].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInTransitSIYN;
+    tableData[4].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInHandEmployeesSIYN;
+    tableData[5].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInSafeSIYN;
+    // tableData[6].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyAnnualcarrySuminsuredSIYN;
+    if(!this.productItem.MoneyInSafeBusinessSIYN){this.productItem.MoneyInSafeBusiness = '0'; this.form?.controls['MoneyInSafeBusiness']?.setValue('0')}
+    if(!this.productItem.MoneyOutSafeBusinessSIYN) {this.productItem.MoneyOutSafeBusiness = '0'; this.form?.controls['MoneyOutSafeBusiness']?.setValue('0')}
+    if(!this.productItem.MoneyInPremisesSIYN) { this.productItem.MoneyInPremises = '0'; this.form?.controls['MoneyInPremises']?.setValue('0')}
+    if(!this.productItem.CashInTransitSIYN) { this.productItem.CashInTransit = '0'; this.form?.controls['CashInTransit']?.setValue('0')}
+    if(!this.productItem.CashInHandEmployeesSIYN) { this.productItem.CashInHandEmployees = '0'; this.form?.controls['CashInHandEmployees']?.setValue('0')}
+    if(!this.productItem.CashInSafeSIYN) { this.productItem.CashInSafe = '0'; this.form?.controls['CashInSafe']?.setValue('0')}
+    // if(!this.productItem.MoneyAnnualcarrySuminsuredSIYN) { this.productItem.MoneyAnnualcarrySuminsured = '0'; this.form?.controls['MoneyAnnualcarrySuminsured']?.setValue('0')}
     console.log("Tablessssss",tableData)
   }
 }
@@ -1500,6 +1616,56 @@ getBurglaryDetails(sections){
     (err) => { },
   );
 }
+getElectronicEquipment(sections){
+  let sectionId = null;
+  if(this.productId=='25') sectionId='3';
+  let ReqObj = {
+    "RequestReferenceNo": this.requestReferenceNo,
+    "RiskId": "1",
+    "SectionId":  sectionId
+  }
+  let urlLink = `${this.motorApiUrl}api/slide6/getelectronicequip`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      console.log(data);
+      if (data.Result) {
+        let details = data?.Result;
+        console.log('PPPPPPPPPPPPPPPPP',details);
+        this.productItem.ElectronicEquipSuminsured = details?.MiningPlantSi;
+       
+        console.log('KKKKKKKKKKKKKKKKKK',this.productItem.ElectronicEquipSuminsured);
+       
+      }
+    },
+    (err) => { },
+  );
+}
+getPlantallrisk(sections){
+  let sectionId = null;
+  if(this.productId=='21') sectionId='3';
+  let ReqObj = {
+    "RequestReferenceNo": this.requestReferenceNo,
+    "RiskId": "1",
+    "SectionId":  sectionId
+  }
+  let urlLink = `${this.motorApiUrl}api/slide2/getallriskdetails`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      console.log(data);
+      if (data.Result) {
+        let details = data?.Result;
+        console.log('PPPPPPPPPPPPPPPPP',details);
+        this.productItem.MiningPlantSi = details?.MiningPlantSi;
+        this.productItem.NonminingPlantSi= details?.NonminingPlantSi;
+        this.productItem.GensetsSi = details?.GensetsSi;
+        this.productItem.EquipmentSi=details?.EquipmentSi;
+        console.log('KKKKKKKKKKKKKKKKKK',this.productItem.EquipmentSi);
+       
+      }
+    },
+    (err) => { },
+  );
+}
 getMoneyDetails(sections){
   let sectionId = null;
   if(this.productId=='19') sectionId='42';
@@ -1538,7 +1704,7 @@ getMoneyDetails(sections){
         if(this.productItem.CashInHandEmployees!=null && this.productItem.CashInHandEmployees!='0' && this.productItem.CashInHandEmployees!='' && this.productItem.CashInHandEmployees!='0.0') this.productItem.CashInHandEmployeesSIYN = true;
         if(this.productItem.CashInSafe!=null && this.productItem.CashInSafe!='0' && this.productItem.CashInSafe!='' && this.productItem.CashInSafe!='0.0') this.productItem.CashInSafeSIYN = true;
         if(this.productItem.CashInTransit!=null && this.productItem.CashInTransit!='0' && this.productItem.CashInTransit!='' && this.productItem.CashInTransit!='0.0') this.productItem.CashInTransitSIYN = true;
-        if(this.productItem.MoneyAnnualcarrySuminsured!=null && this.productItem.MoneyAnnualcarrySuminsured!='0' && this.productItem.MoneyAnnualcarrySuminsured!='' && this.productItem.MoneyAnnualcarrySuminsured!='0.0') this.productItem.MoneyAnnualcarrySuminsuredSIYN = true;
+        if(this.insuranceId!== '100004' && this.productItem.MoneyAnnualcarrySuminsured!=null && this.productItem.MoneyAnnualcarrySuminsured!='0' && this.productItem.MoneyAnnualcarrySuminsured!='' && this.productItem.MoneyAnnualcarrySuminsured!='0.0') this.productItem.MoneyAnnualcarrySuminsuredSIYN = true;
         if(this.productItem.MoneyInPremises!=null && this.productItem.MoneyInPremises!='0' && this.productItem.MoneyInPremises!='' && this.productItem.MoneyInPremises!='0.0') this.productItem.MoneyInPremisesSIYN = true;
         if(this.productItem.MoneyInSafeBusiness!=null && this.productItem.MoneyInSafeBusiness!='0' && this.productItem.MoneyInSafeBusiness!='' && this.productItem.MoneyInSafeBusiness!='0.0') this.productItem.MoneyInSafeBusinessSIYN = true;
         if(this.productItem.MoneyOutSafeBusiness!=null && this.productItem.MoneyOutSafeBusiness!='0'&& this.productItem.MoneyOutSafeBusiness!='' && this.productItem.MoneyOutSafeBusiness!='0.0') this.productItem.MoneyOutSafeBusinessSIYN = true;
@@ -1698,6 +1864,7 @@ addEmployee(){
   this.model.investments = entry.concat(this.model.investments)
 }
 setDomesticForm(type, mode){
+  if(this.insuranceId!='100004'){
   this.fields = [
     {
       type: 'stepper',
@@ -1827,7 +1994,52 @@ setDomesticForm(type, mode){
       ]
     }
   ];
-  if (this.coversRequired == 'C') {
+}
+
+if(this.insuranceId == '100004'){
+  this.fields = [
+    {
+      type: 'stepper',
+      fieldGroup: [
+        {
+          props: { label: 'All Risk - Excluding Cash , Jewellery' },
+          fieldGroup: [
+            {
+              fieldGroupClassName: 'row',
+              fieldGroup: [
+                {
+                  className: 'col-6',
+                  type: 'commaSeparator',
+                  key: 'AllriskSumInsured',
+
+                  props: {
+                    label: `Sum Insured (${this.commonDetails[0].Currency})`,
+                    disabled: this.checkDisable('AllriskSumInsured'),
+                    required: true,
+                    options: [
+
+                    ],
+
+                  },
+                  validators: {
+                  },
+                  hooks: {
+                  },
+                  expressions: {
+                  },
+                },
+              ]
+            }
+          ]
+        },
+      
+      
+      ]
+    }
+  ];
+}
+console.log('INSURANCE IDDDDDDD',this.insuranceId);
+  if (this.coversRequired == 'C' && this.insuranceId!=='100004') {
     let entry = [
       {
         props: { label: 'House Hold Content Risk' },
@@ -1868,7 +2080,49 @@ setDomesticForm(type, mode){
     this.productItem.RoofType = '';
     this.productItem.BuildingSuminsured = 0;
   }
-  if (this.coversRequired == 'BC') {
+
+  if (this.coversRequired == 'C' && this.insuranceId==='100004') {
+    let entry = [
+      {
+        props: { label: 'Contents' },
+        fieldGroup: [
+          {
+            fieldGroupClassName: 'row',
+            fieldGroup: [
+              {
+                className: 'col-6',
+                type: 'commaSeparator',
+                key: 'ContentSuminsured',
+
+                props: {
+                  label: `Contents(${this.commonDetails[0].Currency})`,
+                  disabled: this.checkDisable('ContentSuminsured'),
+                  required: true,
+                  options: [
+
+                  ],
+
+                },
+                validators: {
+                },
+                hooks: {
+                },
+                expressions: {
+                },
+              },
+            ]
+          }
+        ]
+      }
+    ]
+    this.fields[0].fieldGroup = entry.concat(this.fields[0].fieldGroup)
+    this.productItem.BuildingUsageId = '';
+    this.productItem.BuildingBuildYear = null;
+    this.productItem.WallType = '';
+    this.productItem.RoofType = '';
+    this.productItem.BuildingSuminsured = 0;
+  }
+  if (this.coversRequired == 'BC' && this.insuranceId!=='100004') {
     let entry = [
       {
         props: { label: 'Building Risk' },
@@ -1916,7 +2170,7 @@ setDomesticForm(type, mode){
                   required: false,
                   maxLength: 4,
                   pattern: /[0-9]+/gm,
-                  disabled: this.checkDisable('BuildingUsageId'),
+                  disabled: this.checkDisable('BuildingBuildYear'),
                   options: [
                   ],
                 },
@@ -1935,7 +2189,7 @@ setDomesticForm(type, mode){
                 key: 'WallType',
                 props: {
                   label: 'Used Contruction Materials (Wall)',
-                  disabled: this.checkDisable('BuildingUsageId'),
+                  disabled: this.checkDisable('WallType'),
                   required: false,
                   options: [
                   ],
@@ -1950,7 +2204,7 @@ setDomesticForm(type, mode){
                 key: 'RoofType',
                 props: {
                   label: 'Used Contruction Materials (Roof)',
-                  disabled: this.checkDisable('BuildingUsageId'),
+                  disabled: this.checkDisable('RoofType'),
                   required: false,
                   options: [
                   ],
@@ -2050,6 +2304,143 @@ setDomesticForm(type, mode){
     ]
     this.fields[0].fieldGroup = entry.concat(this.fields[0].fieldGroup)
   }
+  if (this.coversRequired == 'BC' && this.insuranceId==='100004') {
+    let entry = [
+      {
+        props: { label: 'Building Risk' },
+
+        fieldGroup: [
+          {
+            fieldGroupClassName: 'row',
+            fieldGroup: [
+    
+              {
+                className: 'col-6',
+                type: 'select',
+                key: 'BuildingUsageId',
+                props: {
+                  label: 'Building Usage',
+                  
+                  disabled: this.checkDisable('BuildingUsageId'),
+                  required: true,
+                  options: [
+                  ],
+                },
+                expressions: {
+
+                },
+              },
+              {
+                className: 'col-6',
+                type: 'input',
+                key: 'BuildingBuildYear',
+                props: {
+                  label: 'Built Year',
+                  placeholder: "YYYY",
+                  required: false,
+                  maxLength: 4,
+                  pattern: /[0-9]+/gm,
+                  disabled: this.checkDisable('BuildingBuildYear'),
+                  options: [
+                  ],
+                },
+                validation: {
+                  messages: {
+                    pattern: (error: any, field: FormlyFieldConfig) => field.formControl.setValue(field.formControl.value.replace(/[^0-9]+/gm, ''))
+                  },
+                },
+                expressions: {
+
+                },
+              },
+              {
+                className: 'col-6',
+                type: 'select',
+                key: 'WallType',
+                props: {
+                  label: 'Used Contruction Materials (Wall)',
+                  disabled: this.checkDisable('WallType'),
+                  required: false,
+                  options: [
+                  ],
+                },
+                expressions: {
+
+                },
+              },
+              {
+                className: 'col-6',
+                type: 'select',
+                key: 'RoofType',
+                props: {
+                  label: 'Used Contruction Materials (Roof)',
+                  disabled: this.checkDisable('RoofType'),
+                  required: false,
+                  options: [
+                  ],
+                },
+                expressions: {
+
+                },
+              },
+
+              {
+                className: 'col-6',
+                type: 'commaSeparator',
+                key: 'BuildingSuminsured',
+                templateOptions: {
+                  label: `Building Sum Insured (${this.commonDetails[0].Currency})`,
+
+                },
+                validators: {
+                },
+                hooks: {
+
+                },
+
+                expressions: {
+                  disabled: this.checkDisable('BuildingSuminsured'),
+                },
+              }
+
+            ]
+          }
+        ]
+      },
+      {
+        props: { label: 'Content' },
+        fieldGroup: [
+          {
+            fieldGroupClassName: 'row',
+            fieldGroup: [
+              {
+                className: 'col-6',
+                type: 'commaSeparator',
+                key: 'ContentSuminsured',
+
+                props: {
+                  label: `Content Sum Insured (${this.commonDetails[0].Currency})`,
+                  disabled: this.checkDisable('ContentSuminsured'),
+                  required: false,
+                  options: [
+
+                  ],
+
+                },
+                validators: {
+                },
+                hooks: {
+                },
+                expressions: {
+                },
+              },
+            ]
+          }
+        ]
+      }
+    ]
+    this.fields[0].fieldGroup = entry.concat(this.fields[0].fieldGroup)
+  }
   if (this.coversRequired == 'B') {
     this.productItem.ContentSuminsured = '0';
     let entry = [
@@ -2118,7 +2509,7 @@ setDomesticForm(type, mode){
                 key: 'WallType',
                 props: {
                   label: 'Used Contruction Materials (Wall)',
-                  disabled: this.checkDisable('BuildingUsageId'),
+                  disabled: this.checkDisable('WallType'),
                   required: false,
                   options: [
                   ],
@@ -2133,7 +2524,7 @@ setDomesticForm(type, mode){
                 key: 'RoofType',
                 props: {
                   label: 'Used Contruction Materials (Roof)',
-                  disabled: this.checkDisable('BuildingUsageId'),
+                  disabled: this.checkDisable('RoofType'),
                   required: false,
                   options: [
                   ],
@@ -2215,8 +2606,6 @@ setDomesticForm(type, mode){
   if(this.productId =='1'){
     this.buglaryloss();
   }
-
-  
 
   if (type == 'create' || mode == 'change') { this.formSection = true; this.viewSection = false; }
   else { this.formSection = false; this.viewSection = true; }
@@ -3584,6 +3973,103 @@ onSaveBurglaryDetails(type,formType){
       (err) => { },
     );
 }
+onSaveElectronicEquipment(type,formType){
+  console.log('RRRRRRRRRRRR',sessionStorage.getItem('quoteReferenceNo'));
+  let ReqObj={
+    "CreatedBy": this.loginId,
+    "InsuranceId": this.insuranceId,
+    "ProductId": this.productId,
+    "RequestReferenceNo":sessionStorage.getItem('quoteReferenceNo'),
+    "RiskId": "1",
+    "SectionId":  "3",
+    "EquipmentSi":this.productItem.ElectronicEquipSuminsured
+  }
+  let urlLink = `${this.motorApiUrl}api/slide6/saveelectronicequip`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      if (data?.Result) {
+        this.requestReferenceNo = data?.Result[0]?.RequestReferenceNo;
+        this.updateComponent.quoteRefNo = data?.Result[0]?.RequestReferenceNo;
+        sessionStorage.setItem('quoteReferenceNo', this.requestReferenceNo);
+        if(type=='proceed'){
+        this.commonDetails[0]['SectionId'] = ['3'];
+        sessionStorage.setItem('homeCommonDetails', JSON.stringify(this.commonDetails))
+        }
+        console.log('RRRRRRRRRRR',data.Result);
+         this.onCalculate(data.Result,type,formType);
+      }
+  },
+  (err) => { },
+);
+}
+onSaveBussinessrisk(type,formType){
+
+ let productsi:any;
+  if(this.productItem.EquipmentSi == '' || this.productItem.EquipmentSi ==null){
+    productsi='0'
+  }
+  else{
+    productsi=this.productItem.EquipmentSi;
+  }
+  console.log('RRRRRRRRRRRR',sessionStorage.getItem('quoteReferenceNo'));
+  let ReqObj={
+    "CreatedBy": this.loginId,
+    "InsuranceId": this.insuranceId,
+    "ProductId": this.productId,
+    "RequestReferenceNo":sessionStorage.getItem('quoteReferenceNo'),
+    "RiskId": "1",
+    "SectionId":  "3",
+    "EquipmentSi":productsi
+  }
+  let urlLink = `${this.motorApiUrl}api/slide2/saveallriskdetails`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      if (data?.Result) {
+        this.requestReferenceNo = data?.Result[0]?.RequestReferenceNo;
+        this.updateComponent.quoteRefNo = data?.Result[0]?.RequestReferenceNo;
+        sessionStorage.setItem('quoteReferenceNo', this.requestReferenceNo);
+        if(type=='proceed'){
+        this.commonDetails[0]['SectionId'] = ['3'];
+        sessionStorage.setItem('homeCommonDetails', JSON.stringify(this.commonDetails))
+        }
+        console.log('RRRRRRRRRRR',data.Result);
+         this.onCalculate(data.Result,type,formType);
+      }
+  },
+  (err) => { },
+);
+}
+onSaveplantaLLrisk(type,formType){
+  console.log('JJJJJJJJJJJJ',sessionStorage.getItem('quoteReferenceNo'));
+  let ReqObj={
+    "CreatedBy": this.loginId,
+    "InsuranceId": this.insuranceId,
+    "ProductId": this.productId,
+    "RequestReferenceNo":sessionStorage.getItem('quoteReferenceNo'),
+    "RiskId": "1",
+    "SectionId":  "3",
+    "MiningPlantSi": this.productItem?.MiningPlantSi,
+    "NonminingPlantSi":this.productItem?.NonminingPlantSi,
+    "GensetsSi":this.productItem?.GensetsSi,
+  }
+  let urlLink = `${this.motorApiUrl}api/slide2/saveallriskdetails`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      if (data?.Result) {
+        this.requestReferenceNo = data?.Result[0]?.RequestReferenceNo;
+        this.updateComponent.quoteRefNo = data?.Result[0]?.RequestReferenceNo;
+        sessionStorage.setItem('quoteReferenceNo', this.requestReferenceNo);
+        if(type=='proceed'){
+        this.commonDetails[0]['SectionId'] = ['3'];
+        sessionStorage.setItem('homeCommonDetails', JSON.stringify(this.commonDetails))
+        }
+         this.onCalculate(data.Result,type,formType);
+      }
+  },
+  (err) => { },
+);
+
+}
 onSaveMoneyDetails(type,formType){
   let ReqObj = {
     "CreatedBy": this.loginId,
@@ -4007,7 +4493,7 @@ getOccupationList(sections) {
                           }
                     }
               }
-              if (this.productId != '19' && this.productId != '3' && this.productId!='6' && this.productId != '1' && this.productId != '32' && this.productId!='14' && this.productId!='16') this.fields[0].fieldGroup[0].fieldGroup[2].props.options = defaultObj.concat(this.occupationList);
+              if (this.productId != '19' && this.productId != '3' && this.productId!='6' && this.productId != '1' && this.productId != '32' && this.productId!='14' && this.productId!='16' && this.productId!='25' && this.productId!='26' && this.productId!='21') this.fields[0].fieldGroup[0].fieldGroup[2].props.options = defaultObj.concat(this.occupationList);
               if(this.productId=='14'){
                 let fireData = new EmployersLiability();
                 let entry = [];
@@ -4054,6 +4540,7 @@ getOccupationList(sections) {
                   this.fields[0].fieldGroup[4].fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.occupationList);
                 }
               }
+             
               else if (this.productId == '6') this.setCommonFormValues();
               if (this.productId != '3' && this.productId != '6' && this.productId != '19' && this.productId!='14' && this.productId!='32') {
 
@@ -4114,6 +4601,8 @@ setCommonFormValues(){
   else if(this.productId=='14'){ReqObj.SectionId='45';urlLink=`${this.motorApiUrl}api/slide7/getempliablity`;}
   else if(this.productId=='32'){ReqObj.SectionId='43';urlLink=`${this.motorApiUrl}api/slide8/getfidelityemp`;}
   else if(this.productId=='1'){ReqObj.SectionId='52';urlLink=`${this.motorApiUrl}api/slide3/getburglaryandhouse`;}
+  else if(this.productId=='21'){ReqObj.SectionId='3';urlLink=`${this.motorApiUrl}api/slide2/getallriskdetails`;}
+  else if(this.productId=='26'){ReqObj.SectionId='3';urlLink=`${this.motorApiUrl}api/slide2/getallriskdetails`;}
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
       console.log(data);
@@ -4232,6 +4721,14 @@ setCommonFormValues(){
               if(this.productItem.ManuUnitsSi!=null && this.productItem.ManuUnitsSi!='0' && this.productItem.ManuUnitsSi!='' && this.productItem.ManuUnitsSi!='0.0') this.productItem.ManuUnitsSIYN = true;
               if(this.productItem.PowerPlantSi!=null && this.productItem.PowerPlantSi!='0' && this.productItem.PowerPlantSi!='' && this.productItem.PowerPlantSi!='0.0') this.productItem.PowerPlantSIYN = true;
               this.checkMachineryYNChanges();
+          }
+          else if(this.productId =='21'){
+            this.productItem.MiningPlantSi  = details?.MiningPlantSi;
+            this.productItem.NonminingPlantSi = details?.NonminingPlantSi;
+            this.productItem.GensetsSi = details?.GensetsSi;
+          }
+          else if(this.productId =='26'){
+            this.productItem.EquipmentSi  = details?.EquipmentSi;
           }
           else if(this.productId=='1'){
             if(details?.EndorsementDate){
@@ -4580,6 +5077,10 @@ onFormSubmit() {
   else if(this.productId=='14'){this.onSaveEmployeeDetails('proceed','individual')}
   else if(this.productId=='32'){this.onSaveFidelityDetails('proceed','individual')}
   else if(this.productId=='1'){this.onSaveBurglaryDetails('proceed','individual')}
+  else if(this.productId=='21'){this.onSaveplantaLLrisk('proceed','individual')}
+  else if(this.productId=='26'){this.onSaveBussinessrisk('proceed','individual')}
+  else if(this.productId=='25'){this.onSaveElectronicEquipment('proceed','individual')}
+ 
   else{
     let createdBy = "";
     let quoteStatus = sessionStorage.getItem('QuoteStatus');

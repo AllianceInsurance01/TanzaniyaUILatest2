@@ -116,7 +116,14 @@
     background: url('../../../assets/images/money.webp') no-repeat center;
     background-size: 120px !important;
 }
-
+.BusinessAllRisk{
+    background: url('../../../assets/plantrisk.avif') no-repeat center;
+    background-size: 95px !important;
+}
+.plantallrisk{
+    background: url('../../../assets/risk.png') no-repeat center;
+    background-size: 95px !important;
+}
 @media screen and (min-width:700px) and (max-width: 2000px) {
     .display2{
        display:none;
@@ -185,4 +192,5 @@
     .bwT {
         background: rgba(275,275,275,.5) !important;
     }
+    
  }
