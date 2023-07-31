@@ -43,9 +43,10 @@ export class EndrosementUserComponent {
     ngOnInit(): void {
 
         this.categoryList = [
-          {"Code":"1","CodeDesc":"Non-Financial"},
-          {"Code":"2","CodeDesc":"Financial"}
-        ]
+          {"Code":"1","CodeDesc":"Non-Financial"}
+        ];
+        this.categoryId = "1";
+        this.getEndorsementList();
     }
   
      getProductList(){
