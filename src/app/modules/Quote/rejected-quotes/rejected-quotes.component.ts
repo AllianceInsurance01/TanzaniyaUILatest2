@@ -79,6 +79,7 @@ export class RejectedQuotesComponent implements OnInit {
         { key: 'ClientName', display: 'Customer Name' },
         { key: 'PolicyStartDate', display: 'Policy Start Date' },
         { key: 'PolicyEndDate', display: 'Policy End Date' },
+        { key: 'Count', display: 'No.Of.Risk' },
         { key: 'RejectReason', display: 'Rejected Reason' },
       ];
     }

@@ -747,7 +747,7 @@ onFidelitySave(){
       "CompanyId": this.insuranceId,
       "ProductId": this.productId,
     }
-    let urlLink = `${this.ApiUrl1}eway/vehicle/sample/download/`
+    let urlLink = `${this.ApiUrl1}eway/vehicle/sample/download`
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         console.log(data);
