@@ -45,6 +45,7 @@ export class MotorDocumentsComponent implements OnInit {
   VechileColumnHeader:any[]=[];
   PaymentInfo:any[]=[];
   DocumentInfo:any[]=[];
+  CommonDoc:any[]=[];
   Currency:any;
   OverallPremiumFc: any;
   pass: boolean;
@@ -305,6 +306,7 @@ export class MotorDocumentsComponent implements OnInit {
       } 
       else if(this.pageFrom=='policy'){ this.router.navigate(['Home/policies'])}
       else if(this.pageFrom == 'Existing') { this.router.navigate(['/Home/existingQuotes'])}
+      else if(this.pageFrom =='Portfolio') { this.router.navigate(['Home/ApproverPortfolio'])}
     }
 
     onViews(row:any){
@@ -603,10 +605,17 @@ Documentview(){
     (data: any) => {
       console.log(data);
       if(data?.Result){
-
-          this.DocumentInfo=data?.Result;
-
+            
+        if(data.Result.DocumentInfo){
+          this.DocumentInfo=data?.Result?.IndividualDocumentRes;
           console.log('Document Info',this.DocumentInfo);
+        }
+
+        if(data.Result.CommonDocumentRes){
+          this.CommonDoc=data?.Result?.CommonDocumentRes;
+        }
+          
+          // this.CommonDoc=data?.Result?.CommonDocumentRes;
           //this.quoteno=data.Result.QuoteNo
 
 

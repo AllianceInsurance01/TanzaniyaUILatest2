@@ -37,9 +37,9 @@ export class SmsDetailsComponent implements OnInit {
       let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if(userDetails){
       this.loginId = userDetails?.Result?.LoginId;
-      this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
-    const user = this.userDetails?.Result;
-    this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+      // this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+    // const user = this.userDetails?.Result;
+    // this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
 
     }
     this.SmsDetails = new Sms();

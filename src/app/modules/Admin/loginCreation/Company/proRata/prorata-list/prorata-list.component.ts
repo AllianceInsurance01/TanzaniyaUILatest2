@@ -167,7 +167,7 @@ export class ProRataListComponent implements OnInit {
 
   getallprorata(){
     let ReqObj={
-      "InsuranceId":"100002",
+      "InsuranceId":this.insuranceId,
       "ProductId": this.productId
 
     }

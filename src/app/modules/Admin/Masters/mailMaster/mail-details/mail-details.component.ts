@@ -47,8 +47,11 @@ userDetails:any;
       let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if(userDetails){
       this.loginId = userDetails?.Result?.LoginId;
-      console.log("Ins Id",userDetails)
-      this.insuranceId = userDetails?.Result?.LoginBranchDetails[0].InsuranceId;
+      console.log("Ins Id",userDetails);
+      this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
+      
+      // this.insuranceId = userDetails?.Result?.LoginBranchDetails[0].InsuranceId;
+      // console.log('UUUUUUUUU',this.insuranceId);
 
     }
 
@@ -178,7 +181,7 @@ userDetails:any;
 getBranchList()
 {
   let ReqObj = {
-    "InsuranceId": "100002"
+    "InsuranceId": this.insuranceId
   }
   let urlLink = `${this.CommonApiUrl1}master/dropdown/branchmaster`;
 this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
