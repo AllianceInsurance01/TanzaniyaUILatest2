@@ -476,6 +476,18 @@ export class EndorsementTypeDetailsComponent {
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
             let customerDatas = data.Result;
+            this.endorsementDate = customerDatas?.EndorsementDate;
+          this.endorsementEffectiveDate = customerDatas?.EndorsementEffectiveDate;
+          this.endorsementRemarks = customerDatas?.EndorsementRemarks;
+          this.endorsementType = customerDatas?.EndorsementType;
+          this.endorsementTypeDesc = customerDatas?.EndorsementTypeDesc;
+          this.endtCategoryDesc = customerDatas?.EndtCategoryDesc;
+          this.endtCount = customerDatas?.EndtCount;
+          this.endtPrevPolicyNo = customerDatas?.EndtPrevPolicyNo;
+          this.endtPrevQuoteNo = customerDatas?.EndtPrevQuoteNo;
+          this.endtStatus = customerDatas?.EndtStatus;
+          this.isFinanceEndt = customerDatas?.IsFinanceEndt;
+          this.orginalPolicyNo = customerDatas?.OrginalPolicyNo;
            this.saveTravelDetails(customerDatas,type);
       },
       (err) => { },

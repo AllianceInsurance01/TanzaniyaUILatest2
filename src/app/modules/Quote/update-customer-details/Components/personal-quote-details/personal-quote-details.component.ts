@@ -1916,7 +1916,7 @@ setDomesticForm(type, mode){
                   required: false,
                   maxLength: 4,
                   pattern: /[0-9]+/gm,
-                  disabled: this.checkDisable('BuildingBuildYear'),
+                  disabled: this.checkDisable('BuildingUsageId'),
                   options: [
                   ],
                 },
@@ -1935,7 +1935,7 @@ setDomesticForm(type, mode){
                 key: 'WallType',
                 props: {
                   label: 'Used Contruction Materials (Wall)',
-                  disabled: this.checkDisable('WallType'),
+                  disabled: this.checkDisable('BuildingUsageId'),
                   required: false,
                   options: [
                   ],
@@ -1950,7 +1950,7 @@ setDomesticForm(type, mode){
                 key: 'RoofType',
                 props: {
                   label: 'Used Contruction Materials (Roof)',
-                  disabled: this.checkDisable('RoofType'),
+                  disabled: this.checkDisable('BuildingUsageId'),
                   required: false,
                   options: [
                   ],
@@ -2118,7 +2118,7 @@ setDomesticForm(type, mode){
                 key: 'WallType',
                 props: {
                   label: 'Used Contruction Materials (Wall)',
-                  disabled: this.checkDisable('WallType'),
+                  disabled: this.checkDisable('BuildingUsageId'),
                   required: false,
                   options: [
                   ],
@@ -2133,7 +2133,7 @@ setDomesticForm(type, mode){
                 key: 'RoofType',
                 props: {
                   label: 'Used Contruction Materials (Roof)',
-                  disabled: this.checkDisable('RoofType'),
+                  disabled: this.checkDisable('BuildingUsageId'),
                   required: false,
                   options: [
                   ],

@@ -2487,7 +2487,12 @@ getMotorUsageList(vehicleValue){
         else if(!this.adminSection) return true;
         else return false;
       }
-      else if(this.endorseSIModification) return false;
+      else if(this.endorseSIModification){
+        console.log("Admin Section",this.adminSection)
+        if(!this.adminSection && coverData.ModifiedYN =='Y') return false;
+        else if(!this.adminSection) return true;
+        else return false;
+      }
       else if(vehicleData.EndorsementYN=='Y') return false;
       else if(this.endorseAddOnCovers && coverData.ModifiedYN =='Y'){
           return false;

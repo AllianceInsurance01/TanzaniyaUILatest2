@@ -266,7 +266,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
         this.orgPolicyNo = sessionStorage.getItem('endorsePolicyNo')
         this.endorsementId = endorseObj.EndtTypeId;
         this.enableFieldsList = endorseObj.FieldsAllowed;
-        let enableAllSection = this.enableFieldsList.some(ele=>ele=='domesticRiskDetails');
+        let enableAllSection = this.enableFieldsList.some(ele=>ele=='domesticRiskDetails' || ele=='AddCovers');
         if(enableAllSection) this.enableAllSection=true;
         else this.enableAllSection = false;
         this.endorsePolicyNo = endorseObj?.PolicyNo;
