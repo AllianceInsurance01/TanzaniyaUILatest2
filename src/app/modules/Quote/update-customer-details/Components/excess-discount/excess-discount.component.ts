@@ -207,6 +207,7 @@ emiyn="N";
   endorseAddOnCovers: any;
   enableSections: any;
   endorseSIModification: any;
+  endorsementType: any;
   constructor(public sharedService: SharedService,private router:Router,private modalService: NgbModal,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe,public dialog: MatDialog) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -1238,27 +1239,72 @@ getMotorUsageList(vehicleValue){
             console.log("Final Cal Response",data.Result);
 
               this.vehicleData = data.Result;
-
-              if(this.vehicleData[0].HavePromoCode){
-                this.havePromoCode = this.vehicleData[0].HavePromoCode;
-                this.promoCode = this.vehicleData[0].PromoCode;
-              }
-              else{
-                this.havePromoCode = "N";
-                this.promoCode = null;
-              }
-              this.currencyCode= this.vehicleData[0].CoverList[0].Currency;
+              
+             
               // let refRemarks = this.vehicleData[0].ReferalRemarks;
               // if(refRemarks){
               //   this.referralRemarks = refRemarks.split('~');
               // }
-              let admRemarks = this.vehicleData[0].AdminRemarks;
-              if(admRemarks){
-                this.adminRemarks = admRemarks.split('~');
-
-              }
+              
               let vehicleList:any[]=[];
               if(this.vehicleData.length!=0){
+                if(this.vehicleData[0].EndtTypeMaster!=null){
+                  let quoteDetails = this.vehicleData[0].EndtTypeMaster
+                  this.endorsementType = quoteDetails.Endtcategdesc;
+                  if(!JSON.parse(sessionStorage.getItem('endorseTypeId'))){
+                    let obj = {
+                      "EndtTypeId": Number(quoteDetails?.Endttypeid),
+                      "FieldsAllowed":quoteDetails.Endtdependantfields,
+                      "EffectiveDate":quoteDetails.Endorsementeffdate,
+                      "Remarks":quoteDetails.Remarks,
+                      "Category": quoteDetails.Endttypecategory,
+                      "EndtName": quoteDetails.Endttype,
+                      "PolicyNo": quoteDetails?.policyNo
+                    }
+                    //sessionStorage.setItem('endorsePolicyNo',)
+                    sessionStorage.setItem('endorseTypeId',JSON.stringify(obj));
+                    this.endorsementSection = true;
+                    let endorseObj = JSON.parse(sessionStorage.getItem('endorseTypeId'))
+                    if(endorseObj){
+                      console.log("Endorse obj",endorseObj)
+                      this.endorsementId = endorseObj.EndtTypeId;
+                      this.endorseEffectiveDate = endorseObj?.EffectiveDate;
+                      this.enableFieldsList = endorseObj.FieldsAllowed;
+                      let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='RemoveSection'  || ele=='AddOnCovers' || ele=='AddCovers' || ele=='removeVehicle');
+                      if(entry) this.coverModificationYN = 'Y';
+                      else this.coverModificationYN = 'N';
+                      console.log("Enable Obj",this.enableFieldsList)
+                      if(this.endorsementId!=42){
+                        this.endorseCovers = this.enableFieldsList.some(ele=>ele=='Covers' && this.endorsementId==852);
+                        this.endorseSIModification = this.enableFieldsList.some(ele=>ele=='Covers' && this.endorsementId==850);
+                        this.endorseAddOnCovers = this.enableFieldsList.some(ele=>ele=='AddOnCovers' || ele=='AddCovers');
+                        this.enableRemoveVehicle = this.enableFieldsList.some(ele=>ele=='removeVehicle');
+                        this.enableSections = this.enableFieldsList.some(ele=>ele=='RemoveSection');
+                      }
+                      else{
+                          this.endorseSIModification = false;
+                          this.endorseCovers = false;
+                          this.endorseAddOnCovers = false;
+                          this.enableRemoveVehicle = false;
+                          this.enableSections = false;
+                      }
+                    }
+                  }
+                }
+                if(this.vehicleData[0].HavePromoCode){
+                  this.havePromoCode = this.vehicleData[0].HavePromoCode;
+                  this.promoCode = this.vehicleData[0].PromoCode;
+                }
+                else{
+                  this.havePromoCode = "N";
+                  this.promoCode = null;
+                }
+                let admRemarks = this.vehicleData[0].AdminRemarks;
+                if(admRemarks){
+                  this.adminRemarks = admRemarks.split('~');
+
+                }
+                this.currencyCode= this.vehicleData[0].CoverList[0].Currency;
                 let i=0;
                 for(let veh of this.vehicleData){
                   veh['ReferralList'] = [];
@@ -2013,7 +2059,7 @@ getMotorUsageList(vehicleValue){
                   console.log("Selected 2",cover);
                 }
               }
-              else if(this.endorseAddOnCovers || this.endorseCovers){
+              else if(this.endorseAddOnCovers || this.endorseCovers || this.endorseSIModification){
                 if(cover.ModifiedYN==undefined){
                   cover['Modifiable']='N';
                   cover['ModifiedYN'] = 'Y';
@@ -2054,7 +2100,7 @@ getMotorUsageList(vehicleValue){
 
   }
   onSelectCover(rowData,event,vehicleId,vehicleData,type,directType){
-    console.log("Cover Selected received",type,this.selectedCoverList)
+    console.log("Cover Selected received",type,this.selectedCoverList,this.endorsementType,this.enableFieldsList)
    
     if(type=='coverList'){
         let vehicle:any;
@@ -2481,14 +2527,14 @@ getMotorUsageList(vehicleValue){
     console.log("Final Covers",this.vehicleDetailsList,this.selectedCoverList)
   }
   checkCoverSelection(vehicleData,coverData){
-    if(this.endorsementSection){
+    if(this.endorsementSection && !this.adminSection && this.statusValue!='RA'){
       if(this.endorseCovers){
         if(!this.adminSection && coverData.ModifiedYN =='N') return false;
         else if(!this.adminSection) return true;
         else return false;
       }
       else if(this.endorseSIModification){
-        console.log("Admin Section",this.adminSection)
+        // console.log("Admin Section",this.adminSection,coverData.ModifiedYN)
         if(!this.adminSection && coverData.ModifiedYN =='Y') return false;
         else if(!this.adminSection) return true;
         else return false;
@@ -2500,6 +2546,7 @@ getMotorUsageList(vehicleValue){
       else if(this.endorseAddOnCovers && this.adminSection )return false;
       else return true;  
     }
+    else if(!this.adminSection && this.statusValue=='RA') return true
     else return false;
   }
   setDiscountDetails(rowData){
@@ -2720,7 +2767,7 @@ getMotorUsageList(vehicleValue){
         //       }
         //       else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
         // }
-         if(this.productId=='3' || this.productId=='19' || this.productId=='32' || this.productId=='14' || this.productId=='1' || this.productId=='6' || this.productId=='16'){
+         if(this.productId=='3' || this.productId=='19' || this.productId=='39' || this.productId=='32' || this.productId=='14' || this.productId=='1' || this.productId=='6' || this.productId=='16'){
           let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
           if(homeSession){
             this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
@@ -3042,7 +3089,7 @@ getMotorUsageList(vehicleValue){
       //   }
       //   else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
       // }
-      else if(this.productId=='32' || this.productId=='14' || this.productId=='15' || this.productId=='19' || this.productId=='1' || this.productId=='6' || this.productId=='16'){
+      else if(this.productId=='32' || this.productId=='39' || this.productId=='14' || this.productId=='15' || this.productId=='19' || this.productId=='1' || this.productId=='6' || this.productId=='16'){
         // let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
         // if(homeSession){
            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])

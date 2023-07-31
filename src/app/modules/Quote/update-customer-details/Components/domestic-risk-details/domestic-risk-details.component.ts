@@ -399,13 +399,13 @@ export class DomesticRiskDetailsComponent implements OnInit {
         this.getOccupationList(eight)
        } 
        else this.eight = false;
-       const nine = this.item.find((Code) => Code == '41');
-        if (nine && this.productId!='19' && this.productId!='16') {
-          this.nine = true;
-        }
-        else {
-          this.nine = false;
-        }
+      //  const nine = this.item.find((Code) => Code == '41');
+      //   if (nine && this.productId!='19' && this.productId!='16') {
+      //     this.nine = true;
+      //   }
+      //   else {
+      //     this.nine = false;
+      //   }
     }
     
   }

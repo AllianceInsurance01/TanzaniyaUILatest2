@@ -30,42 +30,78 @@ export class LapsedQuotesComponent implements OnInit {
     this.insuranceId = this.userDetails.Result.InsuranceId;
     sessionStorage.removeItem('customerReferenceNo');
     sessionStorage.removeItem('vehicleDetailsList');
-    this.quoteHeader =  [
-      { key: 'QuoteNo', display: 'Quote No' },
-      { key: 'RequestReferenceNo', display: 'Reference No' },
-      { key: 'ClientName', display: 'Customer Name' },
-      {
-        key: 'edit',
-        display: 'Vehicle Details',
-        sticky: false,
-        config: {
-          isCollapse: true,
-          isCollapseName:'Vehicles'
+    if(this.productId=='5'){
+      this.quoteHeader =  [
+        { key: 'QuoteNo', display: 'Quote No' },
+        { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'ClientName', display: 'Customer Name' },
+        {
+          key: 'edit',
+          display: 'Vehicle Details',
+          sticky: false,
+          config: {
+            isCollapse: true,
+            isCollapseName:'Vehicles'
+          },
         },
-      },
-      {
-        key: 'actions',
-        display: 'Active',
-        config: {
-          isActive: true,
+        {
+          key: 'actions',
+          display: 'Active',
+          config: {
+            isActive: true,
+          },
         },
-      },
-    ];
-    this.innerColumnHeader =  [
-      { key: 'Vehicleid', display: 'VehicleID' },
-      { key: 'Registrationnumber', display: 'Registration No' },
-      { key: 'Chassisnumber', display: 'Chassis No' },
-      { key: 'Vehiclemake', display: 'Make' },
-      { key: 'Vehcilemodel', display: 'Model' },
-      // {
-      //   key: 'actions',
-      //   display: 'Action',
-      //   config: {
-      //     isEdit: true,
-      //   },
-      // },
-
-    ];
+      ];
+      this.innerColumnHeader =  [
+        { key: 'Vehicleid', display: 'VehicleID' },
+        { key: 'Registrationnumber', display: 'Registration No' },
+        { key: 'Chassisnumber', display: 'Chassis No' },
+        { key: 'Vehiclemake', display: 'Make' },
+        { key: 'Vehcilemodel', display: 'Model' },
+        // {
+        //   key: 'actions',
+        //   display: 'Action',
+        //   config: {
+        //     isEdit: true,
+        //   },
+        // },
+  
+      ];
+    }
+    else if(this.productId=='4'){
+      this.quoteHeader =  [
+        { key: 'QuoteNo', display: 'Quote No' },
+        { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'ClientName', display: 'Customer Name' },
+        { key: 'PolicyStartDate', display: 'Policy Start Date' },
+        { key: 'PolicyEndDate', display: 'Policy End Date' },
+        { key: 'Count', display: 'Passengers' },
+        {
+          key: 'actions',
+          display: 'Active',
+          config: {
+            isActive: true,
+          },
+        },
+      ];
+    }
+    else{
+      this.quoteHeader =  [
+        { key: 'QuoteNo', display: 'Quote No' },
+        { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'ClientName', display: 'Customer Name' },
+        { key: 'PolicyStartDate', display: 'Policy Start Date' },
+        { key: 'PolicyEndDate', display: 'Policy End Date' },
+        { key: 'Count', display: 'No.Of.Risk' },
+        {
+          key: 'actions',
+          display: 'Active',
+          config: {
+            isActive: true,
+          },
+        },
+      ];
+    }
   }
 
   ngOnInit(): void {
