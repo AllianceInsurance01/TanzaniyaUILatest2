@@ -31,7 +31,7 @@ export class BussinessAllRisk{
                   type: 'commaSeparator',
                   key: 'EquipmentSi',
                   props: {
-                    label: 'EquipmentSi',
+                    label: 'Equipment SumInsured',
                     // disabled: this.checkDisable('IndemityPeriod'),
                     required: true,
                     options: [

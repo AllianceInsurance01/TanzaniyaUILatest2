@@ -185,8 +185,11 @@
                                             </div>
                                         </li>
                                         <li class="list_cover_insured  mb-1">
-                                            <div>
+                                            <div *ngIf="productId=='3' && insuranceId !='100004'">
                                                 <b>HouseHold Content </b>
+                                            </div>
+                                            <div *ngIf="productId=='3' && insuranceId =='100004'">
+                                                <b>Content </b>
                                             </div>
                                             <div>
                                                 <b>{{productItem.ContentSuminsured | commaseparator}}</b>
@@ -200,7 +203,7 @@
                                                 <b>{{productItem.ElecEquipSuminsured | commaseparator}}</b>
                                             </div>
                                         </li>
-                                        <li class="list_cover_insured  mb-1" *ngIf="productId=='3'">
+                                        <li class="list_cover_insured  mb-1" *ngIf="productId=='3' && insuranceId!=='100004'">
                                             <div>
                                                 <b>Personal Liability</b>
                                             </div>
@@ -208,7 +211,7 @@
                                                 <b>{{productItem.PersonalIntermediarySuminsured | commaseparator}}</b>
                                             </div>
                                         </li>
-                                        <li class="list_cover_insured  mb-1" *ngIf="productId=='3'">
+                                        <li class="list_cover_insured  mb-1" *ngIf="productId=='3' && insuranceId!=='100004'">
                                             <div>
                                                 <b>Personal Accident</b>
                                             </div>
@@ -365,11 +368,16 @@
                             </div>
                             <div class="maan-grid-item-body">
                                 <ul class="diamond px-3" style="list-style-type: square;">
-                                    <ng-container *ngIf="productId=='3'">
+                                    <ng-container *ngIf="productId=='3' && insuranceId!=='100004'">
                                         <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="(productItem.BuildingSuminsured!='0' && productItem.BuildingSuminsured!='' && productItem.BuildingSuminsured!=null) || ((coversRequired=='B' || coversRequired=='BC'))">Building</li>
                                         <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="(productItem.ContentSuminsured!='0' && productItem.ContentSuminsured!='') || ((coversRequired=='C' || coversRequired=='BC'))">HouseHold Content</li>
                                         <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="productItem.PersonalIntermediarySuminsured!='0' && productItem.PersonalIntermediarySuminsured!=''">Personal Liability</li>
                                         <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="productItem.PersonalAccidentSuminsured!='0' && productItem.PersonalAccidentSuminsured!=''">Personal Accident</li>
+                                        <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="productItem.AllriskSumInsured!='0' && productItem.AllriskSumInsured!=''">All Risk</li>
+                                    </ng-container>
+                                    <ng-container *ngIf="productId=='3' && insuranceId==='100004'">
+                                        <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="(productItem.BuildingSuminsured!='0' && productItem.BuildingSuminsured!='' && productItem.BuildingSuminsured!=null) || ((coversRequired=='B' || coversRequired=='BC'))">Building</li>
+                                        <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="(productItem.ContentSuminsured!='0' && productItem.ContentSuminsured!='') || ((coversRequired=='C' || coversRequired=='BC'))">Content</li>
                                         <li class="spancommon span_font_size mb-1 w3-animate-left" *ngIf="productItem.AllriskSumInsured!='0' && productItem.AllriskSumInsured!=''">All Risk</li>
                                     </ng-container>
                                     <ng-container *ngIf="productId=='19'">

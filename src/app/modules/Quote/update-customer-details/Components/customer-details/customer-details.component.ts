@@ -117,7 +117,7 @@ export class CustomerDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.cyrrencylogin=sessionStorage.getItem('CurrencyidLogin');
-    if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='21' || this.productId=='26'){this.getIndustryList()}
+    if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='21' || this.productId=='26' || this.productId == '25'){this.getIndustryList()}
     this.customerHeader =  [
       { key: 'Chassisnumber', display: 'Chassis Number' },
       { key: 'Registrationnumber', display: 'Registration No' },
@@ -576,7 +576,7 @@ export class CustomerDetailsComponent implements OnInit {
       "InsuranceId": this.insuranceId
     }
     if(this.productId=='3') urlLink = `${this.motorApiUrl}home/getbuildingdetails`;
-    else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14'  || this.productId=='19' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId=='21') urlLink = `${this.motorApiUrl}api/slide/getcommondetails`;
+    else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14'  || this.productId=='19' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId=='21' || this.productId == '25') urlLink = `${this.motorApiUrl}api/slide/getcommondetails`;
     else urlLink =  `${this.motorApiUrl}api/geteservicebyriskid`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
@@ -1768,7 +1768,7 @@ export class CustomerDetailsComponent implements OnInit {
                                   if(this.productId=='19'){
                                     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
                                   }
-                                  else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1') this.saveCommonDetails(Details); 
+                                  else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId =='21') this.saveCommonDetails(Details); 
                                   else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
                                 }
                               }
@@ -1858,7 +1858,7 @@ export class CustomerDetailsComponent implements OnInit {
         if(this.productId=='19'){
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
         }
-        else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1'|| this.productId=='21' || this.productId=='26') this.saveCommonDetails(Details); 
+        else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1'|| this.productId=='21' || this.productId=='26' || this.productId =='25') this.saveCommonDetails(Details); 
         else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
     }
     
@@ -1925,6 +1925,7 @@ export class CustomerDetailsComponent implements OnInit {
     if(this.productId=='1'){section.push('52');};
     if(this.productId=='21'){section.push('3');};
     if(this.productId=='26'){section.push('3');};
+    if(this.productId=='25'){section.push('3');};
     let ReqObj = { 
         "AcexecutiveId": "",
         "PolicyNo": "",
@@ -2107,7 +2108,7 @@ export class CustomerDetailsComponent implements OnInit {
       if(this.productId=='19'){
         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
       }
-      else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='21'  || this.productId=='26') this.saveCommonDetails([vehicle]); 
+      else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='21'  || this.productId=='26' || this.productId == '25') this.saveCommonDetails([vehicle]); 
       else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
     }
   }

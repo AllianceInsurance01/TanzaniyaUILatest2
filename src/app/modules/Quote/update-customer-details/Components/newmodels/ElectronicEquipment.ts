@@ -29,9 +29,9 @@ export class ElectronicEquipment{
                 {
                   className: 'col-4 col-lg-4 col-md-4',
                   type: 'commaSeparator',
-                  key: 'Equipment',
+                  key: 'ElectronicEquipSuminsured',
                   props: {
-                    label: 'Equipment',
+                    label: 'Electronic Equipment SumInsured',
                     // disabled: this.checkDisable('IndemityPeriod'),
                     required: true,
                     options: [
