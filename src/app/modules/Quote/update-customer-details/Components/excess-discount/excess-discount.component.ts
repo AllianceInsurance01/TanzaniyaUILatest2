@@ -1991,13 +1991,13 @@ getMotorUsageList(vehicleValue){
           if(this.adminSection){
               if(this.statusValue=='RA') this.router.navigate(['/Admin/referralApproved']);
               //else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
-              
+              else if(this.statusValue=='RE') this.router.navigate(['/Admin/referralReQuote']);
               else this.router.navigate(['/Admin/referralPending']);
           }
           else{
             if(this.statusValue=='RA') this.router.navigate(['/Home/referralApproved']);
+            else if(this.statusValue=='RE') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
             else this.router.navigate(['/Home/referralPending']);
-            //else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
           }
       }
       else{

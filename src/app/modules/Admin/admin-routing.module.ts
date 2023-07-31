@@ -4,9 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { ReferralPendingComponent } from './ReferralCases/referral-pending/referral-pending.component';
 import { ReferralRejectedComponent } from './ReferralCases/referral-rejected/referral-rejected.component';
 import { ReferralApprovedComponent } from './ReferralCases/referral-approved/referral-approved.component';
-import { ReferralRequoteComponent } from '../referral/referral-requote/referral-requote.component';
 import { AdminComponent } from './admin.component';
 import { EndorsementFieldMasterComponent } from './Masters/endorsement-field-master/endorsement-field-master.component';
+import { ReferralRequoteComponent } from './ReferralCases/referral-requote/referral-requote.component';
 
 const routes: Routes = [
   {
