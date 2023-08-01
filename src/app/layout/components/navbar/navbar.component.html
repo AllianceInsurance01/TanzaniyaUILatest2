@@ -295,10 +295,19 @@
     <nav id="navbar" class="navbar navbar-expand-sm bg-motor navbar-motor" style="position: fixed;
     top: 0;z-index:100;">
         <div class="container-fluid">
-          <a class="bg_Logo p-2" >
-            <img src="./assets/images/logo-2.png" width="170" />
-            <button mat-icon-button style="background-color: #fff;color:black;padding: 7px!important;"  (click)="sidenav.toggle()"> <i class="fa-solid fa-bars" style="font-size: 1.4rem;"></i></button>
-          </a>
+            <ng-container *ngIf="insuranceid == '100002'">
+                <a class="bg_Logo p-2" >
+                    <img src="./assets/images/logo-2.png" width="170" />
+                    <button mat-icon-button style="background-color: #fff;color:black;padding: 7px!important;"  (click)="sidenav.toggle()"> <i class="fa-solid fa-bars" style="font-size: 1.4rem;"></i></button>
+                  </a>
+            </ng-container>
+            <ng-container *ngIf="insuranceid == '100004'">
+                <a class="bg_Logo p-2">
+                    <img src="./assets/images/mgen-logo.png" width="170" />
+                    <button mat-icon-button style="background-color: #fff;color:black;padding: 7px!important;"  (click)="sidenav.toggle()"> <i class="fa-solid fa-bars" style="font-size: 1.1rem;"></i></button>
+                  </a>
+            </ng-container>
+         
           
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>

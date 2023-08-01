@@ -181,6 +181,8 @@ export class ProductData {
 		this.MiningPlantSi  = data?.MiningPlantSi ?? '0';
 		this.NonminingPlantSi = data?.NonminingPlantSi ?? '0';
 		this.GensetsSi = data?.GensetsSi ?? '0';
-		this.EquipmentSi = data?.EquipmentSi ?? '0';
+		this.ElectronicEquipSuminsured = data?.ElecEquipSuminsured ?? '0';
+		// this.EquipmentSi = data?.EquipmentSi ?? '0';
+		// this.ElectronicEquipSuminsured = data.ElectronicEquipSuminsured ?? '0';
 	}
 }

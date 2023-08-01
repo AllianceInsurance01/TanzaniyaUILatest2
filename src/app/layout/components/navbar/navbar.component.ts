@@ -46,6 +46,7 @@ export class NavbarComponent implements OnInit {
   typeList: any[] = []; typeValue: any;parentSection:boolean = true;
   branchName: any; menuSection: boolean = true;
   typeName: any;openSideNav:boolean=false;
+  insuranceid: any;
   constructor(
     private authService: AuthService,
     private service: HttpService,
@@ -77,6 +78,11 @@ export class NavbarComponent implements OnInit {
         console.log("evt***",evt);
         $('.branchsubName').toggle();
       });
+
+      // let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+      this.insuranceid = this.userDetails.Result.LoginBranchDetails[0].InsuranceId;
+      console.log('INSURNACRRR',this.insuranceid)
+      console.log('IIIIIIIIII',this.insuranceid);
   }
   ngAfterViewInit() {
     this.observer

@@ -1,0 +1,109 @@
+.mdc-data-table__table {
+    min-width: 100%;
+    // min-height:100px !important;
+    border: 0;
+     white-space: nowrap !important; 
+    border-spacing: 0;
+    table-layout: fixed;
+}
+.deletedBg{
+    background-color: #fd7e14 !important;
+    color: #fff !important;
+}
+// .table-containers {
+//     max-height: 300px;
+//    max-width:70%;
+//   }
+//   .table-container {
+//     max-height: 200px;
+//     max-width:70%;
+//   }
+@media screen and (min-width: 750px) and (max-width: 20000px) {
+    .example-containers{
+        display:none;
+        // max-width:73% !important;
+        // max-height:300px !important;
+        // height: 200px !important;
+    }
+
+    ::ng-deep .mat-mdc-paginator-outer-container {
+        display: flex !important;
+        position: relative !important;
+        right: 37rem!important;
+        margin-top: 20px !important;
+    }
+
+    .mat-mdc-table .mdc-data-table__row {
+        height: 22px !important;
+    }
+    .mdc-data-table__cell{
+        /* top | right | bottom | left */
+          padding: 0px 4px 0px 13px !important;
+    }
+    .mdc-data-table__table {
+        // min-width:50% !important;
+        // min-height:10% !important;
+
+    }
+    ::-webkit-scrollbar-thumb {
+        border: 6px solid transparent !important;
+    }
+    #grid-table{
+        margin-top:20px !important;
+    }
+    ::ng-deep .mat-mdc-paginator-page-size-label {
+        font-size: 12px !important;
+    }
+    ::ng-deep .mat-mdc-paginator-container{
+        flex-wrap: nowrap !important;
+        // margin-top:20px !important;
+    }
+    ::ng-deep .mat-mdc-paginator-page-size{
+      display:block !important;
+    }
+    // .mat-mdc-paginator-container {
+    //     flex-wrap: nowrap !important;
+    //      align-items: none !important;
+    //      justify-content: none !important;
+    //     /* display: flex; */
+    //     /* align-items: center; */
+    //     /* justify-content: flex-end; */
+    //     /* flex-wrap: wrap-reverse; */
+    // }
+  }
+  
+  @media screen and (min-width: 280px) and (max-width: 750px) {
+    .example-container{ display: none; } 
+    .mobile-label {
+      //width: 80px;
+      display: inline-block;
+          font-weight: bold;
+    }
+    .mat-mdc-table .mdc-data-table__header-row {
+        display: none !important;
+    }
+    .mat-row .mat-mdc-row{
+        height: unset;
+        display: flex !important;
+        flex-direction: column;
+    }
+    .example-element-detail{
+        height: 100% !important;
+        width: 500px !important;
+    }
+    .example-element-details{
+        height: 0px !important;
+        width: 0px !important;
+    }
+    tr.example-detail-row {
+        height:60% !important;
+    }
+    .mdc-data-table__row .mdc-data-table__cell {
+        padding: 10px !important;
+    }
+    #gridstyle {
+        float: left;
+        position: relative;
+        bottom: 0.3rem;
+    }
+  }

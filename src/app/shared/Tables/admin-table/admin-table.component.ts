@@ -7,15 +7,16 @@ import { Router } from '@angular/router';
 import * as Mydatas from '../../../app-config.json';
 
 @Component({
-  selector: 'app-grid-table',
-  templateUrl: './grid-table.component.html',
-  styleUrls: ['./grid-table.component.scss'],
+  selector: 'app-admin-table',
+  templateUrl: './admin-table.component.html',
+  styleUrls: ['./admin-table.component.scss'],
 })
-export class GridTableComponent implements OnInit, OnChanges, AfterViewInit {
+export class AdminTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
-
+  // @ViewChild('paginatorLegal') paginatorLegal: MatPaginator;
+  // @ViewChild('paginatorGSTN') paginatorGSTN: MatPaginator;
   @Input('data') tableData: any[] = [];
   @Input('cols') columnHeader: any[] = [];
   @Input('filterValue') filterValue: any = '';
@@ -26,14 +27,13 @@ export class GridTableComponent implements OnInit, OnChanges, AfterViewInit {
   // tslint:disable-next-line: no-output-rename
   @Output('onSelectCustomer') onSelectCustomer = new EventEmitter();
   @Output('onEdit') onEdit = new EventEmitter();
+  @Output('onTotal') onTotal = new EventEmitter();
   @Output('onConfigure') onConfigure = new EventEmitter();
   @Output('onDelete') onDelete = new EventEmitter();
   // tslint:disable-next-line: no-output-rename
   @Output('onOpenCoverAction') onOpenCoverAction = new EventEmitter();
   @Output('onViews') onViews = new EventEmitter();
   @Output('onGetSchedule') onGetSchedule = new EventEmitter();
-  @Output('onView') onView = new EventEmitter();
-  @Output('onSchedule') onSchedule = new EventEmitter();
 
   public dataSource: any;
   @ViewChild(MatSort) sort!: MatSort;
@@ -44,6 +44,9 @@ export class GridTableComponent implements OnInit, OnChanges, AfterViewInit {
   enableAddVehicle: boolean=false;
   enableFieldsList: any[]=[];
   endorsementId: any;
+  p:any=1;
+  @ViewChild('paginatorFirst') paginatorFirst: MatPaginator;
+  @ViewChild('paginatorSecond') paginatorSecond: MatPaginator;
 
 
   constructor(
@@ -55,7 +58,9 @@ export class GridTableComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnChanges() {
     console.log(this.tableData);
+    this.Currency=sessionStorage.getItem('CurrencyidLogin');
     this.dataSource = new MatTableDataSource(this.tableData);
+    console.log('PPPPPPPPPP',this.dataSource);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.applyFilter(this.filterValue);
@@ -64,7 +69,7 @@ export class GridTableComponent implements OnInit, OnChanges, AfterViewInit {
 
 
   ngOnInit() {
-    console.log('Data in Grid', this.tableData);
+    console.log('Data in Gridssssssssssssss', this.tableData);
     this.dataSource = new MatTableDataSource(this.tableData);
     console.log(this.dataSource);
     this.dataSource.sort = this.sort;
@@ -89,6 +94,13 @@ export class GridTableComponent implements OnInit, OnChanges, AfterViewInit {
     this.sortDirection = 'desc';
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    // if(this.dataSource.ProductId =='5'){
+    //   console.log('IIIIIIIII',)
+    //   this.dataSource.paginator = this.paginatorFirst;
+    // }
+    // else if(this.dataSource.ProductId =='3'){
+    //   this.dataSource.paginator = this.paginatorSecond;
+    // }
   }
   onCheckCustomer(rowData){
    return this.ReferenceNo==rowData.CustomerReferenceNo;
@@ -111,7 +123,9 @@ export class GridTableComponent implements OnInit, OnChanges, AfterViewInit {
     const filterValue = value.toLowerCase();
     return data.filter((option) => option?.CodeDescription?.toLowerCase().includes(filterValue));
   }
-
+  onTotals(rowdata){
+console.log('OOOOOOOOOOOOO',rowdata);
+  }
 
 
 

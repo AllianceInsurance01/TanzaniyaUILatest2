@@ -32,17 +32,21 @@ export class ProductSelectionComponent implements OnInit {
   userTypes:any='B2';
   typeList:any;
   branchName: any;
+  insuranceid: any;
 
   constructor(private router: Router,
     private authService: AuthService,
     private loginService:LoginService,
     private service: HttpService,private SharedService:SharedService) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+    console.log('UUUUUUUUUUU',this.userDetails);
     this.userResponse = this.userDetails?.Result;
     this.loginId = this.userDetails.Result.LoginId;
     this.userType = this.userDetails.Result.UserType;
     //this.userTypes = this.userDetails.Result.BranchCode;
     this.userTypes= this.userDetails.Result.BrokerBranchName
+    this.insuranceid = this.userDetails.Result.LoginBranchDetails[0].InsuranceId;
+    console.log('IIIIIIIIII',this.insuranceid);
     this.productList = this.userDetails.Result.BrokerCompanyProducts;
 
 

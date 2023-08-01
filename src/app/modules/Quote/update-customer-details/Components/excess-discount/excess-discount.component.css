@@ -500,5 +500,18 @@ th.mat-header-cell {
             .botomdisplay{
                 margin-bottom: none !important;
             }
+            ::ng-deep .card{
+                border-right:none !important;
+                border-left:none !important;
+                box-shadow:none !important;
+            }
+            ::ng-deep .customBody{
+                /* border-bottom: 0px solid grey!important; */
+        
+                border-right: none !important;
+            }
+            ::-webkit-scrollbar-thumb {
+                border: 6px solid transparent !important;
+            }
           
         }

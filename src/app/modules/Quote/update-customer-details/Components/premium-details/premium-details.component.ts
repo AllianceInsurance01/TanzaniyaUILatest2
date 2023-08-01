@@ -89,15 +89,13 @@ export class PremiumDetailsComponent implements OnInit {
       { CodeDesc: 'Mail', Code: 'Mail' },
       { CodeDesc: 'Whatsapp', Code: 'Whatsapp' }
     ];
-    if(sessionStorage.getItem('endorsePolicyNo')){
       sessionStorage.removeItem('quotePaymentId');
-      this.endorsementSection = true;
+      
       let endorseObj = JSON.parse(sessionStorage.getItem('endorseTypeId'))
       if(endorseObj){
-        this.orgPolicyNo = sessionStorage.getItem('endorsePolicyNo')
+        this.endorsementSection = true;
         this.endorseCategory = endorseObj.Category;
         this.endorsementName = endorseObj?.EndtName;
-        this.endorsePolicyNo = endorseObj.PolicyNo;
         this.enableFieldsList = endorseObj.FieldsAllowed;
         this.endorsementId = endorseObj.EndtTypeId;
         if(endorseObj.QuoteNo) this.quoteNo = endorseObj.QuoteNo;
@@ -109,10 +107,9 @@ export class PremiumDetailsComponent implements OnInit {
           
         }
       }
-    }
-    else{
-      this.endorsementSection = false;
-    }
+      else{
+        this.endorsementSection = false;
+      }
      this.quoteRefNo = sessionStorage.getItem('quoteReferenceNo');
      this.quoteNo = sessionStorage.getItem('quoteNo');
      this.updateComponent.quoteNo = this.quoteNo;
@@ -417,11 +414,13 @@ export class PremiumDetailsComponent implements OnInit {
             let quoteDetails = data?.Result?.QuoteDetails;
             if(quoteDetails){
               if(quoteDetails.Endorsementeffdate!=null){
+                this.orgPolicyNo = quoteDetails?.OriginalPolicyNo;
+                this.endorsePolicyNo = quoteDetails?.policyNo;
                  this.endorsementType = quoteDetails.Endtcategdesc;
                 if(!JSON.parse(sessionStorage.getItem('endorseTypeId'))){
                   let obj = {
                     "EndtTypeId": quoteDetails?.EndtTypeId,
-                    "FieldsAllowed":[],
+                    "FieldsAllowed":quoteDetails.Endtdependantfields.split(','),
                     "EffectiveDate":quoteDetails.Endorsementeffdate,
                     "Remarks":quoteDetails.Endorsementeffdate,
                     "Category": quoteDetails.Endtcategdesc,

@@ -606,7 +606,7 @@ Documentview(){
       console.log(data);
       if(data?.Result){
             
-        if(data.Result.DocumentInfo){
+        if(data.Result.IndividualDocumentRes){
           this.DocumentInfo=data?.Result?.IndividualDocumentRes;
           console.log('Document Info',this.DocumentInfo);
         }

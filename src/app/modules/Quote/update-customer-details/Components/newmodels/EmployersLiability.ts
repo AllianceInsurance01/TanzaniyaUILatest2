@@ -93,7 +93,7 @@ export class EmployersLiabilitys{
                     {
                         type: 'commaSeparator',
                         className: 'col-sm-4',
-                        key: 'LiabilityAnnualAggregateLimit',
+                        key: 'LiabilityAnnualLimit',
                         defaultValue: '0',
                         props: {
                           label: `Liability Annual Aggregate Limit`,

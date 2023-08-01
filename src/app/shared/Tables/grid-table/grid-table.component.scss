@@ -34,7 +34,7 @@
 .mdc-data-table__table {
     min-width: 100%;
     border: 0;
-     white-space: normal !important; 
+     white-space: nowrap !important; 
     border-spacing: 0;
     table-layout: fixed;
 }
@@ -84,3 +84,7 @@
         bottom: 0.3rem;
     }
   }
+
+  ::-webkit-scrollbar-thumb {
+    border: 6px solid transparent !important;
+}
