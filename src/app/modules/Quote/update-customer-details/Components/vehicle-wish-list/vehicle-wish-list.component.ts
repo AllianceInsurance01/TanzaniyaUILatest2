@@ -618,7 +618,7 @@ export class VehicleWishListComponent implements OnInit {
       "UserType": this.userType,
       "NcdYn":"N"
     }
-    let urlLink = `${this.UploadUrl}eway/batch/upload`;
+    let urlLink = `${this.UploadUrl}eway/vehicle/batch/upload`;
     this.sharedService.onPostExcelDocumentMethodSync(urlLink, ReqObj,this.uploadDocList[0].url).subscribe(
       (data: any) => {
           if(data){
@@ -643,7 +643,7 @@ export class VehicleWishListComponent implements OnInit {
       "ProductId":this.productId,
       "RequestRefNo":this.referenceNo
     }
-    let urlLink = `${this.UploadUrl}eway/get/transaction/status`;
+    let urlLink = `${this.UploadUrl}eway/vehicle/get/transaction/status`;
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
           (data: any) => {
               if(data){
@@ -676,7 +676,7 @@ export class VehicleWishListComponent implements OnInit {
       "ProductId":this.productId,
       "RequestRefNo":this.referenceNo
     }
-    let urlLink = `${this.UploadUrl}eway/getUploadTransaction`;
+    let urlLink = `${this.UploadUrl}eway/vehicle/getUploadTransaction`;
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
           (data: any) => {
               if(data){
@@ -701,7 +701,7 @@ export class VehicleWishListComponent implements OnInit {
       "RiskId":"1",
       "Status": 'E'
     }
-    let urlLink = `${this.UploadUrl}eway/get/recordsByStatus`;
+    let urlLink = `${this.UploadUrl}eway/vehicle/get/recordsByStatus`;
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
           (data: any) => {
               if(data){
@@ -720,7 +720,7 @@ export class VehicleWishListComponent implements OnInit {
       "ProductId":this.productId,
       "RowNum": rowData.RowNum
     }
-    let urlLink = `${this.UploadUrl}eway/delete/records`;
+    let urlLink = `${this.UploadUrl}eway/vehicle/delete/records`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
           if(data){
@@ -743,7 +743,7 @@ export class VehicleWishListComponent implements OnInit {
       "RiskId": "1",
       "Status": "Y"
     }
-    let urlLink = `${this.UploadUrl}eway/insert/records`;
+    let urlLink = `${this.UploadUrl}eway/vehicle/insert/records`;
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
           (data: any) => {
               if(data){
