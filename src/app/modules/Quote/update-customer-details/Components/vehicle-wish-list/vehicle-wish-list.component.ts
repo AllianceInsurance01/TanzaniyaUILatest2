@@ -637,6 +637,26 @@ export class VehicleWishListComponent implements OnInit {
       (err) => { },
     );
   }
+  employeedownload(){
+    let ReqObj = {
+      "CompanyId": this.insuranceId,
+      "ProductId": this.productId,
+    }
+    let urlLink = `${this.ApiUrl1}eway/vehicle/sample/download/`
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', data?.Result);
+        link.setAttribute('download', 'SampleVehicleDetails');
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    },
+      (err) => { },
+    );
+  }
   checkUploadStatus(){
     let ReqObj={
       "CompanyId":this.insuranceId,
