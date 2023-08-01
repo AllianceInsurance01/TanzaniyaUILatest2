@@ -1256,7 +1256,7 @@ getMotorUsageList(vehicleValue){
                   if(!JSON.parse(sessionStorage.getItem('endorseTypeId'))){
                     let obj = {
                       "EndtTypeId": Number(quoteDetails?.Endttypeid),
-                      "FieldsAllowed":quoteDetails.Endtdependantfields,
+                      "FieldsAllowed":quoteDetails.Endtdependantfields.split(','),
                       "EffectiveDate":quoteDetails.Endorsementeffdate,
                       "Remarks":quoteDetails.Remarks,
                       "Category": quoteDetails.Endttypecategory,

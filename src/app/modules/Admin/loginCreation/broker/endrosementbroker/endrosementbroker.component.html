@@ -15,7 +15,7 @@
             <div class="col-md-5 col-lg-5 col-xl-5">
                 <div class="input-control-container">
                     <label class="input-form-label">Category</label>
-                    <ng-select class="input-form-select" appendTo="body" [items]="categoryList" [(ngModel)]="categoryId" (change)="getEndorsementList()" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="input-form-select" appendTo="body" disabled [items]="categoryList" [(ngModel)]="categoryId" (change)="getEndorsementList()" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                 </div>
             </div>
@@ -90,7 +90,7 @@
         </ng-container>-->
 
         <div class="text-center mb-2 mt-2">
-            <button class="btn btn-danger" (click)="back()">Back</button>
+            <button class="btn btn-danger" (click)="back()">Back</button>&nbsp;
             <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
         </div>
     </div>
