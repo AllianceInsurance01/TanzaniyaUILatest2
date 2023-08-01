@@ -209,6 +209,7 @@ emiyn="N";
   endorseSIModification: any;
   endorsementType: any;
   showGrid:boolean=false;
+  enableAddVehicle: any;
   constructor(public sharedService: SharedService,private router:Router,private modalService: NgbModal,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe,public dialog: MatDialog) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -224,10 +225,10 @@ emiyn="N";
     this.insuranceId = this.userDetails.Result.InsuranceId;
     this.brokerbranchCode = this.userDetails.Result.BrokerBranchCode;
     this.updateComponent.showStepperSection = true;
-    if(sessionStorage.getItem('endorsePolicyNo')){
-      this.endorsementSection = true;
+      
       let endorseObj = JSON.parse(sessionStorage.getItem('endorseTypeId'))
       if(endorseObj){
+        this.endorsementSection = true;
         console.log("Endorse obj",endorseObj)
         this.endorsementId = endorseObj.EndtTypeId;
         this.endorseEffectiveDate = endorseObj?.EffectiveDate;
@@ -240,22 +241,23 @@ emiyn="N";
           this.endorseCovers = this.enableFieldsList.some(ele=>ele=='Covers' && this.endorsementId==852);
           this.endorseSIModification = this.enableFieldsList.some(ele=>ele=='Covers' && this.endorsementId==850);
           this.endorseAddOnCovers = this.enableFieldsList.some(ele=>ele=='AddOnCovers' || ele=='AddCovers');
+          this.enableAddVehicle = this.enableFieldsList.some(ele=>ele=='addVehicle');
           this.enableRemoveVehicle = this.enableFieldsList.some(ele=>ele=='removeVehicle');
           this.enableSections = this.enableFieldsList.some(ele=>ele=='RemoveSection');
         }
         else{
-            this.endorseSIModification = false;
-            this.endorseCovers = false;
-            this.endorseAddOnCovers = false;
-            this.enableRemoveVehicle = false;
-            this.enableSections = false;
+          this.endorseSIModification = false;
+          this.endorseCovers = false;
+          this.enableAddVehicle = false;
+          this.endorseAddOnCovers = false;
+          this.enableRemoveVehicle = false;
+          this.enableSections = false;
         }
       }
-    }
-    else{
-      this.endorsementSection = false;
-      this.endorseCovers = false;
-    }
+      else{
+        this.endorsementSection = false;
+        this.endorseCovers = false;
+      }
     this.statusList = [
       {"Code":"RP","CodeDesc":"Referral Pending"},
       {"Code":"RA","CodeDesc":"Referral Approved"},
@@ -1280,12 +1282,14 @@ getMotorUsageList(vehicleValue){
                         this.endorseCovers = this.enableFieldsList.some(ele=>ele=='Covers' && this.endorsementId==852);
                         this.endorseSIModification = this.enableFieldsList.some(ele=>ele=='Covers' && this.endorsementId==850);
                         this.endorseAddOnCovers = this.enableFieldsList.some(ele=>ele=='AddOnCovers' || ele=='AddCovers');
+                        this.enableAddVehicle = this.enableFieldsList.some(ele=>ele=='addVehicle');
                         this.enableRemoveVehicle = this.enableFieldsList.some(ele=>ele=='removeVehicle');
                         this.enableSections = this.enableFieldsList.some(ele=>ele=='RemoveSection');
                       }
                       else{
                           this.endorseSIModification = false;
                           this.endorseCovers = false;
+                          this.enableAddVehicle = false;
                           this.endorseAddOnCovers = false;
                           this.enableRemoveVehicle = false;
                           this.enableSections = false;
@@ -2506,6 +2510,10 @@ getMotorUsageList(vehicleValue){
       else if(vehicleData.EndorsementYN=='Y') return false;
       else if(this.endorseAddOnCovers && coverData.ModifiedYN =='Y'){
           return false;
+      }
+      else if(this.enableAddVehicle){
+        if(vehicleData.EndorsementYn=='Y')return false;
+        else return true;
       }
       else if(this.endorseAddOnCovers && this.adminSection )return false;
       else return true;  
