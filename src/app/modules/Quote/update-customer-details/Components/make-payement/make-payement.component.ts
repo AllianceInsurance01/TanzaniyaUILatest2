@@ -98,7 +98,7 @@ export class MakePayementComponent implements OnInit {
     let endorseObj = JSON.parse(sessionStorage.getItem('endorseTypeId'))
       if(endorseObj){
         this.endorsementSection = true;
-        this.orgPolicyNo = sessionStorage.getItem('endorsePolicyNo')
+        
         this.endorseCategory = endorseObj.Category;
         this.endorsementName = endorseObj?.EndtName;
         this.endorsePolicyNo = endorseObj.PolicyNo;
@@ -155,7 +155,8 @@ export class MakePayementComponent implements OnInit {
           if(data?.Result){
             this.vehicleList = data?.Result?.ProductDetails;
             let quoteDetails = data?.Result?.QuoteDetails;
-            
+            this.orgPolicyNo = quoteDetails?.OriginalPolicyNo;
+            this.endorsePolicyNo = quoteDetails?.policyNo;
             this.currencyCode = quoteDetails?.Currency;
             this.IsChargeOrRefund = quoteDetails?.IsChargeOrRefund;
             this.endtPremium = quoteDetails?.TotalEndtPremium;
