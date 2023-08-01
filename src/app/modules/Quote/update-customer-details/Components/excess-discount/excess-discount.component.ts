@@ -208,6 +208,7 @@ emiyn="N";
   enableSections: any;
   endorseSIModification: any;
   endorsementType: any;
+  showGrid:boolean=false;
   constructor(public sharedService: SharedService,private router:Router,private modalService: NgbModal,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe,public dialog: MatDialog) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -412,6 +413,7 @@ emiyn="N";
     let referenceNo =  sessionStorage.getItem('customerReferenceNo');
     if(referenceNo){
       this.getCustomerDetails(referenceNo);
+      this.viewCondition('direct');
     }
     let quoteStatus = sessionStorage.getItem('QuoteStatus');
     if(quoteStatus=='AdminRP' || quoteStatus == 'AdminRA' || quoteStatus == 'AdminRE'){
@@ -1672,9 +1674,6 @@ getMotorUsageList(vehicleValue){
     //this.setVehicleValues('direct')
   }
   editWarranty(id){
-    //$('#WarrantyModel').modal('show');
-    //this.open(modal);
-    //this.getEditVehicleDetails(rowData,'direct',modal);
     const dialogRef = this.dialog.open(DialogComponent, {
 
       data: {
@@ -1682,30 +1681,17 @@ getMotorUsageList(vehicleValue){
         existingData:this.WarrantyData,
         QuoteNo:this.quoteNo,
         ReferenceNo:this.quoteRefNo,
-        RiskId: this.tempData.VehicleId,
-        SectionId:this.tempData.SectionId,
+        RiskId:"1",
+        SectionId:"99999",
         Id:"4"
-        /*jsonList: this.jsonList = [
-          {
-            "TermsId":null,
-             "Id":this.Id,
-            "SubId":null,
-             "SubIdDesc":""
-          }
-        ],
-        Id:"6"*/
       }
     });
     dialogRef.afterClosed().subscribe((result) => {
       let i=id
       console.log('The dialog was closed');
-       this.WarrantyStatus(i,this.tempData)
-      // this.onWarranty = false;
-      //  this.onClauses = true;
-      //  this.onWars = false;
-      //  this.onExclusion = false;
-      //  this.clauses=true;
-      //this.animal = result;
+      this.WarrantyStatuss();
+      //  this.WarrantyStatus(i,this.tempData)
+    
     });
 
   }
@@ -1713,7 +1699,7 @@ getMotorUsageList(vehicleValue){
     let clauses
      
 
-    console.log('QQQQQ',this.quoteNo)
+    console.log('QQQQQ',this.quoteNo,rawData);
         let quote
     if(this.quoteNo){
       quote=this.quoteNo;
@@ -1740,8 +1726,8 @@ getMotorUsageList(vehicleValue){
       ProductId: this.productId,
       QuoteNo:quote,
       //TermsId:null,
-      RiskId: this.tempData.VehicleId,
-      SectionId:this.tempData.SectionId,
+      RiskId:'1',
+      SectionId:'99999',
       TermsAndConditionReq:passData,
       RequestReferenceNo: this.requestReferenceNo
     };
@@ -1773,30 +1759,16 @@ getMotorUsageList(vehicleValue){
         existingData:this.ClausesData,
         QuoteNo:this.quoteNo,
         ReferenceNo:this.quoteRefNo,
-        RiskId: this.tempData.VehicleId,
-        SectionId:this.tempData.SectionId,
+        RiskId: "1",
+        SectionId:"99999",
         Id:"6"
-        /*jsonList: this.jsonList = [
-          {
-            "TermsId":null,
-             "Id":this.Id,
-            "SubId":null,
-             "SubIdDesc":""
-          }
-        ],
-        Id:"6"*/
       }
     });
     dialogRef.afterClosed().subscribe((result) => {
       let i=id
       console.log('The dialog was closed');
-       this.ClausesStatus(i,this.tempData);
-      // this.onWarranty = false;
-      //  this.onClauses = true;
-      //  this.onWars = false;
-      //  this.onExclusion = false;
-      //  this.clauses=true;
-      //this.animal = result;
+      this.ClausesStatuss();
+      //  this.ClausesStatus(i,this.tempData);
     });
   }
 
@@ -1809,25 +1781,17 @@ getMotorUsageList(vehicleValue){
         existingData:this.ExclusionData,
         QuoteNo:this.quoteNo,
         ReferenceNo:this.quoteRefNo,
-        RiskId: this.tempData.VehicleId,
-        SectionId:this.tempData.SectionId,
+        RiskId: "1",
+        SectionId:"99999",
         Id:"7"
-        /*jsonList: this.jsonList = [
-          {
-            "TermsId":null,
-             "Id":this.Id,
-            "SubId":null,
-             "SubIdDesc":""
-          }
-        ],
-        Id:"6"*/
       }
     });
     dialogRef.afterClosed().subscribe((result) => {
       let i=id
       console.log('The dialog was closed');
-      this.ExclusioStatus(i,this.tempData);
-      //this.animal = result;
+      this.ExclusioStatuss();
+      //this.ExclusioStatus(i,this.tempData);
+      
     });
   }
   saveExclusionData(){
@@ -3089,7 +3053,7 @@ getMotorUsageList(vehicleValue){
       //   }
       //   else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
       // }
-      else if(this.productId=='32' || this.productId=='39' || this.productId=='14' || this.productId=='15' || this.productId=='19' || this.productId=='1' || this.productId=='6' || this.productId=='16'){
+      else if(this.productId=='32' || this.productId=='39' || this.productId=='14' || this.productId=='15' || this.productId=='19' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId =='21' || this.productId =='26'){
         // let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
         // if(homeSession){
            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
@@ -3472,7 +3436,8 @@ getMotorUsageList(vehicleValue){
       ProductId:this.productId,
       QuoteNo:QuoteNo,
       TermsId:"D",
-      SectionId:this.vehicleDetailsList[index].SectionId,
+      SectionId:'99999',
+      // SectionId:this.vehicleDetailsList[index].SectionId,
       RequestReferenceNo: this.quoteRefNo
 
     }
@@ -3483,11 +3448,19 @@ getMotorUsageList(vehicleValue){
         if(data.Result){
           this.viewList = data.Result;
           console.log(' view Condition Value',this.viewList);
-          this.ClausesData = this.viewList.ClausesList;
-          console.log('Clausss',this.ClausesData)
-          this.WarrantyData = this.viewList.WarrantyList;
+          if(this.viewList?.ClausesList){
+            this.ClausesData = this.viewList?.ClausesList;
+            console.log('Claussssssssssss',this.ClausesData);
+          }
+          if(this.viewList?.ExclusionList){
+            this.ExclusionData = this.viewList?.ExclusionList;
+            console.log('Exclusiooooooooon',this.ExclusionData);
+          }
+          if(this.viewList?.WarrantyList){
+            this.WarrantyData = this.viewList?.WarrantyList;
+            console.log('Waraantyyyyy',this.WarrantyData);
+          }
           this.WarrteData = this.viewList.WarrateList;
-          this.ExclusionData = this.viewList.ExclusionList;
           if(this.userType=='Broker'){
             /*console.log('bbbbbbbbbbbbb',this.userType)
             this.ClauseColumnHeader;
@@ -3607,7 +3580,7 @@ getMotorUsageList(vehicleValue){
               "WarrantyList": this.WarrantyData,
               "ExclusionList": this.ExclusionData
             }
-              this.vehicleDetailsList[index]["Common"] = commonObj;
+              // this.vehicleDetailsList[index]["Common"] = commonObj;
           }
         }
       },
@@ -3692,6 +3665,50 @@ getMotorUsageList(vehicleValue){
       (err) => { },
     )
   }
+
+  ClausesStatuss(){
+    let common:any;
+    console.log('this',this.vehicleDetailsList);
+    console.log('TTTTTTT',this.vehicleDetailsList);
+    this.CoveList=false;
+   // this.ClausesSection=true;
+    this.onClauses = true;
+    this.onWarranty=false;
+    this.onWars = false;
+    this.onExclusion = false;
+    this.clauses = true;
+    this.warranty = false;
+    this.Exclusion = false;
+    this.showGrid=true;
+  this.viewCondition('direct');
+  }
+  ExclusioStatuss(){
+    this.CoveList=false;
+    this.onExclusion = true;
+    this.onWarranty=false;
+    this.onWars = false;
+    this.onClauses = false;
+    this.Exclusion = true;
+    this.warranty = false;
+    this.clauses = false;
+    this.showGrid=true;
+console.log('Common',this.common4);
+this.viewCondition('1'); 
+  }
+  WarrantyStatuss(){
+    this.CoveList=false;
+     this.onWarranty=true;
+     this.onClauses = false;
+     this.onWars = false;
+     this.onExclusion = false;
+     this.showGrid=true;
+     this.warranty = true;
+     this.clauses = false;
+     this.Exclusion = false;
+     let common
+     this.viewCondition('1');
+  }
+
 
   ClausesStatus(i,rowData){
     /*this.viewList[i]
@@ -3836,6 +3853,7 @@ this.viewCondition(i);
     this.Exclusion = false;
     this.clause = false;
     this.clauses = false;
+    this.showGrid=false;
   }
   onCheckUser(i, event,clause) {
     const checked = event.target.checked; // stored checked value true or false

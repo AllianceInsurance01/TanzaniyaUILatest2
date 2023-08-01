@@ -1,0 +1,265 @@
+<div class="card">
+    <div class="card-header">Portfolio</div>
+    <div class="card-body">
+        <div class="row" *ngIf="!show">
+            <div class="col-12 col-md-3 col-lg-3">
+                <label class="input-form-label spancommon span_font_size">Start Date</label>
+                <mat-form-field appearance="fill">
+                    <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
+                    <input matInput [matDatepicker]="picker1" [(ngModel)]="StartDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3 col-lg-3">
+                <label class="input-form-label spancommon span_font_size">End Date</label>
+                <mat-form-field appearance="fill">
+                    <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="EndDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3 col-lg-3">
+                <div class="input-control-container">
+                    <label class="input-form-label">Branch</label><span class="text-danger">*</span>
+                    <ng-select class="input-form-select" appendTo="body" [items]="branchList" [(ngModel)]="branchValue" (change)="getBussinessType('change')" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="input-control-container">
+                    <label class="input-form-label">Business Type</label><span class="text-danger">*</span>
+                    <ng-select class="input-form-select" appendTo="body" [items]="TemplateList" [(ngModel)]="bussinesstype" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+    
+        </div>
+        <div style="text-align:center;" *ngIf="!show">
+                <div class="col-12 col-md-3 offset-4">
+                    <button class="custom-btn btn-6" matRipple style="margin: 0.7rem 0;" (click)="getsearchlist(bussinesstype)"><i class="fas fa-search"></i>&nbsp;Search </button>
+                </div>
+            
+        </div>
+
+<!-- 
+            <div class="report-container">
+                <div class="report-header">
+                    <h1 class="recent-Articles">Recent Articles</h1>
+                    <button class="view">View All</button>
+                </div>
+ 
+                <div class="report-body">
+                    <div class="report-topic-heading">
+                        <h3 class="t-op">Article</h3>
+                        <h3 class="t-op">Views</h3>
+                        <h3 class="t-op">Comments</h3>
+                        <h3 class="t-op">Status</h3>
+                    </div>
+ 
+                    <div class="items">
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Article 73</h3>
+                            <h3 class="t-op-nextlvl">2.9k</h3>
+                            <h3 class="t-op-nextlvl">210</h3>
+                            <h3 class="t-op-nextlvl label-tag">Published</h3>
+                        </div>
+ 
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Article 72</h3>
+                            <h3 class="t-op-nextlvl">1.5k</h3>
+                            <h3 class="t-op-nextlvl">360</h3>
+                            <h3 class="t-op-nextlvl label-tag">Published</h3>
+                        </div>
+ 
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Article 71</h3>
+                            <h3 class="t-op-nextlvl">1.1k</h3>
+                            <h3 class="t-op-nextlvl">150</h3>
+                            <h3 class="t-op-nextlvl label-tag">Published</h3>
+                        </div>
+ 
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Article 70</h3>
+                            <h3 class="t-op-nextlvl">1.2k</h3>
+                            <h3 class="t-op-nextlvl">420</h3>
+                            <h3 class="t-op-nextlvl label-tag">Published</h3>
+                        </div>
+ 
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Article 69</h3>
+                            <h3 class="t-op-nextlvl">2.6k</h3>
+                            <h3 class="t-op-nextlvl">190</h3>
+                            <h3 class="t-op-nextlvl label-tag">Published</h3>
+                        </div>
+ 
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Article 68</h3>
+                            <h3 class="t-op-nextlvl">1.9k</h3>
+                            <h3 class="t-op-nextlvl">390</h3>
+                            <h3 class="t-op-nextlvl label-tag">Published</h3>
+                        </div>
+ 
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Article 67</h3>
+                            <h3 class="t-op-nextlvl">1.2k</h3>
+                            <h3 class="t-op-nextlvl">580</h3>
+                            <h3 class="t-op-nextlvl label-tag">Published</h3>
+                        </div>
+ 
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Article 66</h3>
+                            <h3 class="t-op-nextlvl">3.6k</h3>
+                            <h3 class="t-op-nextlvl">160</h3>
+                            <h3 class="t-op-nextlvl label-tag">Published</h3>
+                        </div>
+ 
+                        <div class="item1">
+                            <h3 class="t-op-nextlvl">Article 65</h3>
+                            <h3 class="t-op-nextlvl">1.3k</h3>
+                            <h3 class="t-op-nextlvl">220</h3>
+                            <h3 class="t-op-nextlvl label-tag">Published</h3>
+                        </div>
+ 
+                    </div>
+
+
+        
+     
+               </div>
+            </div> -->
+    
+
+         <!-- <table class="styled-table" style="min-height:20px !important;">
+                        <thead>
+                            <tr>
+                                <th>Broker Name</th>
+                                <th>Channel Type</th>
+                                <th>Total Count</th>
+                                <th>Total Premium</th>
+                            </tr>
+                        </thead>
+                        <tbody style="overflow-y:scroll !important;">
+                            <ng-container>
+                                <tr *ngFor="let document of s.BrokerList;let i=index">
+                                    <td>{{document.BrokerName}}</td>
+                                    <td> {{document.SubUserType}}</td>
+                                    <td>
+                                        {{document.TotalCount}}
+                                    </td>
+                                    <td>
+                                        {{document.TotalPremiumFc}}
+                                    </td>
+                                </tr>
+                            </ng-container>
+                           
+                           
+                        </tbody>
+                    </table> -->
+                  
+                    <div>
+                        <div class="row">
+                            <ng-container *ngIf="!show">
+                          <div class="col-12 col-md-5 mt-1 mb-2 small" *ngFor="let s of tableData"  [ngClass]="{'yellow':s.length <= 3,'red':s.length > 3}">
+                             <!--<div class="mb-2" style="text-align: center;margin-top:-20px;margin-left:40px !important">
+                             <h1 style="background: lightblue;
+                             color: #fff;text-align: center;width:200px;font-size: 16px;font-weight: 600;border:1px solid lightgrey;">{{s.ProductName}}</h1>
+                             </div>--><!--class="report-header mb-2"  /* padding: 10px 40px; */-->
+                             <!-- <div style="background:lightblue;
+                           padding: 10px 30px;
+                             border-radius: 20px;
+                             margin-top: -32px;
+                             text-align: center;
+                             font: 600 16px Arial;
+                             letter-spacing: 0;
+                             color: #e02020;
+                             z-index: 99;
+                             position: absolute;
+                             white-space: nowrap;
+                             text-align: center;         
+                             transform: translate(-50%);margin-left:200px;">
+                                {{s.ProductName}}
+                             </div> -->
+                             <div class="report-header">
+                                <h1 class="recent-Articles">{{s.ProductName}}</h1>
+                               
+                            </div>
+                                <ng-container *ngIf="s.BrokerList.length!=0">
+                                    <app-admin-table [cols]="quoteHeader" [data]="s.BrokerList" (onTotal)="onTotal($event,s.ProductName,s.ProductId)">
+                                    </app-admin-table>
+                                </ng-container>
+                                <ng-container *ngIf="s.BrokerList.length==0">
+                                    <app-admin-table [cols]="quoteHeader" [data]="s.BrokerList" (onTotal)="onTotal($event,s.ProductName)">
+                                    </app-admin-table>
+                                </ng-container>
+                                
+                    <!-- <ng-contanier *ngIf="s.ProductId =='5'">
+                        <mat-paginator
+                        #paginatorFirst
+                        [pageSizeOptions]="[2, 4, 6]"
+                        showFirstLastButtons
+                      ></mat-paginator>
+                       <div class="d-flex justify-content-end">
+                        <pagination-controls (pageChange)="p=$event" id="s.ProductId == '5'"></pagination-controls>
+                        <pagination-controls (pageChange)="p=$event" id="s.ProductId == '3'"></pagination-controls>
+                      </div>
+                    </ng-contanier> -->
+                   
+                          </div>
+                         
+                        </ng-container>
+                        <ng-container *ngIf="show">
+                            <!-- <div class="container" style="box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);">
+                                <div>Customer Information</div>
+                                <div class="row">
+                                    <div class="col-3 col-md-3">
+                                        <span> Product Name</span><span>{{ProductName}}</span>
+                                     </div>
+                                     <div class="col-3 col-md-3">
+                                              <span>Start Date</span><span>{{startDate}}</span>
+                                     </div>
+                                     <div class="col-3 col-md-3">
+                                        <span>End Date</span><span>{{enddate}}</span>
+                                     </div>
+                                    
+                                </div>
+                            </div> -->
+                            <div class="maan-grid-item">
+                            
+                                    <div class="maan-grid-item-title p-0">
+                                        
+                                        <div class="row">
+                                            <div class="col-12 col-md-3">
+                                                <span style="color:black"><b>Product Name</b></span>:<span>{{ProductName}}</span>
+                                             </div>
+                                             <div class="col-12 col-md-3">
+                                                      <span style="color:black"><b>Broker Name</b></span>:<span>{{BrokerName}}</span>
+                                             </div>
+                                             <div class="col-12 col-md-3">
+                                                <span style="color:black"><b>Start Date</b></span>:<span>{{startDate}}</span>
+                                       </div>
+                                             <div class="col-12 col-md-3">
+                                                <span style="color:black"><b>End Date</b></span>:<span>{{enddate}}</span>
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    <ng-container *ngIf="tableData1.length!=0">
+                                    <app-grid-table [cols]="quotesHeader" [data]="tableData1" (onSchedule)="onGetSchedule($event)" (onView)="onViews($event)">
+                                    </app-grid-table>
+                                     </ng-container>
+                                </div>
+                            </div>
+                           
+                            <div style="text-align: center;">
+                                <button class="custom-btn btn-5 mr-2" (click)="ongetBack()" matRipple>Back</button>
+                            </div>
+                            </ng-container>
+                         
+                        </div>
+                      </div>
+
+</div>

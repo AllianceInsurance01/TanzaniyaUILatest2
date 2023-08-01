@@ -52,7 +52,9 @@ export class DialogComponent implements OnInit {
     this.brokerbranchCode = this.userDetails.Result.BrokerBranchCode;
     this.jsonList = [
       {
-        "TermsId":null,
+        "TypeId":"D",
+        "DocRefNo":null,
+      "DocumentId":null,
          "Id":"6",
         "SubId":null,
          "SubIdDesc":""
@@ -61,20 +63,24 @@ export class DialogComponent implements OnInit {
 
     this.ExclusionList = [
       {
-        "TermsId":null,
+        "TypeId":"D",
          "Id":"7",
         "SubId":null,
-         "SubIdDesc":""
+         "SubIdDesc":"",
+         "DocRefNo":null,
+         "DocumentId":null,
       }
     ]
 
 
     this.json = [
       {
-        "TermsId":null,
+        "TypeId":"D",
          "Id":"4",
         "SubId":null,
-         "SubIdDesc":""
+         "SubIdDesc":"",
+         "DocRefNo":null,
+         "DocumentId":null,
       }
     ]
 
@@ -115,10 +121,13 @@ export class DialogComponent implements OnInit {
   addItem(){
     //this.jsonList.push(row);
     let entry = [{
-     "TermsId":null,
+     "TypeId":"D",
      "Id":this.Id,
      "SubId":null,
-     "SubIdDesc":""
+     "SubIdDesc":"",
+     "DocRefNo":null,
+    "DocumentId":null,
+     
    }]
    this.jsonList = entry.concat(this.jsonList);
      }
@@ -178,8 +187,8 @@ export class DialogComponent implements OnInit {
       ProductId: this.productId,
       QuoteNo:quote,
       //TermsId:null,
-      RiskId: this.RiskId,
-      SectionId:this.SectionId,
+      RiskId:"1",
+      SectionId:"99999",
       TermsAndConditionReq:clauses,
       RequestReferenceNo: this.ReferenceNo
     };
@@ -310,7 +319,9 @@ else{
       "TermsId":null,
       "Id":"7",
       "SubId":null,
-      "SubIdDesc":""
+      "SubIdDesc":"",
+      "DocRefNo":null,
+      "DocumentId":null,
     }]
     this.ExclusionList = entry.concat(this.ExclusionList);
   //this.ExclusionList.push(row);
@@ -383,7 +394,9 @@ else{
       "TermsId":null,
       "Id":"4",
       "SubId":null,
-      "SubIdDesc":""
+      "SubIdDesc":"",
+      "DocRefNo":null,
+      "DocumentId":null,
     }]
     this.json = entry.concat(this.json);
     //this.json.push(row);

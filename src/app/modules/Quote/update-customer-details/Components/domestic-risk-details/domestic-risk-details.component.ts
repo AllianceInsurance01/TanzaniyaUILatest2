@@ -192,6 +192,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   sumInsuredError: boolean;
   totalAccSIError: boolean;
   enableAllSection: boolean = false;
+  EquipmentSi: any;
   constructor(private router: Router,private datePipe:DatePipe,private modalService: NgbModal,
      private sharedService: SharedService,) {
     let homeObj = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
@@ -365,7 +366,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
       }
 
       const third = this.item.find((Code) => Code == '3');
-      if (third) {
+      console.log("MMMMMMMMMMMMMM",third);
+      if (third && this.productId!='21') {
         this.third = true;
       }
       else {
@@ -517,6 +519,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
     this.pageIndex = event.pageIndex;
   }
   getSumInsuredDetails(){
+   
     let ReqObj = {
       "QuoteNo": sessionStorage.getItem('quoteNo'),
       "ProductId": this.productId
@@ -527,6 +530,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
         console.log(data);
         if(data.Result){
           this.sumInsuredDetails = data.Result;
+          console.log('SUMMMMMMMMMM',this.sumInsuredDetails);
           let homeObj = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
           if(this.item==undefined || this.item == null){
               this.item = this.sumInsuredDetails?.ProductSuminsuredDetails?.SectionId;
@@ -534,7 +538,16 @@ export class DomesticRiskDetailsComponent implements OnInit {
               
           }
           this.getContentList();
-              this.getallriskList();
+          if(this.productId=='21'){
+            this.getallriskLists();
+          }
+          else if(this.productId=='26'){
+            this.getallriskListsplant();
+          }
+          else{
+            this.getallriskList();
+          }
+             
           if(this.sumInsuredDetails){
             // if(this.first) this.contentSumInsured = this.sumInsuredDetails.ProductSuminsuredDetails.ContentSuminsured;
             // if(this.second) this.pASumInsured = this.sumInsuredDetails.ProductSuminsuredDetails.ContentSuminsured;
@@ -560,6 +573,11 @@ export class DomesticRiskDetailsComponent implements OnInit {
               this.actualAllRiskSI = allRiskSI;
             }
             else this.actualAllRiskSI = 0;
+            let EquipmentSi = this.sumInsuredDetails.ProductSuminsuredDetails.EquipmentSi;
+            if(EquipmentSi!='' && EquipmentSi!=null && EquipmentSi!=undefined){
+              this.EquipmentSi = EquipmentSi;
+            }
+            else this.EquipmentSi = 0;
             let pAccSI = this.sumInsuredDetails.ProductSuminsuredDetails.PersonalAccSuminsured;
             if(pAccSI!='' && pAccSI!=null && pAccSI!=undefined){
               this.actualPersonalAccSI = pAccSI;
@@ -1073,6 +1091,42 @@ onFidelitySave(){
       (err) => { },
     );
   }
+  getallriskListsplant(){
+    let ReqObj = {
+      "InsuranceId":this.insuranceId,
+      "BranchCode": this.branchCode
+    }
+    let urlLink = `${this.CommonApiUrl}dropdown/plantallrisk`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+            this.allriskList = data.Result;
+            //this.getOccupationList();
+
+        }
+      },
+      (err) => { },
+    );
+  }
+  getallriskLists(){
+    let ReqObj = {
+      "InsuranceId":this.insuranceId,
+      "BranchCode": this.branchCode
+    }
+    let urlLink = `${this.CommonApiUrl}dropdown/businessallrisk`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+            this.allriskList = data.Result;
+            //this.getOccupationList();
+
+        }
+      },
+      (err) => { },
+    );
+  }
   getallriskList(){
     let ReqObj = {
       "InsuranceId":this.insuranceId,
@@ -1286,6 +1340,7 @@ onFidelitySave(){
     }
     if(type=='A')
     {
+      console.log('AAAAAAAAA')
       ReqObj = {
         "CreatedBy": this.loginId,
       "QuoteNo":sessionStorage.getItem('quoteNo'),

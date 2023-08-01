@@ -10,6 +10,7 @@ import { ReferralRequoteComponent } from '../referral/referral-requote/referral-
 import { MotorDocumentsComponent } from 'src/app/shared/MotorDocuments/MotorDocuments.component';
 import { QuotesearchComponent } from 'src/app/shared/Quotesearch/Quotesearch.component';
 import { CustomerModelComponent } from '../Customer/customer-model/customer-model.component';
+import { ApproverPortfolioComponent } from '../approverportfolio/approverportfolio.component';
 
 const routes: Routes = [
   {
@@ -284,7 +285,18 @@ const routes: Routes = [
       title: "Quote",
       breadcrumb: 'Quote',
     }
+  },
+  {
+    path:'ApproverPortfolio',
+    component:ApproverPortfolioComponent,
+    loadChildren: () => import('../approverportfolio/approverportfolio.module').then(m => m.ApproverPortfolioModule),
+    data: {
+      preload: true,
+      title: "PortFolio",
+      breadcrumb: 'PortFolio',
+    }
   }
+
   
 
  

@@ -73,6 +73,7 @@ export class ProductData {
 	GoodsLossPercent:any='';FurnitureLossPercent:any='';
 	ApplianceLossPercent:any='';CashValueablesLossPercent:any='';
 	MiningPlantSi:any='0';NonminingPlantSi:any='0';GensetsSi:any='0';
+	ElectronicEquipSuminsured:any ='0';
 	
 	constructor(data?) {
 		this.id = data?.id ?? ''
@@ -180,6 +181,8 @@ export class ProductData {
 		this.MiningPlantSi  = data?.MiningPlantSi ?? '0';
 		this.NonminingPlantSi = data?.NonminingPlantSi ?? '0';
 		this.GensetsSi = data?.GensetsSi ?? '0';
-		this.EquipmentSi = data?.EquipmentSi ?? '0';
+		this.ElectronicEquipSuminsured = data?.ElecEquipSuminsured ?? '0';
+		// this.EquipmentSi = data?.EquipmentSi ?? '0';
+		// this.ElectronicEquipSuminsured = data.ElectronicEquipSuminsured ?? '0';
 	}
 }

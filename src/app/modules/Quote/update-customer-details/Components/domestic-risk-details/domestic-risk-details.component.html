@@ -5,7 +5,7 @@
     <div class="col-12">
         <div class="maan-grid customer-grid maan-grid-column-1">
             <div class="maan-grid-item">
-                <mat-tab label="Building" *ngIf="buildingDetailsSection">
+                <mat-tab label="Location Details" *ngIf="buildingDetailsSection">
                     <!--table-->
                     <div>
                         <!-- <div class="row mt-1">
@@ -629,22 +629,22 @@
                                     <tbody>
                                         <tr *ngFor="let row of risk|paginate:{itemsPerPage: 5, currentPage:ar, id:'ar'};let i = index">
                                             <td class="tbl-content">
-                                                <ng-select class="custom" [items]="LocationList" [(ngModel)]="row.RiskId" [disabled]="checkEndorseDisable('allRisk')" placeholder="Select Location" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc" style="position:relative;">
+                                                <ng-select class="custom" [items]="LocationList" [(ngModel)]="row.RiskId" [disabled]="checkEndorseDisable('allRisk')" placeholder="Select Location" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc" style="position:relative;top:0.4rem;">
 
                                                 </ng-select>
                                             </td>
                                             <td class="tbl-content">
-                                                    <ng-select class="custom" [items]="allriskList" [(ngModel)]="row.ItemId" [disabled]="checkEndorseDisable('allRisk')" placeholder="Select Location" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc" style="position:relative;">
+                                                    <ng-select class="custom" [items]="allriskList" [(ngModel)]="row.ItemId" [disabled]="checkEndorseDisable('allRisk')" placeholder="Select Content" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc" style="position:relative;top:0.4rem;">
                                                     </ng-select>
                                             </td>
-                                            <td class="tbl-content" style="position: relative!important;top: 0.8rem!important;">
+                                            <td class="tbl-content" style="position: relative!important;top: 0.7rem!important;">
                                                 <div class="input-form-box">
                                                     <textarea style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('allRisk')" (keyup)="onSerialNoChange('allRisk')" class="input-form-control without-icon" cols="40" rows="1" maxlength="100" [(ngModel)]="row.SerialNoDesc" [ngModelOptions]="{standalone: true}"></textarea>
                                                 </div>
                                             </td>
                                             <td class="tbl-content">
                                                 <div class="input-form-box">
-                                                    <input type="text" class="input-form-control without-icon" [disabled]="checkEndorseDisable('allRisk')" style="min-width: 166px;position: relative;left: 1.5rem;bottom: 0.3rem;" maxlength="50" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'allRisk')" [(ngModel)]="row.SumInsured"
+                                                    <input type="text" class="input-form-control without-icon" [disabled]="checkEndorseDisable('allRisk')" style="position: relative;top: 0.5rem!important;" maxlength="50" (keydown)="onSIValueChange($event)" (keyup)="CommaFormatted(i,'allRisk')" [(ngModel)]="row.SumInsured"
                                                         [ngModelOptions]="{standalone: true}">
                                                 </div>
                                             </td>
@@ -664,7 +664,28 @@
                                         </tr>
                                     </tbody>
                                     <tfoot *ngIf="actualAllRiskSI!=undefined && actualAllRiskSI!=''">
-                                        <tr>
+                                        <tr *ngIf="productId=='26'">
+                                            <td>
+                                                <div class="ml-3">
+                                                    <b style="white-space: nowrap;">Actual SumInsured</b>
+                                                </div>
+                                            </td>
+                                            <td style="text-align: end;">{{EquipmentSi | commaseparator}} &nbsp;({{currencyValue}})</td>
+                                            <td>
+                                                <div class="ml-5" style="position: relative;left: 2rem;">
+                                                    <b style="text-align: end;">Total SumInsured</b>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div *ngIf="totalAllRiskSI==0 || totalAllRiskSI=='0' || totalAllRiskSI==null">
+                                                    <span style="position: relative;left: 2rem;">0&nbsp;({{currencyValue}})</span>
+                                                </div>
+                                                <div *ngIf="totalAllRiskSI!=0 && totalAllRiskSI!='0' && totalAllRiskSI!=null">
+                                                    <span style="position: relative;left: 2rem;">{{totalAllRiskSI | commaseparator}} &nbsp;({{currencyValue}})</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="productId!='26'">
                                             <td>
                                                 <div class="ml-3">
                                                     <b style="white-space: nowrap;">Actual SumInsured</b>

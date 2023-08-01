@@ -9,11 +9,24 @@
                                 <i class="fas fa-book mx-1"></i>
                             </span> <span class="spancommon">Coverage Details</span>
                         </div>
+                        <div class="mt-2 ml-3">
+                            <ng-container *ngIf="ClausesData.length!=0">
+                                <button class="btn clausebutton btn-sm" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatuss()">Clauses</button>&nbsp;
+                            </ng-container>
+                            <ng-container *ngIf="ExclusionData.length!=0">
+                                <button class="btn clausebutton btn-sm" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatuss()">Exclusion</button>&nbsp;
+                            </ng-container>
+                           
+                            <ng-container *ngIf="WarrantyData.length!=0">
+                                <button class="btn clausebutton btn-sm" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatuss()">Warranties</button>
+                            </ng-container>
+                           
+                        </div>
                     </div>
                 </div>
                 <div class="maan-grid-item-body">
                     <div class="row mb-3">
-                        <div class="col-12 col-xl-12 col-lg-12">
+                        <div class="col-12 col-xl-12 col-lg-12" *ngIf="!showGrid">
                             <ul id="accordion" class="accordion" style="margin-left: 12px !important;">
                                 <li *ngFor="let menu of vehicleDetailsList; let i = index" [class.active]="menu.Collapse" class="li-data">
                                     <div class="menu">
@@ -31,9 +44,9 @@
                                                     <span style="padding-left:10px;">|</span>&nbsp;
                                                     <button class="fas fa-edit"  style="border: none;border-radius: 100%;padding-top: 6px; padding-bottom: 6px;" (click)="editcard(menu,mymodalEdit)"></button>&nbsp;
                                                 </ng-container>
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
+                                                <!-- <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
                                                 <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm " *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button>
+                                                <button class="btn clausebutton btn-sm " *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button> -->
                                             </ng-container>
                                             <ng-container *ngIf="productId=='4'">
                                                 <ng-container *ngIf="menu.RiskDetails.TravelId=='1'">
@@ -62,9 +75,9 @@
                                                     {{menu.RiskDetails.DestinationCountry}}
                                                     &nbsp;|&nbsp; {{ menu.RiskDetails.TravelStartDate }} &nbsp;~&nbsp; {{
                                                     menu.RiskDetails.TravelEndDate }}</span>
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
+                                                <!-- <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
                                                 <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button>
+                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button> -->
                                             </ng-container>
                                             <ng-container *ngIf="productId=='3' || productId=='19' || productId=='14' || productId=='32'">
                                                 
@@ -75,16 +88,16 @@
                                                     </ng-container> 
                                                     {{menu.SectionName}}
                                                 </span>
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
+                                                <!-- <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
                                                 <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button>
+                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button> -->
                                             </ng-container>
                                             <ng-container *ngIf="productId!='3' && productId!='4' && productId!='5' && productId!='19' && productId!='14' && productId!='32'">
                                                 <span class="spancommon" style="color:navy;font-size: 1rem;"> {{productName}}
                                                 </span>
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
+                                                <!-- <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
                                                 <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" (click)="WarrantyStatus(i,menu)">Warranties</button>
+                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" (click)="WarrantyStatus(i,menu)">Warranties</button> -->
                                             </ng-container>
                                             <!-- <ng-container *ngIf="productId!='3' && productId!='4' && productId!='5' && productId!='19'">
                                                 <span class="spancommon" style="color:navy;font-size: 1rem;">
@@ -115,11 +128,11 @@
                                                     <span style="padding-left:10px;">|</span>&nbsp;
                                                     <button class="fas fa-edit"  style="border: none;border-radius: 100%;padding-top: 6px; padding-bottom: 6px;" (click)="editcard(menu,mymodalEdit)"></button>&nbsp;
                                                 </ng-container>
-                                                <div style="text-align: center;margin-left: -50px;">
+                                                <!-- <div style="text-align: center;margin-left: -50px;">
                                                     <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">C</button>&nbsp;
                                                     <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatus(i,menu)">E</button>&nbsp;
                                                     <button class="btn clausebutton btn-sm " *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">W</button>
-                                                </div>
+                                                </div> -->
                                                 
                                             </ng-container>
                                             <ng-container *ngIf="productId=='4'">
@@ -149,23 +162,23 @@
                                                     {{menu.RiskDetails.DestinationCountry}}
                                                     &nbsp;|&nbsp; {{ menu.RiskDetails.TravelStartDate }} &nbsp;~&nbsp; {{
                                                     menu.RiskDetails.TravelEndDate }}</span>
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
+                                                <!-- <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
                                                 <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button>
+                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button> -->
                                             </ng-container>
                                             <ng-container *ngIf="productId=='3' || productId=='19' || productId=='14' || productId=='32'">
                                                 <span class="spancommon" style="color:navy;font-size: 1rem;"> {{menu.SectionName}}
                                                 </span>
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
+                                                <!-- <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
                                                 <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button>
+                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button> -->
                                             </ng-container>
                                             <ng-container *ngIf="productId!='3' && productId!='4' && productId!='5' && productId!='19' && productId!='14' && productId!='32'">
                                                 <span class="spancommon" style="color:navy;font-size: 1rem;"> {{productName}}
                                                 </span>
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
+                                                <!-- <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
                                                 <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" (click)="WarrantyStatus(i,menu)">Warranties</button>
+                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" (click)="WarrantyStatus(i,menu)">Warranties</button> -->
                                             </ng-container>
                                             <!-- <ng-container *ngIf="productId!='3' && productId!='4' && productId!='5' && productId!='19'">
                                                 <span class="spancommon" style="color:navy;font-size: 1rem;">
@@ -213,7 +226,7 @@
                                                     <i class="fas fa-filter"></i>
                                                 </span>
                                             </div> -->
-                                            <div class="col-md-12 col-lg-12 p-3 display1"><!--style="overflow-x: scroll !important;"-->
+                                            <div class="col-md-12 col-lg-12 p-3 display1" style="overflow-x: scroll !important;"><!--style="overflow-x: scroll !important;"-->
                                                 <table mat-table [dataSource]="menu.CoverList" class="outerTable" multiTemplateDataRows matSort >
                                                     <ng-container matColumnDef="header-row-first-group">
                                                         <th mat-header-cell *matHeaderCellDef class="outerHead mat-header-cell" [style.text-align]="center" [attr.colspan]="5">
@@ -1907,191 +1920,197 @@
                                             </div>
                                         </div>
                                         <!--Master View Grid-->
-                                        <div class="ClausesList" *ngIf="clauses && (tempVehicleId== menu.VehicleId || tempVehicleId==menu.SectionId)" >
-                                            <div>
-                                                <div>
-                
-                
-                                                    <div class="d-flex justify-content-between maan-grid-item-title">
-                                                        <p class="mx-1" st><span class="spancommon span_font_size">Clauses List
-                                                                Details</span>
-                
-                                                        </p>
-                                                        <button type="button" class="custom-btn btn-6 maan-button-data" (click)="editClauses(i)" *ngIf="button">
-                                                            Add Clauses
-                                                        </button>
-                                                    </div>
-                                                    <ng-container *ngIf="ClausesData">
-                
-                                                        <app-grid-table [cols]="ClauseColumnHeader" [data]="ClausesData" [filterValue]="filterValue" *ngIf="userType=='Broker'">
-                                                        </app-grid-table>
-                
-                                                        <table *ngIf="userType!='Broker'" class="styled-table">
-                
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="spancommon span_font_size">Select</th>
-                
-                                                                    <th class="spancommon span_font_size">ClauseDescription</th>
-                                                                </tr>
-                                                            </thead>
-                
-                                                            <tbody *ngFor="let clause of ClausesData|paginate:{itemsPerPage: 10, currentPage:p,id: 'p'}; let i=index;">
-                                                                <tr>
-                                                                    <td>
-                                                                        <input type="checkbox" (change)="onCheckUser(i,$event,clause)" [checked]="clause.TypeId == 'D' ? true : false"> 
-                                                                        <!-- <input type="checkbox"  *ngIf="clause.TypeId=='O'" (change)="onCheckUser(i,$event,clause)">  -->
-                                                                    </td>
-                
-                                                                    <td>
-                                                                        <div class="input-control-container">
-                                                                            <div class="input-form-box">
-                                                                                <textarea [(ngModel)]="clause.SubIdDesc" cols="120" rows="2"></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </ng-container>
-                                                </div>
-                                                <div class="d-flex justify-content-end" *ngIf="userType!='Broker'">
-                                                  <pagination-controls (pageChange)="p=$event"  id="p"></pagination-controls>
-                                                </div>
-                                                <div class="d-flex justify-content-center">
-                                                    <button class="custom-btn btn-5" (click)="OnClose()">Close</button>
-                                                    <button class="custom-btn btn-6 ml-2" *ngIf="userType!='Broker'" (click)="saveClausesData(ClausesData)">Submit</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="ClausesList" *ngIf="Exclusion  && (tempVehicleId== menu.VehicleId || tempVehicleId==menu.SectionId)">
-                                            <div>
-                                                <div>
-                                                    <!--<div class="d-flex justify-content-between maan-grid-item-title">
-                                                        <span class="mx-1" style="position:absolute;top:3.5rem;font-size:1.2rem;font-family: var(--our-font-family-new)!important;">
-                                                            Exclusion List Details
-                                                        </span>
-                
-                                                        <button type="button" class="btn btn-primary" *ngIf="button" (click)="editExclusion(i)">
-                                                            Add Exclusion
-                                                        </button>
-                                                    </div>-->
-                                                    <div class="d-flex justify-content-between maan-grid-item-title">
-                                                      <p class="mx-1" st><span class="spancommon span_font_size"> Exclusion List
-                                                              Details</span>
-                
-                                                      </p>
-                                                      <button type="button" class="btn btn-success" (click)="editExclusion(i)" *ngIf="button">
-                                                          Add Exclusion
-                                                      </button>
-                                                  </div>
-                                                    <ng-container *ngIf="ExclusionData">
-                
-                                                        <app-grid-table [cols]="ExclusionsColumnHeader" [data]="ExclusionData" [filterValue]="filterValue" *ngIf="userType=='Broker'">
-                                                        </app-grid-table>
-                                                        <table *ngIf="userType!='Broker'" class="styled-table">
-                
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Select</th>
-                
-                                                                    <th>ExclusionDescription</th>
-                                                                </tr>
-                                                            </thead>
-                
-                                                            <tbody *ngFor="let clause of ExclusionData|paginate:{itemsPerPage: 10, currentPage:s,id: 's'} ; let i=index;">
-                                                                <tr>
-                                                                    <td><input type="checkbox" (change)="onUser(i,$event,clause)" [checked]="clause.TypeId == 'D' ? true : false"> </td>
-                
-                                                                    <td>
-                                                                        <div class="input-control-container">
-                                                                            <div class="input-form-box">
-                                                                                <textarea [(ngModel)]="clause.SubIdDesc" cols="120" rows="2"></textarea>
-                                                                            </div>
-                                                                        </div>
-                
-                                                                    </td>
-                
-                
-                                                                </tr>
-                                                            </tbody>
-                
-                                                        </table>
-                                                    </ng-container>
-                                                </div>
-                                                  <div class="d-flex justify-content-end" *ngIf="userType!='Broker'">
-                                                  <pagination-controls (pageChange)="s=$event" id="s"></pagination-controls>
-                                                </div>
-                                                <div class="d-flex justify-content-center">
-                                                    <button class="custom-btn btn-5" (click)="OnClose()">Close</button>
-                                                    <button class="custom-btn btn-6 ml-2" *ngIf="userType!='Broker'" (click)="saveClausesData(ExclusionData)">Submit</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="ClausesList" *ngIf="warranty  && (tempVehicleId== menu.VehicleId || tempVehicleId==menu.SectionId)">
-                                            <div>
-                                                <div>
-                                                    <!--<div class="d-flex justify-content-between">
-                                                        <span class="mx-1" style="position:absolute;top:3.5rem;font-size:1.2rem;font-family: var(--our-font-family-new)!important;">
-                                                            Warranty List Details
-                                                        </span>
-                                                        <button type="button" class="btn btn-primary" *ngIf="button" (click)="editWarranty(i)">
-                                                            Add Warranties
-                                                        </button>
-                                                    </div>-->
-                                                    <div class="d-flex justify-content-between maan-grid-item-title">
-                                                      <p class="mx-1" st><span class="spancommon span_font_size">Warranty List
-                                                              Details</span>
-                
-                                                      </p>
-                                                      <button type="button" class="btn btn-success" (click)="editWarranty(i)" *ngIf="button">
-                                                        Add Warranties
-                                                      </button>
-                                                  </div>
-                                                    <ng-container *ngIf="WarrantyData">
-                                                        <app-grid-table [cols]="WarrantiesColumnHeader" [data]="WarrantyData" [filterValue]="filterValue" *ngIf="userType=='Broker'">
-                                                        </app-grid-table>
-                                                        <table *ngIf="userType!='Broker'" class="styled-table">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Select</th>
-                
-                                                                    <th>WarrantiesDescription</th>
-                                                                </tr>
-                                                            </thead>
-                
-                                                            <tbody *ngFor="let clause of WarrantyData|paginate:{itemsPerPage: 10, currentPage:pa, id:'pa'}; let i=index;">
-                                                                <tr>
-                                                                    <td><input type="checkbox" (change)="onCheck(i,$event,clause)" [checked]="clause.TypeId == 'D' ? true : false"> </td>
-                
-                                                                    <td>
-                                                                        <div class="input-control-container">
-                                                                            <div class="input-form-box">
-                                                                                <textarea [(ngModel)]="clause.SubIdDesc" cols="120" rows="2"></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-                
-                
-                                                                </tr>
-                                                            </tbody>
-                
-                                                        </table>
-                                                    </ng-container>
-                                                </div>
-                                                <div class="d-flex justify-content-end" *ngIf="userType!='Broker'">
-                                                  <pagination-controls (pageChange)="pa=$event" id="pa"></pagination-controls>
-                                                </div>
-                                                <div class="d-flex justify-content-center">
-                                                    <button class="custom-btn btn-5 " (click)="OnClose()">Close</button>
-                                                    <button class="custom-btn btn-6 ml-2" *ngIf="userType!='Broker'" (click)="saveClausesData(WarrantyData)">Submit</button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <!--&& (tempVehicleId== menu.VehicleId || tempVehicleId==menu.SectionId)-->
+                                        
                                         <!--finish of clauses grid-->
                                     </div>
                                 </li>
                             </ul>
+                        </div>
+                        <div class="col-12 col-xl-12 col-lg-12" *ngIf="showGrid" style="overflow: scroll !important;">
+                            <div class="ClausesList" *ngIf="clauses && showGrid">
+                                <div>
+                                    <div>
+    
+
+                                        <div class="d-flex justify-content-between maan-grid-item-title">
+                                            <p class="mx-1" st><span class="spancommon span_font_size">Clauses List
+                                                    Details</span>
+    
+                                            </p>
+                                            <button type="button" class="custom-btn btn-6 maan-button-data" (click)="editClauses(i)" *ngIf="button">
+                                                Add Clauses
+                                            </button>
+                                        </div>
+                                        <ng-container *ngIf="ClausesData">
+    
+                                            <app-grid-table [cols]="ClauseColumnHeader" [data]="ClausesData" [filterValue]="filterValue" *ngIf="userType=='Broker'">
+                                            </app-grid-table>
+    
+                                            <table *ngIf="userType!='Broker'" class="styled-table">
+    
+                                                <thead>
+                                                    <tr>
+                                                        <th class="spancommon span_font_size">Select</th>
+    
+                                                        <th class="spancommon span_font_size">ClauseDescription</th>
+                                                    </tr>
+                                                </thead>
+    
+                                                <tbody *ngFor="let clause of ClausesData|paginate:{itemsPerPage: 10, currentPage:p,id: 'p'}; let i=index;">
+                                                    <tr>
+                                                        <td>
+                                                            <input type="checkbox" (change)="onCheckUser(i,$event,clause)" [checked]="clause.TypeId == 'D' ? true : false"> 
+                                                            <!-- <input type="checkbox"  *ngIf="clause.TypeId=='O'" (change)="onCheckUser(i,$event,clause)">  -->
+                                                        </td>
+    
+                                                        <td>
+                                                            <div class="input-control-container">
+                                                                <div class="input-form-box">
+                                                                    <textarea [(ngModel)]="clause.SubIdDesc" cols="120" rows="2"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ng-container>
+                                    </div>
+                                    <div class="d-flex justify-content-end" *ngIf="userType!='Broker'">
+                                      <pagination-controls (pageChange)="p=$event"  id="p"></pagination-controls>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <button class="custom-btn btn-5" (click)="OnClose()">Close</button>
+                                        <button class="custom-btn btn-6 ml-2" *ngIf="userType!='Broker'" (click)="saveClausesData(ClausesData)">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- && (tempVehicleId== menu.VehicleId || tempVehicleId==menu.SectionId)"-->
+                            <div class="ClausesList" *ngIf="Exclusion && showGrid">
+                                <div>
+                                    <div>
+                                        <!--<div class="d-flex justify-content-between maan-grid-item-title">
+                                            <span class="mx-1" style="position:absolute;top:3.5rem;font-size:1.2rem;font-family: var(--our-font-family-new)!important;">
+                                                Exclusion List Details
+                                            </span>
+    
+                                            <button type="button" class="btn btn-primary" *ngIf="button" (click)="editExclusion(i)">
+                                                Add Exclusion
+                                            </button>
+                                        </div>-->
+                                        <div class="d-flex justify-content-between maan-grid-item-title">
+                                          <p class="mx-1" st><span class="spancommon span_font_size"> Exclusion List
+                                                  Details</span>
+    
+                                          </p>
+                                          <button type="button" class="btn btn-success" (click)="editExclusion(i)" *ngIf="button">
+                                              Add Exclusion
+                                          </button>
+                                      </div>
+                                        <ng-container *ngIf="ExclusionData">
+    
+                                            <app-grid-table [cols]="ExclusionsColumnHeader" [data]="ExclusionData" [filterValue]="filterValue" *ngIf="userType=='Broker'">
+                                            </app-grid-table>
+                                            <table *ngIf="userType!='Broker'" class="styled-table">
+    
+                                                <thead>
+                                                    <tr>
+                                                        <th>Select</th>
+    
+                                                        <th>ExclusionDescription</th>
+                                                    </tr>
+                                                </thead>
+    
+                                                <tbody *ngFor="let clause of ExclusionData|paginate:{itemsPerPage: 10, currentPage:s,id: 's'} ; let i=index;">
+                                                    <tr>
+                                                        <td><input type="checkbox" (change)="onUser(i,$event,clause)" [checked]="clause.TypeId == 'D' ? true : false"> </td>
+    
+                                                        <td>
+                                                            <div class="input-control-container">
+                                                                <div class="input-form-box">
+                                                                    <textarea [(ngModel)]="clause.SubIdDesc" cols="120" rows="2"></textarea>
+                                                                </div>
+                                                            </div>
+    
+                                                        </td>
+    
+    
+                                                    </tr>
+                                                </tbody>
+    
+                                            </table>
+                                        </ng-container>
+                                    </div>
+                                      <div class="d-flex justify-content-end" *ngIf="userType!='Broker'">
+                                      <pagination-controls (pageChange)="s=$event" id="s"></pagination-controls>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <button class="custom-btn btn-5" (click)="OnClose()">Close</button>
+                                        <button class="custom-btn btn-6 ml-2" *ngIf="userType!='Broker'" (click)="saveClausesData(ExclusionData)">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--&& (tempVehicleId== menu.VehicleId || tempVehicleId==menu.SectionId)"-->
+                            <div class="ClausesList" *ngIf="warranty && showGrid">
+                                <div>
+                                    <div>
+                                        <!--<div class="d-flex justify-content-between">
+                                            <span class="mx-1" style="position:absolute;top:3.5rem;font-size:1.2rem;font-family: var(--our-font-family-new)!important;">
+                                                Warranty List Details
+                                            </span>
+                                            <button type="button" class="btn btn-primary" *ngIf="button" (click)="editWarranty(i)">
+                                                Add Warranties
+                                            </button>
+                                        </div>-->
+                                        <div class="d-flex justify-content-between maan-grid-item-title">
+                                          <p class="mx-1" st><span class="spancommon span_font_size">Warranty List
+                                                  Details</span>
+    
+                                          </p>
+                                          <button type="button" class="btn btn-success" (click)="editWarranty(i)" *ngIf="button">
+                                            Add Warranties
+                                          </button>
+                                      </div>
+                                        <ng-container *ngIf="WarrantyData">
+                                            <app-grid-table [cols]="WarrantiesColumnHeader" [data]="WarrantyData" [filterValue]="filterValue" *ngIf="userType=='Broker'">
+                                            </app-grid-table>
+                                            <table *ngIf="userType!='Broker'" class="styled-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Select</th>
+    
+                                                        <th>WarrantiesDescription</th>
+                                                    </tr>
+                                                </thead>
+    
+                                                <tbody *ngFor="let clause of WarrantyData|paginate:{itemsPerPage: 10, currentPage:pa, id:'pa'}; let i=index;">
+                                                    <tr>
+                                                        <td><input type="checkbox" (change)="onCheck(i,$event,clause)" [checked]="clause.TypeId == 'D' ? true : false"> </td>
+    
+                                                        <td>
+                                                            <div class="input-control-container">
+                                                                <div class="input-form-box">
+                                                                    <textarea [(ngModel)]="clause.SubIdDesc" cols="120" rows="2"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+    
+    
+                                                    </tr>
+                                                </tbody>
+    
+                                            </table>
+                                        </ng-container>
+                                    </div>
+                                    <div class="d-flex justify-content-end" *ngIf="userType!='Broker'">
+                                      <pagination-controls (pageChange)="pa=$event" id="pa"></pagination-controls>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <button class="custom-btn btn-5 " (click)="OnClose()">Close</button>
+                                        <button class="custom-btn btn-6 ml-2" *ngIf="userType!='Broker'" (click)="saveClausesData(WarrantyData)">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

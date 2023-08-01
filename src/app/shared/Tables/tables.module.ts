@@ -14,13 +14,15 @@ import { DigitOnlyModule } from '@uiowa/digit-only';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxCollapseModule } from 'ngx-collapse';
 import { MatIconModule } from '@angular/material/icon';
+import { AdminTableComponent } from './admin-table/admin-table.component';
 
 @NgModule({
   declarations: [
     MaterialTableComponent,
     GridTableComponent,
     CommodityTableComponent,
-    InnerTableComponent
+    InnerTableComponent,
+    AdminTableComponent
   ],
   imports: [
     CommonModule,
@@ -40,6 +42,7 @@ import { MatIconModule } from '@angular/material/icon';
     MaterialTableComponent,
     GridTableComponent,
     CommodityTableComponent,
+    AdminTableComponent
   ],
   providers: [SharedService,DatePipe, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
 

@@ -171,7 +171,6 @@ export class VehicleWishListComponent implements OnInit {
         { "Code":"","CodeDesc":"---Select---"},
         { "Code":"02","CodeDesc":"Register Number"},
         { "Code":"01","CodeDesc":"Chassis Number"},
-
       ];
      }
 

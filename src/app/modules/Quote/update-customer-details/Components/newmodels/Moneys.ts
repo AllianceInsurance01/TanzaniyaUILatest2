@@ -60,7 +60,7 @@ export class Moneys{
                                 type: 'display',
               
                                 templateOptions: {
-                                  label: `Major Loss Limit (Premises & In Transit)`,
+                                  label: `Damage to Safe Limit`,
                                   required: false,
               
                                 },
@@ -189,7 +189,7 @@ export class Moneys{
                                 type: 'display',
               
                                 templateOptions: {
-                                  label: `Damage to safe Limit`,
+                                  label: `Major Loss Limit (Premises & In Transit)`,
                                   required: false,
               
                                 },
@@ -255,61 +255,18 @@ export class Moneys{
                               }
                             ]
                           },
-                          {
-                            fieldGroup:[
-                              {
-                                className:'customCheckbox',
-                                key: 'CashInSafeSIYN',
-                                type: 'checkbox',
-                                templateOptions: {
-                                  type: 'checkbox',
-                                  label: '',
-                                  required: false,
-                                  disabled: this.checkDisable('CashInSafeSIYN'),
-                                  name: 'CashInSafeSIYN',
-                                  options: [],
-                                }
-                              },
-                              {
-                                className: "mt-1",
-                                type: 'display',
-              
-                                templateOptions: {
-                                  label: `Estimated Annual Carry`,
-                                  required: false,
-              
-                                },
-                              },
-                              {
-                                type: 'commaSeparator',
-                                key: 'CashInSafe',
-                                templateOptions: {
-                                  disabled: this.checkDisable('CashInSafe')
-                                },
-                                validators: {
-                                  validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                                },
-                                hooks: {
-                                },
-                
-                                expressions: {
-                                  disabled: '!model.CashInSafeSIYN'
-                                },
-                              }
-                            ]
-                          },
                           // {
                           //   fieldGroup:[
                           //     {
                           //       className:'customCheckbox',
-                          //       key: 'MoneyAnnualcarrySuminsuredSIYN',
+                          //       key: 'CashInSafeSIYN',
                           //       type: 'checkbox',
                           //       templateOptions: {
                           //         type: 'checkbox',
                           //         label: '',
                           //         required: false,
-                          //         disabled: this.checkDisable('MoneyAnnualcarrySuminsuredSIYN'),
-                          //         name: 'MoneyAnnualcarrySuminsuredSIYN',
+                          //         disabled: this.checkDisable('CashInSafeSIYN'),
+                          //         name: 'CashInSafeSIYN',
                           //         options: [],
                           //       }
                           //     },
@@ -318,16 +275,16 @@ export class Moneys{
                           //       type: 'display',
               
                           //       templateOptions: {
-                          //         label: `Estimated Annual Cash Carrying`,
+                          //         label: `Estimated Annual Carry`,
                           //         required: false,
               
                           //       },
                           //     },
                           //     {
                           //       type: 'commaSeparator',
-                          //       key: 'MoneyAnnualcarrySuminsured',
+                          //       key: 'CashInSafe',
                           //       templateOptions: {
-                          //         disabled: this.checkDisable('MoneyAnnualcarrySuminsured')
+                          //         disabled: this.checkDisable('CashInSafe')
                           //       },
                           //       validators: {
                           //         validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -336,11 +293,54 @@ export class Moneys{
                           //       },
                 
                           //       expressions: {
-                          //         disabled: '!model.MoneyAnnualcarrySuminsuredSIYN'
+                          //         disabled: '!model.CashInSafeSIYN'
                           //       },
                           //     }
                           //   ]
                           // },
+                          {
+                            fieldGroup:[
+                              {
+                                className:'customCheckbox',
+                                key: 'MoneyAnnualcarrySuminsuredSIYN',
+                                type: 'checkbox',
+                                templateOptions: {
+                                  type: 'checkbox',
+                                  label: '',
+                                  required: false,
+                                  disabled: this.checkDisable('MoneyAnnualcarrySuminsuredSIYN'),
+                                  name: 'MoneyAnnualcarrySuminsuredSIYN',
+                                  options: [],
+                                }
+                              },
+                              {
+                                className: "mt-1",
+                                type: 'display',
+              
+                                templateOptions: {
+                                  label: `Estimated Annual Cash Carrying`,
+                                  required: false,
+              
+                                },
+                              },
+                              {
+                                type: 'commaSeparator',
+                                key: 'MoneyAnnualcarrySuminsured',
+                                templateOptions: {
+                                  disabled: this.checkDisable('MoneyAnnualcarrySuminsured')
+                                },
+                                validators: {
+                                  validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                                },
+                                hooks: {
+                                },
+                
+                                expressions: {
+                                  disabled: '!model.MoneyAnnualcarrySuminsuredSIYN'
+                                },
+                              }
+                            ]
+                          },
                     ]
                   }
                 ]

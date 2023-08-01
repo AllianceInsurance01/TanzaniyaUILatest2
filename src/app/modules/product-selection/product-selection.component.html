@@ -83,9 +83,18 @@
 
 
 <div class="product-menubar">
-    <div class="logo-img" style="background-color: #fff;">
-        <img src="./assets/images/logo-2.png">
-    </div>
+    <ng-container  *ngIf="insuranceid == '100002'">
+        <div class="logo-img" style="background-color: #fff;">
+            <img src="./assets/images/logo-2.png">
+        </div>
+    </ng-container>
+   
+    <ng-container *ngIf="insuranceid == '100004'">
+        <div class="logo-img" style="background-color: #fff;">
+            <img src="./assets/images/mgen-logo.png">
+        </div>
+    </ng-container>
+    
 
 
     <div class="user-container">
@@ -225,6 +234,7 @@
                         <div class="InsuranceIcon InsuranceIcon1 moneyInsuranceIcon" *ngIf="item.ProductId=='16'"></div>
                         <div class="InsuranceIcon InsuranceIcon1 BusinessAllRisk" *ngIf="item.ProductId=='26'"></div>
                         <div class="InsuranceIcon InsuranceIcon1 plantallrisk" *ngIf="item.ProductId=='21'"></div>
+                        <div class="InsuranceIcon InsuranceIcon1 electronicequipment" *ngIf="item.ProductId=='25'"></div>
                     </div>
                     <div class="InsuranceName">{{item?.ProductName}}</div>
                 </div>

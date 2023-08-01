@@ -4,7 +4,7 @@ import { UpdateCustomerDetailsComponent } from "../../update-customer-details.co
 import { ForceLengthValidators } from "../personal-quote-details/personal-quote-details.component";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 
-export class PublicLiability{
+export class PublicLiabilitys{
   customerDetails: any;
   commonDetails: any[]=[];
   endorsementSection: boolean=false;
