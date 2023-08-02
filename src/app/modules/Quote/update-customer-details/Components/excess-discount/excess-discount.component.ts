@@ -1700,7 +1700,7 @@ getMotorUsageList(vehicleValue){
     });
 
   }
-  saveClausesData(rawData){
+  saveClausesData(rawData,type){
     let clauses
      
 
@@ -1750,6 +1750,27 @@ getMotorUsageList(vehicleValue){
         this.clause = false;
         this.clauses = false;
         this.showGrid=true;
+        
+   if(type){
+    if(type=='Clauses'){
+      this.viewCondition('direct');
+      this.clauses = true;
+      this.showGrid=true;
+    }
+    else if(type=='Exclusion'){
+      this.viewCondition('direct');
+    this.Exclusion = true;
+    this.showGrid=true;
+    }
+    else if(type=='Warranty'){
+      this.viewCondition('direct');
+      this.warranty = true;
+      this.showGrid=true;
+      }
+      else{
+        this.showGrid=false;
+      }
+    }
       }
       
     });
