@@ -1685,7 +1685,7 @@
                         </div>
                     </div>
                 </mat-tab>
-                <!-- <mat-tab label="Machinery Breakdown" [disabled]="!fourth" *ngIf="nine">
+                <mat-tab label="Machinery Breakdown" [disabled]="!fourth" *ngIf="nine">
                     <div class="row mt-2" *ngIf="!enableMachineryEditSection">
                         <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
                             <div class="boxForm">
@@ -1707,6 +1707,42 @@
                                             <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNewMachinery()"><i class="fa fa-plus-circle"></i>&nbsp; Add New</button>
                                     </div>
                                 </div>
+                                <div  class="addMembers" *ngIf="machineries.length!=0">
+                                    <div class="addMembers__item" *ngFor="let entry of machineries;let i=index">
+                                        <div class="addMembers__header">
+                                            <div class="addMembers__name">{{getLocationName(entry.RiskId)}}</div>
+                                            <div class="addMembers__edit">
+                                                <button class="circle btn btn-danger btn-sm mr-2" (click)="MachineryDelete(entry)" *ngIf="!checkEndorseDisable('machinery')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                                <button class="circle btn btn-primary btn-sm" (click)="onEditMachinery(i)" *ngIf="!checkEndorseDisable('machinery')"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                
+                                                
+                                            </div>
+                                            <div class="addMembers__edit">
+                                                <span>{{entry.SumInsured| commaseparator }} </span>&nbsp;&nbsp;
+                                            </div>
+                                        </div>
+                                        <ul class="addMembers__list">
+                                            <li>{{getContentsName(entry)}} &nbsp; | &nbsp; {{entry.SerialNoDesc}}</li>
+                                        </ul>
+                                    </div>
+                                    <div  class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                        <div class="totalProsession">
+                                            <span ><b>Sum Insured</b></span>
+                                        </div>
+                                        <div class="totalProsession">
+                                            <span ><b>Actual&nbsp;&nbsp;{{actualMachinerySI | commaseparator }}</b></span>
+                                        </div>
+                                        <div class="totalProsession">
+                                            <ng-container *ngIf="totalMachinerySI!=0 && totalMachinerySI!='0' && totalMachinerySI!=null">
+                                                &nbsp;<span style="text-align: end !important;"><b>{{ totalMachinerySI | commaseparator }}</b></span>
+                                            </ng-container>
+                                            <ng-container *ngIf="totalMachinerySI==0 || totalMachinerySI=='0' || totalMachinerySI==null">
+                                                <span style="text-align: end !important;"><b>0</b></span>
+                                            </ng-container>
+                                            
+                                        </div>
+                                    </div>  
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1716,10 +1752,31 @@
                                     <span><u> Machinery Details </u></span>
                                 <div class="row">
                                     <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                        <label class="input-form-label">Location</label><span class="text-danger">*</span>
+                                    <div class="input-form-box">
+                                        <ng-select class="custom" [items]="LocationList" [(ngModel)]="MachineryLocation" [disabled]="checkEndorseDisable('machinery')" placeholder="Select Location" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc" style="position:relative;top:.2rem;">
+                                        </ng-select>
+                                    </div>
+                                    </div>
+                                   
+                                    <div class="col-12 col-md-6 col-lg-6 input-control-container">
                                         <label class="input-form-label">Machinery Description</label><span class="text-danger">*</span>
                                         <div class="input-form-box" style="position: relative;top:.2rem">
                                             <input type="text" class="input-form-control without-icon" maxlength="50" [disabled]="checkEndorseDisable('machinery')" [(ngModel)]="MachineryName" [ngModelOptions]="{standalone: true}">
                                         </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                        <label class="input-form-label">Name</label><span class="text-danger">*</span>
+                                        <div class="input-form-box" style="position: relative;top:.2rem">
+                                            <input type="text" class="input-form-control without-icon" maxlength="50" [disabled]="checkEndorseDisable('machinery')" [(ngModel)]="NameDesc" [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                        <label class="input-form-label">Content Type</label><span class="text-danger">*</span>
+                                    <div class="input-form-box">
+                                        <ng-select class="custom" [items]="allriskList" [(ngModel)]="machineryItemId" [disabled]="checkEndorseDisable('allRisk')" placeholder="Select Content" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc" style="position:relative;top:.2rem;">
+                                        </ng-select>
+                                       </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-6 input-control-container">
                                         <label class="input-form-label">Brand</label><span class="text-danger">*</span>
@@ -1733,10 +1790,38 @@
                                             <textarea style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('machinery')" (keyup)="onSerialNoChange('machinery')" class="input-form-control without-icon" cols="40" rows="1" maxlength="100" [(ngModel)]="serialNoDesc" [ngModelOptions]="{standalone: true}"></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                    <!-- <div class="col-12 col-md-6 col-lg-6 input-control-container">
                                         <label class="input-form-label">SumInsured</label><span class="text-danger">*</span>
                                         <div class="input-form-box" style="position: relative;top:.2rem">
-                                            <input type="text" class="input-form-control without-icon" maxlength="15" [disabled]="checkEndorseDisable('machinery')" (keydown)="onSIValueChange($event)" (keyup)="individualCommaFormatted('machinery')" [(ngModel)]="SumInsured" [ngModelOptions]="{standalone: true}">
+                                            <input type="text" class="input-form-control without-icon" maxlength="15" [disabled]="checkEndorseDisable('machinery')" (keydown)="onSIValueChange($event)" (keyup)="individualCommaFormatted('machinery')" [(ngModel)]="MiSumInsured" [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                    </div> -->
+                                    <div class="col-12 col-md-7 col-lg-7 offset-2 input-control-container">
+                                        <label class="input-form-label">Sum Insured</label><span class="text-danger">*</span>
+                                        <div class="input-form-box" style="position: relative;top:.2rem">
+                                            <input type="text" [disabled]="checkEndorseDisable('machinery')" (keydown)="onSIValueChange($event)" (keyup)="individualCommaFormatted('machinery')" class="input-form-control without-icon" maxlength="50" [(ngModel)]="MiSumInsured" [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <span><u> Sum Insured </u></span>
+                                    </div>
+                                    <div class="row" >
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6 ml-3">
+                                            <b style="white-space: nowrap;">Actual</b>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6">
+                                            <b style="white-space: nowrap;">{{ actualMachinerySI| commaseparator }} &nbsp;({{currencyValue}})</b>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="ml-3">
+                                                <b style="white-space: nowrap;">Total</b>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf=" totalMachinerySI==0 ||  totalMachinerySI=='0' ||  totalMachinerySI==null">
+                                            <b style="white-space: nowrap;">0</b>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalMachinerySI!=0 &&  totalMachinerySI!='0' &&  totalMachinerySI!=null">
+                                            <b style="white-space: nowrap;">{{ totalMachinerySI| commaseparator }} &nbsp;({{currencyValue}})</b>
                                         </div>
                                     </div>
                                     
@@ -1748,7 +1833,12 @@
                             </div>
                         </div>
                     </div>
-                </mat-tab> -->
+                    <div class="text-center mt-2">
+                        <button class="custom-btn btn-5 mx-2" matRipple *ngIf="!enableMachineryEditSection" (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+
+                        <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="machineries.length!=0 && !enableMachineryEditSection" (click)="onSaveMachineryRisk()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
+                    </div>
+                </mat-tab>
                 <mat-tab label="Accessories" *ngIf="!buildingDetailsSection">
                     <!--table-->
                     <div>
