@@ -789,7 +789,7 @@
                                                                         {{ element[col.key]}}
                                                                     </ng-container>
                                                                     <ng-container *ngIf="(adminSection && !endorsementSection) || (adminSection && endorsementSection && element?.Endorsements==null)">
-                                                                        <input type="text" [id]="'Rate'+i" style="width: 70px;" [(ngModel)]="element[col.key]">
+                                                                        <input type="text" [id]="'Rate'+i" style="margin-top: 12px;width: 70px;" [(ngModel)]="element[col.key]">
                                                                     </ng-container>
                                                                 </ng-container>
                                                                 <ng-container *ngIf="col.key=='ExcessPercent'">
