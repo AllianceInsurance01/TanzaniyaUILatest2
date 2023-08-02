@@ -8,16 +8,16 @@
     <table mat-table [dataSource]="dataSource" matSort [matSortActive]="sortProperty" [matSortDirection]="sortDirection" matSortDisableClear>
         <ng-container *ngFor="let col of columnHeader; let i = index;" [matColumnDef]="col.key" [sticky]="i===0" [stickyEnd]="i === 10">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header mat-header-cell">
-                <ng-container *ngIf="columnHeader[i]['display']=='Premium'">
+                <ng-container *ngIf="columnHeader[i]['display']=='Premium' || columnHeader[i]['display']=='Endorsement Premium'">
                     {{ columnHeader[i]["display"] }} &nbsp; ({{Currency}})
                 </ng-container>
-                <ng-container *ngIf="columnHeader[i]['display']=='Endorsement Premium'">
+                <ng-container *ngIf="columnHeader[i]['display']=='Endorsements Premium'">
                     Premium &nbsp; ({{Currency}})
                 </ng-container>
                 <ng-container *ngIf="columnHeader[i]['display']=='EndorsementStatus'">
                     Status
                 </ng-container>
-                <ng-container *ngIf="columnHeader[i]['display']!='Premium' && columnHeader[i]['display']!='Endorsement Premium' && columnHeader[i]['display']!='EndorsementStatus'">
+                <ng-container *ngIf="columnHeader[i]['display']!='Premium' && columnHeader[i]['display']!='Endorsements Premium' && columnHeader[i]['display']!='Endorsement Premium' && columnHeader[i]['display']!='EndorsementStatus'">
                     {{ columnHeader[i]["display"] }}
                 </ng-container>
             </th>
@@ -43,10 +43,10 @@
                             <span *ngIf="element[col.key]=='C' && element?.endorsementTypeId==842">Cancelled</span>
                             <span *ngIf="endorsementSection && element[col.key]==null">Base policy</span>
                     </ng-container>
-                    <ng-container *ngIf="col.key!='Status'  && columnHeader[i]['display']!='EndorsementStatus' && columnHeader[i]['display']!='Endorsement Premium'">
+                    <ng-container *ngIf="col.key!='Status'  && columnHeader[i]['display']!='EndorsementStatus' && columnHeader[i]['display']!='Endorsements Premium' && columnHeader[i]['display']!='Endorsement Premium'">
                         {{ element[col.key] }}
                     </ng-container>
-                    <ng-container *ngIf="columnHeader[i]['display']=='Endorsement Premium'">
+                    <ng-container *ngIf="columnHeader[i]['display']=='Endorsements Premium' || columnHeader[i]['display']=='Endorsement Premium'">
                         <ng-container *ngIf="element[col.key]==0 || element[col.key]=='0'">
                                 N/A
                         </ng-container>
@@ -223,17 +223,17 @@
     </div>
     <table mat-table [dataSource]="dataSource" matSort [matSortActive]="sortProperty" style="white-space: normal !important;" [matSortDirection]="sortDirection" matSortDisableClear>
         <ng-container *ngFor="let col of columnHeader; let i = index;" [matColumnDef]="col.key" [sticky]="i===0" [stickyEnd]="i === 10">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header mat-header-cell">
-                <ng-container *ngIf="columnHeader[i]['display']=='Premium'">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header mat-header-cell" style="text-wrap: wrap !important;">
+                <ng-container *ngIf="columnHeader[i]['display']=='Premium' && columnHeader[i]['display']!='Endorsement Premium'">
                     {{ columnHeader[i]["display"] }} &nbsp; ({{Currency}})
                 </ng-container>
-                <ng-container *ngIf="columnHeader[i]['display']=='Endorsement Premium'">
+                <ng-container *ngIf="columnHeader[i]['display']=='Endorsements Premium'">
                     Premium &nbsp; ({{Currency}})
                 </ng-container>
                 <ng-container *ngIf="columnHeader[i]['display']=='EndorsementStatus'">
                     Status
                 </ng-container>
-                <ng-container *ngIf="columnHeader[i]['display']!='Premium' && columnHeader[i]['display']!='Endorsement Premium' && columnHeader[i]['display']!='EndorsementStatus'">
+                <ng-container *ngIf="columnHeader[i]['display']!='Premium' && columnHeader[i]['display']!='Endorsements Premium' && columnHeader[i]['display']!='Endorsement Premium' && columnHeader[i]['display']!='EndorsementStatus'">
                     {{ columnHeader[i]["display"] }}
                 </ng-container>
             </th>
@@ -265,13 +265,13 @@
                                     <ng-container *ngIf="columnHeader[i]['display']=='Premium'">
                                         {{ columnHeader[i]["display"] }} &nbsp; ({{Currency}})
                                     </ng-container>
-                                    <ng-container *ngIf="columnHeader[i]['display']=='Endorsement Premium'">
+                                    <ng-container *ngIf="columnHeader[i]['display']=='Endorsements Premium'">
                                         Premium &nbsp; ({{Currency}})
                                     </ng-container>
                                     <ng-container *ngIf="columnHeader[i]['display']=='EndorsementStatus'">
                                         Status
                                     </ng-container>
-                                    <ng-container *ngIf="columnHeader[i]['display']!='Premium' && columnHeader[i]['display']!='Endorsement Premium' && columnHeader[i]['display']!='EndorsementStatus'">
+                                    <ng-container *ngIf="columnHeader[i]['display']!='Premium' && columnHeader[i]['display']!='Endorsements Premium' && columnHeader[i]['display']!='EndorsementStatus'">
                                         {{ columnHeader[i]["display"] }}
                                     </ng-container>
                                     

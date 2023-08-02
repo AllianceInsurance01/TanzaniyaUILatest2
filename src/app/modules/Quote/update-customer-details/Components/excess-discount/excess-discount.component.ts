@@ -1265,6 +1265,7 @@ getMotorUsageList(vehicleValue){
                       "EndtName": quoteDetails.Endttype,
                       "PolicyNo": quoteDetails?.policyNo
                     }
+                    sessionStorage.setItem('endorsePolicyNo',quoteDetails?.OriginalPolicyNo);
                     //sessionStorage.setItem('endorsePolicyNo',)
                     sessionStorage.setItem('endorseTypeId',JSON.stringify(obj));
                     this.endorsementSection = true;

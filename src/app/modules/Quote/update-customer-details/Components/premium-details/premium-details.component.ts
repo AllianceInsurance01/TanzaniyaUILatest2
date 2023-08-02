@@ -416,6 +416,7 @@ export class PremiumDetailsComponent implements OnInit {
               if(quoteDetails.Endorsementeffdate!=null){
                 this.orgPolicyNo = quoteDetails?.OriginalPolicyNo;
                 this.endorsePolicyNo = quoteDetails?.policyNo;
+                sessionStorage.setItem('endorsePolicyNo',quoteDetails?.OriginalPolicyNo);
                  this.endorsementType = quoteDetails.Endtcategdesc;
                 if(!JSON.parse(sessionStorage.getItem('endorseTypeId'))){
                   let obj = {

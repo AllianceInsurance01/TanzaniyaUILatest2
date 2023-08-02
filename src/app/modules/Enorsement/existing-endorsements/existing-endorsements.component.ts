@@ -41,8 +41,9 @@ export class ExistingEndorsementsComponent {
       { key: 'quoteNo', display: 'QuoteNo' },
       { key: 'requestReferenceNo', display: 'ReferenceNo' },
       { key: 'endorsementCategoryDesc', display: 'Category' },
-      { key: 'endorsementDesc', display: 'Endorsement Type' },
-      { key: 'overallPremiumLc', display: 'Endorsement Premium' },
+      { key: 'endorsementDesc', display: 'Type' },
+      { key: 'overallPremiumLc', display: 'Endorsements Premium' },
+      { key: 'endtPremium', display: 'Endorsement Premium' },
       //{ key: 'MinimumPremium', display: 'Minimum' },
       { key: 'endorsementStatus', display: 'EndorsementStatus' },
       {
