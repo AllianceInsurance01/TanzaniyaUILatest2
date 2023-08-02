@@ -39,11 +39,11 @@
                                                     menu.RiskDetails.Vehiclemake }} &nbsp;|&nbsp; {{ menu.RiskDetails.Vehcilemodel
                                                     }} &nbsp;|&nbsp; {{ menu.RiskDetails.Chassisnumber }} | &nbsp;</span>
                     
-                                                <ng-container *ngIf="menu.Status!='D'">
+                                                <!-- <ng-container *ngIf="menu.Status!='D'">
                                                     <button class="fa fa-eye" style="border: none;border-radius: 100%; padding-top: 6px;padding-bottom: 6px;"  (click)="htmlcard(menu,mymodal)"></button>
                                                     <span style="padding-left:10px;">|</span>&nbsp;
                                                     <button class="fas fa-edit"  style="border: none;border-radius: 100%;padding-top: 6px; padding-bottom: 6px;" (click)="editcard(menu,mymodalEdit)"></button>&nbsp;
-                                                </ng-container>
+                                                </ng-container> -->
                                                 <!-- <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
                                                 <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
                                                 <button class="btn clausebutton btn-sm " *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button> -->
@@ -555,16 +555,16 @@
                                                                                 <div class="d-flex justify-content-between">
                                                                                     <div></div>
                                                                                     <div>
-                                                                                        <ng-container *ngIf="coverModificationYN=='Y'  && element.DifferenceYN=='Y'" >
+                                                                                        <ng-container *ngIf="(coverModificationYN=='Y' && !endorseSIModification)  && element.DifferenceYN=='Y'" >
                                                                                             0
                                                                                         </ng-container>
-                                                                                        <ng-container *ngIf="coverModificationYN=='Y' && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=0 && element.DifferenceYN=='N'">
+                                                                                        <ng-container *ngIf="(coverModificationYN=='Y' && !endorseSIModification) && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=0 && element.DifferenceYN=='N'">
                                                                                             {{ element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC |commaseparator }}
                                                                                         </ng-container>
-                                                                                        <ng-container *ngIf="coverModificationYN=='N' && !element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC  && (element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC==null || element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC==0)">
+                                                                                        <ng-container *ngIf="(coverModificationYN=='N' || endorseSIModification) && !element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC  && (element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC==null || element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC==0)">
                                                                                             0
                                                                                         </ng-container>
-                                                                                        <ng-container *ngIf="coverModificationYN=='N' && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=0">
+                                                                                        <ng-container *ngIf="(coverModificationYN=='N' || endorseSIModification)  && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=0">
                                                                                             {{ element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC |commaseparator }}
                                                                                         </ng-container>
                                                                                     </div>
@@ -816,7 +816,7 @@
                                                                         &nbsp;{{ element[col.key]}}
                                                                     </ng-container>
                                                                     <ng-container *ngIf="col.key =='CoverName'" >
-                                                                        <div style="min-width: 150px !important;">
+                                                                        <div style="min-width: 150px !important;white-space: normal !important;">
                                                                             {{ element[col.key]}}&nbsp;<button class="fa fa-question-circle" style="border: none;" placement="bottom" (click)="covernameinfo(myView,element)">
                                                                             
                                                                             </button>
