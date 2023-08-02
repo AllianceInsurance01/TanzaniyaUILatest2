@@ -45,6 +45,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   PersonalAssistantList: any[] = [];
   LocationList: any[] = [];
   Cotentrisk: any[] = [];
+  MachineryContentrisk:any[]=[];
   policyEndDate: any;
   row: any;contentList:any[]=[];
   rows: any;Intermedity:any[]=[];
@@ -90,6 +91,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   sumInsured: boolean;six: boolean;
   actualPersonalAccSI: any;machineries:any[]=[];
   length = 50;MachineryName:any=null;BrandName:any=null;
+  MachineryLocation:any=null;NameDesc:any=null;
   pageSize = 10;SumInsured:any=null;
   pageIndex = 0;
   pageSizeOptions = [5, 10, 25];
@@ -124,6 +126,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   editBuildingSection: boolean=false;
   totalBuildSIError: boolean=false;
   currentContentIndex: number;
+  MachineryIndex:number;
   editContentSection: boolean;
   LocationId: any;
   serialNoDesc: any;
@@ -193,6 +196,9 @@ export class DomesticRiskDetailsComponent implements OnInit {
   totalAccSIError: boolean;
   enableAllSection: boolean = false;
   EquipmentSi: any;
+  machineryItemId: any;
+  MiSumInsured: any;
+  actualMachinerySI: any;
   constructor(private router: Router,private datePipe:DatePipe,private modalService: NgbModal,
      private sharedService: SharedService,) {
     let homeObj = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
@@ -331,6 +337,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
       else return false;
   }
   setTabSections(){
+    console.log('PPPPPPPPP',this.item);
     if(this.item){
       let items = this.item.find((Code) => Code == '1' || Code=='40');
       if (items) {
@@ -366,7 +373,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
       }
 
       const third = this.item.find((Code) => Code == '3');
-      console.log("MMMMMMMMMMMMMM",third);
+      
       if (third && this.productId!='21') {
         this.third = true;
       }
@@ -401,14 +408,16 @@ export class DomesticRiskDetailsComponent implements OnInit {
         this.getOccupationList(eight)
        } 
        else this.eight = false;
-      //  const nine = this.item.find((Code) => Code == '41');
-      //   if (nine && this.productId!='19' && this.productId!='16') {
-      //     this.nine = true;
-      //   }
-      //   else {
-      //     this.nine = false;
-      //   }
+       const nine = this.item.find((Code) => Code == '41');
+        if (nine && this.productId!='19' && this.productId!='16') {
+          this.nine = true;
+        }
+        else {
+          this.nine = false;
+        }
     }
+   
+
     
   }
   getEditQuoteDetails(){
@@ -544,6 +553,9 @@ export class DomesticRiskDetailsComponent implements OnInit {
           else if(this.productId=='26'){
             this.getallriskListsplant();
           }
+          else if(this.productId=='39'){
+            this.getallriskMachinery();
+          }
           else{
             this.getallriskList();
           }
@@ -598,6 +610,11 @@ export class DomesticRiskDetailsComponent implements OnInit {
               this.actualEmployeeSI = empSI;
             }
             else this.actualEmployeeSI=0;
+            let MachinerySI = this.sumInsuredDetails.ProductSuminsuredDetails.MachinerySi;
+            if(MachinerySI!='' && MachinerySI!=null && MachinerySI!=undefined){
+              this.actualMachinerySI = MachinerySI;
+            }
+            else this.actualMachinerySI=0;
             let FidEmpSi = this.sumInsuredDetails.ProductSuminsuredDetails.FidEmpSi;
             if(FidEmpSi!='' && FidEmpSi!=null && FidEmpSi!=undefined){
               this.actualFidelitySI = FidEmpSi;
@@ -685,9 +702,33 @@ export class DomesticRiskDetailsComponent implements OnInit {
   
 }
 onMachinerySave(){
-  this.MachineryName = null;this.BrandName=null;this.serialNoDesc=null;this.SumInsured=null;
-    this.currentMachineryIndex = null;
-    this.enableMachineryEditSection = false;
+ 
+ 
+    this.locationIdError = false;this.contentIdError=false; this.serialNoError = false;this.contentDescError = false;this.contentSIError = false;
+    let i=0;
+    if(this.MachineryLocation==null || this.MachineryLocation==undefined || this.MachineryLocation==''){ i+=1; this.locationIdError = true;}
+    if(this.machineryItemId==null || this.machineryItemId==undefined || this.machineryItemId==''){ i+=1; this.contentIdError = true;}
+    if(this.serialNoDesc==null || this.serialNoDesc==undefined || this.serialNoDesc==''){ i+=1; this.serialNoError = true;}
+    if(this.MachineryName==null || this.MachineryName==undefined || this.MachineryName==''){ i+=1; this.contentDescError = true;}
+    if(this.MiSumInsured==null || this.MiSumInsured==undefined || this.MiSumInsured=='' || this.MiSumInsured == '0'){ i+=1; this.contentSIError = true;}
+    console.log('uuuuuuuuu',i)
+    if(i==0){
+      this.machineries[this.currentMachineryIndex]['SumInsured'] = this.MiSumInsured;
+      this.machineries[this.currentMachineryIndex]['RiskId'] =this.MachineryLocation;
+      this.machineries[this.currentMachineryIndex]['SerialNoDesc'] = this.serialNoDesc;
+      this.machineries[this.currentMachineryIndex]['MachinaryDesc'] = this.MachineryName;
+      this.machineries[this.currentMachineryIndex]['ItemId'] = this.machineryItemId;
+      this.machineries[this.currentMachineryIndex]['Name'] = this.NameDesc;
+      this.machineries[this.currentMachineryIndex]['Brand'] = this.BrandName;
+      this.MachineryName = null;this.BrandName=null;this.serialNoDesc=null;this.SumInsured=null;
+      this.currentMachineryIndex = null;
+      this.enableMachineryEditSection = false;
+      // this.machineries[this.currentContentIndex]['LocationName'] = this.LocationList.find(ele=>ele.Code==this.LocationId).CodeDesc;
+      // this.LocationId = null;this.currentContentIndex=null;this.contentSI=null;this.serialNoDesc=null;this.contentRiskDesc=null;this.contentId=null;
+      // this.editContentSection = false;
+      // this.enableContentEditSection = false;
+    }
+
 }
 onFidelitySave(){
   this.employeeNameError = false;this.employeeOccupationError = false;this.employeeAddressError=false;
@@ -976,6 +1017,7 @@ onFidelitySave(){
       
   }
   onContentSubmit(){
+    console.log('PPPPPPPPPPPP')
     this.locationIdError = false;this.contentIdError=false; this.serialNoError = false;this.contentDescError = false;this.contentSIError = false;
     let i=0;
     if(this.LocationId==null || this.LocationId==undefined || this.LocationId==''){ i+=1; this.locationIdError = true;}
@@ -1138,6 +1180,26 @@ onFidelitySave(){
         console.log(data);
         if(data.Result){
             this.allriskList = data.Result;
+            //this.getOccupationList();
+
+        }
+      },
+      (err) => { },
+    );
+  }
+  getallriskMachinery(){
+    console.log('QQQQQQQQQQ333333333',this.quoteNo);
+    let ReqObj = {
+      "InsuranceId":this.insuranceId,
+      "BranchCode": this.branchCode,
+      "QuoteNo":this.quoteNo
+    }
+    let urlLink = `${this.CommonApiUrl}dropdown/machinerycontent`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+            this.allriskList = data.Result.ContentTypeRes;
             //this.getOccupationList();
 
         }
@@ -1338,7 +1400,7 @@ onFidelitySave(){
       }
       urlLink = `${this.motorApiUrl}api/savecontentrisk`;
     }
-    if(type=='A')
+    if(type=='A' && this.productId!='39')
     {
       console.log('AAAAAAAAA')
       ReqObj = {
@@ -1351,7 +1413,19 @@ onFidelitySave(){
       }
       urlLink = `${this.motorApiUrl}api/savecontentrisk`;
     }
-
+    if(type=='A' && this.productId=='39')
+    {
+      console.log('AAAAAAAAA')
+      ReqObj = {
+        "CreatedBy": this.loginId,
+      "QuoteNo":sessionStorage.getItem('quoteNo'),
+      "RequestReferenceNo":this.quoteRefNo,
+      "SectionId": "41",
+       "Type":type,
+       "ContentRiskDetails":reqList
+      }
+      urlLink = `${this.motorApiUrl}api/savecontentrisk`;
+    }
     if(type=='E')
     {
       ReqObj = {
@@ -1498,7 +1572,38 @@ onFidelitySave(){
 
     }
   }
+  onSaveMachineryRisk(){
+    if (this.machineries.length != 0) {
+      let i=0, reqList =[];
+      for(let entry of this.machineries){
+        let sumInsured;
+        if(entry.SumInsured==undefined || entry.SumInsured==null) sumInsured = null;
+        else if(entry.SumInsured.includes(',')){ sumInsured = entry.SumInsured.replace(/,/g, '') }
+        else sumInsured = entry.SumInsured;
+          let data = {
+              "ItemId":entry.ItemId,
+              "RiskId":entry.RiskId,
+              "ContentRiskDesc":entry.MachinaryDesc,
+              "SerialNoDesc": entry.SerialNoDesc,
+              "MakeAndModel":"TN123",
+              "SerialNo":"155685",
+              "ItemValue":"26534556",
+              "SumInsured":sumInsured,
+              "Name":entry.Name,
+              "Brand":entry.Brand
+          }
+          /*if(data.Dob!=null){
+              data.Dob = this.datePipe.transform(data.Dob, "dd/MM/yyyy")
+          }*/
+          reqList.push(data);
+          i+=1;
+          if(i==this.machineries.length){
+            this.finalSaveRiskDetails(reqList,'A');
+          }
+      }
 
+    }
+  }
   onSaveAllRisk(){
     if (this.risk.length != 0) {
       let i=0, reqList =[];
@@ -1581,6 +1686,8 @@ onFidelitySave(){
 
 
           if (data.Result) {
+            console.log('PPPPPPPPP',data.Result);
+            console.log('SSSSSSSSSSSS',type);
             //this.first=true;
             if(type=='Content Risk'){
               this.fourth = true;
@@ -1600,9 +1707,30 @@ onFidelitySave(){
             else if(type=='ElectricalEquipment'){
               this.fourth = true;this.getElectronicEquipment();
             }
+            else if(type== 'Machinery Breakdown'){
+              this.nine =true;
+              this.getMachineryRisk();
+              }
             else if (this.first||this.second || this.third || this.fifth || this.six || this.seven || this.eight || this.nine) {
               this.fourth = true;
-
+              if(this.first){
+                this.getContentDetails();
+              }
+              else if(this.second){
+                this.getPersonalAccidentDetails();
+              }
+              else if(this.third){
+                this.getallriskDetails();
+              }
+              else if(this.fifth){
+                this.getPersonalIntermediaryDetails();
+              }
+              else if(this.six){
+                this.getElectronicEquipment();
+                }
+                else if(this.nine){
+                  this.getMachineryRisk();
+                  }
               this.selectedTab = 1;
             }
             else{
@@ -1725,6 +1853,9 @@ onFidelitySave(){
         else if(this.six){
           this.getElectronicEquipment();
           }
+          else if(this.nine){
+            this.getMachineryRisk();
+            }
       })
   }
   onSIValueChange (args) {
@@ -1773,6 +1904,12 @@ onFidelitySave(){
   }
   getContentName(rowData){
     let entry = this.dropList.find(ele=>ele.Code==rowData.ItemId);
+    if(entry) return entry.CodeDesc;
+    else return '';
+  }
+
+  getContentsName(rowData){
+    let entry = this.allriskList.find(ele=>ele.Code==rowData.ItemId);
     if(entry) return entry.CodeDesc;
     else return '';
   }
@@ -1888,13 +2025,13 @@ onFidelitySave(){
         }
       }
       if(type=='machinery'){
-        let entry = this.SumInsured;
-        if(this.SumInsured){
-          if(this.SumInsured.includes('.')) this.SumInsured = this.SumInsured.split('.')[0];
-          let value = this.SumInsured.replace(/\D/g, "")
+        let entry = this.MiSumInsured;
+        if(this.MiSumInsured){
+          if(this.MiSumInsured.includes('.')) this.MiSumInsured = this.MiSumInsured.split('.')[0];
+          let value = this.MiSumInsured.replace(/\D/g, "")
           .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           this.machineries[this.currentMachineryIndex]['SumInsured'] = value.replace(/,/g, '');
-          this.SumInsured = value;
+          this.MiSumInsured = value;
           this.getTotalSICost('Machinery');
         }
       }
@@ -2119,6 +2256,9 @@ onFidelitySave(){
         else if(this.six){
           this.getElectronicEquipment();
         }
+        // else if(this.nine){
+        //   this.getMachineryRisk();
+        // }
 
       })
   }
@@ -2371,6 +2511,59 @@ onFidelitySave(){
     } else {
       return  `with: ${reason}`;
     }
+  }
+  getMachineryRisk(){
+    console.log('MMMMMMMMMMMMMMM')
+    let urlLink = `${this.motorApiUrl}api/getallcontentrisk`;
+    let ReqObj = {
+      "QuoteNo": sessionStorage.getItem('quoteNo'),
+      "SectionId":"41"
+    }
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        let res: any = data;
+        if(res.Result){
+          if (res.Result.ContentRiskDetails) {
+            if(res.Result.ContentRiskDetails.length!=0){
+              // if(this.endorsementSection){
+              //   this.electronicEquipSection = !this.enableFieldsList.some(ele=>ele=='MachineryBreakDown');
+              // }
+              // else 
+              //this.enableMachineryEditSection= true;
+              this.machineries = res.Result.ContentRiskDetails;
+              console.log('PPPPPPPPPPPPPPPPPPPPPPPPPPPP',this.machineries);
+              this.getTotalSICost('Machinery');
+            }
+            else{
+            //  this.machineries = [{
+            //    "ItemId":null,
+            //    "RiskId":null,
+            //    "MakeAndModel":null,
+            //   //  "ContentRiskDesc":null,
+            //   "SerialNoDesc": null,
+            //    "SerialNo":null,
+            //    "ItemValue":null,
+            //    "SumInsured":null,
+            //  }]
+            }
+           }
+         
+    }
+
+  else {
+    this.machineries= [{
+      "ItemId":null,
+      "RiskId":null,
+      "MakeAndModel":null,
+      // "ContentRiskDesc":null,
+      "SerialNoDesc": null,
+      "SerialNo":null,
+      "ItemValue":null,
+      "SumInsured":null,
+    }]
+    }
+      })
   }
   getElectronicEquipment(){
     let urlLink = `${this.motorApiUrl}api/getallcontentrisk`;
@@ -2755,6 +2948,21 @@ onFidelitySave(){
     this.contentSI = this.Cotentrisk[index].SumInsured;this.contentId = this.Cotentrisk[index].ItemId;
     this.individualCommaFormatted('content');
   }
+
+  onEditMachinery(index){
+    console.log('LLLL');
+    this.currentMachineryIndex = index;
+    this.enableMachineryEditSection = true;
+    this.MachineryLocation = this.machineries[index].RiskId;
+    this.serialNoDesc = this.machineries[index].SerialNoDesc;
+    this.MachineryName = this.machineries[index].ContentRiskDesc;
+    this.MiSumInsured = this.machineries[index].SumInsured;this.machineryItemId = this.machineries[index].ItemId;
+    this.NameDesc=this.machineries[index].Name;
+    this.BrandName=this.machineries[index].Brand;
+
+    this.individualCommaFormatted('machinery');
+  }
+
   onEditEmployee(index){
     this.currentEmployeeIndex = index;
     this.editEmployeeSection = true;
@@ -2901,12 +3109,13 @@ onFidelitySave(){
   }
   AddNewMachinery(){
     let entry = {
-      "MachineryDesc": null,
+      "ConttentRiskDesc": null,
       "Brand": null,
       "SerialNo": null,
       "SumInsured": null,
       "RiskId": null,
-      "SectionId": "41"
+      "SectionId": "41",
+      "Name":null,
     }
     this.currentMachineryIndex = this.machineries.length;
     this.editMachinerySection = false;
@@ -2960,6 +3169,12 @@ onFidelitySave(){
     const index = this.Cotentrisk.indexOf(rowss);
     this.Cotentrisk.splice(index, 1);
     this.getTotalSICost('content');
+  }
+
+  MachineryDelete(rows:any){
+    const index = this.machineries.indexOf(rows);
+    this.machineries.splice(index, 1);
+    this.getTotalSICost('machinery');
   }
   AllAdd(){
     let entry = [{
