@@ -4317,7 +4317,7 @@ onCalculate(buildDetails,type,formType) {
       if (this.endorsementSection) {
         effectiveDate = this.endorseEffectiveDate;
         let entry = this.enableFieldsList.some(ele => ele == 'Covers');
-        if (entry) coverModificationYN = 'Y';
+        if (entry || this.endorsementId == 846) coverModificationYN = 'Y';
         else coverModificationYN = 'N';
       }
       else {
@@ -5415,7 +5415,7 @@ getCalculationDetails(vehicleDetails) {
       if (this.endorsementSection) {
         effectiveDate = this.endorseEffectiveDate;
         let entry = this.enableFieldsList.some(ele => ele == 'Covers');
-        if (entry) coverModificationYN = 'Y';
+        if (entry || (this.endorsementId == 846 && veh.Status =='D')) coverModificationYN = 'Y';
         else coverModificationYN = 'N';
       }
       else {

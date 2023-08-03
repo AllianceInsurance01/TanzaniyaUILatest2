@@ -234,7 +234,7 @@ emiyn="N";
         this.endorseEffectiveDate = endorseObj?.EffectiveDate;
         this.enableFieldsList = endorseObj.FieldsAllowed;
         let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='RemoveSection'  || ele=='AddOnCovers' || ele=='AddCovers' || ele=='removeVehicle');
-        if(entry) this.coverModificationYN = 'Y';
+        if(entry || this.endorsementId == 846) this.coverModificationYN = 'Y';
         else this.coverModificationYN = 'N';
         console.log("Enable Obj",this.enableFieldsList)
         if(this.endorsementId!=42){
@@ -1276,7 +1276,7 @@ getMotorUsageList(vehicleValue){
                       this.endorseEffectiveDate = endorseObj?.EffectiveDate;
                       this.enableFieldsList = endorseObj.FieldsAllowed;
                       let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='RemoveSection'  || ele=='AddOnCovers' || ele=='AddCovers' || ele=='removeVehicle');
-                      if(entry) this.coverModificationYN = 'Y';
+                      if(entry || this.endorsementId == 846) this.coverModificationYN = 'Y';
                       else this.coverModificationYN = 'N';
                       console.log("Enable Obj",this.enableFieldsList)
                       if(this.endorsementId!=42){
@@ -1884,15 +1884,22 @@ getMotorUsageList(vehicleValue){
             this.enableFieldsList = fieldList;
             let entry = this.enableFieldsList.some(ele=>ele=='Covers' || ele=='RemoveSection' || ele=='AddOnCovers' || ele=='AddCovers' || ele=='removeVehicle');
             if(this.coverModificationYN=='N'){
-              if(entry) this.coverModificationYN = 'Y';
+              if(entry || this.endorsementId == 846) this.coverModificationYN = 'Y';
               else this.coverModificationYN = 'N';
             }
             sessionStorage.setItem('endorseTypeId',JSON.stringify(obj));
           }
           if(((cover.isSelected=='D' || cover.isSelected=='O' || cover.isSelected=='Y' || cover?.UserOpt=='Y') && !this.endorsementSection) || 
           (this.endorsementSection && (cover.UserOpt=='Y' || cover.isSelected=='D' || cover.isSelected=='O')) ){
-            cover['selected']= true;
-            this.onSelectCover(cover,true,veh.Vehicleid,veh,'coverList','direct');
+            // if(this.endorsementId == 846 && veh.Status=='D'){
+            //   cover['selected']= false;
+            //   this.onSelectCover(cover,false,veh.Vehicleid,veh,'coverList','change');
+            // }
+            // else{
+              cover['selected']= true;
+              this.onSelectCover(cover,true,veh.Vehicleid,veh,'coverList','direct');
+            //}
+            
           }
           else{
             console.log("Not Selected 1",cover);
@@ -1929,21 +1936,77 @@ getMotorUsageList(vehicleValue){
         }
         j+=1;
         if(j==this.vehicleDetailsList.length){
-
-          if(this.quoteNo!="null" && this.quoteNo!=null){
-            this.updateComponent.quoteNo = this.quoteNo;
-            //this.getEditQuoteDetails();
-          }
-           if(this.quoteRefNo!="null" && this.quoteRefNo!=null){
-            //this.updateComponent.quoteNo = this.quoteNo;
-            this.getEditQuoteDetails();
+          if(this.endorsementId==846){
+              let vehicles = this.vehicleDetailsList.filter(ele=>ele.Status=='D');
+              console.log("Entered Veh 1",vehicles)
+              if(vehicles.length!=0){
+                let n=0;
+                  for(let veh of vehicles){
+                    let coverList:any[]=veh.CoverList;
+                    let j = 0;
+                    for(let cover of coverList){
+                      if(((cover.isSelected=='D' || cover.isSelected=='O' || cover.isSelected=='Y' || cover?.UserOpt=='Y') && !this.endorsementSection) || 
+                        (this.endorsementSection && (cover.UserOpt=='Y' || cover.isSelected=='D' || cover.isSelected=='O')) ){
+                          cover['selected']= false;
+                          this.onSelectCover(cover,false,veh.Vehicleid,veh,'coverList','change');
+                          cover['DifferenceYN'] = 'N';
+                        }
+                      j+=1;
+                      if(j==coverList.length) n+=1;
+                    }
+                    
+                    if(n==vehicles.length){
+                      if(this.quoteNo!="null" && this.quoteNo!=null){
+                        this.updateComponent.quoteNo = this.quoteNo;
+                        //this.getEditQuoteDetails();
+                      }
+                       if(this.quoteRefNo!="null" && this.quoteRefNo!=null){
+                        //this.updateComponent.quoteNo = this.quoteNo;
+                        this.getEditQuoteDetails();
+                      }
+                      else{
+                        this.dataSource = new MatTableDataSource(this.coverList);
+                        this.dataSource.sort = this.sort;
+                        this.dataSource.paginator = this.paginator;
+                        this.applyFilter(this.filterValue);
+                      }
+                    }
+                  }
+              }
+              else{
+                if(this.quoteNo!="null" && this.quoteNo!=null){
+                  this.updateComponent.quoteNo = this.quoteNo;
+                  //this.getEditQuoteDetails();
+                }
+                 if(this.quoteRefNo!="null" && this.quoteRefNo!=null){
+                  //this.updateComponent.quoteNo = this.quoteNo;
+                  this.getEditQuoteDetails();
+                }
+                else{
+                  this.dataSource = new MatTableDataSource(this.coverList);
+                  this.dataSource.sort = this.sort;
+                  this.dataSource.paginator = this.paginator;
+                  this.applyFilter(this.filterValue);
+                }
+              }
           }
           else{
-            this.dataSource = new MatTableDataSource(this.coverList);
-            this.dataSource.sort = this.sort;
-            this.dataSource.paginator = this.paginator;
-            this.applyFilter(this.filterValue);
+            if(this.quoteNo!="null" && this.quoteNo!=null){
+              this.updateComponent.quoteNo = this.quoteNo;
+              //this.getEditQuoteDetails();
+            }
+             if(this.quoteRefNo!="null" && this.quoteRefNo!=null){
+              //this.updateComponent.quoteNo = this.quoteNo;
+              this.getEditQuoteDetails();
+            }
+            else{
+              this.dataSource = new MatTableDataSource(this.coverList);
+              this.dataSource.sort = this.sort;
+              this.dataSource.paginator = this.paginator;
+              this.applyFilter(this.filterValue);
+            }
           }
+          
           //this.onGetCoverListById();
         }
       }
@@ -2045,8 +2108,14 @@ getMotorUsageList(vehicleValue){
               if(cover.UserOpt=='Y' ){
                 let coverEntry = coverList.find(ele=>ele.CoverId == cover.CoverId)
                 if(coverEntry){
-                  coverEntry['selected']= true;
-                  this.onSelectCover(coverEntry,true,veh.VehicleId,veh,'coverList','direct');
+                  if(this.endorsementId == 846 && veh.Status=='D'){
+                    cover['selected']= false;
+                    this.onSelectCover(cover,true,veh.Vehicleid,veh,'coverList','direct');
+                  }
+                  else{
+                    cover['selected']= true;
+                    this.onSelectCover(cover,true,veh.Vehicleid,veh,'coverList','direct');
+                  }
                   console.log("Selected 2",cover);
                 }
               }
@@ -2104,10 +2173,14 @@ getMotorUsageList(vehicleValue){
         
         let coverList = vehicle?.CoverList;
         if(event){
+          if(rowData.DifferenceYN==undefined && this.coverModificationYN=='Y'){
+            rowData['DifferenceYN'] = 'Y'
+          }
           if(this.selectedCoverList.length!=0){
            
             let entry = this.selectedCoverList.filter(ele=>ele.Id==vehicleId);
             if(entry.length==0){
+              
               if(rowData.SubCovers==null){
                 let element = {
                   "Covers": [
@@ -2125,9 +2198,7 @@ getMotorUsageList(vehicleValue){
                 this.selectedCoverList.push(element);
               }
               
-              if(this.coverModificationYN=='Y'){
-                rowData['DifferenceYN'] = 'Y'
-              }
+              
               if(directType=='change' && this.endorsementSection){
                 if((this.endorseAddOnCovers || this.endorseCovers) && (rowData.Modifiable==undefined || rowData.Modifiable!='N')){
                   rowData['ModifiedYN'] = 'Y';
@@ -2222,9 +2293,7 @@ getMotorUsageList(vehicleValue){
                 }
                 console.log("Selected Cover",this.selectedCoverList)
               }
-              if(this.coverModificationYN=='Y'){
-                rowData['DifferenceYN'] = 'Y'
-              }
+              
               if(directType=='change' && this.endorsementSection){
                 
                 if((this.endorseAddOnCovers || this.endorseCovers) && (rowData.Modifiable==undefined || rowData.Modifiable!='N')){
@@ -2345,9 +2414,7 @@ getMotorUsageList(vehicleValue){
                   sectionEntry.Covers.push(element)
                   console.log("Selected Cover",this.selectedCoverList)
                 }
-                if(this.coverModificationYN=='Y'){
-                  rowData['DifferenceYN'] = 'Y'
-                }
+                
                 if(directType=='change' && this.endorsementSection){
                   if(rowData.Endorsements!=null && rowData.Endorsements!=undefined){
                     if(this.coverModificationYN=='Y'){
@@ -2435,9 +2502,7 @@ getMotorUsageList(vehicleValue){
               this.selectedCoverList.push(element);
               console.log("Selected Cover",this.selectedCoverList)
             }
-          if(this.coverModificationYN=='Y'){
-                rowData['DifferenceYN'] = 'Y'
-          }
+          
           if(directType=='change' && this.endorsementSection){
             if((this.endorseAddOnCovers || this.endorseCovers) && (rowData.Modifiable==undefined || rowData.Modifiable!='N')){
               rowData['ModifiedYN'] = 'Y';
@@ -2510,7 +2575,7 @@ getMotorUsageList(vehicleValue){
               let covers:any[] = sectionEntry.Covers;
               let CoverIndex = covers.findIndex(ele=>ele.CoverId==rowData.CoverId);
               covers.splice(CoverIndex,1);
-              if(this.coverModificationYN=='Y') rowData['DifferenceYN'] = 'N';
+              if(this.coverModificationYN=='Y') {rowData['DifferenceYN'] = 'N';}
               if(directType=='change' && this.endorsementSection){
                 if(!vehicle?.totalLcPremium) {vehicle['totalLcPremium'] = 0;vehicle['totalPremium']=0;}
                 if(rowData.Endorsements!=null && rowData.Endorsements!=undefined){
@@ -2547,6 +2612,10 @@ getMotorUsageList(vehicleValue){
             }
 
           }
+          // else if(this.endorsementId==846){
+          //   let covers:any[] = rowData.Covers;
+          //   console.log("Coverssssssssss",covers)
+          // }
         }
 
     }
