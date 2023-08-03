@@ -61,6 +61,7 @@ export class EmployersLiability{
                       key: 'TotalNoOfEmployees',
                       templateOptions: {
                         label: 'Employee Count',
+                        disabled: this.checkDisable('OccupationType'),
                         required: true,
                       },
                       validators: {
@@ -75,7 +76,7 @@ export class EmployersLiability{
                       defaultValue: '0',
                       props: {
                         label: `SumInsured`,
-                        disabled: this.checkDisable('EmpLiabilitySi'),
+                        disabled: this.checkDisable('SIModification'),
                         required: true,
                         options: [
         

@@ -1948,7 +1948,7 @@ getMotorUsageList(vehicleValue){
                     let j = 0;
                     for(let cover of coverList){
                       if(((cover.isSelected=='D' || cover.isSelected=='O' || cover.isSelected=='Y' || cover?.UserOpt=='Y') && !this.endorsementSection) || 
-                        (this.endorsementSection && (cover.UserOpt=='Y' || cover.isSelected=='D' || cover.isSelected=='O')) ){
+                        (this.endorsementSection && (cover.UserOpt=='Y' || cover.isSelected=='Y')) ){
                           cover['selected']= false;
                           this.onSelectCover(cover,false,veh.Vehicleid,veh,'coverList','change');
                           cover['DifferenceYN'] = 'N';
