@@ -12,7 +12,154 @@
         </div>
     </div>
 </div>
-<div class="maan-grid-item">
+<div class="maan-grid-item" *ngIf="uploadSection">
+    <div class="maan-grid-item-title">
+        <div class="d-flex justify-content-between">
+            <div>
+                <span class="mx-1">
+                    <i class="fas fa-car mx-1"></i>
+                </span>
+                <span class="spancommon span_font_size">Upload Vehicle </span>
+            </div>
+            <div>
+                <button class="maan-btn maan-btn-green maan-btn-data ml-1" *ngIf="showEmpRecordsSection" matRipple (click)="onEnableUploadSection()" style="white-space: nowrap;"><i class="fas fa-upload"></i>&nbsp;Upload Vehicle Details</button>
+            </div>
+        </div>
+    </div>
+    <div class="maan-grid-item-body">
+        <ng-container *ngIf="!showEmpRecordsSection">
+            <div class="row" *ngIf="uploadStatus==null">
+                <div class="col-md-8 col-lg-8 offset-2" >
+                    <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct')" #doc>
+                    <div class="imag-card my-3" appDragDropFileUpload (click)="doc.click()">
+                        <div>
+                            <div class="center">
+                                <b class="text-dark" style="font-size:1rem">
+                                    <i class="far fa-images"></i> Drag or Click</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="uploadDocList.length!=0 && uploadStatus==null">
+                <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                    <table class="table" id="capture_table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                <th scope="col"><span class="spancommon">FileName</span></th>
+                                <th scope="col"><span class="spancommon">Delete</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let document of uploadDocList;let i=index">
+                                <th scope="row">{{i+1}}</th>
+                                <td><span class="spancommon">{{document.filename}}</span></td>
+                                <td>
+                                    <button class="btn-sm btn btn-danger" (click)="uploadDocList=[];"><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="text-center mt-2" *ngIf="uploadStatus==null">
+                <button class="btn btn-danger btn-sm mr-5" (click)="onCancelDocUpload()"> Cancel</button>&nbsp;&nbsp;
+                <button class="btn btn-success btn-sm" *ngIf="uploadDocList.length!=0" (click)="onUploadVehicleData()">Upload</button>
+            </div>
+            <div class="text-center" *ngIf="uploadStatus">
+                <p>{{uploadStatus}}</p>
+            </div>
+        </ng-container>
+        <div *ngIf="showEmpRecordsSection">
+            <div class="row" *ngIf="employeeUploadRecords.length!=0">
+                <div class="col-md-12 col-lg-12 col-xl-12">
+                    <table class="table" id="capture_table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                <th scope="col"><span class="spancommon">Uploaded Date</span></th>
+                                <th scope="col"><span class="spancommon">Total Records</span></th>
+                                <th scope="col"><span class="spancommon">Valid Records</span></th>
+                                <th scope="col"><span class="spancommon">Error Records</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let records of employeeUploadRecords;let i=index">
+                                <th scope="row">{{i+1}}</th>
+                                <td><span class="spancommon">{{records.UploadDate}}</span></td>
+                                <td> <span class="spancommon">{{records.TotalRecords}}</span> </td>
+                                <td> <span class="spancommon">{{records.ValidRecords}}</span> </td>
+                                <td> <span class="spancommon">{{records.ErrorRecords}}</span> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center mt-2" *ngIf="employeeUploadRecords[0].ValidRecords!='0' && employeeUploadRecords[0].ValidRecords!=null">
+                    <button class="custom-btn btn-7 maan-button-data mx-2" (click)="updateEmployeeRecordsTable()">Move Records</button>
+                </div>
+                <ng-container *ngIf="errorRecords.length!=0">
+                    <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                        <div class="headcommon" >
+                            <span><i class="fas fa-users mx-1 mt-3"></i></span>
+                            <span class="spancommon span_font_size" style="font-weight:600">Error  Details</span>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xl-2">
+                        <span style="width:'25px !important';height:'10px !important'"></span>&nbsp;<span>Input Based Error</span>
+                    </div>
+                    <div class="col-md-12 col-lg-12 col-xl-12" >
+                        <table class="table" id="capture_table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                    <th scope="col"><span class="spancommon">Chassis No/Reg No</span></th>
+                                    <th scope="col"><span class="spancommon">Policy Type</span></th>
+                                    <th scope="col"><span class="spancommon">Start Date</span></th>
+                                    <th scope="col"><span class="spancommon">End Date</span></th>
+                                    <th scope="col"><span class="spancommon">TIRA Error</span></th>
+                                    <th scope="col"><span class="spancommon">Input Error</span></th>
+                                    <!-- <th scope="col"><span class="spancommon">Action</span></th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let records of errorRecords|paginate:{itemsPerPage: 5, currentPage:j , id:'j'};let i=index">
+                                    <th scope="row">{{i+1}}</th>
+                                    <td><span class="spancommon">{{records.SearchByData}}</span></td>
+                                    <td> <span class="spancommon">{{records.InsuranceType}}</span> </td>
+                                    <td> <span class="spancommon">{{records.PolicyStartDate}}</span> </td>
+                                    <td> <span class="spancommon">{{records.PolicyEndDate}}</span> </td>
+                                    <ng-container *ngIf="records.TiraStatus!='E'">
+                                        <td> <span class="spancommon">N/A</span> </td>
+                                    </ng-container>
+                                    <ng-container *ngIf="records.TiraStatus=='E'">
+                                        <td class="tiraBg"> <span class="spancommon">{{records.TiraErrorDesc}}</span> </td>
+                                    </ng-container>
+                                    <ng-container  *ngIf="records.InputStatus=='E'">
+                                        <td class="inputBg"> <span class="spancommon">{{records.InputErrorDesc}}</span> </td>
+                                    </ng-container>
+                                    <ng-container *ngIf="records.InputStatus!='E'">
+                                        <td> <span class="spancommon">N/A</span> </td>
+                                    </ng-container>
+                                    <!-- <td> 
+                                            <button class="btn btn-primary" (click)="onDeleteErrorRow(records)"><i class="fa fa-pen"></i></button>    
+                                    </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <pagination-controls (pageChange)="j=$event"  id="j"></pagination-controls>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-danger btn-sm mr-5" (click)="showEmpRecordsSection=!showEmpRecordsSection;uploadDocList=[];uploadStatus=null;errorRecords=[];"> Cancel</button>&nbsp;&nbsp;
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="maan-grid-item" *ngIf="!uploadSection">
     <div class="maan-grid-item-title display1" *ngIf="customerData.length!=0">
         <div class="d-flex justify-content-between">
             <div>
@@ -27,6 +174,7 @@
             </div>
         </div>
     </div>
+    
     <div class="display2 mb-0" *ngIf="customerData.length!=0">
         <div class="row mt-2">
             <div class="col-12 mt-2" style="border-bottom: 2px solid #333b85;">
@@ -43,7 +191,7 @@
                
             </div>
             <div *ngIf="!searchSection && statusValue!='RA' && (!endorsementSection || (endorsementSection && enableAddVehicle)) && !checkDisableField()">
-                <button class="maan-btn maan-btn-green maan-btn-data ml-1" matRipple (click)="onEnableUploadSection()" style="white-space: nowrap;bottom: 0.2rem !important;"><i class="fas fa-upload"></i>&nbsp;Upload Vehicle Details</button>
+                <button class="maan-btn maan-btn-green maan-btn-data ml-1" *ngIf="!uploadSection" matRipple (click)="onEnableUploadSection()" style="white-space: nowrap;bottom: 0.2rem !important;"><i class="fas fa-upload"></i>&nbsp;Upload Vehicle Details</button>
             </div>
         </div>
     </div>
@@ -166,153 +314,6 @@
         <div class="text-center mb-2">
             <button class="custom-btn btn-5 mr-2 custom-btn btn-5" (click)="ongetBack()" matRipple><<&nbsp;Back</button>&nbsp;
             <button class="custom-btn btn-6  maan-button-data" matRipple (click)="WishListProceed()"><i class="fas fa-check"></i>&nbsp;Proceed</button>
-        </div>
-    </div>
-</div>
-<div class="maan-grid-item" *ngIf="uploadSection">
-    <div class="maan-grid-item-title">
-        <div class="d-flex justify-content-between">
-            <div>
-                <span class="mx-1">
-                    <i class="fas fa-car mx-1"></i>
-                </span>
-                <span class="spancommon span_font_size">Upload Vehicle </span>
-            </div>
-            <div>
-                <button class="maan-btn maan-btn-green maan-btn-data ml-1" *ngIf="showEmpRecordsSection" matRipple (click)="onEnableUploadSection()" style="white-space: nowrap;"><i class="fas fa-upload"></i>&nbsp;Upload Vehicle Details</button>
-            </div>
-        </div>
-    </div>
-    <div class="maan-grid-item-body">
-        <ng-container *ngIf="!showEmpRecordsSection">
-            <div class="row" *ngIf="uploadStatus==null">
-                <div class="col-md-8 col-lg-8 offset-2" >
-                    <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct')" #doc>
-                    <div class="imag-card my-3" appDragDropFileUpload (click)="doc.click()">
-                        <div>
-                            <div class="center">
-                                <b class="text-dark" style="font-size:1rem">
-                                    <i class="far fa-images"></i> Drag or Click</b>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row" *ngIf="uploadDocList.length!=0 && uploadStatus==null">
-                <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
-                    <table class="table" id="capture_table">
-                        <thead>
-                            <tr>
-                                <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
-                                <th scope="col"><span class="spancommon">FileName</span></th>
-                                <th scope="col"><span class="spancommon">Delete</span></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let document of uploadDocList;let i=index">
-                                <th scope="row">{{i+1}}</th>
-                                <td><span class="spancommon">{{document.filename}}</span></td>
-                                <td>
-                                    <button class="btn-sm btn btn-danger" (click)="uploadDocList=[];"><i class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="text-center mt-2" *ngIf="uploadStatus==null">
-                <button class="btn btn-danger btn-sm mr-5" (click)="uploadSection=!uploadSection;searchSection=!searchSection;uploadDocList=[]"> Cancel</button>&nbsp;&nbsp;
-                <button class="btn btn-success btn-sm" *ngIf="uploadDocList.length!=0" (click)="onUploadVehicleData()">Upload</button>
-            </div>
-            <div class="text-center" *ngIf="uploadStatus">
-                <p>{{uploadStatus}}</p>
-            </div>
-        </ng-container>
-        <div *ngIf="showEmpRecordsSection">
-            <div class="row" *ngIf="employeeUploadRecords.length!=0">
-                <div class="col-md-12 col-lg-12 col-xl-12">
-                    <table class="table" id="capture_table">
-                        <thead>
-                            <tr>
-                                <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
-                                <th scope="col"><span class="spancommon">Uploaded Date</span></th>
-                                <th scope="col"><span class="spancommon">Total Records</span></th>
-                                <th scope="col"><span class="spancommon">Valid Records</span></th>
-                                <th scope="col"><span class="spancommon">Error Records</span></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let records of employeeUploadRecords;let i=index">
-                                <th scope="row">{{i+1}}</th>
-                                <td><span class="spancommon">{{records.UploadDate}}</span></td>
-                                <td> <span class="spancommon">{{records.TotalRecords}}</span> </td>
-                                <td> <span class="spancommon">{{records.ValidRecords}}</span> </td>
-                                <td> <span class="spancommon">{{records.ErrorRecords}}</span> </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="text-center mt-2" *ngIf="employeeUploadRecords[0].ValidRecords!='0' && employeeUploadRecords[0].ValidRecords!=null">
-                    <button class="custom-btn btn-7 maan-button-data mx-2" (click)="updateEmployeeRecordsTable()">Move Records</button>
-                </div>
-                <ng-container *ngIf="errorRecords.length!=0">
-                    <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
-                        <div class="headcommon" >
-                            <span><i class="fas fa-users mx-1 mt-3"></i></span>
-                            <span class="spancommon span_font_size" style="font-weight:600">Error  Details</span>
-                        </div>
-                    </div>
-                    <div class="col-md-2 col-lg-2 col-xl-2">
-                        <span style="width:'25px !important';height:'10px !important'"></span>&nbsp;<span>Input Based Error</span>
-                    </div>
-                    <div class="col-md-12 col-lg-12 col-xl-12" >
-                        <table class="table" id="capture_table">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
-                                    <th scope="col"><span class="spancommon">Chassis No/Reg No</span></th>
-                                    <th scope="col"><span class="spancommon">Policy Type</span></th>
-                                    <th scope="col"><span class="spancommon">Start Date</span></th>
-                                    <th scope="col"><span class="spancommon">End Date</span></th>
-                                    <th scope="col"><span class="spancommon">TIRA Error</span></th>
-                                    <th scope="col"><span class="spancommon">Input Error</span></th>
-                                    <!-- <th scope="col"><span class="spancommon">Action</span></th> -->
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let records of errorRecords|paginate:{itemsPerPage: 5, currentPage:j , id:'j'};let i=index">
-                                    <th scope="row">{{i+1}}</th>
-                                    <td><span class="spancommon">{{records.SearchByData}}</span></td>
-                                    <td> <span class="spancommon">{{records.InsuranceType}}</span> </td>
-                                    <td> <span class="spancommon">{{records.PolicyStartDate}}</span> </td>
-                                    <td> <span class="spancommon">{{records.PolicyEndDate}}</span> </td>
-                                    <ng-container *ngIf="records.TiraStatus!='E'">
-                                        <td> <span class="spancommon">N/A</span> </td>
-                                    </ng-container>
-                                    <ng-container *ngIf="records.TiraStatus=='E'">
-                                        <td class="tiraBg"> <span class="spancommon">{{records.TiraErrorDesc}}</span> </td>
-                                    </ng-container>
-                                    <ng-container  *ngIf="records.InputStatus=='E'">
-                                        <td class="inputBg"> <span class="spancommon">{{records.InputErrorDesc}}</span> </td>
-                                    </ng-container>
-                                    <ng-container *ngIf="records.InputStatus!='E'">
-                                        <td> <span class="spancommon">N/A</span> </td>
-                                    </ng-container>
-                                    <!-- <td> 
-                                            <button class="btn btn-primary" (click)="onDeleteErrorRow(records)"><i class="fa fa-pen"></i></button>    
-                                    </td> -->
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <pagination-controls (pageChange)="j=$event"  id="j"></pagination-controls>
-                    </div>
-                    <div class="text-center">
-                        <button class="btn btn-danger btn-sm mr-5" (click)="showEmpRecordsSection=!showEmpRecordsSection;uploadDocList=[];uploadStatus=null;errorRecords=[];"> Cancel</button>&nbsp;&nbsp;
-                    </div>
-                </ng-container>
-            </div>
         </div>
     </div>
 </div>
