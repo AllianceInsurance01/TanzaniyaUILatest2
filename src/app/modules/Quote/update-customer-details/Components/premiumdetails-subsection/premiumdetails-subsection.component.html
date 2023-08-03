@@ -99,16 +99,19 @@
                 <div class="col-12 col-md-3">
                     <div class="input-control-container">
                         
-                        <ng-container *ngIf="columnHeader?.TotalEndtPremium==null">
+                        <ng-container *ngIf="columnHeader?.TotalEndtPremium==null || columnHeader?.TotalEndtPremium==0">
                             <label class="input-form-label" style="font-size: 0.9rem !important;"><b>Total Premium</b></label>
                             <div class="input-form-radio-box">
-                                <span class="spancommon span_font_size text-primary" style="font-size: 0.9rem !important;">{{columnHeader?.OverallPremiumFc|commaseparator}}<span>
-                                    &nbsp;({{columnHeader?.Currency}})</span></span>
-        
+                                <ng-container *ngIf="columnHeader?.OverallPremiumFc!=null && columnHeader?.OverallPremiumFc!=0">
+                                    <span class="spancommon span_font_size text-primary" style="font-size: 0.9rem !important;">{{columnHeader?.OverallPremiumFc|commaseparator}}<span>
+                                        &nbsp;({{columnHeader?.Currency}})</span></span>
+                                </ng-container>
+                                <ng-container *ngIf="columnHeader?.OverallPremiumFc==null || columnHeader?.OverallPremiumFc==0">
+                                    <span class="spancommon span_font_size text-primary" style="font-size: 0.9rem !important;">0&nbsp;({{columnHeader?.Currency}})</span>
+                                </ng-container>
                             </div>
-                           
                         </ng-container>
-                        <ng-container *ngIf="columnHeader?.TotalEndtPremium!=undefined && columnHeader?.TotalEndtPremium!=null">
+                        <ng-container *ngIf="columnHeader?.TotalEndtPremium!=undefined && columnHeader?.TotalEndtPremium!=0 && columnHeader?.TotalEndtPremium!=null">
                             <label class="input-form-label" style="font-size: 0.9rem !important;"><b>Total Endorsement Premium</b></label>
                             <span>:
                                 <ng-container *ngIf="columnHeader?.TotalEndtPremium!=0 && columnHeader?.TotalEndtPremium!=null ">
