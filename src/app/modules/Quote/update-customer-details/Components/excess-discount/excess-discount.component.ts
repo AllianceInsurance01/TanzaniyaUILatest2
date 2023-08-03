@@ -1942,6 +1942,8 @@ getMotorUsageList(vehicleValue){
               if(vehicles.length!=0){
                 let n=0;
                   for(let veh of vehicles){
+                    let SectionEntry:any[]=[];
+                    SectionEntry = this.vehicleDetailsList.filter(ele=>ele.Status=='E' && ele.SectionId==veh.SectionId);
                     let coverList:any[]=veh.CoverList;
                     let j = 0;
                     for(let cover of coverList){
@@ -1950,7 +1952,20 @@ getMotorUsageList(vehicleValue){
                           cover['selected']= false;
                           this.onSelectCover(cover,false,veh.Vehicleid,veh,'coverList','change');
                           cover['DifferenceYN'] = 'N';
+                          if(SectionEntry.length!=0){
+                            let coverList = SectionEntry[0]?.CoverList;
+                            let covers = coverList.filter(ele=>ele.CoverId==cover.CoverId);
+                            
+                            if(!(covers[0].UserOpt=='Y' || covers[0].isSelected=='D' || covers[0].isSelected=='O')){
+                              console.log("Opted Sections",SectionEntry[0],covers)
+                              covers[0]['selected']= true;
+                              this.onSelectCover(covers[0],true,SectionEntry[0].Vehicleid,SectionEntry[0],'coverList','change');
+                              covers[0]['DifferenceYN'] = 'Y';
+                            }
+                          }
+                          
                         }
+                      
                       j+=1;
                       if(j==coverList.length) n+=1;
                     }
@@ -2110,7 +2125,7 @@ getMotorUsageList(vehicleValue){
                 if(coverEntry){
                   if(this.endorsementId == 846 && veh.Status=='D'){
                     cover['selected']= false;
-                    this.onSelectCover(cover,true,veh.Vehicleid,veh,'coverList','direct');
+                   // this.onSelectCover(cover,true,veh.Vehicleid,veh,'coverList','direct');
                   }
                   else{
                     cover['selected']= true;
