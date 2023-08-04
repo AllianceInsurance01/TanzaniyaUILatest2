@@ -13,9 +13,21 @@ import { FieldArrayType } from '@ngx-formly/core';
     </div>
     <div class="justify-content-end d-flex">
         <div >
-            <button class="btn btn-primary" type="button" (click)="add()"><i class="fa fa-plus"></i>&nbsp;Add Employees</button>
+            <button class="btn btn-primary" type="button" *ngIf="endorsementId!=850" (click)="add()"><i class="fa fa-plus"></i>&nbsp;Add Employees</button>
         </div>
     </div>
   `,
 })
-export class RepeatTypeComponent extends FieldArrayType {}
+export class RepeatTypeComponent extends FieldArrayType {
+  endorsementSection:boolean=false;
+  endorsementId: any=null;
+  constructor(){
+    super();
+    let endorsementDetails = JSON.parse(sessionStorage.getItem('endorseTypeId'));
+    console.log("Endorsements",endorsementDetails);
+    if(endorsementDetails){
+      this.endorsementSection = true;
+      this.endorsementId = endorsementDetails?.EndtTypeId
+    }
+  }
+}

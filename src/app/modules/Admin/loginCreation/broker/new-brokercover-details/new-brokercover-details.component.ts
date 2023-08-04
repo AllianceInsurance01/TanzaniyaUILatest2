@@ -72,7 +72,8 @@ export class NewBrokercoverDetailsComponent implements OnInit {
   excessDesc: any;
   uploadTranId: any=null;
   uploadStatus: any=null;
-  uploadRecordsList: any[];
+  uploadRecordsList: any[]=[];
+  CoverList: any;
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,) {
       this.minDate = new Date();
@@ -198,9 +199,27 @@ export class NewBrokercoverDetailsComponent implements OnInit {
       if(this.coverDetails?.IsTaxExcempted == null) this.coverDetails.IsTaxExcempted = 'N';
     }
     this.getTaxTypeList();
+    this.getcoverList();
   }
   dismiss() {
     //this.ref.close();
+  }
+  getcoverList(){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId,
+      "BranchCode": "99999"
+    }
+    let urlLink = `${this.ApiUrl1}dropdown/coveragetypes`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          //this.holderTypeValue = null;
+           this.CoverList = data.Result;
+        }
+      },
+      (err) => { },
+    );
   }
   getEditCoverDetails(coverId){
     let ReqObj = {
