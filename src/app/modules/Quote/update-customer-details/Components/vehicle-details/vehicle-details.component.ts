@@ -87,6 +87,7 @@ export class VehicleDetailsComponent implements OnInit {
   enableAddVehicle: boolean=false;
   enableFieldsSection: boolean = false;
   endorsementYn: any;tiraCoverNoteNo:any=null;
+  endorseSIModification: boolean=false;
   constructor(private router:Router,private sharedService: SharedService,
     private updateComponent:UpdateCustomerDetailsComponent,
    private datePipe:DatePipe) {
@@ -97,7 +98,7 @@ export class VehicleDetailsComponent implements OnInit {
     let quoteRefNo = sessionStorage.getItem('quoteReferenceNo');
     if(quoteRefNo) this.requestReferenceNo = quoteRefNo;
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
-    console.log("User Details",this.userDetails)
+    
     this.loginId = this.userDetails.Result.LoginId;
     this.userType = this.userDetails?.Result?.UserType;
     this.agencyCode = this.userDetails.Result.OaCode;
@@ -137,6 +138,7 @@ export class VehicleDetailsComponent implements OnInit {
             this.enableInsuranceClass = this.enableFieldsList.some(ele=>ele=='InsuranceClass');
             this.enableBodyType = this.enableFieldsList.some(ele=>ele=='BodyType');
             this.enableMotorUsage = this.enableFieldsList.some(ele=>ele=='MotorUsage');
+            this.endorseSIModification = this.enableFieldsList.some(ele=>ele=='Covers' && this.endorsementId==850);
             this.enableClaimsYN = this.enableFieldsList.some(ele=>ele=='ClaimsYN');
             this.enableGpsYN = this.enableFieldsList.some(ele=>ele=='GpsYN');
             this.enableVehicleSI = this.enableFieldsList.some(ele=>ele=='VehicleSI');
@@ -1327,7 +1329,7 @@ export class VehicleDetailsComponent implements OnInit {
           let coverModificationYN = 'N';
           if(this.endorsementSection){
             let entry = this.enableFieldsList.some(ele=>ele=='Covers');
-            if(entry) coverModificationYN = 'Y';
+            if(entry && !this.endorseSIModification) coverModificationYN = 'Y';
             else coverModificationYN = 'N';
           }
           let quoteStatus = sessionStorage.getItem('QuoteStatus');

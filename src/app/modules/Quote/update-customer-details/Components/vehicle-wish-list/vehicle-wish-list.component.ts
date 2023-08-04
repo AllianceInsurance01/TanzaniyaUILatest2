@@ -637,6 +637,9 @@ export class VehicleWishListComponent implements OnInit {
       (err) => { },
     );
   }
+  onCancelDocUpload(){
+    this.uploadSection=false;this.searchSection=false;this.uploadDocList=[]
+  }
   employeedownload(){
     let ReqObj = {
       "CompanyId": this.insuranceId,

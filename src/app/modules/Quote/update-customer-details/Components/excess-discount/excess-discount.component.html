@@ -115,6 +115,7 @@
                                             </ng-container>
                                             <ng-container>
                                                 <span class="spancommon" style="color:navy;padding:10px !important;border-radius:10px;font-size: 1rem;background-color: #fd7e14!important;" *ngIf="menu.Status=='D' && productId=='5'" >Removed Vehicle</span>
+                                                <span class="spancommon" style="color:navy;padding:10px !important;border-radius:10px;font-size: 1rem;background-color: #fd7e14!important;" *ngIf="endorsementSection && endorsementId==846 && menu.Status=='D'" >Removed Occupation</span>
                                             </ng-container>
                                         </div>
                                         <div class="display2">
@@ -555,7 +556,7 @@
                                                                                 <div class="d-flex justify-content-between">
                                                                                     <div></div>
                                                                                     <div>
-                                                                                        <ng-container *ngIf="(coverModificationYN=='Y' && !endorseSIModification)  && element.DifferenceYN=='Y'" >
+                                                                                        <ng-container *ngIf="(coverModificationYN=='Y' && !endorseSIModification )  && element.DifferenceYN=='Y'" >
                                                                                             0
                                                                                         </ng-container>
                                                                                         <ng-container *ngIf="(coverModificationYN=='Y' && !endorseSIModification) && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=0 && element.DifferenceYN=='N'">
@@ -564,7 +565,7 @@
                                                                                         <ng-container *ngIf="(coverModificationYN=='N' || endorseSIModification) && !element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC  && (element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC==null || element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC==0)">
                                                                                             0
                                                                                         </ng-container>
-                                                                                        <ng-container *ngIf="(coverModificationYN=='N' || endorseSIModification)  && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=0">
+                                                                                        <ng-container *ngIf="(coverModificationYN=='N' || endorseSIModification )  && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=0 ">
                                                                                             {{ element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC |commaseparator }}
                                                                                         </ng-container>
                                                                                     </div>

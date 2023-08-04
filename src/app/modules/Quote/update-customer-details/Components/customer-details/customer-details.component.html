@@ -248,7 +248,7 @@
                                     <span class="heading">SELECT INDUSTRY TYPE <span class="text-danger">*</span></span>
                                     <div class="row mt-3">
                                         <div class="input-control-container col-md-12 col-lg-12">
-                                            <ng-select class="input-form-select" appendTo="body" [(ngModel)]="IndustryId" [items]="industryList" bindValue="Code" bindLabel="CodeDesc">
+                                            <ng-select class="input-form-select" appendTo="body" [(ngModel)]="IndustryId" [items]="industryList" [disabled]="(endorsementSection)" bindValue="Code" bindLabel="CodeDesc">
                                             </ng-select>
                                         </div>
                                     </div>
