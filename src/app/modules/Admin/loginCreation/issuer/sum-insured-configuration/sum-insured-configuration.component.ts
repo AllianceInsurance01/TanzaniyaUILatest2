@@ -25,6 +25,7 @@ export class SumInsuredConfigurationComponent {
   IssuerType: any;
   tableList:any[]=[];
   InputTable: any;
+  reqlist:any[]=[];
   constructor(private router:Router,private sharedService:SharedService,) {
     let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if(userDetails){
@@ -602,61 +603,94 @@ export class SumInsuredConfigurationComponent {
   }
 
 
-   
-onSelectendorse(rowData,event){ 
-    let Endrosement; let endorsements 
-   let i=0;
-    if(this.productList.length!=0){
-        let entry = this.productList.find(ele=>ele.ProductId==this.productIds)
-        if(entry){
-               if(entry?.EndorsementIds[i]==0){
-                endorsements = entry?.EndorsementIds[0];
-               }
-               else if(entry?.EndorsementIds[i]!=0){
-            endorsements = entry?.EndorsementIds[0]?.split(',');
-               }
-            Endrosement=endorsements.some(ele=>ele==rowData.EndtTypeId);
-            i+=1;
-        }
+  onSelectendorse(rowData,event){
+    let endrose;let endroseData:any[]=[]; let endorsements :any;
+    let entry = this.productList.find(ele=>ele.ProductId==this.productIds)
+    console.log('MMMMMMMMMMMMMMMMMMM',entry);
+    if(entry){
+      if(this.endorseData.length!=0){
+        endorsements = entry?.EndorsementIds[0]?.split(',');
+        console.log('EEEEEEEEEE',endorsements);
+      }
     }
-    console.log('llllllllllllll',rowData);
-    console.log('hhhhhhhhhhhh',event);
-    let type:any;let list:any
     if(event==true){
-        if(endorsements.length!=0){
-            let exist = endorsements.some(ele=>ele == rowData.EndtTypeId);
-            if(!exist){
-                let entry = this.productList.find(ele=>ele.ProductId== this.productIds)
-                if(entry){
-                   entry.EndorsementIds[0] = entry.EndorsementIds[0]+','+rowData.EndtTypeId
-                }
+      if(this.endorseData.length!=0){
+        let exist = this.endorseData.find(ele=>ele.EndtTypeId == rowData.EndtTypeId);
+        console.log('EEBBBBBBBBBBBBB',exist);
+        if(exist){
+          if(endorsements.length!=0){
+            let exists = endorsements.some(ele=>ele == exist.EndtTypeId);
+            console.log('Not Exists',exists);
+            if(!exists){
+              this.reqlist.push(exist.EndtTypeId);
             }
+          }
+          console.log('UUUUUUU',this.reqlist);
         }
+      }    
     }
-    else{
-        if(endorsements.length!=0){
-            let exist = endorsements.some(ele=>ele == rowData.EndtTypeId);
-            if(exist){
-                endorsements.splice(endorsements.findIndex(ele=>ele == rowData.EndtTypeId),1);
-                let i=0,finalString = ''
-                if(endorsements.length!=0){
-                    for(let endorse of endorsements){
-                        if(finalString=='') finalString = endorse;
-                        else finalString = finalString+','+endorse;
-                        i+=1;
-                        if(i==endorsements.length){
-                            let entry = this.productList.find(ele=>ele.ProductId== this.productIds)
-                            entry.EndorsementIds[0] = finalString;
-                        }
-                    }
-                }
-                
-            }
-        }
+    else if(event== false){
+      let index = this.reqlist.findIndex(ele=>ele==rowData.EndtTypeId);
+      this.reqlist.splice(index,1);
+      console.log('TTTTTTTTTTTTT',this.reqlist);       
     }
-    console.log("Final Product List",this.productList)
-            
   }
+
+   
+// onSelectendorse(rowData,event){ 
+//     let Endrosement; let endorsements 
+//    let i=0;
+//     if(this.productList.length!=0){
+//         let entry = this.productList.find(ele=>ele.ProductId==this.productIds)
+//         if(entry){
+//                if(entry?.EndorsementIds[i]==0){
+//                 endorsements = entry?.EndorsementIds[0];
+//                }
+//                else if(entry?.EndorsementIds[i]!=0){
+//             endorsements = entry?.EndorsementIds[0]?.split(',');
+//                }
+//             Endrosement=endorsements.some(ele=>ele==rowData.EndtTypeId);
+//             i+=1;
+//         }
+//     }
+//     console.log('llllllllllllll',rowData);
+//     console.log('hhhhhhhhhhhh',event);
+//     let type:any;let list:any
+//     if(event==true){
+//         if(endorsements.length!=0){
+//             let exist = endorsements.some(ele=>ele == rowData.EndtTypeId);
+//             if(!exist){
+//                 let entry = this.productList.find(ele=>ele.ProductId== this.productIds)
+//                 if(entry){
+//                    entry.EndorsementIds[0] = entry.EndorsementIds[0]+','+rowData.EndtTypeId
+//                 }
+//             }
+//         }
+//     }
+//     else{
+//         if(endorsements.length!=0){
+//             let exist = endorsements.some(ele=>ele == rowData.EndtTypeId);
+//             if(exist){
+//                 endorsements.splice(endorsements.findIndex(ele=>ele == rowData.EndtTypeId),1);
+//                 let i=0,finalString = ''
+//                 if(endorsements.length!=0){
+//                     for(let endorse of endorsements){
+//                         if(finalString=='') finalString = endorse;
+//                         else finalString = finalString+','+endorse;
+//                         i+=1;
+//                         if(i==endorsements.length){
+//                             let entry = this.productList.find(ele=>ele.ProductId== this.productIds)
+//                             entry.EndorsementIds[0] = finalString;
+//                         }
+//                     }
+//                 }
+                
+//             }
+//         }
+//     }
+//     console.log("Final Product List",this.productList)
+            
+//   }
 
   getEndorsementList(){
     let s=sessionStorage.getItem('userproduct')
@@ -794,20 +828,73 @@ onSelectendorse(rowData,event){
               }
                i+=1; 
                if(i==this.productList.length){
-                this.onsubmit(reqList);
+                this.onproductsubmit(reqList);
               }
             }
         }
   }
 
-  onsubmit(reqList){
+  onproductsubmit(reqList){
+    let ReqObj = {
+      "LoginId":this.issuerLoginId,
+      "InsuranceId":this.insuranceId,
+      "CreatedBy":this.loginId,
+       "IssuerProduct":reqList
+     }
+   let urlLink = `${this.CommonApiUrl}admin/attachissuerproducts`;
+   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+       (data: any) => {
+           console.log(data);
+           let res:any=data;
+           if(data.Result){
+             this.productSection=true;
+             this.referralSection = false;
+             this.endorseSection = false;
+             this.getProductList();
+             this.router.navigate(['/Admin/issuerList/issuerMenuCongifuration']);
+             
+             //.referralSection = false;
+          //this.router.navigate(['/Admin/userList/UserproductList']);
+           }
+          
+         },
+         (err) => { },
+       );
+  }
+
+  onsubmit(){
+    let product:any;let productid=this.productIds;
+    if(productid){
+       product=productid
+    }
+    else{
+      product=null;
+    }
+    let type:any;let types:any;
+    let categoryId=this.categoryList.find(ele=>ele.Code==this.categoryId)
+    if(categoryId){
+      type=categoryId.CodeDesc;
+    }
+    if(type){
+      if(type=='Non-Financial'){
+        types='NF'
+      }
+      else if(type=='Financial'){
+        types='F'
+      }
+      else if(type=='Referral'){
+        types='R'
+      }
+    }
     let ReqObj = {
        "LoginId":this.issuerLoginId,
        "InsuranceId":this.insuranceId,
        "CreatedBy":this.loginId,
-        "IssuerProduct":reqList
+       "ProductId":product,
+       "IdType":types,
+       "Ids":this.reqlist
       }
-    let urlLink = `${this.CommonApiUrl}admin/attachissuerproducts`;
+    let urlLink = `${this.CommonApiUrl}admin/attachloginendtids`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
             console.log(data);

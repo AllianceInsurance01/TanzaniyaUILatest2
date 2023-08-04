@@ -68,7 +68,8 @@ export class IssuerListComponent implements OnInit {
               { key: 'LoginId', display: 'LoginID' },
               { key: 'UserMail', display: 'MailID' },
               { key: 'UserMobile', display: 'Mobile No' },
-              { key: 'CreatedBy', display: 'Created By' },
+              { key: 'EntryDate', display: 'Created Date' },
+              // { key: 'CreatedBy', display: 'Created By' },
               { key: 'Status', display: 'Status' },
               {
                 key: 'actions',

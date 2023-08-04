@@ -350,6 +350,7 @@ let app
         "SearchValue":this.searchValue,
         "QuoteNo":row.QuoteNo,
         "RequestReferenceNo":row.RequestReferenceNo,
+        "ProductId":this.productId,
         "pageFrom": 'search'
       }
       sessionStorage.setItem('editCustomer',JSON.stringify(ReqObj));

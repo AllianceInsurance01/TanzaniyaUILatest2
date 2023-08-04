@@ -54,7 +54,7 @@ export class UserListComponent implements OnInit {
     this.loginId = user.LoginId;
     this.subUserType = sessionStorage.getItem('typeValue');
     this.getInsuranceList();
-    this.getChannelList();
+    this.getChannelList('direct');
     //this. getBrokersList();
     //this. onBrokerChange();
     //this.onBrokerChange();
@@ -69,6 +69,7 @@ export class UserListComponent implements OnInit {
       { key: 'LoginId', display: 'LoginId' },
       { key: 'SubUserType', display: 'Sub UserType' },
       { key: 'UserMobile', display: 'MobileNo' },
+      { key: 'EntryDate', display: 'Created Date' },
       { key: 'Status', display: 'Status' },
       {
         key: 'actions',
@@ -182,7 +183,11 @@ export class UserListComponent implements OnInit {
       );
     }
   }*/
-  getChannelList(){
+  getChannelList(type){
+    if(type=='change'){
+      this.channelId='';
+      this.brokerValue='';
+    }
     let ReqObj = {
       "UserType": "Broker"
     }

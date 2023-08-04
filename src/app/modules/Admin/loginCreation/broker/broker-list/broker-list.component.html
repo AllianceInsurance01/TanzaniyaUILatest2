@@ -6,7 +6,7 @@
             <div class="col-md-4 col-lg-4 col-xl-4">
                 <div class="input-control-container">
                     <label class="input-form-label">Company <span class="text-required">*</span></label>
-                    <ng-select class="input-form-select" appendTo="body" [disabled]="subUserType!='SuperAdmin'" [(ngModel)]="insuranceId"   [items]="companyList" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="input-form-select" appendTo="body" [disabled]="subUserType!='SuperAdmin'" [(ngModel)]="insuranceId"  (change)="changebroker()" [items]="companyList" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                 </div>
             </div>

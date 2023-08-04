@@ -23,6 +23,7 @@ export class EndrosementBrokerComponent {
     effectivevalue: any;
     productDetails: any[]=[];
     selectedEndrosementId:any[]=[];
+  reqlist: any[]=[];
     constructor(private router:Router,private sharedService:SharedService,) {
       let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       console.log('MMMMMMMMMMMMMMMMMM',userDetails);
@@ -59,59 +60,174 @@ export class EndrosementBrokerComponent {
         this.getEndorsementList();
     }
     
-    onSelectProduct(rowData,event){
+    // onSelectProduct(rowData,event){
     
-        let Endrosement; let endorsements 
-        if(this.productDetails.length!=0){
-            let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('brokerproduct'))
-            if(entry){
-                endorsements = entry?.EndorsementIds[0]?.split(',');
-                Endrosement=endorsements.some(ele=>ele==rowData.EndtTypeId);
-            }
-        }
-        console.log('llllllllllllll',rowData);
-        console.log('hhhhhhhhhhhh',event);
-        let type:any;let list:any
-        if(event==true){
-            if(endorsements.length!=0){
-                let exist = endorsements.some(ele=>ele == rowData.EndtTypeId);
-                if(!exist){
-                    let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('brokerproduct'))
-                    if(entry){
-                       entry.EndorsementIds[0] = entry.EndorsementIds[0]+','+rowData.EndtTypeId
-                    }
-                }
-            }
-        }
-        else{
-            if(endorsements.length!=0){
-                let exist = endorsements.some(ele=>ele == rowData.EndtTypeId);
-                if(exist){
-                    endorsements.splice(endorsements.findIndex(ele=>ele == rowData.EndtTypeId),1);
-                    let i=0,finalString = ''
-                    if(endorsements.length!=0){
-                        for(let endorse of endorsements){
-                            if(finalString=='') finalString = endorse;
-                            else finalString = finalString+','+endorse;
-                            i+=1;
-                            if(i==endorsements.length){
-                                let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('brokerproduct'))
-                                entry.EndorsementIds[0] = finalString;
-                            }
-                        }
-                    }
+    //     let Endrosement; let endorsements 
+    //     if(this.productDetails.length!=0){
+    //         let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('brokerproduct'))
+    //         if(entry){
+    //             endorsements = entry?.EndorsementIds[0]?.split(',');
+    //             Endrosement=endorsements.some(ele=>ele==rowData.EndtTypeId);
+    //         }
+    //     }
+    //     console.log('llllllllllllll',rowData);
+    //     console.log('hhhhhhhhhhhh',event);
+    //     let type:any;let list:any
+    //     if(event==true){
+    //       if(this.endorseData.length!=0){
+    //         let exist = this.endorseData.find(ele=>ele.EndtTypeId == rowData.EndtTypeId);
+    //         console.log('EEBBBBBBBBBBBBB',exist);
+    //         if(exist){
+    //           this.reqlist.push(exist.EndtTypeId);
+    //           console.log('UUUUUUU',this.reqlist)
+    //         }
+    //       }
+    //         // if(endorsements.length!=0){
+             
+    //         //     let exist = endorsements.some(ele=>ele == rowData.EndtTypeId);
+    //         //     console.log('PPPPPPPPPPPPPPPPPPP',exist);
+    //         //     if(!exist){
+    //         //         let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('brokerproduct'))
+    //         //         if(entry){
+    //         //            entry.EndorsementIds[0] = entry.EndorsementIds[0]+','+rowData.EndtTypeId;
+    //         //            this.reqlist=entry.EndorsementIds[0];
+    //         //            console.log('YYYYYYYYYYY',entry.EndorsementIds[0]);
+    //         //         }
                     
-                }
-            }
+    //         //     }
+    //         // }
+    //     }
+    //     else if(event== false){
+    //       let index = this.reqlist.findIndex(ele=>ele==rowData.EndtTypeId);
+    //       this.reqlist.splice(index,1);
+    //       console.log('TTTTTTTTTTTTT',this.reqlist);
+    //         // if(endorsements.length!=0){
+    //         //     let exist = endorsements.some(ele=>ele == rowData.EndtTypeId);
+    //         //     if(exist){
+    //         //         endorsements.splice(endorsements.findIndex(ele=>ele == rowData.EndtTypeId),1);
+    //         //         let i=0,finalString = ''
+    //         //         if(endorsements.length!=0){
+    //         //             for(let endorse of endorsements){
+    //         //                 if(finalString=='') finalString = endorse;
+    //         //                 else finalString = finalString+','+endorse;
+    //         //                 i+=1;
+    //         //                 if(i==endorsements.length){
+    //         //                     let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('brokerproduct'))
+    //         //                     entry.EndorsementIds[0] = finalString;
+    //         //                 }
+    //         //             }
+    //         //         }
+                    
+    //         //     }
+    //         // }
+    //     }
+    //     console.log("Final Product List",this.productDetails)
+    //         /*else if(event.checked==false){
+    //           let index = this.selectedMenuList.findIndex(ele=>ele==rowData);
+    //           this.selectedMenuList.splice(index,1);
+    //           console.log('sssssssss',this.selectedMenuList)
+    //         }  */      
+    //   }
+
+
+       
+    // onSelectProduct(rowData,event){ 
+    //     let Endrosement; let endorsements;
+     
+    //     if(this.productDetails.length!=0){
+    //         let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('brokerproduct'))
+    //         if(entry){
+    //               endorsements = entry?.EndorsementIds[0]?.split(','); 
+    //             Endrosement=endorsements.some(ele=>ele==rowData.EndtTypeId);
+               
+    //         }
+    //     }
+    //     console.log('llllllllllllll',rowData);
+    //     console.log('hhhhhhhhhhhh',event);
+    //     let type:any;let list:any
+    //     if(event==true){
+    //         if(endorsements.length!=0){
+    //             let exist = endorsements.some(ele=>ele == rowData.EndtTypeId);
+    //             if(!exist){
+    //                 let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('brokerproduct'))
+    //                 if(entry){
+                      
+    //                    //entry.EndorsementIds[0] = entry.EndorsementIds[0]+','+rowData.EndtTypeId;
+    //                   //  let entres=entry.EndorsementIds[0];
+    //                   // //  console.log('PPPP',entres);
+    //                   // //  entry.EndorsementIds[0] =  entres.filter((element) => {
+    //                   // //   return /\S/.test(element);
+    //                   // // });
+    //                    this.reqlist.push(rowData.EndtTypeId);
+    //                    console.log('RRRRRRRRRRRR',entry.EndorsementIds[0])
+                      
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     else{
+    //         if(endorsements.length!=0){
+    //             let exist = endorsements.some(ele=>ele == rowData.EndtTypeId);
+    //             if(exist){
+    //                 endorsements.splice(endorsements.findIndex(ele=>ele == rowData.EndtTypeId),1);
+    //                 let i=0,finalString = ''
+    //                 if(endorsements.length!=0){
+    //                     for(let endorse of endorsements){
+    //                         if(finalString=='') finalString = endorse;
+    //                         else finalString = finalString+','+endorse;
+    //                         i+=1;
+    //                         if(i==endorsements.length){
+    //                             let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('brokerproduct'))
+    //                             entry.EndorsementIds[0] = finalString;
+    //                         }
+    //                     }
+    //                 }
+                    
+    //             }
+    //         }
+    //     }
+    //     console.log("Final Product List",this.productDetails)
+                
+    //   }
+
+    onSelectProduct(rowData,event){
+      let endrose;let endroseData:any[]=[]; let endorsements :any;
+      let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('brokerproduct'))
+      console.log('MMMMMMMMMMMMMMMMMMM',entry);
+      if(entry){
+        if(this.endorseData.length!=0){
+          endorsements = entry?.EndorsementIds[0]?.split(',');
+          console.log('EEEEEEEEEE',endorsements);
         }
-        console.log("Final Product List",this.productDetails)
-            /*else if(event.checked==false){
-              let index = this.selectedMenuList.findIndex(ele=>ele==rowData);
-              this.selectedMenuList.splice(index,1);
-              console.log('sssssssss',this.selectedMenuList)
-            }  */      
       }
-    
+      if(event==true){
+        if(this.endorseData.length!=0){
+          let exist = this.endorseData.find(ele=>ele.EndtTypeId == rowData.EndtTypeId);
+          console.log('EEBBBBBBBBBBBBB',exist);
+          if(exist){
+            if(endorsements.length!=0){
+              let exists = endorsements.some(ele=>ele == exist.EndtTypeId);
+              console.log('Not Exists',exists);
+              if(!exists){
+                this.reqlist.push(exist.EndtTypeId);
+              }
+            }
+            console.log('UUUUUUU',this.reqlist);
+          }
+        }    
+      }
+      else if(event== false){
+        let exists = endorsements.some(ele=>ele == rowData.EndtTypeId);
+        console.log('Not Exists',exists);
+        if(exists){
+          let index = this.reqlist.findIndex(ele=>ele==rowData.EndtTypeId);
+          this.reqlist.splice(index,1);
+          console.log('TTTTTTTTTTTTT',this.reqlist);   
+        }
+           
+      }
+    }
+
      getProductList(){
         if(this.insurance!='' && this.insurance!= undefined){
           let urlLink = `${this.CommonApiUrl}admin/getissuerproductbyid`;
@@ -135,8 +251,11 @@ export class EndrosementBrokerComponent {
         if(this.productDetails.length!=0){
             let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('brokerproduct'))
             if(entry){
+             
                 let endorsements = entry?.EndorsementIds[0]?.split(',');
+
                 return endorsements.some(ele=>ele==rowData.EndtTypeId);
+               
             }
         }
       }
@@ -231,30 +350,59 @@ export class EndrosementBrokerComponent {
         console.log('kkkkkkkkkkkk',this.productDetails)
         if (this.productDetails.length != 0){
             let reqList=[];let i=0;
-            for(let s of this.productDetails){
-                let data = {
-                        "ProductId": s.ProductId,
-                          "ReferralIds":s.ReferralIds,
-                          "EndorsementIds":s.EndorsementIds,
-                          "SuminsuredEnd":s.SumInsuredEnd,
-                          "SuminsuredStart":s.SumInsuredStart
-                    }
-                    reqList.push(data)
-                   i+=1; 
-                   if(i==this.productDetails.length){
-                    this.onsubmit(reqList);
-                  }
-                }
+            let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('brokerproduct'))
+            if(entry){
+              console.log('Entries',entry);
+                  reqList=entry.EndorsementIds;
+                  console.log('ENTRY LISTSSSS',reqList);
+                  this.onsubmit(this.reqlist);
+                      // this.onsubmit(this.reqlist);
+        
+            }
+            // for(let s of this.productDetails){
+            //     let data = {
+            //             "ProductId": s.ProductId,
+            //               "ReferralIds":s.ReferralIds,
+            //               "EndorsementIds":s.EndorsementIds,
+            //               "SuminsuredEnd":s.SumInsuredEnd,
+            //               "SuminsuredStart":s.SumInsuredStart
+            //         }
+            //         reqList.push(data)
+            //        i+=1; 
+            //        if(i==this.productDetails.length){
+            //         this.onsubmit(reqList);
+            //       }
+            //     }
             }
       }
       onsubmit(reqList){
+        let type:any;let types:any;
+        let categoryId=this.categoryList.find(ele=>ele.Code==this.categoryId)
+        if(categoryId){
+          type=categoryId.CodeDesc;
+        }
+        if(type){
+          if(type=='Non-Financial'){
+            types='NF'
+          }
+          else if(type=='Financial'){
+            types='F'
+          }
+          else if(type=='Referral'){
+            types='R'
+          }
+        }
+       
+        console.log('IIIIIIIIIIIII',type)
         let ReqObj = {
            "LoginId":this.issuerId,
            "InsuranceId":this.insurance,
            "CreatedBy":this.loginId,
-            "IssuerProduct":reqList
+           "ProductId":sessionStorage.getItem('brokerproduct'),
+          "IdType":types,
+          "Ids":reqList
           }
-        let urlLink = `${this.CommonApiUrl}admin/attachissuerproducts`;
+        let urlLink = `${this.CommonApiUrl}admin/attachloginendtids`;
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
             (data: any) => {
                 console.log(data);

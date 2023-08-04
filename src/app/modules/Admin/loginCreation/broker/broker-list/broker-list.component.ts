@@ -41,27 +41,50 @@ export class BrokerListComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.insuranceId && this.channelId){ this.getBrokerList(); }
+
     this.brokerHeader = [
-      { key: 'BrokerName', display: 'Broker Name' },
-      { key: 'BrokerId', display: 'Broker Code' },
-      { key: 'TIRACode', display: 'TIRA Code' },
-      { key: 'CoreAppCode', display: 'Core App Code' },
-      { key: 'Status', display: 'Status' },
-      {
-        key: 'actions',
-        display: 'Action',
-        config: {
-          isEdit: true,
-        },
-      },
-      {
-        key: 'configure',
-        display: 'Configure',
-        config: {
-          isConfigure: true,
-        },
-      }
-    ];
+                { key: 'LoginId', display: 'Login Id'},
+                { key: 'UserName', display: 'Broker Name' },
+                { key: 'UserMail', display: 'MailID' },
+                { key: 'EntryDate', display: 'Created Date' },
+                { key: 'UserMobile', display: 'Mobile No' },
+                { key: 'Status', display: 'Status' },
+                {
+                  key: 'actions',
+                  display: 'Action',
+                  config: {
+                    isEdit: true,
+                  },
+                },
+                {
+                  key: 'configure',
+                  display: 'Configure',
+                  config: {
+                    isConfigure: true,
+                  },
+                }
+             ];
+    // this.brokerHeader = [
+    //   { key: 'BrokerName', display: 'Broker Namess' },
+    //   { key: 'BrokerId', display: 'Broker Code' },
+    //   { key: 'TIRACode', display: 'TIRA Code' },
+    //   { key: 'CoreAppCode', display: 'Core App Code' },
+    //   { key: 'Status', display: 'Status' },
+    //   {
+    //     key: 'actions',
+    //     display: 'Action',
+    //     config: {
+    //       isEdit: true,
+    //     },
+    //   },
+    //   {
+    //     key: 'configure',
+    //     display: 'Configure',
+    //     config: {
+    //       isConfigure: true,
+    //     },
+    //   }
+    // ];
   }
   geChannelList(){
     let ReqObj = {
@@ -78,6 +101,11 @@ export class BrokerListComponent implements OnInit {
       (err) => { },
     );
   }
+  changebroker(){
+    if(this.channelId!=null && this.channelId!=undefined && this.channelId!=''){
+      this.getBrokerList();
+    }
+  }
   getBrokerList(){
     if(this.insuranceId!=null && this.channelId!=null){
       sessionStorage.setItem('brokerChannelId',this.channelId);
@@ -93,27 +121,27 @@ export class BrokerListComponent implements OnInit {
           (data: any) => {
             console.log(data);
             if(data.Result){
-              this.brokerHeader = [
-                { key: 'UserName', display: 'Broker Name' },
-                { key: 'UserMail', display: 'MailID' },
-                { key: 'UserMobile', display: 'Mobile No' },
-                { key: 'CreatedBy', display: 'Created By' },
-                { key: 'Status', display: 'Status' },
-                {
-                  key: 'actions',
-                  display: 'Action',
-                  config: {
-                    isEdit: true,
-                  },
-                },
-                {
-                  key: 'configure',
-                  display: 'Configure',
-                  config: {
-                    isConfigure: true,
-                  },
-                }
-              ];
+              // this.brokerHeader = [
+              //   { key: 'UserName', display: 'Broker Name' },
+              //   { key: 'UserMail', display: 'MailID' },
+              //   { key: 'UserMobile', display: 'Mobile No' },
+              //   { key: 'CreatedBy', display: 'Created By' },
+              //   { key: 'Status', display: 'Status' },
+              //   {
+              //     key: 'actions',
+              //     display: 'Action',
+              //     config: {
+              //       isEdit: true,
+              //     },
+              //   },
+              //   {
+              //     key: 'configure',
+              //     display: 'Configure',
+              //     config: {
+              //       isConfigure: true,
+              //     },
+              //   }
+              // ];
               this.brokerData = data.Result;
              
             }

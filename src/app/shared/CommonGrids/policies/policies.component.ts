@@ -223,6 +223,7 @@ export class PoliciesComponent implements OnInit {
       "SearchValue":rowData.QuoteNo,
       "QuoteNo":rowData.QuoteNo,
       "RequestReferenceNo":rowData.RequestReferenceNo,
+      "ProductId":this.productId,
       "pageFrom": 'policy'
     }
     sessionStorage.setItem('editCustomer',JSON.stringify(ReqObj));

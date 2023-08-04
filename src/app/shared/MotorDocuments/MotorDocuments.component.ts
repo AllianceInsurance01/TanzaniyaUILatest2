@@ -60,7 +60,7 @@ export class MotorDocumentsComponent implements OnInit {
       this.agencyCode = this.userDetails.Result.OaCode;
       this.brokerbranchCode = this.userDetails.Result.BrokerBranchCode;
       this.branchCode = this.userDetails.Result.BranchCode;
-      this.productId = this.userDetails.Result.ProductId;
+      // this.productId = this.userDetails.Result.ProductId;
       this.userType = this.userDetails?.Result?.UserType;
       this.insuranceId = this.userDetails.Result.InsuranceId;
 
@@ -222,7 +222,8 @@ export class MotorDocumentsComponent implements OnInit {
        this.searchValue=CustomerObj.SearchValue;
        this.quoteNo=CustomerObj.QuoteNo;
        this.ReferenceNo=CustomerObj.RequestReferenceNo;
-       this.pageFrom = CustomerObj?.pageFrom
+       this.pageFrom = CustomerObj?.pageFrom;
+       this.productId=CustomerObj.ProductId;
 
        console.log('sssssssssss',this.search)
             
@@ -324,6 +325,7 @@ export class MotorDocumentsComponent implements OnInit {
     }
 
     onRisk(){
+  
       let ReqObj ={
         "ApplicationId": null,
         "BranchCode": null,
@@ -359,6 +361,7 @@ export class MotorDocumentsComponent implements OnInit {
       );
     }
     onCustomerSearch(){
+    
       let app
          if(this.userType == 'Issuer'){
            app=this.loginId
@@ -513,6 +516,7 @@ export class MotorDocumentsComponent implements OnInit {
 
 
        DriverDetails(){
+    
         let ReqObj={
           "QuoteNo":this.quoteNo,
            "ProductId":this.productId
@@ -540,6 +544,7 @@ export class MotorDocumentsComponent implements OnInit {
 
        
        VechileTira(){
+    
         let ReqObj={
           "QuoteNo":this.quoteNo,
            "ProductId":this.productId
@@ -566,6 +571,7 @@ export class MotorDocumentsComponent implements OnInit {
        }
 
 payment(){
+
   let ReqObj={
     "QuoteNo":this.quoteNo,
      "ProductId":this.productId
@@ -592,6 +598,7 @@ payment(){
 }
 
 Documentview(){
+ 
   let ReqObj={
     "QuoteNo": this.quoteNo,
     "ProductId":this.productId

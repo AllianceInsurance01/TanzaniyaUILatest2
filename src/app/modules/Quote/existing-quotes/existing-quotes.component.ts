@@ -487,6 +487,7 @@ export class ExistingQuotesComponent implements OnInit {
         // "from":'Existing',
         "CustomerReferenceNo": rowData.CustomerReferenceNo,
         "RequestReferenceNo": rowData.RequestReferenceNo,
+        "ProductId":this.productId,
         "pageFrom": 'Existing'
         //"QuoteNo":rowData.QuoteNo
       }

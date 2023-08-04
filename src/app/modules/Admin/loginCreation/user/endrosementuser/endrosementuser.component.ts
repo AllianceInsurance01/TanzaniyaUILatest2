@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedService } from 'src/app/shared/shared.service';
 import * as Mydatas from '../../../../../app-config.json';
+import { endrosement } from '../../Company/EndrosementField/endrosementfield-details/endrosement.Model';
 @Component({
   selector: 'app-endrosementuser',
   templateUrl: './endrosementuser.component.html',
@@ -21,12 +22,14 @@ export class EndrosementUserComponent {
     columnHeader:any[]=[];
     userLoginId: string;
     productDetails:any[]=[];
+    reqlist:any[]=[];
     constructor(private router:Router,private sharedService:SharedService,) {
       let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       console.log('MMMMMMMMMMMMMMMMMM',userDetails);
       if(userDetails){
         this.loginId = userDetails?.Result?.LoginId;
-        this.productId= userDetails?.Result?.BrokerCompanyProducts[0].ProductId;
+        
+        //this.productId= userDetails?.Result?.BrokerCompanyProducts[0].ProductId;
 
       }
       //let issuerId = sessionStorage.getItem('editIssuerLoginId');
@@ -81,57 +84,90 @@ export class EndrosementUserComponent {
       }
 
        
-    onSelectProduct(rowData,event){ 
-        let Endrosement; let endorsements;
+    // onSelectProduct(rowData,event){ 
+    //     let Endrosement; let endorsements;
      
-        if(this.productDetails.length!=0){
-            let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('userproduct'))
-            if(entry){
-                  endorsements = entry?.EndorsementIds[0]?.split(','); 
-                Endrosement=endorsements.some(ele=>ele==rowData.EndtTypeId);
+    //     if(this.productDetails.length!=0){
+    //         let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('userproduct'))
+    //         if(entry){
+    //               endorsements = entry?.EndorsementIds[0]?.split(','); 
+    //             Endrosement=endorsements.some(ele=>ele==rowData.EndtTypeId);
                
-            }
-        }
-        console.log('llllllllllllll',rowData);
-        console.log('hhhhhhhhhhhh',event);
-        let type:any;let list:any
-        if(event==true){
-            if(endorsements.length!=0){
-                let exist = endorsements.some(ele=>ele == rowData.EndtTypeId);
-                if(!exist){
-                    let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('userproduct'))
-                    if(entry){
-                       entry.EndorsementIds[0] = entry.EndorsementIds[0]+','+rowData.EndtTypeId
-                    }
-                }
-            }
-        }
-        else{
-            if(endorsements.length!=0){
-                let exist = endorsements.some(ele=>ele == rowData.EndtTypeId);
-                if(exist){
-                    endorsements.splice(endorsements.findIndex(ele=>ele == rowData.EndtTypeId),1);
-                    let i=0,finalString = ''
-                    if(endorsements.length!=0){
-                        for(let endorse of endorsements){
-                            if(finalString=='') finalString = endorse;
-                            else finalString = finalString+','+endorse;
-                            i+=1;
-                            if(i==endorsements.length){
-                                let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('userproduct'))
-                                entry.EndorsementIds[0] = finalString;
-                            }
-                        }
-                    }
+    //         }
+    //     }
+    //     console.log('llllllllllllll',rowData);
+    //     console.log('hhhhhhhhhhhh',event);
+    //     let type:any;let list:any
+    //     if(event==true){
+    //         if(endorsements.length!=0){
+    //             let exist = endorsements.some(ele=>ele == rowData.EndtTypeId);
+    //             if(!exist){
+    //                 let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('userproduct'))
+    //                 if(entry){
+    //                    entry.EndorsementIds[0] = entry.EndorsementIds[0]+','+rowData.EndtTypeId
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     else{
+    //         if(endorsements.length!=0){
+    //             let exist = endorsements.some(ele=>ele == rowData.EndtTypeId);
+    //             if(exist){
+    //                 endorsements.splice(endorsements.findIndex(ele=>ele == rowData.EndtTypeId),1);
+    //                 let i=0,finalString = ''
+    //                 if(endorsements.length!=0){
+    //                     for(let endorse of endorsements){
+    //                         if(finalString=='') finalString = endorse;
+    //                         else finalString = finalString+','+endorse;
+    //                         i+=1;
+    //                         if(i==endorsements.length){
+    //                             let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('userproduct'))
+    //                             entry.EndorsementIds[0] = finalString;
+    //                         }
+    //                     }
+    //                 }
                     
-                }
-            }
-        }
-        console.log("Final Product List",this.productDetails)
+    //             }
+    //         }
+    //     }
+    //     console.log("Final Product List",this.productDetails)
                 
-      }
-    
+    //   }
 
+
+
+    onSelectProduct(rowData,event){
+      let endrose;let endroseData:any[]=[]; let endorsements :any;
+      let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('userproduct'))
+      console.log('MMMMMMMMMMMMMMMMMMM',entry);
+      if(entry){
+        if(this.endorseData.length!=0){
+          endorsements = entry?.EndorsementIds[0]?.split(',');
+          console.log('EEEEEEEEEE',endorsements);
+        }
+      }
+      if(event==true){
+        if(this.endorseData.length!=0){
+          let exist = this.endorseData.find(ele=>ele.EndtTypeId == rowData.EndtTypeId);
+          console.log('EEBBBBBBBBBBBBB',exist);
+          if(exist){
+            if(endorsements.length!=0){
+              let exists = endorsements.some(ele=>ele == exist.EndtTypeId);
+              console.log('Not Exists',exists);
+              if(!exists){
+                this.reqlist.push(exist.EndtTypeId);
+              }
+            }
+            console.log('UUUUUUU',this.reqlist);
+          }
+        }    
+      }
+      else if(event== false){
+        let index = this.reqlist.findIndex(ele=>ele==rowData.EndtTypeId);
+        this.reqlist.splice(index,1);
+        console.log('TTTTTTTTTTTTT',this.reqlist);       
+      }
+    }
       back(){
         sessionStorage.removeItem('userproduct');
         this.router.navigate(['Admin/userList/UserproductList']);
@@ -189,35 +225,60 @@ export class EndrosementUserComponent {
         );
       }
 
-      onProceed(){
-        console.log('kkkkkkkkkkkk',this.productDetails)
-        if (this.productDetails.length != 0){
-            let reqList=[];let i=0;
-            for(let s of this.productDetails){
-                let data = {
-                        "ProductId": s.ProductId,
-                          "ReferralIds":s.ReferralIds,
-                          "EndorsementIds":s.EndorsementIds,
-                          "SuminsuredEnd":s.SumInsuredEnd,
-                          "SuminsuredStart":s.SumInsuredStart
-                    }
-                    reqList.push(data)
-                   i+=1; 
-                   if(i==this.productDetails.length){
-                    this.onsubmit(reqList);
-                  }
-                }
-            }
-      }
+      // onProceed(){
+      //   console.log('kkkkkkkkkkkk',this.productDetails)
+      //   if (this.productDetails.length != 0){
+      //       let reqList=[];let i=0;
+      //       for(let s of this.productDetails){
+      //           let data = {
+      //                   "ProductId": s.ProductId,
+      //                     "ReferralIds":s.ReferralIds,
+      //                     "EndorsementIds":s.EndorsementIds,
+      //                     "SuminsuredEnd":s.SumInsuredEnd,
+      //                     "SuminsuredStart":s.SumInsuredStart
+      //               }
+      //               reqList.push(data)
+      //              i+=1; 
+      //              if(i==this.productDetails.length){
+      //               this.onsubmit(reqList);
+      //             }
+      //           }
+      //       }
+      // }
 
-      onsubmit(reqList){
+      onsubmit(){
+        let product:any;let productid=sessionStorage.getItem('userproduct');
+        if(productid){
+           product=productid
+        }
+        else{
+          product=null;
+        }
+        let type:any;let types:any;
+        let categoryId=this.categoryList.find(ele=>ele.Code==this.categoryId)
+        if(categoryId){
+          type=categoryId.CodeDesc;
+        }
+        if(type){
+          if(type=='Non-Financial'){
+            types='NF'
+          }
+          else if(type=='Financial'){
+            types='F'
+          }
+          else if(type=='Referral'){
+            types='R'
+          }
+        }
         let ReqObj = {
            "LoginId":this.userLoginId,
            "InsuranceId":this.insuranceId,
            "CreatedBy":this.loginId,
-            "IssuerProduct":reqList
+           "ProductId":product,
+           "IdType":types,
+           "Ids":this.reqlist
           }
-        let urlLink = `${this.CommonApiUrl}admin/attachissuerproducts`;
+        let urlLink = `${this.CommonApiUrl}admin/attachloginendtids`;
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
             (data: any) => {
                 console.log(data);

@@ -146,7 +146,7 @@ this.enddate=this.datePipe.transform(this.EndDate, "dd/MM/yyyy");
          "BusinessType":this.bussinesstype,
           "StartDate":this.startDate,
          "EndDate":this.enddate,
-         "LoginId": "",
+         "LoginId":"",
          "ProductId": ""//this.productId
       }
       let urlLink = `${this.CommonApiUrl}api/admin/portfoliodashboard`;
@@ -171,7 +171,7 @@ this.enddate=this.datePipe.transform(this.EndDate, "dd/MM/yyyy");
                "BusinessType":this.bussinesstype,
                 "StartDate":this.startDate,
                "EndDate":this.enddate,
-               "LoginId": "",
+               "LoginId":"",
                "ProductId": ""//this.productId,
             }
             let urlLink = `${this.CommonApiUrl}api/admin/portfoliopendings`;
@@ -295,9 +295,11 @@ this.enddate=this.datePipe.transform(this.EndDate, "dd/MM/yyyy");
            }
 
            onViews(rowData){
-            this.router.navigate(['/Home/MotorDocument']);
+            console.log('OOOOOOOOOOO',rowData);
+        
             let quoteObj = {
               "QuoteNo": rowData.QuoteNo,
+              "ProductId":rowData.ProductId,
               // "PolicyNo":null,
               // "from":'Existing',
               "CustomerReferenceNo": rowData.CustomerReferenceNo,
@@ -307,6 +309,7 @@ this.enddate=this.datePipe.transform(this.EndDate, "dd/MM/yyyy");
             }
             //sessionStorage.setItem('FromDetails',JSON.stringify(quoteObj));
             sessionStorage.setItem('editCustomer',JSON.stringify(quoteObj));
+            this.router.navigate(['/Home/MotorDocument']);
            }
 
            onGetSchedule(rowData){
