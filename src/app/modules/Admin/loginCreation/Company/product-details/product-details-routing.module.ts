@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProductDetailsComponent } from './product-details.component';
 import { TaxDetailsComponent } from '../tax-details/tax-details.component';
+import { PlanTypeBenefitsListComponent } from '../PlanTypeBenefits/plan-type-benefits-list/plan-type-benefits-list.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,15 @@ const routes: Routes = [
       preload: true,
       title: "Existing SubCovers",
       breadcrumb:  "Existing SubCovers",
+    }
+  },
+  {
+    path: 'planTypeBenefits',
+    component:PlanTypeBenefitsListComponent,
+    data: {
+      preload: true,
+      title: "Tax Details",
+      breadcrumb:  "Tax Details",
     }
   },
   {

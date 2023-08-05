@@ -13,7 +13,10 @@
                     <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
 
                     <label for="menu2">Cover</label>
-
+                    <ng-container *ngIf="productId=='4'">
+                        <input type="radio" id="menu20" name="menu" value="PlanType" (click)="onRedirect('PlanType')" [(ngModel)]="activeMenu">
+                        <label for="menu20">PlanType Benefit</label>
+                    </ng-container> 
                     <input type="radio" id="menu20" name="menu" value="Benefit" (click)="onRedirect('Benefit')" [(ngModel)]="activeMenu">
 
                     <label for="menu20">Product Benefit</label>
@@ -288,7 +291,7 @@
 
                         </div>
                         <div class="text-center">
-                            <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+                            <button class="btn btn-danger" (click)="ongetBack()">Back</button>&nbsp;
                             <button class="btn btn-primary ml-2" (click)="onProceed()">Submit</button>
                         </div>
                     </div>

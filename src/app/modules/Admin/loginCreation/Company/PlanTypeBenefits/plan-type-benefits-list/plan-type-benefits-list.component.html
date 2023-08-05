@@ -1,0 +1,579 @@
+<div class="card">
+    <div class="card-header">Product Configuration</div>
+    <div class="card p-1">
+        <div class="vision-grid vision-grid-column-2">
+            <div class="vision-grid-item">
+                <div class="radio-toolbar menu-bar">
+                    <input id="menu" type="radio" name="menu" value="Product" (click)="onRedirect('Product')" [(ngModel)]="activeMenu">
+                    <label for="menu">Product Details</label>
+                    <input type="radio" id="menu6" name="menu" value="FactorType" (click)="onRedirect('FactorType')" [(ngModel)]="activeMenu">
+                    <label for="menu6">Factor Type</label>
+                    <input type="radio" id="menu1" name="menu" value="Section" (click)="onRedirect('Section')" [(ngModel)]="activeMenu">
+                    <label for="menu1">Section</label>
+                    <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+
+                    <label for="menu2">Cover</label>
+                    <ng-container *ngIf="productId=='4'">
+                        <input type="radio" id="menu20" name="menu" value="PlanType" (click)="onRedirect('PlanType')" [(ngModel)]="activeMenu">
+                        <label for="menu20">PlanType Benefit</label>
+                    </ng-container> 
+                    <input type="radio" id="menu20" name="menu" value="Benefit" (click)="onRedirect('Benefit')" [(ngModel)]="activeMenu">
+                    <label for="menu20">Product Benefit</label>
+                    <input type="radio" id="menu15" name="menu" value="Policy"(click)="onRedirect('Policy')" [(ngModel)]="activeMenu">
+                    <label for="menu15">Policy Type</label>
+                    <input type="radio" id="menu10" name="menu" value="Emi" (click)="onRedirect('Emi')" [(ngModel)]="activeMenu">
+                    <label for="menu10">EMI</label>
+                    <!-- <input type="radio" id="menu3" name="menu" value="SubCover" (click)="onRedirect('SubCover')" [(ngModel)]="activeMenu">
+                    <label for="menu3">SubCover</label> -->
+                    <input type="radio" id="menu8" name="menu" value="Tax" (click)="onRedirect('Tax')" [(ngModel)]="activeMenu">
+                    <label for="menu8">Tax</label>
+                    <input type="radio" id="menu9" name="menu" value="Prorata" (click)="onRedirect('Prorata')" [(ngModel)]="activeMenu">
+                    <label for="menu9">ProRata</label>
+                    <input type="radio" id="menu7" name="menu" value="UwQues" (click)="onRedirect('UwQues')" [(ngModel)]="activeMenu">
+                    <label for="menu7">UnderWriter Questions</label>
+                    <input type="radio" id="menu5" name="menu" value="Referral" (click)="onRedirect('Referral')" [(ngModel)]="activeMenu">
+                    <label for="menu5">Referral</label>
+                    <input type="radio" id="menu4" name="menu" value="Document" (click)="onRedirect('Document')" [(ngModel)]="activeMenu">
+                    <label for="menu4">Attached Documents</label>
+                    <input type="radio" id="menu11" name="menu" value="Payment" (click)="onRedirect('Payment')" [(ngModel)]="activeMenu">
+                    <label for="menu11">Payment</label>
+                    <input type="radio" id="menu12" name="menu" value="Notification"(click)="onRedirect('Notification')" [(ngModel)]="activeMenu">
+                    <label for="menu12">Notification</label>
+                    <input type="radio" id="menu13" name="menu" value="TinyUrl"(click)="onRedirect('TinyUrl')" [(ngModel)]="activeMenu">
+                    <label for="menu13">TinyUrl</label>
+                    <input type="radio" id="menu14" name="menu" value="Premia"(click)="onRedirect('Premia')" [(ngModel)]="activeMenu">
+                    <label for="menu14">Premia Configuration</label>
+                    <!--<input type="radio" id="menu16" name="menu" value="Industry"(click)="onRedirect('Industry')" [(ngModel)]="activeMenu">
+                    <label for="menu16">Industry</label>-->
+                    <input type="radio" id="menu17" name="menu" value="Promo"(click)="onRedirect('Promo')" [(ngModel)]="activeMenu">
+                    <label for="menu17">PromoCode</label>
+                    <input type="radio" id="menu19" name="menu" value="EndorsementField"(click)="onRedirect('EndorsementField')" [(ngModel)]="activeMenu">
+                    <label for="menu19">EndorsementField Type</label>
+                    <input type="radio" id="menu18" name="menu" value="Endorsement"(click)="onRedirect('Endorsement')" [(ngModel)]="activeMenu">
+                    <label for="menu18">Endorsement Type</label>
+                </div>
+            </div>
+            <div class="vision-grid-item">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div style="font-family: var(--our-font-family-new) !important;">
+                                Plan Type Benefits
+                            </div>
+                            <div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- <div class="col-md-4 col-lg-4 col-xl-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Country</label>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="countryList" [(ngModel)]="countryValue" (change)="getPlanTypeList()" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div> -->
+                            <div class="col-md-4 col-lg-4 col-xl-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Premium Plan</label>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="sectionList" [(ngModel)]="sectionValue" (change)="getPlanList()" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-lg-4 col-xl-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Plan Type</label>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="planTypeList" [(ngModel)]="planTypeValue"  bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <ng-container *ngIf="benefitsList.length!=0">
+                                    <div class="example-container">
+                                        <div class="row">
+                                            <div class="col-md-4 col-lg-4 col-xl-4 input-form-box" id="gridstyle" >
+                                                <input type="text" class="input-form-control with-icon" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                                                <span class="input-form-icon">
+                                                    <i class="fas fa-filter"></i>
+                                                </span>
+                                            </div>
+                                            <div class="col-md-2 col-lg-2 col-xl-2 offset-6">
+                                                <button class="btn btn-warning btn-sm" (click)="onAddCoverRow()">
+                                                    <i class="fas fa-plus"></i>&nbsp;Cover
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- <mat-form-field class="mt-3" style="width: 40%;">
+                                            <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue" placeholder="Filter" />
+                                        </mat-form-field> -->
+                                        <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
+                                            <ng-container *ngFor="let col of columnHeader; let i = index" [matColumnDef]="col.key" [sticky]="col.sticky" [stickyEnd]="col.sticky">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header-cell">
+                                                    
+                                                    {{ columnHeader[i]["display"] }}
+                                                   
+                                                </th>
+                                    
+                                                <td mat-cell *matCellDef="let element;let j = dataIndex;">
+                                                    <ng-container *ngIf="!col.config; else hasConfig">
+                                                        <ng-container *ngIf="columnHeader[i]['display']=='Cover Name'">
+                                                            <div class="input-control-container">
+                                                                <div class="input-form-box">
+                                                                    <textarea cols="60" rows="2" [(ngModel)]="element[col.key]" class="input-form-select"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="columnHeader[i]['display']!='Cover Name' && columnHeader[i]['display']!='Status'">
+                                                            {{ element[col.key]}}
+                                                        </ng-container>
+                                                        <ng-container *ngIf="col.key=='Status'">
+                                                            <div class="input-form-radio-box">
+                                                                <div class="radio-toolbar" style="width: 300px;">
+                                                                    <input [id]="'orginwarehouse_Yes'+j" type="radio" [name]="'originatingWarehouse'+j" [(ngModel)]="element[col.key]" value="Y">
+                                                                    <label [for]="'orginwarehouse_Yes'+j" class="customLabel">Active</label>
+                                                                    <input type="radio" [id]="'orginwarehouse_No'+j" [name]="'originatingWarehouse'+j" [(ngModel)]="element[col.key]" value="N">
+                                                                    <label [for]="'orginwarehouse_No'+j" class="customLabel">DeActive</label>
+                                                                </div>
+                                                            </div>
+                                                            <!-- <span *ngIf="element[col.key]=='Y'">Active</span>
+                                                            <span *ngIf="element[col.key]=='RP'">Referral Pending</span>
+                                                            <span *ngIf="element[col.key]=='RR'">Referral Rejected</span>
+                                                            <span *ngIf="element[col.key]=='RA'">Referral Approved</span>
+                                                            <span *ngIf="element[col.key]=='RE'">Referral ReQuote</span>
+                                                            <span *ngIf="element[col.key]=='R'">Referral</span>
+                                                            <span *ngIf="element[col.key]=='P'">Pending</span>
+                                                            <span *ngIf="element[col.key]=='E'">Endorsement</span>
+                                                            <span *ngIf="element[col.key]=='D'">Removed</span>
+                                                            <span *ngIf="element[col.key]=='N'">DeActive</span> -->
+                                                        </ng-container>
+                                                    </ng-container>
+                                    
+                                                    <ng-template #hasConfig>
+                                                        <ng-container *ngIf="col.config.isDelete">
+                                                            <button class="circle btn btn-primary btn-sm" (click)="onDeleteCoverRow(j)">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>&nbsp;
+                                                        </ng-container>
+                                                        <ng-container *ngIf="col.config.isView">
+                                                            <button class="circle btn btn-warning btn-sm" *ngIf="element.QuoteNo!=null" (click)="onView.emit(element)">
+                                                                <i class="fas fa-eye" style='color: blue'></i>
+                                                            </button>&nbsp;
+                                                        </ng-container>
+                                                        <ng-container *ngIf="col.config.isEdit">
+                                                            <button class="circle btn btn-primary btn-sm" (click)="onEdit.emit(element)">
+                                                                <i class="fas fa-marker"></i>
+                                                            </button>&nbsp;
+                                                        </ng-container>
+                                                        <ng-container *ngIf="col.config.isMail">
+                                                          <button class="circle btn btn-primary btn-sm" (click)="onMail.emit(element)">
+                                                            <i class="fa fa-envelope"></i>
+                                                          </button>&nbsp;
+                                                      </ng-container>
+                                                      <ng-container *ngIf="col.config.isViews">
+                                                        <button class="circle btn btn-primary btn-sm" (click)="onViews.emit(element)">
+                                                          <i class="fas fa-eye"></i>
+                                                        </button>&nbsp;
+                                                    </ng-container>
+                                                      <ng-container *ngIf="col.config.isFollowup">
+                                                        <button class="circle btn btn-primary btn-sm" (click)="onFollowup.emit(element)" style="background-color:grey">
+                                                          <i class="fa-solid fa-user"></i>
+                                                        </button>&nbsp;
+                                                    </ng-container>
+                                                    <ng-container *ngIf="col.config.isSms">
+                                                      <button class="circle btn btn-primary btn-sm" (click)="onSms.emit(element)">
+                                                        <i class="fas fa-sms" style="font-size:22px;color:lightgray"></i>
+                                                      </button>&nbsp;
+                                                  </ng-container>
+                                                        <ng-container *ngIf="col.config.isActive">
+                                                            <button class="circle btn btn-warning btn-sm" (click)="onActive.emit(element)">
+                                                                <i class="fas fa-check"></i>
+                                                            </button>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="col.config.isReject">
+                                                            <button class="circle btn btn-danger btn-sm" (click)="onReject.emit(element)">
+                                                                <i class='fa fa-times' style='color: yellow'></i>
+                                                            </button>
+                                                        </ng-container>
+                                    
+                                    
+                                                        <!--need to delete-->
+                                                        <ng-container *ngIf="col.config.isMoreView">
+                                                                    <button mat-icon-button (click)="onPassData(element);expandedElement = expandedElement === element ? null : element">
+                                                                            <mat-icon>keyboard_arrow_down</mat-icon> 
+                                                                    </button>
+                                                        
+                                                        </ng-container>
+                                            
+                                    
+                                                <ng-container *ngIf="col.config.isMoreVechView">
+                                                    <button mat-icon-button (click)="onPassData(element);expandedvech = expandedvech === element ? null : element">
+                                                            <mat-icon>keyboard_arrow_down</mat-icon> 
+                                                    </button>
+                                                   
+                                                </ng-container>
+                                    
+                                    
+                                    
+                                                <!--<ng-container *ngIf="columnHeader[i]['display']=='IncludedTax'">
+                                                    {{ columnHeader[i]["display"] }} &nbsp; ({{Currency}})
+                                                </ng-container>-->
+                                    
+                                                        <ng-container *ngIf="col.config.isMoView && element.SubCovers!=null">
+                                                            <button mat-icon-button (click)="onPassData(element);expandedElement = expandedElement === element ? null : element">
+                                                                <mat-icon>keyboard_arrow_down</mat-icon>
+                                                            </button>
+                                                        </ng-container>
+                                    
+                                                        
+                                                        <ng-container *ngIf="col.config.isPolicyConfig">
+                                                            <button mat-button [matMenuTriggerFor]="menu">
+                                                                <i class="fas fa-cog"></i>
+                                                            </button>
+                                                            <mat-menu #menu="matMenu">
+                                                                <button mat-menu-item (click)="onSchedule.emit(element)"><i class="fas fa-file"></i>&nbsp;Schedule</button>
+                                                                <button mat-menu-item><i class="fas fa-file"></i>&nbsp;Credit Note</button>
+                                                                <button mat-menu-item><i class="fas fa-file"></i>&nbsp;Debit Note</button>
+                                                                <button mat-menu-item (click)="onGetEndorsements.emit(element)"><i class="fas fa-address-card"></i>&nbsp;Endorsement</button>
+                                                                <button mat-menu-item (click)="onView.emit(element)"><i class="fas fa-eye"></i>&nbsp;View Quote Details</button>
+                                                                <button mat-menu-item><i class="fas fa-credit-card"></i>&nbsp;Pay EMI</button>
+                                                            </mat-menu>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="col.config.isCollapse">
+                                                            <button class="btn btn-light btnVehicle" shape="round" size="tiny" (click)="onPassData(element,j);expandedElement = expandedElement === element ? null : element;">
+                                                        
+                                                {{col.config.isCollapseName}}
+                                                
+                                                <i [ngClass]="selectedIndex!=j ?'fas fa-plus-circle':'fas fa-minus-circle'" ></i>
+                                                </button>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="col.config.isMenuAction">
+                                                            <button class="text-warning" mat-icon-button [matMenuTriggerFor]="menus" aria-label="Example icon-button with a menu">
+                                                                <i class="fas fa-ellipsis-v"></i>
+                                                                </button>
+                                                            <mat-menu #menus="matMenu">
+                                                                <ng-container *ngFor="let item of col.config.menuList">
+                                                                    <button mat-menu-item>
+                                                                        <span>{{item.name}}</span>
+                                                                    </button>
+                                                                </ng-container>
+                                                            </mat-menu>
+                                                        </ng-container>
+                                                    </ng-template>
+                                                </td>
+                                    
+                                            </ng-container>
+                                    
+                                            <ng-container matColumnDef="expandedDetail">
+                                                <td mat-cell *matCellDef="let element" [attr.colspan]="columnHeader.length">
+                                                    <div class="example-element-detail" [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'">
+                                                        <ng-container>
+                                                            <div class="example-container">
+                                                                <table class="inner-table" mat-table [dataSource]="dataSource2" matSort [matSortActive]="sortProperty" [matSortDirection]="sortDirection" matSortDisableClear>
+                                                                    <ng-container *ngFor="let col of innerColumnHeader; let i = index;" [matColumnDef]="col.key" [sticky]="col.sticky" [stickyEnd]="col.sticky">
+                                                                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header mat-header-cell" style="background: #0d6efd!important;">
+                                                                            <ng-container *ngIf="innerColumnHeader[i]['display']!='Premium'">
+                                                                                {{ innerColumnHeader[i]["display"] }}
+                                                                            </ng-container>
+                                                                            <ng-container *ngIf="innerColumnHeader[i]['display']=='Premium'">
+                                                                                {{ innerColumnHeader[i]["display"] }} &nbsp;({{currencyCode}})
+                                                                            </ng-container>
+                                                                            
+                                                                        </th>
+                                                                        <td mat-cell *matCellDef="let element">
+                                                                            <ng-container *ngIf="!col.config; else hasConfig">
+                                                                                <div class="input-form-radio-box">
+                                                                                    <div class="radio-toolbar" style="width: 300px;">
+                                                                                        <input [id]="'orginwarehouse_Yest'+j" type="radio" [name]="'originatingWarehouset'+j" [(ngModel)]="element[col.key]" value="Y">
+                                                                                        <label [for]="'orginwarehouse_Yest'+j" class="customLabel">Active</label>
+                                                                                        <input type="radio" [id]="'orginwarehouse_Not'+j" [name]="'originatingWarehouset'+j" [(ngModel)]="element[col.key]" value="N">
+                                                                                        <label [for]="'orginwarehouse_Not'+j" class="customLabel">DeActive</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <ng-container *ngIf="col.key!='Status'">
+                                                                                    {{ element[col.key] }}
+                                                                                </ng-container>
+                                                                                
+                                                                            </ng-container>
+                                                                            <ng-template #hasConfig>
+                                                                                <ng-container *ngIf="col.config.isEdit">
+                                                                                    <button class="btn btn-primary btn-sm" (click)="onEdit.emit(element)">
+                                                                                        <i class="fas fa-marker"></i>
+                                                                                    </button>
+                                                                                </ng-container>
+                                                                                <ng-container *ngIf="col.config.isSchedule">
+                                                                                    <button class="btn btn-primary btn-sm">
+                                                                                  <i class="fas fa-file"></i>
+                                                                                </button>
+                                                                                </ng-container>
+                                                                                <ng-container *ngIf="col.config.CommodityBaseRate">
+                                                                                    <div class="input-control-container input-edit">
+                                                                                        <div class="input-form-box">
+                                                                                            <input type="text" digitOnly class="input-form-control without-icon" [(ngModel)]="element.CommodityBaseRate">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </ng-container>
+                                                                                <ng-container *ngIf="col.config.DiscountPercent">
+                                                                                    <div class="input-control-container input-edit">
+                                                                                        <div class="input-form-box">
+                                                                                            <input type="text" mask="percent" class="input-form-control without-icon" [(ngModel)]="element.DiscountPercent">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </ng-container>
+                                                                                <ng-container *ngIf="col.config.DiscountValue">
+                                                                                    <div class="input-control-container input-edit">
+                                                                                        <div class="input-form-box">
+                                                                                            <input type="text" digitOnly class="input-form-control without-icon" [(ngModel)]="element.DiscountValue">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </ng-container>
+                                                                                <ng-container *ngIf="col.config.DiscountDesc">
+                                                                                    <div class="input-control-container input-edit">
+                                                                                        <div class="input-form-box">
+                                                                                            <input type="text" class="input-form-control without-icon" [(ngModel)]="element.DiscountDesc">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </ng-container>
+                                                                                <ng-container *ngIf="col.config.isActionBtn">
+                                                                                    <button nbButton shape="round" size="tiny" [status]="col.config.bg" (click)="onPassData(element,col.config.isActionBtnName);">
+                                                                          <i class="fas fa-pen-alt"></i>
+                                                                        </button>
+                                                                                </ng-container>
+                                                                            </ng-template>
+                                                                        </td>
+                                                                    </ng-container>
+                                                            
+                                                                    <tr mat-header-row *matHeaderRowDef="subKeys"></tr>
+                                                                    <tr mat-row *matRowDef="let row; columns: subKeys"></tr>
+                                                                </table>
+                                                                <ng-container *ngIf="!dataSource2?.data?.length">
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td class="p-3" style="text-align: center" [attr.colspan]="innerColumnHeader?.length">
+                                                                                No Records Found!
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </ng-container>
+                                                            </div>
+                                                            
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                            </ng-container>
+                                    
+                                            <ng-container matColumnDef="expandedDetails">
+                                                <td mat-cell *matCellDef="let element" [attr.colspan]="columnHeader.length">
+                                                    <div class="example-element-details" [@detailExpand]="element === expandedvech ? 'expanded' : 'collapsed'">
+                                                       <app-vechileCustomer>
+                                    
+                                                       </app-vechileCustomer>
+                                                    </div>
+                                                </td>
+                                            </ng-container>
+                                    
+                                            <!--<ng-container matColumnDef="expandedvech">
+                                                <td mat-cell *matCellDef="let element" [attr.colspan]="columnHeader.length">
+                                                    <div class="example-element-details" [@detailExpand]="element === expandedvech ? 'expanded' : 'collapsed'">
+                                                        <ng-container>
+                                                        <app-vechileCustomer>
+                                                            </app-vechileCustomer>
+                                                        </ng-container>
+                                                    </div>
+                                                </td>
+                                            </ng-container>-->
+                                    
+                                            <tr mat-header-row *matHeaderRowDef="keys"></tr>
+                                            <tr mat-row *matRowDef="let element; columns: keys" class="example-element-row" [class.example-expanded-row]="expandedElement === element"></tr>
+                                            <!--<tr mat-row *matRowDef="let element; columns: keys" class="example-element-row" [class.example-expanded-row]="expandedvech === element"></tr>-->
+                                            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                                        </table>
+                                        <table width="100%">
+                                            <tr *ngIf="!dataSource.data.length">
+                                                <td style="text-align: center" [attr.colspan]="columnHeader.length">
+                                                    No Records Found!
+                                                </td>
+                                            </tr>
+                                        </table>
+                                         <!--Reject My Model Popup-->
+                                    
+                                    </div>
+                                    <div class="example-containers mat-elevation-z8"><!--style="overflow-y: scroll;"-->
+                                        <div class="input-form-box" id="gridstyle" >
+                                            <input type="text" class="input-form-control with-icon" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                                            <span class="input-form-icon">
+                                                <i class="fas fa-filter"></i>
+                                            </span>
+                                        </div>
+                                        <mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
+                                                  <div>
+                                                  <ng-container *ngFor="let col of columnHeader; let i = index" [matColumnDef]="col.key">
+                                                   
+                                                    <div>
+                                                        <mat-header-cell *matHeaderCellDef>  {{ columnHeader[i]["display"] }}</mat-header-cell>
+                                                        <mat-cell *matCellDef="let element"> 
+                                                            <ng-container *ngIf="!col.config; else hasConfig">
+                                                               
+                                                                    <div class="col-6">
+                                                                        <span class="mobile-label"> {{ columnHeader[i]["display"] }}</span>
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        {{ element[col.key]}}
+                                                                    </div>
+                                                               
+                                                            </ng-container>
+                                                            <ng-template #hasConfig>
+                                                                <ng-container *ngIf="col.config.isView">
+                                                                    <div class="col-6">
+                                                                    <span class="mobile-label"> {{ columnHeader[i]["display"] }}</span>
+                                                                    </div>
+                                                                    <button class="circle btn btn-warning btn-sm" (click)="onView.emit(element)">
+                                                                        <i class="fas fa-eye" style='color: blue'></i>
+                                                                    </button>&nbsp;
+                                                                   
+                                                                </ng-container>
+                                                                <ng-container *ngIf="col.config.isEdit">
+                                                                   
+                                                                    <button class="circle btn btn-primary btn-sm" (click)="onEdit.emit(element)">
+                                                                        <i class="fas fa-marker"></i>
+                                                                    </button>&nbsp;
+                                                                </ng-container>
+                                            
+                                                              <ng-container *ngIf="col.config.isMail">
+                                                                
+                                                                <span class="mobile-label"> {{ columnHeader[i]["display"] }}</span>
+                                                               
+                                                               
+                                                                <button class="circle btn btn-primary btn-sm" (click)="onMail.emit(element)">
+                                                                  <i class="fa fa-envelope"></i>
+                                                                </button>
+                                                                &nbsp;
+                                                            </ng-container>
+                                                             
+                                                              <ng-container *ngIf="col.config.isViews">
+                                                                <button class="circle btn btn-primary btn-sm" (click)="onViews.emit(element)">
+                                                                  <i class="fas fa-eye"></i>
+                                                                </button>&nbsp;
+                                                            </ng-container>
+                                                              <ng-container *ngIf="col.config.isFollowup">
+                                                                <button class="circle btn btn-primary btn-sm" (click)="onFollowup.emit(element)" style="background-color:grey">
+                                                                  <i class="fa-solid fa-user"></i>
+                                                                </button>&nbsp;
+                                                            </ng-container>
+                                                            <ng-container *ngIf="col.config.isSms">
+                                                              <button class="circle btn btn-primary btn-sm" (click)="onSms.emit(element)">
+                                                                <i class="fas fa-sms" style="font-size:22px;color:lightgray"></i>
+                                                              </button>&nbsp;
+                                                          </ng-container>
+                                                                <ng-container *ngIf="col.config.isActive">
+                                                                    <button class="circle btn btn-warning btn-sm" (click)="onActive.emit(element)">
+                                                                        <i class="fas fa-check"></i>
+                                                                    </button>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="col.config.isReject">
+                                                                    <button class="circle btn btn-danger btn-sm" (click)="onReject.emit(element)">
+                                                                        <i class='fa fa-times' style='color: yellow'></i>
+                                                                    </button>
+                                                                </ng-container>
+                                            
+                                            
+                                                        <ng-container *ngIf="col.config.isMoreView">
+                                                                    <button mat-icon-button (click)="onPassData(element);expandedElement = expandedElement === element ? null : element">
+                                                          <mat-icon>keyboard_arrow_down</mat-icon> 
+                                                        </button>
+                                                        </ng-container>
+                                            
+                                            
+                                                        <ng-container *ngIf="col.config.isMoreVechView">
+                                                            <button mat-icon-button (click)="onPassData(element);expandedvech = expandedvech === element ? null : element">
+                                                  <mat-icon>keyboard_arrow_down</mat-icon> 
+                                                   
+                                                            </button>
+                                                           
+                                                </ng-container>
+                                            
+                                                                <ng-container *ngIf="col.config.isMoView && element.SubCovers!=null">
+                                                                    <button mat-icon-button (click)="onPassData(element);expandedElement = expandedElement === element ? null : element">
+                                                          <mat-icon>keyboard_arrow_down</mat-icon>
+                                                        </button>
+                                                                </ng-container>
+                                            
+                                                                
+                                                                <ng-container *ngIf="col.config.isPolicyConfig">
+                                                                    <button mat-button [matMenuTriggerFor]="menu">
+                                                                        <i class="fas fa-cog"></i>
+                                                                    </button>
+                                                                    <mat-menu #menu="matMenu">
+                                                                        <button mat-menu-item (click)="onSchedule.emit(element)"><i class="fas fa-file"></i>&nbsp;Schedule</button>
+                                                                        <button mat-menu-item><i class="fas fa-file"></i>&nbsp;Credit Note</button>
+                                                                        <button mat-menu-item><i class="fas fa-file"></i>&nbsp;Debit Note</button>
+                                                                        <button mat-menu-item (click)="onGetEndorsements.emit(element)"><i class="fas fa-address-card"></i>&nbsp;Endorsement</button>
+                                                                        <button mat-menu-item (click)="onView.emit(element)"><i class="fas fa-eye"></i>&nbsp;View Quote Details</button>
+                                                                        <button mat-menu-item><i class="fas fa-credit-card"></i>&nbsp;Pay EMI</button>
+                                                                    </mat-menu>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="col.config.isCollapse">
+                                                                    <button class="btn btn-light btnVehicle" shape="round" size="tiny" (click)="onPassData(element);expandedElement = expandedElement === element ? null : element;">
+                                                                <ng-container *ngIf="element.CommodityNotInResponse">
+                                                                    New
+                                                                    </ng-container>
+                                                                    {{col.config.isCollapseName}}
+                                                                    <i [ngClass]="selectedIndex!=i?'fas fa-plus-circle':'fas fa-minus-circle'" ></i>
+                                                                    </button>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="col.config.isMenuAction">
+                                                                    <button class="text-warning" mat-icon-button [matMenuTriggerFor]="menus" aria-label="Example icon-button with a menu">
+                                                          <i class="fas fa-ellipsis-v"></i>
+                                                        </button>
+                                                                    <mat-menu #menus="matMenu">
+                                                                        <ng-container *ngFor="let item of col.config.menuList">
+                                                                            <button mat-menu-item>
+                                                            <span>{{item.name}}</span>
+                                                          </button>
+                                                                        </ng-container>
+                                                                    </mat-menu>
+                                                                </ng-container>
+                                                            </ng-template>
+                                                          
+                                                        </mat-cell>
+                                                    </div>
+                                                  </ng-container>
+                                                  <ng-container matColumnDef="expandedDetail">
+                                                    <mat-cell *matCellDef="let element" [attr.colspan]="columnHeader.length">
+                                                        <div [ngClass]="{'example-element-detail' : element === expandedElement, 'example-element-details': element !== expandedElement}" [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'">
+                                                            <!--class="example-element-detail" -->
+                                                            <ng-container>
+                                                                <!-- <app-inner-table [cols]="innerColumnHeader" [data]="element.MotorList" (isActionBtn)="isActionBtn.emit($event)">
+                                                                </app-inner-table> -->
+                                                            </ng-container>
+                                                        </div>
+                                                    </mat-cell>
+                                                </ng-container>
+                                                </div>
+                                        
+                                          
+                                      
+                                          <mat-header-row *matHeaderRowDef="keys" style="font-size:14px;"></mat-header-row>
+                                         
+                                          <mat-row *matRowDef="let element; columns: keys" class="mt-2" [class.example-expanded-row]="expandedElement === element"  style="overflow:scroll;
+                                          display: flex !important;
+                                          flex-direction: column; border-top:1px solid navy; border-bottom:1px solid navy;font-size:14px;"></mat-row>
+                                        
+                                           <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>
+                                        </mat-table>
+                                       
+                                      </div>
+                                    <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Select page of periodic elements">
+                                    </mat-paginator>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

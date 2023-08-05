@@ -324,6 +324,31 @@ export class EndorsementTypeDetailsComponent {
     this.endorsementId = rowData?.EndtType
     this.selectedEndorsement = rowData;
     this.cancelYN = 'N';
+    if(this.endorsementId==853){
+      this.minDate = new Date();
+    }
+    else{
+      let startDate = sessionStorage.getItem('endorseStartDate');
+      if(startDate){
+        var d = new Date();
+        var year = d.getFullYear();
+        var month = d.getMonth();
+        var day = d.getDate();
+        let date1 = formatDate(new Date(),'yyyy-MM-dd','en_US');
+        let date2 = null;
+        if(startDate!='' && startDate !=null){
+          if(startDate.split('/').length>1){
+            let dates = startDate.split('/')
+            date2 = dates[2]+'-'+dates[1]+'-'+dates[0]
+          }
+        } 
+        if(date2<date1 || date2==date1){
+          this.minDate = new Date();
+        }
+        else{this.minDate = new Date(date2);}
+      }
+      else this.minDate = new Date();
+    }
   }
   checkEndorseSelection(rowData){
     return this.endorsementId==rowData?.EndtType;

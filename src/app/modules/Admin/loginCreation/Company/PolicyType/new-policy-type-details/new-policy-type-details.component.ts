@@ -13,8 +13,10 @@ export class NewPolicyTypeDetailsComponent implements OnInit {
 
   insuranceName: any;activeMenu="PolicyType";
   minDate:Date;
+  productId: string;
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,) {
+      this.productId =  sessionStorage.getItem('companyProductId');
       this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
      }
 
@@ -40,9 +42,10 @@ export class NewPolicyTypeDetailsComponent implements OnInit {
     if(value=='Policy') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/policytypeList'])
     if(value=='Industry') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/IndustryList'])
     if(value=='Promo') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/promoCodeMaster'])
-    if(value=='Endorsement') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/endorsementType'])
     if(value=='EndorsementField') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/endorsementfield'])
-    if(value=='Benefit') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/productbenefit'])
+    if(value=='Endorsement') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/endorsementType'])
+    if(value=='Benefit') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/productbenefit']);
+    if(value=='PlanType') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/planTypeBenefits'])
   }
   ongetBack(){
 
