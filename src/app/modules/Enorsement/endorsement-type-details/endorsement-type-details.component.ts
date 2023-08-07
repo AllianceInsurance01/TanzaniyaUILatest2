@@ -1185,6 +1185,10 @@ export class EndorsementTypeDetailsComponent {
           let i = 0;
           for (let build of buildDetails) {
             let effectiveDate = this.endorseEffectiveDate;
+            let Id = null;
+            if(build.LocationId!=undefined) Id=build.LocationId;
+            else if(build.RiskId!=undefined) Id=build.RiskId;
+            else Id="1";
             let ReqObj = {
               "InsuranceId": this.insuranceId,
               "BranchCode": customerData.BranchCode,
@@ -1192,7 +1196,7 @@ export class EndorsementTypeDetailsComponent {
               "SectionId": build.SectionId,
               "ProductId": this.productId,
               "MSRefNo": build.MSRefNo,
-              "VehicleId": build.LocationId,
+              "VehicleId": Id,
               "CdRefNo": build.CdRefNo,
               "VdRefNo": build.VdRefNo,
               "CreatedBy": this.loginId,
