@@ -586,8 +586,7 @@ export class CustomerDetailsComponent implements OnInit {
               let entry:any;
               if(this.productId=='3') entry = this.customerData[0];
               else entry = this.customerData
-              if(this.productId=='19'){
-                if(entry?.EndorsementDate){
+                if(entry?.EndorsementDate!=null){
                   this.endorsementDetails['EndorsementDate'] = entry?.EndorsementDate;
                   this.endorsementDetails['EndorsementEffectiveDate'] = entry?.EndorsementEffectiveDate;
                   this.endorsementDetails['EndorsementRemarks'] = entry?.EndorsementRemarks;
@@ -602,7 +601,6 @@ export class CustomerDetailsComponent implements OnInit {
                   this.endorsementDetails['OrginalPolicyNo'] = entry?.OrginalPolicyNo;
                   sessionStorage.setItem('endorseTypeId',JSON.stringify(this.endorsementDetails));
                 }
-              }
               this.applicationId = entry.ApplicationId;
               if(entry?.PolicyStartDate != null ){
                 var dateParts = entry?.PolicyStartDate.split("/");
