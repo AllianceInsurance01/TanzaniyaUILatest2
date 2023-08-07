@@ -1498,13 +1498,13 @@ checkMachineryYNChanges(){
       for(let field of fields){
         if(field.props.label=='Machinery BreakDown'){
             let tableData = field.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
-            tableData[0].fieldGroup[2].templateOptions['disabled'] = !this.productItem.PowerPlantSIYN;
-            tableData[1].fieldGroup[2].templateOptions['disabled'] = !this.productItem.ElecMachinesSIYN;
-            tableData[2].fieldGroup[2].templateOptions['disabled'] = !this.productItem.EquipmentSIYN;
-            tableData[3].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MachineEquipSIYN;
-            tableData[4].fieldGroup[2].templateOptions['disabled'] = !this.productItem.GeneralMachineSIYN;
-            tableData[5].fieldGroup[2].templateOptions['disabled'] = !this.productItem.ManuUnitsSIYN;
-            tableData[6].fieldGroup[2].templateOptions['disabled'] = !this.productItem.BoilerPlantsSIYN;
+            tableData[0].fieldGroup[2].templateOptions['disabled'] = (!this.productItem.PowerPlantSIYN || (this.endorsementSection && this.endorsementId!=850 && this.endorsementId!=851));
+            tableData[1].fieldGroup[2].templateOptions['disabled'] = (!this.productItem.ElecMachinesSIYN || (this.endorsementSection && this.endorsementId!=850 && this.endorsementId!=851));
+            tableData[2].fieldGroup[2].templateOptions['disabled'] = (!this.productItem.EquipmentSIYN || (this.endorsementSection && this.endorsementId!=850 && this.endorsementId!=851));
+            tableData[3].fieldGroup[2].templateOptions['disabled'] = (!this.productItem.MachineEquipSIYN || (this.endorsementSection && this.endorsementId!=850 && this.endorsementId!=851));
+            tableData[4].fieldGroup[2].templateOptions['disabled'] = (!this.productItem.GeneralMachineSIYN || (this.endorsementSection && this.endorsementId!=850 && this.endorsementId!=851));
+            tableData[5].fieldGroup[2].templateOptions['disabled'] = (!this.productItem.ManuUnitsSIYN || (this.endorsementSection && this.endorsementId!=850 && this.endorsementId!=851));
+            tableData[6].fieldGroup[2].templateOptions['disabled'] = (!this.productItem.BoilerPlantsSIYN || (this.endorsementSection && this.endorsementId!=850 && this.endorsementId!=851));
             if(!this.productItem.PowerPlantSIYN){this.productItem.PowerPlantSi = '0'; this.form?.controls['PowerPlantSi']?.setValue('0')}
             if(!this.productItem.ElecMachinesSIYN) {this.productItem.ElecMachinesSi = '0'; this.form?.controls['ElecMachinesSi']?.setValue('0')}
             if(!this.productItem.EquipmentSIYN) { this.productItem.EquipmentSi = '0'; this.form?.controls['EquipmentSi']?.setValue('0')}
@@ -1517,13 +1517,13 @@ checkMachineryYNChanges(){
   }
   else{
     let tableData = this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
-    tableData[0].fieldGroup[2].templateOptions['disabled'] = !this.productItem.PowerPlantSIYN;
-    tableData[1].fieldGroup[2].templateOptions['disabled'] = !this.productItem.ElecMachinesSIYN;
-    tableData[2].fieldGroup[2].templateOptions['disabled'] = !this.productItem.EquipmentSIYN;
-    tableData[3].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MachineEquipSIYN;
-    tableData[4].fieldGroup[2].templateOptions['disabled'] = !this.productItem.GeneralMachineSIYN;
-    tableData[5].fieldGroup[2].templateOptions['disabled'] = !this.productItem.ManuUnitsSIYN;
-    tableData[6].fieldGroup[2].templateOptions['disabled'] = !this.productItem.BoilerPlantsSIYN;
+    tableData[0].fieldGroup[2].templateOptions['disabled'] = (!this.productItem.PowerPlantSIYN || (this.endorsementSection && this.endorsementId!=850 && this.endorsementId!=851));
+    tableData[1].fieldGroup[2].templateOptions['disabled'] = (!this.productItem.ElecMachinesSIYN || (this.endorsementSection && this.endorsementId!=850 && this.endorsementId!=851));
+    tableData[2].fieldGroup[2].templateOptions['disabled'] = (!this.productItem.EquipmentSIYN || (this.endorsementSection && this.endorsementId!=850 && this.endorsementId!=851));
+    tableData[3].fieldGroup[2].templateOptions['disabled'] = (!this.productItem.MachineEquipSIYN || (this.endorsementSection && this.endorsementId!=850 && this.endorsementId!=851));
+    tableData[4].fieldGroup[2].templateOptions['disabled'] = (!this.productItem.GeneralMachineSIYN || (this.endorsementSection && this.endorsementId!=850 && this.endorsementId!=851));
+    tableData[5].fieldGroup[2].templateOptions['disabled'] = (!this.productItem.ManuUnitsSIYN || (this.endorsementSection && this.endorsementId!=850 && this.endorsementId!=851));
+    tableData[6].fieldGroup[2].templateOptions['disabled'] = (!this.productItem.BoilerPlantsSIYN || (this.endorsementSection && this.endorsementId!=850 && this.endorsementId!=851));
     if(!this.productItem.PowerPlantSIYN){this.productItem.PowerPlantSi = '0'; this.form?.controls['PowerPlantSi']?.setValue('0')}
     if(!this.productItem.ElecMachinesSIYN) {this.productItem.ElecMachinesSi = '0'; this.form?.controls['ElecMachinesSi']?.setValue('0')}
     if(!this.productItem.EquipmentSIYN) { this.productItem.EquipmentSi = '0'; this.form?.controls['EquipmentSi']?.setValue('0')}
@@ -1876,6 +1876,21 @@ getFireAlliedRiskDetails(sections){
             this.productItem.BuildingSuminsured = data?.Result?.BuildingSuminsured;
             this.productItem.IndemityPeriod = data?.Result?.IndemityPeriod;
             this.productItem.MakutiYn = data?.Result?.MakutiYn;
+            let details = data.Result;
+            if(details?.EndorsementDate){
+              this.endorsementDate = details?.EndorsementDate;
+              this.endorsementEffectiveDate = details?.EndorsementEffectiveDate;
+              this.endorsementRemarks = details?.EndorsementRemarks;
+              this.endorsementType = details?.EndorsementType;
+              this.endorsementTypeDesc = details?.EndorsementTypeDesc;
+              this.endtCategoryDesc = details?.EndtCategoryDesc;
+              this.endtCount = details?.EndtCount;
+              this.endtPrevPolicyNo = details?.EndtPrevPolicyNo;
+              this.endtPrevQuoteNo = details?.EndtPrevQuoteNo;
+              this.endtStatus = details?.EndtStatus;
+              this.isFinanceEndt = details?.IsFinanceEndt;
+              this.orginalPolicyNo = details?.OrginalPolicyNo;
+            }
             this.sectionCount +=1;
             if(sections.length==this.sectionCount){
               this.formSection = true; this.viewSection = false;
@@ -3814,7 +3829,19 @@ onSaveFireAlliedDetails(type,formType){
     "SectionId":  "40",
     "BuildingSuminsured": this.productItem?.BuildingSuminsured,
     "IndemityPeriod": this.productItem?.IndemityPeriod,
-    "MakutiYn": this.productItem?.MakutiYn
+    "MakutiYn": this.productItem?.MakutiYn,
+    "EndorsementDate": this.endorsementDate,
+    "EndorsementEffectiveDate": this.endorsementEffectiveDate,
+    "EndorsementRemarks": this.endorsementRemarks,
+    "EndorsementType": this.endorsementType,
+    "EndorsementTypeDesc": this.endorsementTypeDesc,
+    "EndtCategoryDesc": this.endtCategoryDesc,
+    "EndtCount": this.endtCount,
+    "EndtPrevPolicyNo": this.endtPrevPolicyNo,
+    "EndtPrevQuoteNo": this.endtPrevQuoteNo,
+    "EndtStatus": this.endtStatus,
+    "IsFinanceEndt": this.isFinanceEndt,
+    "OrginalPolicyNo": this.orginalPolicyNo,
   }
   let urlLink = `${this.motorApiUrl}api/slide4/savefireandperils`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -4656,6 +4683,8 @@ getOccupationList(sections) {
   );
 }
 setCommonFormValues(){
+  let refNo = sessionStorage.getItem('quoteReferenceNo');
+  if(refNo==undefined) refNo = this.requestReferenceNo
   let ReqObj = {
     "RequestReferenceNo": this.requestReferenceNo,
     "RiskId": "1",
@@ -4706,19 +4735,19 @@ setCommonFormValues(){
             if(data.Result.length!=0){
               let entry = data.Result[0];
               if(entry.EndorsementDate){
-                  this.endorsementDate = entry?.EndorsementDate;
-                  this.endorsementEffectiveDate = entry?.EndorsementEffectiveDate;
-                  this.endorsementRemarks = entry?.EndorsementRemarks;
-                  this.endorsementType = entry?.EndorsementType;
-                  this.endorsementTypeDesc = entry?.EndorsementTypeDesc;
-                  this.endtCategoryDesc = entry?.EndtCategoryDesc;
-                  this.endtCount = entry?.EndtCount;
-                  this.endtPrevPolicyNo = entry?.EndtPrevPolicyNo;
-                  this.endtPrevQuoteNo = entry?.EndtPrevQuoteNo;
-                  this.endtStatus = entry?.EndtStatus;
-                  this.isFinanceEndt = entry?.IsFinanceEndt;
-                  this.orginalPolicyNo = entry?.OrginalPolicyNo;
-              }
+                this.endorsementDate = entry?.EndorsementDate;
+                this.endorsementEffectiveDate = entry?.EndorsementEffectiveDate;
+                this.endorsementRemarks = entry?.EndorsementRemarks;
+                this.endorsementType = entry?.EndorsementType;
+                this.endorsementTypeDesc = entry?.EndorsementTypeDesc;
+                this.endtCategoryDesc = entry?.EndtCategoryDesc;
+                this.endtCount = entry?.EndtCount;
+                this.endtPrevPolicyNo = entry?.EndtPrevPolicyNo;
+                this.endtPrevQuoteNo = entry?.EndtPrevQuoteNo;
+                this.endtStatus = entry?.EndtStatus;
+                this.isFinanceEndt = entry?.IsFinanceEndt;
+                this.orginalPolicyNo = entry?.OrginalPolicyNo;
+            }
               this.productItem.fidelityList = data.Result;
               this.formSection = true; this.viewSection = false;
             }

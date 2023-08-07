@@ -515,6 +515,8 @@ export class EndorsementTypeDetailsComponent {
             if(this.productId=='14') this.getEmployersDetails(refNo,customerDatas,type,'employers');
             else if(this.productId=='32') this.getEmployersDetails(refNo,customerDatas,type,'fidelity');
             else if(this.productId=='39') this.getEmployersDetails(refNo,customerDatas,type,'machinery');
+            else if(this.productId=='16') this.getEmployersDetails(refNo,customerDatas,type,'money');
+            else if(this.productId=='1') this.getEmployersDetails(refNo,customerDatas,type,'burglary');
         },
         (err) => { },
       );
@@ -525,6 +527,8 @@ export class EndorsementTypeDetailsComponent {
     if(name=='employers'){sectionId = '45';urlLink = `${this.motorApiUrl}api/slide7/getempliablity`;urlLink2 = `${this.motorApiUrl}api/slide7/saveempliablity`;}
     else if(name=='fidelity'){sectionId = '43';urlLink = `${this.motorApiUrl}api/slide8/getfidelityemp`;urlLink2 = `${this.motorApiUrl}api/slide8/savefidelityemp`;}
     else if(name=='machinery'){sectionId = '41';urlLink = `${this.motorApiUrl}api/slide9/getmachinerybreakdown`;urlLink2 = `${this.motorApiUrl}api/slide9/savemachinerybreakdown`;}
+    else if(name=='money'){sectionId = '42';urlLink = `${this.motorApiUrl}api/slide10/getmoneydetails`;urlLink2 = `${this.motorApiUrl}api/slide9/savemoneydetails`;}
+    else if(name=='burglary'){sectionId = '52';urlLink = `${this.motorApiUrl}api/slide3/getburglaryandhouse`;urlLink2 = `${this.motorApiUrl}api/slide3/saveburglaryandhouse`;}
     let ReqObj = {
       "RequestReferenceNo": refNo,
       "RiskId": "1",
@@ -557,10 +561,143 @@ export class EndorsementTypeDetailsComponent {
               }
             }
             else if(this.productId=='39') this.saveMachineryDetails(customerDatas,refNo,customerData,type,name);
+            else if(this.productId=='16') this.saveMoneyDetails(customerDatas,refNo,customerData,type,name);
+            else if(this.productId=='1') this.saveBurglaryDetails(customerDatas,refNo,customerData,type,name)
         },
         (err) => { },
       );
 
+  }
+
+  saveBurglaryDetails(customerDatas,refNo,customerData,type,name){
+
+    let ReqObj = {
+      "AgencyCode": customerDatas.AgencyCode,
+      "ApplicationId": customerDatas.ApplicationId,
+      "BdmCode": customerDatas.BdmCode,
+      "BranchCode": customerDatas.BranchCode,
+      "BrokerBranchCode": customerDatas.BrokerBranchCode,
+      "BrokerCode": customerDatas.BrokerCode,
+      "BuidingAreaSqm": customerDatas.BuidingAreaSqm,
+      "BuildingBuildYear": customerDatas.BuildingBuildYear,
+      "BuildingCondition": customerDatas.BuildingCondition,
+      "BuildingFloors": customerDatas.BuildingFloors,
+      "BuildingOwnerYn": customerDatas.BuildingOwnerYn,
+      "BuildingPurposeId": customerDatas.BuildingPurposeId,
+      "CreatedBy": customerDatas.CreatedBy,
+      "SourceType": customerDatas.SourceType,
+      "CustomerCode": customerDatas.CustomerCode,
+      "InsuranceId": customerDatas.InsuranceId,
+      "InsuranceType": customerDatas.InsuranceType,
+      "RiskId": "1",
+      "LoginId": customerDatas.LoginId,
+      "UserType": customerDatas.UserType,
+      "OutbuildConstructType": customerDatas.OutbuildConstructType,
+      "ProductId": customerDatas.ProductId,
+      "SectionId": "52",
+      "SubUsertype": customerDatas.SubUsertype,
+      "InsuranceForId": customerDatas.InsuranceForId,
+      "NatureOfTradeId": customerDatas.NatureOfTradeId,
+      "WallType": customerDatas.WallType,
+      "InternalWallType": customerDatas.InternalWallType,
+      "CeilingType": customerDatas.CeilingType,
+      "FirstLossPercentId": customerDatas.FirstLossPercentId,
+      "StockInTradeSi": customerDatas.StockInTradeSi,
+      "GoodsSi": customerDatas.GoodsSi,
+      "FurnitureSi": customerDatas.FurnitureSi,
+      "ApplianceSi": customerDatas.ApplianceSi,
+      "CashValueablesSi": customerDatas.CashValueablesSi,
+      "StockLossPercent": customerDatas.StockLossPercent,
+      "GoodsLossPercent": customerDatas.GoodsLossPercent,
+      "FurnitureLossPercent": customerDatas.FurnitureLossPercent,
+      "ApplianceLossPercent": customerDatas.ApplianceLossPercent,
+      "CashValueablesLossPercent": customerDatas.CashValueablesLossPercent,
+      "Address": customerDatas.Address,
+      "RegionCode": customerDatas.RegionCode,
+      "DistrictCode": customerDatas.DistrictCode,
+      "OccupiedYear": customerDatas.OccupiedYear,
+      "WatchmanGuardHours": customerDatas.WatchmanGuardHours,
+      "AccessibleWindows": customerDatas.AccessibleWindows,
+      "ShowWindow": customerDatas.ShowWindow,
+      "FrontDoors": customerDatas.FrontDoors,
+      "BackDoors": customerDatas.BackDoors,
+      "TrapDoors": customerDatas.TrapDoors,
+      "WindowsMaterialId": customerDatas.WindowsMaterialId,
+      "DoorsMaterialId": customerDatas.DoorsMaterialId,
+      "NightLeftDoor": customerDatas.NightLeftDoor,
+      "BuildingOccupied": customerDatas.BuildingOccupied,
+      "RoofType": customerDatas.RoofType,
+      "RequestReferenceNo": refNo,
+      "EndorsementDate": customerDatas.EndorsementDate,
+      "EndorsementEffectiveDate": customerDatas.EndorsementEffectiveDate,
+      "EndorsementRemarks": customerDatas.EndorsementRemarks,
+      "EndorsementType": customerDatas.EndorsementType,
+      "EndorsementTypeDesc": customerDatas.EndorsementTypeDesc,
+      "EndtCategoryDesc": customerDatas.EndtCategoryDesc,
+      "EndtCount": customerDatas.EndtCount,
+      "EndtPrevPolicyNo": customerDatas.EndtPrevPolicyNo,
+      "EndtPrevQuoteNo": customerDatas.EndtPrevQuoteNo,
+      "EndtStatus": customerDatas.EndtStatus,
+      "IsFinanceEndt": customerDatas.IsFinanceEndt,
+      "OrginalPolicyNo": customerDatas.OrginalPolicyNo,
+      "PolicyNo": customerDatas.PolicyNo,
+      "Status": "Y"
+    }
+     ReqObj['Status'] = 'E';
+      ReqObj['PolicyNo'] = this.endorsePolicyNo;
+      let urlLink = `${this.motorApiUrl}api/slide3/saveburglaryandhouse`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          if (data?.Result) {
+            if(data.Result.length!=0){
+              this.requestReferenceNo = data?.Result[0]?.RequestReferenceNo;
+              this.onCalculate(data.Result,customerData,type);
+            }
+            
+          }
+      },
+      (err) => { },
+    );
+  }
+  saveMoneyDetails(customerDatas,refNo,customerData,type,name){
+    let ReqObj = {
+      "CreatedBy": customerDatas.CreatedBy,
+      "InsuranceId": customerDatas.InsuranceId,
+      "ProductId": customerDatas.ProductId,
+      "RequestReferenceNo": this.requestReferenceNo,
+      "RiskId": "1",
+      "SectionId":  "42",
+      "CashInHandEmployees": customerDatas.CashInHandEmployees,
+      "CashInSafe": customerDatas.CashInSafe,
+      "CashInTransit": customerDatas.CashInTransit,
+      "MoneyAnnualcarrySuminsured": customerDatas.MoneyAnnualcarrySuminsured,
+      "MoneyInPremises": customerDatas.MoneyInPremises,
+      "MoneyInSafeBusiness": customerDatas.MoneyInSafeBusiness,
+      "MoneyOutSafeBusiness": customerDatas.MoneyOutSafeBusiness,
+      "EndorsementDate": customerDatas.EndorsementDate,
+      "EndorsementEffectiveDate": customerDatas.EndorsementEffectiveDate,
+      "EndorsementRemarks": customerDatas.EndorsementRemarks,
+      "EndorsementType": customerDatas.EndorsementType,
+      "EndorsementTypeDesc": customerDatas.EndorsementTypeDesc,
+      "EndtCategoryDesc": customerDatas.EndtCategoryDesc,
+      "EndtCount": customerDatas.EndtCount,
+      "EndtPrevPolicyNo": customerDatas.EndtPrevPolicyNo,
+      "EndtPrevQuoteNo": customerDatas.EndtPrevQuoteNo,
+      "EndtStatus": customerDatas.EndtStatus,
+      "IsFinanceEndt": customerDatas.IsFinanceEndt,
+      "OrginalPolicyNo": customerDatas.OrginalPolicyNo,
+    }
+    let urlLink = `${this.motorApiUrl}api/slide10/savemoneydetails`;
+        this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+          (data: any) => {
+            if (data?.Result) {
+              this.requestReferenceNo = data?.Result[0]?.RequestReferenceNo;
+              sessionStorage.setItem('quoteReferenceNo', this.requestReferenceNo);
+            this.onCalculate(data.Result,customerData,type);
+            }
+          },
+          (err) => { },
+        );
   }
   saveMachineryDetails(customerDatas,refNo,customerData,type,name){
       let ReqObj = {

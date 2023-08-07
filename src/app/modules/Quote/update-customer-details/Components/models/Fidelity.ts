@@ -39,7 +39,7 @@ export class Fidelity{
                       className: 'col-sm-4',
                       props: {
                         label: `Occupation`,
-                        disabled: this.checkDisable('LiabilityOccupationId'),
+                        disabled: this.checkDisable('OccupationType'),
                         required: true,
                         options: [
         
@@ -60,6 +60,7 @@ export class Fidelity{
                       key: 'FidEmpCount',
                       templateOptions: {
                         label: 'Employee Count',
+                        disabled: this.checkDisable('EmployeeCount'),
                         required: true,
                       },
                       validators: {
@@ -73,7 +74,7 @@ export class Fidelity{
                       key: 'FidEmpSi',
                       props: {
                         label: `Sum Insured`,
-                        disabled: this.checkDisable('FidEmpSi'),
+                        disabled: this.checkDisable('SumInsured'),
                         required: true,
                         options: [
         

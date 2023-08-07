@@ -61,7 +61,7 @@ export class EmployersLiability{
                       key: 'TotalNoOfEmployees',
                       templateOptions: {
                         label: 'Employee Count',
-                        disabled: this.checkDisable('OccupationType'),
+                        disabled: this.checkDisable('EmployeeCount'),
                         required: true,
                       },
                       validators: {
@@ -76,7 +76,7 @@ export class EmployersLiability{
                       defaultValue: '0',
                       props: {
                         label: `SumInsured`,
-                        disabled: this.checkDisable('SIModification'),
+                        disabled: this.checkDisable('SumInsured'),
                         required: true,
                         options: [
         
@@ -102,14 +102,14 @@ export class EmployersLiability{
     checkDisable(fieldName) {
         console.log("Disable Check", fieldName);
         if (this.endorsementSection) {
-          let occupationEntry = this.enableFieldsList.some(ele => ele == 'OccupationType');
-          if (occupationEntry) {
-              return false;
-          }
-          else{
+          // let occupationEntry = this.enableFieldsList.some(ele => ele == 'OccupationType');
+          // if (occupationEntry) {
+          //     return false;
+          // }
+          // else{
             let entry = this.enableFieldsList.some(ele => ele == fieldName);
             return !entry;
-          }
+          //}
           
         }
         else return false;

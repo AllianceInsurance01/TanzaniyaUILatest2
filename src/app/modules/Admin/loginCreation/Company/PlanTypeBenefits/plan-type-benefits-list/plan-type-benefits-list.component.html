@@ -84,12 +84,30 @@
                             <div class="col-md-4 col-lg-4 col-xl-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Plan Type</label>
-                                    <ng-select class="input-form-select" appendTo="body" [items]="planTypeList" [(ngModel)]="planTypeValue"  bindValue="Code" bindLabel="CodeDesc">
+                                    <ng-select class="input-form-select" appendTo="body" [items]="planTypeList" [(ngModel)]="planTypeValue"  (change)="getBenefitsList()" bindValue="Code" bindLabel="CodeDesc">
                                     </ng-select>
                                 </div>
                             </div>
+                            <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="benefitsList.length!=0">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Effective Date</label>
+                                    <mat-form-field appearance="fill">
+                                        <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="EffectiveDateStart">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="benefitsList.length!=0">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Remarks</label>
+                                    <div class="input-form-box">
+                                        <textarea cols="60" ros="3" class="input-form-select" [(ngModel)]="Remarks"></textarea>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-3">
                             <div class="col-md-12 col-lg-12 col-xl-12">
                                 <ng-container *ngIf="benefitsList.length!=0">
                                     <div class="example-container">
@@ -245,7 +263,7 @@
                                                         <ng-container *ngIf="col.config.isCollapse">
                                                             <button class="btn btn-light btnVehicle" shape="round" size="tiny" (click)="onPassData(element,j);expandedElement = expandedElement === element ? null : element;">
                                                         
-                                                {{col.config.isCollapseName}}
+                                                         {{col.config.isCollapseName}}
                                                 
                                                 <i [ngClass]="selectedIndex!=j ?'fas fa-plus-circle':'fas fa-minus-circle'" ></i>
                                                 </button>
@@ -272,33 +290,48 @@
                                                     <div class="example-element-detail" [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'">
                                                         <ng-container>
                                                             <div class="example-container">
+                                                                <div class="row mb-1 mt-2">
+                                                                    <div class="col-md-2 col-lg-2 col-xl-2 offset-10">
+                                                                        <button class="btn btn-warning btn-sm" (click)="onAddSubCoverRow(i)">
+                                                                            <i class="fas fa-plus"></i>&nbsp;SubCover
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
                                                                 <table class="inner-table" mat-table [dataSource]="dataSource2" matSort [matSortActive]="sortProperty" [matSortDirection]="sortDirection" matSortDisableClear>
-                                                                    <ng-container *ngFor="let col of innerColumnHeader; let i = index;" [matColumnDef]="col.key" [sticky]="col.sticky" [stickyEnd]="col.sticky">
+                                                                    <ng-container *ngFor="let col of innerColumnHeader; let l = index;" [matColumnDef]="col.key" [sticky]="col.sticky" [stickyEnd]="col.sticky">
                                                                         <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header mat-header-cell" style="background: #0d6efd!important;">
-                                                                            <ng-container *ngIf="innerColumnHeader[i]['display']!='Premium'">
-                                                                                {{ innerColumnHeader[i]["display"] }}
+                                                                            <ng-container *ngIf="innerColumnHeader[l]['display']!='Premium'">
+                                                                                {{ innerColumnHeader[l]["display"] }}
                                                                             </ng-container>
-                                                                            <ng-container *ngIf="innerColumnHeader[i]['display']=='Premium'">
-                                                                                {{ innerColumnHeader[i]["display"] }} &nbsp;({{currencyCode}})
+                                                                            <ng-container *ngIf="innerColumnHeader[l]['display']=='Premium'">
+                                                                                {{ innerColumnHeader[l]["display"] }} &nbsp;({{currencyCode}})
                                                                             </ng-container>
                                                                             
                                                                         </th>
-                                                                        <td mat-cell *matCellDef="let element">
+                                                                        <td mat-cell *matCellDef="let element;let k = dataIndex;">
                                                                             <ng-container *ngIf="!col.config; else hasConfig">
-                                                                                <div class="input-form-radio-box">
-                                                                                    <div class="radio-toolbar" style="width: 300px;">
-                                                                                        <input [id]="'orginwarehouse_Yest'+j" type="radio" [name]="'originatingWarehouset'+j" [(ngModel)]="element[col.key]" value="Y">
-                                                                                        <label [for]="'orginwarehouse_Yest'+j" class="customLabel">Active</label>
-                                                                                        <input type="radio" [id]="'orginwarehouse_Not'+j" [name]="'originatingWarehouset'+j" [(ngModel)]="element[col.key]" value="N">
-                                                                                        <label [for]="'orginwarehouse_Not'+j" class="customLabel">DeActive</label>
+                                                                                <ng-container *ngIf="col.key=='Status'">
+                                                                                    <ng-select class="input-form-select" appendTo="body" [items]="statusList" [(ngModel)]="element[col.key]" bindValue="Code" bindLabel="CodeDesc">
+                                                                                    </ng-select>
+                                                                                </ng-container>
+                                                                                <ng-container *ngIf="innerColumnHeader[l]['display']=='SubCover Name' || innerColumnHeader[l]['display']=='Limits' || innerColumnHeader[l]['display']=='Currency' || innerColumnHeader[l]['display']=='Excess'">
+                                                                                    <div class="input-control-container">
+                                                                                        <div class="input-form-box">
+                                                                                            <textarea cols="60" rows="2" [(ngModel)]="element[col.key]" class="input-form-select"></textarea>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <ng-container *ngIf="col.key!='Status'">
+                                                                                </ng-container>
+                                                                                <ng-container *ngIf="col.key!='Status' && innerColumnHeader[l]['display']!='SubCover Name' && innerColumnHeader[l]['display']!='Limits' && innerColumnHeader[l]['display']!='Currency' && innerColumnHeader[l]['display']!='Excess'">
                                                                                     {{ element[col.key] }}
                                                                                 </ng-container>
                                                                                 
                                                                             </ng-container>
                                                                             <ng-template #hasConfig>
+                                                                                <ng-container *ngIf="col.config.isDelete">
+                                                                                    <button class="circle btn btn-primary btn-sm" (click)="onDeleteSubCoverRow(j,K)">
+                                                                                        <i class="fas fa-trash"></i>
+                                                                                    </button>&nbsp;
+                                                                                </ng-container>
                                                                                 <ng-container *ngIf="col.config.isEdit">
                                                                                     <button class="btn btn-primary btn-sm" (click)="onEdit.emit(element)">
                                                                                         <i class="fas fa-marker"></i>
@@ -566,10 +599,18 @@
                                         </mat-table>
                                        
                                       </div>
-                                    <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Select page of periodic elements">
+                                    <mat-paginator *ngIf="benefitsList.length!=0" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Select page of periodic elements">
                                     </mat-paginator>
                                 </ng-container>
+                                <ng-container *ngIf="benefitsList.length==0">
+                                        <div class="text-center">
+                                            No Data Available
+                                        </div>
+                                </ng-container>
                             </div>
+                        </div>
+                        <div class="d-flex justify-content-center" *ngIf="benefitsList.length!=0">
+                            <button class="btn btn-primary ml-2" (click)="onSaveCoverDetails()">Submit</button> 
                         </div>
                     </div>
                 </div>

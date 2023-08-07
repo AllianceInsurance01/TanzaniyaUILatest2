@@ -51,7 +51,7 @@ export class FireAlliedPerils{
       
                     props: {
                       label: `Building Value`,
-                      disabled: this.checkDisable('BuildingSuminsured'),
+                      disabled: this.checkDisable('SumInsured'),
                       required: true,
                       options: [
       

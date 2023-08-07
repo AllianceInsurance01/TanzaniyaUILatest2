@@ -1277,7 +1277,7 @@
                                     <div class="col-12 col-md-6 col-lg-6 input-control-container">
                                         <label class="input-form-label">Salary</label><span class="text-danger">*</span>
                                         <div class="input-form-box  mt-2">
-                                            <input type="text" style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('content')" (keydown)="onSIValueChange($event)" (keyup)="individualCommaFormatted('employee')" class="input-form-control without-icon" maxlength="50" [(ngModel)]="employeeSalary" [ngModelOptions]="{standalone: true}">
+                                            <input type="text" style="position: relative;bottom: 0.35rem;" [disabled]="checkEndorseDisable('employee')" (keydown)="onSIValueChange($event)" (keyup)="individualCommaFormatted('employee')" class="input-form-control without-icon" maxlength="50" [(ngModel)]="employeeSalary" [ngModelOptions]="{standalone: true}">
                                         </div>
                                         <div class="input-form-error" *ngIf="employeeSalaryError">
                                             <div class="error-text text-danger">
@@ -1774,7 +1774,7 @@
                                     <div class="col-12 col-md-6 col-lg-6 input-control-container">
                                         <label class="input-form-label">Content Type</label><span class="text-danger">*</span>
                                     <div class="input-form-box">
-                                        <ng-select class="custom" [items]="allriskList" [(ngModel)]="machineryItemId" [disabled]="checkEndorseDisable('allRisk')" placeholder="Select Content" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc" style="position:relative;top:.2rem;">
+                                        <ng-select class="custom" [items]="allriskList" [(ngModel)]="machineryItemId" [disabled]="checkEndorseDisable('machinery')" placeholder="Select Content" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc" style="position:relative;top:.2rem;">
                                         </ng-select>
                                        </div>
                                     </div>

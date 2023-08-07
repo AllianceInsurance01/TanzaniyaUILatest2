@@ -1988,8 +1988,8 @@ export class CustomerDetailsComponent implements OnInit {
         if (data.Result) {
                 let sections = data.Result?.SectionIds;
                 let refNo = data.Result?.RequestReferenceNo;
-                this.updateComponent.referenceNo = refNo;
-                sessionStorage.setItem('quoteReferenceNo',refNo);
+                this.updateComponent.referenceNo = data.Result?.RequestReferenceNo;
+                sessionStorage.setItem('quoteReferenceNo',data.Result?.RequestReferenceNo);
                 let homeDetails = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
                 if (homeDetails) {
                     if (homeDetails[0].SectionId == undefined || homeDetails[0].SectionId == "undefined") homeDetails[0]['SectionId'] = sections;
