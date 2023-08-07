@@ -46,6 +46,14 @@ export class TravelQuoteDetailsComponent implements OnInit {
   requestReferenceNo: string;
   passengerError: boolean = false;
   planTypeList: any[]=[];
+  endorsementSection: boolean=false;
+  orgPolicyNo: string;
+  enableFieldsList: any;
+  endorsementId: any;
+  endorseEffectiveDate: any;
+  endorsePolicyNo: any;
+  endorseCategory: any;
+  endorsementName: any;
 
   constructor(private router: Router, private updateComponent: UpdateCustomerDetailsComponent,
     private sharedService: SharedService, private datePipe: DatePipe
@@ -60,6 +68,23 @@ export class TravelQuoteDetailsComponent implements OnInit {
     this.branchCode = this.userDetails.Result.BranchCode;
     this.productId = this.userDetails.Result.ProductId;
     this.insuranceId = this.userDetails.Result.InsuranceId;
+    if (sessionStorage.getItem('endorsePolicyNo')) {
+      this.endorsementSection = true;
+      let endorseObj = JSON.parse(sessionStorage.getItem('endorseTypeId'))
+      if (endorseObj) {
+        this.orgPolicyNo = sessionStorage.getItem('endorsePolicyNo')
+        this.endorsementId = endorseObj.EndtTypeId;
+        this.enableFieldsList = endorseObj.FieldsAllowed;
+        this.endorseEffectiveDate = endorseObj?.EffectiveDate;
+        this.endorsePolicyNo = endorseObj?.PolicyNo;
+        this.endorseCategory = endorseObj.Category;
+        this.endorsementName = endorseObj?.EndtName;
+        console.log("Enable Obj in Vehicle", this.enableFieldsList, this.endorsementId)
+        // if(this.endorsementId!=42 && this.endorsementId!=842){
+        //     this.enableFieldName = this.enableFieldsList.some(ele=>ele=='InsuranceType');
+        // }
+      }
+    }
     if (this.userType != 'Broker') {
       let quoteStatus = sessionStorage.getItem('QuoteStatus');
       if (quoteStatus == 'AdminRP') {
@@ -603,6 +628,23 @@ export class TravelQuoteDetailsComponent implements OnInit {
     let createdBy = this.loginId
     let groupList = coverListObj?.GroupDetails;
     let vehicleList = [];
+    let endDate:any = null,coverModificationYN='N';
+    if(coverListObj?.TravelEndDate){
+      if(this.endorsementSection){
+        coverModificationYN = 'Y';
+        endDate = this.endorseEffectiveDate;
+      }
+      else endDate = coverListObj?.TravelEndDate;
+    }
+    let effectiveDate=null;
+    if(this.endorsementSection){
+        effectiveDate = this.endorseEffectiveDate;
+    }
+    else {
+      if(coverListObj.TravelStartDate){
+        effectiveDate = coverListObj.TravelStartDate;
+      }
+    }
     if (groupList.length != 0) {
       let i = 0;
       for (let group of groupList) {
@@ -619,6 +661,8 @@ export class TravelQuoteDetailsComponent implements OnInit {
           "CreatedBy": createdBy,
           "productId": this.productId,
           "Passengers": group.GroupMembers,
+          "EffectiveDate": effectiveDate,
+          "PolicyEndDate": endDate,
           "RequestReferenceNo": coverListObj?.RequestReferenceNo,
           "CoverModification":'N'
         }
