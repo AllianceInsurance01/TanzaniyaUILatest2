@@ -72,7 +72,7 @@ export class PlantAllRisk{
                     required: true,
                   },
                   validators: {
-                    validation: [ForceLengthValidators.maxLength(3), ForceLengthValidators.min(1)]
+                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
                   },
                 },
                

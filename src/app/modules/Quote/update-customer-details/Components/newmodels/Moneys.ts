@@ -146,7 +146,7 @@ export class Moneys{
                                 type: 'display',
               
                                 templateOptions: {
-                                  label: `Residence Of Director And Managers`,
+                                  label: `Residence Of Director / Managers`,
                                   required: false,
               
                                 },
@@ -318,7 +318,7 @@ export class Moneys{
                                 type: 'display',
               
                                 templateOptions: {
-                                  label: `Estimated Annual Cash Carrying`,
+                                  label: `Estimated Annual Carry`,
                                   required: false,
               
                                 },

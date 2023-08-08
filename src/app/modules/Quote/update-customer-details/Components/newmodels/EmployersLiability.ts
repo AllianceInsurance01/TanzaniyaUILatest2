@@ -74,7 +74,7 @@ export class EmployersLiabilitys{
                       key: 'EmpLiabilitySi',
                       defaultValue: '0',
                       props: {
-                        label: `SumInsured`,
+                        label: `Liability Annual Aggregate Limit`,
                         disabled: this.checkDisable('EmpLiabilitySi'),
                         required: true,
                         options: [
@@ -90,28 +90,28 @@ export class EmployersLiabilitys{
                       expressions: {
                       },
                     },
-                    {
-                        type: 'commaSeparator',
-                        className: 'col-sm-4',
-                        key: 'LiabilityAnnualLimit',
-                        defaultValue: '0',
-                        props: {
-                          label: `Liability Annual Aggregate Limit`,
-                        //   disabled: this.checkDisable('EmpLiabilitySi'),
-                          required: true,
-                          options: [
+                    // {
+                    //     type: 'commaSeparator',
+                    //     className: 'col-sm-4',
+                    //     key: 'LiabilityAnnualLimit',
+                    //     defaultValue: '0',
+                    //     props: {
+                    //       label: `Liability Annual Aggregate Limit`,
+                    //     //   disabled: this.checkDisable('EmpLiabilitySi'),
+                    //       required: true,
+                    //       options: [
           
-                          ],
+                    //       ],
           
-                        },
-                        validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                        },
-                        hooks: {
-                        },
-                        expressions: {
-                        },
-                      },
+                    //     },
+                    //     validators: {
+                    //       validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                    //     },
+                    //     hooks: {
+                    //     },
+                    //     expressions: {
+                    //     },
+                    //   },
                   ]
                 }
               ],
