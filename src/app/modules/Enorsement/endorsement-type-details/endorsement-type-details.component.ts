@@ -1553,8 +1553,9 @@ export class EndorsementTypeDetailsComponent {
             createdBy = this.loginId;
           }
           let endDate:any = null;
-          if(vehicleDetails.PolicyEndDate){
-            endDate = vehicleDetails.PolicyEndDate;
+          if(type=='cancel') endDate = this.endorseEffectiveDate;
+          else if(vehicleDetails.PolicyEndDate){
+              endDate = vehicleDetails.PolicyEndDate;
           }
           let effectiveDate=null;
           //if(this.endorsementSection){

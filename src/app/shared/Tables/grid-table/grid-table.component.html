@@ -1,11 +1,11 @@
 <div style="background: transparent;overflow-y: scroll;" class="example-container">
-    <div class="input-form-box" id="gridstyle" >
+    <div class="input-form-box" style="margin-right: 5px !important;" id="gridstyle" >
         <input type="text" class="input-form-control with-icon" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
         <span class="input-form-icon">
             <i class="fas fa-filter"></i>
         </span>
     </div>
-    <table mat-table [dataSource]="dataSource" matSort [matSortActive]="sortProperty" [matSortDirection]="sortDirection" matSortDisableClear>
+    <table mat-table [dataSource]="dataSource" class="ux-table-v" matSort [matSortActive]="sortProperty" [matSortDirection]="sortDirection" matSortDisableClear>
         <ng-container *ngFor="let col of columnHeader; let i = index;" [matColumnDef]="col.key" [sticky]="i===0" [stickyEnd]="i === 10">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header mat-header-cell">
                 <ng-container *ngIf="columnHeader[i]['display']=='Premium' || columnHeader[i]['display']=='Endorsement Premium'">
