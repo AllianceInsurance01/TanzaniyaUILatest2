@@ -547,6 +547,35 @@ export class VehicleWishListComponent implements OnInit {
     console.log("Final File List",this.uploadDocList)
   }
   onUploadVehicleData(){
+      if(this.customerData.length!=0){
+        Swal.fire({
+          title: '<strong>Merge / Replace Records</strong>',
+          icon: 'info',
+          html:
+            `<ul class="list-group errorlist">
+             <li>Some Vehicle Details You Already Stored</li>
+             <li>Do You Want to Clear Old Records?</li>
+         </ul>`,
+          showCloseButton: false,
+          //focusConfirm: false,
+          showCancelButton:true,
+
+         //confirmButtonColor: '#3085d6',
+         cancelButtonColor: '#d33',
+         confirmButtonText: 'Merge With Old Records',
+         cancelButtonText: 'Clear Old Records',
+        }).then((result) => {
+          if (result.isConfirmed) {
+                this.uploadProceed('Merge')
+          }
+          else{
+            this.uploadProceed('Add')
+          }
+        })
+      }
+      else this.uploadProceed('Add');
+  }
+  uploadProceed(type){
     let createdBy="";
     let quoteStatus = sessionStorage.getItem('QuoteStatus');
     this.subUsertype = sessionStorage.getItem('typeValue');
@@ -578,6 +607,7 @@ export class VehicleWishListComponent implements OnInit {
       }
   
     console.log("AcExecutive",this.acExecutiveId,this.vehicleDetails,this.sourceType,this.bdmCode,this.brokerCode,this.customerCode);
+  
     let ReqObj = {
       "CompanyId": this.insuranceId,
       "ProductId": this.productId,
@@ -616,6 +646,7 @@ export class VehicleWishListComponent implements OnInit {
       "AgencyCode":this.userDetails.Result.OaCode,
       "Idnumber": this.updateComponent.idNumber,
       "UserType": this.userType,
+      "UploadType": type,
       "NcdYn":"N"
     }
     let urlLink = `${this.UploadUrl}eway/vehicle/batch/upload`;

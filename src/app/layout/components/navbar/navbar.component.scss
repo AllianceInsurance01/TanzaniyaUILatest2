@@ -14,7 +14,7 @@
 margin-left: 5px !important;
   padding: 2px!important;
   background-color: #fff!important;
-  box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff!important;
+  //box-shadow: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #fff!important;
   border-radius: 0.55rem!important;
 }
 .navigation ul li a .label_label {
@@ -156,20 +156,21 @@ li:hover .logo::after{
 }
 mat-sidenav-container {
 height: calc(100vh - 65px);
-overflow-y: scroll;
+// overflow-y: scroll;
 }
 ::ng-deep .customSideNave::-webkit-scrollbar {
-display: none !important;
+// display: none !important;
+// overflow: hidden !important;
 }
-.mat-elevation-z8::-webkit-scrollbar {
-display: none !important;
-}
+// .mat-elevation-z8::-webkit-scrollbar {
+// display: none !important;
+// }
 .mainContent{
 min-height: 100%;
 }
-::ng-deep .mat-drawer-content::-webkit-scrollbar {
-display: none !important;
-}
+// ::ng-deep .mat-drawer-content::-webkit-scrollbar {
+// display: none !important;
+// }
 .topbar{
   width: 100%;
   display: flex;
@@ -284,12 +285,12 @@ display: block;
   }
   .main{
     transition: .5s;
-    min-height: 75vh !important;
+    min-height: 81vh !important;
 }
 .content {
-  min-height: 80vh !important;
-  border-radius: 10px;
-  padding: 10px !important;
+  min-height: 97% !important;
+  //border-radius: 10px;
+  //padding: 10px !important;
   margin: 9px 10px 5px 15px;
 }
   .bread_crumb.active{
@@ -353,7 +354,7 @@ display: block;
     min-height: 80% !important;
     border-radius: 10px;
     padding: 10px !important;
-    margin: 9px 10px 5px 15px;
+    //margin: 9px 10px 5px 15px;
   
     overflow: auto;
   }

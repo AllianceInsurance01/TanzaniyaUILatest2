@@ -21,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ɵb } from 'ngx-toast-notifications';
 import { MultilevelMenuService } from 'ng-material-multilevel-menu';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { PlanTypeBenefitsListComponent } from '../PlanTypeBenefits/plan-type-benefits-list/plan-type-benefits-list.component';
 
 
 
@@ -32,7 +33,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
   declarations: [
     ProductDetailsComponent,
     NewProductDetailsComponent,
-    TaxDetailsComponent
+    TaxDetailsComponent,
+    PlanTypeBenefitsListComponent
   ],
   imports: [
     CommonModule,

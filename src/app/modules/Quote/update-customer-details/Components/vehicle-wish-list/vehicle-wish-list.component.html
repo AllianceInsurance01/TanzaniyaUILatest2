@@ -168,9 +168,9 @@
                 </span> <span class="spancommon">Vehicle to Insure</span>
             </div>
             <div *ngIf="!searchSection && statusValue!='RA' && (!endorsementSection || (endorsementSection && enableAddVehicle)) && !checkDisableField()">
-                <button class="maan-btn maan-btn-blue maan-button-data" style="bottom: 0.2rem !important;" (click)="searchSection=!searchSection" matRipple><i class="fas fa-plus"></i>&nbsp;Add New</button>&nbsp;
+                <button class="maan-btn maan-btn-blue maan-button-data" style="bottom: 0.2rem !important;" (click)="searchSection=!searchSection;uploadSection=false;" matRipple><i class="fas fa-plus"></i>&nbsp;Add New</button>&nbsp;
                 <button class="maan-btn maan-btn-yellow maan-btn-data ml-1" (click)="employeedownload()" style="white-space: nowrap;bottom: 0.2rem !important;"><i class="fas fa-download mx-1"></i>Sample Vehicle Details</button>&nbsp;
-                <button class="maan-btn maan-btn-green maan-btn-data ml-1" matRipple (click)="onEnableUploadSection()" style="white-space: nowrap;bottom: 0.2rem !important;"><i class="fas fa-upload"></i>&nbsp;Upload Vehicle Details</button>
+                <button class="maan-btn maan-btn-green maan-btn-data ml-1" matRipple *ngIf="!uploadSection" (click)="onEnableUploadSection()" style="white-space: nowrap;bottom: 0.2rem !important;"><i class="fas fa-upload"></i>&nbsp;Upload Vehicle Details</button>
             </div>
         </div>
     </div>

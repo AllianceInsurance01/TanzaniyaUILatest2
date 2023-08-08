@@ -49,7 +49,7 @@ export class MachineryBreakDown{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('SumInsured'),
+                                    disabled: this.checkDisable('SumInsuredYN'),
                                     name: 'PowerPlantSIYN',
                                     options: [],
                                   }
@@ -92,7 +92,7 @@ export class MachineryBreakDown{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('SumInsured'),
+                                    disabled: this.checkDisable('SumInsuredYN'),
                                     name: 'ElecMachinesSIYN',
                                     options: [],
                                   }
@@ -135,7 +135,7 @@ export class MachineryBreakDown{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('SumInsured'),
+                                    disabled: this.checkDisable('SumInsuredYN'),
                                     name: 'EquipmentSIYN',
                                     options: [],
                                   }
@@ -178,7 +178,7 @@ export class MachineryBreakDown{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('SumInsured'),
+                                    disabled: this.checkDisable('SumInsuredYN'),
                                     name: 'MachineEquipSIYN',
                                     options: [],
                                   }
@@ -221,7 +221,7 @@ export class MachineryBreakDown{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('SumInsured'),
+                                    disabled: this.checkDisable('SumInsuredYN'),
                                     name: 'GeneralMachineSIYN',
                                     options: [],
                                   }
@@ -264,7 +264,7 @@ export class MachineryBreakDown{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('SumInsured'),
+                                    disabled: this.checkDisable('SumInsuredYN'),
                                     name: 'ManuUnitsSIYN',
                                     options: [],
                                   }
@@ -307,7 +307,7 @@ export class MachineryBreakDown{
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
-                                    disabled: this.checkDisable('SumInsured'),
+                                    disabled: this.checkDisable('SumInsuredYN'),
                                     name: 'BoilerPlantsSIYN',
                                     options: [],
                                   }

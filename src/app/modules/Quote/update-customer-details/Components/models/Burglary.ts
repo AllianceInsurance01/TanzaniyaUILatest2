@@ -508,7 +508,7 @@ export class Burglary{
                       
                                         templateOptions: {
                                           required: false,
-                                          disabled: this.checkDisable('SumInsured'),
+                                          disabled: this.checkDisable('LossPercentage'),
                                           options: [
                       
                                           ],
@@ -562,7 +562,7 @@ export class Burglary{
                                         key: 'GoodsLossPercent',
                                         
                                         templateOptions: {
-                                          disabled: this.checkDisable('SumInsured'),
+                                          disabled: this.checkDisable('LossPercentage'),
                                           required: false,
                                           options: [
                       
@@ -616,7 +616,7 @@ export class Burglary{
                                         key: 'FurnitureLossPercent',
                                         
                                         templateOptions: {
-                                          disabled: this.checkDisable('SumInsured'),
+                                          disabled: this.checkDisable('LossPercentage'),
                                           required: false,
                                           options: [
                       
@@ -670,7 +670,7 @@ export class Burglary{
                                           key: 'ApplianceLossPercent',
                                          
                                           templateOptions: {
-                                            disabled: this.checkDisable('SumInsured'),
+                                            disabled: this.checkDisable('LossPercentage'),
                                             required: false,
                                             options: [
                         
@@ -724,7 +724,7 @@ export class Burglary{
                                         key: 'CashValueablesLossPercent',
                                         
                                         templateOptions: {
-                                          disabled: this.checkDisable('SumInsured'),
+                                          disabled: this.checkDisable('LossPercentage'),
                                           required: false,
                                           options: [
                       

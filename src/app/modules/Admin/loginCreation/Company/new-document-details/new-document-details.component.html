@@ -13,6 +13,10 @@
                 <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
 
                 <label for="menu2">Cover</label>
+                <ng-container *ngIf="productId=='4'">
+                    <input type="radio" id="menu20" name="menu" value="PlanType" (click)="onRedirect('PlanType')" [(ngModel)]="activeMenu">
+                    <label for="menu20">PlanType Benefit</label>
+                </ng-container> 
                 <input type="radio" id="menu20" name="menu" value="Benefit" (click)="onRedirect('Benefit')" [(ngModel)]="activeMenu">
                     <label for="menu20">Product Benefit</label>
                 <input type="radio" id="menu15" name="menu" value="Policy"(click)="onRedirect('Policy')" [(ngModel)]="activeMenu">

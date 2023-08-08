@@ -324,6 +324,31 @@ export class EndorsementTypeDetailsComponent {
     this.endorsementId = rowData?.EndtType
     this.selectedEndorsement = rowData;
     this.cancelYN = 'N';
+    if(this.endorsementId==853){
+      this.minDate = new Date();
+    }
+    else{
+      let startDate = sessionStorage.getItem('endorseStartDate');
+      if(startDate){
+        var d = new Date();
+        var year = d.getFullYear();
+        var month = d.getMonth();
+        var day = d.getDate();
+        let date1 = formatDate(new Date(),'yyyy-MM-dd','en_US');
+        let date2 = null;
+        if(startDate!='' && startDate !=null){
+          if(startDate.split('/').length>1){
+            let dates = startDate.split('/')
+            date2 = dates[2]+'-'+dates[1]+'-'+dates[0]
+          }
+        } 
+        if(date2<date1 || date2==date1){
+          this.minDate = new Date();
+        }
+        else{this.minDate = new Date(date2);}
+      }
+      else this.minDate = new Date();
+    }
   }
   checkEndorseSelection(rowData){
     return this.endorsementId==rowData?.EndtType;
@@ -412,6 +437,11 @@ export class EndorsementTypeDetailsComponent {
             this.requestReferenceNo = res.requestReferenceNo;
             this.getTravelDetails(res.requestReferenceNo,'cancel');
           }
+          else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14'  || this.productId=='19' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId=='21' || this.productId == '25'){
+            this.requestReferenceNo = res.requestReferenceNo;
+            this.getCommonDetails(res.requestReferenceNo,'cancel');
+            //this.getEmployersDetails(res.requestReferenceNo,'cancel');
+          }
           //this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
           //this.router.navigate([''])
         }
@@ -442,6 +472,10 @@ export class EndorsementTypeDetailsComponent {
               else if(this.productId=='3'){
                 this.getBuildingDetails(res.requestReferenceNo,'other');
               }
+              else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14'  || this.productId=='19' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId=='21' || this.productId == '25'){
+                this.requestReferenceNo = res.requestReferenceNo;
+                this.getCommonDetails(res.requestReferenceNo,'other');
+              }
               //this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
             }
             else{
@@ -454,7 +488,7 @@ export class EndorsementTypeDetailsComponent {
           else if(this.selectedEndorsement.EndorsementCategory==1){
             if(this.quoteNo) sessionStorage.setItem('quoteNo',this.quoteNo);
             else sessionStorage.setItem('quoteNo',res.quoteNo);
-            if(this.productId=='3'){
+            if((this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14'  || this.productId=='19' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId=='21' || this.productId == '25')){
               this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
             }
             else{
@@ -466,6 +500,244 @@ export class EndorsementTypeDetailsComponent {
       },
       (err) => { },
     );
+  }
+  getCommonDetails(refNo,type){
+    let ReqObj = {
+      "RequestReferenceNo": refNo,
+      "RiskId": "1",
+      "ProductId": this.productId,
+      "InsuranceId": this.insuranceId
+    }
+    let urlLink =  `${this.motorApiUrl}api/slide/getcommondetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+            let customerDatas = data.Result;
+            if(this.productId=='14') this.getEmployersDetails(refNo,customerDatas,type,'employers');
+            else if(this.productId=='32') this.getEmployersDetails(refNo,customerDatas,type,'fidelity');
+            else if(this.productId=='39') this.getEmployersDetails(refNo,customerDatas,type,'machinery');
+            else if(this.productId=='16') this.getEmployersDetails(refNo,customerDatas,type,'money');
+            else if(this.productId=='1') this.getEmployersDetails(refNo,customerDatas,type,'burglary');
+        },
+        (err) => { },
+      );
+
+  }
+  getEmployersDetails(refNo,customerData,type,name){
+    let sectionId = null,urlLink = null,urlLink2=null;
+    if(name=='employers'){sectionId = '45';urlLink = `${this.motorApiUrl}api/slide7/getempliablity`;urlLink2 = `${this.motorApiUrl}api/slide7/saveempliablity`;}
+    else if(name=='fidelity'){sectionId = '43';urlLink = `${this.motorApiUrl}api/slide8/getfidelityemp`;urlLink2 = `${this.motorApiUrl}api/slide8/savefidelityemp`;}
+    else if(name=='machinery'){sectionId = '41';urlLink = `${this.motorApiUrl}api/slide9/getmachinerybreakdown`;urlLink2 = `${this.motorApiUrl}api/slide9/savemachinerybreakdown`;}
+    else if(name=='money'){sectionId = '42';urlLink = `${this.motorApiUrl}api/slide10/getmoneydetails`;urlLink2 = `${this.motorApiUrl}api/slide9/savemoneydetails`;}
+    else if(name=='burglary'){sectionId = '52';urlLink = `${this.motorApiUrl}api/slide3/getburglaryandhouse`;urlLink2 = `${this.motorApiUrl}api/slide3/saveburglaryandhouse`;}
+    let ReqObj = {
+      "RequestReferenceNo": refNo,
+      "RiskId": "1",
+      "SectionId": sectionId
+    }
+    
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+            let customerDatas = data.Result;
+            if(this.productId=='14' || this.productId=='32'){
+              if(customerDatas.length!=0){
+                let i=0;
+                for(let customer of customerDatas){
+                  customer['RiskId']="1";
+                  i+=1;
+                  if(i==customerDatas.length){
+                    
+                    this.sharedService.onPostMethodSync(urlLink2, customerDatas).subscribe(
+                      (data: any) => {
+                        if (data?.Result.length!=0) { 
+                          this.requestReferenceNo = data?.Result[0]?.RequestReferenceNo;
+                          sessionStorage.setItem('quoteReferenceNo', this.requestReferenceNo);
+                          this.onCalculate(data.Result,customerData,type);
+                        }
+                      },
+                      (err) => { },
+                    );
+                  }
+                }
+              }
+            }
+            else if(this.productId=='39') this.saveMachineryDetails(customerDatas,refNo,customerData,type,name);
+            else if(this.productId=='16') this.saveMoneyDetails(customerDatas,refNo,customerData,type,name);
+            else if(this.productId=='1') this.saveBurglaryDetails(customerDatas,refNo,customerData,type,name)
+        },
+        (err) => { },
+      );
+
+  }
+
+  saveBurglaryDetails(customerDatas,refNo,customerData,type,name){
+
+    let ReqObj = {
+      "AgencyCode": customerDatas.AgencyCode,
+      "ApplicationId": customerDatas.ApplicationId,
+      "BdmCode": customerDatas.BdmCode,
+      "BranchCode": customerDatas.BranchCode,
+      "BrokerBranchCode": customerDatas.BrokerBranchCode,
+      "BrokerCode": customerDatas.BrokerCode,
+      "BuidingAreaSqm": customerDatas.BuidingAreaSqm,
+      "BuildingBuildYear": customerDatas.BuildingBuildYear,
+      "BuildingCondition": customerDatas.BuildingCondition,
+      "BuildingFloors": customerDatas.BuildingFloors,
+      "BuildingOwnerYn": customerDatas.BuildingOwnerYn,
+      "BuildingPurposeId": customerDatas.BuildingPurposeId,
+      "CreatedBy": customerDatas.CreatedBy,
+      "SourceType": customerDatas.SourceType,
+      "CustomerCode": customerDatas.CustomerCode,
+      "InsuranceId": customerDatas.InsuranceId,
+      "InsuranceType": customerDatas.InsuranceType,
+      "RiskId": "1",
+      "LoginId": customerDatas.LoginId,
+      "UserType": customerDatas.UserType,
+      "OutbuildConstructType": customerDatas.OutbuildConstructType,
+      "ProductId": customerDatas.ProductId,
+      "SectionId": "52",
+      "SubUsertype": customerDatas.SubUsertype,
+      "InsuranceForId": customerDatas.InsuranceForId,
+      "NatureOfTradeId": customerDatas.NatureOfTradeId,
+      "WallType": customerDatas.WallType,
+      "InternalWallType": customerDatas.InternalWallType,
+      "CeilingType": customerDatas.CeilingType,
+      "FirstLossPercentId": customerDatas.FirstLossPercentId,
+      "StockInTradeSi": customerDatas.StockInTradeSi,
+      "GoodsSi": customerDatas.GoodsSi,
+      "FurnitureSi": customerDatas.FurnitureSi,
+      "ApplianceSi": customerDatas.ApplianceSi,
+      "CashValueablesSi": customerDatas.CashValueablesSi,
+      "StockLossPercent": customerDatas.StockLossPercent,
+      "GoodsLossPercent": customerDatas.GoodsLossPercent,
+      "FurnitureLossPercent": customerDatas.FurnitureLossPercent,
+      "ApplianceLossPercent": customerDatas.ApplianceLossPercent,
+      "CashValueablesLossPercent": customerDatas.CashValueablesLossPercent,
+      "Address": customerDatas.Address,
+      "RegionCode": customerDatas.RegionCode,
+      "DistrictCode": customerDatas.DistrictCode,
+      "OccupiedYear": customerDatas.OccupiedYear,
+      "WatchmanGuardHours": customerDatas.WatchmanGuardHours,
+      "AccessibleWindows": customerDatas.AccessibleWindows,
+      "ShowWindow": customerDatas.ShowWindow,
+      "FrontDoors": customerDatas.FrontDoors,
+      "BackDoors": customerDatas.BackDoors,
+      "TrapDoors": customerDatas.TrapDoors,
+      "WindowsMaterialId": customerDatas.WindowsMaterialId,
+      "DoorsMaterialId": customerDatas.DoorsMaterialId,
+      "NightLeftDoor": customerDatas.NightLeftDoor,
+      "BuildingOccupied": customerDatas.BuildingOccupied,
+      "RoofType": customerDatas.RoofType,
+      "RequestReferenceNo": refNo,
+      "EndorsementDate": customerDatas.EndorsementDate,
+      "EndorsementEffectiveDate": customerDatas.EndorsementEffectiveDate,
+      "EndorsementRemarks": customerDatas.EndorsementRemarks,
+      "EndorsementType": customerDatas.EndorsementType,
+      "EndorsementTypeDesc": customerDatas.EndorsementTypeDesc,
+      "EndtCategoryDesc": customerDatas.EndtCategoryDesc,
+      "EndtCount": customerDatas.EndtCount,
+      "EndtPrevPolicyNo": customerDatas.EndtPrevPolicyNo,
+      "EndtPrevQuoteNo": customerDatas.EndtPrevQuoteNo,
+      "EndtStatus": customerDatas.EndtStatus,
+      "IsFinanceEndt": customerDatas.IsFinanceEndt,
+      "OrginalPolicyNo": customerDatas.OrginalPolicyNo,
+      "PolicyNo": customerDatas.PolicyNo,
+      "Status": "Y"
+    }
+     ReqObj['Status'] = 'E';
+      ReqObj['PolicyNo'] = this.endorsePolicyNo;
+      let urlLink = `${this.motorApiUrl}api/slide3/saveburglaryandhouse`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          if (data?.Result) {
+            if(data.Result.length!=0){
+              this.requestReferenceNo = data?.Result[0]?.RequestReferenceNo;
+              this.onCalculate(data.Result,customerData,type);
+            }
+            
+          }
+      },
+      (err) => { },
+    );
+  }
+  saveMoneyDetails(customerDatas,refNo,customerData,type,name){
+    let ReqObj = {
+      "CreatedBy": customerDatas.CreatedBy,
+      "InsuranceId": customerDatas.InsuranceId,
+      "ProductId": customerDatas.ProductId,
+      "RequestReferenceNo": this.requestReferenceNo,
+      "RiskId": "1",
+      "SectionId":  "42",
+      "CashInHandEmployees": customerDatas.CashInHandEmployees,
+      "CashInSafe": customerDatas.CashInSafe,
+      "CashInTransit": customerDatas.CashInTransit,
+      "MoneyAnnualcarrySuminsured": customerDatas.MoneyAnnualcarrySuminsured,
+      "MoneyInPremises": customerDatas.MoneyInPremises,
+      "MoneyInSafeBusiness": customerDatas.MoneyInSafeBusiness,
+      "MoneyOutSafeBusiness": customerDatas.MoneyOutSafeBusiness,
+      "EndorsementDate": customerDatas.EndorsementDate,
+      "EndorsementEffectiveDate": customerDatas.EndorsementEffectiveDate,
+      "EndorsementRemarks": customerDatas.EndorsementRemarks,
+      "EndorsementType": customerDatas.EndorsementType,
+      "EndorsementTypeDesc": customerDatas.EndorsementTypeDesc,
+      "EndtCategoryDesc": customerDatas.EndtCategoryDesc,
+      "EndtCount": customerDatas.EndtCount,
+      "EndtPrevPolicyNo": customerDatas.EndtPrevPolicyNo,
+      "EndtPrevQuoteNo": customerDatas.EndtPrevQuoteNo,
+      "EndtStatus": customerDatas.EndtStatus,
+      "IsFinanceEndt": customerDatas.IsFinanceEndt,
+      "OrginalPolicyNo": customerDatas.OrginalPolicyNo,
+    }
+    let urlLink = `${this.motorApiUrl}api/slide10/savemoneydetails`;
+        this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+          (data: any) => {
+            if (data?.Result) {
+              this.requestReferenceNo = data?.Result[0]?.RequestReferenceNo;
+              sessionStorage.setItem('quoteReferenceNo', this.requestReferenceNo);
+            this.onCalculate(data.Result,customerData,type);
+            }
+          },
+          (err) => { },
+        );
+  }
+  saveMachineryDetails(customerDatas,refNo,customerData,type,name){
+      let ReqObj = {
+        "CreatedBy": customerDatas.CreatedBy,
+        "InsuranceId": this.insuranceId,
+        "ProductId": this.productId,
+        "RequestReferenceNo": refNo,
+        "RiskId": "1",
+        "SectionId":  "41",
+        "BoilerPlantsSi": customerDatas.BoilerPlantsSi,
+        "ElecMachinesSi": customerDatas.ElecMachinesSi,
+        "EquipmentSi": customerDatas.EquipmentSi,
+        "GeneralMachineSi": customerDatas.GeneralMachineSi,
+        "MachineEquipSi": customerDatas.MachineEquipSi,
+        "ManuUnitsSi": customerDatas.ManuUnitsSi,
+        "PowerPlantSi": customerDatas.PowerPlantSi,
+        "EndorsementDate": this.endorsementDate,
+        "EndorsementEffectiveDate": customerDatas.EndorsementEffectiveDate,
+        "EndorsementRemarks": customerDatas.EndorsementRemarks,
+        "EndorsementType": customerDatas.EndorsementType,
+        "EndorsementTypeDesc": customerDatas.EndorsementTypeDesc,
+        "EndtCategoryDesc": customerDatas.EndtCategoryDesc,
+        "EndtCount": customerDatas.EndtCount,
+        "EndtPrevPolicyNo": customerDatas.EndtPrevPolicyNo,
+        "EndtPrevQuoteNo": customerDatas.EndtPrevQuoteNo,
+        "EndtStatus": customerDatas.EndtStatus,
+        "IsFinanceEndt": customerDatas.IsFinanceEndt,
+        "OrginalPolicyNo": customerDatas.OrginalPolicyNo,
+      }
+      let urlLink = `${this.motorApiUrl}api/slide9/savemachinerybreakdown`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          if (data?.Result) {
+            this.requestReferenceNo = data?.Result[0]?.RequestReferenceNo;
+            sessionStorage.setItem('quoteReferenceNo', this.requestReferenceNo);
+            this.onCalculate(data.Result,customerData,type);
+          }
+        },
+        (err) => { },
+      );
   }
   getTravelDetails(refNo,type){
     let ReqObj = {
@@ -810,8 +1082,6 @@ export class EndorsementTypeDetailsComponent {
           this.requestReferenceNo = data?.Result[0]?.RequestReferenceNo;
           sessionStorage.setItem('quoteReferenceNo', this.requestReferenceNo);
          this.onCalculate(data.Result,customerData,type);
-          
-
         }
       })
   }
@@ -822,6 +1092,23 @@ export class EndorsementTypeDetailsComponent {
       let createdBy = this.loginId
       let groupList = coverListObj?.GroupDetails;
       let vehicleList = [];
+      let endDate:any = null,coverModificationYN='N';
+      if(coverListObj?.TravelEndDate){
+        if(this.endorsementSection){
+          coverModificationYN = 'Y';
+          endDate = this.endorseEffectiveDate;
+        }
+        else endDate = coverListObj?.TravelEndDate;
+      }
+      let effectiveDate=null;
+      if(this.endorsementSection){
+          effectiveDate = this.endorseEffectiveDate;
+      }
+      else {
+        if(coverListObj.TravelStartDate){
+          effectiveDate = coverListObj.TravelStartDate;
+        }
+      }
       if (groupList.length != 0) {
         let i = 0;
         for (let group of groupList) {
@@ -839,6 +1126,8 @@ export class EndorsementTypeDetailsComponent {
             "productId": this.productId,
             "Passengers": group.GroupMembers,
             "RequestReferenceNo": coverListObj?.RequestReferenceNo,
+            "EffectiveDate": effectiveDate,
+            "PolicyEndDate": endDate,
             "CoverModification":'Y'
           }
           let urlLink = `${this.CommonApiUrl}calculator/calc`;
@@ -896,6 +1185,10 @@ export class EndorsementTypeDetailsComponent {
           let i = 0;
           for (let build of buildDetails) {
             let effectiveDate = this.endorseEffectiveDate;
+            let Id = null;
+            if(build.LocationId!=undefined) Id=build.LocationId;
+            else if(build.RiskId!=undefined) Id=build.RiskId;
+            else Id="1";
             let ReqObj = {
               "InsuranceId": this.insuranceId,
               "BranchCode": customerData.BranchCode,
@@ -903,7 +1196,7 @@ export class EndorsementTypeDetailsComponent {
               "SectionId": build.SectionId,
               "ProductId": this.productId,
               "MSRefNo": build.MSRefNo,
-              "VehicleId": build.LocationId,
+              "VehicleId": Id,
               "CdRefNo": build.CdRefNo,
               "VdRefNo": build.VdRefNo,
               "CreatedBy": this.loginId,
@@ -1260,8 +1553,9 @@ export class EndorsementTypeDetailsComponent {
             createdBy = this.loginId;
           }
           let endDate:any = null;
-          if(vehicleDetails.PolicyEndDate){
-            endDate = vehicleDetails.PolicyEndDate;
+          if(type=='cancel') endDate = this.endorseEffectiveDate;
+          else if(vehicleDetails.PolicyEndDate){
+              endDate = vehicleDetails.PolicyEndDate;
           }
           let effectiveDate=null;
           //if(this.endorsementSection){

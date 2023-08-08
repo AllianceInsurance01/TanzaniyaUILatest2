@@ -13,7 +13,7 @@ import { FieldArrayType } from '@ngx-formly/core';
     </div>
     <div class="justify-content-end d-flex">
         <div >
-            <button class="btn btn-primary" type="button" *ngIf="endorsementId!=850" (click)="add()"><i class="fa fa-plus"></i>&nbsp;Add Employees</button>
+            <button class="btn btn-primary" type="button" *ngIf="endorsementId!=850 && endorsementId!=846" (click)="add()"><i class="fa fa-plus"></i>&nbsp;Add Employees</button>
         </div>
     </div>
   `,
