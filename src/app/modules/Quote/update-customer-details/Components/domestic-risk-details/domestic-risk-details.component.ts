@@ -2266,6 +2266,9 @@ onFidelitySave(){
     this.currentEmployeeIndex = null;this.enableEmployeeEditSection = false;
     this.enableEmployeeUploadSection = true;
     this.showEmpRecordsSection = false;
+    this.uploadDocList=[];
+    this.employeeUploadRecords = [];
+    this.uploadStatus = null;
   }
   onUploadFidelitySection(){
     this.currentFidelityIndex = null;this.enableFidelityEditSection = false;
@@ -2296,6 +2299,34 @@ onFidelitySave(){
     console.log("Final File List",this.uploadDocList)
   }
   onUploadEmployeeDetails(){
+      if(this.uploadDocList.length!=0){
+        Swal.fire({
+          title: '<strong>Merge / Replace Records</strong>',
+          icon: 'info',
+          html:
+            `<ul class="list-group errorlist">
+             <li>Some Employee Details You Already Stored</li>
+             <li>Do You Want to Clear Old Records?</li>
+         </ul>`,
+          showCloseButton: false,
+          //focusConfirm: false,
+          showCancelButton:true,
+
+         //confirmButtonColor: '#3085d6',
+         cancelButtonColor: '#d33',
+         confirmButtonText: 'Merge With Old Records',
+         cancelButtonText: 'Clear Old Records',
+        }).then((result) => {
+          if (result.isConfirmed) {
+                this.onProceedUpload('Merge')
+          }
+          else{
+            this.onProceedUpload('Add')
+          }
+        })
+      }
+  }
+  onProceedUpload(type){
     let typeId=null;
     if(this.productId=='32') typeId = '104';
     else if(this.productId=='14') typeId='102';
@@ -2310,7 +2341,8 @@ onFidelitySave(){
       "RequestReferenceNo":this.quoteRefNo,
       "TypeId":typeId,
       "LoginId":this.loginId,
-      "SectionId":SectionId
+      "SectionId":SectionId,
+      "UploadType": type,
     }
     let urlLink = `${this.ApiUrl1}eway/vehicle/batch/upload`;
         this.sharedService.onPostExcelDocumentMethodSync(urlLink, ReqObj,this.uploadDocList[0].url).subscribe(

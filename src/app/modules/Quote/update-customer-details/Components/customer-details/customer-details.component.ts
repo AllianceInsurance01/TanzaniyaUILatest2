@@ -179,7 +179,7 @@ export class CustomerDetailsComponent implements OnInit {
           this.updateComponent.branchValue = this.branchValue;
           this.onGetCustomerList('direct',this.customerCode);
           this.currencyCode = this.userDetails.Result.CurrencyId;
-          this.onCurrencyChange();
+          this.onCurrencyChange('direct');
           this.searchSection = true;
           this.commonSection = true;
         }
@@ -220,7 +220,7 @@ export class CustomerDetailsComponent implements OnInit {
               
               this.quoteRefNo=null;
               this.currencyCode = this.userDetails.Result.CurrencyId;
-              this.onCurrencyChange();
+              this.onCurrencyChange('direct');
               this.searchSection = true;
               this.commonSection = true;
               
@@ -240,13 +240,13 @@ export class CustomerDetailsComponent implements OnInit {
             this.branchValue = this.userDetails.Result.BranchCode;
             this.updateComponent.branchValue = this.branchValue;
             this.currencyCode = this.userDetails.Result.CurrencyId;
-            this.onCurrencyChange();
+            this.onCurrencyChange('direct');
             this.onGetCustomerList('direct',this.customerCode);
               var d= new Date();
               var year = d.getFullYear();
               var month = d.getMonth();
               var day = d.getDate();
-              if(this.productId=='5'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange()}
+              if(this.productId=='5'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
               this.searchSection = true;
             this.commonSection = true;
             let quoteStatus = sessionStorage.getItem('QuoteStatus');
@@ -271,7 +271,7 @@ export class CustomerDetailsComponent implements OnInit {
           this.updateComponent.HavePromoCode = this.HavePromoCode;
           this.updateComponent.PromoCode = this.PromoCode;
           this.currencyCode = this.userDetails.Result.CurrencyId;
-          this.onCurrencyChange();
+          this.onCurrencyChange('direct');
           this.onGetCustomerList('direct',this.customerCode);
           this.searchSection = true;
           this.commonSection = true;
@@ -460,7 +460,7 @@ export class CustomerDetailsComponent implements OnInit {
         this.updateComponent.branchValue = this.branchValue;
         this.onGetCustomerList('direct',this.customerCode);
         this.currencyCode = this.userDetails.Result.CurrencyId;
-        this.onCurrencyChange();
+        this.onCurrencyChange('direct');
         this.searchSection = true;
         this.commonSection = true;
       }
@@ -500,7 +500,7 @@ export class CustomerDetailsComponent implements OnInit {
           else{
             this.quoteRefNo=null;
             this.currencyCode = this.userDetails.Result.CurrencyId;
-            this.onCurrencyChange();
+            this.onCurrencyChange('direct');
             this.searchSection = true;
             this.commonSection = true;
           }
@@ -519,13 +519,13 @@ export class CustomerDetailsComponent implements OnInit {
           this.branchValue = this.userDetails.Result.BranchCode;
           this.updateComponent.branchValue = this.branchValue;
           this.currencyCode = this.userDetails.Result.CurrencyId;
-          this.onCurrencyChange();
+          this.onCurrencyChange('direct');
           this.onGetCustomerList('direct',this.customerCode);
             var d= new Date();
             var year = d.getFullYear();
             var month = d.getMonth();
             var day = d.getDate();
-            if(this.productId=='5'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange()}
+            if(this.productId=='5'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
           this.searchSection = true;
           this.commonSection = true;
           let quoteStatus = sessionStorage.getItem('QuoteStatus');
@@ -550,7 +550,7 @@ export class CustomerDetailsComponent implements OnInit {
         this.updateComponent.HavePromoCode = this.HavePromoCode;
         this.updateComponent.PromoCode = this.PromoCode;
         this.currencyCode = this.userDetails.Result.CurrencyId;
-        this.onCurrencyChange();
+        this.onCurrencyChange('direct');
         this.onGetCustomerList('direct',this.customerCode);
         this.searchSection = true;
         this.commonSection = true;
@@ -612,12 +612,12 @@ export class CustomerDetailsComponent implements OnInit {
                 var dateParts = entry?.PolicyEndDate.split("/");
                 // month is 0-based, that's why we need dataParts[1] - 1
                 this.policyEndDate = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
-                this.onChangeEndDate();
+                this.onChangeEndDate('direct');
               }
               //this.executiveValue = entry?.AcExecutiveId;
               this.currencyCode = entry?.Currency;
               this.exchangeRate = entry?.ExchangeRate;
-              this.onCurrencyChange();
+              this.onCurrencyChange('direct');
               this.IndustryId = entry?.IndustryId;
               this.executiveValue= entry?.AcExecutiveId;
               this.InsuranceType=entry?.SectionId;
@@ -667,7 +667,7 @@ export class CustomerDetailsComponent implements OnInit {
               var dateParts = entry?.PolicyEndDate.split("/");
               // month is 0-based, that's why we need dataParts[1] - 1
               this.policyEndDate = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
-              this.onChangeEndDate();
+              this.onChangeEndDate('direct');
             }
             this.commissionValue = entry?.CommissionType;
             this.executiveValue = entry?.AcExecutive;
@@ -684,7 +684,7 @@ export class CustomerDetailsComponent implements OnInit {
             
             this.currencyCode = entry?.Currency;
             this.exchangeRate = entry?.ExchangeRate;
-            this.onCurrencyChange();
+            this.onCurrencyChange('direct');
             this.HavePromoCode = entry.HavePromoCode;
             //this.updateComponent.HavePromoCode = entry.HavePromoCode;
             if(entry.Promocode){
@@ -817,6 +817,7 @@ export class CustomerDetailsComponent implements OnInit {
           this.brokerList = data.Result;
           //if(this.Code=='Agent') this.executiveSection = true;
           if(type=='change'){
+            if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
             this.brokerCode = null;
             this.brokerBranchCode = null;
           }
@@ -851,9 +852,11 @@ export class CustomerDetailsComponent implements OnInit {
   }
   onBranchValueChange(){
     this.updateComponent.branchValue = this.branchValue;
+    if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
   }
   onBrokerChange(){
     //if(this.Code=='Broker' || this.Code=='Agent'){
+      if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
       let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
       if(entry){
         this.brokerLoginId = entry.Name; 
@@ -877,6 +880,7 @@ export class CustomerDetailsComponent implements OnInit {
   }
   onBrokerBranchChange(){
     this.updateComponent.brokerBranchCode = this.brokerBranchCode;
+    if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
   }
   getBrokerBranchList(type){
     let urlLink = `${this.ApiUrl1}api/brokerbranches`;
@@ -943,7 +947,7 @@ export class CustomerDetailsComponent implements OnInit {
                 this.showCustomerList = false;
                 let entry = this.customerList.find(ele=>ele.Code==this.customerCode);
                 this.customerName = entry.Name;
-                this.setCustomerValue(this.customerCode,this.customerName)
+                this.setCustomerValue(this.customerCode,this.customerName,'direct')
               }
               
         },
@@ -954,11 +958,12 @@ export class CustomerDetailsComponent implements OnInit {
       this.customerList = [];
     }
   }
-  setCustomerValue(code,name){
+  setCustomerValue(code,name,type){
     this.showCustomerList = false;
       this.customerCode = code;
       this.customerName = name;
       this.updateComponent.CustomerCode = code;
+      if(this.productId=='5' && type=='change'){this.updateComponent.modifiedYN = 'Y'}
   }
   setCommonValues(entry){
     console.log("Entry Values",entry);
@@ -975,7 +980,7 @@ export class CustomerDetailsComponent implements OnInit {
       // month is 0-based, that's why we need dataParts[1] - 1
       this.policyEndDate = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
       this.updateComponent.policyEndDate = this.policyEndDate;
-      this.onChangeEndDate();
+      this.onChangeEndDate('direct');
     }
     this.HavePromoCode = entry?.HavePromoCode;
     this.PromoCode = entry?.PromoCode;
@@ -991,7 +996,7 @@ export class CustomerDetailsComponent implements OnInit {
     this.onSourceTypeChange('direct');
     this.executiveValue = entry?.AcExecutiveId;
     this.currencyCode = entry?.Currency;
-    this.onCurrencyChange();
+    this.onCurrencyChange('direct');
     this.updateComponent.exchangeRate = entry?.ExchangeRate;
     this.updateComponent.HavePromoCode = entry?.HavePromoCode;
     this.updateComponent.PromoCode = entry?.PromoCode;
@@ -999,6 +1004,7 @@ export class CustomerDetailsComponent implements OnInit {
   }
   onExchangeRateChange(){
     this.updateComponent.exchangeRate = this.exchangeRate;
+    if(this.productId=='5' ){this.updateComponent.modifiedYN = 'Y'}
   }
   getExistingTravelDetails(){
     let ReqObj = {
@@ -1047,12 +1053,12 @@ export class CustomerDetailsComponent implements OnInit {
               // month is 0-based, that's why we need dataParts[1] - 1
               this.travelEndDate = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
               this.updateComponent.travelEndDate = this.travelEndDate;
-              this.onChangeEndDate();
+              this.onChangeEndDate('direct');
             }
           //  this.TravelForm.controls['travelStartDate'].setValue(customerDatas.TravelStartDate);
           //  this.TravelForm.controls['travelEndDate'].setValue(customerDatas.TravelEndDate);
            this.currencyCode = customerDatas.Currency;
-           this.onCurrencyChange();
+           this.onCurrencyChange('direct');
            //this.exchangeRate = customerDatas.ExchangeRate;
            this.commonSection = true;
            this.onGetCustomerList('direct',this.customerCode);
@@ -1103,7 +1109,7 @@ export class CustomerDetailsComponent implements OnInit {
         console.log(data);
         if(data.Result){
             this.currencyList = data.Result;
-            if(this.currencyCode) this.onCurrencyChange();
+            if(this.currencyCode) this.onCurrencyChange('direct');
             this.getSourceList();
         }
 
@@ -1111,7 +1117,7 @@ export class CustomerDetailsComponent implements OnInit {
       (err) => { },
     );
   }
-  onCurrencyChange(){
+  onCurrencyChange(type){
     if(this.currencyCode!=null && this.currencyCode!=''){
       let currencyData = this.currencyList.find(ele=>ele.Code==this.currencyCode);
       this.exchangeRate = currencyData?.ExchangeRate;
@@ -1130,9 +1136,11 @@ export class CustomerDetailsComponent implements OnInit {
     else{
       this.editSection=true;
     }
+    if(this.productId=='5' && type=='change'){this.updateComponent.modifiedYN = 'Y'}
   }
-  onStartDateChange(){
+  onStartDateChange(type){
     if(this.productId!='4'){
+      if(this.productId=='5' && type=='change'){this.updateComponent.modifiedYN = 'Y'}
       var d = this.policyStartDate;
       var year = d.getFullYear();
       var month = d.getMonth();
@@ -1145,7 +1153,7 @@ export class CustomerDetailsComponent implements OnInit {
       //this.updateComponent.policyEndDate = this.policyEndDate;
       this.updateComponent.HavePromoCode = this.HavePromoCode;
       this.updateComponent.PromoCode = this.PromoCode;
-      this.onChangeEndDate();
+      this.onChangeEndDate(type);
     }
     else{
       var d = this.travelStartDate;
@@ -1170,12 +1178,15 @@ export class CustomerDetailsComponent implements OnInit {
     }
     this.updateComponent.HavePromoCode = this.HavePromoCode;
     this.updateComponent.PromoCode= this.PromoCode;
+    if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
   }
   onPromoCodeChange(){
     this.updateComponent.PromoCode= this.PromoCode;
+    if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
   }
-  onChangeEndDate(){
+  onChangeEndDate(type){
     if(this.productId!='4'){
+      if(this.productId=='5' && type=='change'){this.updateComponent.modifiedYN = 'Y'}
     const oneday = 24 * 60 * 60 * 1000;
     const momentDate = new Date(this.policyEndDate); // Replace event.value with your date value
     const formattedDate = moment(momentDate).format("YYYY-MM-DD");

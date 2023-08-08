@@ -41,6 +41,7 @@ export class UpdateCustomerDetailsComponent implements OnInit {
   CustomerCode: any=null;subUserType:any=null;
   showStepperSection: boolean = true;
   b2cSection: boolean=false;
+  modifiedYN: any='N';
   //public orderStatus="customerDetails"
 
   constructor(

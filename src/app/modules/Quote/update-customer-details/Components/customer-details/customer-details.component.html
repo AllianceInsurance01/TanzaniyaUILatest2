@@ -163,7 +163,7 @@
                                     <div class="input-form-box">
                                         <input id="CustomerInput" class="input-form-control without-icon"  [disabled]="endorsementSection" [(ngModel)]="customerCode" type="text" (keyup)="onGetCustomerList('change',$event.target.value)" autocomplete="off" placeholder="Search here" data-toggle="dropdown" /><br>
                                         <ul class="dropdown-menu dropdown-list-style CustomerInput" appendTo="body"   [ngClass]="{dropdownDisplay: showCustomerList, dropdownNotDisplay: !showCustomerList}">
-                                            <li *ngFor="let item of customerList" (click)="setCustomerValue(item.Code, item.Name)">
+                                            <li *ngFor="let item of customerList" (click)="setCustomerValue(item.Code, item.Name,'change')">
                                                 {{item.Code}} - {{ item.Name }}
                                             </li>
                                             <div class="text-center" *ngIf="customerList.length == 0">
@@ -259,7 +259,7 @@
                                 <label class="input-form-label spancommon span_font_size">Departure Date<span class="text-danger">*</span></label>
                                 <mat-form-field appearance="fill">
                                     <!-- <mat-label>Departure Date<span class="text-danger">*</span></mat-label> -->
-                                    <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" (dateChange)="onStartDateChange()" [(ngModel)]="travelStartDate" [ngModelOptions]="{standalone: true}">
+                                    <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" (dateChange)="onStartDateChange('change')" [(ngModel)]="travelStartDate" [ngModelOptions]="{standalone: true}">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-datepicker #picker></mat-datepicker>
                                     <div class="input-form-error" *ngIf="travelStartError">
@@ -273,7 +273,7 @@
                                 <label class="input-form-label spancommon span_font_size">Arrival Date<span class="text-danger">*</span></label>
                                 <mat-form-field appearance="fill">
                                     <!-- <mat-label>Arrival Date<span class="text-danger">*</span></mat-label> -->
-                                    <input matInput [matDatepicker]="picker2" [min]="endMinDate" (dateChange)="onChangeEndDate()" [(ngModel)]="travelEndDate" [ngModelOptions]="{standalone: true}">
+                                    <input matInput [matDatepicker]="picker2" [min]="endMinDate" (dateChange)="onChangeEndDate('change')" [(ngModel)]="travelEndDate" [ngModelOptions]="{standalone: true}">
                                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                     <mat-datepicker #picker2></mat-datepicker>
                                     <div class="input-form-error" *ngIf="travelEndError">
@@ -289,7 +289,7 @@
                                 <ng-container >
                                     <mat-form-field appearance="fill">
                                         <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
-                                        <input matInput [matDatepicker]="picker" [min]="minDate" [disabled]="(endorsementSection && !enablePolicyStart) || checkDisableField()" [max]="maxDate" (dateChange)="onStartDateChange()" [(ngModel)]="policyStartDate">
+                                        <input matInput [matDatepicker]="picker" [min]="minDate" [disabled]="(endorsementSection && !enablePolicyStart) || checkDisableField()" [max]="maxDate" (dateChange)="onStartDateChange('change')" [(ngModel)]="policyStartDate">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                     </mat-form-field>
@@ -309,7 +309,7 @@
                                 <label class="input-form-label spancommon span_font_size">Policy End Date<span class="text-danger">*</span></label>
                                 <mat-form-field appearance="fill">
                                     <!-- <mat-label>Policy End Date<span class="text-danger">*</span></mat-label> -->
-                                    <input matInput [matDatepicker]="picker2" [min]="endMinDate" [max]="endMaxDate" [disabled]="(endorsementSection && !enablePolicyEnd) || checkDisableField()" (dateChange)="onChangeEndDate()" [(ngModel)]="policyEndDate">
+                                    <input matInput [matDatepicker]="picker2" [min]="endMinDate" [max]="endMaxDate" [disabled]="(endorsementSection && !enablePolicyEnd) || checkDisableField()" (dateChange)="onChangeEndDate('change')" [(ngModel)]="policyEndDate">
                                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                     <mat-datepicker #picker2></mat-datepicker>
                                 </mat-form-field>
@@ -349,7 +349,7 @@
                             <div class="col-12 col-md-3" [ngStyle]="{'position':'realtive','bottom':'0.2rem'}">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Currency</label><span class="text-danger">*</span>
-                                    <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableCurrency) || checkDisableField()" [(ngModel)]="currencyCode" [items]="currencyList" (change)="onCurrencyChange()" bindValue="Code" bindLabel="CodeDesc">
+                                    <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableCurrency) || checkDisableField()" [(ngModel)]="currencyCode" [items]="currencyList" (change)="onCurrencyChange('change')" bindValue="Code" bindLabel="CodeDesc">
                                     </ng-select>
                                     <div class="input-form-error" *ngIf="currencyError">
                                         <div class="error-text">
