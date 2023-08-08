@@ -1493,6 +1493,7 @@ onFidelitySave(){
         }
       }
       else {
+        console.log('First Fields');
           // this.toastrService.show(
           //   'Building Details',
           //   'Building Details Inserted/Updated Successfully',
@@ -1501,6 +1502,11 @@ onFidelitySave(){
             if (this.second || this.third || this.fifth || this.six || this.nine) {
               this.fourth = true;
               this.selectedTab = this.selectedTab+1;
+              if(this.third){
+                this.getallriskDetails();
+              }
+              console.log('Second Fields');
+            
             }
             else{
               if(this.productId=='19' && this.seven){
@@ -2203,6 +2209,7 @@ onFidelitySave(){
             }
             else this.contentRiskSection = true;
              this.Cotentrisk = res.Result.ContentRiskDetails;
+             console.log('Get details',this.Cotentrisk);
              this.getTotalSICost('content');
            }
            else{
@@ -2545,7 +2552,7 @@ onFidelitySave(){
     }
   }
   getMachineryRisk(){
-    console.log('MMMMMMMMMMMMMMM')
+    
     let urlLink = `${this.motorApiUrl}api/getallcontentrisk`;
     let ReqObj = {
       "QuoteNo": sessionStorage.getItem('quoteNo'),
@@ -2821,6 +2828,7 @@ onFidelitySave(){
                 }
                 else this.allRiskSection = true;
                  this.risk = res.Result.ContentRiskDetails;
+                 console.log('Get pre risk Details',this.risk);
                  this.getTotalSICost('AllRisk');
                }
                else{
