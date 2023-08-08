@@ -974,7 +974,10 @@
                                             <span class="spancommon span_font_size" style="font-weight:600">Upload Employee Details</span>
                                         </ng-container>
                                     </div>
-                                    <div class="headcommon mr-3"  *ngIf="enableEmployeeUploadSection"> <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data" (click)="employeedownload()"><i class="fas fa-download mx-1"></i>Sample</button></div>
+                                    <div class="headcommon mr-3"  *ngIf="enableEmployeeUploadSection"> 
+                                        <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data" (click)="employeedownload()"><i class="fas fa-download mx-1"></i>Sample</button>
+                                        <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2" *ngIf="showEmpRecordsSection" (click)="onUploadEmployeeSection()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
+                                    </div>
                                     <div *ngIf="!enableEmployeeUploadSection">Currency&nbsp;({{currencyValue}})</div>
                                 </div>
                                 <div  *ngIf="employeeList.length==0 && !enableEmployeeUploadSection">
@@ -1343,7 +1346,10 @@
                                             <span class="spancommon span_font_size" style="font-weight:600">Upload Fidelity Details</span>
                                         </ng-container>
                                     </div>
-                                    <div class="headcommon mr-3"  *ngIf="enableFidelityUploadSection"> <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data" (click)="employeedownload()"><i class="fas fa-download mx-1"></i>Sample</button></div>
+                                    <div class="headcommon mr-3"  *ngIf="enableFidelityUploadSection"> 
+                                        <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data" (click)="employeedownload()"><i class="fas fa-download mx-1"></i>Sample</button>
+                                        <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2"  (click)="onUploadFidelitySection()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
+                                    </div>
                                     <div *ngIf="!enableEmployeeUploadSection">Currency&nbsp;({{currencyValue}})</div>
                                 </div>
                                 <div  *ngIf="fidelityList.length==0 && !enableFidelityUploadSection" >
