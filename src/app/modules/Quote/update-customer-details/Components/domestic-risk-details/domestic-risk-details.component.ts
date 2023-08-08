@@ -2312,7 +2312,7 @@ onFidelitySave(){
       "LoginId":this.loginId,
       "SectionId":SectionId
     }
-    let urlLink = `${this.UploadUrl}eway/batch/upload`;
+    let urlLink = `${this.ApiUrl1}eway/vehicle/batch/upload`;
         this.sharedService.onPostExcelDocumentMethodSync(urlLink, ReqObj,this.uploadDocList[0].url).subscribe(
           (data: any) => {
               if(data){
@@ -2331,7 +2331,7 @@ onFidelitySave(){
       "ProductId":this.productId,
       "RequestRefNo":this.quoteRefNo
     }
-    let urlLink = `${this.UploadUrl}eway/get/transaction/status`;
+    let urlLink = `${this.ApiUrl1}eway/vehicle/get/transaction/status`;
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
           (data: any) => {
               if(data){
@@ -2367,7 +2367,7 @@ onFidelitySave(){
       "RiskId": "1",
       "Status": "Y"
     }
-    let urlLink = `${this.UploadUrl}eway/insert/records`;
+    let urlLink = `${this.ApiUrl1}eway/vehicle/insert/records`;
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
           (data: any) => {
               if(data){
@@ -2389,7 +2389,7 @@ onFidelitySave(){
       "ProductId":this.productId,
       "RequestRefNo":this.quoteRefNo
     }
-    let urlLink = `${this.UploadUrl}eway/getUploadTransaction`;
+    let urlLink = `${this.ApiUrl1}eway/vehicle/getUploadTransaction`;
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
           (data: any) => {
               if(data){
@@ -2414,7 +2414,7 @@ onFidelitySave(){
       "RiskId":"1",
       "Status": 'E'
     }
-    let urlLink = `${this.UploadUrl}eway/get/recordsByStatus`;
+    let urlLink = `${this.ApiUrl1}eway/vehicle/get/recordsByStatus`;
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
           (data: any) => {
               if(data){
@@ -2475,7 +2475,7 @@ onFidelitySave(){
           "OccupationId": this.occupationType,
           "RowNum": this.errorRowNum
       }
-      let urlLink = `${this.UploadUrl}eway/update/records`
+      let urlLink = `${this.ApiUrl1}eway/vehicle/update/records`
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
             if(data){
