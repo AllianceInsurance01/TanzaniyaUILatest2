@@ -682,8 +682,8 @@ export class VehicleWishListComponent implements OnInit {
         console.log(data);
         const link = document.createElement('a');
         link.setAttribute('target', '_blank');
-        link.setAttribute('href', data?.Result);
-        link.setAttribute('download', 'SampleVehicleDetails');
+        link.setAttribute('href', data?.Result.Base64);
+        link.setAttribute('download',data?.Result.FileName);
         document.body.appendChild(link);
         link.click();
         link.remove();

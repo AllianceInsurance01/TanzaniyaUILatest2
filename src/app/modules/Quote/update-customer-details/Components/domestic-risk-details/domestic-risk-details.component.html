@@ -962,7 +962,7 @@
                                     
                                     <div class="headcommon mr-3"  *ngIf="!enableAddNewBtn('employee') && !enableEmployeeUploadSection && employeeList.length!=0">
                                         <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2"  (click)="EmployeeAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>&nbsp;
-                                            <!-- <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2"  (click)="onUploadEmployeeSection()"><i class="fa fa-upload"></i>&nbsp;Upload</button> -->
+                                            <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2"  (click)="onUploadEmployeeSection()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
                                     </div>
                                     <div class="headcommon" *ngIf="enableEmployeeUploadSection">
                                         <ng-container *ngIf="showEmpRecordsSection">
@@ -977,14 +977,14 @@
                                     <div class="headcommon mr-3"  *ngIf="enableEmployeeUploadSection"> <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data" (click)="employeedownload()"><i class="fas fa-download mx-1"></i>Sample</button></div>
                                     <div *ngIf="!enableEmployeeUploadSection">Currency&nbsp;({{currencyValue}})</div>
                                 </div>
-                                <div  *ngIf="employeeList.length==0 && !enableEmployeeUploadSection" >
+                                <div  *ngIf="employeeList.length==0 && !enableEmployeeUploadSection">
                                     <div class="groupBtnMembers text-center">
                                         <div class="groupBtnMembers__desc groupBtnMembers__desc_top">
                                             Enter All Employee Details that you want to insure
                                         </div>
                                         <div>
                                             <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="EmployeeAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>&nbsp;
-                                            <!-- <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2" (click)="onUploadEmployeeSection()"><i class="fa fa-upload"></i>&nbsp;Upload</button> -->
+                                            <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2" (click)="onUploadEmployeeSection()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1086,7 +1086,7 @@
                                     </div>
                                     <div class="text-center mt-2" *ngIf="uploadStatus==null">
                                         <button class="btn btn-danger btn-sm mr-5" (click)="enableEmployeeUploadSection=!enableEmployeeUploadSection;uploadDocList=[]"> Cancel</button>&nbsp;&nbsp;
-                                        <!-- <button class="btn btn-success btn-sm" *ngIf="uploadDocList.length!=0" (click)="onUploadEmployeeDetails()">Upload</button> -->
+                                        <button class="btn btn-success btn-sm" *ngIf="uploadDocList.length!=0" (click)="onUploadEmployeeDetails()">Upload</button>
                                     </div>
                                     <div class="text-center">
                                         <p>{{uploadStatus}}</p>
@@ -1331,7 +1331,7 @@
                                     
                                     <div class="headcommon mr-3"  *ngIf="!enableAddNewBtn('employee') && !enableFidelityUploadSection && fidelityList.length!=0">
                                         <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2"  (click)="FidelityAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>&nbsp;
-                                            <!-- <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2"  (click)="onUploadEmployeeSection()"><i class="fa fa-upload"></i>&nbsp;Upload</button> -->
+                                            <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2"  (click)="onUploadEmployeeSection()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
                                     </div>
                                     <div class="headcommon" *ngIf="enableFidelityUploadSection">
                                         <ng-container *ngIf="showFidelityRecordsSection">
@@ -1353,7 +1353,7 @@
                                         </div>
                                         <div>
                                             <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="FidelityAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>&nbsp;
-                                            <!-- <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2" (click)="onUploadEmployeeSection()"><i class="fa fa-upload"></i>&nbsp;Upload</button> -->
+                                            <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2" (click)="onUploadFidelitySection()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1455,7 +1455,7 @@
                                     </div>
                                     <div class="text-center mt-2" *ngIf="uploadStatus==null">
                                         <button class="btn btn-danger btn-sm mr-5" (click)="enableEmployeeUploadSection=!enableEmployeeUploadSection;uploadDocList=[]"> Cancel</button>&nbsp;&nbsp;
-                                        <!-- <button class="btn btn-success btn-sm" *ngIf="uploadDocList.length!=0" (click)="onUploadEmployeeDetails()">Upload</button> -->
+                                        <button class="btn btn-success btn-sm" *ngIf="uploadDocList.length!=0" (click)="onUploadEmployeeDetails()">Upload</button>
                                     </div>
                                     <div class="text-center">
                                         <p>{{uploadStatus}}</p>
