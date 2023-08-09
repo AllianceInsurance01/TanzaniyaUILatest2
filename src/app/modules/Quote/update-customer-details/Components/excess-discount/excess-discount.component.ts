@@ -225,7 +225,8 @@ emiyn="N";
     this.insuranceId = this.userDetails.Result.InsuranceId;
     this.brokerbranchCode = this.userDetails.Result.BrokerBranchCode;
     this.updateComponent.showStepperSection = true;
-      
+    this.updateComponent.modifiedYN = 'N';
+    sessionStorage.removeItem('vehicleDetailsList');
       let endorseObj = JSON.parse(sessionStorage.getItem('endorseTypeId'))
       if(endorseObj){
         this.endorsementSection = true;

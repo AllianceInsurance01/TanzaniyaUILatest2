@@ -1565,7 +1565,7 @@ export class VehicleDetailsComponent implements OnInit {
     let i=0,j=0;
     for(let veh of this.vehicleDetailsList){
       let refNo = veh?.MSRefNo;
-      if(refNo == undefined){
+      if(refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined)){
         i+=1;
       }
       j+=1;
@@ -1633,7 +1633,7 @@ export class VehicleDetailsComponent implements OnInit {
     let i = 0;
     for(let veh of this.vehicleDetailsList){
       let refNo = veh?.MSRefNo;
-      if(refNo == undefined){
+      if(refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined)){
         let reqRefNo = veh?.RequestReferenceNo;
         if(reqRefNo == undefined){
           reqRefNo = null;

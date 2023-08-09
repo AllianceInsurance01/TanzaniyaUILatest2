@@ -364,6 +364,7 @@ getYears(from) {
               vehicleDetails['PolicyStartDate'] =this.datePipe.transform(this.updateComponent.policyStartDate, "dd/MM/yyyy");
               vehicleDetails['PolicyEndDate'] = this.datePipe.transform(this.updateComponent.policyEndDate, "dd/MM/yyyy");
             }
+            vehicleDetails['modifiedYN'] = 'Y';
             vehicleDetails['SourceType'] = this.updateComponent.sourceType;
             vehicleDetails['BrokerCode'] = this.updateComponent.brokerCode;
             vehicleDetails['BranchCode'] = this.updateComponent.branchValue;

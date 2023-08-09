@@ -1212,6 +1212,7 @@ export class CustomerDetailsComponent implements OnInit {
   onVehicleSubmit(){
     sessionStorage.setItem('vehicleType','edit');
     this.updateComponent.resetVehicleTab();
+    this.vehicleDetails['modifiedYN'] = this.updateComponent.modifiedYN;
     this.vehicleDetails['Vehicleid'] = String(this.customerData.length+1)
     sessionStorage.setItem('vehicleDetails',JSON.stringify(this.vehicleDetails));
     console.log("On Final Vehicle List 8",this.vehicleDetails)
@@ -2059,6 +2060,7 @@ export class CustomerDetailsComponent implements OnInit {
           vehicle['PolicyStartDate'] = this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy");
           vehicle['PolicyEndDate'] = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
         }
+        vehicle['modifiedYN'] = this.updateComponent.modifiedYN;
         vehicle['Currency'] = this.currencyCode;
         vehicle['HavePromoCode'] = this.HavePromoCode;
         vehicle['PromoCode'] = this.PromoCode;
@@ -2104,6 +2106,7 @@ export class CustomerDetailsComponent implements OnInit {
         vehicle['CustomerCode'] = this.customerCode;
         vehicle['LoginId'] = this.loginId;
       }
+      vehicle['modifiedYN'] = this.updateComponent.modifiedYN;
       vehicle['PolicyStartDate'] = this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy");
       vehicle['PolicyEndDate'] = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
       vehicle['PolicyPeriod'] = this.noOfDays;
@@ -2142,6 +2145,7 @@ export class CustomerDetailsComponent implements OnInit {
             if(Number(this.exchangeRate) >= Number(this.minCurrencyRate) && Number(this.exchangeRate) <= Number(this.maxCurrencyRate)){
               console.log("Entered Exchange Rate",rowData);
               for(let veh of rowData){
+                veh['modifiedYN'] = this.updateComponent.modifiedYN;
                 veh['PolicyStartDate'] = this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy");
                 veh['PolicyEndDate'] = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
                 veh['Currency'] = this.currencyCode;
@@ -2171,6 +2175,7 @@ export class CustomerDetailsComponent implements OnInit {
                         vehicle['PolicyStartDate'] = this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy");
                         vehicle['PolicyEndDate'] = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
                       }
+                      vehicle['modifiedYN'] = this.updateComponent.modifiedYN;
                       vehicle['Currency'] = this.currencyCode;
                       vehicle['ExchangeRate'] = this.exchangeRate;
                       vehicle['Vehicleid'] = String(k+1);
@@ -2232,6 +2237,7 @@ export class CustomerDetailsComponent implements OnInit {
               veh['PolicyStartDate'] = this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy");
               veh['PolicyEndDate'] = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
             }
+            veh['modifiedYN'] = this.updateComponent.modifiedYN;
             veh['Currency'] = this.currencyCode;
             veh['HavePromoCode'] = this.HavePromoCode;
             veh['PromoCode'] = this.PromoCode;
@@ -2261,7 +2267,7 @@ export class CustomerDetailsComponent implements OnInit {
                     vehicle['PolicyStartDate'] = this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy");
                     vehicle['PolicyEndDate'] = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
                   }
-                  
+                  vehicle['modifiedYN'] = this.updateComponent.modifiedYN;
                   vehicle['Currency'] = this.currencyCode;
                   vehicle['ExchangeRate'] = this.exchangeRate;
                   vehicle['Vehicleid'] = String(k+1);

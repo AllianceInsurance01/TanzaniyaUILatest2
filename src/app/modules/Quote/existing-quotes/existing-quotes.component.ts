@@ -4,6 +4,7 @@ import * as Mydatas from '../../../app-config.json';
 import { SharedService } from '../../../shared/shared.service';
 import {NgbModule, NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {MatTabsModule} from '@angular/material/tabs';
+import { formatDate } from '@angular/common';
 declare var $:any;
 
 @Component({
@@ -308,7 +309,20 @@ export class ExistingQuotesComponent implements OnInit {
     sessionStorage.removeItem('endorsePolicyNo');
     sessionStorage.removeItem('homeCommonDetails');
     if(this.productId){
-      if(rowData.QuoteNo!=null && rowData.QuoteNo!='' && rowData.QuoteNo!=undefined){
+      let date = rowData.PolicyStartDate;
+      var d = new Date();
+      var year = d.getFullYear();
+      var month = d.getMonth();
+      var day = d.getDate();
+      let date1 = formatDate(new Date(),'yyyy-MM-dd','en_US');
+      let date2 = null;
+      if(date!='' && date !=null){
+        if(date.split('/').length>1){
+          let dates = date.split('/')
+          date2 = dates[2]+'-'+dates[1]+'-'+dates[0]
+        }
+      } 
+      if((rowData.QuoteNo!=null && rowData.QuoteNo!='' && rowData.QuoteNo!=undefined) && date2>=date1){
         sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
         sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
         sessionStorage.setItem('quoteNo',rowData.QuoteNo);
@@ -318,6 +332,7 @@ export class ExistingQuotesComponent implements OnInit {
       }
       else{
         sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+        if(rowData.QuoteNo!=null && rowData.QuoteNo!='' && rowData.QuoteNo!=undefined) sessionStorage.setItem('quoteNo',rowData.QuoteNo);
         sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
         sessionStorage.setItem('TravelQuoteRefNo',rowData.RequestReferenceNo);
         sessionStorage.removeItem('quoteNo');
