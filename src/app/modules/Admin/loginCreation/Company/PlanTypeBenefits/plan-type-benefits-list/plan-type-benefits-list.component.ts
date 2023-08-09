@@ -7,6 +7,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { DatePipe } from '@angular/common';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-plan-type-benefits-list',
   templateUrl: './plan-type-benefits-list.component.html',
@@ -49,7 +51,9 @@ export class PlanTypeBenefitsListComponent {
   dataSource2: any;
   statusList: any[]=[];Remarks:any=null;
   minDate: Date;EffectiveDateStart:any;
-  constructor(private router:Router,private sharedService: SharedService,private modalService: NgbModal,) {
+  policyTypeDesc: any;
+  planTypeDesc: any;
+  constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,private modalService: NgbModal,) {
     this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
     this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
     this.productId =  sessionStorage.getItem('companyProductId');
@@ -84,6 +88,7 @@ export class PlanTypeBenefitsListComponent {
   get subKeys() {
     return this.innerColumnHeader.map(({ key }) => key);
   }
+  
   ngOnInit(){
     this.columnHeader =  [
       {
@@ -97,7 +102,7 @@ export class PlanTypeBenefitsListComponent {
       },
       { key: 'CoverDesc', display: 'Cover Name' },
       {
-        key: 'Status',
+        key: 'CoverStatus',
         display: 'Status',
         
       },
@@ -114,7 +119,7 @@ export class PlanTypeBenefitsListComponent {
       { key: 'SubCoverDesc', display: 'SubCover Name' },
       { key: 'Currency', display: 'Currency' },
       { key: 'SumInsured', display: 'Limits' },
-      { key: 'Excess', display: 'Excess' },
+      { key: 'ExcessAmt', display: 'Excess' },
       {
         key: 'Status',
         display: 'Status',
@@ -129,405 +134,6 @@ export class PlanTypeBenefitsListComponent {
       },
 
     ];
-    // this.benefitsList =  [
-    //       {
-    //           "CoverId": "1",
-    //           "CoverDesc": "PERSONAL ASSISTANCE",
-    //           "Status":"Y",
-    //           "SubCoverDetails": [
-    //               {
-    //                   "SubCoverId": "1",
-    //                   "SubCoverDesc": "RELAY OF URGENT MESSAGES",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "Included Service Only",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               },
-    //               {
-    //                   "SubCoverId": "2",
-    //                   "SubCoverDesc": "DISPATCH OF MEDICATION",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "Included Service Only",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               },
-    //               {
-    //                   "SubCoverId": "3",
-    //                   "SubCoverDesc": "GENERAL INFORMATION",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "Included Service Only",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               },
-    //               {
-    //                   "SubCoverId": "4",
-    //                   "SubCoverDesc": "HIJACK",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "$ 60 Hour Max $ 3.000",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               }
-    //           ]
-    //       },
-    //       {
-    //           "CoverId": "2",
-    //           "CoverDesc": "MEDICAL TRASPORTATION AND\r\nREPATRIATION",
-    //           "Status":"Y",
-    //           "SubCoverDetails": [
-    //               {
-    //                   "SubCoverId": "1",
-    //                   "SubCoverDesc": "MEDICAL TRANSPORTATION OR  REPATRIATION",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "$ 15.000",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               },
-    //               {
-    //                   "SubCoverId": "2",
-    //                   "SubCoverDesc": "TRANSPORT OF A PERSON DUE TO THE\r\nHOSPITALISATION OF THE INSURED",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "NIL",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               },
-    //               {
-    //                   "SubCoverId": "3",
-    //                   "SubCoverDesc": "STAY OF A PERSON DUE TO THE\r\nHOSPITALISATION OF THE INSURED",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "NIL",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               },
-    //               {
-    //                   "SubCoverId": "4",
-    //                   "SubCoverDesc": "TRANSPORTATION OR REPATRIATION\r\nOF THE ACCOMPANYING INSUREDS",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "$ 2.000",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               }
-    //           ]
-    //       },
-    //       {
-    //           "CoverId": "3",
-    //           "CoverDesc": "MEDICAL EXPENSES",
-    //           "Status":"Y",
-    //           "SubCoverDetails": [
-    //               {
-    //                   "SubCoverId": "1",
-    //                   "SubCoverDesc": "MEDICAL EXPENSES ABROAD – Including\r\nCovid-19",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "$ 30.000",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               },
-    //               {
-    //                   "SubCoverId": "2",
-    //                   "SubCoverDesc": "COMPULSORY QUARANTINE in case of\r\ninfection with Covid-19",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "$ 80 Per day max 14 days",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               },
-    //               {
-    //                   "SubCoverId": "3",
-    //                   "SubCoverDesc": "FIRST MEDICAL ASSISTANCE ABROAD",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "Included in General Limit",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               },
-    //               {
-    //                   "SubCoverId": "4",
-    //                   "SubCoverDesc": "DENTAL EXPENSES",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "$ 450",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               },
-    //               {
-    //                   "SubCoverId": "5",
-    //                   "SubCoverDesc": "PHARMACEUTICAL EXPENSES",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "Included in General Limit",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               },
-    //               {
-    //                   "SubCoverId": "6",
-    //                   "SubCoverDesc": "PASSIVE WAR AND TERRORISM - Only Medical Expenses",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "NIL",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               }
-    //           ]
-    //       },
-    //       {
-    //           "CoverId": "4",
-    //           "CoverDesc": "REPATRIATION OF MORTAL REMAINS",
-    //           "Status":"Y",
-    //           "SubCoverDetails": [
-    //               {
-    //                   "SubCoverId": "1",
-    //                   "SubCoverDesc": "TRANSPORT OR REPATRIATION OF THE DECEASED INSURED",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "$ 30.000",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               }
-    //           ]
-    //       },
-    //       {
-    //           "CoverId": "5",
-    //           "CoverDesc": "LUGGAGE",
-    //           "Status":"Y",
-    //           "SubCoverDetails": [
-    //               {
-    //                   "SubCoverId": "1",
-    //                   "SubCoverDesc": "INDEMNITY DUE TO PROBLEMS WITH\r\nTHE CHECKED - IN LUGGAGE\r\n(ACCIDENTAL DAMAGE, LOSS,\r\nROBBERY)",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "$ 1.500",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               },
-    //               {
-    //                   "SubCoverId": "2",
-    //                   "SubCoverDesc": "COMPENSATION FOR BAGGAGE DELAY",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "$ 250",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               }
-    //           ]
-    //       },
-    //       {
-    //           "CoverId": "6",
-    //           "CoverDesc": "CANCELLATION",
-    //           "Status":"Y",
-    //           "SubCoverDetails": [
-    //               {
-    //                   "SubCoverId": "1",
-    //                   "SubCoverDesc": "REIMBURSEMENT OF THE\r\nCANCELLATION EXPENSES OF THE TRIP",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "NIL",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               }
-    //           ]
-    //       },
-    //       {
-    //           "CoverId": "7",
-    //           "CoverDesc": "DELAYS",
-    //           "Status":"Y",
-    //           "SubCoverDetails": [
-    //               {
-    //                   "SubCoverId": "1",
-    //                   "SubCoverDesc": "INDEMNITY DUE TO THE TRANSPORT\r\nDEPARTURE DELAY",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "NIL",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               },
-    //               {
-    //                   "SubCoverId": "2",
-    //                   "SubCoverDesc": "MISSED CONNECTIONS",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "NIL",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               },
-    //               {
-    //                   "SubCoverId": "3",
-    //                   "SubCoverDesc": "MISSED DEPARTURE",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "NIL",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               }
-    //           ]
-    //       },
-    //       {
-    //           "CoverId": "8",
-    //           "CoverDesc": "CURTAILMENT",
-    //           "Status":"Y",
-    //           "SubCoverDetails": [
-    //               {
-    //                   "SubCoverId": "1",
-    //                   "SubCoverDesc": "CURTAILMENT EXPENSES",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "NIL",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               },
-    //               {
-    //                   "SubCoverId": "2",
-    //                   "SubCoverDesc": "EARLY RETURN DUE TO SERIOUS FAMILY MATTER",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "NIL",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               }
-    //           ]
-    //       },
-    //       {
-    //           "CoverId": "9",
-    //           "CoverDesc": "PERSONAL ACCIDENTS",
-    //           "Status":"Y",
-    //           "SubCoverDetails": [
-    //               {
-    //                   "SubCoverId": "1",
-    //                   "SubCoverDesc": "ACCIDENTAL DEATH MEANS OF\r\nTRANPORT",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "NIL",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               },
-    //               {
-    //                   "SubCoverId": "2",
-    //                   "SubCoverDesc": "PERMANENT ACCIDENTAL DISABILITY\r\n(MEANS OF TRANSPORT)",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "NIL",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               }
-    //           ]
-    //       },
-    //       {
-    //           "CoverId": "10",
-    //           "CoverDesc": "PERSONAL LIABILITY",
-    //           "Status":"Y",
-    //           "SubCoverDetails": [
-    //               {
-    //                   "SubCoverId": "1",
-    //                   "SubCoverDesc": "PERSONAL LIABILITY DUE TO PHYSICAL\r\nDAMAGES TO THIRD-PARTIES",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "NIL",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               },
-    //               {
-    //                   "SubCoverId": "2",
-    //                   "SubCoverDesc": "LEGAL DEFENCE (NOT TRAFFIC)",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "NIL",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               },
-    //               {
-    //                   "SubCoverId": "3",
-    //                   "SubCoverDesc": "DEPOSIT FOR LEGAL COSTS AND\r\nEXPENSES",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "NIL",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               },
-    //               {
-    //                   "SubCoverId": "4",
-    //                   "SubCoverDesc": "PERSONAL LIABILITY DUE TO MATERIAL\r\nDAMAGES TO THIRD-PARTIES",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "NIL",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               }
-    //           ]
-    //       },
-    //       {
-    //           "CoverId": "11",
-    //           "CoverDesc": "COMPLEMENTARY MEDICAL COVERS",
-    //           "Status":"Y",
-    //           "SubCoverDetails": [
-    //               {
-    //                   "SubCoverId": "1",
-    //                   "SubCoverDesc": "HOSPITAL COMPENSATION",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "NIL",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               }
-    //           ]
-    //       },
-    //       {
-    //           "CoverId": "12",
-    //           "CoverDesc": "COMPLEMENTARY CARD COVERS",
-    //           "Status":"Y",
-    //           "SubCoverDetails": [
-    //               {
-    //                   "SubCoverId": "1",
-    //                   "SubCoverDesc": "REPLACEMENT OF THE PASSPORT AND\r\nTHE DRIVING LICENCE BY EMERGENCY\r\nDOCUMENTS",
-    //                   "Currency": "US $",
-    //                   "SumInsured": "$ 500",
-    //                   "Excess": null,
-    //                   "EntryDate": "15/12/2022",
-    //                   "Status": "Y",
-    //                   "Remarks": null
-    //               }
-    //           ]
-    //       }
-    //   ]
-    //   this.dataSource = new MatTableDataSource(this.benefitsList);
-    //   this.dataSource.sort = this.sort;
-    //   this.dataSource.paginator = this.paginator;
   }
   onDeleteCoverRow(index){
     this.benefitsList.splice(index,1);
@@ -553,6 +159,12 @@ export class PlanTypeBenefitsListComponent {
         console.log(data);
         let obj = [{ Code: "", CodeDesc: "--SELECT--" }];
         this.sectionList = obj.concat(data?.Result);
+        let details = JSON.parse(sessionStorage.getItem('planBenefitsObj'));
+        if(details){
+          this.planTypeValue = details?.planTypeId;
+          this.sectionValue = details?.policyTypeId;
+          if(this.planTypeValue!=null) this.getPlanList();
+        }
         //this.typeList = data.Result;
       },
       (err) => { },
@@ -571,6 +183,7 @@ export class PlanTypeBenefitsListComponent {
       (data: any) => {
         console.log(data);
         let obj = [{ Code: "", CodeDesc: "--SELECT--" }];
+        this.policyTypeDesc = (this.sectionList.find(ele=>ele.Code==this.sectionValue))?.CodeDesc
         this.planTypeList = obj.concat(data?.Result);
         if(this.planTypeValue!=null){
           this.getBenefitsList();
@@ -581,6 +194,8 @@ export class PlanTypeBenefitsListComponent {
     );
   }
   getBenefitsList(){
+    this.planTypeDesc = (this.planTypeList.find(ele=>ele.Code==this.planTypeValue))?.CodeDesc
+    
     this.benefitsList = [];
       let ReqObj = {
         "PlanTypeId": this.planTypeValue,
@@ -590,10 +205,24 @@ export class PlanTypeBenefitsListComponent {
       let urlLink = `${this.motorApiUrl}api/gettravelpolicytype`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
-          this.benefitsList = data?.Result[0].CoverDetails;
-          this.dataSource = new MatTableDataSource(this.benefitsList);
-          this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
+          if(data.Result.length!=0){
+            let obj = {
+              "planTypeId":this.planTypeValue,
+              "policyTypeId": this.sectionValue
+            }
+            sessionStorage.setItem('planBenefitsObj',JSON.stringify(obj))
+            this.benefitsList = data?.Result[0].CoverDetails;
+            this.Remarks = data?.Result[0].Remarks;
+            this.planTypeDesc = data?.Result[0].PlanTypeDesc;
+            this.policyTypeDesc = data?.Result[0].PolicyTypeDesc;
+            if(data.Result[0].EffectiveDateStart!=null){
+              this.EffectiveDateStart = this.onDateFormatInEdit(data.Result[0].EffectiveDateStart)
+            }
+            this.dataSource = new MatTableDataSource(this.benefitsList);
+            this.dataSource.sort = this.sort;
+            this.dataSource.paginator = this.paginator;
+          }
+          
         },
         (err) => { },
       );
@@ -603,7 +232,7 @@ export class PlanTypeBenefitsListComponent {
       {
         "CoverId": null,
         "CoverDesc": "",
-        "Status":"Y",
+        "CoverStatus":"Y",
         "SubCoverDetails": [
            
         ]
@@ -623,15 +252,16 @@ export class PlanTypeBenefitsListComponent {
           "SubCoverDesc": null,
           "Currency": null,
           "SumInsured": null,
-          "Excess": null,
+          "ExcessAmt": null,
           "EntryDate": null,
           "Status": "Y",
           "Remarks": null
         },
       ];
-      subCoverDetails = entry.concat(subCoverDetails);
-      console.log("Final SubCovers",subCoverDetails)
-      this.dataSource2 = new MatTableDataSource(subCoverDetails);
+    
+      this.benefitsList[this.selectedIndex].SubCoverDetails = entry.concat(subCoverDetails);
+      console.log("Final SubCovers",this.benefitsList)
+      this.dataSource2 = new MatTableDataSource(this.benefitsList[this.selectedIndex].SubCoverDetails);
       this.dataSource2.sort = this.sort;
       this.dataSource2.paginator = this.paginator;
   }
@@ -663,9 +293,49 @@ export class PlanTypeBenefitsListComponent {
     return data.filter((option) => option?.CodeDescription?.toLowerCase().includes(filterValue));
   }
   onSaveCoverDetails(){
-      let ReqObj = {
-
+    let sectionDesc=null,planTypeDesc = null;
+    if(this.planTypeDesc!=undefined && this.planTypeDesc!=null){
+      sectionDesc = this.policyTypeDesc;planTypeDesc=this.planTypeDesc;
+    }
+    let effectiveDate = null;
+    console.log("Final Insert List",this.benefitsList);
+    if(this.EffectiveDateStart!=undefined && this.EffectiveDateStart!=null) effectiveDate = this.datePipe.transform(this.EffectiveDateStart, "dd/MM/yyyy");
+      let ReqObj =  {
+        "BranchCode": "99999",
+        "CoverDetails": this.benefitsList,
+        "CreatedBy": this.loginId,
+        "EffectiveDateEnd": null,
+        "EffectiveDateStart": effectiveDate,
+        "InsuranceId": this.insuranceId,
+        "PlanTypeDesc": planTypeDesc,
+        "PlanTypeId": this.planTypeValue,
+        "PolicyTypeDesc": sectionDesc,
+        "PolicyTypeId": this.sectionValue,
+         "Remarks": this.Remarks,
+        "ProductId": this.productId
       }
+      let urlLink = `${this.ApiUrl1}planbenefits/insertplanbenefits`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+             if(data.ErrorMessage.length==0){
+              Swal.fire({
+                title: '<strong>Success</strong>',
+                icon: 'success',
+                html:
+                  `Plan Benefits Inserted/Updated Successfully`,
+                showCloseButton: true,
+                //focusConfirm: false,
+                showCancelButton: false,
+    
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancel',
+              })
+             }   
+        },
+        (err) => { },
+      );
+
   }
 
   open(content) {
@@ -682,6 +352,26 @@ export class PlanTypeBenefitsListComponent {
       return 'by clicking on a backdrop';
     } else {
       return  `with: ${reason}`;
+    }
+  }
+  onDateFormatInEdit(date) {
+    console.log(date);
+    if (date) {
+      let format = date.split('-');
+      if(format.length >1){
+        var NewDate = new Date(new Date(format[0], format[1], format[2]));
+        NewDate.setMonth(NewDate.getMonth() - 1);
+        return NewDate;
+      }
+      else{
+        format = date.split('/');
+        if(format.length >1){
+          var NewDate = new Date(new Date(format[2], format[1], format[0]));
+          NewDate.setMonth(NewDate.getMonth() - 1);
+          return NewDate;
+        }
+      }
+
     }
   }
   onRedirect(value){

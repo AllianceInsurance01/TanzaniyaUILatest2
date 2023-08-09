@@ -50,7 +50,7 @@ th.mat-header-cell {
 
 .example-container {
     width: 100%;
-    overflow-x: auto;
+    overflow-x: hidden !important;
     background: white;
 }
 
@@ -157,3 +157,7 @@ tr.example-detail-row {
     }
 
   }
+  .mdc-data-table__cell, .mdc-data-table__header-cell {
+    padding: 0px 0px 0px 7px !important;
+    border-bottom: none !important;
+}
