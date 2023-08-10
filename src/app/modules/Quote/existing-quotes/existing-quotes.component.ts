@@ -60,8 +60,9 @@ export class ExistingQuotesComponent implements OnInit {
           { key: 'QuoteNo', display: 'Quote No' },
           { key: 'RequestReferenceNo', display: 'Reference No' },
           { key: 'ClientName', display: 'Customer Name' },
-          { key: 'PolicyStartDate', display: 'Policy Start Date' },
-          { key: 'PolicyEndDate', display: 'Policy End Date' },
+          { key: 'PolicyStartDate', display: 'Start Date' },
+          { key: 'PolicyEndDate', display: 'End Date' },
+          { key: 'Premium', display: 'Premium' },
           {
             key: 'edit',
             display: 'Vehicle Details',
@@ -73,22 +74,29 @@ export class ExistingQuotesComponent implements OnInit {
           },
           {
             key: 'actions',
-            display: 'View / Edit / Reject',
+            display: 'Edit',
             config: {
-              isView:true,
+              //isView:true,
               isEdit: true,
-              isReject: true,
+              // isReject: true,
             },
           },
           {
             key: 'mail',
-            display: 'Mail / Followup / Sms',
+            display: 'Action',
             config: {
-              isMail:true,
-              isFollowup: true,
-              isSms: true,
+              ismailConfig: true,
             },
           },
+          // {
+          //   key: 'mail',
+          //   display: 'Mail / Followup / Sms',
+          //   config: {
+          //     isMail:true,
+          //     isFollowup: true,
+          //     isSms: true,
+          //   },
+          // },
 
         ];
 
@@ -116,27 +124,35 @@ export class ExistingQuotesComponent implements OnInit {
         { key: 'QuoteNo', display: 'Quote No' },
         { key: 'RequestReferenceNo', display: 'Reference No' },
         { key: 'ClientName', display: 'Customer Name' },
-        { key: 'PolicyStartDate', display: 'Policy Start Date' },
-        { key: 'PolicyEndDate', display: 'Policy End Date' },
+        { key: 'PolicyStartDate', display: 'Start Date' },
+        { key: 'PolicyEndDate', display: 'End Date' },
         { key: 'Count', display: 'Passengers' },
+        { key: 'Premium', display: 'Premium' },
         {
           key: 'actions',
-          display: 'View / Edit / Reject',
+          display: 'Edit',
           config: {
-            isView:true,
+            //isView:true,
             isEdit: true,
-            isReject: true,
+            //isReject: true,
           },
         },
         {
           key: 'mail',
-          display: 'Mail / Followup / Sms',
+          display: 'Action',
           config: {
-            isMail:true,
-            isFollowup: true,
-            isSms: true,
+            ismailConfig: true,
           },
         },
+        // {
+        //   key: 'mail',
+        //   display: 'Mail / Followup / Sms',
+        //   config: {
+        //     isMail:true,
+        //     isFollowup: true,
+        //     isSms: true,
+        //   },
+        //},
       ];
       this.innerColumnHeader =  [
         { key: 'Vehicleid', display: 'VehicleID' },
@@ -167,22 +183,29 @@ export class ExistingQuotesComponent implements OnInit {
         /*{ key: 'Count', display: 'No.Of.Locations' },*/
         {
           key: 'actions',
-          display: 'View / Edit / Reject',
+          display: 'Edit',
           config: {
-            isView:true,
+            //isView:true,
             isEdit: true,
-            isReject: true,
+            //isReject: true,
           },
         },
         {
           key: 'mail',
-          display: 'Mail / Followup / Sms',
+          display: 'Action',
           config: {
-            isMail:true,
-            isFollowup: true,
-            isSms: true,
+            ismailConfig: true,
           },
         },
+        // {
+        //   key: 'mail',
+        //   display: 'Mail / Followup / Sms',
+        //   config: {
+        //     isMail:true,
+        //     isFollowup: true,
+        //     isSms: true,
+        //   },
+        // },
       ];
       this.innerColumnHeader =  [
         { key: 'Vehicleid', display: 'VehicleID' },
@@ -212,22 +235,29 @@ export class ExistingQuotesComponent implements OnInit {
         { key: 'Count', display: 'No.Of.Risk' },
         {
           key: 'actions',
-          display: 'View / Edit / Reject',
+          display: 'Edit',
           config: {
-            isView:true,
+            //isView:true,
             isEdit: true,
-            isReject: true,
+            //isReject: true,
           },
         },
         {
           key: 'mail',
-          display: 'Mail / Followup / Sms',
+          display: 'Action',
           config: {
-            isMail:true,
-            isFollowup: true,
-            isSms: true,
+            ismailConfig: true,
           },
         },
+        // {
+        //   key: 'mail',
+        //   display: 'Mail / Followup / Sms',
+        //   config: {
+        //     isMail:true,
+        //     isFollowup: true,
+        //     isSms: true,
+        //   },
+        // },
       ];
       this.innerColumnHeader =  [
         { key: 'Vehicleid', display: 'VehicleID' },
