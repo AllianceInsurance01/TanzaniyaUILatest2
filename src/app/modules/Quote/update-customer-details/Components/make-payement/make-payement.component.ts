@@ -384,7 +384,12 @@ export class MakePayementComponent implements OnInit {
     else if(this.Menu=='1'){ this.Third=true; }
     else if(this.Menu == '2'){ this.Fourth = true;}
     else if(this.Menu == 'Bank'){ this.Fifth = true;}
-    else if(this.Menu == '4'){this.Sixth = true;}
+    else if(this.Menu == '4'){
+        this.payAmount = this.totalPremium;
+        this.payeeName = this.clientName;
+        this.activeMenu = this.Menu;
+        this.onCashPayment();
+    }
   }
   getPaymentTypeList(){
     let ReqObj = {
