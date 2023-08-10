@@ -1,10 +1,20 @@
-<div style="background: transparent;overflow-y: scroll;" class="example-container">
-    <div class="input-form-box" style="margin-right: 5px !important;" id="gridstyle" >
+<div class="d-flex justify-content-end">
+    <div class="input-form-box" id="gridstyle">
+            <input type="text" class="input-form-control with-icon" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+            <span class="input-form-icon">
+                <i class="fas fa-filter"></i>
+            </span>
+        </div>
+    </div>
+<div class="example-container">
+    <!--style="background: transparent;overflow-y: scroll;-->
+    <!-- <div class="input-form-box" style="margin-right: 5px !important;" id="gridstyle" >
         <input type="text" class="input-form-control with-icon" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
         <span class="input-form-icon">
             <i class="fas fa-filter"></i>
         </span>
-    </div>
+    </div> -->
+    <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" class="ux-table-v" matSort [matSortActive]="sortProperty" [matSortDirection]="sortDirection" matSortDisableClear>
         <ng-container *ngFor="let col of columnHeader; let i = index;" [matColumnDef]="col.key" [sticky]="i===0" [stickyEnd]="i === 10">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header mat-header-cell">
@@ -201,6 +211,9 @@
         <tr mat-header-row *matHeaderRowDef="keys"></tr>
         <tr mat-row *matRowDef="let row; columns: keys"></tr>
     </table>
+    <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
+   </div>
     <ng-container *ngIf="!dataSource.data.length">
         <table>
             <tr>
@@ -214,13 +227,14 @@
 
 
 
-<div style="background: transparent;" class="example-containers mat-elevation-z8 mt-2">
-    <div class="input-form-box" id="gridstyle" >
+<div class="example-containers mt-2">
+    <!-- <div class="input-form-box" id="gridstyle" >
         <input type="text" class="input-form-control with-icon" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
         <span class="input-form-icon">
             <i class="fas fa-filter"></i>
         </span>
-    </div>
+    </div> -->
+    <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort [matSortActive]="sortProperty" style="white-space: normal !important;" [matSortDirection]="sortDirection" matSortDisableClear>
         <ng-container *ngFor="let col of columnHeader; let i = index;" [matColumnDef]="col.key" [sticky]="i===0" [stickyEnd]="i === 10">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header mat-header-cell" style="text-wrap: wrap !important;">
@@ -449,6 +463,9 @@
         <tr mat-header-row *matHeaderRowDef="keys"></tr>
         <tr mat-row *matRowDef="let row; columns: keys" style="height: 100%;width:100%;overflow: scroll;display: flex !important;flex-direction: column; border-top:1px solid navy; border-bottom:1px solid navy;font-size:14px;" class="mt-2"></tr>
     </table>
+    <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
+    </div>
     <ng-container *ngIf="!dataSource.data.length">
         <table>
             <tr>
@@ -461,5 +478,3 @@
 </div>
 
 
-<mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Select page of periodic elements">
-</mat-paginator>

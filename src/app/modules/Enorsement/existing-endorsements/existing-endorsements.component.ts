@@ -39,7 +39,7 @@ export class ExistingEndorsementsComponent {
     this.quoteHeader = [
       { key: 'policyNo', display: 'Policy No' },
       { key: 'quoteNo', display: 'QuoteNo' },
-      { key: 'requestReferenceNo', display: 'ReferenceNo' },
+      // { key: 'requestReferenceNo', display: 'ReferenceNo' },
       { key: 'endorsementCategoryDesc', display: 'Category' },
       { key: 'endorsementDesc', display: 'Type' },
       { key: 'overallPremiumLc', display: 'Endorsements Premium' },

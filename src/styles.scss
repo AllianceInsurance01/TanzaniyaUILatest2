@@ -22,6 +22,10 @@
 // @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 
+// body {
+//     height: auto !important;
+//     overflow: auto;
+//   }
 
 :root {
     --theme1: #333b85;
@@ -291,9 +295,11 @@ mat-form-field {
 }
 
 .mat-header-cell {
-    background-color: var(--theme1);
-    padding: 0 !important;
-    padding-left: 5px !important;
+    // background-color: var(--theme1);
+    // padding: 0 !important;
+    // padding-left: 5px !important;
+  
+    background:#6c757d !important;
 }
 
 mat-form-field {
@@ -440,8 +446,11 @@ ng-select input {
     border-radius: 0.7rem !important;
     padding: 5px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    z-index:10000
+    z-index:10000;
+    // height:auto;
 }
+
+
 
 .input-form-box .search-control {
     border: 0;
@@ -1653,58 +1662,89 @@ input:checked+.slider:before {
 /*----------------------------------Mat-table custom css changes----------------------------------*/
 
 .mat-mdc-table .mdc-data-table__header-row {
-    height: 42px;
+    // height: 42px;
 }
+
 
 
 
 th.mat-header-cell {
-    font-size: 1rem!important;
-    font-weight: 500;
-    text-align: center !important;
-    font-family: var(--our-font-family-new)!important;
+    // font-size: 1rem!important;
+    // font-weight: 500;
+    // text-align: center !important;
+    // font-family: var(--our-font-family-new)!important;
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    outline: none;
+    text-align: left;
+    padding: 0 16px 0 16px !important;
+}
+.mdc-data-table__header-cell {
+    box-sizing: border-box !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+    outline: none !important;
+    text-align: left !important;
+    padding: 0 16px 0 16px !important;
 }
 td {
     font-size: 13px !important;
 }
-.mat-sort-header-container {
-    cursor: pointer;
-    letter-spacing: normal;
-    outline: 0;
-    text-align: center !important;
-    position: relative!important;
-    top: 0.5rem!important;
-}
+// .mat-sort-header-container {
+//     // cursor: pointer;
+//     // letter-spacing: normal;
+//     // outline: 0;
+//     // text-align: center !important;
+//     // position: relative!important;
+//     // top: 0.5rem!important;
+// }
 
+
+// .mat-sort-header-content {
+//     // font-family: var(--our-font-family-new)!important;
+//     // position: relative;
+//     // // left: 1rem !important;
+//     // bottom: 0.5rem;
+// }
 .mat-sort-header-content {
-    font-family: var(--our-font-family-new)!important;
-    position: relative;
-    // left: 1rem !important;
-    bottom: 0.5rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    padding-left: 4px !important;
 }
 
 .mdc-data-table__cell {
-    padding: 0 24px 0 16px;
+    // padding: 0 24px 0 16px;
+    padding:0 !important;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-align: left;
+    text-overflow: ellipsis;
+   
 }
 
 .mat-mdc-table .mdc-data-table__row {
-    height: 42px;
+    height: 40px;
 }
 
 .mdc-data-table__row .mdc-data-table__cell {
-    border-bottom: 1px solid #e3dbdb!important;
-    box-shadow: inset 0px 0px 2px #b8b9be, inset 1px 1px 3px #fff!important;
-    font-family: var(--our-font-family-new)!important;
+    border-bottom-width: 1px !important;
+    border-bottom-style: solid;
+    padding:0 16px 0 16px !important;
+    // border-bottom: 1px solid #e3dbdb!important;
+    // box-shadow: inset 0px 0px 2px #b8b9be, inset 1px 1px 3px #fff!important;
+    // font-family: var(--our-font-family-new)!important;
 }
 
-.mat-mdc-paginator-container {
-    display: flex;
-    position: relative;
-    align-items: center;
-    padding: 0 0px;
-    left: 37rem;
-    width: auto !important;
-}
+// .mat-mdc-paginator-container {
+//     display: flex;
+//     position: relative;
+//     align-items: center;
+//     padding: 0 0px;
+//     left: 37rem;
+//     width: auto !important;
+// }
 
 #capture_table {
     position: relative;
@@ -2186,21 +2226,21 @@ td {
     top: 0.05rem;
 }
 
-.mat-mdc-paginator-range-actions {
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    position: relative !important;
-    top: 0.1rem !important;
-}
+// .mat-mdc-paginator-range-actions {
+//     display: flex;
+//     align-items: center;
+//     flex-wrap: nowrap;
+//     flex-direction: row;
+//     position: relative !important;
+//     top: 0.1rem !important;
+// }
 
-.mat-mdc-paginator-range-label {
-    position: relative !important;
-    margin: 0px 0px 0px 0px !important;
-    font-family: var(--our-font-family-new) !important;
-    font-size: 1rem;
-}
+// .mat-mdc-paginator-range-label {
+//     position: relative !important;
+//     margin: 0px 0px 0px 0px !important;
+//     font-family: var(--our-font-family-new) !important;
+//     font-size: 1rem;
+// }
 
 .mdc-text-field {
     display: flex !important;
@@ -2208,18 +2248,18 @@ td {
     position: relative !important;
 }
 
-.mat-mdc-paginator-page-size-label {
-    font-family: var(--our-font-family-new) !important;
-    font-size: 1.1rem;
-    margin: 0px 0px 0px 0px !important;
-}
+// .mat-mdc-paginator-page-size-label {
+//     font-family: var(--our-font-family-new) !important;
+//     font-size: 1.1rem;
+//     margin: 0px 0px 0px 0px !important;
+// }
 
-.mat-mdc-paginator-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex-wrap: wrap-reverse;
-}
+// .mat-mdc-paginator-container {
+//     display: flex;
+//     align-items: center;
+//     justify-content: flex-end;
+//     flex-wrap: wrap-reverse;
+// }
 
 .mdc-data-table__table {
     min-width: 100% !important;
@@ -2227,11 +2267,11 @@ td {
     border-spacing: 0;
 }
 
-.mat-mdc-paginator-outer-container {
-    display: flex!important;
-    position: relative!important;
-    right: 37rem!important;
-}
+// .mat-mdc-paginator-outer-container {
+//     display: flex!important;
+//     position: relative!important;
+//     right: 37rem!important;
+// }
 
 
 /*Clauses Wars Button CSS*/
@@ -3248,3 +3288,9 @@ input[type="radio"]{
     // max-width:15px !important;
     // max-height: 40px !important;
   }
+
+
+  .mat-mdc-table .mdc-data-table__header-row {
+    height: 40px !important;
+}
+

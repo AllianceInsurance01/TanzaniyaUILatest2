@@ -37,9 +37,12 @@ export class PoliciesComponent implements OnInit {
       this.quoteHeader =  [
         { key: 'OriginalPolicyNo', display: 'Policy No' },
         { key: 'QuoteNo', display: 'Quote No' },
-        { key: 'RequestReferenceNo', display: 'Reference No' },
-        { key: 'PolicyStartDate', display: 'Policy Start Date' },
-        { key: 'PolicyEndDate', display: 'Policy End Date' },
+        { key: 'ClientName', display: 'Customer Name' },
+        // { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'Premium', display: 'Premium' },
+        { key: 'PolicyStartDate', display: 'Start Date' },
+        { key: 'PolicyEndDate', display: 'End Date' },
+        
         //{ key: 'ClientName', display: 'Customer Name' },
         // { key: 'CreditNo', display: 'Credit Note No' },
         // { key: 'DebitNoteNo', display: 'Debit Note No' },
