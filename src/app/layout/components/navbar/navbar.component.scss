@@ -524,7 +524,12 @@ a:hover {
   white-space: nowrap;
   transition: 0.3s;
 }
-
+.customContent{
+  margin-left: 185px !important;
+}
+.customContent2{
+  margin-left: 0px !important;
+}
 .navbar a i,
 .navbar a:focus i {
   font-size: 12px;

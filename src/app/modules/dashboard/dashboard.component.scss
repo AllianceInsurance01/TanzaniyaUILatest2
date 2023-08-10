@@ -1,7 +1,7 @@
 .card-header {
   color: black !important;
   margin-bottom: 0 !important;
-  padding: 1.25rem 1.5rem !important;
+  //padding: 1.25rem 1.5rem !important;
   border-bottom: 1px solid rgba(0,0,0,.05) !important;
   background-color: #fff !important;
 }
@@ -12,7 +12,7 @@
   min-width: 0 !important;
   word-wrap: break-word !important;
   border: 1px solid rgba(0,0,0,.05) !important;
-  border-radius: 0.375rem !important;
+  border-radius: 10px !important;
   background-color: #fff !important;
   background-clip: border-box !important;
 }
@@ -32,14 +32,17 @@
 .bg-gradient-danger {
   background: linear-gradient(87deg, #f5365c 0, #f56036 100%) !important;
 }
+.bg-gradient-sub{
+  background: #3f6c6c !important;
+}
 .header {
   position: relative;
   width: 100% !important;
-  height: 40vh !important;
+  height: auto !important;
+  overflow-y: visible;
   font-size: 100% !important;
   font-weight: 500px !important;
   transition: opacity .5s ease !important;
-  overflow: hidden !important;
   color: #000 !important;
 }
 .mt--7, .my--7 {
@@ -72,6 +75,11 @@
   font-size: 0.875rem;
   will-change: transform;
 }
+.card{
+  margin-top: 0px !important;
+  margin-bottom: 5px !important;
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12) !important;
+}
 .icon-shape {
   padding: 12px;
   text-align: center;
@@ -82,4 +90,11 @@
 }
 .text-muted {
   color: #8898aa!important;
+}
+
+.overviewCard{
+  min-height: 290px !important;
+}
+.overviewHeader{
+  padding: 5px !important;
 }

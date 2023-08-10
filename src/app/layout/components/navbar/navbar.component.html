@@ -298,13 +298,13 @@
             <ng-container *ngIf="insuranceid == '100002'">
                 <a class="bg_Logo p-2" >
                     <img src="./assets/images/logo-2.png" width="170" />
-                    <button mat-icon-button style="background-color: #fff;color:black;padding: 7px!important;"  (click)="sidenav.toggle()"> <i class="fa-solid fa-bars" style="font-size: 1.4rem;"></i></button>
+                    <button mat-icon-button style="background-color: #fff;color:black;padding: 7px!important;"  (click)="sidenav.toggle();openSideNav=!openSideNav"> <i class="fa-solid fa-bars" style="font-size: 1.4rem;"></i></button>
                   </a>
             </ng-container>
             <ng-container *ngIf="insuranceid == '100004'">
                 <a class="bg_Logo p-2">
                     <img src="./assets/images/mgen-logo.png" width="170" />
-                    <button mat-icon-button style="background-color: #fff;color:black;padding: 7px!important;"  (click)="sidenav.toggle()"> <i class="fa-solid fa-bars" style="font-size: 1.1rem;"></i></button>
+                    <button mat-icon-button style="background-color: #fff;color:black;padding: 7px!important;"  (click)="sidenav.toggle();openSideNav=!openSideNav"> <i class="fa-solid fa-bars" style="font-size: 1.1rem;"></i></button>
                   </a>
             </ng-container>
          
@@ -402,7 +402,7 @@
             </ul>
         </div>
     </mat-sidenav>
-    <mat-sidenav-content style="margin-left: 185px !important;">
+    <mat-sidenav-content [ngClass]="openSideNav == true ? 'customContent2' : 'customContent'">
         <div class="content" >
             <div class="bread_crumb main">
                 <app-breadcrumb [ngStyle]="{'font-family':' var(--our-font-family-new) !important'}"></app-breadcrumb>
