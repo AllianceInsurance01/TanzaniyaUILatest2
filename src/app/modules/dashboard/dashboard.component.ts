@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js';
-
+import * as Highcharts from 'highcharts';
+import highcharts3d from 'highcharts/highcharts-3d';
 // core components
 import {
   chartOptions,
@@ -21,7 +22,62 @@ export class DashboardComponent implements OnInit {
   public clicked: boolean = true;
   public clicked1: boolean = false;
   referralList:any[]=[];customerList:any[]=[];
+  _chart: any;
   ngOnInit() {
+    this._chart = {
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: true,
+        type: 'pie',
+        renderTo: 'PieChart',
+        options3d: {
+          enabled: true,
+          alpha: 45,
+          beta: 0,
+        },
+      },
+      title: {
+        text: ''
+      },
+      tooltip: {
+        pointFormat: '{series.name}: {point.y} & {point.percentage:.1f}%'
+      },
+      accessibility: {
+        point: {
+          valueSuffix: '%'
+        }
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          depth: 45,
+          size: 90,
+          dataLabels: {
+            enabled: true,
+            format: '{point.name}: {point.y}({point.percentage:.1f} %)'
+          }
+        }
+      },
+      series: [{
+        name: 'Claim TotalCount & Percentage ',
+        colorByPoint: true,
+        data: [
+          { "name": 'Referral Rejected', "y": Number(3), "id": 'RR' },
+          { "name": 'Referral Pending', "y": Number(5), "id": 'RP' },
+          { "name": 'Referral Approved', "y": Number(7), "id": 'RR' }
+        ],
+        point: {
+          events: {
+            click: function (event) {
+             
+            },
+          }
+        }
+      }]
+    }
+    Highcharts.chart('PieChart', this._chart);
     this.customerList = [
       {"CustomerName":"SteveSmith","Type":"Individual"},
       {"CustomerName":"Steve James","Type":"Individual"},
