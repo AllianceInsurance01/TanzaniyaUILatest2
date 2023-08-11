@@ -44,49 +44,65 @@
               </div>
             </div>
             <div class="col-xl-8 col-lg-8 col-md-8 mb-xl-0 p-0">
-              <div class="card shadow" style="margin-left: 10px !important;">
+              <div class="card shadow" style="margin-left: 10px !important;min-height: 290px !important;">
                 <div class="card-header border-0">
                   <div class="d-flex justify-content-between">
                     <div>
                       <h3 class="mb-0" style="font-size: 19px;font-weight: 600;">Referral Approved</h3>
                     </div>
-                    <div >
-                      <a href="#!" class="btn btn-sm btn-primary">See all</a>
+                    <div *ngIf="referralList.length!=0">
+                      <a  class="btn btn-sm btn-primary">See all</a>
                     </div>
                   </div>
                 </div>
-                <div class="table-responsive">
-                  <!-- Projects table -->
-                  <table class="table align-items-center table-flush">
-                    <thead class="thead-light">
-                      <tr>
-                        <th scope="col">QuoteNo</th>
-                        <th scope="col">ReferenceNo</th>
-                        <th scope="col">CustomerName</th>
-                        <th scope="col">Remarks</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let data of referralList">
-                        <td>
-                            {{data.QuoteNo}}
+                <div class="card-body">
+                  <div class="table-responsive" *ngIf="referralList.length!=0">
+                    <!-- Projects table -->
+                    <table class="table align-items-center table-flush">
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col">QuoteNo</th>
+                          <th scope="col">ReferenceNo</th>
+                          <th scope="col">CustomerName</th>
+                          <th scope="col">Remarks</th>
+                          <th scope="col">Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of referralList| paginate:{itemsPerPage: 3, 
+                          currentPage: Page};let i=index">
+                          <td>
+                              {{data.QuoteNo}}
+                          </td>
+                          <td>
+                            {{data.RequestReferenceNo}}
+                          </td>
+                          <td>
+                            {{data.ClientName}}
+                          </td>
+                          <td>
+                            {{data.AdminRemarks}}
+                          </td>
+                          <td>
+                            <button class="circle btn btn-primary btn-sm" (click)="onEditAproved(data)">
+                              <i class="fas fa-marker"></i>
+                          </button>&nbsp;
                         </td>
-                        <td>
-                          {{data.ReferenceNumber}}
-                        </td>
-                        <td>
-                          {{data.CustomerName}}
-                        </td>
-                        <td>
-                           {{data.Remarks}}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="text-end" *ngIf="referralList.length!=0">
+                    <pagination-controls class="my-pagination" (pageChange)="Page= $event" previousLabel="Previous"
+                      nextLabel="Next">
+                    </pagination-controls>
+                  </div>
+                  <div class="text-center" *ngIf="referralList.length==0">
+                          <b>No Referral Approved</b>
+                  </div>
                 </div>
               </div>
             </div>
-            
         </div>
       </div>
       <div class="col-xl-3 col-lg-3 col-md-3 mb-xl-0 p-0">
@@ -160,14 +176,14 @@
           <div class="card-header bg-gradient-sub overviewHeader">
             <div class="d-flex justify-content-between">
               <div>
-                <h6 class="text-uppercase text-light ls-1 mb-1" style="font-size: 15px !important;font-weight: 600;">New Customers</h6>
+                <h6 class="text-uppercase text-light ls-1 mb-1" style="font-size: 15px !important;font-weight: 600;">Customers</h6>
               </div>
               <div>
               </div>
             </div>
           </div>
           <div class="card-body">
-            <div class="table-responsive">
+            <div class="table-responsive" *ngIf="customerList.length!=0">
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
@@ -176,16 +192,25 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let data of customerList">
+                  <tr *ngFor="let data of customerList| paginate:{itemsPerPage: 3, 
+                    currentPage: CustomerPage};let i=index">
                     <td class="text-white">
-                        {{data.CustomerName}}
+                        {{data.TitleDesc}}&nbsp;{{data.ClientName}}
                     </td>
                     <td class="text-white">
-                      {{data.Type}}
+                      {{data.PolicyHolderTypeDesc}}
                   </td>
                   </tr>
                 </tbody>
               </table>
+            </div>
+            <div class="text-end" *ngIf="customerList.length!=0">
+              <pagination-controls class="my-pagination" (pageChange)="Page= $event" previousLabel="Previous"
+                nextLabel="Next">
+              </pagination-controls>
+            </div>
+            <div class="text-center" *ngIf="customerList.length==0">
+              No Customers Available
             </div>
           </div>
         </div>
@@ -219,13 +244,13 @@
                       {{data.QuoteNo}}
                   </td>
                   <td>
-                    {{data.ReferenceNumber}}
+                    {{data.RequestReferenceNo}}
                   </td>
                   <td>
-                    {{data.CustomerName}}
+                    {{data.ClientName}}
                   </td>
                   <td>
-                     {{data.Remarks}}
+                     {{data.AdminRemarks}}
                   </td>
                 </tr>
               </tbody>
@@ -253,35 +278,40 @@
               </div>
             </div>
             <div class="card-body">
-              <div class="table-responsive">
-                <!-- Projects table -->
-                <table class="table align-items-center table-flush">
-                  <thead class="thead-light">
-                    <tr>
-                      <th scope="col">QuoteNo</th>
-                      <th scope="col">ReferenceNo</th>
-                      <th scope="col">CustomerName</th>
-                      <th scope="col">Remarks</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let data of referralList">
-                      <td>
-                          {{data.QuoteNo}}
-                      </td>
-                      <td>
-                        {{data.ReferenceNumber}}
-                      </td>
-                      <td>
-                        {{data.CustomerName}}
-                      </td>
-                      <td>
-                         {{data.Remarks}}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+              <ng-container *ngIf="tabSection=='quote'">
+                <div class="row">
+                  <div class="col-12 col-md-12 col-lg-12">
+                      <ng-container *ngIf="quoteData.length!=0">
+                          <app-commodity-table [cols]="quoteHeader" [data]="quoteData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditExistingQuote($event)" (onAdd)="onInnerData($event)" (onView)="onViews($event)" (onReject)="onRejects($event,mymodal)" (onMail)="onMail($event,mymail)"
+                          (onSms)="onSms($event,mysms)" (onFollowup)="onFollowup($event)">
+                          </app-commodity-table>
+                      </ng-container>
+                      <ng-container *ngIf="quoteData.length==0">
+                          <div class="text-center">
+                              No Quote Available
+                          </div>
+                      </ng-container>
+                  </div>
               </div>
+              </ng-container>
+              <ng-container *ngIf="tabSection=='policy'">
+                <div class="row mt-1">
+                    <div class="col-12 col-md-12 col-lg-12">
+                        <ng-container *ngIf="policyData.length!=0">
+                            <app-commodity-table [cols]="policyHeader" (onSchedule)="onGetSchedule($event)" [data]="policyData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onGetEndorsements)="onGetEndorsements($event)" (onAdd)="onInnerData($event)"  (onView)="onViews($event)">
+                            </app-commodity-table>
+                        </ng-container>
+                        <ng-container *ngIf="policyData.length==0">
+                            <div class="text-center spancommon span_font_size">
+                                No Policy Available
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="tabSection=='lapsed'">
+                    
+              </ng-container>
             </div>
         </div>
     </div>

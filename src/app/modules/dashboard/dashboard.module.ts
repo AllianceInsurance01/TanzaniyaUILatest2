@@ -17,6 +17,7 @@ import { ReferralApprovedComponent } from '../referral/referral-approved/referra
 import { ReferralRejectedComponent } from '../referral/referral-rejected/referral-rejected.component';
 import { ReferralRequoteComponent } from '../referral/referral-requote/referral-requote.component';
 import { DialogComponent } from '../Quote/dialog/dialog.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 //import { MotorDocumentsComponent } from 'src/app/shared/MotorDocuments/MotorDocuments.component';
 
 
@@ -47,7 +48,7 @@ import { DialogComponent } from '../Quote/dialog/dialog.component';
     MaterialModule,
     PipesModule,
     DigitOnlyModule,
-
+    NgxPaginationModule
   ],
   bootstrap: [DashboardComponent],
   providers: [
