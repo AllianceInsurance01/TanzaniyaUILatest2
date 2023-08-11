@@ -175,6 +175,7 @@ export class BrokerListComponent implements OnInit {
       "insuranceId": this.insuranceId,
       "brokerCompanyYN": brokerCompYN
     }
+    sessionStorage.setItem('InsuranceId',this.insuranceId);
     sessionStorage.setItem('brokerConfigureDetails',JSON.stringify(entry));
     sessionStorage.setItem('editBroker',rowData.LoginId);
     this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerBranchList'])

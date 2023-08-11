@@ -72,7 +72,7 @@
                         </ng-container>
 
                         <div *ngIf="brokerList.length!=0 || coverList.length!=0" style="text-align: center;">
-                            <!-- <button *ngIf="IncValue=='2'" class="btn btn-success" (click)="submit()">Submit</button> -->
+                            <button *ngIf="IncValue=='2'" class="btn btn-danger" (click)="getBack()">Back</button>&nbsp;
                             <button class="btn btn-success" (click)="openDialog(template)">Submit</button>
                         </div>
                     </div>

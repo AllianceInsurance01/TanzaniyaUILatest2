@@ -30,10 +30,10 @@ export class NewBrokerDetailsComponent implements OnInit {
   companyCode: any; editSection: boolean = false; vatRegNo: any = null;
   agencyCode: any = null; stateCode: any; branchCode: any;
   brokerLoginId: any; subUser: any; bankList: any[] = [];
-  oaCode: any = null; bankCode: any = null;
+  oaCode: any = null; bankCode: any = null;creditLimit:any=null;
   executiveId: any = null; stateList: any[] = [];
-  editsSection = false;
-  editValue: boolean = false;
+  editsSection = false;taxExcemptedCode:any=null;
+  editValue: boolean = false;taxExcemptedYN:any='N';
   constructor(private router: Router, private sharedService: SharedService,
     private datePipe: DatePipe) {
     this.minDate = new Date();
@@ -186,7 +186,11 @@ export class NewBrokerDetailsComponent implements OnInit {
           this.address1 = PersonalInformation?.Address1;
           this.address2 = PersonalInformation?.Address2;
           this.checkerYN = PersonalInformation?.CheckerYn;
-
+          if(PersonalInformation?.TaxExemptedYn!=null){
+            this.taxExcemptedYN=PersonalInformation?.TaxExemptedYn;
+            if(this.taxExcemptedYN=='Y') this.taxExcemptedCode = PersonalInformation?.TaxExemptedCode;
+          }
+          if(PersonalInformation?.CreditLimit){this.creditLimit = PersonalInformation?.CreditLimit;}
           this.designation = PersonalInformation?.Designation;
           this.contactPersonName = PersonalInformation?.ContactPersonName;
           this.coreAppBrokerCode = PersonalInformation?.CoreAppBrokerCode;
@@ -384,6 +388,7 @@ export class NewBrokerDetailsComponent implements OnInit {
 
       console.log('bbbbbbbbb', this.brokerCompanyYn)
     }
+    if(this.taxExcemptedYN=='N') this.taxExcemptedCode=null;
     let ReqObj = {
       "LoginInformation": {
         "AgencyCode": this.agencyCode,
@@ -417,6 +422,9 @@ export class NewBrokerDetailsComponent implements OnInit {
         "Designation": this.designation,
         "Fax": "0",
         "MakerYn": this.makerYN,
+        "CreditLimit": this.creditLimit,
+        "TaxExemptedYn": this.taxExcemptedYN,
+        "TaxExemptedCode": this.taxExcemptedCode,
         "Pobox": this.pobox,
         "Remarks": this.remarks,
         "UserMail": this.userMail,

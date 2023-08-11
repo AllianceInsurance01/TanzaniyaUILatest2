@@ -21,17 +21,291 @@
                                 Existing Products
                             </div>
                             <div>
-                                <button class="btn btn-warning" (click)="onAddNewProduct()">Add New</button>
+                                <button *ngIf="!editSection" class="btn btn-warning" (click)="editSection=!editSection">Edit Details</button>
+                                <!-- <button class="btn btn-warning" (click)="onAddNewProduct()">Add New</button> -->
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <ng-container *ngIf="productData">
-                            <app-grid-table [cols]="productHeader" [data]="productData" [filterValue]="filterValue" (onEdit)="onEditProduct($event)" (onConfigure)="onConfigure($event)">
-                            </app-grid-table>
-                        </ng-container>
+                        <div style="background: transparent;overflow-y: scroll;" class="example-container">
+                            
+                            <div [hidden]="!editSection">
+                                <div class="input-form-box" style="margin-right: 5px !important;" id="gridstyle" >
+                                    <input type="text" class="input-form-control with-icon" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                                    <span class="input-form-icon">
+                                        <i class="fas fa-filter"></i>
+                                    </span>
+                                </div>
+                                <table mat-table [dataSource]="dataSource" class="ux-table-v" matSort [matSortActive]="sortProperty" [matSortDirection]="sortDirection" matSortDisableClear>
+                                    <ng-container *ngFor="let col of productHeader; let i = index;" [matColumnDef]="col.key" [sticky]="i===0" [stickyEnd]="i === 10">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header mat-header-cell">
+                                            <ng-container *ngIf="productHeader[i]['display']=='Premium' || productHeader[i]['display']=='Endorsement Premium'">
+                                                {{ productHeader[i]["display"] }} &nbsp; ({{Currency}})
+                                            </ng-container>
+                                            <ng-container *ngIf="productHeader[i]['display']=='Endorsements Premium'">
+                                                Premium &nbsp; ({{Currency}})
+                                            </ng-container>
+                                            <ng-container *ngIf="productHeader[i]['display']=='EndorsementStatus'">
+                                                Status
+                                            </ng-container>
+                                            <ng-container *ngIf="productHeader[i]['display']!='Premium' && productHeader[i]['display']!='Endorsements Premium' && productHeader[i]['display']!='Endorsement Premium' && productHeader[i]['display']!='EndorsementStatus'">
+                                                {{ productHeader[i]["display"] }}
+                                            </ng-container>
+                                        </th>
+                                        <td mat-cell *matCellDef="let element" [ngClass]="[element?.Active == true && i==0 ? 'cutomBg1' : 'cutomBg2',col.key=='Status' && element[col.key]=='D' ? 'deletedBg' : 'cutomBg2']">
+                                            <ng-container *ngIf="!col.config; else hasConfig">
+                                                <ng-container *ngIf="col.key=='Commission'">
+                                                    <div class="input-control-container">
+                                                        <div class="input-form-box">
+                                                            <input type="text" class="input-form-control without-icon" style="width: 90px;" maxlength="5" [(ngModel)]="element[col.key]">
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                                <ng-container *ngIf="col.key=='Backdays'">
+                                                    <div class="input-control-container">
+                                                        <div class="input-form-box">
+                                                            <input type="text" class="input-form-control without-icon" style="width: 80px;" maxlength="5" [(ngModel)]="element[col.key]">
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                                <ng-container *ngIf="col.key=='SumInsuredEnd'">
+                                                    <div class="input-control-container">
+                                                        <div class="input-form-box">
+                                                            <input type="text" class="input-form-control without-icon" style="width: 150px;" maxlength="25" [(ngModel)]="element[col.key]">
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                                <ng-container *ngIf="col.key=='CreditYN'">
+                                                    <div class="input-form-radio-box">
+                                                        <div class="radio-toolbar" style="width: 120px;">
+                                                            <input [id]="'credit_Yes'+j" type="radio" [name]="'creditYN'+j" [(ngModel)]="element[col.key]" value="Y">
+                                                            <label [for]="'credit_Yes'+j" class="customLabel">Yes</label>
+                                                            <input type="radio" [id]="'credit_No'+j" [name]="'creditYN'+j" [(ngModel)]="element[col.key]" value="N">
+                                                            <label [for]="'credit_No'+j" class="customLabel">No</label>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                                <ng-container *ngIf="col.key=='EffectiveDateStart'">
+                                                    <mat-form-field appearance="fill" style="width: 130px;">
+                                                        <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="element[col.key]" [ngModelOptions]="{standalone: true}">
+                                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                        <mat-datepicker #picker></mat-datepicker>
+                                                    </mat-form-field>
+                                                </ng-container>
+                                                <ng-container *ngIf="col.key=='CheckerYN'">
+                                                    <div class="input-form-radio-box">
+                                                        <div class="radio-toolbar" style="width: 120px;">
+                                                            <input [id]="'checker_Yes'+j" type="radio" [name]="'checkerYN'+j" [(ngModel)]="element[col.key]" value="Y">
+                                                            <label [for]="'checker_Yes'+j" class="customLabel">Yes</label>
+                                                            <input type="radio" [id]="'checker_No'+j" [name]="'checkerYN'+j" [(ngModel)]="element[col.key]" value="N">
+                                                            <label [for]="'checker_No'+j" class="customLabel">No</label>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                                <ng-container *ngIf="col.key=='Select'">
+                                                    <mat-checkbox class="example-margin text-center" [checked]="checkSelectedProducts(element)">
+                                                    </mat-checkbox> 
+                                                </ng-container>
+                                                <ng-container *ngIf="col.key=='Status'">
+                                                    <div class="input-form-radio-box">
+                                                        <div class="radio-toolbar" style="width: 170px;">
+                                                            <input [id]="'orginwarehouse_Yes'+j" type="radio" [name]="'originatingWarehouse'+j" [(ngModel)]="element[col.key]" value="Y">
+                                                            <label [for]="'orginwarehouse_Yes'+j" class="customLabel">Active</label>
+                                                            <input type="radio" [id]="'orginwarehouse_No'+j" [name]="'originatingWarehouse'+j" [(ngModel)]="element[col.key]" value="N">
+                                                            <label [for]="'orginwarehouse_No'+j" class="customLabel">DeActive</label>
+                                                        </div>
+                                                    </div>
+                                                </ng-container>
+                                                <ng-container *ngIf="productHeader[i]['display']=='EndorsementStatus'">
+                                                        <span *ngIf="element[col.key]=='P'">Pending</span>
+                                                        <span *ngIf="element[col.key]=='N'">Cancelled</span>
+                                                        <span *ngIf="element[col.key]=='C' && element?.endorsementTypeId!=842">Completed</span>
+                                                        <span *ngIf="element[col.key]=='C' && element?.endorsementTypeId==842">Cancelled</span>
+                                                        <span *ngIf="endorsementSection && element[col.key]==null">Base policy</span>
+                                                </ng-container>
+                                                <ng-container *ngIf="col.key!='Status' && col.key!='Select' && col.key!='Commission' && col.key!='EffectiveDateStart' && col.key!='SumInsuredEnd' && col.key!='CheckerYN' && col.key!='CreditYN' && col.key!='Backdays'  && productHeader[i]['display']!='EndorsementStatus' && productHeader[i]['display']!='Endorsements Premium' && productHeader[i]['display']!='Endorsement Premium'">
+                                                    {{ element[col.key] }}
+                                                </ng-container>
+                                                <ng-container *ngIf="productHeader[i]['display']=='Endorsements Premium' || productHeader[i]['display']=='Endorsement Premium'">
+                                                    <ng-container *ngIf="element[col.key]==0 || element[col.key]=='0'">
+                                                            N/A
+                                                    </ng-container>
+                                                    <ng-container *ngIf="element[col.key]!=0 && element[col.key]!='0'">
+                                                        {{ element[col.key] }}
+                                                    </ng-container>
+                                                </ng-container>
+                                            </ng-container>
+                                            <ng-template #hasConfig>
+                                                <ng-container *ngIf="col.config.isChecked">
+                                                    <mat-checkbox class="example-margin" [(ngModel)]="element[col.config.model]" (change)="onSelectCustomer.emit(element)"></mat-checkbox>
+                                                </ng-container>
+                                                <ng-container *ngIf="col.config.select">
+                                                    <div class="custom-control custom-radio custom-control-inline">
+                                                        <input type="radio" class="custom-control-input" id="customRadio{{element[col.key]}}" name="example" [value]="element[col.key]" [checked]="onCheckCustomer(element)" (change)="onSelect(element)">
+                                                        <label class="custom-control-label" for="customRadio{{element[col.key]}}"></label>
+                                                    </div>
+                                                </ng-container>
+                                                <ng-container *ngIf="col.config.isEdit">
+                                                   <button class="btn btn-primary btn-sm" (click)="onEditProduct(element)">
+                                                        <i class="fas fa-marker"></i>
+                                                      </button>&nbsp;
+                                                </ng-container>
+                            
+                                                <ng-container *ngIf="col.config.isPolicyConfig">
+                                                    <button mat-button [matMenuTriggerFor]="menu">
+                                                        <i class="fas fa-cog"></i>
+                                                    </button>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button mat-menu-item (click)="onSchedule.emit(element)"><i class="fas fa-file"></i>&nbsp;Schedule</button>
+                                                        <button mat-menu-item (click)="onView.emit(element)"><i class="fas fa-eye"></i>&nbsp;View Quote Details</button>
+                                                    </mat-menu>
+                                                </ng-container>
+                                                <!-- <ng-container *ngIf="col.config.isschedules">
+                                                <button class="btn btn-primary btn-sm" (click)="onGetSchedule.emit({data:element,name:'Schedule'})">
+                                                    <i class="fas fa-marker"></i>
+                                                </button>
+                                            </ng-container> -->
+                                                <ng-container *ngIf="col.config.isEndorseEdit">
+                                                    <ng-container *ngIf="element?.endorsementStatus">
+                                                        <ng-container *ngIf="element?.endorsementStatus=='C'">
+                                                            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                                                <i class="fas fa-ellipsis-v"></i>
+                                                            </button>
+                                                            <mat-menu #menu="matMenu">
+                                                                <!-- <button mat-menu-item (click)="onOpenCoverAction.emit({data:element,name:'Certificate'})">
+                                                                    <span>Certificate</span>
+                                                                </button> -->
+                                                                <button mat-menu-item (click)="onGetSchedule.emit({data:element,name:'Schedule'})">
+                                                                    <span>Schedule</span>
+                                                                </button>
+                                                                <!-- <button mat-menu-item>
+                                                                    <span>Policy Wording</span>
+                                                                </button> -->
+                                                            </mat-menu>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="element.endorsementStatus==null">
+                                                                    N/A
+                                                        </ng-container>
+                                                        <ng-container *ngIf="element.endorsementStatus!='C' && element.endorsementStatus!=null">
+                                                            <button class="btn btn-primary btn-sm" (click)="onEdit.emit(element)">
+                                                                <i class="fas fa-marker"></i>
+                                                              </button>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="element?.endorsementStatus==undefined">
+                                                        <ng-container *ngIf="((this.endorsementSection && !this.enableAddVehicle) || (this.endorsementSection && this.enableAddVehicle && element['EndorsementYn']=='Y'))">
+                                                            <button class="btn btn-primary btn-sm" (click)="onEdit.emit(element)" *ngIf="element.endorsementStatus!=null">
+                                                                 <i class="fas fa-marker"></i>
+                                                              </button>
+                                                              <ng-container *ngIf="element.endorsementStatus==null">
+                                                                        N/A
+                                                              </ng-container>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="(this.endorsementSection && this.enableAddVehicle && element['EndorsementYn']!='Y')">
+                                                            N/A
+                                                        </ng-container>
+                                                        
+                                                    </ng-container>
+                                                </ng-container>
+                                                <ng-container *ngIf="col.config.Edit">
+                                                    <!--<button class="btn btn-primary btn-sm" (click)="onEdits.emit(element)"> </button>-->
+                                                    <textarea cols="15" rows="2" maxlength="30" [(ngModel)]="ClausesDesc"></textarea>
+                                                    <!--<i class="fas fa-marker"></i>-->
+                            
+                                                </ng-container>
+                                                <ng-container *ngIf="col.config.isConfigure">
+                                                    <div class="text-center">
+                                                        <button class="btn btn-primary btn-sm" (click)="onConfigure(element)">
+                                                            <i class="fas fa-cog"></i>
+                                                          </button>
+                                                    </div>
+                                                    
+                                                </ng-container>
+                                                <ng-container *ngIf="col.config.isRemove">
+                                                    <button class="btn btn-danger btn-sm" (click)="onDelete.emit(element)">
+                                                    <i class="fas fa-trash"></i>
+                                                  </button>
+                                                </ng-container>
+                                                <ng-container *ngIf="col.config.isPremiums">
+                                                    <div class="d-flex" style="justify-content: flex-end;" (click)="onTotals.emit(element)">
+                                                        {{element.OverallPremiumLc}}
+                                                        </div>
+                                                    </ng-container>
+                            
+                                                <ng-container *ngIf="col.config.isViews">
+                                                    <button class="circle btn btn-primary btn-sm" (click)="onViews.emit(element)">
+                                                      <i class="fas fa-eye"></i>
+                                                    </button>&nbsp;
+                                                </ng-container>
+                                                <ng-container *ngIf="col.config.isOpenGridAction">
+                                                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button mat-menu-item>
+                                                            <span>Lc Details</span>
+                                                        </button>
+                                                        <button mat-menu-item (click)="onOpenCoverAction.emit({data:element,name:'Certificate'})">
+                                                            <span>Certificate</span>
+                                                        </button>
+                                                        <button mat-menu-item (click)="onOpenCoverAction.emit({data:element,name:'Schedule'})">
+                                                            <span>Schedule</span>
+                                                        </button>
+                                                        <button mat-menu-item>
+                                                            <span>Policy Wording</span>
+                                                        </button>
+                                                    </mat-menu>
+                                                </ng-container>
+                                                <ng-container *ngIf="col.config.isCoverRatingEdit">
+                                                    <ng-container *ngIf="element.SubCoverYn=='N'">
+                                                        <button class="btn btn-primary btn-sm" (click)="onCoverRatingEdit.emit(element)">
+                                                            <i class="fas fa-cog"></i>
+                                                          </button>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="element.SubCoverYn!='N'">
+                                                       N/A
+                                                    </ng-container>
+                                                </ng-container>
+                            
+                                           <!-- subCover-->  <ng-container *ngIf="col.config.isSubCoverRatingEdit">
+                                                    <ng-container *ngIf="element.SubCoverYn=='Y'">
+                                                        <button class="btn btn-primary btn-sm" (click)="onSubCoverRatingEdit.emit(element)">
+                                                            <i class="fas fa-cog"></i>
+                                                          </button>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="element.SubCoverYn!='Y'">
+                                                       N/A
+                                                    </ng-container>
+                                                </ng-container>
+                                            </ng-template>
+                                        </td>
+                                    </ng-container>
+                            
+                                    <tr mat-header-row *matHeaderRowDef="keys"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: keys"></tr>
+                                </table>
+                                <ng-container *ngIf="!dataSource.data.length">
+                                    <table>
+                                        <tr>
+                                            <td class="p-3" style="text-align: center" [attr.colspan]="productHeader?.length">
+                                                No Records Found!
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </ng-container>
+                                <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Select page of periodic elements">
+                                </mat-paginator>
+                            </div>
+                            <ng-container *ngIf="!editSection">
+                                <app-grid-table [cols]="productHeaderAlt" [data]="filteredList" [filterValue]="filterValue" (onEdit)="onEditProduct($event)" (onConfigure)="onConfigure($event)">
+                                </app-grid-table>
+                            </ng-container>
+                        </div>
+                        
+                        <!--  -->
                         <div class="text-center mt-2">
-                            <button class="btn btn-danger" (click)="getBackPage()">Back</button>
+                            <button class="btn btn-danger" (click)="getBackPage()">Back</button>&nbsp;
+                            <button class="btn btn-success" *ngIf="editSection" (click)="editSection=!editSection">Submit</button>
                         </div>
                     </div>
                 </div>

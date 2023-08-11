@@ -192,6 +192,9 @@ export class BrokerCoverListComponent implements OnInit {
    console.log("Cover List",this.brokerList);
 
   }
+  getBack(){
+      this.router.navigate(['Admin/brokersList']);
+  }
   Effectivedate(effectiveDate)
   {
     this.EffectiveValue=effectiveDate;

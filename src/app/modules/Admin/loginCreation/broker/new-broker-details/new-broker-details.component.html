@@ -207,6 +207,39 @@
                     </div>
                 </div>
             </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    
+                    <div class="row">
+                        <div class="col-12 col-md-5 col-lg-5">
+                                <label class="input-form-label">Tax ExcemptedYN<span class="text-danger">*</span></label>
+                                <div class="input-form-radio-box">
+                                    <div class="radio-toolbar">
+                                        <input id="taxExcempted_Yes" type="radio" name="taxExcemptedYN" [(ngModel)]="taxExcemptedYN" value="Y">
+                                        <label for="taxExcempted_Yes" *ngIf="editsSection">Yes</label>
+                                        <input id="taxExcempted_No" type="radio" name="taxExcemptedYN" [(ngModel)]="taxExcemptedYN" value="N">
+                                        <label for="taxExcempted_No">No</label>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-12 col-md-7 col-lg-7 p-0" *ngIf="taxExcemptedYN=='Y'">
+                            <label class="input-form-label">Tax Excempted Code<span class="text-danger">*</span></label>
+                            <div class="input-form-box">
+                                <input type="text" class="input-form-control without-icon" [(ngModel)]="taxExcemptedCode" maxlength="50">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Credit Limit<span class="text-danger">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="creditLimit" maxlength="50">
+                    </div>
+                </div>
+            </div>
             <!-- <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
                     <label class="input-form-label">Customer Confirmation?<span class="text-danger">*</span></label>

@@ -31,7 +31,7 @@ export class BrokerBranchListComponent implements OnInit {
   ngOnInit(): void {
   }
   getBackPage(){
-    this.router.navigate(['/Admin/brokersList/newBrokerDetails']);
+    this.router.navigate(['Admin/brokersList']);
   }
   getBrokerBranchList(){
     let ReqObj = {
