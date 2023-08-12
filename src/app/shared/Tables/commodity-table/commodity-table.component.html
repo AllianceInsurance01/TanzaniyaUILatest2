@@ -18,6 +18,7 @@
                 </th>
     
                 <td [ngClass]="{'foo': i === element.length - 1,'foo1':i >element.length - 1}" mat-cell *matCellDef="let element;let j = dataIndex;">
+                    
                     <ng-container *ngIf="!col.config; else hasConfig">
                         {{ element[col.key]}}
                     </ng-container>
@@ -144,6 +145,7 @@
                             </mat-menu>
                         </ng-container>
                     </ng-template>
+                
                 </td>
     
             </ng-container>

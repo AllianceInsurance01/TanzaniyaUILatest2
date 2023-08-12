@@ -41,6 +41,12 @@ table {
 }
 
 
+:host ::ng-deep .mat-sort-header-container {
+  display: flex!important;
+  justify-content:flex-start !important;
+}
+
+
 
 @media screen and (min-width: 750px) and (max-width: 20000px) {
   .example-containers{

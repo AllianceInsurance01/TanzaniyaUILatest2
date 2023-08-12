@@ -211,9 +211,6 @@
         <tr mat-header-row *matHeaderRowDef="keys"></tr>
         <tr mat-row *matRowDef="let row; columns: keys"></tr>
     </table>
-    <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Select page of periodic elements">
-    </mat-paginator>
-   </div>
     <ng-container *ngIf="!dataSource.data.length">
         <table>
             <tr>
@@ -223,6 +220,10 @@
             </tr>
         </table>
     </ng-container>
+    <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
+   </div>
+   
 </div>
 
 
@@ -467,6 +468,7 @@
     </mat-paginator>
     </div>
     <ng-container *ngIf="!dataSource.data.length">
+        
         <table>
             <tr>
                 <td class="p-3" style="text-align: center" [attr.colspan]="columnHeader?.length">

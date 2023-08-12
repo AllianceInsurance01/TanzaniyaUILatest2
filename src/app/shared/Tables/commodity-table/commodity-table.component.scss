@@ -10,7 +10,7 @@ th.mat-header-cell {
     //color: lightslategrey;
     font-size: 14px;
     font-weight: 500;
-    padding: 0 !important;
+    padding: 0px!important;
     // box-sizing: border-box;
     // text-overflow: ellipsis;
     // overflow: hidden;
@@ -81,6 +81,7 @@ tr.example-detail-row {
     height:90%;
     font-weight: 500;
     font-size:14px;
+    overflow:scroll;
     // max-height: 500px;
     // min-width: 300px;
   }
