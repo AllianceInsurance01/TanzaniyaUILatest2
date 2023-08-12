@@ -27,13 +27,23 @@
                 <ng-container *ngIf="columnHeader[i]['display']=='EndorsementStatus'">
                     Status
                 </ng-container>
-                <ng-container *ngIf="columnHeader[i]['display']!='Premium' && columnHeader[i]['display']!='Endorsements Premium' && columnHeader[i]['display']!='Endorsement Premium' && columnHeader[i]['display']!='EndorsementStatus'">
+                <ng-container *ngIf="columnHeader[i]['display']=='BrokerConfigProductName'">
+                    Product Name
+                </ng-container>
+                <ng-container *ngIf="columnHeader[i]['display']!='Premium' && columnHeader[i]['display']!='BrokerConfigProductName' && columnHeader[i]['display']!='Endorsements Premium' && columnHeader[i]['display']!='Endorsement Premium' && columnHeader[i]['display']!='EndorsementStatus'">
                     {{ columnHeader[i]["display"] }}
                 </ng-container>
             </th>
             <td mat-cell *matCellDef="let element" [ngClass]="[element?.Active == true && i==0 ? 'cutomBg1' : 'cutomBg2',col.key=='Status' && element[col.key]=='D' ? 'deletedBg' : 'cutomBg2']">
                 <ng-container *ngIf="!col.config; else hasConfig">
-                    
+                    <ng-container *ngIf="columnHeader[i]['display']=='BrokerConfigProductName'">
+                        <ng-container *ngIf="element.ProductId=='5'">
+                            {{ element[col.key] }}&nbsp;-&nbsp;{{element.PolicyTypeDesc}}
+                        </ng-container>
+                        <ng-container *ngIf="element.ProductId!='5'">
+                            {{ element[col.key] }}
+                        </ng-container>
+                    </ng-container>
                     <ng-container *ngIf="col.key=='Status'">
                         <span *ngIf="element[col.key]=='Y'">Active</span>
                         <span *ngIf="element[col.key]=='RP'">Referral Pending</span>
@@ -53,7 +63,7 @@
                             <span *ngIf="element[col.key]=='C' && element?.endorsementTypeId==842">Cancelled</span>
                             <span *ngIf="endorsementSection && element[col.key]==null">Base policy</span>
                     </ng-container>
-                    <ng-container *ngIf="col.key!='Status'  && columnHeader[i]['display']!='EndorsementStatus' && columnHeader[i]['display']!='Endorsements Premium' && columnHeader[i]['display']!='Endorsement Premium'">
+                    <ng-container *ngIf="col.key!='Status'  && columnHeader[i]['display']!='EndorsementStatus' && columnHeader[i]['display']!='BrokerConfigProductName' && columnHeader[i]['display']!='Endorsements Premium' && columnHeader[i]['display']!='Endorsement Premium'">
                         {{ element[col.key] }}
                     </ng-container>
                     <ng-container *ngIf="columnHeader[i]['display']=='Endorsements Premium' || columnHeader[i]['display']=='Endorsement Premium'">
@@ -247,13 +257,18 @@
                 <ng-container *ngIf="columnHeader[i]['display']=='EndorsementStatus'">
                     Status
                 </ng-container>
+                <ng-container *ngIf="columnHeader[i]['display']=='BrokerConfigProductName'">
+                    Product Name
+                </ng-container>
                 <ng-container *ngIf="columnHeader[i]['display']!='Premium' && columnHeader[i]['display']!='Endorsements Premium' && columnHeader[i]['display']!='Endorsement Premium' && columnHeader[i]['display']!='EndorsementStatus'">
                     {{ columnHeader[i]["display"] }}
                 </ng-container>
             </th>
             <td mat-cell *matCellDef="let element" [ngClass]="[element?.Active == true && i==0 ? 'cutomBg1' : 'cutomBg2',col.key=='Status' && element[col.key]=='D' ? 'deletedBg' : 'cutomBg2']">
                 <ng-container *ngIf="!col.config; else hasConfig">
-                    
+                    <ng-container *ngIf="columnHeader[i]['display']=='BrokerConfigProductName'">
+
+                    </ng-container>
                     <ng-container *ngIf="col.key=='Status'">
                         <span *ngIf="element[col.key]=='Y'">Active</span>
                         <span *ngIf="element[col.key]=='RP'">Referral Pending</span>
@@ -272,7 +287,7 @@
                             <span *ngIf="element[col.key]=='C' && element?.endorsementTypeId==842">Cancelled</span>
                             <span *ngIf="endorsementSection && element[col.key]==null">Base policy</span>
                     </ng-container>
-                    <ng-container *ngIf="col.key!='Status'  && columnHeader[i]['display']!='EndorsementStatus'">
+                    <ng-container *ngIf="col.key!='Status'  && columnHeader[i]['display']!='EndorsementStatus' && columnHeader[i]['display']=='BrokerConfigProductName'">
                         <div class="d-flex justify-content-between">
                             <div>
                                 <span class="mobile-label"> 

@@ -46,6 +46,7 @@ import { NgSelectFormlyComponent } from './ngselect.type';
 import { CustomerRedirectComponent } from './modules/customer-redirect/customer-redirect.component';
 import { FooterComponent } from './layout/components/footer/footer.component';
 import { CustomerProductsComponent } from './modules/customer-products/customer-products.component';
+import { NgApexchartsModule } from 'ng-apexcharts'
 
 
 @NgModule({
@@ -91,7 +92,8 @@ import { CustomerProductsComponent } from './modules/customer-products/customer-
 		MatNativeDateModule,
 		FormlyMatDatepickerModule,
 		FormlyMatToggleModule,
-		NgMaterialMultilevelMenuModule 
+		NgMaterialMultilevelMenuModule,
+		NgApexchartsModule 
 	],
 	providers: [ɵb,MultilevelMenuService,DatePipe, 
 		{provide: LocationStrategy, useClass: HashLocationStrategy},

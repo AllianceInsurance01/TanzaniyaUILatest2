@@ -3,43 +3,29 @@
       <div class="col-xl-9 col-lg-9 col-md-9 mb-xl-0 p-0">
         <div class="row">
             <div class="col-xl-4 col-lg-4 col-md-4 mb-xl-0 p-0" >
-              <div class="card bg-gradient-default shadow overviewCard" style="margin-left: 27px;">
-                <div class="card-header bg-gradient-default overviewHeader">
+              <div class="card shadow overviewCard" style="margin-left: 27px;">
+                <div class="card-header overviewHeader">
                   <div class="d-flex justify-content-between">
                     <div>
-                      <h6 class="text-uppercase text-light ls-1 mb-1" style="font-size: 15px !important;font-weight: 600;">Overview</h6>
+                      <h6 class="text-uppercase ls-1 mb-1" style="font-size: 15px !important;font-weight: 600;">Overview</h6>
                     </div>
                     <div>
-                      <!-- <ul class="nav nav-pills justify-content-end">
-                        <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales"  (click)="data=datasets[0];updateOptions()">
-                          <a href="javascript:void(0)" class="nav-link py-2 px-3" [ngClass]="{'active':clicked===true}" data-toggle="tab" (click)="clicked=true;clicked1=false">
-                            <span class="d-none d-md-block">Month</span>
-                            <span class="d-md-none">M</span>
-                          </a>
-                        </li>
-                        <li class="nav-item" data-toggle="chart" data-target="#chart-sales"  (click)="data=datasets[1];updateOptions()">
-                          <a href="javascript:void(0)" class="nav-link py-2 px-3" [ngClass]="{'active':clicked1===true}" data-toggle="tab" (click)="clicked=false;clicked1=true">
-                            <span class="d-none d-md-block">Week</span>
-                            <span class="d-md-none">W</span>
-                          </a>
-                        </li>
-                      </ul> -->
                     </div>
                   </div>
                 </div>
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-12 col-lg-12">
-                      <figure class="highcharts-figure" >
-                        <div id="PieChart" style="height: 222px !important;"></div>
-                      </figure>
+                      <div id="chart">
+                        <apx-chart
+                          [series]="chartOptions.series"
+                          [chart]="chartOptions.chart"
+                          [labels]="chartOptions.labels"
+                          [responsive]="chartOptions.responsive"
+                        ></apx-chart>
+                      </div>
                     </div>
                   </div>
-                  <!-- Chart -->
-                  <!-- <div class="chart"> -->
-                    <!-- Chart wrapper -->
-                    <!-- <canvas id="chart-sales" class="chart-canvas"></canvas> -->
-                  <!-- </div> -->
                 </div>
               </div>
             </div>
@@ -50,19 +36,17 @@
                     <div>
                       <h3 class="mb-0" style="font-size: 19px;font-weight: 600;">Referral Approved</h3>
                     </div>
-                    <div *ngIf="referralList.length!=0">
-                      <a  class="btn btn-sm btn-primary">See all</a>
-                    </div>
+                    <!-- <div *ngIf="referralList.length!=0">
+                      <button  class="btn btn-sm btn-primary" [routerLink]="['/Home/referralApproved']">See all</button>
+                    </div> -->
                   </div>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive" *ngIf="referralList.length!=0">
-                    <!-- Projects table -->
                     <table class="table align-items-center table-flush">
                       <thead class="thead-light">
                         <tr>
                           <th scope="col">QuoteNo</th>
-                          <th scope="col">ReferenceNo</th>
                           <th scope="col">CustomerName</th>
                           <th scope="col">Remarks</th>
                           <th scope="col">Action</th>
@@ -73,9 +57,6 @@
                           currentPage: Page};let i=index">
                           <td>
                               {{data.QuoteNo}}
-                          </td>
-                          <td>
-                            {{data.RequestReferenceNo}}
                           </td>
                           <td>
                             {{data.ClientName}}
@@ -112,17 +93,21 @@
               <div class="card-body customBody">
                 <div class="row">
                   <div class="col">
-                    <h3 class="mb-0" style="font-size: 25px;font-weight: 600;">Quotes</h3>
-                    
+                    <h3 class="mb-0" style="font-size: 18px;font-weight: 600;">Quotes
+                    </h3>
+                   
                   </div>
                   <div class="col-auto">
-                    <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-                      <i class="fas fa-chart-pie"></i>
-                    </div>
+                    <button class="circle btn btn-primary btn-sm">
+                      <span style="font-weight: 600;">{{quoteData.length}}</span>
+                    </button>
+                    <!-- <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                      <span style="font-weight: 600;">{{quoteData.length}}</span>
+                    </div> -->
                   </div>
                 </div>
-                  <h2 class="mb-0 text-primary" style="font-size: 25px;font-weight: 600;">2,356</h2>
-                  <!-- <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span> -->
+                <h2 class="mb-0 text-primary" style="font-size: 21px;font-weight: 600;" *ngIf="quoteData.length==0">N/A</h2>
+                  <h2 class="mb-0 text-primary" style="font-size: 21px;font-weight: 600;" *ngIf="quoteData.length!=0">12,530 (TZS)</h2>
                
               </div>
             </div>
@@ -134,16 +119,18 @@
               <div class="card-body customBody">
                 <div class="row">
                   <div class="col">
-                    <h3 class="mb-0" style="font-size: 25px;font-weight: 600;">Policies</h3>
-                    
+                    <h3 class="mb-0" style="font-size: 18px;font-weight: 600;">Policies
+                    </h3>
                   </div>
                   <div class="col-auto">
-                    <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-                      <i class="fas fa-users"></i>
-                    </div>
+                    <button class="circle btn btn-danger btn-sm">
+                      <span style="font-weight: 600;">{{policyData.length}}</span>
+                    </button>
+                    
                   </div>
                 </div>
-                <h3 class="mb-0 text-primary" style="font-size: 25px;font-weight: 600;">350,897</h3>
+                <h2 class="mb-0 text-primary" style="font-size: 21px;font-weight: 600;" *ngIf="policyData.length==0">N/A</h2>
+                <h2 class="mb-0 text-primary" style="font-size: 21px;font-weight: 600;" *ngIf="policyData.length!=0">25,00,000 (TZS)</h2>
               </div>
             </div>
           </div>
@@ -154,16 +141,19 @@
               <div class="card-body customBody" >
                 <div class="row">
                   <div class="col">
-                    <h3 class="mb-0" style="font-size: 25px;font-weight: 600;">Referral</h3>
+                    <h3 class="mb-0" style="font-size: 18px;font-weight: 600;">Referral
+                    </h3>
                     
                   </div>
                   <div class="col-auto">
-                    <div class="icon icon-shape bg-info text-white rounded-circle shadow">
-                      <i class="fas fa-chart-bar"></i>
-                    </div>
+                    <button class="circle btn btn-warning btn-sm">
+                      <span style="font-weight: 600;">{{referralList.length}}</span>
+                    </button>
+                    
                   </div>
                 </div>
-                <h3 class="mb-0 text-primary" style="font-size: 25px;font-weight: 600;">57</h3>
+                <h2 class="mb-0 text-primary" style="font-size: 21px;font-weight: 600;" *ngIf="referralList.length==0">N/A</h2>
+                  <h2 class="mb-0 text-primary" style="font-size: 21px;font-weight: 600;" *ngIf="referralList.length!=0">45,000 (TZS)</h2>
               </div>
             </div>
           </div>
@@ -216,7 +206,7 @@
         </div>
       </div>
       <div class="col-xl-9 col-lg-9 col-md-9 mb-xl-0 p-0 mr-2" style="padding-right: 20px !important;">
-        <div class="card shadow" style="margin-left: 10px !important;">
+        <div class="card shadow" style="margin-left: 10px !important;min-height: 290px !important;">
           <div class="card-header border-0">
             <div class="d-flex justify-content-between">
               <div>
@@ -227,35 +217,41 @@
               </div>
             </div>
           </div>
-          <div class="table-responsive">
-            <!-- Projects table -->
-            <table class="table align-items-center table-flush">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col">QuoteNo</th>
-                  <th scope="col">ReferenceNo</th>
-                  <th scope="col">CustomerName</th>
-                  <th scope="col">Remarks</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let data of referralList">
-                  <td>
-                      {{data.QuoteNo}}
-                  </td>
-                  <td>
-                    {{data.RequestReferenceNo}}
-                  </td>
-                  <td>
-                    {{data.ClientName}}
-                  </td>
-                  <td>
-                     {{data.AdminRemarks}}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <ng-container *ngIf="renewalQuoteList.length!=0">
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">QuoteNo</th>
+                    <th scope="col">ReferenceNo</th>
+                    <th scope="col">CustomerName</th>
+                    <th scope="col">Remarks</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of referralList">
+                    <td>
+                        {{data.QuoteNo}}
+                    </td>
+                    <td>
+                      {{data.RequestReferenceNo}}
+                    </td>
+                    <td>
+                      {{data.ClientName}}
+                    </td>
+                    <td>
+                       {{data.AdminRemarks}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="renewalQuoteList.length==0">
+                <div class="text-center">
+                        No Quotes Available
+                </div>
+          </ng-container>
         </div>
       </div>
     </div>
@@ -273,7 +269,6 @@
                   <button class="btn btn-primary" *ngIf="tabSection=='lapsed'">Lapsed Quotes</button>&nbsp;
                   <button class="btn btn-warning" *ngIf="tabSection!='referral'" (click)="setTabSection('referral')">Referral Pending</button>&nbsp;
                   <button class="btn btn-primary" *ngIf="tabSection=='referral'">Referral Pending</button>&nbsp;
-                  
                 </div>
               </div>
             </div>
@@ -310,13 +305,40 @@
                 </div>
               </ng-container>
               <ng-container *ngIf="tabSection=='lapsed'">
-                    
+                <div class="row mt-1">
+                  <div class="col-12 col-md-12 col-lg-12">
+                      <ng-container *ngIf="lapsedQuoteData.length!=0">
+                          <app-commodity-table [cols]="lapsedHeader" (onSchedule)="onGetSchedule($event)" [data]="lapsedQuoteData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onGetEndorsements)="onGetEndorsements($event)" (onAdd)="onInnerData($event)"  (onView)="onViews($event)">
+                          </app-commodity-table>
+                      </ng-container>
+                      <ng-container *ngIf="lapsedQuoteData.length==0">
+                          <div class="text-center spancommon span_font_size">
+                              No Records Available
+                          </div>
+                      </ng-container>
+                  </div>
+              </div>
+              </ng-container>
+              <ng-container *ngIf="tabSection=='referral'">
+                <div class="row mt-1">
+                  <div class="col-12 col-md-12 col-lg-12">
+                      <ng-container *ngIf="referralPendingList.length!=0">
+                          <app-commodity-table [cols]="referralHeader" (onSchedule)="onGetSchedule($event)" [data]="referralPendingList" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onGetEndorsements)="onGetEndorsements($event)" (onAdd)="onInnerData($event)"  (onView)="onViews($event)">
+                          </app-commodity-table>
+                      </ng-container>
+                      <ng-container *ngIf="referralPendingList.length==0">
+                          <div class="text-center spancommon span_font_size">
+                              No Records Available
+                          </div>
+                      </ng-container>
+                  </div>
+              </div>
               </ng-container>
             </div>
         </div>
     </div>
+    </div>
 </div>
-
 
 <!-- <div class="header bg-gradient-danger">
     <div class="container-fluid">

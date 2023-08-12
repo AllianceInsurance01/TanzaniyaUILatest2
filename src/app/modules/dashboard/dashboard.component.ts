@@ -1,7 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import Chart from 'chart.js';
-import * as Highcharts from 'highcharts';
-import highcharts3d from 'highcharts/highcharts-3d';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as Mydatas from '../../app-config.json';
 import { SharedService } from '../../shared/shared.service';
 // core components
@@ -13,6 +10,13 @@ import {
 } from "./variables/charts";
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
+import { ApexChart, ApexNonAxisChartSeries, ApexResponsive, ChartComponent } from 'ng-apexcharts';
+export type ChartOptions = {
+  series: ApexNonAxisChartSeries;
+  chart: ApexChart;
+  responsive: ApexResponsive[];
+  labels: any;
+};
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './dashboard.component.html',
@@ -20,13 +24,15 @@ import { formatDate } from '@angular/common';
 })
 export class DashboardComponent implements OnInit {
 
+  @ViewChild("chart") chart: ChartComponent;
+  public chartOptions: Partial<ChartOptions>;
   public datasets: any;
   public data: any;
   public salesChart;tabSection:any='policy';
   public clicked: boolean = true;
   public clicked1: boolean = false;
   referralList:any[]=[];customerList:any[]=[];
-  _chart: any;
+  _chart: any;renewalQuoteList:any[]=[];
   userDetails: any;
   loginId: any;
   agencyCode: any;
@@ -46,6 +52,9 @@ export class DashboardComponent implements OnInit {
   policyData: any[]=[];
   lapsedQuoteData: any[]=[];
   lapsedHeader: any[]=[];
+  referralPendingList: any[]=[];
+  referralHeader: any[];
+  referralApprovedSection: boolean=false;quoteSection:boolean=false;policySection:boolean=false;
   constructor(private router:Router,private sharedService: SharedService){
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -63,101 +72,87 @@ export class DashboardComponent implements OnInit {
     this.getQuotesList();
     this.getPolicyList();
     this.getLapsedList();
+    this.getReferralPendingList();
   }
   ngOnInit() {
-    this._chart = {
-      chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: true,
-        type: 'pie',
-        renderTo: 'PieChart',
-        options3d: {
-          enabled: true,
-          alpha: 45,
-          beta: 0,
-        },
-      },
-      title: {
-        text: ''
-      },
-      tooltip: {
-        pointFormat: '{series.name}: {point.y} & {point.percentage:.1f}%'
-      },
-      accessibility: {
-        point: {
-          valueSuffix: '%'
-        }
-      },
-      plotOptions: {
-        pie: {
-          allowPointSelect: true,
-          cursor: 'pointer',
-          depth: 45,
-          size: 90,
-          dataLabels: {
-            enabled: true,
-            format: '{point.name}: {point.y}({point.percentage:.1f} %)'
-          }
-        }
-      },
-      series: [{
-        name: 'Claim TotalCount & Percentage ',
-        colorByPoint: true,
-        data: [
-          { "name": 'Referral Rejected', "y": Number(3), "id": 'RR' },
-          { "name": 'Referral Pending', "y": Number(5), "id": 'RP' },
-          { "name": 'Referral Approved', "y": Number(7), "id": 'RR' }
-        ],
-        point: {
-          events: {
-            click: function (event) {
+    
+    // this._chart = {
+    //   chart: {
+    //     plotBackgroundColor: null,
+    //     plotBorderWidth: null,
+    //     plotShadow: true,
+    //     type: 'pie',
+    //     renderTo: 'PieChart',
+    //     options3d: {
+    //       enabled: true,
+    //       alpha: 45,
+    //       beta: 0,
+    //     },
+    //   },
+    //   title: {
+    //     text: ''
+    //   },
+    //   tooltip: {
+    //     pointFormat: '{series.name}: {point.y} & {point.percentage:.1f}%'
+    //   },
+    //   accessibility: {
+    //     point: {
+    //       valueSuffix: '%'
+    //     }
+    //   },
+    //   plotOptions: {
+    //     pie: {
+    //       allowPointSelect: true,
+    //       cursor: 'pointer',
+    //       depth: 45,
+    //       size: 90,
+    //       dataLabels: {
+    //         enabled: true,
+    //         format: '{point.name}: {point.y}({point.percentage:.1f} %)'
+    //       }
+    //     }
+    //   },
+    //   series: [{
+    //     name: '',
+    //     colorByPoint: true,
+    //     data: [
+    //       { "name": 'Referral Rejected', "y": Number(3), "id": 'RR' },
+    //       { "name": 'Referral Pending', "y": Number(5), "id": 'RP' },
+    //       { "name": 'Referral Approved', "y": Number(7), "id": 'RR' }
+    //     ],
+    //     point: {
+    //       events: {
+    //         click: function (event) {
              
-            },
-          }
-        }
-      }]
-    }
-    Highcharts.chart('PieChart', this._chart);
-    this.customerList = [
-      {"CustomerName":"SteveSmith","Type":"Individual"},
-      {"CustomerName":"Steve James","Type":"Individual"},
-      {"CustomerName":"Michael","Type":"Individual"},
-      {"CustomerName":"Thomas","Type":"Individual"},
-      {"CustomerName":"Peter England","Type":"Individual"},
-    ]
-    this.referralList = [
-      {"CustomerName":"SteveSmith","QuoteNo":"Q03622","ReferenceNumber":"MOT-05450","Remarks":"Test"},
-      {"CustomerName":"SteveJames","QuoteNo":"Q03623","ReferenceNumber":"MOT-05451","Remarks":"Test"},
-      {"CustomerName":"SteveSmith","QuoteNo":"Q03624","ReferenceNumber":"MOT-05452","Remarks":"Test"},
-      {"CustomerName":"SteveJames","QuoteNo":"Q03625","ReferenceNumber":"MOT-05453","Remarks":"Test"},
-      {"CustomerName":"SteveJames","QuoteNo":"Q03626","ReferenceNumber":"MOT-05454","Remarks":"Test"},
-    ]
-    this.datasets = [
-      [0, 20, 10, 30, 15, 40, 20, 60, 60],
-      [0, 20, 5, 25, 10, 30, 15, 40, 40]
-    ];
-    this.data = this.datasets[0];
+    //         },
+    //       }
+    //     }
+    //   }]
+    // }
+    // Highcharts.chart('PieChart', this._chart);
+    // this.datasets = [
+    //   [0, 20, 10, 30, 15, 40, 20, 60, 60],
+    //   [0, 20, 5, 25, 10, 30, 15, 40, 40]
+    // ];
+    // this.data = this.datasets[0];
+    // var chartOrders = document.getElementById('chart-orders');
+
+    // parseOptions(Chart, chartOptions());
 
 
-    var chartOrders = document.getElementById('chart-orders');
+    // var ordersChart = new Chart(chartOrders, {
+    //   type: 'bar',
+    //   options: chartExample2.options,
+    //   data: chartExample2.data
+    // });
 
-    parseOptions(Chart, chartOptions());
+    // var chartSales = document.getElementById('chart-sales');
 
-
-    var ordersChart = new Chart(chartOrders, {
-      type: 'bar',
-      options: chartExample2.options,
-      data: chartExample2.data
-    });
-
-    var chartSales = document.getElementById('chart-sales');
-
-    this.salesChart = new Chart(chartSales, {
-			type: 'line',
-			options: chartExample1.options,
-			data: chartExample1.data
-		});
+    // this.salesChart = new Chart(chartSales, {
+		// 	type: 'line',
+		// 	options: chartExample1.options,
+		// 	data: chartExample1.data
+		// });
   }
   getReferralApprovedList(){
     let appId = "1",loginId="",brokerbranchCode="";
@@ -189,6 +184,8 @@ export class DashboardComponent implements OnInit {
         console.log(data);
         if(data.Result){
             this.referralList = data?.Result;
+            this.referralApprovedSection = true;
+            if(this.referralApprovedSection && this.quoteSection && this.policySection) this.setChartValue();
         }
       },
       (err) => { },
@@ -481,6 +478,8 @@ export class DashboardComponent implements OnInit {
           ];
         }
             this.quoteData = data?.Result;
+            this.quoteSection = true;
+            if(this.referralApprovedSection && this.quoteSection && this.policySection) this.setChartValue();
         }
       },
       (err) => { },
@@ -596,6 +595,112 @@ export class DashboardComponent implements OnInit {
             ];
           }
             this.policyData = data?.Result;
+            this.policySection = true;
+            if(this.referralApprovedSection && this.quoteSection && this.policySection) this.setChartValue();
+        }
+      },
+      (err) => { },
+    );
+  }
+  getReferralPendingList(){
+    let appId = "1",loginId="",brokerbranchCode="";
+    if(this.userType!='Issuer'){
+      appId = "1"; loginId = this.loginId;
+      brokerbranchCode = this.brokerbranchCode;
+    }
+    else{
+      appId = this.loginId;
+      brokerbranchCode = null;
+    }
+    let ReqObj = {
+      "BrokerBranchCode": brokerbranchCode,
+      "BranchCode":this.branchCode,
+      "InsuranceId": this.insuranceId,
+      "LoginId":loginId,
+      "ApplicationId":appId,
+      "UserType":this.userType,
+      "SubUserType":sessionStorage.getItem('typeValue'),
+      "SourceType":"",
+      "BdmCode": this.agencyCode,
+       "ProductId":this.productId,
+      "Limit":"0",
+      "Offset":"1000"
+    }
+    let urlLink = `${this.CommonApiUrl}api/referralpending`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          if(this.productId=='5'){
+            this.referralHeader =  [
+              { key: 'RequestReferenceNo', display: 'Reference No' },
+              { key: 'ClientName', display: 'Customer Name' },
+              { key: 'PolicyStartDate', display: 'Policy Start Date' },
+              { key: 'PolicyEndDate', display: 'Policy End Date' },
+              
+              {
+                key: 'edit',
+                display: 'Vehicle Details',
+                sticky: false,
+                config: {
+                  isCollapse: true,
+                  isCollapseName:'Vehicles'
+                },
+              },
+              {
+                key: 'actions',
+                display: 'Action',
+                config: {
+                  isEdit: true,
+                },
+              },
+            ];
+            this.innerColumnHeader =  [
+              { key: 'Vehicleid', display: 'VehicleID' },
+              { key: 'Registrationnumber', display: 'Registration No' },
+              { key: 'Chassisnumber', display: 'Chassis No' },
+              { key: 'Vehiclemake', display: 'Make' },
+              { key: 'Vehcilemodel', display: 'Model' },
+              { key: 'PolicyTypeDesc', display: 'Policy Type' },
+              { key: 'ReferalRemarks', display: 'ReferralRemarks' },
+              { key: 'OverallPremiumFc', display: 'Premium' },
+              // {
+              //   key: 'actions',
+              //   display: 'Action',
+              //   config: {
+              //     isEdit: true,
+              //   },
+              // },
+              
+            ];
+          }
+          else{
+            this.referralHeader =  [
+              { key: 'RequestReferenceNo', display: 'Reference No' },
+              { key: 'ClientName', display: 'Customer Name' },
+              { key: 'PolicyStartDate', display: 'Policy Start Date' },
+              { key: 'PolicyEndDate', display: 'Policy End Date' },
+              { key: 'ReferalRemarks', display: 'ReferralRemarks' },
+              {
+                key: 'actions',
+                display: 'Action',
+                config: {
+                  isEdit: true,
+                },
+              },
+            ];
+            this.innerColumnHeader =  [
+              { key: 'Vehicleid', display: 'VehicleID' },
+              { key: 'Registrationnumber', display: 'Registration No' },
+              { key: 'Chassisnumber', display: 'Chassis No' },
+              { key: 'Vehiclemake', display: 'Make' },
+              { key: 'Vehcilemodel', display: 'Model' },
+              { key: 'PolicyTypeDesc', display: 'Policy Type' },
+              { key: 'ReferalRemarks', display: 'ReferralRemarks' },
+              { key: 'OverallPremiumFc', display: 'Premium' }
+            ];
+          }
+            this.referralPendingList = data?.Result;
         }
       },
       (err) => { },
@@ -707,6 +812,42 @@ export class DashboardComponent implements OnInit {
       },
       (err) => { },
     );
+  }
+  setChartValue(){
+    let seriesList = [],labelsList=[];
+    if(this.quoteData.length!=0){
+      seriesList.push(this.quoteData.length)
+      labelsList.push("Quotes");
+    }
+    if(this.policyData.length!=0){
+      seriesList.push(this.policyData.length)
+      labelsList.push("Policies");
+    }
+    if(this.referralList.length!=0){
+      seriesList.push(this.referralList.length)
+      labelsList.push("Referral Approved");
+    }
+    this.chartOptions = {
+      series: seriesList,
+      chart: {
+        width: 380,
+        type: "pie"
+      },
+      labels: labelsList,
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: "bottom"
+            }
+          }
+        }
+      ]
+    };
   }
   onInnerData(rowData){
     let ReqObj = {

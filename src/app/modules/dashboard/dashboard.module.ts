@@ -18,6 +18,7 @@ import { ReferralRejectedComponent } from '../referral/referral-rejected/referra
 import { ReferralRequoteComponent } from '../referral/referral-requote/referral-requote.component';
 import { DialogComponent } from '../Quote/dialog/dialog.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgApexchartsModule } from 'ng-apexcharts';
 //import { MotorDocumentsComponent } from 'src/app/shared/MotorDocuments/MotorDocuments.component';
 
 
@@ -48,7 +49,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MaterialModule,
     PipesModule,
     DigitOnlyModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgApexchartsModule
   ],
   bootstrap: [DashboardComponent],
   providers: [
