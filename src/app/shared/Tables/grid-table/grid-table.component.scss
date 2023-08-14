@@ -135,6 +135,12 @@
     text-Overflow: ellipsis !important;
     white-space: wrap !important;
 }
+.mat-mdc-paginator {
+    padding-bottom: 5px !important;
+}
+:host ::ng-deep .mat-mdc-paginator-page-size {
+   display: grid !important;
+}
 .my_class{
     height:25px !important;
 }

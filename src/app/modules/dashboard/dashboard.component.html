@@ -30,21 +30,30 @@
               </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6">   
-              <div class="row">
-                <div class="card-body" style="min-height:200 !important">
-                <div class="col-12 col-md-12 col-lg-12">
-                  <ng-container *ngIf="customerList.length!=0">
-                    <app-grid-table [cols]="customerheader" [data]="customerList" [dataValue]="'value'">
-                    </app-grid-table>
-                </ng-container>
-                <ng-container *ngIf="customerList.length==0">
-                    <div class="text-center">
-                        No Quote Available
+                <div class="card shadow overviewCard" >
+                  <div class="card-header overviewHeader">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <h6 class="text-uppercase ls-1 mb-1" style="font-size: 15px !important;font-weight: 600;">CUSTOMERS</h6>
+                      </div>
+                      <div>
+                      </div>
                     </div>
-                </ng-container>
+                  </div>
+                  <div class="card-body" style="min-height:200px !important;padding: 0px !important;">
+                  <div class="col-12 col-md-12 col-lg-12">
+                    <ng-container *ngIf="customerList.length!=0">
+                      <app-grid-table [cols]="customerheader" [data]="customerList" [dataValue]="'value'">
+                      </app-grid-table>
+                  </ng-container>
+                  <ng-container *ngIf="customerList.length==0">
+                      <div class="text-center">
+                          No Quote Available
+                      </div>
+                  </ng-container>
+                  </div>
+                  </div>
                 </div>
-                </div>
-              </div>
            
              
               <!-- <div class="card bg-gradient-sub shadow overviewCard" style="margin-left: 15px;">
