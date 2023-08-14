@@ -23,7 +23,7 @@ export class BankListComponent implements OnInit {
   public branchList:any;branchValue:any;
   userDetails:any;
   companyId: any=null;
-  insuranceList: { InsuranceId: string; CompanyName: string; }[];
+  insuranceList: { Code: string; CodeDesc: string; }[];
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,/*private toastrService:NbToastrService,*/) {
       this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
@@ -80,7 +80,7 @@ getCompanyList(){
     (data: any) => {
       console.log(data);
       if(data.Result){
-        let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+        let defaultObj = [{"Code":"99999","CodeDesc":"ALL"}]
         this.insuranceList = defaultObj.concat(data.Result);
         if(this.companyId) this.getBranchList('direct');
       }

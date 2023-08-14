@@ -67,7 +67,7 @@ getCompanyList(){
     (data: any) => {
       console.log(data);
       if(data.Result){
-        let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+        let defaultObj = [{"Code":"99999","CodeDesc":"ALL"}]
         this.insuranceList = defaultObj.concat(data.Result);
         if(this.insuranceId){this.getBranchList('direct');}
       }

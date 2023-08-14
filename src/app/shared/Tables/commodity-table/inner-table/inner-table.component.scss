@@ -27,7 +27,7 @@ table {
 
 }
 .mat-table {
-  table-layout: auto;
+  table-layout: fixed !important;
   white-space: nowrap !important;
   border: 2px solid #eaecf1;
   outline: none;

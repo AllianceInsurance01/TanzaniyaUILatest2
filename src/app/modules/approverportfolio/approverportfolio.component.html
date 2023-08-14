@@ -160,7 +160,7 @@
                   
                     <div>
                         <div class="row">
-                            <ng-container *ngIf="!show">
+                            <ng-container>
                           <div class="col-12 col-md-5 mt-1 mb-2 small" *ngFor="let s of tableData"  [ngClass]="{'yellow':s.length <= 3,'red':s.length > 3}">
                              <!--<div class="mb-2" style="text-align: center;margin-top:-20px;margin-left:40px !important">
                              <h1 style="background: lightblue;
@@ -209,55 +209,7 @@
                           </div>
                          
                         </ng-container>
-                        <ng-container *ngIf="show">
-                            <!-- <div class="container" style="box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);">
-                                <div>Customer Information</div>
-                                <div class="row">
-                                    <div class="col-3 col-md-3">
-                                        <span> Product Name</span><span>{{ProductName}}</span>
-                                     </div>
-                                     <div class="col-3 col-md-3">
-                                              <span>Start Date</span><span>{{startDate}}</span>
-                                     </div>
-                                     <div class="col-3 col-md-3">
-                                        <span>End Date</span><span>{{enddate}}</span>
-                                     </div>
-                                    
-                                </div>
-                            </div> -->
-                            <div class="maan-grid-item">
-                            
-                                    <div class="maan-grid-item-title p-0">
-                                        
-                                        <div class="row">
-                                            <div class="col-12 col-md-3">
-                                                <span style="color:black"><b>Product Name</b></span>:<span>{{ProductName}}</span>
-                                             </div>
-                                             <div class="col-12 col-md-3">
-                                                      <span style="color:black"><b>Broker Name</b></span>:<span>{{BrokerName}}</span>
-                                             </div>
-                                             <div class="col-12 col-md-3">
-                                                <span style="color:black"><b>Start Date</b></span>:<span>{{startDate}}</span>
-                                       </div>
-                                             <div class="col-12 col-md-3">
-                                                <span style="color:black"><b>End Date</b></span>:<span>{{enddate}}</span>
-                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            <div class="row">
-                                <div class="col-12 col-md-12">
-                                    <ng-container *ngIf="tableData1.length!=0">
-                                    <app-grid-table [cols]="quotesHeader" [data]="tableData1" (onSchedule)="onGetSchedule($event)" (onView)="onViews($event)">
-                                    </app-grid-table>
-                                     </ng-container>
-                                </div>
-                            </div>
-                           
-                            <div style="text-align: center;">
-                                <button class="custom-btn btn-5 mr-2" (click)="ongetBack()" matRipple>Back</button>
-                            </div>
-                            </ng-container>
+                     
                          
                         </div>
                       </div>

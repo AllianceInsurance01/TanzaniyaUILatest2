@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,Pipe, PipeTransform  } from '@angular/core';
+import { Component, OnInit, Input,Pipe, PipeTransform,ViewChild, OnChanges } from '@angular/core';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -17,6 +17,9 @@ import {
 } from '@angular/material/dialog';
 import {NgbModule, NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 declare var $:any;
 
 
@@ -30,7 +33,7 @@ declare var $:any;
 //@Pipe({name: 'convertFrom24To12Format'})
 
 
-export class FollowupComponent implements OnInit {
+export class FollowupComponent implements OnInit,OnChanges{
   userDetails: any;
   loginId: any;
   agencyCode: any;
@@ -58,6 +61,7 @@ export class FollowupComponent implements OnInit {
   MailHeader:any[]=[];
   ViewList: any;
   closeResult: string;
+  New:any[]=[];
   followupId:any;
   Remarks: any;
   EntryDate:any;
@@ -73,6 +77,23 @@ export class FollowupComponent implements OnInit {
   EntryDates: any;
   EndTimes: any;
   StartTimes: any;
+  NewList:any[]=[];
+  count: number;
+  FollowupDetails: any;
+  RefNo: any;
+  quoteno: any;
+  CusName: any;
+  Startdate: any;
+  enddate: any;
+  Sttartdate: any;
+  proname: string;
+  showGrids: boolean=false;
+  public dataSource: any;
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) private paginator!: MatPaginator;
+  @Input('cols') columnHeader: any[] = [];
+  Addnew: boolean=false;
+  newfollowup: any;
 
 
   constructor(private router:Router,private sharedService: SharedService, private modalService: NgbModal,private datePipe:DatePipe) {
@@ -87,10 +108,27 @@ export class FollowupComponent implements OnInit {
     this.userType = this.userDetails?.Result?.UserType;
     this.insuranceId = this.userDetails.Result.InsuranceId;
 
+    this.FollowupDetails = JSON.parse(sessionStorage.getItem('FollowUpDetails'));
+
+    this.mailRequestno=this.FollowupDetails?.RequestReferenceNo;
+    this.quoteno=this.FollowupDetails?.QuoteNo;
+    this.CusName=this.FollowupDetails?.CustomerName;
+    this.Sttartdate=this.FollowupDetails?.StartDate;
+    this.enddate=this.FollowupDetails?.QuoteNo;
+    if(this.productId=='5'){
+      this.proname="Motor"
+    }
+    else if(this.productId=='4'){
+      this.proname="Travel"
+    }
+    else if(this.productId=='3'){
+      this.proname="Domestic"
+    }
+
    
 
      
-  
+  this.onFollowup();
 
 
     /*else {
@@ -118,9 +156,9 @@ export class FollowupComponent implements OnInit {
   ngOnInit(): void {
 
     this.drop();
-    let policyObj = JSON.parse(sessionStorage.getItem('Details'));
+    // let policyObj = JSON.parse(sessionStorage.getItem('Details'));
 
-    this.mailRequestno=policyObj.RequestReferenceNo;
+    // this.mailRequestno=policyObj.RequestReferenceNo;
 
 
 
@@ -180,6 +218,8 @@ export class FollowupComponent implements OnInit {
 
  
   smsBack(){
+    // this.Addnew=false;
+    // this.showGrids=true;
     this.router.navigate(['/Home/existingQuotes'])
   }
 
@@ -196,7 +236,7 @@ export class FollowupComponent implements OnInit {
       "LoginId": this.loginId,
       "InsuranceId": this.insuranceId,
       "ProductId": this.productId,
-      "Status":this.followupId
+      "Status":"PE"
     }
        
       let urlLink = `${this.CommonApiUrl}api/getallfollowupdetails`;
@@ -205,15 +245,12 @@ export class FollowupComponent implements OnInit {
           //console.log(data);
           
           if(data.Result){
-            if(this.followupId == 'PE'){
+  
               this.MailHeader=[
                 { key: 'FollowupDesc', display: 'FollowupDesc' },
                 { key: 'StartDate', display: 'Start Date' },
-                { key: 'StartTime', display: 'StartTime' },
-                { key: 'EndTime', display: 'EndTime' },
+                { key: 'Status', display: 'Status' },
                 { key: 'Remarks', display: 'Remarks' },
-          
-          //{ key: 'RequestReferenceNo', display: 'RequestReferenceNo' },
                 {
                   key: 'View',
                   display: 'View',
@@ -230,41 +267,28 @@ export class FollowupComponent implements OnInit {
                 },
           
               ]
-            }
-          
-            else if (this.followupId =='CA' || this.followupId =="CO"){
-              this.MailHeader=[
-                { key: 'FollowupDesc', display: 'FollowupDesc' },
-                { key: 'StartDate', display: 'Start Date' },
-                { key: 'StartTime', display: 'StartTime' },
-                { key: 'EndTime', display: 'EndTime' },
-                { key: 'Remarks', display: 'Remarks' },
-          
-          //{ key: 'RequestReferenceNo', display: 'RequestReferenceNo' },
-          
-          
-                {
-                  key: 'View',
-                  display: 'View',
-                  config: {
-                    isViews:true,
-                  },
-                }, 
-          
-              ]
-            }
 
             if(data?.Result?.FollowupDetailsRes){
-            
-
               this.NotifiList= data?.Result?.FollowupDetailsRes;
+              if(this.NotifiList.length!=0){
+                this.showGrids=true;
+                this.Addnew=true;
+              }
+              else{
+                this.showGrids=false;
+                this.Addnew=false;
+              }
 
               console.log('jjjjjjjj',this.NotifiList)
               //this.FollowId=data?.Result?.FollowupDetailsRes?.FollowId;
-              
   
             } 
-            
+          //   this.NewList=[{"FollowupDesc":"New Details","StartDate":"12-08-2023","StatusDesc":"Pending","Remarks":"New","Status":"PE"},
+          //   {"FollowupDesc":"Second Details","StartDate":"15-08-2023","StatusDesc":"Completed","Remarks":"New","Status":"CP"},
+          //   {"FollowupDesc":"Third Details","StartDate":"14-08-2023","StatusDesc":"Cancelled","Remarks":"New","Status":"CA"}
+          // ]
+          // this.New=[{"FollowupDesc":"New Details","StartDate":"12-08-2023","StatusDesc":"Pending","Remarks":"New","Status":"PE"},
+            this.count=this.NewList.length;
           
           
           }
@@ -307,6 +331,8 @@ getMailTemplate(rowdata,modal){
             // this.MailBody=data.Result.MailBody;
             // this.MailRegards=data.Result.MailRegards;
             this.FollowupDesc=data?.Result?.FollowupDesc;
+
+            this.newfollowup=data?.Result?.FollowupDesc;
             this.StatusDesc=data?.Result?.StatusDesc;
             this.Status=data?.Result?.Status;
             this.StartTime=data?.Result?.StartTime;
@@ -352,23 +378,14 @@ send(modal){
   let follow
 
   console.log('yyyyyyy',this.FollowupId)
-   if(this.FollowupId !=""){
+   if(this.FollowupId !="" && this.FollowupId!=null){
       follow =this.FollowupId;
    }
    else{
       follow="";
    }
   let ReqObj= {
-    /*"CreatedBy":this.loginId,
-    "InsuranceId":this.insuranceId,
-    "NotifTemplateCode": this.templist.NotifTemplateCode,
-    "NotificationNo":this.templist.NotificationNo,
-    "ProductId":this.productId,
-    "RequestReferenceNo": this.mailRequestno,
-      "MailSubject":  this.MailSubject,
-          "MailBody":   this.MailBody,
-          "MailRegards": this.MailRegards*/
-          "InsuranceId": this.insuranceId,
+"InsuranceId": this.insuranceId,
 "EndDate": this.EndDate,
 "EndTime":  this.EndTime,
 "FollowupDesc": this.FollowupDesc,
@@ -422,7 +439,8 @@ send(modal){
         if(data.Result){
           // $('#follow_Up').modal('hide');
 
-          this.opens=false;
+          this.showGrids=true;
+          this.Addnew=true;
           this.onFollowup();
          
           modal.dismiss('Cross click');
@@ -468,7 +486,9 @@ backs(){
 }
 
 Mail(){
-  this.opens=true;
+  // this.opens=true;
+  this.Addnew=false;
+  this.showGrids=false;
   this.drop();
   //this.followupId=""
   console.log('hhhh');
@@ -525,6 +545,24 @@ onviewMail(rowdata,modal){
 
 onEditQuotes(rowdata:any,modal){
   this.open(modal);
+}
+Mails(){
+  this.opens=true;
+  this.followupId="";
+}
+
+main(){
+  this.showGrids=true;
+}
+
+ngOnChanges() {
+  console.log('OOOOOOOOOOO',this.NewList);
+  this.dataSource = new MatTableDataSource(this.NewList);
+  this.dataSource.sort = this.sort;
+  this.dataSource.paginator = this.paginator;
+}
+get keys() {
+  return this.columnHeader.map(({ key }) => key);
 }
 
 }

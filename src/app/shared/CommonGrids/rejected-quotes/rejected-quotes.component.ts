@@ -17,8 +17,9 @@ export class RejectedQuotesComponent implements OnInit {
 
   ngOnInit(): void {
     this.quoteData =  [
-      { key: 'QuoteNo', display: 'Quote No' },
+     
       { key: 'RequestReferenceNo', display: 'Reference No' },
+      { key: 'QuoteNo', display: 'Quote No' },
       { key: 'ClientName', display: 'Customer Name' },
       {
         key: 'edit',

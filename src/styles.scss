@@ -1724,7 +1724,9 @@ td {
 }
 .mat-sort-header-container {
     display:flex !important;
-    justify-content: space-around !important;
+    padding: 0 14px;
+    white-space: wrap;
+    //justify-content: space-around !important;
 }
 
 
@@ -1737,6 +1739,7 @@ td {
     overflow: hidden !important;
     text-align: left;
     text-overflow: ellipsis;
+    white-space: wrap !important;
 }
 
 .mdc-data-table__row .mdc-data-table__cell {

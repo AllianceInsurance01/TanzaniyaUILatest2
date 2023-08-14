@@ -57,12 +57,12 @@ export class ExistingQuotesComponent implements OnInit {
 
 
         this.quoteHeader =  [
-          { key: 'QuoteNo', display: 'Quote No' },
           { key: 'RequestReferenceNo', display: 'Reference No' },
+          { key: 'QuoteNo', display: 'Quote No' },
           { key: 'ClientName', display: 'Customer Name' },
           { key: 'PolicyStartDate', display: 'Start Date' },
           { key: 'PolicyEndDate', display: 'End Date' },
-          { key: 'Premium', display: 'Premium' },
+          { key: 'OverallPremiumLc', display: 'Premium' },
           {
             key: 'edit',
             display: 'Vehicle Details',
@@ -121,13 +121,13 @@ export class ExistingQuotesComponent implements OnInit {
     }
     else if(this.productId=='4'){
       this.quoteHeader =  [
-        { key: 'QuoteNo', display: 'Quote No' },
         { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'QuoteNo', display: 'Quote No' },
         { key: 'ClientName', display: 'Customer Name' },
         { key: 'PolicyStartDate', display: 'Start Date' },
         { key: 'PolicyEndDate', display: 'End Date' },
         { key: 'Count', display: 'Passengers' },
-        { key: 'Premium', display: 'Premium' },
+        { key: 'OverallPremiumLc', display: 'Premium' },
         {
           key: 'actions',
           display: 'Edit',
@@ -175,11 +175,12 @@ export class ExistingQuotesComponent implements OnInit {
     }
     else if(this.productId=='3'){
       this.quoteHeader =  [
-        { key: 'QuoteNo', display: 'Quote No' },
         { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'QuoteNo', display: 'Quote No' },
         { key: 'ClientName', display: 'Customer Name' },
-        { key: 'PolicyStartDate', display: 'Policy Start Date' },
-        { key: 'PolicyEndDate', display: 'Policy End Date' },
+        { key: 'PolicyStartDate', display: 'Start Date' },
+        { key: 'PolicyEndDate', display: 'End Date' },
+        { key: 'OverallPremiumLc', display: 'Premium' },
         /*{ key: 'Count', display: 'No.Of.Locations' },*/
         {
           key: 'actions',
@@ -227,11 +228,11 @@ export class ExistingQuotesComponent implements OnInit {
     }
     else{
       this.quoteHeader =  [
-        { key: 'QuoteNo', display: 'Quote No' },
         { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'QuoteNo', display: 'Quote No' },
         { key: 'ClientName', display: 'Customer Name' },
-        { key: 'PolicyStartDate', display: 'Policy Start Date' },
-        { key: 'PolicyEndDate', display: 'Policy End Date' },
+        { key: 'PolicyStartDate', display: 'Start Date' },
+        { key: 'PolicyEndDate', display: 'End Date' },
         { key: 'Count', display: 'No.Of.Risk' },
         {
           key: 'actions',
@@ -429,13 +430,18 @@ export class ExistingQuotesComponent implements OnInit {
   }
 
   onFollowup(rowData){
-    this.router.navigate(['/Home/Followup']);
+    console.log('QQQQQQQQQQQQQQQQ',rowData);
     let quoteObj = {
      "RequestReferenceNo": rowData.RequestReferenceNo,
-     "open":"false"
+     "QuoteNo":rowData.QuoteNo,
+     "CustomerName":rowData.ClientName,
+     "ProductId":this.productId,
+     "StartDate":rowData.PolicyStartDate,
+     "EndDate":rowData.PolicyEndDate
      //"QuoteNo":rowData.QuoteNo
    }
-   sessionStorage.setItem('Details',JSON.stringify(quoteObj));
+   sessionStorage.setItem('FollowUpDetails',JSON.stringify(quoteObj));
+   this.router.navigate(['/Home/Followup']);
   }
 
 

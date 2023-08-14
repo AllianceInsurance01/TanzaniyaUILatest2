@@ -18,11 +18,13 @@ import { DigitOnlyModule } from '@uiowa/digit-only';
 import { DirectivesModule } from '../../shared/Directives/directives.module';
 import { ApproverPortfolioComponent } from './approverportfolio.component';
 import { ApproverRoutingModule } from './approverportfolio-routing.module';
+
 //import { RejectedQuotesComponent } from './rejected-quotes.component';
 //import { RejectedQuotesRoutingModule } from './rejected-quotes-routing.module';
 @NgModule({
   declarations: [
-    ApproverPortfolioComponent
+    ApproverPortfolioComponent,
+ 
   ],
   imports: [
     CommonModule,

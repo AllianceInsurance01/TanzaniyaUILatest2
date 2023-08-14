@@ -55,6 +55,9 @@ export class DashboardComponent implements OnInit {
   referralPendingList: any[]=[];
   referralHeader: any[];
   referralApprovedSection: boolean=false;quoteSection:boolean=false;policySection:boolean=false;
+  chartSection: boolean=false;
+  customerheader: any[]=[];
+  referralHeaders: any[]=[];
   constructor(private router:Router,private sharedService: SharedService){
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -183,6 +186,18 @@ export class DashboardComponent implements OnInit {
       (data: any) => {
         console.log(data);
         if(data.Result){
+          this.referralHeaders =  [
+            { key: 'QuoteNo', display: 'Quote No' },
+            { key: 'ClientName', display: 'Customer Name' },
+            { key: 'AdminRemarks', display: 'Remarks' },
+            {
+              key: 'actions',
+              display: 'Action',
+              config: {
+                isEdit: true,
+              },
+            },
+          ];
             this.referralList = data?.Result;
             this.referralApprovedSection = true;
             if(this.referralApprovedSection && this.quoteSection && this.policySection) this.setChartValue();
@@ -216,6 +231,10 @@ export class DashboardComponent implements OnInit {
     (data: any) => {
       console.log(data);
       if(data.Result){
+        this.customerheader =  [
+          { key: 'ClientName', display: 'Customer Name' },
+          { key: 'PolicyHolderTypeDesc', display: 'Type' },
+        ];
           this.customerList = data?.Result;
           
       }
@@ -261,7 +280,7 @@ export class DashboardComponent implements OnInit {
               { key: 'RequestReferenceNo', display: 'Reference No' },
               { key: 'ClientName', display: 'Customer Name' },
               { key: 'PolicyStartDate', display: 'Start Date' },
-              { key: 'PolicyEndDate', display: 'End Date' },
+              // { key: 'PolicyEndDate', display: 'End Date' },
               { key: 'Premium', display: 'Premium' },
               {
                 key: 'edit',
@@ -272,20 +291,20 @@ export class DashboardComponent implements OnInit {
                   isCollapseName:'Vehicles'
                 },
               },
-              {
-                key: 'actions',
-                display: 'Edit',
-                config: {
-                  //isView:true,
-                  isEdit: true,
-                  // isReject: true,
-                },
-              },
+              // {
+              //   key: 'actions',
+              //   display: 'Edit',
+              //   config: {
+              //     //isView:true,
+              //     isEdit: true,
+              //     // isReject: true,
+              //   },
+              // },
               {
                 key: 'mail',
                 display: 'Action',
                 config: {
-                  ismailConfig: true,
+                  isNewConfig: true,
                 },
               },
               // {
@@ -325,7 +344,7 @@ export class DashboardComponent implements OnInit {
             { key: 'RequestReferenceNo', display: 'Reference No' },
             { key: 'ClientName', display: 'Customer Name' },
             { key: 'PolicyStartDate', display: 'Start Date' },
-            { key: 'PolicyEndDate', display: 'End Date' },
+            // { key: 'PolicyEndDate', display: 'End Date' },
             { key: 'Count', display: 'Passengers' },
             { key: 'Premium', display: 'Premium' },
             {
@@ -520,9 +539,9 @@ export class DashboardComponent implements OnInit {
               { key: 'QuoteNo', display: 'Quote No' },
               { key: 'ClientName', display: 'Customer Name' },
               // { key: 'RequestReferenceNo', display: 'Reference No' },
-              { key: 'Premium', display: 'Premium' },
+              { key: 'OverallPremiumLc', display: 'Premium' },
               { key: 'PolicyStartDate', display: 'Start Date' },
-              { key: 'PolicyEndDate', display: 'End Date' },
+              //  { key: 'PolicyEndDate', display: 'End Date' },
               
               //{ key: 'ClientName', display: 'Customer Name' },
               // { key: 'CreditNo', display: 'Credit Note No' },
@@ -568,10 +587,11 @@ export class DashboardComponent implements OnInit {
             this.policyHeader =  [
               { key: 'OriginalPolicyNo', display: 'Policy No' },
               { key: 'QuoteNo', display: 'Quote No' },
-              { key: 'RequestReferenceNo', display: 'Reference No' },
+              //{ key: 'RequestReferenceNo', display: 'Reference No' },
               { key: 'ClientName', display: 'Insured Name' },
+              {key:'OverallPremiumLc', display:'Premium'},
               { key: 'PolicyStartDate', display: 'Policy Start Date' },
-              { key: 'PolicyEndDate', display: 'Policy End Date' },
+              // { key: 'PolicyEndDate', display: 'Policy End Date' },
       
               // { key: 'CreditNo', display: 'Credit Note No' },
               // { key: 'DebitNoteNo', display: 'Debit Note No' },
@@ -831,6 +851,7 @@ export class DashboardComponent implements OnInit {
       series: seriesList,
       chart: {
         width: 380,
+        height: 200,
         type: "pie"
       },
       labels: labelsList,
@@ -839,7 +860,7 @@ export class DashboardComponent implements OnInit {
           breakpoint: 480,
           options: {
             chart: {
-              width: 200
+              width: 200,
             },
             legend: {
               position: "bottom"
@@ -848,6 +869,7 @@ export class DashboardComponent implements OnInit {
         }
       ]
     };
+    this.chartSection = true;
   }
   onInnerData(rowData){
     let ReqObj = {

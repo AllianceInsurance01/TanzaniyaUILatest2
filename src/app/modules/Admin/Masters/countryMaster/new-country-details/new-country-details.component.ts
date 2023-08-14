@@ -128,7 +128,8 @@ export class NewCountryDetailsComponent implements OnInit {
       "MobileCode": this.CountryDetails.MobileCode,
       "Status": this.CountryDetails.Status,
       "RegulatoryCode": this.CountryDetails.RegulatoryCode,
-      "Remarks":this.CountryDetails.Remarks
+      "Remarks":this.CountryDetails.Remarks,
+      "Nationality":this.CountryDetails.Nationality
     }
     let urlLink = `${this.CommonApiUrl}master/insertcountry`;
   if (ReqObj.EffectiveDateStart != '' && ReqObj.EffectiveDateStart != null && ReqObj.EffectiveDateStart != undefined) {

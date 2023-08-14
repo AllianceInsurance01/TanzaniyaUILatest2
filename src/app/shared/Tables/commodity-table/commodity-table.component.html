@@ -122,6 +122,21 @@
                                
                             </mat-menu>
                         </ng-container>
+                        <ng-container *ngIf="col.config.isNewConfig">
+                            <button mat-button [matMenuTriggerFor]="menu">
+                                <i class="fas fa-cog"></i>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="onEdit.emit(element)"><i class="fas fa-marker"></i>&nbsp;Edit</button>
+                                <button mat-menu-item (click)="onMail.emit(element)"><i class="fa fa-envelope"></i>&nbsp;Mail</button>
+                                <button mat-menu-item (click)="onSms.emit(element)"><i class="fas fa-sms" style="font-size:22px;color:lightcoral"></i>&nbsp;SMS</button>
+                                <button mat-menu-item (click)="onFollowup.emit(element)"><i class="fa-solid fa-user"></i>&nbsp;FollowUp</button>
+                                <button mat-menu-item *ngIf="element.QuoteNo!=null" (click)="onView.emit(element)"><i class="fas fa-eye" style='color:lightskyblue'></i>&nbsp;View</button>
+                                <button mat-menu-item (click)="onReject.emit(element)"><i class='fa fa-times' style='color: red'></i>&nbsp;Reject</button>
+                               
+                               
+                            </mat-menu>
+                        </ng-container>
                         <ng-container *ngIf="col.config.isCollapse">
                             <button class="btn btn-light btnVehicle" shape="round" size="tiny" (click)="onPassData(element,j);expandedElement = expandedElement === element ? null : element;">
                         <ng-container *ngIf="element.CommodityNotInResponse">

@@ -10,7 +10,7 @@
     <div>
         <div class="card-body">
             <div class="row">
-                <div class="col-12 col-md-10 col-lg-10 offset-1">
+                <div class="col-12 col-md-12 col-lg-12">
                     <ng-container *ngIf="quoteData.length!=0">
                         <app-commodity-table [cols]="quoteHeader" [data]="quoteData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onAdd)="onInnerData($event)" (onActive)="onActiveDetals($event)">
                         </app-commodity-table>

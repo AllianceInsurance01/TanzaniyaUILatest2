@@ -16,7 +16,7 @@
                                     <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
                                         <div class="headcommon">
                                             <span><i class="fas fa-home mx-1 mt-3"></i></span>
-                                            <span class="spancommon span_font_size" style="font-weight:600">Building Details</span>
+                                            <span class="spancommon span_font_size" style="font-weight:600">Location/Building Details</span>
                                         </div>
                                         <div *ngIf="sumInsured">
                                             Currency({{currencyValue}})
@@ -219,7 +219,7 @@
                     <div class="text-center mt-1 mb-2">
                         <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack()"  routerLinkActive="router-link-active"><<&nbsp;Back</button>
                         <!-- <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="building.length!=0 && !enableBuildingEditSection" (click)="AddNew()"><i class="fa fa-plus-circle"></i>&nbsp; Add New</button> -->
-                        <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="building.length!=0 && !enableBuildingEditSection" style="width: 11rem;" matRipple (click)="onSave(null)" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Save Building Details</button>
+                        <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="building.length!=0 && !enableBuildingEditSection" matRipple (click)="onSave(null)" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
                     <!--<mat-paginator
                         (page)="handlePageEvent($event)"

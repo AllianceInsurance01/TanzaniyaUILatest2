@@ -21,7 +21,7 @@ export class ExistingOccupationsComponent implements OnInit {
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   branchList: any[]=[];branchValue:any;userDetails:any;
   pro: any;
-  insuranceList: { InsuranceId: string; CompanyName: string; }[];
+  insuranceList: { Code: string; CodeDesc: string; }[];
   constructor(private router:Router,private sharedService: SharedService) {
 
      //this.productId =  sessionStorage.getItem('companyProductId');
@@ -100,7 +100,7 @@ export class ExistingOccupationsComponent implements OnInit {
       (data: any) => {
         console.log(data);
         if(data.Result){
-          let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+          let defaultObj = [{"Code":"99999","CodeDesc":"ALL"}]
           this.insuranceList = defaultObj.concat(data.Result);
           if(this.insuranceId){this.getBranchList('direct');}
         }

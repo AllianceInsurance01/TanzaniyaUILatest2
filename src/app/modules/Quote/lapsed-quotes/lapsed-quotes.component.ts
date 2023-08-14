@@ -32,9 +32,12 @@ export class LapsedQuotesComponent implements OnInit {
     sessionStorage.removeItem('vehicleDetailsList');
     if(this.productId=='5'){
       this.quoteHeader =  [
-        { key: 'QuoteNo', display: 'Quote No' },
         { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'QuoteNo', display: 'Quote No' },
         { key: 'ClientName', display: 'Customer Name' },
+        { key: 'PolicyStartDate', display: 'Start Date' },
+        { key: 'PolicyEndDate', display: 'End Date' },
+        { key: 'OverallPremiumLc', display: 'Premium' },
         {
           key: 'edit',
           display: 'Vehicle Details',
@@ -70,11 +73,12 @@ export class LapsedQuotesComponent implements OnInit {
     }
     else if(this.productId=='4'){
       this.quoteHeader =  [
-        { key: 'QuoteNo', display: 'Quote No' },
         { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'QuoteNo', display: 'Quote No' },
         { key: 'ClientName', display: 'Customer Name' },
-        { key: 'PolicyStartDate', display: 'Policy Start Date' },
-        { key: 'PolicyEndDate', display: 'Policy End Date' },
+        { key: 'PolicyStartDate', display: 'Start Date' },
+        { key: 'PolicyEndDate', display: 'End Date' },
+        { key: 'OverallPremiumLc', display: 'Premium' },
         { key: 'Count', display: 'Passengers' },
         {
           key: 'actions',
@@ -87,11 +91,12 @@ export class LapsedQuotesComponent implements OnInit {
     }
     else{
       this.quoteHeader =  [
-        { key: 'QuoteNo', display: 'Quote No' },
         { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'QuoteNo', display: 'Quote No' },
         { key: 'ClientName', display: 'Customer Name' },
-        { key: 'PolicyStartDate', display: 'Policy Start Date' },
-        { key: 'PolicyEndDate', display: 'Policy End Date' },
+        { key: 'PolicyStartDate', display: 'Start Date' },
+        { key: 'PolicyEndDate', display: 'End Date' },
+        { key: 'OverallPremiumLc', display: 'Premium' },
         { key: 'Count', display: 'No.Of.Risk' },
         {
           key: 'actions',

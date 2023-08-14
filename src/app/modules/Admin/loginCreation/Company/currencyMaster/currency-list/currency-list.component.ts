@@ -22,7 +22,7 @@ export class CurrencyListComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl1: any = this.AppConfig.CommonApiUrl;
   dialogService: any;
-  insuranceList: { InsuranceId: string; CompanyName: string; }[];
+  insuranceList: { Code: string; CodeDesc: string; }[];
   constructor(private router:Router, private sharedService: SharedService) {
     this.activeMenu = "Currency";
     this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
@@ -154,7 +154,7 @@ export class CurrencyListComponent implements OnInit {
       (data: any) => {
         console.log(data);
         if(data.Result){
-          let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+          let defaultObj = [{"Code":"99999","CodeDesc":"ALL"}]
           this.insuranceList = defaultObj.concat(data.Result);
           if(this.insuranceId) {this.getExistingCurrency('direct')}
            //{this.getBranchList('direct'); this.getCompanyProductList('direct');}

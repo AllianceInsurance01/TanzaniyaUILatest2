@@ -2279,8 +2279,8 @@
         <div class="row botomdisplay">
             <div class="row">
 
-                <div class="col-12 col-lg-7 col-xl-7 col-md-7">
-                    <div class="text-center my-3" style="margin-right: 25px;">
+                <div class="col-12 col-lg-7 col-xl-7 col-md-7 offset-2">
+                    <div class="text-center my-3">
                         <button class="custom-btn btn-5 mx-2" matRipple (click)="ongetBack()"><<&nbsp;Back</button>
                         <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="!adminSection && statusValue == 'RA'" (click)="onFormSubmit()">Proceed</button>
                         <button class="custom-btn btn-6 maan-button-data  mx-2" matRipple *ngIf="adminSection" (click)="onUpdateFactor('calculate')">Calculate</button>
@@ -2795,8 +2795,8 @@
                     </ul>
                 </div>
             </div> -->
-    
-    <div class="col-3 col-md-3 col-lg-3 col-xl-3 offset-9 display1 dialogContainer">
+    <!-- Premium Details Strip -->
+    <!-- <div class="col-3 col-md-3 col-lg-3 col-xl-3 offset-9 display1 dialogContainer">
         <div class="accordion" id="accordionPanelsStayOpenExample" style="width: 27rem;float: right; margin-right: 10px;">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="panelsStayOpen-headingOne" style="height: 25px;">
@@ -2839,7 +2839,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <!-- <div class="accordion" id="accordionExample">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
@@ -2880,8 +2880,8 @@
             </div>
         </div> -->
 
-    </div>
-    <div class="col-3 col-md-3 col-lg-3 col-xl-3 offset-9 display2 dialogContainer">
+    <!--</div>-->
+    <!--<div class="col-3 col-md-3 col-lg-3 col-xl-3 offset-9 display2 dialogContainer">
         <div class="accordion" id="accordionPanelsStayOpenExample" style="width: 300px;float: right; margin-right: 10px;">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="panelsStayOpen-headingOne" style="height: 25px;">
@@ -2925,47 +2925,8 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="accordion" id="accordionExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Accordion Item #1
-                    </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show w3-animate-top  referal-status" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <ul class="list-group mt-2">
-                            <li class="list-item-value">
-                                <div><span class="spancommon">Customer Name</span></div>
-                                <div><span class="spancommon" style="color: #0056b3!important;">{{clientName}}</span>
-                                </div>
-                            </li>
-                            <li class="list-item-value">
-                                <div><span class="spancommon">Customer Type</span></div>
-                                <div><span class="spancommon" style="color: #0056b3!important;">{{clientType}}</span></div>
-                            </li>
-                            <li class="list-item-value">
-                                <div><span class="spancommon">Mobile No</span></div>
-                                <div><span class="spancommon" style="color: #0056b3!important;">{{mobileNo}}</span>
-                                </div>
-                            </li>
-                            <li class="list-item-value">
-                                <div><span class="spancommon">Promo Code</span></div>
-                                <div><span class="spancommon" style="color: #0056b3!important;">{{promoCode}}</span>
-                                </div>
-                            </li>
-                            <li class=" list-item-value">
-                                <div><b><span class="spancommon span_font_size">Total Premium</span></b></div>
-                                <div><b><span class="spancommon span_font_size" style="color: #0056b3!important;">{{totalPremium | number :
-                                            '1.2-2'}}&nbsp;({{currencyCode}})</span></b></div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div> -->
 
-    </div>
+    </div> -->
     <ng-template #myView let-modal>
         <div class="modal-header">
             <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Cover

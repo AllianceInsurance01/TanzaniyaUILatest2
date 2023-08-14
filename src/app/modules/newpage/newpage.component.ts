@@ -23,12 +23,12 @@ import Swal from 'sweetalert2';
 
 
 @Component({
-  selector: 'app-approverportfolio',
-  templateUrl: './approverportfolio.component.html',
-  styleUrls: ['./approverportfolio.component.scss'],
+  selector: 'app-newpage',
+  templateUrl: './newpage.component.html',
+  styleUrls: ['./newpage.component.scss'],
 })
 
-export class ApproverPortfolioComponent implements OnInit,OnChanges, AfterViewInit{
+export class NewComponent implements OnInit,OnChanges, AfterViewInit{
   
   StartDate:any;minDate:any;TemplateList:any[]=[];EndDate:any;bussinesstype:any;
   branchValue:any;branchList:any[]=[];
@@ -54,6 +54,7 @@ export class ApproverPortfolioComponent implements OnInit,OnChanges, AfterViewIn
   newlogin: any;
   newproductId: any;
   page: any;rowdata:any;
+  ProductId: any;
   // @Output('Currency') Currency:any=sessionStorage.getItem('CurrencyidLogin');;
   constructor(private datePipe:DatePipe,public sharedService: SharedService,private router:Router){
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -63,75 +64,27 @@ export class ApproverPortfolioComponent implements OnInit,OnChanges, AfterViewIn
  this.loginId = this.userDetails.Result.LoginId;
   }
     ngOnInit(): void {
-      this.getBranchList('direct');
+    
+    //   let CustomerObj = JSON.parse(sessionStorage.getItem('editdetails'));
+    //   console.log('HHHHHHHHHHHH',CustomerObj);
       
-      this.quoteHeader =  [
-        { key: 'BrokerName', display: 'Broker' },
-        { key: 'SubUserType', display: 'Channel' },
-        {
-          key: 'actions',
-          display: 'Count',
-          config: {
-            isTotalCount:true,
-          },
-        },
-        {
-          key: 'edit',
-          display: 'Premium',
-          config: {
-            isPremium:true,
-          },
-        },
-        // { key: 'TotalCount', display: 'Count' },
-        // { key: 'TotalPremiumLc', display: 'Premium' },
-      ];
-
-      let CustomerObj = JSON.parse(sessionStorage.getItem('datedetails'));
-      if(CustomerObj){
-     
-     this.StartDate=CustomerObj?.StartDate;
-     this.EndDate=CustomerObj?.EndDate;
-     this.branchValue=CustomerObj?.BranchCode;
-     this.bussinesstype=CustomerObj?.Businesstype;
-
-     if(this.StartDate){
-      this.StartDate=this.onDateFormatInEdit(this.StartDate);
-     }
-    else{
-      this.StartDate=''
-    }
-    if(this.EndDate){
-      this.EndDate=this.onDateFormatInEdit(this.EndDate);
-     }
-    else{
-      this.EndDate=''
-    }
-     console.log('PPPPPPPPPPPPPPP',this.StartDate);
-      this.getsearchlist(this.bussinesstype);
-      console.log( this.StartDate,this.EndDate);
-      }
-  
-    }
-
-    onDateFormatInEdit(date) {
-      console.log(date);
-      if (date) {
-        let format = date.split('-');
-        if(format.length >1){
-          var NewDate = new Date(new Date(format[0], format[1], format[2]));
-          NewDate.setMonth(NewDate.getMonth() - 1);
-          return NewDate;
-        }
-        else{
-          format = date.split('/');
-          if(format.length >1){
-            var NewDate = new Date(new Date(format[2], format[1], format[0]));
-            NewDate.setMonth(NewDate.getMonth() - 1);
-            return NewDate;
-          }
-        }
-  
-      }
+    //   if (CustomerObj){
+    //   this.newproductId=CustomerObj?.ProductId,
+    //   this.ProductName=CustomerObj?.ProductName,
+    //     this.bussinesstype=CustomerObj?.BusinessType,
+    //     this.startDate=CustomerObj?.StartDate,
+    //   this.enddate=CustomerObj?.EndDate,
+    //   this.branchValue=CustomerObj?.BranchCode,
+    //   this.newlogin=CustomerObj?.Login,
+    //   this.page=CustomerObj?.page,
+    //   console.log('ooooooooo',this.page);
+    //   this.rowdata=CustomerObj?.rowData
+    //   if(this.page=='new'){
+    //     this.show=true;
+    //     this.onTotal(this.rowdata,this.ProductName,this.newproductId);
+    //   }
+    // }
+    this.onTotal();
     }
 
     getBranchList(type){
@@ -149,7 +102,6 @@ export class ApproverPortfolioComponent implements OnInit,OnChanges, AfterViewIn
         if(data.Result){
           let obj = [{Code:"99999",CodeDesc:"ALL"}];
           this.branchList = obj.concat(data?.Result);
-          this.getBussinessType('direct');
           //if(!this.branchValue){ this.branchValue = "99999"; this.getVehicleUsage() }
           // let docObj = JSON.parse(sessionStorage.getItem('addVehicle'))
           // if(docObj){ this.branchValue = docObj?.branch;
@@ -164,9 +116,6 @@ export class ApproverPortfolioComponent implements OnInit,OnChanges, AfterViewIn
 
 
     getBussinessType(type){
-      if(type=='change'){
-        this.bussinesstype=""
-      }
       let ReqObj = {
         "InsuranceId":this.insuranceId,
          "BranchCode": this.branchValue
@@ -181,7 +130,7 @@ export class ApproverPortfolioComponent implements OnInit,OnChanges, AfterViewIn
       (err) => { },
     );
     }
-    getsearchlist(bussinesstype){
+    getsearchlist(bussinesstype,productId){
           if(bussinesstype == 'N' || bussinesstype == 'C' || bussinesstype == 'E'){
             this.geteditList();
           }
@@ -248,148 +197,135 @@ this.enddate=this.datePipe.transform(this.EndDate, "dd/MM/yyyy");
           );
           }
 
-          onTotal(rowdata,ProductName,ProductId){
-
-              let quoteObj = {
-              "ProductId":ProductId,
-              "ProductName":ProductName,
+          onTotal(){
+            this.show=true;
+            let CustomerObj = JSON.parse(sessionStorage.getItem('editdetails'));
+      console.log('HHHHHHHHHHHH',CustomerObj);
+      
+      if (CustomerObj){
+      this.newproductId=CustomerObj?.ProductId,
+      this.ProductName=CustomerObj?.ProductName,
+        this.bussinesstype=CustomerObj?.BusinessType,
+        this.startDate=CustomerObj?.StartDate,
+      this.enddate=CustomerObj?.EndDate,
+      this.branchValue=CustomerObj?.BranchCode,
+      this.newlogin=CustomerObj?.LoginId,
+      this.page=CustomerObj?.page,
+      console.log('ooooooooo',this.page);
+      this.rowdata=CustomerObj?.rowData
+      }
+          
+            console.log('PPPPPPPPPP',this.ProductName);
+            // this.newproductId=ProductId;
+            if(this.bussinesstype == 'N' || this.bussinesstype == 'C' || this.bussinesstype == 'E'){
+              this.quotesHeader=[
+                // { key: 'BrokerName', display: 'Broker Name' },
+                { key: 'QuoteNo', display: 'Quote No' },
+                { key: 'PolicyNo', display: 'Policy No' },
+                { key: 'PolicyStartDate', display: 'Policy StartDate' },
+                { key: 'PolicyEndDate', display: 'Policy EndDate' },
+                {
+                  key: 'edit',
+                  display: 'Premium',
+                  config: {
+                    isPremiums:true,
+                  },
+                },
+                {
+                  key: 'actions',
+                  display: 'Action',
+                  config: {
+                    isPolicyConfig: true,
+                  },
+                },
+                // {
+                //   key: 'actions',
+                //   display: 'Schedule / View',
+                //   config: {
+                //     isViews:true,
+                //     isEdit: true,
+                    
+                //   },
+                // },
+                // { key: 'OverallPremiumLc', display: 'Premium' }, 
+                // { key:'StatusDesc', display:'Status Desc'},
+                // {key:'UserType',display:'UserType'}
+              ]
+            }
+        
+              if(this.bussinesstype == 'Q'){
+              this.quotesHeader=[
+                 {key:'RequestReferenceNo',display: 'Request ReferenceNo' },
+                // { key: 'BrokerName', display: 'Broker Name' },
+                { key: 'QuoteNo', display: 'Quote No' },
+                { key: 'PolicyNo', display: 'Policy No' },
+                { key: 'PolicyStartDate', display: 'Policy StartDate' },
+                { key: 'PolicyEndDate', display: 'Policy EndDate' },
+                // { key: 'OverallPremiumLc', display: 'Premium' }, 
+                {
+                  key: 'edit',
+                  display: 'Premium',
+                  config: {
+                    isPremiums:true,
+                  },
+                },
+                {
+                  key: 'actions',
+                  display: 'Action',
+                  config: {
+                    isPolicyConfig: true,
+                  },
+                },
+                // { key:'StatusDesc', display:'Status Desc'},
+                // {key:'UserType',display:'UserType'}
+              ]
+            }
+           
+              //  let startDate = this.datePipe.transform(this.StartDate, "dd/MM/yyyy");
+              //  let enddate=this.datePipe.transform(this.EndDate, "dd/MM/yyyy");
+               let ReqObj={
+                "InsuranceId":this.insuranceId,
               "BusinessType": this.bussinesstype,
                "StartDate":this.startDate,
               "EndDate":this.enddate,
               "BranchCode":this.branchValue,
-              "LoginId":rowdata.BrokerLoginId,
-              "page":'new',
-              "rowData":rowdata
+              "LoginId":this.newlogin,
+              "ProductId": this.newproductId,
+              "Limit":"0",
+              "Offset":"1000"
             }
-            console.log('PPPPPPPP');
-            sessionStorage.setItem('editdetails',JSON.stringify(quoteObj));
-            this.router.navigate(['Home/NewDetails']);
-            // this.show=true;
-          
-            // this.ProductName=ProductName;
-            // console.log('PPPPPPPPPP',this.ProductName);
-            // this.BrokerName=rowdata.BrokerName;
-            // this.newlogin=rowdata.BrokerLoginId;
-            // // this.newproductId=ProductId;
-            // if(this.bussinesstype == 'N' || this.bussinesstype == 'C' || this.bussinesstype == 'E'){
-            //   this.quotesHeader=[
-            //     // { key: 'BrokerName', display: 'Broker Name' },
-            //     { key: 'QuoteNo', display: 'Quote No' },
-            //     { key: 'PolicyNo', display: 'Policy No' },
-            //     { key: 'PolicyStartDate', display: 'Policy StartDate' },
-            //     { key: 'PolicyEndDate', display: 'Policy EndDate' },
-            //     {
-            //       key: 'edit',
-            //       display: 'Premium',
-            //       config: {
-            //         isPremiums:true,
-            //       },
-            //     },
-            //     {
-            //       key: 'actions',
-            //       display: 'Action',
-            //       config: {
-            //         isPolicyConfig: true,
-            //       },
-            //     },
-            //     // {
-            //     //   key: 'actions',
-            //     //   display: 'Schedule / View',
-            //     //   config: {
-            //     //     isViews:true,
-            //     //     isEdit: true,
-                    
-            //     //   },
-            //     // },
-            //     // { key: 'OverallPremiumLc', display: 'Premium' }, 
-            //     // { key:'StatusDesc', display:'Status Desc'},
-            //     // {key:'UserType',display:'UserType'}
-            //   ]
-            // }
-        
-            //   if(this.bussinesstype == 'Q'){
-            //   this.quotesHeader=[
-            //      {key:'RequestReferenceNo',display: 'Request ReferenceNo' },
-            //     // { key: 'BrokerName', display: 'Broker Name' },
-            //     { key: 'QuoteNo', display: 'Quote No' },
-            //     { key: 'PolicyNo', display: 'Policy No' },
-            //     { key: 'PolicyStartDate', display: 'Policy StartDate' },
-            //     { key: 'PolicyEndDate', display: 'Policy EndDate' },
-            //     // { key: 'OverallPremiumLc', display: 'Premium' }, 
-            //     {
-            //       key: 'edit',
-            //       display: 'Premium',
-            //       config: {
-            //         isPremiums:true,
-            //       },
-            //     },
-            //     {
-            //       key: 'actions',
-            //       display: 'Action',
-            //       config: {
-            //         isPolicyConfig: true,
-            //       },
-            //     },
-            //     // { key:'StatusDesc', display:'Status Desc'},
-            //     // {key:'UserType',display:'UserType'}
-            //   ]
-            // }
-            //    console.log('IIIIIIIIII',rowdata);
-            //   //  let startDate = this.datePipe.transform(this.StartDate, "dd/MM/yyyy");
-            //   //  let enddate=this.datePipe.transform(this.EndDate, "dd/MM/yyyy");
-            //    let ReqObj={
-            //     "InsuranceId":this.insuranceId,
-            //   "BusinessType": this.bussinesstype,
-            //    "StartDate":this.startDate,
-            //   "EndDate":this.enddate,
-            //   "BranchCode":this.branchValue,
-            //   "LoginId":this.newlogin,
-            //   "ProductId":ProductId,
-            //   "Limit":"0",
-            //   "Offset":"1000"
-            // }
-            // let urlLink = `${this.CommonApiUrl}api/admin/portfoliogrid`;
-            // this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-            //   (data: any) => {
-            //     if(data?.Result){
-            //       this.tableData1=data.Result;
-            //       console.log('Bussiness Type',this.tableData1);
+            let urlLink = `${this.CommonApiUrl}api/admin/portfoliogrid`;
+            this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+              (data: any) => {
+                if(data?.Result){
+                  this.tableData1=data.Result;
+                  console.log('Bussiness Type',this.tableData1);
                   
-            //     }
-            //   },
-            //   (err) => { },
-            // );
-            // let quoteObj = {
-            //   "ProductId":ProductId,
-            //   "ProductName":this.ProductName,
-            //   "BusinessType": this.bussinesstype,
-            //    "StartDate":this.startDate,
-            //   "EndDate":this.enddate,
-            //   "BranchCode":this.branchValue,
-            //   "LoginId":rowdata.BrokerLoginId,
-            //   "page":'new',
-            //   "rowData":rowdata
-            // }
-            // sessionStorage.setItem('editdetails',JSON.stringify(quoteObj));
-            // let quote={
-            //   "bussinesstype":this.bussinesstype,
-            //   "startDate":this.StartDate,
-            //   "EndDate":this.EndDate
-            // }
-            // sessionStorage.setItem('datedetials',JSON.stringify(quote));
+                }
+              },
+              (err) => { },
+            );
+           
+            let quote={
+              "bussinesstype":this.bussinesstype,
+              "startDate":this.startDate,
+              "EndDate":this.enddate
+            }
+            sessionStorage.setItem('datedetials',JSON.stringify(quote));
           }
 
-          // ongetBack(){
-          //      this.show=false;
-          //      let CustomerObj = JSON.parse(sessionStorage.getItem('datedetails'));
-          //      let buss=CustomerObj?.bussinesstype;
-          //     this.StartDate=CustomerObj?.startDate;
-          //     this.EndDate=CustomerObj?.EndDate;
-          //      this.getsearchlist(buss,this.productId);
-          //      console.log( this.StartDate,this.EndDate);
-
-              
-          // }
+          ongetBack(){
+           
+            let quoteObj = {
+             "Businesstype":this.bussinesstype,
+             "StartDate":this.startDate,
+             "EndDate":this.enddate,
+             "BranchCode":this.branchValue
+            }
+            //sessionStorage.setItem('FromDetails',JSON.stringify(quoteObj));
+            sessionStorage.setItem('datedetails',JSON.stringify(quoteObj));
+            this.router.navigate(['Home/ApproverPortfolio']);
+          }
           ngOnChanges() {
             // this.dataSource = new MatTableDataSource(this.tableData);
             // this.dataSource.paginator = this.paginatorFirst;

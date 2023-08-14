@@ -18,7 +18,7 @@ export class ExisitingDropdownsComponent implements OnInit {
   public CommonApiUrl1:any = this.AppConfig.CommonApiUrl;
   public ApiUrl1:any = this.AppConfig.ApiUrl1;tableList:any;
   TypeList:any[]=[];TypeValue:any;
-  insuranceList: { InsuranceId: string; CompanyName: string; }[];
+  insuranceList: { Code: string; CodeDesc: string; }[];
 
 
   public branchList:any;branchValue:any;BranchCode:any;insuranceId:any;
@@ -108,7 +108,7 @@ export class ExisitingDropdownsComponent implements OnInit {
       (data: any) => {
         console.log(data);
         if(data.Result){
-          let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+          let defaultObj = [{"Code":"99999","CodeDesc":"ALL"}]
           this.insuranceList = defaultObj.concat(data.Result);
           if(this.insuranceId){this.getList('direct');}
         }

@@ -8,6 +8,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MotorDocumentsComponent } from './MotorDocuments.component';
 import { MotorCustomerInfoComponent } from './MotorCustomerInfo/MotorCustomerInfo.component';
 import { vechileCustomer } from './VechileCustomer/vechileCustomer.component';
+import { PaymentComponent } from './Payment/Payment.component';
 
 
 
@@ -28,12 +29,12 @@ const routes: Routes = [
   },
 
   {
-    path: 'VechileCustomer',
-    component:vechileCustomer,
+    path: 'PaymentComponent',
+    component:PaymentComponent,
     data: {
       preload: true,
-      title: 'VechileCustomerInfo',
-      breadcrumb:  'Vechile Customer Info',
+      title: 'Payment Info',
+      breadcrumb:  'Payment Info',
     }
   },
   /*{

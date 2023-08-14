@@ -39,7 +39,8 @@ export class PoliciesComponent implements OnInit {
         { key: 'QuoteNo', display: 'Quote No' },
         { key: 'ClientName', display: 'Customer Name' },
         // { key: 'RequestReferenceNo', display: 'Reference No' },
-        { key: 'Premium', display: 'Premium' },
+        { key: 'Currency', display: 'Currency' },
+        { key: 'OverallPremiumLc', display: 'Premium' },
         { key: 'PolicyStartDate', display: 'Start Date' },
         { key: 'PolicyEndDate', display: 'End Date' },
         

@@ -22,7 +22,7 @@ export class ColorListComponent implements OnInit {
   ColorData: any[]=[];
   BranchCode: any;userDetails:any;
   title:string|any;
-  insuranceList: { InsuranceId: string; CompanyName: string; }[];
+  insuranceList: { Code: string; CodeDesc: string; }[];
   constructor(private router:Router,private sharedService: SharedService) {
     //this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -60,7 +60,7 @@ export class ColorListComponent implements OnInit {
       (data: any) => {
         console.log(data);
         if(data.Result){
-          let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+          let defaultObj = [{"Code":"99999","CodeDesc":"ALL"}]
           this.insuranceList = defaultObj.concat(data.Result);
           if(this.insuranceId){this.getExistingColor();}
         }
