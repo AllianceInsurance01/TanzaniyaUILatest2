@@ -34,6 +34,7 @@ export class NewBrokerDetailsComponent implements OnInit {
   executiveId: any = null; stateList: any[] = [];
   editsSection = false;taxExcemptedCode:any=null;
   editValue: boolean = false;taxExcemptedYN:any='N';
+  regulatoryCode: any=null;
   constructor(private router: Router, private sharedService: SharedService,
     private datePipe: DatePipe) {
     this.minDate = new Date();
@@ -88,6 +89,20 @@ export class NewBrokerDetailsComponent implements OnInit {
   onChangeVatYN() {
     this.vatRegNo = null;
   }
+  onCreditChange (args) {
+    if (args.key === 'e' || args.key === '+' || args.key === '-') {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  CommaFormatted() {
+
+    // format number
+    if (this.creditLimit) {
+      this.creditLimit= this.creditLimit.replace(/\D/g, "")
+       .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }}
   getCountryList() {
     let ReqObj = { "InsuranceId": this.insuranceId }
     let urlLink = `${this.CommonApiUrl}master/dropdown/country`;
@@ -190,10 +205,13 @@ export class NewBrokerDetailsComponent implements OnInit {
             this.taxExcemptedYN=PersonalInformation?.TaxExemptedYn;
             if(this.taxExcemptedYN=='Y') this.taxExcemptedCode = PersonalInformation?.TaxExemptedCode;
           }
-          if(PersonalInformation?.CreditLimit){this.creditLimit = PersonalInformation?.CreditLimit;}
+          if(PersonalInformation?.CreditLimit){this.creditLimit = PersonalInformation?.CreditLimit;
+            if(this.creditLimit!=null) this.creditLimit = String(this.creditLimit).split('.')[0];
+            this.CommaFormatted();}
           this.designation = PersonalInformation?.Designation;
           this.contactPersonName = PersonalInformation?.ContactPersonName;
           this.coreAppBrokerCode = PersonalInformation?.CoreAppBrokerCode;
+          this.regulatoryCode = PersonalInformation?.RegulatoryCode;
           //this.cityCode = PersonalInformation?.CityName;
           this.custConfirmYN = PersonalInformation?.CustConfirmYn;
           this.makerYN = PersonalInformation?.MakerYn;
@@ -381,7 +399,9 @@ export class NewBrokerDetailsComponent implements OnInit {
     if (this.commissionVatYN == 'N') this.vatRegNo = null;
     let bankCode = null;
     if (this.subUserType == 'bank' && this.bankCode != null && this.bankCode != undefined) bankCode = this.bankCode
-
+    let creditLimit = null;
+    if(this.creditLimit.includes(',')) creditLimit = this.creditLimit.replace(',','');
+    else creditLimit = this.creditLimit
     console.log('this', this.brokerCompanyYn)
     if (this.brokerCompanyYn == null || this.brokerCompanyYn == '' || this.brokerCompanyYn == undefined) {
       this.brokerCompanyYn = 'N';
@@ -417,12 +437,13 @@ export class NewBrokerDetailsComponent implements OnInit {
         "CompanyName": this.companyCode,
         "ContactPersonName": this.contactPersonName,
         "CoreAppBrokerCode": this.coreAppBrokerCode,
+        "RegulatoryCode": this.regulatoryCode,
         "CountryCode": this.countryCode,
         "CustConfirmYn": this.custConfirmYN,
         "Designation": this.designation,
         "Fax": "0",
         "MakerYn": this.makerYN,
-        "CreditLimit": this.creditLimit,
+        "CreditLimit": creditLimit,
         "TaxExemptedYn": this.taxExcemptedYN,
         "TaxExemptedCode": this.taxExcemptedCode,
         "Pobox": this.pobox,
