@@ -162,10 +162,9 @@ tr.example-detail-row {
 }
 
 
-::ng-deep .mat-mdc-table {
+:host ::ng-deep .mat-mdc-table {
     table-layout: fixed !important;
-    white-space: normal;
-   
+    white-space: normal; 
 }
 
 

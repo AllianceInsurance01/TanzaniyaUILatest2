@@ -6,6 +6,7 @@ td.mat-footer-cell {
     border: 0.1px solid #ccc !important;
 }
 
+
 .mat-header-row {
     height: 20px !important;
 }
@@ -84,8 +85,8 @@ th.mat-header-cell {
 table {
     width: 100% !important;
 }
-.mat-table {
-    table-layout: auto;
+:host ::ng-deep .mat-table {
+    table-layout: auto !important;
     white-space: normal !important;
     border: 2px solid #eaecf1;
     outline: none;
@@ -96,6 +97,9 @@ table {
     box-shadow: 1px 2px 2px #1f26875e !important;
     backdrop-filter: blur(18.5px);
     list-style-type: none;
+}
+:host ::ng-deep .mat-mdc-table {
+    table-layout: auto !important;
 }
 .mat-table td {
     white-space: pre-wrap !important;

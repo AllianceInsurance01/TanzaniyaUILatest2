@@ -26,7 +26,7 @@ table {
     padding: 0px 10px !important;
 
 }
-.mat-table {
+:host ::ng-deep .mat-table {
   table-layout: fixed !important;
   white-space: nowrap !important;
   border: 2px solid #eaecf1;
