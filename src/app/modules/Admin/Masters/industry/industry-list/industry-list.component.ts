@@ -31,7 +31,7 @@ export class IndustryListComponent implements OnInit {
   productValue: any;
   CategoryList:any[]=[];
   CategoryValue:any;
-  insuranceList: { InsuranceId: string; CompanyName: string; }[];
+  insuranceList: { Code: string; CodeDesc: string; }[];
   constructor(private router:Router,private sharedService:SharedService,) {
     this.minDate = new Date();
     //this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
@@ -84,7 +84,7 @@ export class IndustryListComponent implements OnInit {
       (data: any) => {
         console.log(data);
         if(data.Result){
-          let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+          let defaultObj = [{"Code":"99999","CodeDesc":"ALL"}]
           this.insuranceList = defaultObj.concat(data.Result);
           if(this.insuranceId){this.getBranchList('direct');}
         }

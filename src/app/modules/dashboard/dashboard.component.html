@@ -2,7 +2,7 @@
     <div class="row ml-2">
       <div class="col-xl-9 col-lg-9 col-md-9 mb-xl-0 p-0">
         <div class="row">
-            <div class="col-xl-4 col-lg-4 col-md-4 mb-xl-0 p-0" >
+          <div  class="col-xl-4 col-lg-4 col-md-4 mb-xl-0 p-0" *ngIf="chartSection" >
               <div class="card shadow overviewCard" style="margin-left: 27px;">
                 <div class="card-header overviewHeader">
                   <div class="d-flex justify-content-between">
@@ -29,8 +29,8 @@
                 </div>
               </div>
             </div>
-            <div class="col-xl-8 col-lg-8 col-md-8 mb-xl-0 p-0">
-              <div class="card shadow" style="margin-left: 10px !important;min-height: 290px !important;">
+            <div [ngClass]="chartSection  ? 'col-xl-8 col-lg-8 col-md-8 mb-xl-0 p-0' : 'col-xl-12 col-lg-12 col-md-12 mb-xl-0 pr-1'">
+              <div class="card shadow" [ngClass]="chartSection  ? 'customMargin2' : 'customMargin'" style="min-height: 290px !important;">
                 <div class="card-header border-0">
                   <div class="d-flex justify-content-between">
                     <div>
@@ -89,7 +89,7 @@
       <div class="col-xl-3 col-lg-3 col-md-3 mb-xl-0 p-0">
         <div class="row">
           <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11" style="margin-left: 15px !important;width: 90.666667% !important;">
-            <div class="card card-stats mb-4 mb-xl-0" style="background-color: #ffe4c2 !important;">
+            <div class="card card-stats mb-4 mb-xl-0" style="background-color: #ffe4c2 !important;min-height: 85px !important;">
               <div class="card-body customBody">
                 <div class="row">
                   <div class="col">
@@ -106,8 +106,8 @@
                     </div> -->
                   </div>
                 </div>
-                <h2 class="mb-0 text-primary" style="font-size: 21px;font-weight: 600;" *ngIf="quoteData.length==0">N/A</h2>
-                  <h2 class="mb-0 text-primary" style="font-size: 21px;font-weight: 600;" *ngIf="quoteData.length!=0">12,530 (TZS)</h2>
+                <h2 class="mb-0 mt-3 text-primary" style="font-size: 17px;font-weight: 600;" *ngIf="quoteData.length==0">N/A</h2>
+                  <h2 class="mb-0 mt-3 text-primary" style="font-size: 17px;font-weight: 600;" *ngIf="quoteData.length!=0">12,530 (TZS)</h2>
                
               </div>
             </div>
@@ -115,7 +115,7 @@
         </div>
         <div class="row mt-2">
           <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11" style="margin-left: 15px !important;width: 90.666667% !important;">
-            <div class="card card-stats mb-xl-0" style="background-color: #f7b0c4 !important">
+            <div class="card card-stats mb-xl-0" style="background-color: #f7b0c4 !important;min-height: 85px !important;">
               <div class="card-body customBody">
                 <div class="row">
                   <div class="col">
@@ -129,15 +129,15 @@
                     
                   </div>
                 </div>
-                <h2 class="mb-0 text-primary" style="font-size: 21px;font-weight: 600;" *ngIf="policyData.length==0">N/A</h2>
-                <h2 class="mb-0 text-primary" style="font-size: 21px;font-weight: 600;" *ngIf="policyData.length!=0">25,00,000 (TZS)</h2>
+                <h2 class="mb-0 mt-3 text-primary" style="font-size: 17px;font-weight: 600;" *ngIf="policyData.length==0">N/A</h2>
+                <h2 class="mb-0 mt-3 text-primary" style="font-size: 17px;font-weight: 600;" *ngIf="policyData.length!=0">25,00,000 (TZS)</h2>
               </div>
             </div>
           </div>
         </div>
         <div class="row mt-2">
           <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11" style="margin-left: 15px !important;width: 90.666667% !important;">
-            <div class="card card-stats mb-4 mb-xl-0"  style="background-color: #84dfea !important;">
+            <div class="card card-stats mb-4 mb-xl-0"  style="background-color: #84dfea !important;min-height: 85px !important;">
               <div class="card-body customBody" >
                 <div class="row">
                   <div class="col">
@@ -152,8 +152,8 @@
                     
                   </div>
                 </div>
-                <h2 class="mb-0 text-primary" style="font-size: 21px;font-weight: 600;" *ngIf="referralList.length==0">N/A</h2>
-                  <h2 class="mb-0 text-primary" style="font-size: 21px;font-weight: 600;" *ngIf="referralList.length!=0">45,000 (TZS)</h2>
+                <h2 class="mb-0 mt-3 text-primary" style="font-size: 17px;font-weight: 600;" *ngIf="referralList.length==0">N/A</h2>
+                  <h2 class="mb-0 mt-3 text-primary" style="font-size: 17px;font-weight: 600;" *ngIf="referralList.length!=0">45,000 (TZS)</h2>
               </div>
             </div>
           </div>
@@ -206,68 +206,18 @@
         </div>
       </div>
       <div class="col-xl-9 col-lg-9 col-md-9 mb-xl-0 p-0 mr-2" style="padding-right: 20px !important;">
-        <div class="card shadow" style="margin-left: 10px !important;min-height: 290px !important;">
-          <div class="card-header border-0">
-            <div class="d-flex justify-content-between">
-              <div>
-                <h3 class="mb-0" style="font-size: 19px;font-weight: 600;">Renewal Quotes</h3>
-              </div>
-              <div >
-                <a href="#!" class="btn btn-sm btn-primary">See all</a>
-              </div>
-            </div>
-          </div>
-          <ng-container *ngIf="renewalQuoteList.length!=0">
-            <div class="table-responsive">
-              <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">QuoteNo</th>
-                    <th scope="col">ReferenceNo</th>
-                    <th scope="col">CustomerName</th>
-                    <th scope="col">Remarks</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let data of referralList">
-                    <td>
-                        {{data.QuoteNo}}
-                    </td>
-                    <td>
-                      {{data.RequestReferenceNo}}
-                    </td>
-                    <td>
-                      {{data.ClientName}}
-                    </td>
-                    <td>
-                       {{data.AdminRemarks}}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </ng-container>
-          <ng-container *ngIf="renewalQuoteList.length==0">
-                <div class="text-center">
-                        No Quotes Available
-                </div>
-          </ng-container>
-        </div>
-      </div>
-    </div>
-    <div class="row ml-2" style="min-height: 290px !important;margin-bottom: 50px!important;">
         <div class="col-md-12 col-lg-12 col-xl-12">
           <div class="card shadow" style="margin-left: 10px !important;">
             <div class="card-header border-0">
               <div class="d-flex justify-content-center">
                 <div>
-                  <button class="btn btn-warning" *ngIf="tabSection!='policy'" (click)="setTabSection('policy')">Policies</button>&nbsp;
-                  <button class="btn btn-primary" *ngIf="tabSection=='policy'">Policies</button>&nbsp;
-                  <button class="btn btn-warning" *ngIf="tabSection!='quote'" (click)="setTabSection('quote')">Quotes</button>&nbsp;
+                  <button class="btn" style="background-color: #FFBF00;" *ngIf="tabSection!='quote'" (click)="setTabSection('quote')">Quotes</button>&nbsp;
                   <button class="btn btn-primary" *ngIf="tabSection=='quote'">Quotes</button>&nbsp;
-                  <button class="btn btn-warning" *ngIf="tabSection!='lapsed'" (click)="setTabSection('lapsed')">Lapsed Quotes</button>&nbsp;
-                  <button class="btn btn-primary" *ngIf="tabSection=='lapsed'">Lapsed Quotes</button>&nbsp;
-                  <button class="btn btn-warning" *ngIf="tabSection!='referral'" (click)="setTabSection('referral')">Referral Pending</button>&nbsp;
+                  <button class="btn" style="background-color:green;" *ngIf="tabSection!='policy'"  (click)="setTabSection('policy')">Policies</button>&nbsp;
+                  <button class="btn btn-primary" *ngIf="tabSection=='policy'">Policies</button>&nbsp;
+                  <!-- <button class="btn btn-warning" *ngIf="tabSection!='lapsed'" (click)="setTabSection('lapsed')">Lapsed Quotes</button>&nbsp;
+                  <button class="btn btn-primary" *ngIf="tabSection=='lapsed'">Lapsed Quotes</button>&nbsp; -->
+                  <button class="btn" style="background-color:red;" *ngIf="tabSection!='referral'" (click)="setTabSection('referral')">Referral Pending</button>&nbsp;
                   <button class="btn btn-primary" *ngIf="tabSection=='referral'">Referral Pending</button>&nbsp;
                 </div>
               </div>
@@ -337,6 +287,57 @@
             </div>
         </div>
     </div>
+      </div>
+    </div>
+    <div class="row ml-2" *ngIf="renewalQuoteList.length!=0" style="min-height: 290px !important;margin-bottom: 50px!important;">
+      <div class="card shadow" style="margin-left: 10px !important;min-height: 290px !important;">
+        <div class="card-header border-0">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h3 class="mb-0" style="font-size: 19px;font-weight: 600;">Renewal Quotes</h3>
+            </div>
+            <div >
+              <a href="#!" class="btn btn-sm btn-primary">See all</a>
+            </div>
+          </div>
+        </div>
+        <ng-container *ngIf="renewalQuoteList.length!=0">
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">QuoteNo</th>
+                  <th scope="col">ReferenceNo</th>
+                  <th scope="col">CustomerName</th>
+                  <th scope="col">Remarks</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of referralList">
+                  <td>
+                      {{data.QuoteNo}}
+                  </td>
+                  <td>
+                    {{data.RequestReferenceNo}}
+                  </td>
+                  <td>
+                    {{data.ClientName}}
+                  </td>
+                  <td>
+                     {{data.AdminRemarks}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="renewalQuoteList.length==0">
+              <div class="text-center">
+                      No Quotes Available
+              </div>
+        </ng-container>
+      </div>
+
     </div>
 </div>
 

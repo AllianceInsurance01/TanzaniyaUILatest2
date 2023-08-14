@@ -28,7 +28,6 @@ table {
     width: 100%;
 }
 .mat-table {
-    table-layout: auto;
     white-space: nowrap !important;
     border: 2px solid #eaecf1;
     outline: none;
@@ -164,23 +163,23 @@ tr.example-detail-row {
 
 
 ::ng-deep .mat-mdc-table {
-    table-layout: auto;
+    table-layout: fixed !important;
     white-space: normal;
    
 }
 
 
-::ngdeep .mdc-data-table__cell {
-    padding: 0 16px 0 16px !important;
-}
+// ::ngdeep .mdc-data-table__cell {
+//     padding: 0 16px 0 16px !important;
+// }
 
 ::ngdeep .mat-mdc-paginator {
     display: contents;
 }
 
-::ngdeep .mdc-data-table__header-cell {
-    padding: 0 16px 0 16px !important;
-}
+// ::ngdeep .mdc-data-table__header-cell {
+//     padding: 0 16px 0 16px !important;
+// }
 
 // th.mat-header-cell {
 //     //color: lightslategrey;

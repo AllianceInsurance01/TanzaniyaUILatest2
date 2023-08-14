@@ -31,10 +31,15 @@ export class PendingPoliciesComponent implements OnInit {
   ngOnInit(): void {
     if(this.productId==5){
       this.quoteHeader =  [
-        { key: 'PolicyNo', display: 'Policy No' },
+        // { key: 'PolicyNo', display: 'Policy No' },
+        { key: 'OriginalPolicyNo', display: 'Policy No' },
         { key: 'QuoteNo', display: 'Quote No' },
-        { key: 'RequestReferenceNo', display: 'Reference No' },
+        // { key: 'RequestReferenceNo', display: 'Reference No' },
+      
         { key: 'ClientName', display: 'Customer Name' },
+        { key: 'PolicyStartDate', display: 'Start Date' },
+        { key: 'PolicyEndDate', display: 'End Date' },
+        {key:'OverallPremiumLc',display:'Premium'},
         { key: 'CreditNo', display: 'Credit Note No' },
         { key: 'DebitNoteNo', display: 'Debit Note No' },
         {
@@ -65,7 +70,8 @@ export class PendingPoliciesComponent implements OnInit {
     }
     else if(this.productId!=5){
       this.quoteHeader =  [
-        { key: 'PolicyNo', display: 'Policy No' },
+        { key: 'OriginalPolicyNo', display: 'Policy No' },
+        // { key: 'PolicyNo', display: 'Policy No' },
         { key: 'QuoteNo', display: 'Quote No' },
         { key: 'RequestReferenceNo', display: 'Reference No' },
         { key: 'ClientName', display: 'Customer Name' },

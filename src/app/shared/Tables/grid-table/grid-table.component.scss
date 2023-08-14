@@ -53,9 +53,15 @@
     background-color: #fd7e14 !important;
     color: #fff !important;
 }
+
+::ng-deep .mat-mdc-table {
+    table-layout: fixed !important;
+    white-space: normal;
+   
+}
 :host ::ng-deep .mat-sort-header-content{
     white-space: normal !important;
-    padding: 0px !important;
+    padding: 0px!important;
 }
 :host ::ng-deep .mat-sort-header-container {
     display:flex !important;
@@ -122,5 +128,9 @@
     color: rgb(255, 255, 255) !important;
 }
 :host ::ng-deep .mdc-data-table__cell{
-    padding: 0 16px 0 16px !important;
+    padding: 14px !important;
+    // word-wrap: break-word !important;
+    white-Space: wrap !important;
+    overflow: hidden !important;
+    text-Overflow: ellipsis !important;
 }

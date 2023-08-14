@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { SharedService } from '../shared.service';
 import { DatePipe } from '@angular/common';
 import * as Mydatas from '../../app-config.json';
+import { MatDialog } from '@angular/material/dialog';
+// import { CoverDetailsComponent } from '../cover-details/cover-details.component';
+import { CoverDetailsComponent } from 'src/app/modules/Quote/update-customer-details/Components/cover-details/cover-details.component';
 
 
 @Component({
@@ -50,9 +53,19 @@ export class MotorDocumentsComponent implements OnInit {
   OverallPremiumFc: any;
   pass: boolean;
   pageFrom: any;
+  chhassisno: any;
+  index: any;
+  sectionnameopted: any;
+  sectionnamenonopted: any;
+  CustomerName: any;
+  PolicyNo: any;
+  ProductName: any;
+  historyRecords:any[]=[];
+  passengerName: any;
+  History:any[]=[];
 
 
-  constructor(public router:Router,private sharedService: SharedService){
+  constructor(public router:Router,private sharedService: SharedService,public dialogService: MatDialog){
 
    this.s= sessionStorage.getItem('Status')
  this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -63,7 +76,25 @@ export class MotorDocumentsComponent implements OnInit {
       // this.productId = this.userDetails.Result.ProductId;
       this.userType = this.userDetails?.Result?.UserType;
       this.insuranceId = this.userDetails.Result.InsuranceId;
-
+          this.History=[
+            {
+                "RequestId": "EWAY1690539843418",
+                "Status": "Y",
+                "AcknowledgementId": "202307281324040155084",
+                "RequestStatusCode": "TIRA001",
+                "RequestStatusDesc": "Successful",
+                "RequestFilePath": "/home/ewayportal/commonpath/EwayPortal/PushPolicy/BAVFE85CGFSY02451/REQ 2023-07-28T10-24-04.179.txt",
+                "ResponseFilePath": "/home/ewayportal/commonpath/EwayPortal/PushPolicy/BAVFE85CGFSY02451/RES 2023-07-28T10-24-04.179.txt",
+                "Acknowledgement": {
+                    "ResponseId": "202307281324040155084",
+                    "Status": "Y",
+                    "ResponseStatusCode": "TIRA001",
+                    "RequestStatusDesc": "Successful",
+                    "RequestFilePath": "/home/ewayportal/commonpath/EwayPortal/PushPolicy/BAVFE85CGFSY02451/REQ 2023-07-28T10-24-08.488.txt",
+                    "ResponseFilePath": "/home/ewayportal/commonpath/EwayPortal/PushPolicy/BAVFE85CGFSY02451/RES 2023-07-28T10-24-08.488.txt"
+                }
+            }
+        ];
       this.quoteHeader =  [
           
         /*{
@@ -223,18 +254,31 @@ export class MotorDocumentsComponent implements OnInit {
        this.quoteNo=CustomerObj.QuoteNo;
        this.ReferenceNo=CustomerObj.RequestReferenceNo;
        this.pageFrom = CustomerObj?.pageFrom;
-       this.productId=CustomerObj.ProductId;
+       this.productId=CustomerObj?.ProductId;
+       this.CustomerName=CustomerObj?.CustomerName
+       this.PolicyNo=CustomerObj?.PolicyNo
+       this.ProductName=CustomerObj?.ProductName
 
        console.log('sssssssssss',this.search)
             
            if(this.quoteNo){
-            this.onRisk();
+            
             this.onPremium();
             this.DriverDetails();
             this.VechileTira();
             this.payment();
             this.Documentview();
             this.onCustomerSearch();
+           }
+
+           if(this.productId =='5' && this.quoteNo){
+            this.onRisk();
+           }
+           if(this.productId =='4' && this.ReferenceNo){
+            this.onTravelRisk();
+           }
+           if(this.productId =='3' && this.ReferenceNo){
+            this.onDomesRisk();
            }
 
            if(this.ReferenceNo){
@@ -307,7 +351,8 @@ export class MotorDocumentsComponent implements OnInit {
       } 
       else if(this.pageFrom=='policy'){ this.router.navigate(['Home/policies'])}
       else if(this.pageFrom == 'Existing') { this.router.navigate(['/Home/existingQuotes'])}
-      else if(this.pageFrom =='Portfolio') { this.router.navigate(['Home/ApproverPortfolio'])}
+      else if(this.pageFrom =='Portfolio') { this.router.navigate(['Home/NewDetails']);
+    sessionStorage.setItem('Dates','new')}
     }
 
     onViews(row:any){
@@ -323,7 +368,107 @@ export class MotorDocumentsComponent implements OnInit {
       }
       sessionStorage.setItem('FromDetails',JSON.stringify(quoteObj));
     }
+    onDomesRisk(){
+      console.log('ReferenceNo',this.ReferenceNo)
+      let ReqObj ={
+        "RequestReferenceNo": this.ReferenceNo,
+      }
+      let urlLink = `${this.motorApiUrl}home/getbuildingdetails`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          console.log(data);
+          if(data?.Result){
+              this.ViewRisk=data?.Result;
+              console.log('mmmmmmmmmm',this.ViewRisk);
+          }
 
+        },
+        (err) => { },
+      );
+    }
+    onTravelRisk(){
+      console.log('ReferenceNo',this.ReferenceNo)
+      let ReqObj ={
+        "RequestReferenceNo": this.ReferenceNo,
+        "TravelId": "1"
+      }
+      let urlLink = `${this.motorApiUrl}api/gettraveldetails`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          console.log(data);
+          if(data?.Result){
+              this.ViewRisk=data?.Result;
+
+              if(this.ViewRisk?.length!=0){
+                this.onTravelRiskPassenger();
+              }
+              console.log('mmmmmmmmmm',this.ViewRisk)
+              //this.quoteno=data.Result.QuoteNo
+
+
+          }
+
+        },
+        (err) => { },
+      );
+    }
+    passnger(type){
+      console.log('Passsssssss',type)
+this.passengerName=type;
+ 
+    }
+
+    onTravelRiskPassenger(){
+      console.log('ReferenceNo',this.ReferenceNo)
+      let ReqObj ={
+        "QuoteNo": this.quoteNo,
+      }
+      let urlLink = `${this.motorApiUrl}api/getallpasshistorydetails`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          console.log(data);
+          if(data?.Result){
+              this.historyRecords=data?.Result;
+              console.log('Recordesssss',this.historyRecords);
+              this.passnger(this.historyRecords[0]?.PassengerName);
+              //this.quoteno=data.Result.QuoteNo
+
+
+          }
+
+        },
+        (err) => { },
+      );
+    }
+
+
+    viewplanBenifits(plantype,SectionId) {
+      let ReqObj = {
+        "PlanTypeId":plantype,
+        //"PolicyTypeId":this.TravelForm.controls[''].value,
+        //"PolicyTypeId":this.TravelForm.controls['PlanTypeId'].value,
+        "PolicyTypeId":SectionId
+      }
+      let urlLink = `${this.motorApiUrl}api/gettravelpolicytype`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          if (data.Result) {
+            const dialogRef = this.dialogService.open(CoverDetailsComponent, {
+              data: {
+                titles: 'travel PolicyDetails',
+                benefitList: data.Result
+              }
+            });
+  
+            dialogRef.afterClosed().subscribe(result => {
+              console.log(`Dialog result: ${result}`);
+            });
+          }
+        },
+  
+        (err) => { },
+      );
+    }
     onRisk(){
   
       let ReqObj ={
@@ -349,6 +494,7 @@ export class MotorDocumentsComponent implements OnInit {
           console.log(data);
           if(data?.Result?.RiskDetails){
               this.ViewRisk=data?.Result.RiskDetails;
+              this.ChasNo(this.ViewRisk,this.ViewRisk[0].Chassisnumber,'1')
 
               console.log('mmmmmmmmmm',this.ViewRisk)
               //this.quoteno=data.Result.QuoteNo
@@ -407,7 +553,11 @@ export class MotorDocumentsComponent implements OnInit {
            );
          //}
        }
-
+       ChasNo(rowData,type,i){
+         this.chhassisno=type
+         this.index=i;
+         console.log('OOOOOOOOOO',rowData);
+       }
 
        onRating(){
         let ReqObj={
@@ -437,6 +587,7 @@ export class MotorDocumentsComponent implements OnInit {
                 //this.RatingInfo=obj.concat(data?.Result[0].CoverList);
                 this.RatingInfo=data?.Result[0].CoverList;
                 this.Currency=data.Result[0].Currency;
+                this.sectionnamenonopted=this.RatingInfo[0]?.SectionName;
                 this.OverallPremiumFc=data.Result[0].OverallPremiumFc;
                 console.log('RAAAAAAAAAAA',this.RatingInfo)
                 //this.quoteno=data.Result.QuoteNo
@@ -452,15 +603,17 @@ export class MotorDocumentsComponent implements OnInit {
 
        onPremium(){
         let ReqObj={
-          "QuoteNo":this.quoteNo,
+          "RequestReferenceNo":this.ReferenceNo,
            "ProductId":this.productId
         }
-        let urlLink = `${this.CommonApiUrl}api/adminviewpremiumdetails`;
+        let urlLink = `${this.CommonApiUrl}api/view/calc`;
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
           (data: any) => {
             console.log(data);
-            if(data?.Result.CoverId){
-                this.PremiumInfo=data?.Result?.CoverId;
+            if(data?.Result){
+           
+                this.PremiumInfo=data?.Result;
+                this.sectionnameopted=this.PremiumInfo[0]?.SectionName;
                 this.Currency=data.Result?.CoverId.Currency;
                 console.log('PREEEEEEEEEEEEEEE',this.PremiumInfo)
                 //this.quoteno=data.Result.QuoteNo

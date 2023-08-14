@@ -55,6 +55,7 @@ export class DashboardComponent implements OnInit {
   referralPendingList: any[]=[];
   referralHeader: any[];
   referralApprovedSection: boolean=false;quoteSection:boolean=false;policySection:boolean=false;
+  chartSection: boolean=false;
   constructor(private router:Router,private sharedService: SharedService){
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -260,8 +261,8 @@ export class DashboardComponent implements OnInit {
               { key: 'QuoteNo', display: 'Quote No' },
               { key: 'RequestReferenceNo', display: 'Reference No' },
               { key: 'ClientName', display: 'Customer Name' },
-              { key: 'PolicyStartDate', display: 'Start Date' },
-              { key: 'PolicyEndDate', display: 'End Date' },
+              // { key: 'PolicyStartDate', display: 'Start Date' },
+              // { key: 'PolicyEndDate', display: 'End Date' },
               { key: 'Premium', display: 'Premium' },
               {
                 key: 'edit',
@@ -272,20 +273,20 @@ export class DashboardComponent implements OnInit {
                   isCollapseName:'Vehicles'
                 },
               },
-              {
-                key: 'actions',
-                display: 'Edit',
-                config: {
-                  //isView:true,
-                  isEdit: true,
-                  // isReject: true,
-                },
-              },
+              // {
+              //   key: 'actions',
+              //   display: 'Edit',
+              //   config: {
+              //     //isView:true,
+              //     isEdit: true,
+              //     // isReject: true,
+              //   },
+              // },
               {
                 key: 'mail',
                 display: 'Action',
                 config: {
-                  ismailConfig: true,
+                  isNewConfig: true,
                 },
               },
               // {
@@ -324,8 +325,8 @@ export class DashboardComponent implements OnInit {
             { key: 'QuoteNo', display: 'Quote No' },
             { key: 'RequestReferenceNo', display: 'Reference No' },
             { key: 'ClientName', display: 'Customer Name' },
-            { key: 'PolicyStartDate', display: 'Start Date' },
-            { key: 'PolicyEndDate', display: 'End Date' },
+            // { key: 'PolicyStartDate', display: 'Start Date' },
+            // { key: 'PolicyEndDate', display: 'End Date' },
             { key: 'Count', display: 'Passengers' },
             { key: 'Premium', display: 'Premium' },
             {
@@ -522,7 +523,7 @@ export class DashboardComponent implements OnInit {
               // { key: 'RequestReferenceNo', display: 'Reference No' },
               { key: 'Premium', display: 'Premium' },
               { key: 'PolicyStartDate', display: 'Start Date' },
-              { key: 'PolicyEndDate', display: 'End Date' },
+              // { key: 'PolicyEndDate', display: 'End Date' },
               
               //{ key: 'ClientName', display: 'Customer Name' },
               // { key: 'CreditNo', display: 'Credit Note No' },
@@ -534,15 +535,15 @@ export class DashboardComponent implements OnInit {
                   isPolicyConfig: true,
                 },
               },
-              {
-                key: 'edit',
-                display: 'Vehicle Details',
-                sticky: false,
-                config: {
-                  isCollapse: true,
-                  isCollapseName:'Vehicles'
-                },
-              },
+              // {
+              //   key: 'edit',
+              //   display: 'Vehicle Details',
+              //   sticky: false,
+              //   config: {
+              //     isCollapse: true,
+              //     isCollapseName:'Vehicles'
+              //   },
+              // },
       
             ];
             this.innerColumnHeader =  [
@@ -848,6 +849,7 @@ export class DashboardComponent implements OnInit {
         }
       ]
     };
+    this.chartSection = true;
   }
   onInnerData(rowData){
     let ReqObj = {

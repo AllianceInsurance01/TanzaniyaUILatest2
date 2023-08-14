@@ -28,7 +28,7 @@ export class WarrantyListComponent implements OnInit {
   productValue: any;
   userDetails: any; sectionValue:any;
   sectionList: any[];
-  insuranceList: { InsuranceId: string; CompanyName: string; }[];
+  insuranceList: { Code: string; CodeDesc: string; }[];
   constructor(private router: Router, private sharedService: SharedService) {
     let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if (userDetails) {
@@ -108,7 +108,7 @@ export class WarrantyListComponent implements OnInit {
       (data: any) => {
         console.log(data);
         if(data.Result){
-          let defaultObj = [{"InsuranceId":"99999","CompanyName":"ALL"}]
+          let defaultObj = [{"Code":"99999","CodeDesc":"ALL"}]
           this.insuranceList = defaultObj.concat(data.Result);
           if(this.insuranceId){this.getBranchList('direct'); this.getCompanyProductList('direct');}
         }

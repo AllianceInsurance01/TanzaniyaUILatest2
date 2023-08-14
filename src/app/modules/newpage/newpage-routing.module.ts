@@ -1,18 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 //import { RejectedQuotesComponent } from './rejected-quotes.component';
-import { ApproverPortfolioComponent } from './approverportfolio.component';
-
+import { NewComponent } from '../newpage/newpage.component';
 
 
 
 const routes: Routes = [
   {
     path: '',
-    component: ApproverPortfolioComponent,
+    component: NewComponent,
   },
-
-
   // {
   //   path: 'customerDetails',
   //   loadChildren: () => import('../update-customer-details/update-customer-details.module').then(m => m.UpdateCustomerDetailsModule),
@@ -29,4 +26,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ApproverRoutingModule {}
+export class NewRouteRoutingModule {}

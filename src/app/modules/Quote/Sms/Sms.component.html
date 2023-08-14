@@ -11,8 +11,6 @@
      
   </div>
       <!--<h4 class="card-title" id="modal-basic-title"><span class="spancommon span_font_size">Sms Details</span></h4>-->
-
-
   </div>
   <div class="card-body">
       <div class="form-group">
@@ -30,7 +28,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="row ml-4">
+                <div class="row ml-4" style="margin-left:85px;">
 
                       <!--<div class="col-12 col-md-5">
                         <div class="input-control-container">
@@ -53,7 +51,7 @@
                     </div>
 
 
-                    <div class="row mt-2 ml-4" *ngIf="smstemplatevalue">
+                    <div class="row mt-2 ml-4" style="justify-content: center;" *ngIf="smstemplatevalue">
                     <div class="col-12 col-md-5">
                       <div class="input-control-container">
                         <label class="input-form-label">SmsSubject
@@ -76,8 +74,8 @@
                     </div>
                 </div>
 
-                <div class="row mt-2 ml-4" *ngIf="smstemplatevalue">
-                  <div class="col-12 col-md-11 col-lg-11">
+                <div class="row mt-2 ml-4" style="justify-content: center;" *ngIf="smstemplatevalue">
+                  <div class="col-10 col-md-10 col-lg-10">
                     <div class="input-control-container">
                         <label class="input-form-label">SmsBody<span class="text-required">*</span></label>
                         <div class="input-form-box">
@@ -104,8 +102,8 @@
 
                   <div class="col-12">
                       <div class="text-center my-3">
-                        
-                          <button class="custom-btn btn-5 mx-2" matRipple   *ngIf="smstemplatevalue" (click)="back()">Back</button>
+                        <!--smstemplatevalue-->
+                          <button class="custom-btn btn-5 mx-2" matRipple *ngIf="smss" (click)="back()">Back</button>
                           <button class="custom-btn btn-6 maan-button-data mx-2" matRipple  *ngIf="smstemplatevalue" (click)="sendSms()">Send</button>
                          
                       </div>
@@ -115,9 +113,9 @@
             </ng-container>
 
 
-              <mat-tab-group  mat-align-tabs="center" *ngIf="!smss">
+              <div *ngIf="!smss">
 
-                <mat-tab label="SMS">
+                <div>
 
                   <ng-container *ngIf="SList.length!=0">
                     <app-grid-table [cols]="SMSHeader" [data]="SList" (onViews)="onViewsms($event,SmCard)">
@@ -131,9 +129,9 @@
   
               </ng-container>
 
-                   </mat-tab>
+            </div>
 
-              </mat-tab-group>
+          </div>
 
               <div class="row">
 

@@ -11,6 +11,7 @@ import { MotorDocumentsComponent } from 'src/app/shared/MotorDocuments/MotorDocu
 import { QuotesearchComponent } from 'src/app/shared/Quotesearch/Quotesearch.component';
 import { CustomerModelComponent } from '../Customer/customer-model/customer-model.component';
 import { ApproverPortfolioComponent } from '../approverportfolio/approverportfolio.component';
+import { NewComponent } from '../newpage/newpage.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,15 @@ const routes: Routes = [
       preload: true,
       title: "Rejected Quotes",
       breadcrumb: 'Rejected Quotes',
+    }
+  },
+  {
+    path: 'NewDetails',
+    loadChildren: () => import('../newpage/newpage.module').then(m => m.NewPageModule),
+    data: {
+      preload: true,
+      title: "ProductGrid",
+      breadcrumb: 'ProductGrid',
     }
   },
   // {

@@ -28,7 +28,7 @@
                         </span>
                     </div>
                 </div>-->
-                <div class="row">
+                <div class="row" style="margin-left:85px;">
 
 
                       <div class="col-12 col-md-5">
@@ -42,7 +42,7 @@
                     </div>
 
 
-                    <div class="row mt-2" *ngIf="templatevalue">
+                    <div class="row mt-2" style="justify-content: center;" *ngIf="templatevalue">
                     <div class="col-12 col-md-5">
                       <div class="input-control-container">
                         <label class="input-form-label">MailSubject<span class="text-required">*</span></label>
@@ -63,8 +63,8 @@
                     </div>
                 </div>
              
-                <div class="row mt-2" *ngIf="templatevalue">
-                  <div class="col-12 col-md-11 col-lg-11">
+                <div class="row mt-2" *ngIf="templatevalue" style="justify-content: center;">
+                  <div class="col-10 col-md-10 col-lg-10">
                     <div class="input-control-container">
                         <label class="input-form-label">MailBody<span class="text-required">*</span></label>
                         <div class="input-form-box">
@@ -73,15 +73,9 @@
                     </div>
                 </div>
                 </div>
-
-
-              
-
                 <div class="row mt-2">
-
                   <div class="col-12">
                       <div class="text-center my-3">
-                        
                           <button class="custom-btn btn-5 mx-2" matRipple *ngIf="opens && templatevalue" (click)="backs()">Back</button>
                           <button class="custom-btn btn-6 maan-button-data mx-2" matRipple  *ngIf="opens && templatevalue" (click)="send()">Send</button>
                          
@@ -89,13 +83,12 @@
                   </div>
               </div>
               </div>
-
             </ng-container>
 
 
-              <mat-tab-group  mat-align-tabs="center" *ngIf="!opens">
+              <div *ngIf="!opens">
 
-                <mat-tab label="Mail">
+                <div>
 
                   <ng-container *ngIf="NotifiList.length!=0">
                     <app-grid-table [cols]="MailHeader" [data]="NotifiList" (onViews)="onviewMail($event,discountCard)">
@@ -107,7 +100,7 @@
                     <span>No Quote Available</span>
                 </div>
                 </ng-container>
-                   </mat-tab>
+              </div>
                  
 
               
@@ -116,7 +109,7 @@
               </div>
 
 
-              </mat-tab-group>
+            </div>
 
 
               <div class="row">
