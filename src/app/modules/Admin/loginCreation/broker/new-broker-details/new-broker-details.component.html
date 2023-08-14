@@ -209,7 +209,14 @@
             </div>
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
-                    
+                    <label class="input-form-label">Regulatory Code<span class="text-danger">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="regulatoryCode" maxlength="50">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
                     <div class="row">
                         <div class="col-12 col-md-5 col-lg-5">
                                 <label class="input-form-label">Tax ExcemptedYN<span class="text-danger">*</span></label>
@@ -236,7 +243,7 @@
                 <div class="input-control-container">
                     <label class="input-form-label">Credit Limit<span class="text-danger">*</span></label>
                     <div class="input-form-box">
-                        <input type="text" class="input-form-control without-icon" [(ngModel)]="creditLimit" maxlength="50">
+                        <input type="text" class="input-form-control without-icon" digitOnly (keydown)="onCreditChange($event)" (keyup)="CommaFormatted()" [(ngModel)]="creditLimit" maxlength="50">
                     </div>
                 </div>
             </div>
