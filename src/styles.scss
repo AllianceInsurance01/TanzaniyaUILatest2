@@ -1724,7 +1724,9 @@ td {
 }
 .mat-sort-header-container {
     display:flex !important;
-    justify-content: space-around !important;
+    padding: 0 14px;
+    white-space: wrap;
+    //justify-content: space-around !important;
 }
 
 

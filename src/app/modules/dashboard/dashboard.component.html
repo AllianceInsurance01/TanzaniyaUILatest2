@@ -2,7 +2,7 @@
     <div class="row ml-2">
       <div class="col-xl-9 col-lg-9 col-md-9 mb-xl-0 p-0">
         <div class="row">
-          <div  class="col-xl-4 col-lg-4 col-md-4 mb-xl-0 p-0" *ngIf="chartSection" >
+          <div  class="col-xl-6 col-lg-6 col-md-4 mb-xl-0 p-0" *ngIf="chartSection" >
               <div class="card shadow overviewCard" style="margin-left: 27px;">
                 <div class="card-header overviewHeader">
                   <div class="d-flex justify-content-between">
@@ -29,16 +29,76 @@
                 </div>
               </div>
             </div>
-            <div [ngClass]="chartSection  ? 'col-xl-8 col-lg-8 col-md-8 mb-xl-0 p-0' : 'col-xl-12 col-lg-12 col-md-12 mb-xl-0 pr-1'">
+            <div class="col-xl-6 col-lg-6 col-md-6">   
+              <div class="row">
+                <div class="card-body" style="min-height:200 !important">
+                <div class="col-12 col-md-12 col-lg-12">
+                  <ng-container *ngIf="customerList.length!=0">
+                    <app-grid-table [cols]="customerheader" [data]="customerList" [dataValue]="'value'">
+                    </app-grid-table>
+                </ng-container>
+                <ng-container *ngIf="customerList.length==0">
+                    <div class="text-center">
+                        No Quote Available
+                    </div>
+                </ng-container>
+                </div>
+                </div>
+              </div>
+           
+             
+              <!-- <div class="card bg-gradient-sub shadow overviewCard" style="margin-left: 15px;">
+                <div class="card-header bg-gradient-sub overviewHeader">
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <h6 class="text-uppercase text-light ls-1 mb-1" style="font-size: 15px !important;font-weight: 600;">Customers</h6>
+                    </div>
+                    <div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                 
+                  <div class="table-responsive" *ngIf="customerList.length!=0">
+                    <table class="table align-items-center table-flush">
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col">Name</th>
+                          <th scope="col">Type</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of customerList| paginate:{itemsPerPage: 3, 
+                          currentPage: CustomerPage};let i=index">
+                          <td class="text-white">
+                              {{data.TitleDesc}}&nbsp;{{data.ClientName}}
+                          </td>
+                          <td class="text-white">
+                            {{data.PolicyHolderTypeDesc}}
+                        </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="text-end" *ngIf="customerList.length!=0">
+                    <pagination-controls class="my-pagination" (pageChange)="Page= $event" previousLabel="Previous"
+                      nextLabel="Next">
+                    </pagination-controls>
+                  </div>
+                  <div class="text-center" *ngIf="customerList.length==0">
+                    No Customers Available
+                  </div>
+                </div>
+              </div> -->
+            </div>
+            <!-- <div [ngClass]="chartSection  ? 'col-xl-8 col-lg-8 col-md-8 mb-xl-0 p-0' : 'col-xl-12 col-lg-12 col-md-12 mb-xl-0 pr-1'">
               <div class="card shadow" [ngClass]="chartSection  ? 'customMargin2' : 'customMargin'" style="min-height: 290px !important;">
                 <div class="card-header border-0">
                   <div class="d-flex justify-content-between">
                     <div>
                       <h3 class="mb-0" style="font-size: 19px;font-weight: 600;">Referral Approved</h3>
                     </div>
-                    <!-- <div *ngIf="referralList.length!=0">
-                      <button  class="btn btn-sm btn-primary" [routerLink]="['/Home/referralApproved']">See all</button>
-                    </div> -->
+                  
                   </div>
                 </div>
                 <div class="card-body">
@@ -83,13 +143,13 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
         </div>
       </div>
       <div class="col-xl-3 col-lg-3 col-md-3 mb-xl-0 p-0">
         <div class="row">
           <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11" style="margin-left: 15px !important;width: 90.666667% !important;">
-            <div class="card card-stats mb-4 mb-xl-0" style="background-color: #ffe4c2 !important;min-height: 85px !important;">
+            <div class="card card-stats mb-4 mb-xl-0" style="background-color: #ffe4c2 !important;min-height: 55px !important;"><!--85px-->
               <div class="card-body customBody">
                 <div class="row">
                   <div class="col">
@@ -115,7 +175,7 @@
         </div>
         <div class="row mt-2">
           <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11" style="margin-left: 15px !important;width: 90.666667% !important;">
-            <div class="card card-stats mb-xl-0" style="background-color: #f7b0c4 !important;min-height: 85px !important;">
+            <div class="card card-stats mb-xl-0" style="background-color: #f7b0c4 !important;min-height: 55px !important;">
               <div class="card-body customBody">
                 <div class="row">
                   <div class="col">
@@ -137,7 +197,7 @@
         </div>
         <div class="row mt-2">
           <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11" style="margin-left: 15px !important;width: 90.666667% !important;">
-            <div class="card card-stats mb-4 mb-xl-0"  style="background-color: #84dfea !important;min-height: 85px !important;">
+            <div class="card card-stats mb-4 mb-xl-0"  style="background-color: #84dfea !important;min-height: 55px !important;">
               <div class="card-body customBody" >
                 <div class="row">
                   <div class="col">
@@ -161,51 +221,8 @@
       </div>
     </div>
     <div class="row mb-2">
-      <div class="col-xl-3 col-lg-3 col-md-3 mb-xl-0 p-0" >
-        <div class="card bg-gradient-sub shadow overviewCard" style="margin-left: 15px;">
-          <div class="card-header bg-gradient-sub overviewHeader">
-            <div class="d-flex justify-content-between">
-              <div>
-                <h6 class="text-uppercase text-light ls-1 mb-1" style="font-size: 15px !important;font-weight: 600;">Customers</h6>
-              </div>
-              <div>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive" *ngIf="customerList.length!=0">
-              <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Type</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let data of customerList| paginate:{itemsPerPage: 3, 
-                    currentPage: CustomerPage};let i=index">
-                    <td class="text-white">
-                        {{data.TitleDesc}}&nbsp;{{data.ClientName}}
-                    </td>
-                    <td class="text-white">
-                      {{data.PolicyHolderTypeDesc}}
-                  </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="text-end" *ngIf="customerList.length!=0">
-              <pagination-controls class="my-pagination" (pageChange)="Page= $event" previousLabel="Previous"
-                nextLabel="Next">
-              </pagination-controls>
-            </div>
-            <div class="text-center" *ngIf="customerList.length==0">
-              No Customers Available
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-9 col-lg-9 col-md-9 mb-xl-0 p-0 mr-2" style="padding-right: 20px !important;">
+    
+      <div class="col-xl-12 col-lg-12 col-md-12 mb-xl-0 p-0 mr-2" style="padding-right: 20px !important;margin-left: 5px;">
         <div class="col-md-12 col-lg-12 col-xl-12">
           <div class="card shadow" style="margin-left: 10px !important;">
             <div class="card-header border-0">
@@ -219,6 +236,8 @@
                   <button class="btn btn-primary" *ngIf="tabSection=='lapsed'">Lapsed Quotes</button>&nbsp; -->
                   <button class="btn" style="background-color:red;" *ngIf="tabSection!='referral'" (click)="setTabSection('referral')">Referral Pending</button>&nbsp;
                   <button class="btn btn-primary" *ngIf="tabSection=='referral'">Referral Pending</button>&nbsp;
+                  <button class="btn" style="background-color:lightskyblue;" *ngIf="tabSection!='approved'" (click)="setTabSection('approved')">Referral Approved</button>&nbsp;
+                  <button class="btn btn-primary" *ngIf="tabSection=='approved'">Referral Approved</button>&nbsp;
                 </div>
               </div>
             </div>
@@ -284,6 +303,22 @@
                   </div>
               </div>
               </ng-container>
+              <ng-container *ngIf="tabSection=='approved'">
+                <div class="row mt-1">
+                  <div class="col-12 col-md-12 col-lg-12">
+                      <ng-container *ngIf="referralList.length!=0">
+                          <app-grid-table [cols]="referralHeaders" [data]="referralList" (onEdit)="onEditAproved(data)">
+                          </app-grid-table>
+                      </ng-container>
+                      <ng-container *ngIf="referralList.length===0">
+                          <div class="text-center spancommon span_font_size">
+                              No Records Available
+                          </div>
+                      </ng-container>
+                  </div>
+              </div>
+              </ng-container>
+
             </div>
         </div>
     </div>

@@ -87,7 +87,8 @@
   will-change: transform;
 }
 .customBody{
-  padding: 6px !important;
+  padding:4px !important;
+  //padding: 6px !important;
 }
 .card{
   margin-top: 0px !important;
@@ -107,8 +108,12 @@
 }
 
 .overviewCard{
-  min-height: 290px !important;
+  min-height: 255px !important;
+  //min-height:270 !important;
 }
 .overviewHeader{
   padding: 5px !important;
+}
+::ng-deep .apexcharts-legend{
+  position:left !important;
 }

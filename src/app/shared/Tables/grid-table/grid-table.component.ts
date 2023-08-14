@@ -17,6 +17,7 @@ export class GridTableComponent implements OnInit, OnChanges, AfterViewInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
 
   @Input('data') tableData: any[] = [];
+  @Input('dataValue') dataValue: any;
   @Input('cols') columnHeader: any[] = [];
   @Input('filterValue') filterValue: any = '';
   @Input('Currency') Currency:any='';
@@ -44,6 +45,7 @@ export class GridTableComponent implements OnInit, OnChanges, AfterViewInit {
   enableAddVehicle: boolean=false;
   enableFieldsList: any[]=[];
   endorsementId: any;
+  dataValues: any;
 
 
   constructor(
@@ -57,6 +59,7 @@ export class GridTableComponent implements OnInit, OnChanges, AfterViewInit {
     console.log(this.tableData);
     this.dataSource = new MatTableDataSource(this.tableData);
     this.dataSource.sort = this.sort;
+    this.dataValues=this.dataValue;
     this.dataSource.paginator = this.paginator;
     this.applyFilter(this.filterValue);
     console.log(this.filterValue);
