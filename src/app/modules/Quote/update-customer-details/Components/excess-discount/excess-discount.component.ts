@@ -267,13 +267,13 @@ emiyn="N";
     ]
       this.columnHeader = [
 
-        {
-          key: 'CalcType',
-          display: '',
-          config: {
-            isExpand:true
-          },
-        },
+        // {
+        //   key: 'CalcType',
+        //   display: '',
+        //   config: {
+        //     isExpand:true
+        //   },
+        // },
         // { key: 'SectionName', display: 'Section Name' },
         {
           key: 'selected',
