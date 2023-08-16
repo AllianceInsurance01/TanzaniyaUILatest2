@@ -576,7 +576,7 @@ export class CustomerDetailsComponent implements OnInit {
       "InsuranceId": this.insuranceId
     }
     if(this.productId=='3') urlLink = `${this.motorApiUrl}home/getbuildingdetails`;
-    else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14'  || this.productId=='19' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId=='21' || this.productId == '25') urlLink = `${this.motorApiUrl}api/slide/getcommondetails`;
+    else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14'  || this.productId=='19' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId=='21' || this.productId == '25' || this.productId=='42') urlLink = `${this.motorApiUrl}api/slide/getcommondetails`;
     else urlLink =  `${this.motorApiUrl}api/geteservicebyriskid`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {

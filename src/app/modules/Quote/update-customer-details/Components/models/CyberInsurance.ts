@@ -28,28 +28,34 @@ export class CyberInsurance{
               fieldGroup: [
                 {
                     className: 'col-6 co-md-6 col-lg-6 col-xl-6 offset-3',
-                    key: 'BuildingOwnerYn',
+                    key: 'CyberCode',
                     type: 'radio',
                     templateOptions: {
                       type: 'radio',
                       label: 'Choose Your Usage Type',
                       required: true,
-                      disabled: this.checkDisable('BuildingOwnerYn'),
-                      name: 'BuildingOwnerYn',
-                      options: [{ value: 'S', label: 'Self' }, { value: 'SS', label: 'Self & Spouse' },{ value: 'SSC', label: 'Self,Spouse & Child' }],
+                      disabled: this.checkDisable('CyberCode'),
+                      name: 'CyberCode',
+                      options: [
+
+                      ],
+                     
                     }
                 },
                 {
                     className: 'col-6 co-md-6 col-lg-6 col-xl-6 offset-3',
-                    key: 'BuildingOwnerYn',
+                    key: 'PlanType',
                     type: 'radio',
                     templateOptions: {
                       type: 'radio',
                       label: 'Choose Your Plan Type',
                       required: true,
-                      disabled: this.checkDisable('BuildingOwnerYn'),
-                      name: 'BuildingOwnerYn',
-                      options: [{ value: 'S', label: 'Silver' }, { value: 'SS', label: 'Gold' },{ value: 'SSC', label: 'Platinum' }],
+                      disabled: this.checkDisable('PlanType'),
+                      name: 'PlanType',
+                      options: [
+
+                      ],
+                     
                     }
                 }
               ]

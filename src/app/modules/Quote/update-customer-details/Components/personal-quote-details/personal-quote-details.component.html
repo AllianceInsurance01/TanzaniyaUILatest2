@@ -81,36 +81,42 @@
                         </form> -->
                     </div>
                     <div class="row" *ngIf="productId=='42'">
-                        <div class="col-md-5 col-lg-5  col-xl-5 offset-1">
+                        <div class="col-md-6 col-lg-6  col-xl-6">
                             <div class="input-control-container">
-                                <label class="input-form-label"><b>Usage Type</b></label><span class="text-danger">*</span>
-                                <div class="input-form-radio-box">
-                                    <div class="radio-toolbar">
-                                        <input id="claims_Own" type="radio" name="rentOwnHome" [(ngModel)]="productItem.UsageType"  value="S">
-                                        <label for="claims_Own" class="yes_alt">SELF</label>
-                                        <input id="claims_SS" type="radio" name="rentOwnHome" [(ngModel)]="productItem.UsageType" value="SS">
-                                        <label for="claims_SS" class="no">SELF & SPOUSE</label>
-                                        <input id="claims_SSC" type="radio" name="rentOwnHome" [(ngModel)]="productItem.UsageType" value="SS">
-                                        <label for="claims_SSC" class="no">SELF, SPOUSE & CHILD</label>
+                                <label class="input-form-label"><b>Occupation Type</b></label><span class="text-danger">*</span>
+                                <div style="width:400px;">
+                                    <div class="d-flex justify-content-between"> 
+                                        <div *ngFor="let pro of CyperNewList;let i=index;"> 
+                                    <div class="input-form-radio-box">
+                                            <div class="radio-toolbar">
+                                                    <input [id]="'claims_Own'+i" type="radio" name="SampleType" [(ngModel)]="CyberCode" [value]='pro.Code'>
+                                                    <label [for]="'claims_Own'+i" class="yes_alt">{{pro.CodeDesc}}</label>
+                                                </div>
                                     </div>
                                 </div>
+                                    </div>
+                                    </div>
                             </div>
                         </div>
-                        <div class="col-md-5 col-lg-5  col-xl-5 offset-1">
+                        <div class="col-md-5 col-lg-5 col-xl-5 offset-1">
+                                          
                             <div class="input-control-container">
                                 <label class="input-form-label"><b>Plan Type</b></label><span class="text-danger">*</span>
+                                <div style="width:300px;">
+                                <div class="d-flex justify-content-between">  
+                                <div *ngFor="let products of ProductsList;let j=index">
                                 <div class="input-form-radio-box">
                                     <div class="radio-toolbar">
-                                        <input id="claims_Silver" type="radio" name="planType" [(ngModel)]="productItem.PlanType"  value="S">
-                                        <label for="claims_Silver" class="yes_alt">SILVER</label>
-                                        <input id="claims_Gold" type="radio" name="planType"  [(ngModel)]="productItem.PlanType" value="G">
-                                        <label for="claims_Gold" class="no">GOLD</label>
-                                        <input id="claims_Platinum" type="radio" name="planType" [(ngModel)]="productItem.PlanType" value="P">
-                                        <label for="claims_Platinum" class="no">PLATINUM</label>
+                                        <input [id]="'Silver'+j" type="radio" name="PlanType" [(ngModel)]="ProductCode" [value]='products.Code'>
+                                        <label [for]="'Silver'+j" class="no">{{products.CodeDesc}}</label>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                               </div>
+                            </div>
+                            </div>
+                            </div>
+                        
                     </div>
                 </div>
                 <!-- <div class="row" *ngIf="productId=='1'">
