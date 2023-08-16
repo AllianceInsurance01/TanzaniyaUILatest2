@@ -3,6 +3,9 @@
     background-color: #333a84 !important;
     border-color: #7d82b1 !important;
 }
+.customPadding{
+    margin-left: 15px;
+}
 @media screen and (min-width:700px) and (max-width: 20000px) {
     .display2{
        display:none;

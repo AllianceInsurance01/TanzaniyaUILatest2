@@ -47,11 +47,35 @@ export class TravelPassengerDetailsComponent implements OnInit {
   postBoxNo: any;superSeniorTrashSection:boolean=false;grandSeniorTrashSection:boolean=false;
   validRecordsList: any;
   p: Number = 1;
+  passengerCountList: any[]=[];
+  historyRecordsList: any[]=[];
+  PassengerFirstName: any=null;
+  PassengerLastName: any=null;
+  RelationId: any=null;
+  Dob: any=null;
+  Nationality: any=null;
+  editSection: boolean=false;
+  relationShipList: any;
+  firstNameError: boolean;
+  lastNameError: boolean;
+  relationShipError: boolean;
+  genderError: boolean;
+  DobError: boolean;
+  passportError: boolean;
+  NationalityError: boolean;
+  relationshipDesc: any=null;
+  PassengerId: any=null;GroupId:any=null;
+  GroupIdError: boolean;
+  editIndex: any=null;
 
   constructor(private router:Router,private updateComponent:UpdateCustomerDetailsComponent,
     private datePipe:DatePipe,private sharedService: SharedService,) {
       this.quoteNo = sessionStorage.getItem('quoteNo');
-    this.minDate = new Date();
+      var d = new Date();
+      var year = d.getFullYear();
+      var month = d.getMonth();
+      var day = d.getDate();
+      this.minDate = new Date(year, month-3, day-1);
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
     this.userType = this.userDetails?.Result?.UserType;
@@ -66,7 +90,7 @@ export class TravelPassengerDetailsComponent implements OnInit {
       { "Code":"02","CodeDesc":"Register Number"},
     ];
     this.customerHeader =  [
-      { key: 'Name', display: 'PassengerName' },
+      { key: 'PassengerFirstName', display: 'PassengerName' },
       { key: 'MobileNo', display: 'MobileNo' },
      { key: 'PassportNo', display: 'Passport no' },
       { key: 'RelationShip', display: 'RelationShip' },
@@ -81,16 +105,17 @@ export class TravelPassengerDetailsComponent implements OnInit {
     ];
 
     this.PassengerHeader =  [
-      { key: 'PassengerFirstName', display: 'FirstName' },
-      { key: 'PassengerLastName', display: 'LastName' },
-     { key: 'RelationDesc', display: 'RelationShip' },
+      { key: 'PassengerFirstName', display: 'First Name' },
+      { key: 'PassengerLastName', display: 'Last Name' },
+     { key: 'RelationDesc', display: 'Relation' },
      {key:'Dob', display:'Date Of Birth'},
-     {key:'PassengerId',display:'PassengerId'},
+     {key:'PassportNo',display:'PassportNo'},
       {
         key: 'actions',
         display: 'Action',
         config: {
           isEdit: true,
+          isRemove: true,
         },
       }
     ];
@@ -190,6 +215,7 @@ export class TravelPassengerDetailsComponent implements OnInit {
     // let TravelObj = JSON.parse(sessionStorage.getItem('travelCoverListObj'));
     // if(TravelObj){
     //   this.travelId = TravelObj?.TravelId;
+    this.getPassengerCountList();
       this.getpassengerDetails(0);
       this.getEditQuoteDetails();
     
@@ -219,38 +245,38 @@ export class TravelPassengerDetailsComponent implements OnInit {
         if(data?.Result){
           console.log("Data**",data?.Result);
           this.quoteDetails = data?.Result?.QuoteDetails;
-          this.Riskdetails = data?.Result?.RiskDetails;
-          this.customerDetails=data?.Result?.CustomerDetails;
-          for (let cover of this.Riskdetails) {
-            let j = 0;
-            for (let section of cover?.SectionDetails) {
-              let CoverData = section.Covers;
-              for (let subsectioncover of section?.Covers) {
-                console.log("subsectioncover", subsectioncover);
-                if (cover?.totalPremium) {
-                  cover['totalLcPremium'] = cover['totalLcPremium'] + subsectioncover?.PremiumIncludedTaxLC;
-                  cover['totalPremium'] = cover['totalPremium'] + subsectioncover?.PremiumIncludedTax;
-                }
-                else {
-                  cover['totalLcPremium'] = subsectioncover?.PremiumIncludedTaxLC;
-                  cover['totalPremium'] = subsectioncover?.PremiumIncludedTax;
+          // this.Riskdetails = data?.Result?.RiskDetails;
+           this.customerDetails=data?.Result?.CustomerDetails;
+          // for (let cover of this.Riskdetails) {
+          //   let j = 0;
+          //   for (let section of cover?.SectionDetails) {
+          //     let CoverData = section.Covers;
+          //     for (let subsectioncover of section?.Covers) {
+          //       console.log("subsectioncover", subsectioncover);
+          //       if (cover?.totalPremium) {
+          //         cover['totalLcPremium'] = cover['totalLcPremium'] + subsectioncover?.PremiumIncludedTaxLC;
+          //         cover['totalPremium'] = cover['totalPremium'] + subsectioncover?.PremiumIncludedTax;
+          //       }
+          //       else {
+          //         cover['totalLcPremium'] = subsectioncover?.PremiumIncludedTaxLC;
+          //         cover['totalPremium'] = subsectioncover?.PremiumIncludedTax;
 
-                }
-                let baseCovers = [], otherCovers = [];
-                baseCovers = CoverData.filter(ele => ele.CoverageType == 'B');
-                otherCovers = CoverData.filter(ele => ele.CoverageType != 'B');
-                section.Covers = baseCovers.concat(otherCovers);
-                console.log("otherCovers", CoverData);
-                this.CoverList.push(cover);
-                console.log("CoverList", this.CoverList);
-                if (j == cover?.SectionDetails) {
-                  this.CoverList.push(cover);
-                  console.log("vehicleList", this.CoverList);
-                }
-                else j += 1;
-              }
-            }
-          }
+          //       }
+          //       let baseCovers = [], otherCovers = [];
+          //       baseCovers = CoverData.filter(ele => ele.CoverageType == 'B');
+          //       otherCovers = CoverData.filter(ele => ele.CoverageType != 'B');
+          //       section.Covers = baseCovers.concat(otherCovers);
+          //       console.log("otherCovers", CoverData);
+          //       this.CoverList.push(cover);
+          //       console.log("CoverList", this.CoverList);
+          //       if (j == cover?.SectionDetails) {
+          //         this.CoverList.push(cover);
+          //         console.log("vehicleList", this.CoverList);
+          //       }
+          //       else j += 1;
+          //     }
+          //   }
+          // }
         }
       },
       (err) => { },
@@ -289,18 +315,21 @@ export class TravelPassengerDetailsComponent implements OnInit {
       (err) => { },
     );
   }
-  getRelationshipList(index){
+  getRelationshipList(type){
     let ReqObj ={
       "InsuranceId":this.insuranceId,
       "BranchCode": this.branchCode,
-      "Gender":this.PassengerDetails[index].GenderId
+      "Gender":this.GenderId
     }
     let urlLink = `${this.CommonApiUrl}dropdown/relationtype`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         if(data.Result){
-          this.PassengerDetails[index]['relationship'] = data.Result;
-          if(index==0 &&  this.PassengerDetails[index].RelationId == null) this.PassengerDetails[index].RelationId = "9";
+          let defaultObj = [{'Code':null,"CodeDesc":"- - Select - -"}]
+          this.relationShipList = defaultObj.concat(data.Result);
+          if(this.historyRecordsList.length==0 && type=='change') this.RelationId = '9';
+          // this.PassengerDetails[index]['relationship'] = data.Result;
+          // if(index==0 &&  this.PassengerDetails[index].RelationId == null) this.PassengerDetails[index].RelationId = "9";
         }
       },
       (err) => { },
@@ -389,6 +418,36 @@ export class TravelPassengerDetailsComponent implements OnInit {
     
         
   }
+  onSavePassengerRow(){
+    let i=0;
+    this.firstNameError=false;this.lastNameError=false;this.DobError=false;this.NationalityError=false;
+    this.genderError = false;this.relationShipError =false;this.passportError = false;this.GroupIdError=false;
+    if(this.PassengerFirstName==null){i+=1;this.firstNameError=true;}
+    if(this.PassengerLastName==null){i+=1;this.lastNameError = true;}
+    if(this.GenderId==null){i+=1;this.genderError = true;}
+    if(this.RelationId==null){i+=1;this.relationShipError = true;}
+    if(this.RelationId!=null){this.relationshipDesc = this.relationShipList.find(ele=>ele.Code==this.RelationId)?.CodeDesc;}
+    if(this.Dob==null){i+=1;this.DobError = true;}
+    if(this.PassportNo==null){i+=1;this.passportError = true;}
+    if(this.Nationality==null){i+=1;this.NationalityError = true;}
+    if(i==0){
+      let entry = {
+        "Dob": this.datePipe.transform(this.Dob,'dd/MM/yyyy'),
+        "GenderId": this.GenderId,
+        "GroupId": this.GroupId,
+        "Nationality": this.Nationality,
+        "PassengerFirstName": this.PassengerFirstName,
+        "PassengerId": this.PassengerId,
+        "RelationDesc": this.relationshipDesc,
+        "PassengerLastName": this.PassengerLastName,
+        "PassportNo": this.PassportNo,
+        "RelationId": this.RelationId
+      }
+      if(this.editIndex==null) this.historyRecordsList.push(entry);
+      else this.historyRecordsList[this.editIndex] = entry;
+      this.editSection = false;
+    }
+  }
   onDobChange(index){
     let Dob = this.PassengerDetails[index].Dob;
     let timeDiff = Math.abs(Date.now() - Dob.getTime());
@@ -426,18 +485,35 @@ export class TravelPassengerDetailsComponent implements OnInit {
   {
 
   }
+  getPassengerCountList(){
+    let quoteNo=sessionStorage.getItem('quoteNo');
+    let ReqObj =  {
+      "QuoteNo": quoteNo,
+    }
+    //let urlLink = `${this.motorApiUrl}api/getmotordetails`;
+    let urlLink = `${this.CommonApiUrl}quote/groupsuminsureddetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+              this.passengerCountList = data?.Result;
+        }
+      },
+      (err) => { },
+    );
+  }
   getpassengerDetails(index){
   let quoteNo=sessionStorage.getItem('quoteNo');
   let ReqObj =  {
     "QuoteNo": quoteNo,
   }
    //let urlLink = `${this.motorApiUrl}api/getmotordetails`;
-   let urlLink = `${this.motorApiUrl}api/getallpassdetails`;
+   let urlLink = `${this.motorApiUrl}api/getactiverpassengers`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
       if(data.Result){
-        this.validRecordsList = data.Result;
-        this.getHistoryRecords(data.Result);
+        this.historyRecordsList = data.Result;
+        // this.validRecordsList = data.Result;
+        // this.getHistoryRecords(data.Result);
         // this.PassengerDetails = data.Result;
         // this.passengerSection = true;
         // this.setTravelValues();
@@ -446,17 +522,25 @@ export class TravelPassengerDetailsComponent implements OnInit {
     (err) => { },
   );
 }
+AddPassenger(){
+    this.PassengerFirstName = null;this.PassengerLastName=null;this.GenderId=null;
+    this.RelationId = null;this.Dob = null;this.Nationality=null;this.PassportNo=null;
+    this.editSection = true;this.PassengerId=null;this.GroupId=null;
+    this.editIndex = null;
+}
 getHistoryRecords(passengerList){
   let quoteNo=sessionStorage.getItem('quoteNo');
   let ReqObj =  {
     "QuoteNo": quoteNo,
   }
    //let urlLink = `${this.motorApiUrl}api/getmotordetails`;
-   let urlLink = `${this.motorApiUrl}api/getallpasshistorydetails`;
+   //let urlLink = `${this.motorApiUrl}api/getallpasshistorydetails`;
+   let urlLink = `${this.motorApiUrl}api/getactiverpassengers`
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
       if(data.Result){
        let historyRecords = data.Result;
+       this.historyRecordsList = data.Result
        if(historyRecords.length!=0){
         let adultList = historyRecords.filter(ele=>ele.GroupId=='2');
         let kidList = historyRecords.filter(ele=>ele.GroupId=='1');
@@ -694,6 +778,34 @@ getHistoryRecords(passengerList){
     (err) => { },
   );
 }
+onEditPassenger(rowData){
+  this.editIndex = this.historyRecordsList.findIndex(ele=>ele.PassportNo == rowData.PassportNo && ele.Dob==rowData.Dob);
+  console.log("Edit Index",this.editIndex);
+  this.PassengerId = rowData.PassengerId;
+  this.PassengerFirstName = rowData.PassengerFirstName;
+  this.PassengerLastName = rowData.PassengerLastName;
+  if(rowData.Dob!=null){
+      var dateParts = rowData.Dob.split("/");
+      this.Dob = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
+  }
+  this.Nationality = rowData.Nationality;
+  this.PassportNo = rowData.PassportNo;
+  this.GenderId = rowData.GenderId;
+  this.GroupId = rowData.GroupId;
+  this.RelationId = String(rowData.RelationId);
+  this.getRelationshipList('direct');
+  console.log("Final Relation On Edit",this.RelationId,rowData)
+  this.editSection = true;
+}
+onDeletePassengerList(rowData){
+  console.log("Index Received",rowData);
+  if(rowData.PassengerId!=null){
+
+  }
+  else{
+      this.historyRecordsList = this.historyRecordsList.filter(ele=>(ele.PassportNo!=rowData.PassportNo) && (ele.Dob!=rowData.Dob))
+  }
+}
 onDeletePassenger(rowData){
   let index =  this.PassengerDetails.findIndex(ele=>(ele.PassengerId==rowData.PassengerId && ele.GroupId==rowData.GroupId));
   this.PassengerDetails.splice(index,1);
@@ -791,7 +903,7 @@ setTravelValues(){
         passenger['maxDate'] = new Date(year-81, month, day-1);
        }
       if(passenger.GenderId!=null && passenger.GenderId!=''){
-          this.getRelationshipList(i);
+          //this.getRelationshipList(i);
       }
       else{
         this.GenderId = '';
@@ -1063,8 +1175,25 @@ Proceed()
       }
       else{
         this.onNextVehicle('finalSave');
+      } 
+  }
+  onFinalSavePassemgers(type){
+      let urlLink = null;
+      if(type=='save') urlLink = `${this.motorApiUrl}api/savepassengers`;
+      else urlLink = `${this.motorApiUrl}api/proceedpassengers`;
+      let ReqObj = {
+        "CreatedBy": "kalibroker2",
+        "PassengerList": this.historyRecordsList,
+        "QuoteNo": this.quoteNo
       }
-        
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          if(data.Result){
+            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+          }
+        },
+        (err) => { },
+      );
   }
   checkValidPassengers(){
     let quoteNo=sessionStorage.getItem('quoteNo');

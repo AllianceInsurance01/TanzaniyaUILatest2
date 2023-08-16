@@ -25,7 +25,7 @@
                 <button class="maan-btn maan-btn-blue maan-button-data" (click)="openmodel(mymodal)" style="bottom:0.2rem"><span>Cover Details</span></button>
             </div>
         </div>
-        <div class="maan-grid-item-body smallclass">
+        <div class="maan-grid-item-body smallclass" *ngIf="productId!='4'">
             <div class="row mt-1" *ngIf="!endrosement">
                 <div class="col-12 col-md-3 ">
                     <div class="input-control-container">
@@ -124,7 +124,96 @@
                 
             </div>
         </div>
+        <div class="maan-grid-item-body" *ngIf="productId=='4'">
+            <div class="row mt-1 customPadding" *ngIf="!endrosement">
+                <div class="col-12 col-md-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Customer Name</label>
+                        <div class="input-form-radio-box">
+                            <span class="spancommon span_font_size">{{customerDetails?.TitleDesc}} &nbsp; {{customerDetails?.ClientName}}</span>
 
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Customer ID</label>
+                        <div class="input-form-radio-box">
+                            <span class="spancommon span_font_size">{{customerDetails?.IdNumber}}</span>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-12 col-md-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">CustomerType</label>
+                        <div class="input-form-radio-box">
+                            <ng-container *ngIf="customerDetails?.PolicyHolderType == 1">
+                                <span class="spancommon span_font_size">{{customerTypeIndividual}}</span>
+                            </ng-container>
+                            <ng-container *ngIf="customerDetails?.PolicyHolderType == 2">
+                                <span class="spancommon span_font_size">{{customerTypeCorporate}}</span>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-12 col-md-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Mobile Number</label>
+                        <div class="input-form-radio-box">
+                            <span class="spancommon span_font_size">{{customerDetails?.MobileCodeDesc}}&nbsp;{{customerDetails?.MobileNo1}}</span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>   
+            <div class="row mt-1 customPadding">
+                
+                <div class="col-12 col-md-4 col-lg-4 col-xl-4" style="position: inherit;overflow: revert;">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Policy Start Date</label>
+                        <div class="input-form-radio-box">
+                            <span class="spancommon span_font_size">{{columnHeader?.InceptionDate}}</span>
+    
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 col-xl-4" style="position: inherit;overflow: revert;">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Policy End Date</label>
+                        <div class="input-form-radio-box">
+                            <span class="spancommon span_font_size">{{columnHeader?.ExpiryDate}}</span>
+    
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+                    <div class="input-control-container">
+                        
+                        <ng-container *ngIf="columnHeader?.Endorsementeffdate==null">
+                            <label class="input-form-label" style="font-size: 0.9rem !important;"><b>Total Premium</b></label>
+                            <div class="input-form-radio-box">
+                                <span class="spancommon span_font_size text-primary" style="font-size: 0.9rem !important;">{{columnHeader?.OverallPremiumFc|commaseparator}}<span>
+                                    &nbsp;({{columnHeader?.Currency}})</span></span>
+        
+                            </div>
+                           
+                        </ng-container>
+                        <ng-container *ngIf="columnHeader?.Endorsementeffdate!=null">
+                            <label class="input-form-label" style="font-size: 0.9rem !important;"><b>Total Endorsement Premium</b></label>
+                            <span>:
+                                <ng-container *ngIf="columnHeader?.TotalEndtPremium!=0 && columnHeader?.TotalEndtPremium!=null ">
+                                    <span class="spancommon span_font_size text-primary" style="font-size: 0.9rem !important;">{{columnHeader?.TotalEndtPremium|commaseparator}}&nbsp;({{columnHeader?.Currency}})</span>
+                                </ng-container>
+                                <ng-container *ngIf="columnHeader?.TotalEndtPremium==0 || columnHeader?.TotalEndtPremium==null">
+                                    <span class="spancommon span_font_size text-primary" style="font-size: 0.9rem !important;">{{columnHeader?.TotalEndtPremium}}&nbsp;({{columnHeader?.Currency}})</span>
+                                </ng-container>
+                            </span>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
 </div>
   <ng-template #mymodal let-modal>
         <div class="modal-header">
