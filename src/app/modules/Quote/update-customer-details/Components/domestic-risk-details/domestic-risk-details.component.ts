@@ -159,7 +159,9 @@ export class DomesticRiskDetailsComponent implements OnInit {
   enableEmployeeUploadSection: boolean=false;
   imageUrl: any=null;
   uploadDocList: any[]=[];
+  uploadFedDocList:any[]=[];
   employeeUploadRecords: any[]=[];
+  FedUploadRecords:any[]=[];
   showEmpRecordsSection: boolean;
   errorRecords: any[]=[];
   uploadStatus: any;
@@ -474,6 +476,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   getEmployeeDetails(){
     let SectionId = null;
     if(this.productId=='14' || this.productId=='19') SectionId = '45';
+    if(this.productId=='32') SectionId = '43';
     let ReqObj = {
       "QuoteNo": this.quoteNo,
        "RiskId": "1",
@@ -483,13 +486,27 @@ export class DomesticRiskDetailsComponent implements OnInit {
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         if(data?.Result){
+          if(this.productId!=='32'){
             this.employeeList = data?.Result;
+            console.log('OOOOO',this.employeeList);
+          }
+          else if(this.productId=='32'){
+            this.fidelityList =data?.Result;
+            console.log('Ferdility Lists',this.fidelityList);
+          }
             this.originalEmployeeList = new Array().concat(data?.Result);
-            if(this.employeeList.length!=0){
+            if(this.employeeList.length!=0 && this.productId!=='32'){
               this.getTotalSICost('Employee');
+            }
+            else if(this.productId=='32' && this.fidelityList.length!=0 ){
+              this.getTotalSICost('Fidelity');
             }
         }
       });
+  }
+  newFidelity(){
+    this.enableFidelityEditSection=true;
+    this.errorRecords=[];
   }
   getFidelityDetails(){
     let SectionId = null;
@@ -2281,6 +2298,9 @@ onFidelitySave(){
     this.currentFidelityIndex = null;this.enableFidelityEditSection = false;
     this.enableFidelityUploadSection = true;
     this.showFidelityRecordsSection = false;
+    this.uploadDocList=[];
+    this.employeeUploadRecords = [];
+    this.uploadStatus = null;
   }
   onUploadDocuments(target:any,fileType:any,type:any){
     console.log("Event ",target);
@@ -2340,6 +2360,7 @@ onFidelitySave(){
     else if(this.productId=='15') typeId='103';
     let SectionId = null;
     if(this.productId=='14' || this.productId=='19') SectionId = '45';
+    if(this.productId=='32') SectionId = '43';
     let ReqObj={
       "CompanyId":this.insuranceId,
       "ProductId":this.productId,
@@ -2383,9 +2404,17 @@ onFidelitySave(){
                   setTimeout(() => 
                   {
                     this.uploadDocList = [];
-                    this.enableEmployeeUploadSection = true;
-                    this.uploadStatus = null;
-                    this.enableEmployeeEditSection = false;
+                    if(this.productId!='32'){
+                      this.enableEmployeeUploadSection = true;
+                      this.uploadStatus = null;
+                      this.enableEmployeeEditSection = false;
+                    }
+                    else if(this.productId == '32'){
+                      this.enableFidelityUploadSection = true;
+                      this.uploadStatus =null;
+                      this.enableFidelityEditSection = false;
+                    }
+                  
                 }, (4*1000));
                 }
                 else{
@@ -2412,8 +2441,15 @@ onFidelitySave(){
               if(data){
                 let res = data?.Result;
                 if(res){
-                  this.enableEmployeeUploadSection = false;
-                  this.enableEmployeeEditSection = false;
+                  if(this.productId!='32'){
+                    this.enableEmployeeUploadSection = false;
+                    this.enableEmployeeEditSection = false;
+                  }
+                  else if(this.productId=='32'){
+                    this.enableFidelityEditSection = false;
+                    this.enableFidelityUploadSection = false;
+                  }
+             
                   this.errorRecords = [];this.uploadStatus=null;
                   this.getEmployeeDetails();
                 }
@@ -2434,8 +2470,15 @@ onFidelitySave(){
               if(data){
                 let res = data?.Result;
                 if(res){
-                  this.employeeUploadRecords = [res];
-                  this.showEmpRecordsSection = true;
+                  if(this.productId!=32){
+                    this.employeeUploadRecords = [res];
+                    this.showEmpRecordsSection = true;
+                  }
+                  else if(this.productId == 32){
+                    this.employeeUploadRecords = [res];
+                    this.showFidelityRecordsSection=true;
+                  }
+               
                   if(res?.ErrorRecords!=null && res?.ErrorRecords!='0') this.getErrorRecords();
                   else this.errorRecords = [];
                 }
@@ -2460,6 +2503,7 @@ onFidelitySave(){
                 let res = data?.Result;
                 if(res){
                     this.errorRecords = data.Result;
+                    console.log('OOOOOOOO',this.errorRecords);
                 }
               }
           },

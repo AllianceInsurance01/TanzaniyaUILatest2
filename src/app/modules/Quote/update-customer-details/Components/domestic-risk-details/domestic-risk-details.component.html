@@ -1334,7 +1334,7 @@
                                     
                                     <div class="headcommon mr-3"  *ngIf="!enableAddNewBtn('employee') && !enableFidelityUploadSection && fidelityList.length!=0">
                                         <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2"  (click)="FidelityAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>&nbsp;
-                                            <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2"  (click)="onUploadEmployeeSection()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
+                                            <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2"  (click)="onUploadFidelitySection()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
                                     </div>
                                     <div class="headcommon" *ngIf="enableFidelityUploadSection">
                                         <ng-container *ngIf="showFidelityRecordsSection">
@@ -1352,7 +1352,7 @@
                                     </div>
                                     <div *ngIf="!enableEmployeeUploadSection">Currency&nbsp;({{currencyValue}})</div>
                                 </div>
-                                <div  *ngIf="fidelityList.length==0 && !enableFidelityUploadSection" >
+                                <div  *ngIf="fidelityList.length==0 && !enableFidelityUploadSection">
                                     <div class="groupBtnMembers text-center">
                                         <div class="groupBtnMembers__desc groupBtnMembers__desc_top">
                                             Enter All Fidelity Details that you want to insure
@@ -1460,7 +1460,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center mt-2" *ngIf="uploadStatus==null">
-                                        <button class="btn btn-danger btn-sm mr-5" (click)="enableEmployeeUploadSection=!enableEmployeeUploadSection;uploadDocList=[]"> Cancel</button>&nbsp;&nbsp;
+                                        <button class="btn btn-danger btn-sm mr-5" (click)="enableFidelityUploadSection=!enableFidelityUploadSection;uploadDocList=[]"> Cancel</button>&nbsp;&nbsp;
                                         <button class="btn btn-success btn-sm" *ngIf="uploadDocList.length!=0" (click)="onUploadEmployeeDetails()">Upload</button>
                                     </div>
                                     <div class="text-center">
@@ -1529,6 +1529,9 @@
                                             </div>
                                             <div class="d-flex justify-content-end">
                                                 <pagination-controls (pageChange)="j=$event"  id="j"></pagination-controls>
+                                            </div>
+                                            <div style="text-align: center;">
+                                                <button class="btn btn-danger btn-sm mr-5" (click)="newFidelity()"> Cancel</button>&nbsp;&nbsp;
                                             </div>
                                         </ng-container>
                                     </div>
