@@ -2067,7 +2067,7 @@ getMotorUsageList(vehicleValue){
           else{
             if(this.statusValue=='RA') this.router.navigate(['/Home/referralApproved']);
             else if(this.statusValue=='RE') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
-            else this.router.navigate(['/Home/referralPending']);
+            else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
           }
       }
       else{
