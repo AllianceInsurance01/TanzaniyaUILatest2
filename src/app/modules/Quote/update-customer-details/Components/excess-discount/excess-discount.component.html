@@ -269,7 +269,7 @@
                                                                     <div class="d-flex justify-content-between">
                                                                         <div>
                                                                             <ng-container *ngIf="(element.Discounts!=null && element.Discounts.length!=0) || (element.Loadings!=null && element.Loadings.length!=0)">
-                                                                                <ng-template #discountCard>
+                                                                                <!-- <ng-template #discountCard>
                                                                                     <div class="popover-card customTemplate shawdowcustom ">
                                                                                         <div class="card-header" status="warning">
                                                                                             <span class="spancommon span_font_size">Premium
@@ -279,7 +279,6 @@
                                                                                         <div class="card-body p-0">
                                                                                             <ul class="list-group">
                                                                                                 <li class="list-group-item list-seperate">
-                                                                                                    <!-- <div class="d-flex justify-content-between"> -->
                                                                                                     <div>
                                                                                                         <span class="spancommon span_font_size">Before
                                                                                                             Discount</span>
@@ -288,20 +287,16 @@
                                                                                                     <div>
                                                                                                         <span class="spancommon span_font_size">{{beforeDiscount}}</span>
                                                                                                     </div>
-                                                                                                    <!-- </div> -->
                                                                                                 </li>
                                                                                                 <ng-container *ngIf="discountList.length!=0">
                                                                                                     <li class="list-group-item list-seperate">
-                                                                                                        <!-- <div class="d-flex justify-content-between"> -->
                                                                                                         <div>
                                                                                                             <span class="spancommon span_font_size">Discounts</span>
                                                                                                         </div>
                                                                                                         <div>
                                                                                                         </div>
-                                                                                                        <!-- </div> -->
                                                                                                     </li>
                                                                                                     <li class="list-group-item list-seperate" *ngFor="let discount of discountList">
-                                                                                                        <!-- <div class="d-flex justify-content-between"> -->
                                                                                                         <div>
                                                                                                             <span class="spancommon span_font_size">{{discount.DiscountDesc}}</span>
                 
@@ -310,12 +305,10 @@
                                                                                                             <span class="spancommon span_font_size">{{discount.DiscountAmount}}</span>
                 
                                                                                                         </div>
-                                                                                                        <!-- </div> -->
                                                                                                     </li>
                                                                                                 </ng-container>
                                                                                                 <ng-container *ngIf="loadingList.length!=0">
                                                                                                     <li class="list-group-item list-seperate">
-                                                                                                        <!-- <div class="d-flex justify-content-between"> -->
                                                                                                         <div>
                                                                                                             <span class="spancommon span_font_size">Loading</span>
                 
@@ -323,10 +316,8 @@
                                                                                                         <div>
                 
                                                                                                         </div>
-                                                                                                        <!-- </div> -->
                                                                                                     </li>
                                                                                                     <li class="list-group-item list-seperate" *ngFor="let loading of loadingList">
-                                                                                                        <!-- <div class="d-flex justify-content-between"> -->
                                                                                                         <div>
                                                                                                             <span class="spancommon span_font_size">{{loading.LoadingDesc}}</span>
                 
@@ -335,11 +326,9 @@
                                                                                                             <span class="spancommon span_font_size">{{loading.LoadingAmount}}</span>
                 
                                                                                                         </div>
-                                                                                                        <!-- </div> -->
                                                                                                     </li>
                                                                                                 </ng-container>
                                                                                                 <li class="list-group-item list-seperate">
-                                                                                                    <!-- <div class="d-flex justify-content-between"> -->
                                                                                                     <div>
                                                                                                         <span class="spancommon span_font_size">Total
                                                                                                             Premium</span>
@@ -348,13 +337,12 @@
                                                                                                         <span class="spancommon span_font_size">{{afterDiscount}}</span>
                 
                                                                                                     </div>
-                                                                                                    <!-- </div> -->
                                                                                                 </li>
                                                                                             </ul>
                                                                                         </div>
                                                                                     </div>
-                                                                                </ng-template>
-                                                                                &nbsp;&nbsp;<button type="button" class="btn maan-btn-blue btn-circle" [ngbPopover]="discountCard" (click)="setDiscountDetails(element)">?
+                                                                                </ng-template> -->
+                                                                                &nbsp;&nbsp;<button type="button" class="btn maan-btn-blue btn-circle" (click)="setDiscountDetails(menu,element,discountModal)">?
                                                                                 </button>
                                                                             </ng-container>
                                                                         </div>
@@ -786,29 +774,29 @@
                                                                 </ng-container>
                                                                 <ng-container *ngIf="col.key=='Rate'">
                                                                     &nbsp;
-                                                                    <ng-container *ngIf="!adminSection || (adminSection && endorsementSection && element?.Endorsements!=null)">
+                                                                    <ng-container *ngIf="!adminSection">
                                                                         {{ element[col.key]}}
                                                                     </ng-container>
-                                                                    <ng-container *ngIf="(adminSection && !endorsementSection) || (adminSection && endorsementSection && element?.Endorsements==null)">
-                                                                        <input type="text" [id]="'Rate'+i" style="margin-top: 12px;width: 70px;" [(ngModel)]="element[col.key]">
+                                                                    <ng-container *ngIf="(adminSection)">
+                                                                        <input type="text" [id]="'Rate'+i" style="width: 70px;" [(ngModel)]="element[col.key]">
                                                                     </ng-container>
                                                                 </ng-container>
                                                                 <ng-container *ngIf="col.key=='ExcessPercent'">
                                                                     &nbsp;
-                                                                    <ng-container *ngIf="!adminSection || (adminSection && endorsementSection && element?.Endorsements!=null)">
+                                                                    <ng-container *ngIf="!adminSection">
                                                                         {{ element[col.key]}}
                                                                     </ng-container>
-                                                                    <ng-container *ngIf="(adminSection && !endorsementSection) || (adminSection && endorsementSection && element?.Endorsements==null)">
+                                                                    <ng-container *ngIf="adminSection">
                                                                         <input type="text" [id]="'ExcessPercent'+i" style="width: 100px;" [(ngModel)]="element[col.key]">
                                                                     </ng-container>
                                                                 </ng-container>
                                                                 <ng-container *ngIf="col.key=='ExcessAmount'">
                                                                     &nbsp;
-                                                                    <ng-container *ngIf="!adminSection || (adminSection && endorsementSection && element?.Endorsements!=null)">
+                                                                    <ng-container *ngIf="!adminSection">
                                                                         <div style="max-width: 100px !important;"> {{ element[col.key]}}
                                                                         </div>
                                                                     </ng-container>
-                                                                    <ng-container *ngIf="(adminSection && !endorsementSection) || (adminSection && endorsementSection && element?.Endorsements==null)">
+                                                                    <ng-container *ngIf="(adminSection)">
                                                                         <input type="text" [id]="'ExcessAmount'+i" style="width: 100px;" [(ngModel)]="element[col.key]">
                                                                     </ng-container>
                                                                 </ng-container>
@@ -1113,7 +1101,7 @@
                                                                     <div class="d-flex justify-content-between">
                                                                         <div>
                                                                             <ng-container *ngIf="(element.Discounts!=null && element.Discounts.length!=0) || (element.Loadings!=null && element.Loadings.length!=0)">
-                                                                                <ng-template #discountCard>
+                                                                                <!-- <ng-template #discountCard>
                                                                                     <div class="popover-card customTemplate shawdowcustom ">
                                                                                         <div class="card-header" status="warning">
                                                                                             <span class="spancommon span_font_size">Premium
@@ -1123,7 +1111,6 @@
                                                                                         <div class="card-body p-0">
                                                                                             <ul class="list-group">
                                                                                                 <li class="list-group-item list-seperate">
-                                                                                                    <!-- <div class="d-flex justify-content-between"> -->
                                                                                                     <div>
                                                                                                         <span class="spancommon span_font_size">Before
                                                                                                             Discount</span>
@@ -1132,20 +1119,17 @@
                                                                                                     <div>
                                                                                                         <span class="spancommon span_font_size">{{beforeDiscount}}</span>
                                                                                                     </div>
-                                                                                                    <!-- </div> -->
                                                                                                 </li>
                                                                                                 <ng-container *ngIf="discountList.length!=0">
                                                                                                     <li class="list-group-item list-seperate">
-                                                                                                        <!-- <div class="d-flex justify-content-between"> -->
                                                                                                         <div>
                                                                                                             <span class="spancommon span_font_size">Discounts</span>
                                                                                                         </div>
                                                                                                         <div>
                                                                                                         </div>
-                                                                                                        <!-- </div> -->
                                                                                                     </li>
                                                                                                     <li class="list-group-item list-seperate" *ngFor="let discount of discountList">
-                                                                                                        <!-- <div class="d-flex justify-content-between"> -->
+                                                                                                        
                                                                                                         <div>
                                                                                                             <span class="spancommon span_font_size">{{discount.DiscountDesc}}</span>
                 
@@ -1154,12 +1138,10 @@
                                                                                                             <span class="spancommon span_font_size">{{discount.DiscountAmount}}</span>
                 
                                                                                                         </div>
-                                                                                                        <!-- </div> -->
                                                                                                     </li>
                                                                                                 </ng-container>
                                                                                                 <ng-container *ngIf="loadingList.length!=0">
                                                                                                     <li class="list-group-item list-seperate">
-                                                                                                        <!-- <div class="d-flex justify-content-between"> -->
                                                                                                         <div>
                                                                                                             <span class="spancommon span_font_size">Loading</span>
                 
@@ -1167,10 +1149,9 @@
                                                                                                         <div>
                 
                                                                                                         </div>
-                                                                                                        <!-- </div> -->
                                                                                                     </li>
                                                                                                     <li class="list-group-item list-seperate" *ngFor="let loading of loadingList">
-                                                                                                        <!-- <div class="d-flex justify-content-between"> -->
+                                                                                                        
                                                                                                         <div>
                                                                                                             <span class="spancommon span_font_size">{{loading.LoadingDesc}}</span>
                 
@@ -1179,11 +1160,9 @@
                                                                                                             <span class="spancommon span_font_size">{{loading.LoadingAmount}}</span>
                 
                                                                                                         </div>
-                                                                                                        <!-- </div> -->
                                                                                                     </li>
                                                                                                 </ng-container>
                                                                                                 <li class="list-group-item list-seperate">
-                                                                                                    <!-- <div class="d-flex justify-content-between"> -->
                                                                                                     <div>
                                                                                                         <span class="spancommon span_font_size">Total
                                                                                                             Premium</span>
@@ -1192,13 +1171,12 @@
                                                                                                         <span class="spancommon span_font_size">{{afterDiscount}}</span>
                 
                                                                                                     </div>
-                                                                                                    <!-- </div> -->
                                                                                                 </li>
                                                                                             </ul>
                                                                                         </div>
                                                                                     </div>
-                                                                                </ng-template>
-                                                                                &nbsp;&nbsp;<button type="button" class="btn maan-btn-blue btn-circle" [ngbPopover]="discountCard" (click)="setDiscountDetails(element)" style="margin-right:7px !important;">?
+                                                                                </ng-template> -->
+                                                                                &nbsp;&nbsp;<button type="button" class="btn maan-btn-blue btn-circle" (click)="setDiscountDetails(menu,element,discountModal)" style="margin-right:7px !important;">?
                                                                                 </button>
                                                                             </ng-container>
                                                                         </div>
@@ -1621,7 +1599,7 @@
                                                                                         </ng-container>
                                                                                     </div>
                                                                                     <div>
-                                                                                        {{ element[col.key]|commaseparator }}
+                                                                                        {{ element[col.key]|commaseparator }} 
                                                                                     </div>
                                                                                 </div>
                                                                             </ng-container>
@@ -1633,29 +1611,29 @@
                                                                 </ng-container>
                                                                 <ng-container *ngIf="col.key=='Rate'">
                                                                    
-                                                                    <ng-container *ngIf="!adminSection || (adminSection && endorsementSection && element?.Endorsements!=null)">
+                                                                    <ng-container *ngIf="!adminSection">
                                                                         {{ element[col.key]}}
                                                                     </ng-container>
-                                                                    <ng-container *ngIf="(adminSection && !endorsementSection) || (adminSection && endorsementSection && element?.Endorsements==null)">
+                                                                    <ng-container *ngIf="(adminSection )">
                                                                         <input type="text" [id]="'Rate'+i" style="width: 70px;" [(ngModel)]="element[col.key]">
                                                                     </ng-container>
                                                                 </ng-container>
                                                                 <ng-container *ngIf="col.key=='ExcessPercent'">
                                                                     &nbsp;
-                                                                    <ng-container *ngIf="!adminSection || (adminSection && endorsementSection && element?.Endorsements!=null)">
+                                                                    <ng-container *ngIf="!adminSection">
                                                                         {{ element[col.key]}}
                                                                     </ng-container>
-                                                                    <ng-container *ngIf="(adminSection && !endorsementSection) || (adminSection && endorsementSection && element?.Endorsements==null)">
+                                                                    <ng-container *ngIf="(adminSection)">
                                                                         <input type="text" [id]="'ExcessPercent'+i" style="width: 100px;" [(ngModel)]="element[col.key]">
                                                                     </ng-container>
                                                                 </ng-container>
                                                                 <ng-container *ngIf="col.key=='ExcessAmount'">
                                                                     &nbsp;
-                                                                    <ng-container *ngIf="!adminSection || (adminSection && endorsementSection && element?.Endorsements!=null)">
+                                                                    <ng-container *ngIf="!adminSection">
                                                                         <div style="max-width: 100px !important;"> {{ element[col.key]}}
                                                                         </div>
                                                                     </ng-container>
-                                                                    <ng-container *ngIf="(adminSection && !endorsementSection) || (adminSection && endorsementSection && element?.Endorsements==null)">
+                                                                    <ng-container *ngIf="(adminSection)">
                                                                         <input type="text" [id]="'ExcessAmount'+i" style="width: 100px;" [(ngModel)]="element[col.key]">
                                                                     </ng-container>
                                                                 </ng-container>
@@ -2927,6 +2905,92 @@
         </div>
 
     </div> -->
+    <ng-template #discountModal let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Premium
+                    Details</span></h4>
+            <button type="button" class="close" #discountModalClose aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <ul class="list-group">
+                <li class="list-group-item list-seperate">
+                    <div>
+                        <span class="spancommon span_font_size">Before
+                            Discount</span>
+
+                    </div>
+                    <div>
+                        <span class="spancommon span_font_size">{{beforeDiscount | commaseparator}}</span>
+                    </div>
+                </li>
+                <ng-container *ngIf="discountList.length!=0">
+                    <li class="list-group-item list-seperate">
+                        <div>
+                            <span class="spancommon span_font_size"><b><u>Discounts</u></b></span>
+                        </div>
+                        <div>
+                        </div>
+                    </li>
+                    <li class="list-group-item list-seperate" *ngFor="let discount of discountList">
+                        
+                        <div>
+                            <span class="spancommon span_font_size">{{discount.DiscountDesc}}</span>
+
+                        </div>
+                        <div>
+                            <span class="spancommon span_font_size">{{discount.DiscountAmount | commaseparator}}</span>
+
+                        </div>
+                    </li>
+                </ng-container>
+                <ng-container *ngIf="loadingList.length!=0">
+                    <li class="list-group-item list-seperate">
+                        <div>
+                            <span class="spancommon span_font_size"><b><u>Loading</u></b></span>
+
+                        </div>
+                        <div>
+
+                        </div>
+                    </li>
+                    <li class="list-group-item list-seperate" *ngFor="let loading of loadingList;let i=index">
+                        
+                        <div>
+                            <span class="spancommon span_font_size">{{loading.LoadingDesc}}</span>
+
+                        </div>
+                        <div>
+                            <ng-container *ngIf="(adminSection)">
+                                <input type="text"  [id]="'Rate'+i" class="input-form-control without-icon" (keyup)="premiumComma(i,loading.LoadingAmount)" style="width: auto !important;max-width:300px;text-align:right !important" [(ngModel)]="loading['LoadingAmount']">
+                            </ng-container>
+                            <ng-container *ngIf="(!adminSection)">
+                                <span class="spancommon span_font_size">{{loading.LoadingAmount | commaseparator}}</span>
+                            </ng-container>
+                            
+                        </div>
+                    </li>
+                </ng-container>
+                <li class="list-group-item list-seperate">
+                    <div>
+                        <span class="spancommon span_font_size">Total
+                            Premium</span>
+                    </div>
+                    <div>
+                        <span class="spancommon span_font_size">{{afterDiscount | commaseparator}}</span>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" (click)="modal.dismiss('Cross click')" style="margin-left:10px;">Close</button>
+            <button class="custom-btn btn-6 maan-button-data  mx-2" (click)="SaveLoadingDetails(modal)">Submit
+            </button>
+            
+        </div>
+    </ng-template>
     <ng-template #myView let-modal>
         <div class="modal-header">
             <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Cover

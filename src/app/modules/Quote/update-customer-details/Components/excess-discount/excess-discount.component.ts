@@ -210,6 +210,9 @@ emiyn="N";
   endorsementType: any;
   showGrid:boolean=false;
   enableAddVehicle: any;
+  selectedVehId: any;
+  selectedCoverId: any;
+  selectedSectionId: any;
   constructor(public sharedService: SharedService,private router:Router,private modalService: NgbModal,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe,public dialog: MatDialog) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -2672,13 +2675,71 @@ getMotorUsageList(vehicleValue){
     else if(this.statusValue && this.adminSection) return true;
     else return false;
   }
-  setDiscountDetails(rowData){
+  setDiscountDetails(vehData,rowData,modal){
+    this.selectedVehId = vehData.VehicleId;
+    this.selectedCoverId = rowData.CoverId;
+    this.selectedSectionId = vehData.SectionId;
     this.beforeDiscount = rowData.PremiumBeforeDiscount;
     this.afterDiscount = rowData.PremiumAfterDiscount;
     if(rowData.Discounts) this.discountList = rowData.Discounts;
     if(rowData.Loadings) this.loadingList = rowData.Loadings;
+    this.discountOpen(modal);
   }
-  
+  SaveLoadingDetails(modal){
+    let vehData = this.vehicleDetailsList.filter(ele=>ele.VehicleId==this.selectedVehId);
+    let secData = vehData.filter(ele=>ele.SectionId==this.selectedSectionId);
+    let coverData = secData[0].CoverList.filter(ele=>ele.CoverId==this.selectedCoverId);
+    coverData[0].PremiumAfterDiscount = this.afterDiscount;
+    this.selectedVehId = null;
+    this.selectedCoverId = null;
+    this.selectedSectionId = null;
+    this.beforeDiscount = null;this.loadingList =[];
+    this.afterDiscount = null;this.discountList =[];
+    if(coverData){
+      console.log("Final Covers",coverData)
+      modal.dismiss('Cross click');
+      $('#discountModal').modal('hide');
+    }
+    
+  }
+  premiumComma(i,LoadingAmount){
+    console.log('HHHHHHH',LoadingAmount);
+    let entry = this.loadingList[i];
+    console.log("Entry Came")
+    if(entry.LoadingAmount){
+      console.log("Entry Came 2")
+      let value = entry.LoadingAmount.replace(/\D/g, "")
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      this.loadingList[i]['LoadingAmount'] = value;
+    }
+    this.setTotalPremium();
+  }
+  setTotalPremium(){
+      let finalPremium = 0;
+      finalPremium = Number(this.beforeDiscount+finalPremium);
+       
+      if(this.loadingList.length!=0){
+          let i=0;
+          for(let load of this.loadingList){
+            if(load.LoadingAmount){
+              finalPremium = finalPremium+Number(load.LoadingAmount.replaceAll(',',''));
+            }
+              i+=1;
+              if(i==this.loadingList.length){
+                if(this.discountList.length!=0){
+                    let j =0;
+                    for(let dis of this.discountList){
+                        if(dis.DiscountAmount!=0 && dis.DiscountAmount!=null)  finalPremium = finalPremium + dis.DiscountAmount
+                        j+=1;
+                        if(j==this.discountList.length) this.afterDiscount = finalPremium
+                    }
+                }
+                else this.afterDiscount = finalPremium
+              }
+          }
+      }
+      console.log("Final Premium",this.afterDiscount)
+  }
   getTotalVehiclesCost(){
     let totalCost = 0,i=0,totalLocalCost=0;
 
@@ -2890,7 +2951,7 @@ getMotorUsageList(vehicleValue){
         //       }
         //       else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
         // }
-         if(this.productId=='3' || this.productId=='19' || this.productId=='39' || this.productId=='32' || this.productId=='14' || this.productId=='1' || this.productId=='6' || this.productId=='16'){
+         if(this.productId=='3' || this.productId=='19' || this.productId=='39' || this.productId=='32' || this.productId=='14' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId=='42'){
           let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
           if(homeSession){
             this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
@@ -3212,7 +3273,7 @@ getMotorUsageList(vehicleValue){
       //   }
       //   else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
       // }
-      else if(this.productId=='32' || this.productId=='39' || this.productId=='14' || this.productId=='15' || this.productId=='19' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId =='21' || this.productId =='26'){
+      else if(this.productId=='32' || this.productId=='39' || this.productId=='14' || this.productId=='15' || this.productId=='19' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId =='21' || this.productId =='26' || this.productId=='42'){
         // let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
         // if(homeSession){
            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
@@ -4134,7 +4195,13 @@ this.viewCondition(i);
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
-
+  discountOpen(content) {
+    this.modalService.open(content, { size: 'md', backdrop: 'static',ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';

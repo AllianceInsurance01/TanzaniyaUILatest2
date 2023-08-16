@@ -101,7 +101,7 @@ export class PremiumDetailsComponent implements OnInit {
         if(endorseObj.QuoteNo) this.quoteNo = endorseObj.QuoteNo;
         this.updateComponent.quoteNo = endorseObj.QuoteNo;
         if(this.endorsementId!=42 && this.endorsementId!=842){
-          this.enableCustomerDetails = this.enableFieldsList.some(ele=>ele=='customerName');
+          this.enableCustomerDetails = this.enableFieldsList.some(ele=>ele=='customerName' || ele=='Title');
           this.enableDocumentDetails = this.enableFieldsList.some(ele=>ele=='documentId');
           this.enableDriverDetails = this.enableFieldsList.some(ele=>ele=='driverName' || ele=='DriverName');
           
