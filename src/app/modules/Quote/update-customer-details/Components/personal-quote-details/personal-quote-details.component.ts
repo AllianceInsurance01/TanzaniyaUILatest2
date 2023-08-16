@@ -26,6 +26,7 @@ import { PlantAllRisk } from '../newmodels/Plantallrisk';
 import { EmployersLiabilitys } from '../newmodels/EmployersLiability';
 import { Burglarys } from '../newmodels/Buglarys';
 import { PublicLiabilitys } from '../newmodels/PublicLiablityCover';
+import { CyberInsurance } from '../models/CyberInsurance';
 export class ForceLengthValidators {
   static maxLength(maxLength: number) {
     return (control: FormControl): ValidationErrors => {
@@ -149,7 +150,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
     this.insuranceId = this.userDetails.Result.InsuranceId;
     console.log('OOOOOOOOOOOOO',this.insuranceId);
      this.updateComponent.showStepperSection = false;
-    if (this.productId != '3' && this.productId != '19' && this.productId!='39' && this.productId!='16' && this.productId!='1' && this.productId!='25' && this.productId!='21' && this.productId!='26' && this.productId!='27') {
+    if (this.productId != '3' && this.productId != '19' && this.productId != '42' && this.productId!='39' && this.productId!='16' && this.productId!='1' && this.productId!='25' && this.productId!='21' && this.productId!='26' && this.productId!='27') {
       this.getOccupationList(null);
     }
     this.productItem = new ProductData();
@@ -1311,6 +1312,22 @@ export class PersonalQuoteDetailsComponent implements OnInit {
           this.formSection = true; this.viewSection = false;
       }
     }
+    else if(this.productId=='42'){
+      let fireData = new CyberInsurance();
+      let entry = [];
+      this.fields[0] = fireData?.fields;
+      let referenceNo = sessionStorage.getItem('quoteReferenceNo');
+      if (referenceNo) {
+        this.requestReferenceNo = referenceNo;
+        this.productItem = new ProductData();
+        this.setCommonFormValues();
+       
+      }
+      else {
+          this.productItem = new ProductData();
+          this.formSection = true; this.viewSection = false;
+      }
+    }
     this.BenifitList = [
       { Code: 1, CodeDescription: '12 Months' },
       { Code: 2, CodeDescription: '24 Months' },
@@ -1451,7 +1468,6 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         
         field.fieldGroup[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].hooks = regionHooks;
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([field])
-        
           this.getNatureTradeList();
           this.getInsuranceForList();
           this.getWallMaterialList();
@@ -1703,12 +1719,10 @@ getPlantallrisk(sections){
       console.log(data);
       if (data.Result) {
         let details = data?.Result;
-        console.log('PPPPPPPPPPPPPPPPP',details);
         this.productItem.MiningPlantSi = details?.MiningPlantSi;
         this.productItem.NonminingPlantSi= details?.NonminingPlantSi;
         this.productItem.GensetsSi = details?.GensetsSi;
         this.productItem.EquipmentSi=details?.EquipmentSi;
-        console.log('KKKKKKKKKKKKKKKKKK',this.productItem.EquipmentSi);
        
       }
     },

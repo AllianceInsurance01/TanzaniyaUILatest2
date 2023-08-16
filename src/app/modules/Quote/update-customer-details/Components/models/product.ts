@@ -23,7 +23,7 @@ export class ProductData {
 	SumInsured:any='';
     SectionId: string='';
     IdProofType:string = '';
-    IdNo:string = '';IndustryName:any;
+    IdNo:string = '';IndustryName:any;UsageType:any='S';
     JobJoiningMonth:string = '';NatureOfBusinessId:any;
     BetweenDiscontinued:string="N";MoneyInSafeBusinessSIYN:boolean=false;
 	MoneyOutSafeBusinessSIYN:boolean=false;MoneyInPremisesSIYN:boolean=false;
@@ -74,6 +74,7 @@ export class ProductData {
 	ApplianceLossPercent:any='';CashValueablesLossPercent:any='';
 	MiningPlantSi:any='0';NonminingPlantSi:any='0';GensetsSi:any='0';
 	ElectronicEquipSuminsured:any ='0';
+	PlanType: any = null;
 	constructor(data?) {
 		this.id = data?.id ?? ''
 		this.CustomerName = data?.CustomerName ?? '';
@@ -182,6 +183,8 @@ export class ProductData {
 		this.NonminingPlantSi = data?.NonminingPlantSi ?? '0';
 		this.GensetsSi = data?.GensetsSi ?? '0';
 		this.ElectronicEquipSuminsured = data?.ElecEquipSuminsured ?? '0';
+		this.UsageType = data?.UsageType ?? 'S';
+		this.PlanType = data?.PlanType ?? 'S';
 		// this.EquipmentSi = data?.EquipmentSi ?? '0';
 		// this.ElectronicEquipSuminsured = data.ElectronicEquipSuminsured ?? '0';
 	}
