@@ -517,6 +517,7 @@ export class EndorsementTypeDetailsComponent {
             else if(this.productId=='39') this.getEmployersDetails(refNo,customerDatas,type,'machinery');
             else if(this.productId=='16') this.getEmployersDetails(refNo,customerDatas,type,'money');
             else if(this.productId=='1') this.getEmployersDetails(refNo,customerDatas,type,'burglary');
+            else if(this.productId=='6') this.getEmployersDetails(refNo,customerDatas,type,'fire');
         },
         (err) => { },
       );
@@ -529,6 +530,7 @@ export class EndorsementTypeDetailsComponent {
     else if(name=='machinery'){sectionId = '41';urlLink = `${this.motorApiUrl}api/slide9/getmachinerybreakdown`;urlLink2 = `${this.motorApiUrl}api/slide9/savemachinerybreakdown`;}
     else if(name=='money'){sectionId = '42';urlLink = `${this.motorApiUrl}api/slide10/getmoneydetails`;urlLink2 = `${this.motorApiUrl}api/slide9/savemoneydetails`;}
     else if(name=='burglary'){sectionId = '52';urlLink = `${this.motorApiUrl}api/slide3/getburglaryandhouse`;urlLink2 = `${this.motorApiUrl}api/slide3/saveburglaryandhouse`;}
+    else if(name=='fire'){sectionId = '40';urlLink = `${this.motorApiUrl}api/slide4/getfireandperils`;urlLink2 = `${this.motorApiUrl}api/slide4/savefireandperils`;}
     let ReqObj = {
       "RequestReferenceNo": refNo,
       "RiskId": "1",
@@ -563,12 +565,51 @@ export class EndorsementTypeDetailsComponent {
             else if(this.productId=='39') this.saveMachineryDetails(customerDatas,refNo,customerData,type,name);
             else if(this.productId=='16') this.saveMoneyDetails(customerDatas,refNo,customerData,type,name);
             else if(this.productId=='1') this.saveBurglaryDetails(customerDatas,refNo,customerData,type,name)
+            else if(this.productId=='6') this.saveFireDetails(customerDatas,refNo,customerData,type,name)
         },
         (err) => { },
       );
 
   }
-
+  saveFireDetails(customerDatas,refNo,customerData,type,name){
+    let ReqObj = {
+      "CreatedBy": this.loginId,
+      "InsuranceId": this.insuranceId,
+      "ProductId": this.productId,
+      "RequestReferenceNo": refNo,
+      "RiskId": "1",
+      "SectionId":  "40",
+      "BuildingSuminsured": customerDatas?.BuildingSuminsured,
+      "IndemityPeriod": customerDatas?.IndemityPeriod,
+      "MakutiYn": customerDatas?.MakutiYn,
+      "EndorsementDate": customerDatas.EndorsementDate,
+      "EndorsementEffectiveDate": customerDatas.EndorsementEffectiveDate,
+      "EndorsementRemarks": customerDatas.EndorsementRemarks,
+      "EndorsementType": customerDatas.EndorsementType,
+      "EndorsementTypeDesc": customerDatas.EndorsementTypeDesc,
+      "EndtCategoryDesc": customerDatas.EndtCategoryDesc,
+      "EndtCount": customerDatas.EndtCount,
+      "EndtPrevPolicyNo": customerDatas.EndtPrevPolicyNo,
+      "EndtPrevQuoteNo": customerDatas.EndtPrevQuoteNo,
+      "EndtStatus": customerDatas.EndtStatus,
+      "IsFinanceEndt": customerDatas.IsFinanceEndt,
+      "OrginalPolicyNo": customerDatas.OrginalPolicyNo,
+      "PolicyNo": customerDatas.PolicyNo
+    }
+    let urlLink = `${this.motorApiUrl}api/slide4/savefireandperils`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if (data?.Result) {
+          if(data.Result.length!=0){
+            this.requestReferenceNo = data?.Result[0]?.RequestReferenceNo;
+            this.onCalculate(data.Result,customerData,type);
+          }
+          
+        }
+    },
+    (err) => { },
+  );
+  }
   saveBurglaryDetails(customerDatas,refNo,customerData,type,name){
 
     let ReqObj = {
