@@ -44,12 +44,14 @@ export class DomesticRiskDetailsComponent implements OnInit {
   jsonList: any[] = [];
   PersonalAssistantList: any[] = [];
   LocationList: any[] = [];
+  CyperList:any[]=[];
   Cotentrisk: any[] = [];
   MachineryContentrisk:any[]=[];
   policyEndDate: any;
   row: any;contentList:any[]=[];
   rows: any;Intermedity:any[]=[];
   ElectronicItem:any[]=[];
+  CyberItem:any[]=[];
   Addrow: any;sumInsuredDetails:any;
   rowss: any;
   item: any;
@@ -89,6 +91,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   totalElectrIntSI:number;
   InbuildConstructType: void;
   sumInsured: boolean;six: boolean;
+  ten:boolean;
   actualPersonalAccSI: any;machineries:any[]=[];
   length = 50;MachineryName:any=null;BrandName:any=null;
   MachineryLocation:any=null;NameDesc:any=null;
@@ -119,6 +122,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   liabilityOccupationId: any;
   totalPASI: number=0;
   currentBuildingIndex: number;
+  currentCyberIndex:number;
   enableBuildingEditSection: boolean = false;enableContentEditSection:boolean = false;
   buildingSIError: boolean=false;
   buildingLocationError: boolean=false;
@@ -201,6 +205,13 @@ export class DomesticRiskDetailsComponent implements OnInit {
   machineryItemId: any;
   MiSumInsured: any;
   actualMachinerySI: any;
+  enableCyberSection: boolean = false;
+  CyberMake:any;
+  DeviceType:any;
+  editCyberSection: boolean;
+  cyberSectionId: any;
+  Cyberyear:any;
+  CyberSNo:any;
   constructor(private router: Router,private datePipe:DatePipe,private modalService: NgbModal,
      private sharedService: SharedService,) {
     let homeObj = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
@@ -293,6 +304,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
     if (homeObj) {
       
     }
+
+
     /*this.jsonList = [
       {
         "ApartmentOrBorder": "Y",
@@ -339,7 +352,16 @@ export class DomesticRiskDetailsComponent implements OnInit {
       else return false;
   }
   setTabSections(){
-    console.log('PPPPPPPPP',this.item);
+   
+    this.cyberSectionId=this.item[0];
+    console.log('PPPPPPPPP',this.cyberSectionId);
+    if(this.productId=='42'){
+      this.ten=true;
+      // this.CyberItem=[{'Make':'Honda','DeviceType':'1','Making':'2022','SerialNo':1,"DeviceTypeDesc":"Desktop","SumInsured":"123,45"}];
+    }
+    else{
+      this.ten=false;
+    }
     if(this.item){
       let items = this.item.find((Code) => Code == '1' || Code=='40');
       if (items) {
@@ -536,6 +558,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
       else if(type == 'personalIndeminity') return (!this.personalIntermeditySection && !this.enableAllSection);
       else if(type=='allRisk') return (!this.allRiskSection && !this.enableAllSection);
       else if(type == 'electronic') return (!this.electronicEquipSection && !this.enableAllSection);
+      //else if(type == 'Cyber') return (!this.electronicEquipSection && !this.enableAllSection);
     }
     else return false;
   }
@@ -572,6 +595,9 @@ export class DomesticRiskDetailsComponent implements OnInit {
           }
           else if(this.productId=='39'){
             this.getallriskMachinery();
+          }
+          else if(this.productId=='42'){
+            this.getcontenttype();
           }
           else{
             this.getallriskList();
@@ -651,6 +677,12 @@ export class DomesticRiskDetailsComponent implements OnInit {
     this.currentBuildingIndex = null;
     this.enableBuildingEditSection = false;
   }
+  onCyberCancel(){
+    if(!this.editCyberSection)  this.CyberItem.splice(this.currentCyberIndex,1);
+    this.DeviceType = null; this.CyberMake=null;this.BuildingSuminsured=null;
+    this.currentCyberIndex = null;
+    this.enableCyberSection = false;
+  }
   onMachineryCancel(){
     if(!this.editMachinerySection)  this.machineries.splice(this.currentMachineryIndex,1);
     this.MachineryName = null;this.BrandName=null;this.serialNoDesc=null;this.SumInsured=null;
@@ -679,6 +711,21 @@ export class DomesticRiskDetailsComponent implements OnInit {
     this.currentFidelityIndex = null;this.enableFidelityEditSection = false;
     this.empAddress = null;this.employeeName = null;this.occupationType = null;this.empLocation = null;
       this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;
+  }
+
+  onCyberSaves(){
+    if(this.DeviceType!=null && this.DeviceType!=undefined && this.DeviceType!=null){
+        //this.CyberItem[this.currentCyberIndex].ContentRiskDesc = this.BuildingSuminsured;
+        this.CyberItem[this.currentCyberIndex].ContentRiskDesc = this.CyperList.find(ele=>ele.Code==this.DeviceType).CodeDesc;
+        this.CyberItem[this.currentCyberIndex].SerialNoDesc = this.CyberSNo;
+        this.CyberItem[this.currentCyberIndex].MakeAndModel = this.CyberMake;
+        this.CyberItem[this.currentCyberIndex].ManufactureYear = this.Cyberyear;
+        this.CyberItem[this.currentCyberIndex].ItemId = this.DeviceType;
+        this.CyberItem[this.currentCyberIndex].Name= this.CyperList.find(ele=>ele.Code==this.DeviceType).CodeDesc;
+        this.editCyberSection = false;
+       this.enableCyberSection = false;
+        // this.LocationName = null; this.BuildingAddress = null; this.BuildingSuminsured = null;
+    }
   }
   
   onBuildingSave(){
@@ -1186,6 +1233,23 @@ onFidelitySave(){
       (err) => { },
     );
   }
+  getcontenttype(){
+    let ReqObj = {
+      "InsuranceId":this.insuranceId,
+      "BranchCode": this.branchCode
+    }
+    let urlLink = `${this.CommonApiUrl}dropdown/cybercontents`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+            this.CyperList = data.Result;
+            console.log('CyberContent List',this.CyperList);
+        }
+      },
+      (err) => { },
+    );
+  }
   getallriskList(){
     let ReqObj = {
       "InsuranceId":this.insuranceId,
@@ -1197,7 +1261,6 @@ onFidelitySave(){
         console.log(data);
         if(data.Result){
             this.allriskList = data.Result;
-            //this.getOccupationList();
 
         }
       },
@@ -1366,10 +1429,31 @@ onFidelitySave(){
           }
       }
     }
+  }
 
-   
+  onCyberSave(){
+    console.log('PPPPPPPPPPPP',this.CyberItem)
+    if (this.CyberItem.length != 0) {
+      let i=0, reqList =[];
+      for(let entry of this.CyberItem){
+          let data = {
+            "ItemId": entry.ItemId,
+            "RiskId": "1",
+            "ContentRiskDesc":entry.ContentRiskDesc,
+            "SerialNoDesc":entry.SerialNoDesc,
+            "MakeAndModel":entry.MakeAndModel,
+            "ItemValue":entry.ContentRiskDesc,
+            "Name":entry.ContentRiskDesc,
+            "ManufactureYear": entry.ManufactureYear
+          }
+          reqList.push(data);
+          i+=1;
+          if(i==this.CyberItem.length){
+            this.finalSaveRiskDetails(reqList,'E');
+          }
+      }
 
-
+    }
   }
   onSavePersonalIntermedity()
   {
@@ -1443,13 +1527,25 @@ onFidelitySave(){
       }
       urlLink = `${this.motorApiUrl}api/savecontentrisk`;
     }
-    if(type=='E')
+    if(type=='E' && this.productId!='42')
     {
       ReqObj = {
         "CreatedBy": this.loginId,
       "QuoteNo":sessionStorage.getItem('quoteNo'),
       "RequestReferenceNo":this.quoteRefNo,
       "SectionId": "41",
+       "Type":type,
+       "ContentRiskDetails":reqList
+      }
+      urlLink = `${this.motorApiUrl}api/savecontentrisk`;
+    }
+    if(type=='E' && this.productId=='42')
+    {
+      ReqObj = {
+        "CreatedBy": this.loginId,
+      "QuoteNo":sessionStorage.getItem('quoteNo'),
+      "RequestReferenceNo":this.quoteRefNo,
+      "SectionId":this.cyberSectionId,
        "Type":type,
        "ContentRiskDetails":reqList
       }
@@ -3216,6 +3312,17 @@ onFidelitySave(){
     this.individualCommaFormatted('building');
   }
 
+  onEditCyber(index){
+    this.currentCyberIndex= index;
+    this.editCyberSection = true;
+    this.enableCyberSection= true;
+    this.DeviceType = this.CyberItem[index].Item;
+    this.Cyberyear= this.CyberItem[index].ManufactureYear;
+    this.CyberMake = this.CyberItem[index].MakeAndModel;
+    this.CyberSNo=this.CyberItem[index].SerialNoDesc;
+    // this.individualCommaFormatted('Cyber');
+  }
+
   PersonalAdd() {
     //this.Section=true;
     //this.PersonalAssistantList.push(rows);
@@ -3289,6 +3396,22 @@ onFidelitySave(){
     }]
     this.ElectronicItem.push(entry);
   }
+  AllCyber(){
+    let entry = {
+      "ItemId":"",
+      "RiskId": "1",
+      "ContentRiskDesc":"",
+      "SerialNoDesc":"",
+      "MakeAndModel":"",
+      "ItemValue":"",
+      "Name":"",
+      "ManufactureYear": ""
+    }
+    this.enableCyberSection = true;
+    this.editCyberSection = false;
+    this.currentCyberIndex= this.CyberItem.length;
+    this.CyberItem.push(entry);
+  }
   AllDelete(row:any){
     const index = this.risk.indexOf(row);
     this.risk.splice(index, 1);
@@ -3335,6 +3458,7 @@ onFidelitySave(){
         (err) => { },
       );
   }
+
   tabClick(event){
     console.log("Source Event",event,event.tab.textLabel);
     if(event.index!=0){

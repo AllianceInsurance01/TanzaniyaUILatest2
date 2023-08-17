@@ -1964,6 +1964,184 @@
                         </div>
                     </div>
                 </mat-tab>
+
+                <mat-tab label="Cyber Insurance" *ngIf="ten">
+                    <div>
+                        <div class="row mt-2" *ngIf="!enableCyberSection">
+                            <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                                <div class="boxForm">
+                                    <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                        <div class="headcommon">
+                                            <span><i class="fas fa-home mx-1 mt-3"></i></span>
+                                            <span class="spancommon span_font_size" style="font-weight:600">Insured Device Details</span>
+                                        </div>
+                                        <div *ngIf="sumInsured">
+                                            Currency({{currencyValue}})
+                                        </div>
+                                        <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('building') && building.length!=0 && !checkEndorseDisable('building')"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNew()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
+                                    </div>
+                                    <!-- <span><u> Building Risk Details </u></span> -->
+                                    <div  *ngIf="CyberItem.length==0">
+                                        <div class="groupBtnMembers text-center">
+                                            <div class="groupBtnMembers__desc groupBtnMembers__desc_top">
+                                                Enter All Insured Device Details that you want to insure
+                                            </div>
+                                                <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AllCyber()"><i class="fa fa-plus-circle"></i>&nbsp; Add New</button>
+                                        </div>
+                                    </div>
+                                    <div  class="addMembers" *ngIf="CyberItem.length!=0">
+                                        <div class="addMembers__item" *ngFor="let entry of CyberItem;let i=index">
+                                            <div class="addMembers__header">
+                                                <div class="addMembers__name">{{entry.ContentRiskDesc}}</div>
+                                                <div class="addMembers__edit">
+                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="delete(entry)"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditBuilding(i)"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                   
+                                                    
+                                                </div>
+                                                <div class="addMembers__edit">
+                                                    <span>{{entry.MakeAndModel}}</span>&nbsp;&nbsp;&nbsp;
+                                                </div>
+                                            </div>
+                                            <ul class="addMembers__list"><li>{{entry.ManufactureYear}}</li></ul>
+                                        </div>
+                                        <div  class="d-flex justify-content-between maan-grid-item maan-grid-item-title" *ngIf="sumInsured">
+                                            <div class="totalProsession">
+                                                <span ><b>Sum Insured</b></span>
+                                            </div>
+                                            <div class="totalProsession">
+                                                <span ><b>Actual&nbsp;&nbsp;{{actualBuildingSI | commaseparator }}</b></span>
+                                            </div>
+                                            <div class="totalProsession">
+                                                <ng-container *ngIf="totalBuildingSumInsured!=0 && totalBuildingSumInsured!='0' && totalBuildingSumInsured!=null">
+                                                    &nbsp;<span style="text-align: end !important;"><b>{{totalBuildingSumInsured | commaseparator }}</b></span>
+                                                </ng-container>
+                                                <ng-container *ngIf="totalBuildingSumInsured==0 || totalBuildingSumInsured=='0' || totalBuildingSumInsured==null">
+                                                    <span style="text-align: end !important;"><b>0</b></span>
+                                                </ng-container>
+                                                
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                                    
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="enableCyberSection">
+                            <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                                <div class="boxForm" >
+                                        <span><u> Insured Device Details </u></span>
+                                    <div class="row">
+                                        <div class="col-12 col-md-7 col-lg-7 offset-2 input-control-container">
+                                            <label class="input-form-label">Device Type</label><span class="text-danger">*</span>
+                                            <div class="input-form-box" style="position: relative;top:.2rem">
+                                                <ng-select class="custom" [items]="CyperList" [(ngModel)]="DeviceType" placeholder="Select Device Type" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                                                </ng-select>
+                                                <!-- <input type="text" class="input-form-control without-icon" maxlength="50" [disabled]="checkEndorseDisable('building')" [(ngModel)]="LocationName" [ngModelOptions]="{standalone: true}"> -->
+                                            </div>
+                                            <div class="input-form-error" *ngIf="buildingLocationError">
+                                                <div class="error-text text-danger">
+                                                    Please Enter Valid Device Type
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-7 col-lg-7 offset-2 input-control-container">
+                                            <label class="input-form-label">Make</label><span class="text-danger">*</span>
+                                            <div class="input-form-box" style="position: relative;top:.2rem">
+                                                <input type="text" class="input-form-control without-icon" maxlength="50" [(ngModel)]="CyberMake">
+                                            </div>
+                                            <div class="input-form-error" *ngIf="buildingAddressError">
+                                                <div class="error-text text-danger">
+                                                    Please Enter Valid Make
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-7 col-lg-7 offset-2 input-control-container">
+                                            <label class="input-form-label">Purchase Year</label><span class="text-danger">*</span>
+                                            <div class="input-form-box" style="position: relative;top:.2rem">
+                                                <input type="text" class="input-form-control without-icon" maxlength="50" [(ngModel)]="Cyberyear">
+                                            </div>
+                                            <div class="input-form-error" *ngIf="buildingAddressError">
+                                                <div class="error-text text-danger">
+                                                    Please Enter Valid Purchase Year
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-7 col-lg-7 offset-2 input-control-container">
+                                            <label class="input-form-label">S.No</label><span class="text-danger">*</span>
+                                            <div class="input-form-box" style="position: relative;top:.2rem">
+                                                <input type="text" class="input-form-control without-icon" maxlength="50" [(ngModel)]="CyberSNo">
+                                            </div>
+                                            <div class="input-form-error" *ngIf="buildingAddressError">
+                                                <div class="error-text text-danger">
+                                                    Please Enter Valid S.No
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="row" *ngIf="sumInsured">
+                                        <div class="col-12 col-md-7 col-lg-7 offset-2 input-control-container">
+                                            <label class="input-form-label">Sum Insured</label><span class="text-danger">*</span>
+                                            <div class="input-form-box" style="position: relative;top:.2rem">
+                                                <input type="text" class="input-form-control without-icon" [disabled]="checkEndorseDisable('building')" maxlength="40" (keydown)="onSIValueChange($event)" (keyup)="individualCommaFormatted('building')" [(ngModel)]="BuildingSuminsured" [ngModelOptions]="{standalone: true}">
+                                            </div>
+                                            <div class="input-form-error" *ngIf="buildingSIError">
+                                                <div class="error-text text-danger">
+                                                    Please Enter Valid SumInsured
+                                                </div>
+                                            </div>
+                                            <div class="input-form-error" *ngIf="totalBuildSIError">
+                                                <div class="error-text text-danger">
+                                                    SumInsured Exceeds than Actual SumInsured
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="sumInsured">
+                                        <span><u> Sum Insured </u></span>
+                                    </div>
+                                    <div class="row" *ngIf="sumInsured">
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6 ml-3">
+                                            <b style="white-space: nowrap;">Actual</b>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6">
+                                            <b style="white-space: nowrap;">{{actualBuildingSI | commaseparator }} &nbsp;({{currencyValue}})</b>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="ml-3">
+                                                <b style="white-space: nowrap;">Total</b>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalBuildingSumInsured==0 || totalBuildingSumInsured=='0' || totalBuildingSumInsured==null">
+                                            <b style="white-space: nowrap;">0</b>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalBuildingSumInsured!=0 && totalBuildingSumInsured!='0' && totalBuildingSumInsured!=null">
+                                            <b style="white-space: nowrap;">{{totalBuildingSumInsured | commaseparator }} &nbsp;({{currencyValue}})</b>
+                                        </div>
+                                    </div> -->
+                                    
+                                    <div class="text-center">
+                                        <button class="btn btn-danger btn-sm mr-5" (click)="onCyberCancel()"> Cancel</button>&nbsp;&nbsp;
+                                        <button class="btn btn-primary btn-sm" (click)="onCyberSaves()"> Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div class="text-center mt-1 mb-2">
+                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack()"  routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                     
+                        <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="CyberItem.length!=0 && !enableCyberSection" matRipple (click)="onCyberSave()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
+                    </div>
+                </mat-tab>
             </div>
         </div>
     </div>
