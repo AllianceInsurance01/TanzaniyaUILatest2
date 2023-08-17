@@ -2000,10 +2000,10 @@
                                                     
                                                 </div>
                                                 <div class="addMembers__edit">
-                                                    <span>{{entry.ItemDesc}}</span>&nbsp;&nbsp;&nbsp;
+                                                    <span>{{entry.MakeAndModel}}&nbsp;|&nbsp;{{entry.ManufactureYear}}</span>&nbsp;&nbsp;&nbsp;
                                                 </div>
                                             </div>
-                                            <ul class="addMembers__list"><li>{{entry.MakeAndModel}}&nbsp;|&nbsp;{{entry.ManufactureYear}} &nbsp; | &nbsp; {{entry.SerialNoDesc}}</li></ul>
+                                            <ul class="addMembers__list"><li> {{getLocationName(entry.RiskId)}}&nbsp;|&nbsp; {{entry.SerialNoDesc}}</li></ul>
                                         </div>
                                         <div  class="d-flex justify-content-between maan-grid-item maan-grid-item-title" *ngIf="sumInsured">
                                             <div class="totalProsession">

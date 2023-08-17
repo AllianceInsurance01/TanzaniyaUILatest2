@@ -740,9 +740,9 @@ export class DomesticRiskDetailsComponent implements OnInit {
         this.CyberItem[this.currentCyberIndex].MakeAndModel = this.CyberMake;
         this.CyberItem[this.currentCyberIndex].ManufactureYear = this.Cyberyear;
         this.CyberItem[this.currentCyberIndex].ItemId = this.DeviceType;
-        if(this.DeviceType!=null){
-          this.CyberItem[this.currentCyberIndex].ItemDesc = this.CyperList.find(ele=>ele.Code==this.DeviceType)?.CodeDesc;
-        }
+        // if(this.DeviceType!=null){
+        //   this.CyberItem[this.currentCyberIndex].ItemDesc = this.CyperList.find(ele=>ele.Code==this.DeviceType)?.CodeDesc;
+        // }
         this.CyberItem[this.currentCyberIndex].RiskId = this.LocationId;
         this.CyberItem[this.currentCyberIndex].Name= this.CyperList.find(ele=>ele.Code==this.DeviceType).CodeDesc;
         this.CyberSNo=null;this.CyberMake=null;this.Cyberyear=null;this.DeviceType=null;this.LocationId=null;
