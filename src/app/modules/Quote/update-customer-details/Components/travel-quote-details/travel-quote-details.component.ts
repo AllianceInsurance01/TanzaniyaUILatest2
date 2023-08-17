@@ -243,12 +243,13 @@ export class TravelQuoteDetailsComponent implements OnInit {
       loginId = this.updateComponent.brokerLoginId;
     }
     let ReqObj = {
+        "BranchCode": this.branchCode,
       "InsuranceId": this.insuranceId,
       "ProductId": this.productId,
-      "CountryId": this.TravelForm.controls['SourceCountry'].value,
-      "LoginId":loginId
+      // "CountryId": this.TravelForm.controls['SourceCountry'].value,
+      // "LoginId":loginId
     }
-    let urlLink = `${this.CommonApiUrl}master/dropdown/countryplans`;
+    let urlLink = `${this.ApiUrl1}master/dropdown/productsection`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
