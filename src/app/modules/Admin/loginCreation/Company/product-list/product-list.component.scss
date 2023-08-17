@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;400,600,700,800&display=swap');
+
 .grid-container {
     display: grid;
     gap: 50px;
@@ -9,7 +11,7 @@
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 20px;
+    padding: 16px;
     cursor: pointer;
     font-size: 20px;
     //text-align: center;
@@ -48,4 +50,13 @@
     background-color: #fff;
     border-radius: 50%;
     display: inline-block;
+  }
+  .productname{
+    text-align:left;
+  }
+  .productinline{
+    // color:lightgray;
+    font-weight:700 !important;
+    font-size:14px !important;
+    font-family: 'Inter', sans-serif !important;
   }

@@ -77,14 +77,23 @@
 
                             <ng-container *ngFor="let product of productList">
                                  
-                                <div class="grid-item" (click)="onProductSelect(product)">
-                                <div  style="text-align:center">
-                                    {{product.ProductName}}
+                                <div class="grid-item">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="productname" (click)="onProductSelect(product)">
+                                            <div class="productinline">{{product.ProductName}}</div>
+                                        </div>
+                                        <div style="text-align:right;margin-left:3px;"><!-- margin-top:-28px;-->
+                                            <button class="btn btn-primary" (click)="open(product.ProductName,product.ProductId)"> 
+                                                <i class="fa fa-circle-info"></i></button>
+                                        </div>
+                                    </div>
+                                <!-- <div  style="text-align:left;" (click)="onProductSelect(product)">
+                                    <div style="text-decoration: underline;color:lightgray;">{{product.ProductName}}</div>
                                 </div>
                                 <div style="text-align:right; margin-top:-28px;">
                                     <button class="btn btn-primary" (click)="open(product.ProductName,product.ProductId)"> 
                                         <i class="fa fa-circle-info"></i></button>
-                                </div>
+                                </div> -->
                             </div>
                             </ng-container>
 
