@@ -3397,7 +3397,7 @@ getMotorUsageList(vehicleValue){
               //   }
               //   else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
               // }
-              else if(this.productId=='32' || this.productId=='14' || this.productId=='19' || this.productId=='1' || this.productId=='6' || this.productId=='16'){
+              else if(this.productId=='32' || this.productId=='14' || this.productId=='19' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId=='42'){
                 this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
                 // let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
                 // if(homeSession){
@@ -3505,7 +3505,7 @@ getMotorUsageList(vehicleValue){
                                     if(i==this.vehicleDetailsList.length){
                                       if(type=='calculate'){
                                         //sessionStorage.removeItem('vehicleDetailsList');
-                                        //window.location.reload();
+                                        window.location.reload();
                                       }
                                       else this.updateReferralStatus();
                                     }
@@ -3526,7 +3526,7 @@ getMotorUsageList(vehicleValue){
                 if(i==this.vehicleDetailsList.length){
                   if(type=='calculate'){
                     //sessionStorage.removeItem('vehicleDetailsList');
-                    //window.location.reload();
+                    window.location.reload();
                   }
                   else this.updateReferralStatus();
                 }

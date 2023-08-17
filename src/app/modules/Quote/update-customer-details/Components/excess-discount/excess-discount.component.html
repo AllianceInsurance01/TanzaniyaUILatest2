@@ -242,10 +242,25 @@
                 
                                                         <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center outerHead mat-header-cell" style="white-space: normal !important;">&nbsp;
                                                             <ng-container *ngIf="columnHeader[i]['display']=='Sum Insured' || columnHeader[i]['display']=='Minimum' || columnHeader[i]['display']=='After Discount' || columnHeader[i]['display']=='Included Tax'">
-                                                                {{ columnHeader[i]["display"] }}&nbsp;({{currencyCode}})
+                                                                <ng-container *ngIf="columnHeader[i]['display']=='Sum Insured'">
+                                                                    <ng-container *ngIf="productId!='42'">
+                                                                        {{ columnHeader[i]["display"] }}&nbsp;({{currencyCode}})
+                                                                    </ng-container>
+                                                                    <ng-container *ngIf="productId=='42'">
+                                                                        Coverage Limit&nbsp;({{currencyCode}})
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="columnHeader[i]['display']!='Sum Insured'">
+                                                                    {{ columnHeader[i]["display"] }}&nbsp;({{currencyCode}})
+                                                                </ng-container>
                                                             </ng-container>
                                                             <ng-container *ngIf="columnHeader[i]['display']=='Rate'">
-                                                                {{ columnHeader[i]["display"] }}&nbsp;(%)
+                                                                <ng-container *ngIf="productId=='42'">
+                                                                    {{ columnHeader[i]["display"] }}&nbsp;({{currencyCode}})
+                                                                </ng-container>
+                                                                <ng-container *ngIf="productId!='42'">
+                                                                    {{ columnHeader[i]["display"] }}&nbsp;(%)
+                                                                </ng-container>
                                                             </ng-container>
                                                             <ng-container *ngIf="columnHeader[i]['display']=='Excess Percent'">
                                                                 Excess&nbsp;(%)
@@ -817,12 +832,21 @@
                                                                     </ng-container>
                                                                 </ng-container>
                                                                 <ng-container *ngIf="columnHeader[i]['display']=='Sum Insured'">
-                                                                    <div class="d-flex justify-content-end">
+                                                                    <div class="d-flex justify-content-end" *ngIf="productId!='42'">
                                                                         <ng-container *ngIf="element[col.key]==null || element[col.key]==0">
                                                                             0
                                                                         </ng-container>
                                                                         <ng-container *ngIf="element[col.key]!=null || element[col.key]!=0">
                                                                             <div style="max-width: 100px !important;"><span>{{ element[col.key]|commaseparator }}
+                                                                            </span></div>
+                                                                        </ng-container>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-end" *ngIf="productId=='42'">
+                                                                        <ng-container *ngIf="element['CoverageLimit']==null || element['CoverageLimit']==0">
+                                                                            0
+                                                                        </ng-container>
+                                                                        <ng-container *ngIf="element['CoverageLimit']!=null || element['CoverageLimit']!=0">
+                                                                            <div style="max-width: 100px !important;"><span>{{ element['CoverageLimit']|commaseparator }}
                                                                             </span></div>
                                                                         </ng-container>
                                                                     </div>
@@ -1049,10 +1073,25 @@
                 
                                                         <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center outerHead mat-header-cell" style="white-space: normal !important;">&nbsp;
                                                             <ng-container *ngIf="columnHeader[i]['display']=='Sum Insured' || columnHeader[i]['display']=='Minimum' || columnHeader[i]['display']=='After Discount' || columnHeader[i]['display']=='Included Tax'">
-                                                                {{ columnHeader[i]["display"] }}&nbsp;({{currencyCode}})
+                                                                <ng-container *ngIf="columnHeader[i]['display']=='Sum Insured'">
+                                                                    <ng-container *ngIf="productId!='42'">
+                                                                        {{ columnHeader[i]["display"] }}&nbsp;({{currencyCode}})
+                                                                    </ng-container>
+                                                                    <ng-container *ngIf="productId=='42'">
+                                                                        Coverage Limit&nbsp;({{currencyCode}})
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="columnHeader[i]['display']!='Sum Insured'">
+                                                                    {{ columnHeader[i]["display"] }}&nbsp;({{currencyCode}})
+                                                                </ng-container>
                                                             </ng-container>
                                                             <ng-container *ngIf="columnHeader[i]['display']=='Rate'">
-                                                                {{ columnHeader[i]["display"] }}&nbsp;(%)
+                                                                <ng-container *ngIf="productId=='42'">
+                                                                    {{ columnHeader[i]["display"] }}&nbsp;({{currencyCode}})
+                                                                </ng-container>
+                                                                <ng-container *ngIf="productId!='42'">
+                                                                    {{ columnHeader[i]["display"] }}&nbsp;(%)
+                                                                </ng-container>
                                                             </ng-container>
                                                             <ng-container *ngIf="columnHeader[i]['display']=='Excess Percent'">
                                                                 Excess&nbsp;(%)
@@ -1655,12 +1694,21 @@
                                                                     </ng-container>
                                                                 </ng-container>
                                                                 <ng-container *ngIf="columnHeader[i]['display']=='Sum Insured'">
-                                                                    <div class="d-flex justify-content-end">
+                                                                    <div class="d-flex justify-content-end" *ngIf="productId!='42'">
                                                                         <ng-container *ngIf="element[col.key]==null || element[col.key]==0">
                                                                             0
                                                                         </ng-container>
                                                                         <ng-container *ngIf="element[col.key]!=null || element[col.key]!=0">
                                                                             <div style="max-width: 100px !important;"><span>{{ element[col.key]|commaseparator }}
+                                                                            </span></div>
+                                                                        </ng-container>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-end" *ngIf="productId=='42'">
+                                                                        <ng-container *ngIf="element['CoverageLimit']==null || element['CoverageLimit']==0">
+                                                                            0
+                                                                        </ng-container>
+                                                                        <ng-container *ngIf="element['CoverageLimit']!=null || element['CoverageLimit']!=0">
+                                                                            <div style="max-width: 100px !important;"><span>{{ element['CoverageLimit']|commaseparator }}
                                                                             </span></div>
                                                                         </ng-container>
                                                                     </div>
@@ -2917,6 +2965,15 @@
             <ul class="list-group">
                 <li class="list-group-item list-seperate">
                     <div>
+                        <span class="spancommon span_font_size"><b><u>Description</u></b></span>
+
+                    </div>
+                    <div>
+                        <span class="spancommon span_font_size"><b><u>Amount ({{currencyCode}})</u></b></span>
+                    </div>
+                </li>
+                <li class="list-group-item list-seperate">
+                    <div>
                         <span class="spancommon span_font_size">Before
                             Discount</span>
 
@@ -2966,7 +3023,13 @@
                                 <input type="text"  [id]="'Rate'+i" class="input-form-control without-icon" (keyup)="premiumComma(i,loading.LoadingAmount)" style="width: auto !important;max-width:300px;text-align:right !important" [(ngModel)]="loading['LoadingAmount']">
                             </ng-container>
                             <ng-container *ngIf="(!adminSection)">
-                                <span class="spancommon span_font_size">{{loading.LoadingAmount | commaseparator}}</span>
+                                <ng-container *ngIf="loading.LoadingAmount==0 || loading.LoadingAmount==null">
+                                        0
+                                </ng-container>
+                                <ng-container *ngIf="loading.LoadingAmount!=0 && loading.LoadingAmount!=null">
+                                    <span class="spancommon span_font_size">{{loading.LoadingAmount | commaseparator}}</span>
+                                </ng-container>
+                                
                             </ng-container>
                             
                         </div>

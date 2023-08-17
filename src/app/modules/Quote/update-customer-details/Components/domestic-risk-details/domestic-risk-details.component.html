@@ -1965,7 +1965,7 @@
                     </div>
                 </mat-tab>
 
-                <mat-tab label="Cyber Insurance" *ngIf="ten">
+                <mat-tab label="Device Details" *ngIf="ten">
                     <div>
                         <div class="row mt-2" *ngIf="!enableCyberSection">
                             <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
@@ -1978,7 +1978,7 @@
                                         <div *ngIf="sumInsured">
                                             Currency({{currencyValue}})
                                         </div>
-                                        <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('building') && building.length!=0 && !checkEndorseDisable('building')"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNew()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
+                                        <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('building') && building.length!=0 && !checkEndorseDisable('building')"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AllCyber()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
                                     </div>
                                     <!-- <span><u> Building Risk Details </u></span> -->
                                     <div  *ngIf="CyberItem.length==0">
@@ -1994,16 +1994,16 @@
                                             <div class="addMembers__header">
                                                 <div class="addMembers__name">{{entry.ContentRiskDesc}}</div>
                                                 <div class="addMembers__edit">
-                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="delete(entry)"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
-                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditBuilding(i)"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="deleteCyber(i)"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditCyber(i)"> <i class="fa fa-pencil"></i></button>&nbsp;
                                                    
                                                     
                                                 </div>
                                                 <div class="addMembers__edit">
-                                                    <span>{{entry.MakeAndModel}}</span>&nbsp;&nbsp;&nbsp;
+                                                    <span>{{entry.ItemDesc}}</span>&nbsp;&nbsp;&nbsp;
                                                 </div>
                                             </div>
-                                            <ul class="addMembers__list"><li>{{entry.ManufactureYear}}</li></ul>
+                                            <ul class="addMembers__list"><li>{{entry.MakeAndModel}}&nbsp;|&nbsp;{{entry.ManufactureYear}} &nbsp; | &nbsp; {{entry.SerialNoDesc}}</li></ul>
                                         </div>
                                         <div  class="d-flex justify-content-between maan-grid-item maan-grid-item-title" *ngIf="sumInsured">
                                             <div class="totalProsession">
@@ -2032,7 +2032,14 @@
                                 <div class="boxForm" >
                                         <span><u> Insured Device Details </u></span>
                                     <div class="row">
-                                        <div class="col-12 col-md-7 col-lg-7 offset-2 input-control-container">
+                                        <div class="col-5 col-md-5 col-lg-5 offset-1 input-control-container">
+                                            <label class="input-form-label">Location</label><span class="text-danger">*</span>
+                                            <div class="input-form-box" style="position: relative;top:.2rem">
+                                                <ng-select class="custom" [items]="LocationList"   [(ngModel)]="LocationId" placeholder="Select Location" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-5 col-md-5 col-lg-5 offset-1 input-control-container">
                                             <label class="input-form-label">Device Type</label><span class="text-danger">*</span>
                                             <div class="input-form-box" style="position: relative;top:.2rem">
                                                 <ng-select class="custom" [items]="CyperList" [(ngModel)]="DeviceType" placeholder="Select Device Type" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
@@ -2045,9 +2052,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12 col-md-7 col-lg-7 offset-2 input-control-container">
+                                        <div class="col-5 col-md-5 col-lg-5 offset-1 input-control-container">
                                             <label class="input-form-label">Make</label><span class="text-danger">*</span>
                                             <div class="input-form-box" style="position: relative;top:.2rem">
                                                 <input type="text" class="input-form-control without-icon" maxlength="50" [(ngModel)]="CyberMake">
@@ -2058,10 +2063,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12 col-md-7 col-lg-7 offset-2 input-control-container">
-                                            <label class="input-form-label">Purchase Year</label><span class="text-danger">*</span>
+                                        <div class="col-5 col-md-5 col-lg-5 offset-1 input-control-container">
+                                            <label class="input-form-label">Manufacture Year</label><span class="text-danger">*</span>
                                             <div class="input-form-box" style="position: relative;top:.2rem">
                                                 <input type="text" class="input-form-control without-icon" maxlength="50" [(ngModel)]="Cyberyear">
                                             </div>
@@ -2071,9 +2074,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12 col-md-7 col-lg-7 offset-2 input-control-container">
+                                        <div class="col-5 col-md-5 col-lg-5 offset-1 input-control-container">
                                             <label class="input-form-label">S.No</label><span class="text-danger">*</span>
                                             <div class="input-form-box" style="position: relative;top:.2rem">
                                                 <input type="text" class="input-form-control without-icon" maxlength="50" [(ngModel)]="CyberSNo">

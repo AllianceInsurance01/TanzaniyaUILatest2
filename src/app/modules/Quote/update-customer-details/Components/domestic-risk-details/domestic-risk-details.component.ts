@@ -352,9 +352,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
       else return false;
   }
   setTabSections(){
-   
+    if(this.productId=='42')
     this.cyberSectionId=this.item[0];
-    console.log('PPPPPPPPP',this.cyberSectionId);
     if(this.productId=='42'){
       this.ten=true;
       // this.CyberItem=[{'Make':'Honda','DeviceType':'1','Making':'2022','SerialNo':1,"DeviceTypeDesc":"Desktop","SumInsured":"123,45"}];
@@ -598,6 +597,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
           }
           else if(this.productId=='42'){
             this.getcontenttype();
+            this.getCyberDetails();
           }
           else{
             this.getallriskList();
@@ -671,6 +671,25 @@ export class DomesticRiskDetailsComponent implements OnInit {
       (err) => { },
     );
   }
+  getCyberDetails(){
+    let urlLink = `${this.motorApiUrl}api/getallcontentrisk`;
+    let ReqObj = {
+      "QuoteNo": sessionStorage.getItem('quoteNo'),
+      "SectionId": this.item[0]
+    }
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        let res: any = data;
+        if(res.Result){
+          if (res.Result.ContentRiskDetails) {
+           if(res.Result.ContentRiskDetails.length!=0){
+              this.CyberItem = res.Result.ContentRiskDetails;
+           }
+          }
+        }
+      })
+  }
   onBuildingCancel(){
     if(!this.editBuildingSection)  this.building.splice(this.currentBuildingIndex,1);
     this.LocationName = null; this.BuildingAddress=null;this.BuildingSuminsured=null;
@@ -721,7 +740,12 @@ export class DomesticRiskDetailsComponent implements OnInit {
         this.CyberItem[this.currentCyberIndex].MakeAndModel = this.CyberMake;
         this.CyberItem[this.currentCyberIndex].ManufactureYear = this.Cyberyear;
         this.CyberItem[this.currentCyberIndex].ItemId = this.DeviceType;
+        if(this.DeviceType!=null){
+          this.CyberItem[this.currentCyberIndex].ItemDesc = this.CyperList.find(ele=>ele.Code==this.DeviceType)?.CodeDesc;
+        }
+        this.CyberItem[this.currentCyberIndex].RiskId = this.LocationId;
         this.CyberItem[this.currentCyberIndex].Name= this.CyperList.find(ele=>ele.Code==this.DeviceType).CodeDesc;
+        this.CyberSNo=null;this.CyberMake=null;this.Cyberyear=null;this.DeviceType=null;this.LocationId=null;
         this.editCyberSection = false;
        this.enableCyberSection = false;
         // this.LocationName = null; this.BuildingAddress = null; this.BuildingSuminsured = null;
@@ -1438,7 +1462,7 @@ onFidelitySave(){
       for(let entry of this.CyberItem){
           let data = {
             "ItemId": entry.ItemId,
-            "RiskId": "1",
+            "RiskId": entry.RiskId,
             "ContentRiskDesc":entry.ContentRiskDesc,
             "SerialNoDesc":entry.SerialNoDesc,
             "MakeAndModel":entry.MakeAndModel,
@@ -1852,6 +1876,7 @@ onFidelitySave(){
                   }
               this.selectedTab = 1;
             }
+            else if(this.productId=='42') this.selectedTab = 1;
             else{
               this.checkValidation();
             }
@@ -3316,7 +3341,8 @@ onFidelitySave(){
     this.currentCyberIndex= index;
     this.editCyberSection = true;
     this.enableCyberSection= true;
-    this.DeviceType = this.CyberItem[index].Item;
+    this.LocationId = this.CyberItem[index].RiskId;
+    this.DeviceType = this.CyberItem[index].ItemId;
     this.Cyberyear= this.CyberItem[index].ManufactureYear;
     this.CyberMake = this.CyberItem[index].MakeAndModel;
     this.CyberSNo=this.CyberItem[index].SerialNoDesc;
@@ -3399,7 +3425,8 @@ onFidelitySave(){
   AllCyber(){
     let entry = {
       "ItemId":"",
-      "RiskId": "1",
+      "ItemDesc":"",
+      "RiskId": null,
       "ContentRiskDesc":"",
       "SerialNoDesc":"",
       "MakeAndModel":"",
@@ -3407,6 +3434,9 @@ onFidelitySave(){
       "Name":"",
       "ManufactureYear": ""
     }
+    this.CyberSNo=null;this.CyberMake=null;
+    this.Cyberyear=null;this.LocationId=null;
+    this.DeviceType = null;
     this.enableCyberSection = true;
     this.editCyberSection = false;
     this.currentCyberIndex= this.CyberItem.length;
@@ -3436,6 +3466,9 @@ onFidelitySave(){
       "SerialNo": null
     }]
     this.Intermedity=entry.concat(this.Intermedity)
+  }
+  deleteCyber(index){
+      this.CyberItem.splice(index,1);
   }
   IntermedityDelete(row:any){
     const index = this.Intermedity.indexOf(row);

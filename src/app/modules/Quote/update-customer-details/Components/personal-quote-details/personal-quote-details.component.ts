@@ -3926,6 +3926,32 @@ onCyperSave(type,formType){
   else {
     this.productItem.ElecEquipSuminsured = '0';
   }
+  this.subuserType = sessionStorage.getItem('typeValue');
+    if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
+      brokerbranchCode = this.commonDetails[0].BrokerBranchCode;
+        createdBy = this.commonDetails[0].CreatedBy;
+    }
+    else{
+      createdBy = this.loginId;
+      if(this.userType!='Issuer'){
+        this.brokerCode = this.agencyCode;
+        appId = "1"; loginId=this.loginId;
+        brokerbranchCode = this.brokerbranchCode;
+      }
+      else{
+        appId = this.loginId;
+        loginId = this.commonDetails[0].LoginId;
+        loginId = this.updateComponent.brokerLoginId
+        brokerbranchCode = this.commonDetails[0].BrokerBranchCode;
+      }
+    }
+    if(this.userType!='Broker' && this.userType!='User'){
+      this.sourceType = this.commonDetails[0].SourceType;
+      this.bdmCode = this.commonDetails[0].BrokerCode;
+      this.brokerCode = this.commonDetails[0].BrokerCode;
+      this.brokerbranchCode =  this.commonDetails[0].BrokerBranchCode;
+      this.customerCode = this.commonDetails[0].CustomerCode;
+    }
   let ReqObj = {
     "AcexecutiveId": this.commonDetails[0].AcexecutiveId,
     "AgencyCode": this.agencyCode,
@@ -3976,13 +4002,14 @@ onCyperSave(type,formType){
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
       if (data?.Result) {
+        this.commonDetails[0]['SectionId'] = sectionId
         this.requestReferenceNo = data?.Result?.RequestReferenceNo;
         this.updateComponent.quoteRefNo = data?.Result?.RequestReferenceNo;
         sessionStorage.setItem('quoteReferenceNo', this.requestReferenceNo);
         if(type=='proceed'){
           this.anothercyberSave(type,formType);
           // this.commonDetails[0]['SectionId'] = ['40'];
-          sessionStorage.setItem('homeCommonDetails', JSON.stringify(this.commonDetails))
+         
         }
         //this.onCalculate(data.Result,type,formType);
       }
@@ -4023,10 +4050,9 @@ anothercyberSave(type,formType){
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
       if (data?.Result) {
-        this.commonDetails[0]['SectionId'] =data.Result[0].SectionId;
+        console.log("Final Save Session",this.commonDetails)
         sessionStorage.setItem('homeCommonDetails', JSON.stringify(this.commonDetails));
         this.onCalculate(data.Result,type,formType);
-            console.log('Finish');
       }
   },
   (err) => { },
@@ -4592,7 +4618,7 @@ onCalculate(buildDetails,type,formType) {
             i += 1;
             console.log("Indexxx", i, buildDetails.length,formType,type)
             if (i == buildDetails.length) {
-              if (this.uwQuestionList.length != 0 && this.productId !='42') {
+              if (this.uwQuestionList.length != 0 ) {
                 let i = 0;
                 let uwList: any[] = [];
                 //let branchCode = '';
@@ -4615,14 +4641,16 @@ onCalculate(buildDetails,type,formType) {
                     ques['CreatedBy'] = createdBy;
                     ques['RequestReferenceNo'] = this.requestReferenceNo;
                     ques['UpdatedBy'] = this.loginId;
-                    ques["VehicleId"] = build.LocationId
+                    if(this.productId=='42') ques["VehicleId"] = '1';
+                    else ques["VehicleId"] = build.LocationId
                     uwList.push(ques);
                   }
                   else if (ques.Value != "") {
                     ques['CreatedBy'] = createdBy;
                     ques['RequestReferenceNo'] = this.requestReferenceNo;
                     ques['UpdatedBy'] = this.loginId;
-                    ques["VehicleId"] = build.LocationId
+                    if(this.productId=='42') ques["VehicleId"] = '1';
+                    else ques["VehicleId"] = build.LocationId
                     uwList.push(ques);
                   }
                   i += 1;
