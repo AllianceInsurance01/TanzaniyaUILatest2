@@ -31,12 +31,13 @@ export class CancelledPoliciesComponent implements OnInit {
 
   ngOnInit(): void {
     this.quoteHeader =  [
-      { key: 'PolicyNo', display: 'Policy No' },
+      { key: 'OriginalPolicyNo', display: 'Policy No' },
       { key: 'QuoteNo', display: 'Quote No' },
       { key: 'RequestReferenceNo', display: 'Reference No' },
       { key: 'ClientName', display: 'Customer Name' },
-      { key: 'CreditNo', display: 'Credit Note No' },
-      { key: 'DebitNoteNo', display: 'Debit Note No' },
+      { key: 'OverallPremiumLc',display: 'Premium'},
+      // { key: 'CreditNo', display: 'Credit Note No' },
+      // { key: 'DebitNoteNo', display: 'Debit Note No' },
       {
         key: 'edit',
         display: 'Vehicle Details',

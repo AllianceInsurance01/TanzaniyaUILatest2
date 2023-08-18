@@ -38,6 +38,7 @@ export class TravelPassengerDetailsComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   public motorApiUrl:any = this.AppConfig.MotorApiUrl;
+  public UploadUrl: any = this.AppConfig.ExcelUrl;
   totalCount: number;Age:any;userDetails:any;
   customerDetails: any;loginId:any;userType:any;
   FirstName:any;LastName:any;GenderId:any;dob:any;MobileNo:any;PassportNo:any;relationshipId:any;
@@ -67,6 +68,17 @@ export class TravelPassengerDetailsComponent implements OnInit {
   PassengerId: any=null;GroupId:any=null;
   GroupIdError: boolean;
   editIndex: any=null;
+  enableEmployeeUploadSection: boolean=false;
+  showEmpRecordsSection: boolean;
+  uploadDocList: any[]=[];
+  employeeUploadRecords: any[]=[];
+  uploadStatus: any;
+  showgrid: boolean=false;
+  imageUrl: any=null;
+  enableEmployeeEditSection: boolean=false;
+  errorRecords: any[]=[];
+  employeeList:any[]=[];
+  originalEmployeeList: any[]=[];
 
   constructor(private router:Router,private updateComponent:UpdateCustomerDetailsComponent,
     private datePipe:DatePipe,private sharedService: SharedService,) {
@@ -527,6 +539,229 @@ AddPassenger(){
     this.RelationId = null;this.Dob = null;this.Nationality=null;this.PassportNo=null;
     this.editSection = true;this.PassengerId=null;this.GroupId=null;
     this.editIndex = null;
+}
+onUploadDocuments(target:any,fileType:any,type:any){
+  console.log("Event ",target);
+  this.imageUrl = null;this.uploadDocList=[];
+  let event:any = target.target.files;
+
+  let fileList = event;
+  for (let index = 0; index < fileList.length; index++) {
+    const element = fileList[index];
+    var reader:any = new FileReader();
+    reader.readAsDataURL(element);
+      var filename = element.name;
+
+      let imageUrl: any;
+      reader.onload = (res: { target: { result: any; }; }) => {
+        imageUrl = res.target.result;
+        this.imageUrl = imageUrl;
+        this.uploadDocList.push({ 'url': element,'DocTypeId':'','filename':element.name, 'JsonString': {} });
+
+      }
+
+  }
+  console.log("Final File List",this.uploadDocList)
+}
+onUploadEmployeeDetails(){
+    if(this.uploadDocList.length!=0){
+      Swal.fire({
+        title: '<strong>Merge / Replace Records</strong>',
+        icon: 'info',
+        html:
+          `<ul class="list-group errorlist">
+           <li>Some Employee Details You Already Stored</li>
+           <li>Do You Want to Clear Old Records?</li>
+       </ul>`,
+        showCloseButton: false,
+        //focusConfirm: false,
+        showCancelButton:true,
+
+       //confirmButtonColor: '#3085d6',
+       cancelButtonColor: '#d33',
+       confirmButtonText: 'Merge With Old Records',
+       cancelButtonText: 'Clear Old Records',
+      }).then((result) => {
+        if (result.isConfirmed) {
+              this.onProceedUpload('Merge')
+        }
+        else{
+          this.onProceedUpload('Add')
+        }
+      })
+    }
+}
+onProceedUpload(type){
+  let typeId=null;
+  // if(this.productId=='32') typeId = '104';
+  // else if(this.productId=='14') typeId='102';
+  // else if(this.productId=='15') typeId='103';
+  let SectionId = null;
+  if(this.productId=='4') SectionId = '24'; typeId='105';
+  let ReqObj={
+    "CompanyId":this.insuranceId,
+    "ProductId":this.productId,
+    "QuoteNo":this.quoteNo,
+    "RiskId":"1",
+    "RequestReferenceNo":this.requestReferenceNo,
+    "TypeId":typeId,
+    "LoginId":this.loginId,
+    "SectionId":SectionId,
+    "UploadType": type,
+  }
+  let urlLink = `${this.UploadUrl}eway/vehicle/batch/upload`;
+      this.sharedService.onPostExcelDocumentMethodSync(urlLink, ReqObj,this.uploadDocList[0].url).subscribe(
+        (data: any) => {
+            if(data){
+              let res = data;
+              if(res?.ProgressStatus=='P'){
+                this.checkUploadStatus();
+              }
+            }
+        },  
+        (err) => { },
+      );
+}
+checkUploadStatus(){
+  let ReqObj={
+    "CompanyId":this.insuranceId,
+    "ProductId":this.productId,
+    "RequestRefNo":this.requestReferenceNo
+  }
+  let urlLink = `${this.UploadUrl}eway/vehicle/get/transaction/status`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+            if(data){
+              let res = data?.Result;
+              if(res.Status=='S'){
+                    this.getValidRecordDetails();
+              }
+              else if(res.Status=='E'){
+                this.uploadStatus = 'Upload Failed..Please Try Again...'
+                setTimeout(() => 
+                {
+                  this.uploadDocList = [];
+                  if(this.productId!='32'){
+                    this.enableEmployeeUploadSection = true;
+                    this.uploadStatus = null;
+                    this.enableEmployeeEditSection = false;
+                  }
+                
+                
+              }, (4*1000));
+              }
+              else{
+                this.uploadStatus = res?.StatusDesc;
+                setTimeout(() => this.checkUploadStatus(), (2*1000));
+              }
+            }
+          },  
+          (err) => { },
+        );
+}
+updateEmployeeRecordsTable(){
+  let ReqObj = {
+    "CompanyId":this.insuranceId,
+    "ProductId":this.productId,
+    "RequestRefNo":this.requestReferenceNo,
+    "QuoteNo": this.quoteNo,
+    "RiskId": "1",
+    "Status": "Y"
+  }
+  let urlLink = `${this.UploadUrl}eway/vehicle/insert/records`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+            if(data){
+              let res = data?.Result;
+              if(res){
+                  this.enableEmployeeUploadSection = false;
+                  this.enableEmployeeEditSection = false;
+                this.errorRecords = [];this.uploadStatus=null;
+                this.getEmployeeDetails();
+              }
+            }
+        },  
+        (err) => { },
+      );
+}
+getEmployeeDetails(){
+  let SectionId = null;
+  if(this.productId=='4') SectionId = '24';
+  let ReqObj = {
+    "QuoteNo": this.quoteNo,
+     "RiskId": "1",
+     "SectionId": SectionId
+  }
+  let urlLink = `${this.motorApiUrl}api/getallproductemployees`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      if(data?.Result){
+       
+          this.employeeList = data?.Result;
+          console.log('OOOOO',this.employeeList);
+       
+          this.originalEmployeeList = new Array().concat(data?.Result);
+          if(this.employeeList.length!=0 && this.productId!=='32'){
+            //this.getTotalSICost('Employee');
+          }
+      }
+    });
+}
+getValidRecordDetails(){
+  let ReqObj={
+    "CompanyId":this.insuranceId,
+    "ProductId":this.productId,
+    "RequestRefNo":this.requestReferenceNo
+  }
+  let urlLink = `${this.UploadUrl}eway/vehicle/getUploadTransaction`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+            if(data){
+              let res = data?.Result;
+              if(res){
+                if(this.productId!=32){
+                  this.employeeUploadRecords = [res];
+                  this.showEmpRecordsSection = true;
+                }
+             
+                if(res?.ErrorRecords!=null && res?.ErrorRecords!='0') this.getErrorRecords();
+                else this.errorRecords = [];
+              }
+            }
+          },  
+          (err) => { },
+        );
+}
+getErrorRecords(){
+  let ReqObj={
+    "CompanyId":this.insuranceId,
+    "ProductId":this.productId,
+    "RequestRefNo":this.requestReferenceNo,
+    "QuoteNo":this.quoteNo,
+    "RiskId":"1",
+    "Status": 'E'
+  }
+  let urlLink = `${this.UploadUrl}eway/vehicle/get/recordsByStatus`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+            if(data){
+              let res = data?.Result;
+              if(res){
+                  this.errorRecords = data.Result;
+                  console.log('OOOOOOOO',this.errorRecords);
+              }
+            }
+        },
+        (err) => { },
+        ); 
+}
+UploadTravel(){
+  this.showgrid=true;
+  this.enableEmployeeUploadSection=true;
+  this.showEmpRecordsSection = false;
+  this.uploadDocList=[];
+  this.employeeUploadRecords = [];
+  this.uploadStatus = null;
 }
 getHistoryRecords(passengerList){
   let quoteNo=sessionStorage.getItem('quoteNo');
@@ -1082,6 +1317,27 @@ Proceed()
     }
 
   }*/
+
+  employeedownload(){
+    let ReqObj = {
+      "CompanyId": this.insuranceId,
+      "ProductId": this.productId,
+    }
+    let urlLink = `${this.UploadUrl}eway/vehicle/sample/download`
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', data?.Result.Base64);
+        link.setAttribute('download', data?.Result.FileName);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    },
+      (err) => { },
+    );
+  }
   onFormSubmit(){ 
       if(this.kidTrashSection){
         Swal.fire({

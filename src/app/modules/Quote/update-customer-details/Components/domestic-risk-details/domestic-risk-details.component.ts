@@ -500,10 +500,11 @@ export class DomesticRiskDetailsComponent implements OnInit {
     if(this.productId=='32') SectionId = '43';
     let ReqObj = {
       "QuoteNo": this.quoteNo,
-       "RiskId": "1",
+       //"RiskId": "1",
        "SectionId": SectionId
     }
-    let urlLink = `${this.motorApiUrl}api/getallproductemployees`;
+    let urlLink = `${this.motorApiUrl}api/getallactiveemployees`;
+    //let urlLink = `${this.motorApiUrl}api/getallproductemployees`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         if(data?.Result){
@@ -991,6 +992,9 @@ onFidelitySave(){
     else{alert("No Fidelity Details Found")}
   }
   onSaveEmployeeDetails(type){
+    let urlLink = null;
+    if(type=='save') urlLink = `${this.motorApiUrl}api/saveemployees`;
+    else urlLink = `${this.motorApiUrl}api/proceedemployees`;
     if(this.employeeList.length!=0){
         let empList = [],i=0;
         for(let emp of this.employeeList){
@@ -1008,14 +1012,14 @@ onFidelitySave(){
               "Createdby": this.loginId,
               "SectionId": SectionId,
               "ProductId": this.productId,
-              "EmpcountSIvalidYN": validYN,
-              "ExcelUploadYN": "N",
               "InsuranceId": this.insuranceId,
               "ProductEmployeeSaveReq": empList,
               "QuoteNo": this.quoteNo,
-              "RequestReferenceNo": this.quoteRefNo
+               // "EmpcountSIvalidYN": validYN,
+              // "ExcelUploadYN": "N",
+              // "RequestReferenceNo": this.quoteRefNo
             }
-            let urlLink = `${this.motorApiUrl}api/saveproductemployees`;
+            //let urlLink = `${this.motorApiUrl}api/saveproductemployees`;
             this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
               (data: any) => {
                 console.log(data);
@@ -1032,29 +1036,29 @@ onFidelitySave(){
                           <div style="color: darkgreen;">Field<span class="mx-2">:</span>${element?.Field}</div>
                           <div style="color: red;">Message<span class="mx-2">:</span>${element?.Message}</div>
                         </li>`
-                        if(index==res.ErrorMessage.length-1){
-                          Swal.fire({
-                            title: '<strong>MisMatch Error</strong>',
-                            icon: 'info',
-                            html:
-                              `<ul class="list-group errorlist">
-                                ${ulList}
-                               <li>Do you want to continue?</li>
-                           </ul>`,
-                            showCloseButton: true,
-                            //focusConfirm: false,
-                            showCancelButton:true,
+                        // if(index==res.ErrorMessage.length-1){
+                        //   Swal.fire({
+                        //     title: '<strong>MisMatch Error</strong>',
+                        //     icon: 'info',
+                        //   //   html:
+                        //   //     `<ul class="list-group errorlist">
+                        //   //       ${ulList}
+                        //   //      <li>Do you want to continue?</li>
+                        //   //  </ul>`,
+                        //   //   showCloseButton: true,
+                        //   //   //focusConfirm: false,
+                        //   //   showCancelButton:true,
                 
-                           //confirmButtonColor: '#3085d6',
-                           cancelButtonColor: '#d33',
-                           confirmButtonText: 'Yes,Proceed!',
-                           cancelButtonText: 'Cancel',
-                          }).then((result) => {
-                            if (result.isConfirmed) {
-                                this.onSaveEmployeeDetails('alter');
-                            }
-                          });
-                        }
+                        //   //  //confirmButtonColor: '#3085d6',
+                        //   //  cancelButtonColor: '#d33',
+                        //   //  confirmButtonText: 'Yes,Proceed!',
+                        //    cancelButtonText: 'Cancel',
+                        //   }).then((result) => {
+                        //     if (result.isConfirmed) {
+                        //         this.onSaveEmployeeDetails('alter');
+                        //     }
+                        //   });
+                        // }
                       }
                       
                     }
@@ -3255,11 +3259,12 @@ onFidelitySave(){
         if(this.productId=='14'  || this.productId=='19') SectionId = '45';
         let ReqObj = {
           "QuoteNo": this.quoteNo,
-          "RiskId": rowData.RiskId,
-         "EmployeeId": rowData.EmployeeId,
+        //   "RiskId": rowData.RiskId,
+        "EmployeeId": rowData.EmployeeId,
           "SectionId": SectionId
       }
-      let urlLink = `${this.motorApiUrl}api/deleteproductemployees`;
+      let urlLink = `${this.motorApiUrl}api/deleteemployeebyid`;
+      //let urlLink = `${this.motorApiUrl}api/deleteproductemployees`;
         this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
           (data: any) => {
             console.log(data);
