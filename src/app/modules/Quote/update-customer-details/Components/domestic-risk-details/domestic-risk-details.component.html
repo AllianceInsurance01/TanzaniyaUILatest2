@@ -1165,8 +1165,9 @@
                         </div>
                         <div class="text-center mt-2" >
                             <button class="custom-btn btn-5 mx-2" *ngIf="!enableEmployeeUploadSection" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
-    
-                            <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="employeeList.length!=0 && !enableEmployeeUploadSection" matRipple (click)="onSaveEmployeeDetails('direct')" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
+                            <button class="custom-btn btn-8 mx-2" *ngIf="employeeList.length!=0 && !enableEmployeeUploadSection" matRipple (click)="onSaveEmployeeDetails('save')" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Save & Proceed</button>
+                            <button class="custom-btn btn-6 mx-2" *ngIf="employeeList.length!=0 && !enableEmployeeUploadSection" matRipple (click)="onSaveEmployeeDetails('proceed')" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
+                            <!-- <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="employeeList.length!=0 && !enableEmployeeUploadSection" matRipple (click)="onSaveEmployeeDetails('direct')" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button> -->
                         </div>
                     </div>
                     <div class="row" *ngIf="enableEmployeeEditSection">

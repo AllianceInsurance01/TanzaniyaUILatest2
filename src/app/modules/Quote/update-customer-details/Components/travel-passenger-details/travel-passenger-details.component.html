@@ -60,14 +60,176 @@
                     <div class="row mb-2" *ngIf="!editSection">
                         
                         <div class="col-md-10 col-lg-10 col-xl-10 offset-1">
-                            <div class="text-start mt-2" *ngIf="!editSection">
+                        <div class="row">
+                            <div class="text-start mt-2 col-4" *ngIf="!editSection">
                                 <button class="btn btn-warning"  (click)="AddPassenger()">Add Passenger</button>
                             </div>
+                            <div class="text-start mt-2 col-4" *ngIf="!editSection">
+                                <button class="btn btn-primary" (click)="UploadTravel()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
+                            </div>
+                        </div>
+                        <div *ngIf="historyRecordsList.length!=0 && !showgrid">
                             <app-grid-table [cols]="PassengerHeader" [data]="historyRecordsList" [filterValue]="filterValue" (onEdit)="onEditPassenger($event)" (onDelete)="onDeletePassengerList($event)">
                             </app-grid-table>  
                         </div>
+                            
+                        <div class="row" *ngIf="showgrid">
+                            <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                                <div class="boxForm">
+                                    <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                            <div class="headcommon" *ngIf="enableEmployeeUploadSection">
+                                <ng-container *ngIf="showEmpRecordsSection">
+                                    <span><i class="fas fa-users mx-1 mt-3"></i></span>
+                                    <span class="spancommon span_font_size" style="font-weight:600">Travel Records</span>
+                                </ng-container>
+                                <ng-container *ngIf="!showEmpRecordsSection">
+                                    <span><i class="fas fa-upload mx-1 mt-3"></i></span>
+                                    <span class="spancommon span_font_size" style="font-weight:600">Upload Travel Details</span>
+                                </ng-container>
+                            </div>
+                            <div class="headcommon mr-3"  *ngIf="enableEmployeeUploadSection"> 
+                                <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data" (click)="employeedownload()"><i class="fas fa-download mx-1"></i>Sample</button>
+                                <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2" *ngIf="showEmpRecordsSection" (click)="onUploadEmployeeSection()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
+                            </div>
+                            </div>
+                            <div  class="addMembers" *ngIf="employeeList.length!=0 && !enableEmployeeUploadSection">
+                                <div class="addMembers__item" *ngFor="let entry of employeeList|paginate:{itemsPerPage: 5, currentPage:emp, id:'emp'};;let i=index">
+                                    <div class="addMembers__header">
+                                        <div class="addMembers__name">{{entry.PassangerName}} &nbsp;|&nbsp;{{entry.DateOfJoiningYear}}</div>
+                                        <div class="addMembers__edit">
+                                            <button class="circle btn btn-danger btn-sm mr-2" (click)="EmployeeDelete(entry,i)"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                            <button class="circle btn btn-primary btn-sm" (click)="onEditEmployee(i)"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                        </div>
+                                        <div class="addMembers__edit mr-5">
+                                            <!-- <span>{{entry.Salary| commaseparator }}</span> -->
+                                        </div>
+                                    </div>
+                                    <ul class="addMembers__list">
+                                        <!-- <li>{{entry.OccupationDesc}} &nbsp; | &nbsp; {{entry.NationalityId}}</li> -->
+                                    </ul>
+                                </div>
+                             
+                                <div class="d-flex justify-content-end">
+                                    <pagination-controls (pageChange)="emp=$event"  id="emp"></pagination-controls>
+                                </div>
+                               
+                            </div>
+                            <div *ngIf="enableEmployeeUploadSection && !showEmpRecordsSection">
+                                <div class="row" *ngIf="uploadStatus==null">
+                                    <div class="col-md-8 col-lg-8 offset-2" >
+                                        <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct')" #doc>
+                                        <div class="imag-card my-3" appDragDropFileUpload (click)="doc.click()">
+                                            <div>
+                                                <div class="center">
+                                                    <b class="text-dark" style="font-size:1rem">
+                                                        <i class="far fa-images"></i> Drag or Click</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="uploadDocList.length!=0 && uploadStatus==null">
+                                    <div class="col-md-12 col-lg-12 col-xl-12">
+                                        <table class="table" id="capture_table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                                    <th scope="col"><span class="spancommon">FileName</span></th>
+                                                    <th scope="col"><span class="spancommon">Delete</span></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let document of uploadDocList;let i=index">
+                                                    <th scope="row">{{i+1}}</th>
+                                                    <td><span class="spancommon">{{document.filename}}</span></td>
+                                                    <td>
+                                                        <button class="btn-sm btn btn-danger" (click)="uploadDocList=[];"><i class="fa fa-trash"></i></button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-2" *ngIf="uploadStatus==null">
+                                    <button class="btn btn-danger btn-sm mr-5" (click)="enableEmployeeUploadSection=!enableEmployeeUploadSection;showgrid=!showgrid;uploadDocList=[]"> Cancel</button>&nbsp;&nbsp;
+                                    <button class="btn btn-success btn-sm" *ngIf="uploadDocList.length!=0" (click)="onUploadEmployeeDetails()">Upload</button>
+                                </div>
+                                <div class="text-center">
+                                    <p>{{uploadStatus}}</p>
+                                </div>
+                            </div>
+                            <div *ngIf="enableEmployeeUploadSection && showEmpRecordsSection">
+                                <div class="row" *ngIf="employeeUploadRecords.length!=0">
+                                    <div class="col-md-12 col-lg-12 col-xl-12">
+                                        <table class="table" id="capture_table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                                    <th scope="col"><span class="spancommon">Uploaded Date</span></th>
+                                                    <th scope="col"><span class="spancommon">Total Records</span></th>
+                                                    <th scope="col"><span class="spancommon">Valid Records</span></th>
+                                                    <th scope="col"><span class="spancommon">Error Records</span></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let records of employeeUploadRecords;let i=index">
+                                                    <th scope="row">{{i+1}}</th>
+                                                    <td><span class="spancommon">{{records.UploadDate}}</span></td>
+                                                    <td> <span class="spancommon">{{records.TotalRecords}}</span> </td>
+                                                    <td> <span class="spancommon">{{records.ValidRecords}}</span> </td>
+                                                    <td> <span class="spancommon">{{records.ErrorRecords}}</span> </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="text-center mt-2" *ngIf="errorRecords.length==0">
+                                        <button class="custom-btn btn-7 maan-button-data mx-2" (click)="updateEmployeeRecordsTable()">Move Records</button>
+                                    </div>
+                                    <ng-container *ngIf="errorRecords.length!=0">
+                                        <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                            <div class="headcommon" >
+                                                <span><i class="fas fa-users mx-1 mt-3"></i></span>
+                                                <span class="spancommon span_font_size" style="font-weight:600">Error  Details</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-xl-12" >
+                                            <table class="table" id="capture_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                                        <th scope="col"><span class="spancommon">Employee Name</span></th>
+                                                        <th scope="col"><span class="spancommon">Date Of Birth</span></th>
+                                                        <th scope="col"><span class="spancommon">Nationality</span></th>
+                                                        <th scope="col"><span class="spancommon">Error Reason</span></th>
+                                                        <th scope="col"><span class="spancommon">Action</span></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let records of errorRecords|paginate:{itemsPerPage: 5, currentPage:j , id:'j'};let i=index">
+                                                        <th scope="row">{{i+1}}</th>
+                                                        <td><span class="spancommon">{{records.EmployeeName}}</span></td>
+                                                        <td> <span class="spancommon">{{records.DateOfBirth}}</span> </td>
+                                                        <td> <span class="spancommon">{{records.NationalityId}}</span> </td>
+                                                        <td> <span class="spancommon">{{records.ErrorDesc}}</span> </td>
+                                                        <td> 
+                                                                <button class="btn btn-primary" (click)="onEditEmployeeError(records,mymodal)"><i class="fa fa-pencil"></i></button>    
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <pagination-controls (pageChange)="j=$event"  id="j"></pagination-controls>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
                     </div>
-                    <div class="row" *ngIf="historyRecordsList.length==0 && !editSection">
+                    <div class="row" *ngIf="historyRecordsList.length==0 && !editSection && !showgrid"><!--&& !showgrid-->
                         <div class="text-center">
                                 No Passenger Records Available
                         </div>

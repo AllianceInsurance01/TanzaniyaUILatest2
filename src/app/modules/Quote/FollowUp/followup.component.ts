@@ -236,7 +236,7 @@ export class FollowupComponent implements OnInit,OnChanges{
       "LoginId": this.loginId,
       "InsuranceId": this.insuranceId,
       "ProductId": this.productId,
-      "Status":"PE"
+      // "Status":"PE"
     }
        
       let urlLink = `${this.CommonApiUrl}api/getallfollowupdetails`;
@@ -249,7 +249,7 @@ export class FollowupComponent implements OnInit,OnChanges{
               this.MailHeader=[
                 { key: 'FollowupDesc', display: 'FollowupDesc' },
                 { key: 'StartDate', display: 'Start Date' },
-                { key: 'Status', display: 'Status' },
+                { key: 'StatusDesc', display: 'Status' },
                 { key: 'Remarks', display: 'Remarks' },
                 {
                   key: 'View',
