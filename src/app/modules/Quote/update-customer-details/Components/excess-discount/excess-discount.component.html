@@ -229,14 +229,24 @@
                                             </div> -->
                                             <div class="col-md-12 col-lg-12 p-3 display1" style="overflow-x: scroll !important;"><!--style="overflow-x: scroll !important;"-->
                                                 <table mat-table [dataSource]="menu.CoverList" class="outerTable" multiTemplateDataRows matSort >
-                                                    <ng-container matColumnDef="header-row-first-group">
-                                                        <th mat-header-cell *matHeaderCellDef class="outerHead mat-header-cell" [style.text-align]="center" [attr.colspan]="5">
-                
-                                                        </th>
+                                                    <ng-container *ngIf="checkReferralStatus()">
+                                                        <ng-container matColumnDef="header-row-first-group">
+                                                            <th mat-header-cell *matHeaderCellDef class="outerHead mat-header-cell" [style.text-align]="center" [attr.colspan]="5">
+                    
+                                                            </th>
+                                                        </ng-container>
                                                     </ng-container>
-                                                    <ng-container matColumnDef="header-row-second-group">
-                                                        <th mat-header-cell *matHeaderCellDef [attr.colspan]="6" class="text-center outerHead mat-header-cell">Premium </th>
+                                                    <ng-container *ngIf="!checkReferralStatus()">
+                                                        <ng-container matColumnDef="header-row-first-group">
+                                                            <th mat-header-cell *matHeaderCellDef class="outerHead mat-header-cell" [style.text-align]="center" [attr.colspan]="5">
+                    
+                                                            </th>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="header-row-second-group">
+                                                            <th mat-header-cell *matHeaderCellDef [attr.colspan]="6" class="text-center outerHead mat-header-cell">Premium </th>
+                                                        </ng-container>
                                                     </ng-container>
+                                                    
                 
                                                     <ng-container *ngFor="let col of columnHeader; let i = index;" [matColumnDef]="col.key" [sticky]="i===0" [stickyEnd]="i === 10">
                 
@@ -1049,12 +1059,21 @@
                                                         </td>
                 
                                                     </ng-container>
-                                                    <tr mat-header-row *matHeaderRowDef="['header-row-first-group', 'header-row-second-group']">
-                                                    </tr>
+                                                    <ng-container *ngIf="!checkReferralStatus()">
+                                                        <tr mat-header-row  *matHeaderRowDef="['header-row-first-group', 'header-row-second-group']">
+                                                        </tr>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="checkReferralStatus()">
+                                                        <tr mat-header-row  *matHeaderRowDef="['header-row-first-group']">
+                                                        </tr>
+                                                    </ng-container>
                                                     <tr mat-header-row *matHeaderRowDef="keys"></tr>
                                                     <tr mat-row *matRowDef="let element; columns: keys;let i = dataIndex;" [ngClass]="{'striped-row': i % 2}" [class.example-element-row]="element.SubCovers?.length" [class.example-expanded-row]="element?.expanded"></tr>
                                                     <tr mat-row *matRowDef="let row;let j = dataIndex; columns: ['expandedDetail']" [ngClass]="{'striped-row': j % 2}" class="example-detail-row"></tr>
-                                                    <tr mat-footer-row *matFooterRowDef="keys"></tr>
+                                                    <ng-container *ngIf="!checkReferralStatus()">
+                                                        <tr mat-footer-row *matFooterRowDef="keys"></tr>
+                                                    </ng-container>
+                                                    
                                                 </table>
                                             </div>
                                             <div class="display2 col-12">
@@ -2962,14 +2981,108 @@
             </button>
         </div>
         <div class="modal-body">
-            <ul class="list-group">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-xl-12">
+                    <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col"><b>Description</b></th>
+                            <th scope="col" style="text-align: end;"><b>Rate (%)</b></th>
+                            <th scope="col" style="text-align: end;"><b>Amount ({{currencyCode}})</b></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Before Discount</td>
+                            <td></td>
+                            <td style="text-align: end;">
+                                <span class="spancommon span_font_size">{{beforeDiscount | commaseparator}}</span>
+                            </td>
+                          </tr>
+                          <ng-container *ngIf="discountList.length!=0">
+                            <tr>
+                                <th scope="col">Discounts</th>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr *ngFor="let discount of discountList">
+                                <th scope="row">{{discount.DiscountDesc}}</th>
+                                <td></td>
+                                <td style="text-align: end;"><span class="spancommon span_font_size">{{discount.DiscountAmount | commaseparator}}</span></td>
+                            </tr>
+                          </ng-container>
+                          
+                          <ng-container *ngIf="loadingList.length!=0">
+                              <tr>
+                                <th scope="col" style="text-align: start;" colspan="3">Loadings</th>
+                                
+                              </tr>
+                            <tr *ngFor="let loading of loadingList;let i=index">
+                                    <td>{{loading.LoadingDesc}}</td>
+                                    <td style="text-align: end;">
+                                        <ng-container *ngIf="(adminSection)">
+                                            <ng-container *ngIf="loading.LoadingCalcType!='F'">
+                                                <ng-container *ngIf="loading.LoadingRate!=null">
+                                                    <span class="spancommon span_font_size">{{loading.LoadingRate}}</span>
+                                                </ng-container>
+                                            </ng-container>
+                                            <ng-container *ngIf="loading.LoadingCalcType=='F'">
+                                                <input type="text"  [id]="'Rate'+i" class="input-form-control without-icon" style="width: auto !important;max-width:150px;text-align:left !important" [(ngModel)]="loading['LoadingRate']" maxlength="5">
+                                            </ng-container>
+                                        </ng-container>
+                                        <ng-container *ngIf="(!adminSection)">
+                                            <ng-container *ngIf="loading.LoadingRate==null">
+                                                    0
+                                            </ng-container>
+                                            <ng-container *ngIf="loading.LoadingRate!=0 && loading.LoadingRate!=null">
+                                                <span class="spancommon span_font_size">{{loading.LoadingRate}}</span>
+                                            </ng-container>
+                                            
+                                        </ng-container>
+                                    </td>
+                                    <td style="text-align: end;">
+                                        <ng-container *ngIf="(adminSection)">
+                                            <ng-container *ngIf="loading.LoadingCalcType!='A'">
+                                                <ng-container *ngIf="loading.LoadingAmount==0 || loading.LoadingAmount==null">
+                                                        0
+                                                </ng-container>
+                                                <ng-container *ngIf="loading.LoadingAmount!=0 && loading.LoadingAmount!=null">
+                                                    <span class="spancommon span_font_size">{{loading.LoadingAmount}}</span>
+                                                </ng-container>
+                                            </ng-container>
+                                            <ng-container *ngIf="loading.LoadingCalcType=='A'">
+                                                <input type="text"  [id]="'Amount'+i" class="input-form-control without-icon" (keyup)="premiumComma(i,loading.LoadingAmount)" style="width: auto !important;max-width:300px;text-align:right !important" [(ngModel)]="loading['LoadingAmount']">
+                                            </ng-container>
+                                            
+                                        </ng-container>
+                                        <ng-container *ngIf="(!adminSection)">
+                                            <ng-container *ngIf="loading.LoadingAmount==0 || loading.LoadingAmount==null">
+                                                    0
+                                            </ng-container>
+                                            <ng-container *ngIf="loading.LoadingAmount!=0 && loading.LoadingAmount!=null">
+                                                <span class="spancommon span_font_size">{{loading.LoadingAmount | commaseparator}}</span>
+                                            </ng-container>
+                                            
+                                        </ng-container>
+                                    </td>
+                            </tr>
+                          </ng-container>
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+            <!-- <ul class="list-group">
                 <li class="list-group-item list-seperate">
                     <div>
                         <span class="spancommon span_font_size"><b><u>Description</u></b></span>
 
                     </div>
                     <div>
-                        <span class="spancommon span_font_size"><b><u>Amount ({{currencyCode}})</u></b></span>
+                        <span class="spancommon span_font_size"><b><u>Rate (%)</u></b></span>
+
+                    </div>
+                    <div>
+                        <span class="spancommon span_font_size"><b><u></u></b></span>
                     </div>
                 </li>
                 <li class="list-group-item list-seperate">
@@ -3014,13 +3127,47 @@
                     </li>
                     <li class="list-group-item list-seperate" *ngFor="let loading of loadingList;let i=index">
                         
-                        <div>
-                            <span class="spancommon span_font_size">{{loading.LoadingDesc}}</span>
+                        <div style="min-width: 250px !important;">
+                            <span class="spancommon span_font_size" >{{loading.LoadingDesc}}</span>
 
                         </div>
-                        <div>
+                        <div style="float: left !important;">
                             <ng-container *ngIf="(adminSection)">
-                                <input type="text"  [id]="'Rate'+i" class="input-form-control without-icon" (keyup)="premiumComma(i,loading.LoadingAmount)" style="width: auto !important;max-width:300px;text-align:right !important" [(ngModel)]="loading['LoadingAmount']">
+                                    <ng-container *ngIf="loading.LoadingCalcType!='P'">
+                                        <ng-container *ngIf="loading.LoadingRate!=null">
+                                            <span class="spancommon span_font_size">{{loading.LoadingRate}}</span>
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container *ngIf="loading.LoadingCalcType=='P'">
+                                        <input type="text"  [id]="'Rate'+i" class="input-form-control without-icon" style="width: auto !important;max-width:150px;text-align:left !important" [(ngModel)]="loading['LoadingRate']" maxlength="5">
+                                    </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="(!adminSection)">
+                                <ng-container *ngIf="loading.LoadingRate==null">
+                                        0
+                                </ng-container>
+                                <ng-container *ngIf="loading.LoadingRate!=0 && loading.LoadingRate!=null">
+                                    <span class="spancommon span_font_size">{{loading.LoadingRate}}</span>
+                                </ng-container>
+                                
+                            </ng-container>
+
+                        </div>
+                        <div></div>
+                        <div >
+                            <ng-container *ngIf="(adminSection)">
+                                <ng-container *ngIf="loading.LoadingCalcType!='A'">
+                                    <ng-container *ngIf="loading.LoadingAmount==0 || loading.LoadingAmount==null">
+                                            0
+                                    </ng-container>
+                                    <ng-container *ngIf="loading.LoadingAmount!=0 && loading.LoadingAmount!=null">
+                                        <span class="spancommon span_font_size">{{loading.LoadingAmount}}</span>
+                                    </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="loading.LoadingCalcType=='A'">
+                                    <input type="text"  [id]="'Amount'+i" class="input-form-control without-icon" (keyup)="premiumComma(i,loading.LoadingAmount)" style="width: auto !important;max-width:300px;text-align:right !important" [(ngModel)]="loading['LoadingAmount']">
+                                </ng-container>
+                                
                             </ng-container>
                             <ng-container *ngIf="(!adminSection)">
                                 <ng-container *ngIf="loading.LoadingAmount==0 || loading.LoadingAmount==null">
@@ -3045,7 +3192,7 @@
 
                     </div>
                 </li>
-            </ul>
+            </ul> -->
         </div>
         <div class="modal-footer">
             <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" (click)="modal.dismiss('Cross click')" style="margin-left:10px;">Close</button>

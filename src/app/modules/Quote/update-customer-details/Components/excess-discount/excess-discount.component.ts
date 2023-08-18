@@ -213,6 +213,7 @@ emiyn="N";
   selectedVehId: any;
   selectedCoverId: any;
   selectedSectionId: any;
+  uwReferralSection: boolean=false;
   constructor(public sharedService: SharedService,private router:Router,private modalService: NgbModal,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe,public dialog: MatDialog) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -268,35 +269,6 @@ emiyn="N";
       {"Code":"RR","CodeDesc":"Referral Rejected"},
       {"Code":"RE","CodeDesc":"Referral Re-Quote"},
     ]
-      this.columnHeader = [
-
-        // {
-        //   key: 'CalcType',
-        //   display: '',
-        //   config: {
-        //     isExpand:true
-        //   },
-        // },
-        // { key: 'SectionName', display: 'Section Name' },
-        {
-          key: 'selected',
-          display: 'Select',
-          config: {
-            isChecked:true
-          },
-        },
-        { key: 'CoverName', display: 'Cover Name' },
-        // { key: 'ReferalDescription', display: 'Referral' },
-        { key: 'SumInsured', display: 'Sum Insured' },
-        { key: 'Rate', display: 'Rate' },
-        { key: 'ExcessPercent', display: 'Excess Percent' },
-        { key: 'ExcessAmount', display: 'Excess Amount' },
-        //{ key: 'MinimumPremium', display: 'Minimum' },
-        { key: 'PremiumAfterDiscount', display: 'After Discount' },
-        { key: 'PremiumIncludedTax', display: 'Included Tax' },
-
-      ]
-
     this.innerColumnHeader =  [
       {
         key: 'SubCoverId',
@@ -450,6 +422,65 @@ emiyn="N";
               if(i==vehicles.length){
                   this.vehicleDetailsList = vehicleList;
                   this.coverSection = true;
+                  if(((this.uwReferralSection && !this.adminSection && (this.statusValue=='RP' || this.statusValue==null || this.statusValue==undefined))  || (!this.adminSection && this.statusValue=='RP') || (this.statusValue=='RP' && !this.adminSection))){
+                    this.columnHeader = [
+
+                      // {
+                      //   key: 'CalcType',
+                      //   display: '',
+                      //   config: {
+                      //     isExpand:true
+                      //   },
+                      // },
+                      // { key: 'SectionName', display: 'Section Name' },
+                      {
+                        key: 'selected',
+                        display: 'Select',
+                        config: {
+                          isChecked:true
+                        },
+                      },
+                      { key: 'CoverName', display: 'Cover Name' },
+                      // { key: 'ReferalDescription', display: 'Referral' },
+                      { key: 'SumInsured', display: 'Sum Insured' },
+                      { key: 'ExcessPercent', display: 'Excess Percent' },
+                      { key: 'ExcessAmount', display: 'Excess Amount' },
+                      //{ key: 'MinimumPremium', display: 'Minimum' },
+              
+                    ]
+                  }
+                  else{
+                    this.columnHeader = [
+
+                      // {
+                      //   key: 'CalcType',
+                      //   display: '',
+                      //   config: {
+                      //     isExpand:true
+                      //   },
+                      // },
+                      // { key: 'SectionName', display: 'Section Name' },
+                      {
+                        key: 'selected',
+                        display: 'Select',
+                        config: {
+                          isChecked:true
+                        },
+                      },
+                      { key: 'CoverName', display: 'Cover Name' },
+                      // { key: 'ReferalDescription', display: 'Referral' },
+                      { key: 'SumInsured', display: 'Sum Insured' },
+                      { key: 'Rate', display: 'Rate' },
+                      { key: 'ExcessPercent', display: 'Excess Percent' },
+                      { key: 'ExcessAmount', display: 'Excess Amount' },
+                      //{ key: 'MinimumPremium', display: 'Minimum' },
+                      { key: 'PremiumAfterDiscount', display: 'After Discount' },
+                      { key: 'PremiumIncludedTax', display: 'Included Tax' },
+              
+                    ]
+              
+                   
+                  }
                   this.EmiInstallment();
               }
             }
@@ -1244,7 +1275,6 @@ getMotorUsageList(vehicleValue){
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
           if(data.Result){
-            console.log("Final Cal Response",data.Result);
 
               this.vehicleData = data.Result;
               
@@ -1256,6 +1286,8 @@ getMotorUsageList(vehicleValue){
               
               let vehicleList:any[]=[];
               if(this.vehicleData.length!=0){
+                let referralList = this.vehicleData.filter(ele=>ele.UWReferral!=null && ele.UWReferral.length!=0);
+                if(referralList.length!=0) this.uwReferralSection = true;
                 if(this.vehicleData[0].EndtTypeMaster!=null){
                   let quoteDetails = this.vehicleData[0].EndtTypeMaster
                   this.endorsementType = quoteDetails.Endtcategdesc;
@@ -2153,6 +2185,66 @@ getMotorUsageList(vehicleValue){
         if(i==this.vehicleDetailsList.length){
           this.showSection = true;
           this.coverSection = true;
+          console.log("Dtatus Value",this.statusValue)
+          if(((this.uwReferralSection && !this.adminSection && (this.statusValue=='RP' || this.statusValue=='' || this.statusValue==null || this.statusValue==undefined))  || (!this.adminSection && this.statusValue=='RP'))){
+            this.columnHeader = [
+
+              // {
+              //   key: 'CalcType',
+              //   display: '',
+              //   config: {
+              //     isExpand:true
+              //   },
+              // },
+              // { key: 'SectionName', display: 'Section Name' },
+              {
+                key: 'selected',
+                display: 'Select',
+                config: {
+                  isChecked:true
+                },
+              },
+              { key: 'CoverName', display: 'Cover Name' },
+              // { key: 'ReferalDescription', display: 'Referral' },
+              { key: 'SumInsured', display: 'Sum Insured' },
+              { key: 'ExcessPercent', display: 'Excess Percent' },
+              { key: 'ExcessAmount', display: 'Excess Amount' },
+              //{ key: 'MinimumPremium', display: 'Minimum' },
+      
+            ]
+          }
+          else{
+            this.columnHeader = [
+
+              // {
+              //   key: 'CalcType',
+              //   display: '',
+              //   config: {
+              //     isExpand:true
+              //   },
+              // },
+              // { key: 'SectionName', display: 'Section Name' },
+              {
+                key: 'selected',
+                display: 'Select',
+                config: {
+                  isChecked:true
+                },
+              },
+              { key: 'CoverName', display: 'Cover Name' },
+              // { key: 'ReferalDescription', display: 'Referral' },
+              { key: 'SumInsured', display: 'Sum Insured' },
+              { key: 'Rate', display: 'Rate' },
+              { key: 'ExcessPercent', display: 'Excess Percent' },
+              { key: 'ExcessAmount', display: 'Excess Amount' },
+              //{ key: 'MinimumPremium', display: 'Minimum' },
+              { key: 'PremiumAfterDiscount', display: 'After Discount' },
+              { key: 'PremiumIncludedTax', display: 'Included Tax' },
+      
+            ]
+      
+           
+          }
           if(!this.endorsementSection){
             this.EmiInstallment();
           }
@@ -3416,6 +3508,9 @@ getMotorUsageList(vehicleValue){
           (err) => { },
         );
   }
+  checkReferralStatus(){
+    return ((this.uwReferralSection && !this.adminSection && (this.statusValue=='RP' || this.statusValue=='' || this.statusValue==null || this.statusValue==undefined))  || (!this.adminSection && this.statusValue=='RP'))
+  }
   getExistingEserviceDetails(){
     let ReqObj = {
       "RequestReferenceNo": this.quoteRefNo,
@@ -3505,7 +3600,7 @@ getMotorUsageList(vehicleValue){
                                     if(i==this.vehicleDetailsList.length){
                                       if(type=='calculate'){
                                         //sessionStorage.removeItem('vehicleDetailsList');
-                                        window.location.reload();
+                                        //window.location.reload();
                                       }
                                       else this.updateReferralStatus();
                                     }
@@ -3526,7 +3621,7 @@ getMotorUsageList(vehicleValue){
                 if(i==this.vehicleDetailsList.length){
                   if(type=='calculate'){
                     //sessionStorage.removeItem('vehicleDetailsList');
-                    window.location.reload();
+                   // window.location.reload();
                   }
                   else this.updateReferralStatus();
                 }

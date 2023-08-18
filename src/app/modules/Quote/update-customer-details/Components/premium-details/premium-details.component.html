@@ -892,7 +892,8 @@
                                             <span class="spancommon">
                                                 <ng-container *ngIf="productId=='5'">Chassis Number</ng-container>
                                                 <ng-container *ngIf="productId=='4'">Passpport No</ng-container>
-                                                <ng-container *ngIf="productId!='4' && productId!='5'">ID</ng-container>
+                                                <ng-container *ngIf="productId=='42'">Serial No</ng-container>
+                                                <ng-container *ngIf="productId!='4' && productId!='5' && productId!='42'">ID</ng-container>
                                             </span>
                                         </th>
                                         <th scope="col"><span class="spancommon">Document Type</span></th>

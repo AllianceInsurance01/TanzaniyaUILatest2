@@ -13,11 +13,13 @@ export class ReferralRejectedComponent implements OnInit {
   quoteHeader:any[]=[];
   quoteData:any[]=[];innerColumnHeader:any[]=[];
   innerTableData:any[]=[];userDetails:any;loginId:any;agencyCode:any;branchCode:any;
-  productId:any;insuranceId:any;userType:any;brokerbranchCode:any;
+  productId:any;insuranceId:any;userType:any;brokerbranchCode:any;endorsementHeader:any[];
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public motorApiUrl:any = this.AppConfig.MotorApiUrl;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
+  referralData: any[]=[];
+  section: any=null;
   constructor(private router:Router,private sharedService: SharedService) { 
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -33,6 +35,32 @@ export class ReferralRejectedComponent implements OnInit {
     this.quoteHeader =  [
       { key: 'RequestReferenceNo', display: 'Reference No' },
       { key: 'ClientName', display: 'Customer Name' },
+      { key: 'PolicyStartDate', display: 'Policy Start Date' },
+      { key: 'PolicyEndDate', display: 'Policy End Date' },
+      
+      {
+        key: 'edit',
+        display: 'Vehicle Details',
+        sticky: false,
+        config: {
+          isCollapse: true,
+          isCollapseName:'Vehicles'
+        },
+      },
+      
+      { key: 'RejectReason', display: 'Rejected Reason' },
+      // {
+      //   key: 'actions',
+      //   display: 'Action',
+      //   config: {
+      //     isEdit: true,
+      //   },
+      // },
+    ];
+    this.endorsementHeader =  [
+      { key: 'RequestReferenceNo', display: 'Reference No' },
+      { key: 'ClientName', display: 'Customer Name' },
+      { key: 'EndorsementTypeDesc', display: 'Endt Type'},
       { key: 'PolicyStartDate', display: 'Policy Start Date' },
       { key: 'PolicyEndDate', display: 'Policy End Date' },
       
@@ -79,6 +107,29 @@ export class ReferralRejectedComponent implements OnInit {
       this.quoteHeader =  [
         { key: 'RequestReferenceNo', display: 'Reference No' },
         { key: 'ClientName', display: 'Customer Name' },
+        { key: 'PolicyStartDate', display: 'Policy Start Date' },
+        { key: 'PolicyEndDate', display: 'Policy End Date' },
+        
+        { key: 'RejectReason', display: 'Rejected Reason' },
+        // {
+        //   key: 'actions',
+        //   display: 'Action',
+        //   config: {
+        //     isEdit: true,
+        //   },
+        // },
+        /*{
+          key: 'actions',
+          display: 'Action',
+          config: {
+            isEdit: false,
+          },
+        },*/
+      ];
+      this.endorsementHeader =  [
+        { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'ClientName', display: 'Customer Name' },
+        { key: 'EndorsementTypeDesc', display: 'Endt Type'},
         { key: 'PolicyStartDate', display: 'Policy Start Date' },
         { key: 'PolicyEndDate', display: 'Policy End Date' },
         
@@ -166,10 +217,16 @@ export class ReferralRejectedComponent implements OnInit {
         (data: any) => {
           console.log(data);
           if(data.Result){
-              rowData.MotorList = data.Result;
+            if(data.Result.length!=0){
+              this.referralData = data.Result.filter(ele=>ele.EndorsementDate!=null);
+              this.quoteData = data.Result.filter(ele=>ele.EndorsementDate==null);
+              this.section = 'quote';
+            }
+            else this.section = 'quote';
           }
         },
         (err) => { },
       );
   }
+  setSection(val){this.section = val;}
 }
