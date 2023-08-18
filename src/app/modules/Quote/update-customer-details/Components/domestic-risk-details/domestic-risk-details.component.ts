@@ -1,6 +1,6 @@
 import { DatePipe, Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import * as Mydatas from '../../../../../app-config.json';
@@ -9,7 +9,40 @@ import {PageEvent} from '@angular/material/paginator';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
+import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
+import { Medical } from '../models/additionalDetails/medical';
+import { ProductData } from '../models/product';
+import { FormlyFieldConfig } from "@ngx-formly/core";
+export class ForceLengthValidators {
+  static maxLength(maxLength: number) {
+    return (control: FormControl): ValidationErrors => {
+      if (!control.value) {
+        return null;
+      }
 
+      if (control.value.length > maxLength) {
+        //force the length to 
+        control.setValue(control.value.substring(0, maxLength));
+      }
+
+      return null;
+    };
+  }
+  static min(min: number): ValidatorFn {
+    return (control: FormControl): { [key: string]: boolean } | null => {
+
+      let val: number = control.value;
+
+      if (control.pristine || control.pristine) {
+        return null;
+      }
+      if (val >= min) {
+        return null;
+      }
+      return { 'min': true };
+    }
+  }
+}
 declare var $:any;
 
 
@@ -92,6 +125,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   InbuildConstructType: void;
   sumInsured: boolean;six: boolean;
   ten:boolean;
+  newten:boolean;
   actualPersonalAccSI: any;machineries:any[]=[];
   length = 50;MachineryName:any=null;BrandName:any=null;
   MachineryLocation:any=null;NameDesc:any=null;
@@ -212,8 +246,14 @@ export class DomesticRiskDetailsComponent implements OnInit {
   cyberSectionId: any;
   Cyberyear:any;
   CyberSNo:any;
+  fields: any[] = [];
+  formSection: boolean = false; viewSection: boolean = false;
+  form = new FormGroup({});
+
+  model = {};
+
   constructor(private router: Router,private datePipe:DatePipe,private modalService: NgbModal,
-     private sharedService: SharedService,) {
+     private sharedService: SharedService,private formlyJsonschema: FormlyJsonschema,) {
     let homeObj = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.insuranceId = this.userDetails.Result.InsuranceId;
@@ -244,12 +284,14 @@ export class DomesticRiskDetailsComponent implements OnInit {
     if(this.productId=='5') this.buildingDetailsSection=false;
     else this.buildingDetailsSection = true;
     
+    
    
 
 
     //this.Section=false;
 
   }
+  public productItem: ProductData;
   ngOnInit(): void {
     this.monthList = [
       {"Code":"01","CodeDesc":"January"},
@@ -356,10 +398,17 @@ export class DomesticRiskDetailsComponent implements OnInit {
     this.cyberSectionId=this.item[0];
     if(this.productId=='42'){
       this.ten=true;
+     this.newten=true;
+      let fireData = new Medical();
+      let entry = [];
+      this.fields = fireData?.fields;
+      this.productItem = new ProductData();
+      this.formSection = true; this.viewSection = false;
       // this.CyberItem=[{'Make':'Honda','DeviceType':'1','Making':'2022','SerialNo':1,"DeviceTypeDesc":"Desktop","SumInsured":"123,45"}];
     }
     else{
       this.ten=false;
+      this.newten=false;
     }
     if(this.item){
       let items = this.item.find((Code) => Code == '1' || Code=='40');

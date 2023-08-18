@@ -76,3 +76,12 @@ table {
   }
 
 }
+
+:host ::ng-deep .mat-sort-header-content{
+  overflow: visible !important;
+}
+:host ::ng-deep .mat-sort-header-container {
+  display:flex !important;
+  padding:0px !important;
+  //justify-content: flex-start !important;
+}

@@ -2144,6 +2144,13 @@
                         <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="CyberItem.length!=0 && !enableCyberSection" matRipple (click)="onCyberSave()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
                 </mat-tab>
+                <mat-tab label="Medical Details" *ngIf="newten">
+                    <div class="form__wrapper" *ngIf="productId=='42'">
+                        <form [formGroup]="form">
+                            <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+                        </form>
+                    </div>
+                </mat-tab>
             </div>
         </div>
     </div>

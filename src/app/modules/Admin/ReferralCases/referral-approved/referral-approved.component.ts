@@ -17,6 +17,10 @@ export class ReferralApprovedComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public motorApiUrl:any = this.AppConfig.MotorApiUrl;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
+  referralData: any;
+  section: any=null;
+  endorsementHeader: any;
+
   constructor(private router:Router,private sharedService: SharedService) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -57,6 +61,30 @@ export class ReferralApprovedComponent implements OnInit {
         { key: 'AdminRemarks', display: 'AdminRemarks' },
         
       ];
+      this.endorsementHeader =  [
+        { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'ClientName', display: 'Customer Name' },
+        { key: 'EndorsementTypeDesc', display: 'Endt Type'},
+        { key: 'PolicyStartDate', display: 'Policy Start Date' },
+        { key: 'PolicyEndDate', display: 'Policy End Date' },
+        
+        {
+          key: 'edit',
+          display: 'Vehicle Details',
+          sticky: false,
+          config: {
+            isCollapse: true,
+            isCollapseName:'Vehicles'
+          },
+        },
+        // {
+        //   key: 'actions',
+        //   display: 'Action',
+        //   config: {
+        //     isEdit: true,
+        //   },
+        // },
+      ];
     }
     else{
       this.quoteHeader =  [
@@ -67,11 +95,26 @@ export class ReferralApprovedComponent implements OnInit {
         { key: 'PolicyEndDate', display: 'Policy End Date' },
         { key: 'AdminRemarks', display: 'AdminRemarks' },
       ];
+      this.endorsementHeader =  [
+        { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'ClientName', display: 'Customer Name' },
+        { key: 'EndorsementTypeDesc', display: 'Endt Type'},
+        { key: 'PolicyStartDate', display: 'Policy Start Date' },
+        { key: 'PolicyEndDate', display: 'Policy End Date' },
+        // {
+        //   key: 'actions',
+        //   display: 'Action',
+        //   config: {
+        //     isEdit: true,
+        //   },
+        // },
+      ];
     }
   }
   ngOnInit(): void {
     this.getExistingQuotes();
   }
+  setSection(val){this.section = val;}
   getExistingQuotes(){
     let appId = "1",loginId="";
     if(this.userType=='Broker'){
@@ -98,8 +141,11 @@ export class ReferralApprovedComponent implements OnInit {
       (data: any) => {
         console.log(data);
         if(data.Result){
-            this.quoteData = data?.Result;
+          this.referralData = data.Result.filter(ele=>ele.EndorsementDate!=null);
+          this.quoteData = data.Result.filter(ele=>ele.EndorsementDate==null);
+          this.section = 'quote';
         }
+        else this.section = 'quote';
       },
       (err) => { },
     );
