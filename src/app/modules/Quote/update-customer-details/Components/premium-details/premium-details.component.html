@@ -1384,7 +1384,7 @@
 
     <div class="text-center my-2">
         <button class="custom-btn btn-5 mx-2" *ngIf="endorsementSection" (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
-        <button class="custom-btn btn-5 mx-2" *ngIf="(productId==3 || productId=='14' || productId=='32' || productId=='42') && !endorsementSection" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+        <button class="custom-btn btn-5 mx-2" *ngIf="(productId==3 || productId=='14' || productId=='32' || productId=='42' || productId=='43') && !endorsementSection" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
         <button class="custom-btn btn-5 mx-2" *ngIf="productId==4 &&  !endorsementSection" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
         <button class="custom-btn btn-5 mx-2" *ngIf="productId!=3 && productId!='4' && productId!='14' && productId!='32' && productId!='42' &&  !endorsementSection" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
         <!-- <button class="custom-btn btn-6 mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/make-payment']" routerLinkActive="router-link-active">Next</button> -->

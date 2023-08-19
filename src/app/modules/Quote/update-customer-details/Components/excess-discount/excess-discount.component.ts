@@ -3027,7 +3027,8 @@ getMotorUsageList(vehicleValue){
   onFormSubmit(){
     console.log("Selected Covers",this.selectedCoverList)
     this.subuserType = sessionStorage.getItem('typeValue');
-    if(this.selectedCoverList.length!=0){
+    if(this.productId=='43') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
+    else if(this.selectedCoverList.length!=0){
       let coverList:any[]=[];
        this.onProceed(this.selectedCoverList);
 

@@ -1849,7 +1849,7 @@
                         <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="machineries.length!=0 && !enableMachineryEditSection" (click)="onSaveMachineryRisk()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
                 </mat-tab>
-                <mat-tab label="Accessories" *ngIf="!buildingDetailsSection">
+                <mat-tab label="Accessories" *ngIf="!buildingDetailsSection && productId=='5'">
                     <!--table-->
                     <div>
                         <!-- <div class="row mt-1">
@@ -2145,10 +2145,15 @@
                     </div>
                 </mat-tab>
                 <mat-tab label="Medical Details" *ngIf="newten">
-                    <div class="form__wrapper" *ngIf="productId=='42'">
+                    <div class="form__wrapper">
                         <form [formGroup]="form">
                             <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
                         </form>
+                    </div>
+                    <div class="text-center mt-1 mb-2">
+                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack()"  routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                     
+                        <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="onMedicalSave()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
                 </mat-tab>
             </div>

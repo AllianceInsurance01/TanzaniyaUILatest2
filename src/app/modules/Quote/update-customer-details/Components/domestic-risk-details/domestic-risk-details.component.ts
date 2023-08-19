@@ -282,8 +282,15 @@ export class DomesticRiskDetailsComponent implements OnInit {
       this.Section = false;
     }
     if(this.productId=='5') this.buildingDetailsSection=false;
-    else this.buildingDetailsSection = true;
-    
+    else if(this.productId!='43')this.buildingDetailsSection = true;
+    if(this.productId=='43'){
+      this.newten = true;
+      let fireData = new Medical();
+      let entry = [];
+      this.fields = fireData?.fields;
+      this.productItem = new ProductData();
+      this.formSection = true; this.viewSection = false;
+    }
     
    
 
@@ -394,22 +401,14 @@ export class DomesticRiskDetailsComponent implements OnInit {
       else return false;
   }
   setTabSections(){
-    if(this.productId=='42')
-    this.cyberSectionId=this.item[0];
+    
     if(this.productId=='42'){
+      this.cyberSectionId=this.item[0];
       this.ten=true;
-     this.newten=true;
-      let fireData = new Medical();
-      let entry = [];
-      this.fields = fireData?.fields;
-      this.productItem = new ProductData();
-      this.formSection = true; this.viewSection = false;
+      
       // this.CyberItem=[{'Make':'Honda','DeviceType':'1','Making':'2022','SerialNo':1,"DeviceTypeDesc":"Desktop","SumInsured":"123,45"}];
     }
-    else{
-      this.ten=false;
-      this.newten=false;
-    }
+    
     if(this.item){
       let items = this.item.find((Code) => Code == '1' || Code=='40');
       if (items) {
@@ -781,7 +780,9 @@ export class DomesticRiskDetailsComponent implements OnInit {
     this.empAddress = null;this.employeeName = null;this.occupationType = null;this.empLocation = null;
       this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;
   }
-
+  onMedicalSave(){
+    this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+  }
   onCyberSaves(){
     if(this.DeviceType!=null && this.DeviceType!=undefined && this.DeviceType!=null){
         //this.CyberItem[this.currentCyberIndex].ContentRiskDesc = this.BuildingSuminsured;

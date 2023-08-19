@@ -80,6 +80,11 @@
                             <formly-form [form]="form" [fields]="fields" [model]="productItem"></formly-form>
                         </form> -->
                     </div>
+                    <!-- <div>
+                        <form [formGroup]="form" (ngSubmit)="onSubmit(productItem)">
+                            <formly-form [form]="form" [fields]="fields" [model]="productItem"></formly-form>
+                        </form>
+                    </div> -->
                     <div class="row" *ngIf="productId=='42'">
                         <div class="col-md-6 col-lg-6  col-xl-6">
                             <div class="input-control-container">
@@ -115,8 +120,7 @@
                                </div>
                             </div>
                             </div>
-                            </div>
-                        
+                        </div>
                     </div>
                 </div>
                 <!-- <div class="row" *ngIf="productId=='1'">
@@ -455,11 +459,11 @@
                                 <ng-container *ngIf="questionSection">
                                     <div class="row">
                                         <div class="col-12 col-md-12 col-lg-12">
-                                            <ul class="list-group list-group-flush" ><!-- class="list-group list-group-flush"diamond px-3-->
+                                            <ul class="list-group list-group-flush" style="list-style-type: circle !important;"><!-- class="list-group list-group-flush"diamond px-3-->
                                                 <li class="list-group-item" *ngFor="let ques of uwQuestionList;let i=index">
                                                     <div class="row p-0 w-100 customRow">
                                                         <div class="col-md-12 col-lg-12 col-xl-12  customFont" [ngClass]="{'customRowBg': ques?.Status === 'R'}">
-                                                            <span class="spancommon spanc">{{ques.UwQuestionDesc}}</span><!--span_font_size-->
+                                                            <span class="spancommon spanc" style="font-size: 12.5px;">{{ques.UwQuestionDesc}}</span><!--span_font_size-->
                                                             <ng-container *ngIf="ques.MandatoryYn=='Y'"> &nbsp;<span class="text-danger">*</span></ng-container>
                                                         </div>
                                                         <div class="col-md-12 col-lg-12 col-xl-12">
@@ -471,10 +475,6 @@
                                                                             <label [for]="'orginwarehouse_Yes'+i" class="yes">Yes</label>
                                                                             <input type="radio" [id]="'orginwarehouse_No'+i" [name]="'originatingWarehouse'+i" [disabled]="endorsementSection" [(ngModel)]="ques.Value" value="N">
                                                                             <label [for]="'orginwarehouse_No'+i" class="no">No</label>
-                                                                            <!--<input [id]="'orginwarehouse_Yes'+i" type="radio" [name]="'originatingWarehouse'+i" class="yes" [(ngModel)]="ques.Value" value="Y">
-                                                                            <label [for]="'orginwarehouse_Yes'+i">Yes</label>
-                                                                            <input type="radio" [id]="'orginwarehouse_No'+i" [name]="'originatingWarehouse'+i" class="no" [(ngModel)]="ques.Value" value="N">
-                                                                            <label [for]="'orginwarehouse_No'+i">No</label>-->
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -529,11 +529,11 @@
                                 <li class="list-group-item" *ngFor="let ques of uwQuestionList;let i=index">
                                     <div class="row p-0 w-100 customRow">
                                         <!-- <div class="col-md-8 col-lg-8 col-xl-8 offset-1 customFont" [ngClass]="{'customRowBg': ques?.Status === 'R'}"> -->
-                                        <div class="col-md-8 col-lg-8 col-xl-8 offset-1 customFont">
+                                        <div class="col-md-10 col-lg-10 col-xl-10  customFont">
                                             <span class="spancommon span_font_size">{{ques.UwQuestionDesc}}</span>
                                             <ng-container *ngIf="ques.MandatoryYn=='Y'"> &nbsp;<span class="text-danger">*</span></ng-container>
                                         </div>
-                                        <div class="col-md-4 col-lg-3 col-xl-3">
+                                        <div class="col-md-2 col-lg-2 col-xl-2">
                                             <ng-container *ngIf="ques?.QuestionType=='01'">
                                                 <div class="input-control-container">
                                                     <div class="input-form-radio-box">

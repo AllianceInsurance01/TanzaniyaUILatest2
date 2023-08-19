@@ -59,6 +59,7 @@ import { RepeatTypeComponent } from './repeatArray.type';
 import { TableTypeComponent } from './tableType';
 import { DisplayLabel } from './displayText';
 import { CustomerModelComponent } from '../../Customer/customer-model/customer-model.component';
+import { RadioList } from './radioList';
 
 export function maxlengthValidationMessage(err, field) {
   return `This value should be less than ${field.templateOptions.maxLength} characters`;
@@ -99,7 +100,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     FormlyFieldTabs,
     RepeatTypeComponent,
     TableTypeComponent,
-    CustomerModelComponent
+    CustomerModelComponent,
+    RadioList
     //NewViewDetailsComponent
 
     ],
@@ -132,6 +134,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
         { name: 'multischema', component: MultiSchemaTypeComponent },
         { name: 'repeat', component: RepeatTypeComponent },
         { name: 'display', component: DisplayLabel },
+        { name: 'radioList', component: RadioList },
         { name: 'commaSeparator', component: CommaSeparatorInput, wrappers: ['form-field'] },
         { name: 'table', component: TableTypeComponent, wrappers: ['form-field'] },
         {

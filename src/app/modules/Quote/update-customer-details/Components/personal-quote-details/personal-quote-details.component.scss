@@ -44,15 +44,18 @@
 //     color: black;
 //     font-weight: 600;
 // }
-
+ul{
+    border-radius: 0px !important;
+}
 .list-group .list-group-item {
     display: flex;
     justify-content: space-between;
-    font-size: 12.5px;
+    color: black !important;
     padding: 4px 12px;
+    background-color: transparent !important;
     align-items: center;
     text-transform: capitalize;
-    border: 0;
+    border-bottom: 1px solid grey !important;
 }
 
 .modal-header {

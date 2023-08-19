@@ -27,6 +27,7 @@ import { EmployersLiabilitys } from '../newmodels/EmployersLiability';
 import { Burglarys } from '../newmodels/Buglarys';
 import { PublicLiabilitys } from '../newmodels/PublicLiablityCover';
 import { CyberInsurance } from '../models/CyberInsurance';
+import { MedicalInsurance } from '../models/MedicalInsurance';
 export class ForceLengthValidators {
   static maxLength(maxLength: number) {
     return (control: FormControl): ValidationErrors => {
@@ -1329,6 +1330,88 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       }
       else {
           this.productItem = new ProductData();
+          this.formSection = true; this.viewSection = false;
+      }
+    }
+    else if(this.productId=='43'){
+      let fireData = new MedicalInsurance();
+      let entry = [];
+      this.fields[0] = fireData?.fields;
+      let referenceNo = sessionStorage.getItem('quoteReferenceNo');
+      if (referenceNo) {
+        this.requestReferenceNo = referenceNo;
+        this.productItem = new ProductData();
+        this.fields[0].fieldGroup[0].fieldGroup[0].templateOptions.options = [
+          { value: 'A', 
+            list:[
+                "Nurses","Dietician","Lab/Path.Tech","Physiotherapist","X-Ray Tech","Scanning Tech.Pathologist",
+                "Clinical Pathologist","Forensic Pathologist"
+            ] 
+          }, 
+          { value: 'B', list:[
+                "Midwife", "General Practitioner", "Psychiatrist", "Nephrologist", "Radiologist", "Ophthalmologist (non-surgical)", "Dentist", "Acupuncture Specialist", "Pharmacist", "Emergency doctor", "Neurologist (Non-Surgical)", "Pulmonologist(non-surgical)", "Gastroenterologist(non-surgical)", "Internist (non-surgical)"
+          ] },
+          { value: 'C', list:[
+            "Surgeons including Vascular/cardiovascular", "maxillofacial", "thoracic", "ENT (ear/nose/throat)", "Neurologist", "Urologist", "Plastic", "Venereal Disease Specialist and Dermatologist", "Ophthalmologist", "Neurology", "Gastroenterologist", "Rheumatologist", "Pulmonologist"
+          ]},
+          { value: 'X', list:[
+            "Non-Surgical Specialist", "Gynaecologist", "Obstetrician & Gynaecologist", "Cardiologist", "Anaesthetist", "Paediatrician(non-surgical)", "Obstetrician", "Paediatrician(surgical)", "General surgeon", "orthopaedic surgery", "Doctor (including Surgery)", "Doctor (non-surgical)", "haematology"
+          ]}
+        ];
+        this.fields[0].fieldGroup[0].fieldGroup[1].props.options=[
+          {label:"--Select--",value:''},
+          {label:"100,000",value:'100000'},
+          {label:"50,000",value:'50000'},
+          {label:"25,000",value:'25000'},
+          {label:"15,000",value:'15000'},
+        ];
+        this.fields[0].fieldGroup[0].fieldGroup[2].props.options=[
+          {label:"--Select--",value:''},
+          {label:"100,000",value:'100000'},
+          {label:"50,000",value:'50000'},
+          {label:"25,000",value:'25000'},
+          {label:"15,000",value:'15000'},
+        ]
+        console.log("Final Forms ",this.fields)
+        this.formSection = true; this.viewSection = false;
+        //this.setCommonFormValues();
+       
+      }
+      else {
+          this.productItem = new ProductData();
+          this.fields[0].fieldGroup[0].fieldGroup[0].templateOptions.options = [
+            { value: 'A', 
+            list:[
+                "Nurses","Dietician","Lab/Path.Tech","Physiotherapist","X-Ray Tech","Scanning Tech.Pathologist",
+                "Clinical Pathologist","Forensic Pathologist"
+            ] 
+          }, 
+          { value: 'B', list:[
+                "Midwife", "General Practitioner", "Psychiatrist", "Nephrologist", "Radiologist", "Ophthalmologist (non-surgical)", "Dentist", "Acupuncture Specialist", "Pharmacist", "Emergency doctor", "Neurologist (Non-Surgical)", "Pulmonologist(non-surgical)", "Gastroenterologist(non-surgical)", "Internist (non-surgical)"
+          ] },
+          { value: 'C', list:[
+            "Surgeons including Vascular/cardiovascular", "maxillofacial", "thoracic", "ENT (ear/nose/throat)", "Neurologist", "Urologist", "Plastic", "Venereal Disease Specialist and Dermatologist", "Ophthalmologist", "Neurology", "Gastroenterologist", "Rheumatologist", "Pulmonologist"
+          ]},
+          { value: 'X', list:[
+            "Non-Surgical Specialist", "Gynaecologist", "Obstetrician & Gynaecologist", "Cardiologist", "Anaesthetist", "Paediatrician(non-surgical)", "Obstetrician", "Paediatrician(surgical)", "General surgeon", "orthopaedic surgery", "Doctor (including Surgery)", "Doctor (non-surgical)", "haematology"
+          ]}
+          ];
+          this.fields[0].fieldGroup[0].fieldGroup[1].props.options=[
+            {label:"--Select--",value:''},
+            {label:"100,000",value:'100000'},
+            {label:"50,000",value:'50000'},
+            {label:"25,000",value:'25000'},
+            {label:"15,000",value:'15000'},
+          ];
+          this.fields[0].fieldGroup[0].fieldGroup[2].props.options=[
+            {label:"--Select--",value:''},
+            {label:"100,000",value:'100000'},
+            {label:"50,000",value:'50000'},
+            {label:"25,000",value:'25000'},
+            {label:"15,000",value:'15000'},
+          ]
+          console.log("Final Forms ",this.fields)
+          this.formSection = true; this.viewSection = false;
           this.formSection = true; this.viewSection = false;
       }
     }
@@ -5429,7 +5512,7 @@ onFormSubmit() {
   else if(this.productId=='21'){this.onSaveplantaLLrisk('proceed','individual')}
   else if(this.productId=='26'){this.onSaveBussinessrisk('proceed','individual')}
   else if(this.productId=='25'){this.onSaveElectronicEquipment('proceed','individual')}
- 
+ else if(this.productId=='43'){this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);}
   else{
     let createdBy = "";
     let quoteStatus = sessionStorage.getItem('QuoteStatus');
