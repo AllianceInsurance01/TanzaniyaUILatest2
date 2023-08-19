@@ -58,7 +58,7 @@ export class ProductData {
 	WatchmanGuardHours:any='';AccessibleWindows:any='';ShowWindow:any='';
 	FrontDoors:any='';BackDoors:any='';TrapDoors:any='';
 	Address:any='';CategoryDesc:any='';
-	BuildingOccupied: any = '';
+	BuildingOccupied: any = '';Category:any=null;
 	FirstLossPercentId:any='';
 	IndemityPeriod:any='';
 	MakutiYn:any='';
@@ -73,8 +73,8 @@ export class ProductData {
 	GoodsLossPercent:any='';FurnitureLossPercent:any='';
 	ApplianceLossPercent:any='';CashValueablesLossPercent:any='';
 	MiningPlantSi:any='0';NonminingPlantSi:any='0';GensetsSi:any='0';
-	ElectronicEquipSuminsured:any ='0';
-	PlanType: any = null;
+	ElectronicEquipSuminsured:any ='0';AooSumInsured:any=null;
+	PlanType: any = null;AggSumInsured:any=null;
 	constructor(data?) {
 		this.id = data?.id ?? ''
 		this.CustomerName = data?.CustomerName ?? '';
@@ -100,6 +100,7 @@ export class ProductData {
 		this.EthicalWorkInvolved = data?.EthicalWorkInvolved ?? '';
 		this.IndustryId = data?.IndustryId ?? '';
 		this.CategoryId = data?.CategoryId ?? '';
+		this.Category = data?.Category ?? '';
 		this.BuildingOwnerYn = data?.BuildingOwnerYn ?? null;
 		this.InbuildConstructType = data?.InbuildConstructType ?? null;
 		this.OutbuildConstructType = data?.OutbuildConstructType ?? null;
@@ -185,6 +186,8 @@ export class ProductData {
 		this.ElectronicEquipSuminsured = data?.ElecEquipSuminsured ?? '0';
 		this.UsageType = data?.UsageType ?? 'S';
 		this.PlanType = data?.PlanType ?? 'S';
+		this.AooSumInsured = data?.AooSumInsured ?? null;
+		this.AggSumInsured = data?.AggSumInsured ?? null;
 		// this.EquipmentSi = data?.EquipmentSi ?? '0';
 		// this.ElectronicEquipSuminsured = data.ElectronicEquipSuminsured ?? '0';
 	}

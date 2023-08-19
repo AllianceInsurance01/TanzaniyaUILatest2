@@ -50,7 +50,7 @@
                         No Customer Available
                     </div>
                 </ng-container>
-                <div class="text-center">
+                <div class="text-center mt-1">
                     <button class="maan-btn-red mx-2 custom-btn btn-5" matRipple [routerLink]="['/Home/existingQuotes']" routerLinkActive="router-link-active"><<&nbsp;Back</button>
                     <button class="maan-btn btn-warning maan-btn-clearsearch" *ngIf="clearSearchSection" matRipple (click)="getCustomersList()"><i class="fas fa-close" style="position: relative;right: 0.1rem;top: 0.1rem;"></i>&nbsp;Clear Search &nbsp;</button>
                     <button class="custom-btn btn-6 mx-2 maan-button-data" *ngIf="customerValue" matRipple (click)="onProceed()">Submit</button>

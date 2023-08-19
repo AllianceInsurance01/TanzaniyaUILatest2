@@ -1746,7 +1746,7 @@ export class CustomerDetailsComponent implements OnInit {
                                     if(this.productId=='19'){
                                       this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
                                     }
-                                    else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1') this.saveCommonDetails(Details); 
+                                    else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='43') this.saveCommonDetails(Details); 
                                     else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
                                   }
                                   else{
@@ -1778,7 +1778,7 @@ export class CustomerDetailsComponent implements OnInit {
                                   if(this.productId=='19'){
                                     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
                                   }
-                                  else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId =='21') this.saveCommonDetails(Details); 
+                                  else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId =='21' || this.productId=='43') this.saveCommonDetails(Details); 
                                   else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
                                 }
                               }
@@ -1868,7 +1868,7 @@ export class CustomerDetailsComponent implements OnInit {
         if(this.productId=='19'){
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
         }
-        else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1'|| this.productId=='21' || this.productId=='26' || this.productId =='25') this.saveCommonDetails(Details); 
+        else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1'|| this.productId=='21' || this.productId=='26' || this.productId =='25' || this.productId=='43') this.saveCommonDetails(Details); 
         else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
     }
     
@@ -1936,6 +1936,7 @@ export class CustomerDetailsComponent implements OnInit {
     if(this.productId=='21'){section.push('3');};
     if(this.productId=='26'){section.push('3');};
     if(this.productId=='25'){section.push('3');};
+    if(this.productId=='43'){section.push('70');this.IndustryId='44'};
     let ReqObj = { 
         "AcexecutiveId": "",
         "PolicyNo": "",
@@ -2120,7 +2121,7 @@ export class CustomerDetailsComponent implements OnInit {
       if(this.productId=='19'){
         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
       }
-      else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='21'  || this.productId=='26' || this.productId == '25') this.saveCommonDetails([vehicle]); 
+      else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='21'  || this.productId=='26' || this.productId == '25' || this.productId=='43') this.saveCommonDetails([vehicle]); 
       else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
     }
   }

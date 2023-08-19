@@ -29,7 +29,7 @@ export class MedicalInsurance{
                 {
                   className: 'col-12 col-lg-12 col-md-12',
                   type: 'radioList',
-                  key: 'ElectronicEquipSuminsured',
+                  key: 'Category',
                   templateOptions: {
                     label:'Occupation',
                     name: 'gender',
@@ -42,10 +42,11 @@ export class MedicalInsurance{
                 {
                     className: 'col-5 col-lg-5 col-md-5 offset-1',
                     type: 'select',
-                    key: 'IndemityPeriod',
+                    key: 'AooSumInsured',
                     props: {
                       label: 'Limit Of Indeminity(AOO)',
-                      disabled: this.checkDisable('IndemityPeriod'),
+                      defaultValue: null,
+                      disabled: this.checkDisable('AooSumInsured'),
                       required: true,
                       options: [
                       ],
@@ -57,10 +58,11 @@ export class MedicalInsurance{
                   {
                     className: 'col-5 col-lg-5 col-md-5',
                     type: 'select',
-                    key: 'IndemityPeriod',
+                    key: 'AggSumInsured',
                     props: {
                       label: 'Limit Of Indeminity(AGG)',
-                      disabled: this.checkDisable('IndemityPeriod'),
+                      defaultValue: null,
+                      disabled: this.checkDisable('AggSumInsured'),
                       required: true,
                       options: [
                       ],

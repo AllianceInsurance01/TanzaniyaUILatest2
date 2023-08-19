@@ -155,7 +155,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
     this.insuranceId = this.userDetails.Result.InsuranceId;
     console.log('OOOOOOOOOOOOO',this.insuranceId);
      this.updateComponent.showStepperSection = false;
-    if (this.productId != '3' && this.productId != '19' && this.productId != '42' && this.productId!='39' && this.productId!='16' && this.productId!='1' && this.productId!='25' && this.productId!='21' && this.productId!='26' && this.productId!='27') {
+    if (this.productId != '3' && this.productId != '19' && this.productId != '42' && this.productId != '43' && this.productId!='39' && this.productId!='16' && this.productId!='1' && this.productId!='25' && this.productId!='21' && this.productId!='26' && this.productId!='27') {
       this.getOccupationList(null);
     }
     this.productItem = new ProductData();
@@ -1359,21 +1359,22 @@ export class PersonalQuoteDetailsComponent implements OnInit {
           ]}
         ];
         this.fields[0].fieldGroup[0].fieldGroup[1].props.options=[
-          {label:"--Select--",value:''},
+          {label:"--Select--",value:null},
           {label:"100,000",value:'100000'},
           {label:"50,000",value:'50000'},
           {label:"25,000",value:'25000'},
           {label:"15,000",value:'15000'},
         ];
         this.fields[0].fieldGroup[0].fieldGroup[2].props.options=[
-          {label:"--Select--",value:''},
+          {label:"--Select--",value:null},
           {label:"100,000",value:'100000'},
           {label:"50,000",value:'50000'},
           {label:"25,000",value:'25000'},
           {label:"15,000",value:'15000'},
         ]
+        this.setCommonFormValues();
         console.log("Final Forms ",this.fields)
-        this.formSection = true; this.viewSection = false;
+        
         //this.setCommonFormValues();
        
       }
@@ -3970,6 +3971,7 @@ onSubmit(productData) {
   //else if(this.productId=='42') this.onCyperSave('proceed','individual');
   else this.onFormSubmit();
 }
+
 onCyperSave(type,formType){
   let createdBy = "";
   let quoteStatus = sessionStorage.getItem('QuoteStatus');
@@ -4140,6 +4142,47 @@ anothercyberSave(type,formType){
   },
   (err) => { },
 );
+}
+onSaveMedicalDetails(type,formType){
+      let ReqObj = {
+        "CreatedBy": this.loginId,
+        "InsuranceId": this.insuranceId,
+        "ProductId": this.productId,
+        "RequestReferenceNo": this.requestReferenceNo,
+        "RiskId": "1",
+        "SectionId": "70",
+        "AooSumInsured": this.productItem?.AooSumInsured,
+        "AggSumInsured": this.productItem?.AggSumInsured,
+        "Category": this.productItem?.Category,
+        "EndorsementDate": this.endorsementDate,
+        "EndorsementEffectiveDate": this.endorsementEffectiveDate,
+        "EndorsementRemarks": this.endorsementRemarks,
+        "EndorsementType": this.endorsementType,
+        "EndorsementTypeDesc": this.endorsementTypeDesc,
+        "EndtCategoryDesc": this.endtCategoryDesc,
+        "EndtCount": this.endtCount,
+        "EndtPrevPolicyNo": this.endtPrevPolicyNo,
+        "EndtPrevQuoteNo": this.endtPrevQuoteNo,
+        "EndtStatus": this.endtStatus,
+        "IsFinanceEndt": this.isFinanceEndt,
+        "OrginalPolicyNo": this.orginalPolicyNo
+    }
+    let urlLink = `${this.motorApiUrl}api/slide12/savepublicliability`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          if (data?.Result) {
+            this.requestReferenceNo = data?.Result[0]?.RequestReferenceNo;
+            this.updateComponent.quoteRefNo = data?.Result[0]?.RequestReferenceNo;
+            sessionStorage.setItem('quoteReferenceNo', this.requestReferenceNo);
+            if(type=='proceed'){
+              this.commonDetails[0]['SectionId'] = ['70'];
+              sessionStorage.setItem('homeCommonDetails', JSON.stringify(this.commonDetails))
+            }
+            this.onCalculate(data.Result,type,formType);
+          }
+      },
+      (err) => { },
+    );
 }
 onSaveFireAlliedDetails(type,formType){
   let ReqObj = {
@@ -4724,7 +4767,7 @@ onCalculate(buildDetails,type,formType) {
                     ques['CreatedBy'] = createdBy;
                     ques['RequestReferenceNo'] = this.requestReferenceNo;
                     ques['UpdatedBy'] = this.loginId;
-                    if(this.productId=='42') ques["VehicleId"] = '1';
+                    if(this.productId=='42' || this.productId=='43') ques["VehicleId"] = '1';
                     else ques["VehicleId"] = build.LocationId
                     uwList.push(ques);
                   }
@@ -4732,7 +4775,7 @@ onCalculate(buildDetails,type,formType) {
                     ques['CreatedBy'] = createdBy;
                     ques['RequestReferenceNo'] = this.requestReferenceNo;
                     ques['UpdatedBy'] = this.loginId;
-                    if(this.productId=='42') ques["VehicleId"] = '1';
+                    if(this.productId=='42' || this.productId=='43') ques["VehicleId"] = '1';
                     else ques["VehicleId"] = build.LocationId
                     uwList.push(ques);
                   }
@@ -5026,6 +5069,7 @@ setCommonFormValues(){
   else if(this.productId=='26'){ReqObj.SectionId='3';urlLink=`${this.motorApiUrl}api/slide2/getallriskdetails`;}
   else if(this.productId=='25'){ReqObj.SectionId='3';urlLink=`${this.motorApiUrl}api/slide6/getelectronicequip`;}
   else if(this.productId=='42'){urlLink=`${this.motorApiUrl}api/slide6/getelectronicequip`;}
+  else if(this.productId=='43'){ReqObj.SectionId='70';urlLink=`${this.motorApiUrl}api/slide12/getpublicliability`;}
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
       console.log(data);
@@ -5221,6 +5265,26 @@ setCommonFormValues(){
             console.log('Product 42 Details',details);
             this.ProductCode = details?.SectionId;
             this.CyberCode=details?.OccupationType;
+          }
+          else if(this.productId=='43'){
+            if(details.AggSumInsured!='' && details.AggSumInsured!=null) this.productItem.AggSumInsured = details.AggSumInsured;
+              if(details.AooSumInsured!='' && details.AooSumInsured!=null) this.productItem.AooSumInsured = details.AooSumInsured;
+              this.productItem.Category = details.Category;
+            // if(details.EndorsementDate !=undefined && details.EndorsementDate !=null){
+            //   this.endorsementDate = details?.EndorsementDate;
+            //   this.endorsementEffectiveDate = details?.EndorsementEffectiveDate;
+            //   this.endorsementRemarks = details?.EndorsementRemarks;
+            //   this.endorsementType = details?.EndorsementType;
+            //   this.endorsementTypeDesc = details?.EndorsementTypeDesc;
+            //   this.endtCategoryDesc = details?.EndtCategoryDesc;
+            //   this.endtCount = details?.EndtCount;
+            //   this.endtPrevPolicyNo = details?.EndtPrevPolicyNo;
+            //   this.endtPrevQuoteNo = details?.EndtPrevQuoteNo;
+            //   this.endtStatus = details?.EndtStatus;
+            //   this.isFinanceEndt = details?.IsFinanceEndt;
+            //   this.orginalPolicyNo = details?.OrginalPolicyNo;
+            // }
+              
           }
           else{
             this.productItem.IndemityPeriod = details?.IndemityPeriod;
@@ -5512,7 +5576,7 @@ onFormSubmit() {
   else if(this.productId=='21'){this.onSaveplantaLLrisk('proceed','individual')}
   else if(this.productId=='26'){this.onSaveBussinessrisk('proceed','individual')}
   else if(this.productId=='25'){this.onSaveElectronicEquipment('proceed','individual')}
- else if(this.productId=='43'){this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);}
+ else if(this.productId=='43'){this.onSaveMedicalDetails('proceed','individual')}
   else{
     let createdBy = "";
     let quoteStatus = sessionStorage.getItem('QuoteStatus');
