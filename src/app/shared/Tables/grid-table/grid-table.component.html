@@ -45,6 +45,7 @@
                         </ng-container>
                     </ng-container>
                     <ng-container *ngIf="col.key=='Status'">
+
                         <span *ngIf="element[col.key]=='Y'">Active</span>
                         <span *ngIf="element[col.key]=='RP'">Referral Pending</span>
                         <span *ngIf="element[col.key]=='RR'">Referral Rejected</span>
@@ -55,6 +56,9 @@
                         <span *ngIf="element[col.key]=='E'">Endorsement</span>
                         <span *ngIf="element[col.key]=='D'">Removed</span>
                         <span *ngIf="element[col.key]=='N'">DeActive</span>
+                        <span *ngIf="element[col.key]=='PE'" style="color:#b8860b">Pending</span>
+                        <span *ngIf="element[col.key]=='CO'" style="color:green;">Completed</span>
+                        <span *ngIf="element[col.key]=='CA'" style="color:red;">Cancelled</span>
                     </ng-container>
                     <ng-container *ngIf="columnHeader[i]['display']=='EndorsementStatus'">
                             <span *ngIf="element[col.key]=='P'">Pending</span>
@@ -238,12 +242,6 @@
 
 
 <div class="example-containers mt-2">
-    <!-- <div class="input-form-box" id="gridstyle" >
-        <input type="text" class="input-form-control with-icon" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-        <span class="input-form-icon">
-            <i class="fas fa-filter"></i>
-        </span>
-    </div> -->
     <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort [matSortActive]="sortProperty" style="white-space: normal !important;" [matSortDirection]="sortDirection" matSortDisableClear>
         <ng-container *ngFor="let col of columnHeader; let i = index;" [matColumnDef]="col.key" [sticky]="i===0" [stickyEnd]="i === 10">
@@ -269,6 +267,7 @@
                     <ng-container *ngIf="columnHeader[i]['display']=='BrokerConfigProductName'">
 
                     </ng-container>
+                
                     <ng-container *ngIf="col.key=='Status'">
                         <span *ngIf="element[col.key]=='Y'">Active</span>
                         <span *ngIf="element[col.key]=='RP'">Referral Pending</span>
@@ -279,7 +278,12 @@
                         <span *ngIf="element[col.key]=='E'">Endorsement</span>
                         <span *ngIf="element[col.key]=='D'">Removed</span>
                         <span *ngIf="element[col.key]=='N'">DeActive</span>
+                        <span *ngIf="element[col.key]=='PE'" style="color:#b8860b">Pending</span>
+                        <span *ngIf="element[col.key]=='CO'" style="color:green;">Completed</span>
+                        <span *ngIf="element[col.key]=='CA'" style="color:red;">Cancelled</span>
+                      
                     </ng-container>
+                    
                     <ng-container *ngIf="columnHeader[i]['display']=='EndorsementStatus'">
                             <span *ngIf="element[col.key]=='P'">Pending</span>
                             <span *ngIf="element[col.key]=='N'">Cancelled</span>

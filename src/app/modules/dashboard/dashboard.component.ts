@@ -398,7 +398,7 @@ export class DashboardComponent implements OnInit {
             { key: 'RequestReferenceNo', display: 'Reference No' },
             { key: 'ClientName', display: 'Customer Name' },
             { key: 'PolicyStartDate', display: 'Policy Start Date' },
-            { key: 'PolicyEndDate', display: 'Policy End Date' },
+            //{ key: 'PolicyEndDate', display: 'Policy End Date' },
             /*{ key: 'Count', display: 'No.Of.Locations' },*/
             {
               key: 'actions',

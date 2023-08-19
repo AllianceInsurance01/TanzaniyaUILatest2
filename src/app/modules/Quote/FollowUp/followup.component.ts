@@ -249,7 +249,7 @@ export class FollowupComponent implements OnInit,OnChanges{
               this.MailHeader=[
                 { key: 'FollowupDesc', display: 'FollowupDesc' },
                 { key: 'StartDate', display: 'Start Date' },
-                { key: 'StatusDesc', display: 'Status' },
+                { key: 'Status', display: 'Status' },
                 { key: 'Remarks', display: 'Remarks' },
                 {
                   key: 'View',
