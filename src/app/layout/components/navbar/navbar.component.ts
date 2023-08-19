@@ -47,6 +47,7 @@ export class NavbarComponent implements OnInit {
   branchName: any; menuSection: boolean = true;
   typeName: any;openSideNav:boolean=false;
   insuranceid: any;
+  innerWidth: number;
   constructor(
     private authService: AuthService,
     private service: HttpService,
@@ -65,6 +66,12 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.innerWidth = window.innerWidth;
+ alert(this.innerWidth);
+    if(this.innerWidth<=850){
+      $('#sidenav').toggle();
+      this.openSideNav=false;
+    }
     this.getTypeList();
     $("#dropdownMenuLink").on('click', function (evt) {  
       console.log("evt***",evt);

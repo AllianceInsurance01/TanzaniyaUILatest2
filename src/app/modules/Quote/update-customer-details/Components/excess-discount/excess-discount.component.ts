@@ -3600,6 +3600,7 @@ getMotorUsageList(vehicleValue){
                                     i+=1;
                                     if(i==this.vehicleDetailsList.length){
                                       if(type=='calculate'){
+                                        this.getcall();
                                         //sessionStorage.removeItem('vehicleDetailsList');
                                         //window.location.reload();
                                       }
@@ -3621,6 +3622,7 @@ getMotorUsageList(vehicleValue){
                 i+=1;
                 if(i==this.vehicleDetailsList.length){
                   if(type=='calculate'){
+                    this.getcall();
                     //sessionStorage.removeItem('vehicleDetailsList');
                    // window.location.reload();
                   }
@@ -3673,6 +3675,49 @@ getMotorUsageList(vehicleValue){
     }
 
   }
+
+  getcall(){
+    let referenceNo =  sessionStorage.getItem('customerReferenceNo');
+    this.getCustomerDetails(referenceNo);
+   this.viewCondition('direct');
+   if(this.productId=='5'  || this.productId=='3'){
+    let vehicles:any;
+    if(this.statusValue=='RA'){
+      this.getUpdatedVehicleDetails();
+    }
+    else{
+      if(vehicles && this.productId=='5'){
+        let vehicleList=[];
+        let i=0;
+        for(let veh of vehicles){
+          if(i==0) veh['Collapse'] = true;
+          else veh['Collapse'] = false;
+          i+=1;
+          vehicleList.push(veh);
+          if(i==vehicles.length){
+              this.vehicleDetailsList = vehicleList;
+              this.coverSection = true;
+              this.EmiInstallment();
+          }
+        }
+      }
+      else{
+
+        this.getUpdatedVehicleDetails();
+      }
+    }
+  }
+  else if(this.productId!='5' && this.productId!='3'){
+    this.quoteRefNo = sessionStorage.getItem('quoteReferenceNo');
+    this.requestReferenceNo = this.quoteRefNo;
+    let quoteNo = sessionStorage.getItem('quoteNo');
+    if(quoteNo) this.quoteNo = quoteNo;
+    this.getUpdatedVehicleDetails();
+  }
+this.checkSelectedCovers();
+this.ViewDropDown();
+  }
+ 
   checkEndorseValue(rowData,type,menu){
       let endorse = rowData.Endorsements;
       
