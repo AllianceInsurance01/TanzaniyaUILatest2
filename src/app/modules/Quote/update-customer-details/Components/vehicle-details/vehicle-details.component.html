@@ -258,7 +258,6 @@
                                         <label class="input-form-label">Tare Weight</label>
                                         <div class="input-form-radio-box">
                                             <span class="spancommon span_font_size">{{motorDetails?.Tareweight}}</span>
-
                                         </div>
                                     </div>
                                 </div>
@@ -575,11 +574,8 @@
                             </span>
                         <span class="spancommon">UnderWriter Questions</span>
                     </div>
-                    <div>
-                        <ng-container>
-                            <!-- RefNo - {{customerDetails?.CustomerReferenceNo}} -->
-                        </ng-container>
-
+                    <div class="row p-0" style="margin-right: 10px !important;">
+                        <div class="customReferralBorder custombox"></div>&nbsp;-&nbsp;Referral
                     </div>
                 </div>
 
@@ -589,43 +585,46 @@
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12">
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item" *ngFor="let ques of uwQuestionList;let i=index">
-                                    <div class="row p-0 w-100 customRow">
-                                        <div class="col-md-8 col-lg-8 col-xl-8 mt-3 customFont">
-                                            <span class="spancommon span_font_size">{{ques.UwQuestionDesc}}</span>
-
-                                            <ng-container *ngIf="ques.MandatoryYn=='Y'"> &nbsp;<span class="text-danger">*</span></ng-container>
-                                        </div>
-                                        <div class="col-md-4 col-lg-4 col-xl-4">
-                                            <ng-container *ngIf="ques?.QuestionType=='01'">
-                                                <div class="input-control-container">
-                                                    <div class="input-form-radio-box">
-                                                        <div class="radio-toolbar">
-                                                            <input [id]="'orginwarehouse_Yes'+i" type="radio" [name]="'originatingWarehouse'+i" [disabled]="(endorsementSection && !enableFieldsSection)" [(ngModel)]="ques.Value" value="Y">
-                                                            <label [for]="'orginwarehouse_Yes'+i" class="yes">Yes</label>
-                                                            <input type="radio" [id]="'orginwarehouse_No'+i" [name]="'originatingWarehouse'+i" [disabled]="(endorsementSection && !enableFieldsSection)" [(ngModel)]="ques.Value" value="N">
-                                                            <label [for]="'orginwarehouse_No'+i" class="no">No</label>
+                                <ng-container  *ngFor="let ques of uwQuestionList;let i=index">
+                                    <li class="list-group-item" [hidden]="checkHideQUestion(ques)">
+                                        <div class="row p-0 w-100 customRow">
+                                            <div class="col-md-8 col-lg-8 col-xl-8 mt-3 customFont">
+                                                <span class="spancommon span_font_size">{{ques.UwQuestionDesc}}</span>
+    
+                                                <ng-container *ngIf="ques.MandatoryYn=='Y'"> &nbsp;<span class="text-danger">*</span></ng-container>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-xl-4">
+                                                <ng-container *ngIf="ques?.QuestionType=='01'">
+                                                    <div class="input-control-container">
+                                                        <div class="input-form-radio-box">
+                                                            <div class="radio-toolbar">
+                                                                <ng-container *ngFor="let option of ques.Options">
+                                                                        <input [id]="option.UwQuesOptionDesc+i"  type="radio" [name]="'UwQuesOptionDesc'+i" [disabled]="endorsementSection" [checked]="ques.Value==option.UwQuesOptionDesc" (change)="onChangeUWValue(option,i,ques.Options)">
+                                                                        <label [for]="option.UwQuesOptionDesc+i" [ngClass]="option.ReferralYn=='Y' && ques.Value!=option.UwQuesOptionDesc ?'customReferralBorder':'yes'">{{option.UwQuesOptionDesc}}</label>&nbsp;
+                                                                </ng-container>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </ng-container>
-                                            <ng-container *ngIf="ques?.QuestionType=='02' && ques?.DataType!='02'">
-                                                <div class="input-control-container">
-                                                    <div class="input-form-box">
-                                                        <input type="text" [(ngModel)]="ques.Value" [disabled]="(endorsementSection && !enableFieldsSection)" class="input-form-control without-icon">
+                                                </ng-container>
+                                                <ng-container *ngIf="ques?.QuestionType=='02' && ques?.DataType!='02'">
+                                                    <div class="input-control-container">
+                                                        <div class="input-form-box">
+                                                            <input type="text" [(ngModel)]="ques.Value" [disabled]="(endorsementSection && !enableFieldsSection)" class="input-form-control without-icon">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </ng-container>
-                                            <ng-container *ngIf="ques?.QuestionType=='02' && ques?.DataType=='02'">
-                                                <div class="input-control-container">
-                                                    <div class="input-form-box">
-                                                        <input type="text" digitOnly [(ngModel)]="ques.Value" [disabled]="(endorsementSection && !enableFieldsSection)" class="input-form-control without-icon">
+                                                </ng-container>
+                                                <ng-container *ngIf="ques?.QuestionType=='02' && ques?.DataType=='02'">
+                                                    <div class="input-control-container">
+                                                        <div class="input-form-box">
+                                                            <input type="text" digitOnly [(ngModel)]="ques.Value" [disabled]="(endorsementSection && !enableFieldsSection)" class="input-form-control without-icon">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </ng-container>
+                                                </ng-container>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
+                                    </li>
+                                </ng-container>
+                               
                             </ul>
                         </div>
                     </div>

@@ -23,7 +23,6 @@ export class ExistingUwQuestionsComponent implements OnInit {
     this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
     this.productId =  sessionStorage.getItem('companyProductId');
     this.columnHeader = [
-
       { key: 'UwQuestionDesc', display: 'Question' },
       { key: 'QuestionType', display: 'QuestionType' },
       { key: 'EffectiveDateStart', display: 'Effective Date' },
@@ -90,7 +89,11 @@ export class ExistingUwQuestionsComponent implements OnInit {
 
   }
   onAddQuestion(){
-    sessionStorage.removeItem('uwQuesId');
+    let entry = {
+      "UwQuestionId":null,
+      "BranchCode": this.branchValue
+    }
+    sessionStorage.setItem('uwQuesId',JSON.stringify(entry));
     this.router.navigate(['Admin/companyList/companyConfigure/productDetails/uwQuestionsList/updateUWQuestionDetails'])
   }
   EditStatus(event){

@@ -67,6 +67,14 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Question<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <textarea class="input-form-control without-icon" [(ngModel)]="questionDesc" maxlength="500" cols="160" rows="4"></textarea>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Question Type<span class="text-required">*</span></label>
@@ -75,25 +83,27 @@
                                     </ng-select>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-8 col-lg-8">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Question<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <textarea class="input-form-control without-icon" [(ngModel)]="questionDesc" maxlength="500" cols="160" rows="4"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row">
                             <div class="col-md-4 col-lg-4 col-xl-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Branch<span class="text-required">*</span></label>
-                                    <ng-select class="input-form-select" appendTo="body" [items]="branchList" [(ngModel)]="branchValue" bindValue="Code" bindLabel="CodeDesc">
+                                    <ng-select class="input-form-select" disabled appendTo="body" [items]="branchList" [(ngModel)]="branchValue" bindValue="Code" bindLabel="CodeDesc">
                                     </ng-select>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Effective Date <span class="text-required">*</span></label>
+                                    <mat-form-field appearance="fill">
+                                        <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="onStartDateChange()" [(ngModel)]="effectiveDateStart">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            
+                            <!-- <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
                                     <div class="input-form-box">
@@ -108,22 +118,13 @@
                                         <input type="text" [(ngModel)]="regCode" class="input-form-control without-icon" maxlength="20">
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
+                            
                             <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Effective Date <span class="text-required">*</span></label>
-                                    <mat-form-field appearance="fill">
-                                        <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="onStartDateChange()" [(ngModel)]="effectiveDateStart">
-                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker></mat-datepicker>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-8 col-lg-8">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Remarks<span class="text-required">*</span></label>
                                     <div class="input-form-box">
-                                        <textarea class="input-form-control without-icon" [(ngModel)]="remarks" maxlength="500" cols="160" rows="4"></textarea>
+                                        <textarea class="input-form-control without-icon" [(ngModel)]="remarks" maxlength="500" cols="160" rows="2"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -136,8 +137,6 @@
                                             <label for="orginwarehouse_Yes" class="customLabel">Active</label>
                                             <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="statusValue" value="N">
                                             <label for="orginwarehouse_No" class="customLabel">DeActive</label>
-                                            <input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="statusValue" value="R">
-                                            <label for="orginwarehouse_Pending" class="customLabel">Referral</label>
                                         </div>
                                     </div>
                                 </div>
@@ -155,6 +154,8 @@
                                     </div>
                                 </div>
                             </div>
+                           
+                           
                             <div class="col-12 col-md-4 col-lg-4" *ngIf="typeValue=='02'">
                                 <div class="input-control-container">
                                     <label class="input-form-label">DataType<span class="text-required">*</span></label>
@@ -169,8 +170,99 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="d-flex justify-content-between" *ngIf="typeValue=='01'">
+                            <div >
+                                <b>RadioButton - Option Details</b>
+                            </div>
+                            <div >
+                                <button class="btn btn-info" (click)="onAddOptionList()">Add New</button>
+                            </div>
+                        </div>
+                        <div class="row p-2" *ngIf="typeValue=='01'">
+                            <div class="col-md-12 col-lg-12 col-xl-12 " style="overflow-x: scroll !important;">
+                                <table class="table table-headerRow" >
+                                    <tr>
+                                        <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Display Name</th>
+                                        <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Loading</th>
+                                        <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Referral YN</th>
+                                        <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Dependant YN</th>
+                                        <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Dependant Question</th>
+                                        <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Status</th>
+                                        <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Action</th>
+                                    </tr>
+                                    <tr *ngFor="let row of optionList;let i = index;">
+                                        <td class="tbl-content">
+                                            <div class="input-control-container">
+                                                <input type="text" style="width: 120px;" class="input-form-control without-icon" maxlength="50" [(ngModel)]="row.UwQuesOptionDesc" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;">
+                                            </div>
+                                        </td>
+                                        <!-- <td class="tbl-content" >
+                                            <div class="input-control-container">
+                                                <input type="text" style="width: 70px !important;" class="input-form-control without-icon" maxlength="10" [(ngModel)]="row.UwQuesOptionId" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;">
+                                            </div>
+                                        </td> -->
+                                        <td class="tbl-content">
+                                            <div class="input-control-container">
+                                                <input type="text" style="width: 120px;" class="input-form-control without-icon" maxlength="50" [(ngModel)]="row.LoadingPercent" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;">
+                                            </div>
+                                        </td>
+                                        <td class="tbl-content">
+                                            <div class="input-form-radio-box">
+                                                <div class="radio-toolbar" style="white-space: nowrap;">
+                                                    <input [id]="'referral_Yes'+i" type="radio" [name]="'referralYN'+i" [(ngModel)]="row.ReferralYn" value="Y">
+                                                    <label class="customRadioLabel" [for]="'referral_Yes'+i">Yes</label>
+                                                    <input [id]="'referral_No'+i" type="radio" [name]="'referralYN'+i" [(ngModel)]="row.ReferralYn" value="N">
+                                                    <label class="customRadioLabel" [for]="'referral_No'+i">No</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tbl-content">
+                                            <div class="input-form-radio-box">
+                                                <div class="radio-toolbar" style="white-space: nowrap;">
+                                                    <input [id]="'dependant_Yes'+i" type="radio" [name]="'dependantYN'+i" [(ngModel)]="row.DependentYn" value="Y">
+                                                    <label class="customRadioLabel" [for]="'dependant_Yes'+i">Yes</label>
+                                                    <input type="radio" [id]="'dependant_No'+i" [name]="'dependantYN'+i" [(ngModel)]="row.DependentYn" value="N">
+                                                    <label class="customRadioLabel" [for]="'dependant_No'+i">No</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tbl-content">
+                                            <ng-container *ngIf="row.DependentYn!='Y'">
+                                                N/A
+                                            </ng-container>
+                                            <ng-container *ngIf="row.DependentYn=='Y'">
+                                                <ng-select class="custom" name="TaxType" [(ngModel)]="row.DependentUnderwriterId" placeholder="Select Question" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                                    <ng-option *ngFor="let opt of DependantQuesList" [value]="opt.UwQuestionId" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;">{{opt.UwQuestionDesc}}</ng-option>
+                                                </ng-select>
+                                            </ng-container>
+                                            
+                                        </td>
+                                        <td class="tbl-content">
+                                            <div class="input-form-radio-box">
+                                                <div class="radio-toolbar" style="white-space: nowrap;">
+                                                    <input [id]="'status_Yes'+i" type="radio" [name]="'status'+i" [(ngModel)]="row.Status" value="Y">
+                                                    <label class="customRadioLabel" [for]="'status_Yes'+i">Active</label>
+                                                    <input type="radio" [id]="'status_No'+i" [name]="'status'+i" [(ngModel)]="row.Status" value="N">
+                                                    <label class="customRadioLabel" [for]="'status_No'+i">DeActive</label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tbl-content">
+                                            <ng-container *ngIf="i==0">
+                                                <a mat-raised-button class="mx-1 btn-danger" data-toggle="tooltip" id="remove" data-placement="top" title="Clear" (click)="clearRecords()">Clear</a>
+                                            </ng-container>
+                                            <ng-container *ngIf="i!=0">
+                                                <a mat-raised-button class="mx-1 btn-danger" data-toggle="tooltip" id="remove" data-placement="top" title="Delete" (click)="deleteRow(i,row.OptionId)"><i
+                                                    class="fa fa-trash"></i></a>
+                                            </ng-container>
+                                           
+                                        </td>
+                                    </tr>
+                                </table> 
+                            </div>
+                        </div>
                         <div class="text-center mt-2">
-                            <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+                            <button class="btn btn-danger" (click)="ongetBack()">Back</button>&nbsp;
                             <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
                         </div>
                     </div>

@@ -15,18 +15,18 @@ import { SharedService } from '../../../../../../shared/shared.service';
 export class NewUwQuestionDetailsComponent implements OnInit {
 
   public activeMenu:any='UwQues';statusValue:any="Y";
-  typeList:any[]=[];typeValue:any="";MandatoryYn:any="N";
+  typeList:any[]=[];typeValue:any='';MandatoryYn:any="N";
   uwQuesId: string; public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl1: any = this.AppConfig.CommonApiUrl;
   remarks: any;dataType:any="01";coreAppCode:any;
-  regCode:any;loginId:any;
+  regCode:any;loginId:any;optionList:any[]=[];
   questionDesc: any;
   effectiveDateEnd: any;effectiveDateStart: any;
   minDate: Date;
   insuranceId: string;productId: string;
-  branchValue: any=null;branchList:any[]=[];
-  RegulatoryCode: any;
+  branchValue: any='';branchList:any[]=[];
+  RegulatoryCode: any;DependantQuesList:any[]=[];
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,) {
     this.minDate = new Date();
@@ -37,14 +37,68 @@ export class NewUwQuestionDetailsComponent implements OnInit {
       this.loginId = userDetails?.Result?.LoginId;
     }
     this.typeList = [
+      {"text":"---Select---","value":''},
       {"text":"Radio Button","value":"01"},
       {"text":"TextBox","value":"02"},
     ];
     this.getBranchList();
-
+    this.DependantQuesList = [
+      {"Code":null,"CodeDesc":"---Select---"},
+      {"Code":"01",CodeDesc:"Question 1"},
+      {"Code":"02",CodeDesc:"Question 2"},
+      {"Code":"03",CodeDesc:"Question 3"},
+    ]
+    this.optionList = [
+      {
+          "DependentUnderwriterId": null,
+          "DependentUwAction": null,
+          "DependentYn": "N",
+          "LoadingPercent": "0",
+          "ReferralYn": "N",
+          "Status": "Y",
+          "UwQuesOptionDesc": null,
+          "UwQuesOptionId": this.optionList.length+1
+      }
+    ]
   }
 
   ngOnInit(): void {
+    this.getAllUwQuesList();
+  }
+  getAllUwQuesList(){
+    let ReqObj = {
+      "Limit":"0",
+      "Offset":"100",
+      "ProductId": this.productId,
+      "InsuranceId": this.insuranceId,
+      "BranchCode" : this.branchValue
+      }
+      let urlLink = `${this.CommonApiUrl1}master/getalluwquestions`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          let res:any = data;
+            if(res?.Result){
+                if(res?.Result.length!=0){
+                  
+                    this.DependantQuesList = data?.Result.filter(ele=>ele.UwQuestionId!=this.uwQuesId);
+                }
+            }
+          },
+          (err) => { },
+        );
+  }
+  onAddOptionList(){
+    let entry = {
+          "DependentUnderwriterId": null,
+          "DependentUwAction": null,
+          "DependentYn": "N",
+          "LoadingPercent": "0",
+          "ReferralYn": "N",
+          "Status": "Y",
+          "UwQuesOptionDesc": null,
+          "UwQuesOptionId":  this.optionList.length+1
+    }
+    this.optionList.push(entry);
   }
   getBranchList(){
     let ReqObj = {
@@ -54,13 +108,13 @@ export class NewUwQuestionDetailsComponent implements OnInit {
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
       if(data.Result){
-        let obj = [{Code:"99999",CodeDesc:"ALL"}];
+        let obj = [{Code:"",CodeDesc:"---Select---"},{Code:"99999",CodeDesc:"ALL"}];
         this.branchList = obj.concat(data?.Result);
         let uwId = JSON.parse(sessionStorage.getItem('uwQuesId'));
         if(uwId){
           this.uwQuesId = uwId?.UwQuestionId;
           this.branchValue = uwId?.BranchCode;
-          this.getUwDetails();
+          if(this.uwQuesId!=null) this.getUwDetails();
         }
         else{
           this.uwQuesId = null;
@@ -69,6 +123,19 @@ export class NewUwQuestionDetailsComponent implements OnInit {
     },
     (err) => { },
   );
+  }
+  deleteRow(index,optionId){
+    this.optionList.splice(index,1);
+  }
+  clearRecords(){
+    let entry = this.optionList[0];
+    entry.UwQuesOptionDesc = null;
+    entry.UwQuesOptionId = 0;
+    entry.DependentUnderwriterId = null;
+    entry.LoadingPercent = '0';
+    entry.Status = "Y";
+    entry.ReferralYn = 'N';
+    entry.DependentYn = 'N';
   }
   getUwDetails(){
     let ReqObj = {
@@ -92,14 +159,11 @@ export class NewUwQuestionDetailsComponent implements OnInit {
                  if(details?.MandatoryYn) this.MandatoryYn = details?.MandatoryYn;
                  if(details?.DataType) this.dataType = details?.DataType;
                  if(details?.UwQuestionId) this.uwQuesId = details?.UwQuestionId;
-                 if(details?.CoreAppCode) this.coreAppCode = details?.CoreAppCode;
-                 if(details?.RegulatoryCode) this.regCode = details?.RegulatoryCode;
-
-                 if(details?.EffectiveDateEnd!=null){
-                  this.effectiveDateEnd = this.onDateFormatInEdit(details?.EffectiveDateEnd);
-                }
                 if(details?.EffectiveDateStart!=null){
                   this.effectiveDateStart = this.onDateFormatInEdit(details?.EffectiveDateStart);
+                }
+                if(details?.Options!=null && details.Options.length!=0){
+                    this.optionList = details?.Options;
                 }
             }
           },
@@ -166,21 +230,19 @@ export class NewUwQuestionDetailsComponent implements OnInit {
     if(this.remarks==undefined) this.remarks = "";
     if(this.questionDesc==undefined) this.questionDesc = "";
     let ReqObj = {
-      "EffectiveDateEnd": this.effectiveDateEnd,
-      "EffectiveDateStart": this.effectiveDateStart,
       "BranchCode": this.branchValue,
       "CreatedBy": this.loginId,
+      "DataType": this.dataType,
+      "EffectiveDateStart": this.effectiveDateStart,
       "InsuranceId": this.insuranceId,
+      "MandatoryYn": this.MandatoryYn,
+      "Options": this.optionList,
       "ProductId": this.productId,
       "QuestionType": this.typeValue,
       "Remarks": this.remarks,
-      "MandatoryYn": this.MandatoryYn,
-      "DataType": this.dataType,
+      "Status": this.statusValue,
       "UwQuestionDesc": this.questionDesc,
-      "UwQuestionId": this.uwQuesId,
-      "CoreAppCode": this.coreAppCode,
-      "RegulatoryCode": this.regCode,
-      "Status": this.statusValue
+      "UwQuestionId": this.uwQuesId
     }
     if (ReqObj.EffectiveDateStart != '' && ReqObj.EffectiveDateStart != null && ReqObj.EffectiveDateStart != undefined) {
       ReqObj['EffectiveDateStart'] =  this.datePipe.transform(ReqObj.EffectiveDateStart, "dd/MM/yyyy")
@@ -188,12 +250,7 @@ export class NewUwQuestionDetailsComponent implements OnInit {
       else{
       ReqObj['EffectiveDateStart'] = "";
       }
-      if (ReqObj.EffectiveDateEnd != '' && ReqObj.EffectiveDateEnd != null && ReqObj.EffectiveDateEnd != undefined) {
-      ReqObj['EffectiveDateEnd'] =  this.datePipe.transform(ReqObj.EffectiveDateEnd, "dd/MM/yyyy")
-      }
-      else{
-      ReqObj['EffectiveDateEnd'] = "";
-      }
+      
     let urlLink = `${this.CommonApiUrl1}master/insertuwquestions`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {

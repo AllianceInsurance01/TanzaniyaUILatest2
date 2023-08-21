@@ -61,7 +61,7 @@
                                 Existing UnderWriter Questions
                             </div>
                             <div>
-                                <button class="btn btn-warning" (click)="onAddQuestion()">Add New</button>
+                                <button class="btn btn-warning" *ngIf="branchValue" (click)="onAddQuestion()">Add New</button>
                             </div>
                         </div>
                     </div>

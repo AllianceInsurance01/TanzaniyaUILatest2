@@ -33,3 +33,29 @@
     border: 1px solid lightgrey;
     cursor: pointer;
 }
+.table {
+    margin-bottom: 0rem !important;
+    overflow-x: scroll !important;
+}
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+        white-space: break-spaces !important;
+}
+.table th,
+.table td {
+    padding: 0.3rem !important;
+}
+
+.tbl-header {
+    background: #6c757d!important;
+    border: 1px solid rgb(161, 139, 82);
+    font-weight: 300;
+    color: white;
+    text-align: center;
+}
+
+.tbl-content {
+    background-color: white;
+    border: 2px black !important;
+    font-size: 12px;
+    color: #333;
+}

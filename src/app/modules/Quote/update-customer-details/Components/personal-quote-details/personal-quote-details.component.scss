@@ -107,6 +107,10 @@ ul{
 .spanc{
     font-size: .80rem; 
 }
+.custombox{
+    min-height: 20px;
+    min-width: 50px;
+}
 .yes_alt {
     position: relative;
     transition: all .2s ease;
@@ -118,7 +122,18 @@ ul{
     font-weight: 400;
     bottom: 0.2rem;
 }
-
+.customReferralBorder{
+    position: relative;
+    transition: all .2s ease;
+    font-size: 1rem;
+    background-color: #ead2cc!important;
+    border-color: #d1d9e6!important;
+    box-shadow: 1px 1px 1px #e9856c, -3px -3px 3px #fff;
+    border-radius: 18px;
+    color: black;
+    font-weight: 400;
+    bottom: 0.2rem;
+}
 .no {
     position: relative;
     transition: all .2s ease;

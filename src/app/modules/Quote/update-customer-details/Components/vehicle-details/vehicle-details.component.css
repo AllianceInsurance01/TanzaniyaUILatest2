@@ -7,7 +7,24 @@
  ul li {
     list-style: none !important;
  }
- 
+ .customReferralBorder{
+   position: relative;
+   transition: all .2s ease;
+   font-size: 1rem;
+   background-color: #ead2cc!important;
+   border-color: #d1d9e6!important;
+   box-shadow: 1px 1px 1px #e9856c, -3px -3px 3px #fff;
+   border-radius: 18px;
+   color: black;
+   font-weight: 400;
+   bottom: 0.2rem;
+}
+.custombox {
+   background-color: rgb(211, 151, 151);
+   width: 25px;
+   height: 15px;
+   margin-top: 5px;
+}
  @media screen and (min-width: 280px) and (max-width: 750px) {
     .customer-grid .maan-grid-item-title{
         font-size: 16px;
