@@ -886,14 +886,15 @@
                                     <tr>
                                         <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
                                         <th scope="col"><span class="spancommon">FileName</span></th>
-                                        <th scope="col" *ngIf="productId!='5' && productId!='4'"><span class="spancommon">Location</span></th>
-                                        <th scope="col" ><span class="spancommon">Section</span></th>
+                                        <th scope="col" *ngIf="productId!='5' && productId!='4' && productId!='43'"><span class="spancommon">Location</span></th>
+                                        <th scope="col" *ngIf="productId!='43'"><span class="spancommon">Section</span></th>
                                         <th scope="col">
                                             <span class="spancommon">
                                                 <ng-container *ngIf="productId=='5'">Chassis Number</ng-container>
                                                 <ng-container *ngIf="productId=='4'">Passpport No</ng-container>
                                                 <ng-container *ngIf="productId=='42'">Serial No</ng-container>
-                                                <ng-container *ngIf="productId!='4' && productId!='5' && productId!='42'">ID</ng-container>
+                                                <ng-container *ngIf="productId=='43'">Employer Name</ng-container>
+                                                <ng-container *ngIf="productId!='4' && productId!='5' && productId!='42' && productId!='43'">ID</ng-container>
                                             </span>
                                         </th>
                                         <th scope="col"><span class="spancommon">Document Type</span></th>
@@ -904,11 +905,11 @@
                                     <tr *ngFor="let document of uploadListDoc;let i=index">
                                         <th scope="row"><span class="spancommon span_font_size">{{i+1}}</span></th>
                                         <td><span class="spancommon span_font_size">{{document.filename}}</span></td>
-                                        <td *ngIf="productId!='5' && productId!='4'">
+                                        <td *ngIf="productId!='5' && productId!='4' && productId!='43'">
                                             <ng-select class="input-form-select" [disabled]="document.locationList.length==1" appendTo="body" (change)="onChangeLocationType(document,i)" [(ngModel)]="document.locationId" [items]="document.locationList" bindValue="LocationId" bindLabel="LocationName">
                                             </ng-select>
                                         </td>
-                                        <td>
+                                        <td *ngIf="productId!='43'">
                                             <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.sectionId" (change)="onChangeSectionType(document,i)" [items]="document.sectionList" bindValue="SectionId" bindLabel="SectionName">
                                             </ng-select>
                                         </td>

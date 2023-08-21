@@ -762,8 +762,10 @@ toggle(index: number) {
           if(this.individualDocumentList.length==1){
             entry.locationId = this.individualDocumentList[0].LocationId;
             entry.sectionList = this.individualDocumentList[0].SectionList;
+            this.uploadListDoc.push(entry)
+            if(entry.sectionList.length==1){this.uploadListDoc[this.uploadListDoc.length-1].sectionId= entry.sectionList[0].SectionId; this.onChangeSectionType(this.uploadListDoc[this.uploadListDoc.length-1],this.uploadListDoc.length-1)}
           }
-          this.uploadListDoc.push(entry)
+          
             //this.vehicleList[i].docList.push({ 'url': element,'DocTypeId':'','filename':element.name, 'JsonString': {} });
           
         }

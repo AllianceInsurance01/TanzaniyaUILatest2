@@ -67,7 +67,6 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
- alert(this.innerWidth);
     if(this.innerWidth<=850){
       $('#sidenav').toggle();
       this.openSideNav=false;
