@@ -21,6 +21,10 @@ export class TaxDetailsComponent implements OnInit {
   taxList: any[]=[];effectiveDateEnd:any;effectiveDateStart:any;
   minDate: Date;branchList:any[]=[];branchValue:any;
   data: any;
+  TaxFor: string;
+  TaxForList:any[]=[];
+  CountryId: string;
+  taxType :any[]=[];
   constructor(private router:Router,private sharedService: SharedService,
    private datePipe:DatePipe) {
     this.minDate = new Date();
@@ -38,10 +42,29 @@ export class TaxDetailsComponent implements OnInit {
       {"value": "P","text": "Percentage"}
     ];
     this.getBranchList();
+    this.CountryId=sessionStorage.getItem('CountryIds');
+
+    if(this.CountryId){
+      this.getTaxType();
+    }
   }
 
   ngOnInit(): void {
   }
+  getTaxType(){
+    let ReqObj = {
+      "CountryId": this.CountryId
+    }
+    let urlLink = `${this.ApiUrl1}master/dropdown/countrytaxes`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      if(data.Result){
+        this.taxType = data?.Result;
+      }
+    },
+    (err) => { },
+  );
+}
   getBranchList(){
       let ReqObj = {
         "InsuranceId": this.insuranceId
@@ -52,7 +75,7 @@ export class TaxDetailsComponent implements OnInit {
         if(data.Result){
           let obj = [{Code:"99999",CodeDesc:"ALL"}];
           this.branchList = obj.concat(data?.Result);
-          if(!this.branchValue){ this.branchValue = "99999"; this.getTaxDetails();
+          if(!this.branchValue){ this.branchValue = "99999"; this.getTaxForList('direct');
           // this.getTaxFor(); this.getChangeorrefund();
            }
         }
@@ -65,27 +88,59 @@ export class TaxDetailsComponent implements OnInit {
     let number = String(this.taxList.length+1);
     this.taxList.push(
       {
-        "CalcType": null,
-        "Status": "Y",
-        "TaxDesc": null,
-        "TaxCode": null,
-        "TaxId": number,
-        "TaxName": null,
-        "Value": null,
-        "Delete":null,
-        "TaxFor":null,
-        "ChargeOrRefund":null
+      "CalcType":null,
+      "CoreAppCode":null,
+      "DependentYn":null,
+      "RegulatoryCode":null,
+      "TaxExemptAllowYn": "Y",
+      "Status": "Y",
+      "TaxCode":null,
+      "TaxId":null,
+      "Value":null,
+      "MinimumAmount":null
+        // "CalcType": null,
+        // "Status": "Y",
+        // "TaxDesc": null,
+        // "TaxCode": null,
+        // "TaxId": number,
+        // "TaxName": null,
+        // "Value": null,
+        // "Delete":null,
+        // "TaxFor":null,
+        // "ChargeOrRefund":null
       }
     );
     this.taxList.push()
   }
+
+  getTaxForList(type){
+    if(type=='change'){
+     this.TaxFor="";
+    }
+       let ReqObj = {
+         "InsuranceId": this.insuranceId,
+         "BranchCode":this.branchValue
+       }
+       let urlLink = `${this.CommonApiUrl1}dropdown/taxfordesc`;
+     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+       (data: any) => {
+         if(data.Result){
+          this.TaxForList=data?.Result;
+         }
+       },
+       (err) => { },
+     );
+   }
   getTaxDetails(){
+    this.taxList=[];
     let ReqObj ={
       "ProductId" : this.productId,
       "InsuranceId" : this.insuranceId,
-      "BranchCode": this.branchValue
+      "BranchCode": this.branchValue,
+      "CountryId":this.CountryId,
+      "TaxFor":this.TaxFor
     }
-    let urlLink = `${this.ApiUrl1}master/getbycompanytaxesid`;
+    let urlLink = `${this.ApiUrl1}master/getallproducttax`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
@@ -96,27 +151,29 @@ export class TaxDetailsComponent implements OnInit {
           if(data?.Result?.EffectiveDateEnd!=null){
             this.effectiveDateEnd = this.onDateFormatInEdit(data?.Result?.EffectiveDateEnd);
           }
-            this.taxList = data?.Result?.CompanyTaxDetais;
+          this.TaxFor=data?.Result?.TaxFor;
+            this.taxList = data?.Result?.TaxList;
             console.log("TaxList ",this.taxList)
-            if(this.taxList.length==0){
-              this.taxList = [
-                {
-                  "CalcType": null,
-                  "Status": "Y",
-                  "TaxDesc": null,
-                  "TaxCode": null,
-                  "TaxId": "1",
-                  "TaxName": null,
-                  "Value": null,
-                  "Delete":null,
-                  "ChargeOrRefund":null,
-                  "TaxFor":null
-
-                }
-              ]
-            }
-            this.getTaxFor(); 
-            this.getChangeorrefund();
+         
+            // this.getTaxFor(); 
+            // this.getChangeorrefund();
+        }
+        else{
+            this.taxList = [
+              {
+                "CalcType":null,
+                "TaxExemptAllowYn": "Y",
+                "Status": "Y",
+               "CoreAppCode":null,
+               "DependentYn":null,
+                "RegulatoryCode":null,
+                "TaxCode":null,
+                "TaxId":null,
+               "Value":null,
+               "MinimumAmount":null
+              }
+            ]
+         
         }
       },
       (err) => { },
@@ -156,12 +213,14 @@ export class TaxDetailsComponent implements OnInit {
     let ReqObj = {
       "CreatedBy": this.loginId,
       "BranchCode": this.branchValue,
+      "CountryId": this.CountryId,
       "EffectiveDateStart": this.effectiveDateStart,
       "InsuranceId": this.insuranceId,
       "ProductId": this.productId,
-      "CompanyTaxDetails": this.taxList
+      "TaxFor": this.TaxFor,
+      "TaxList": this.taxList
     }
-    let urlLink = `${this.ApiUrl1}master/insertcompanytax`;
+    let urlLink = `${this.ApiUrl1}master/saveproducttaxes`;
     if (ReqObj.EffectiveDateStart != '' && ReqObj.EffectiveDateStart != null && ReqObj.EffectiveDateStart != undefined) {
       ReqObj['EffectiveDateStart'] =  this.datePipe.transform(ReqObj.EffectiveDateStart, "dd/MM/yyyy")
     }
@@ -173,48 +232,11 @@ export class TaxDetailsComponent implements OnInit {
         console.log(data);
         let res:any =data;
         if(data.Result){
-
-          //   this.Toaster.open({
-          //   text:'Tax Details Inserted/Updated Successfully',
-          //   caption: 'Tax Details',
-          //   type: 'success',
-          // });
-          this.getTaxDetails()
-
-          // let type: NbComponentStatus = 'success';
-          //       const config = {
-          //         status: type,
-          //         destroyByClick: true,
-          //         duration: 4000,
-          //         hasIcon: true,
-          //         position: NbGlobalPhysicalPosition.TOP_RIGHT,
-          //         preventDuplicates: false,
-          //       };
-          //       this.toastrService.show(
-          //         'Tax Details Inserted/Updated Successfully',
-          //         'Tax Details',
-          //         config);
-
+          this.getTaxDetails();
         }
         else if(data.ErrorMessage){
             if(res.ErrorMessage){
-              // for(let entry of res.ErrorMessage){
-              //   let type: NbComponentStatus = 'danger';
-              //   const config = {
-              //     status: type,
-              //     destroyByClick: true,
-              //     duration: 4000,
-              //     hasIcon: true,
-              //     position: NbGlobalPhysicalPosition.TOP_RIGHT,
-              //     preventDuplicates: false,
-              //   };
-              //   this.toastrService.show(
-              //     entry.Field,
-              //     entry.Message,
-              //     config);
-              // }
               console.log("Error Iterate",data.ErrorMessage)
-              //this.loginService.errorService(data.ErrorMessage);
             }
         }
         },

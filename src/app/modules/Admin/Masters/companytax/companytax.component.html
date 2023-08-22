@@ -1,0 +1,179 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-3 col-xl-3 col-lg-3">
+                Company Configuration
+            </div>
+            <div class="col-md-4 col-xl-4 col-lg-4 offset-5 pl-4" >
+                Company Name - <b></b>
+            </div>
+        </div>
+    </div>
+<div class="card p-1">
+    <div class="vision-grid vision-grid-column-2">
+        <div class="vision-grid-item">
+            <div class="radio-toolbar menu-bar">
+                <input id="menu8" type="radio" name="menu" value="Product" (click)="onRedirect('Product')" [(ngModel)]="activeMenu">
+                <label for="menu8">Products</label>
+                <input type="radio" id="menu1" name="menu" value="Branch" (click)="onRedirect('Branch')" [(ngModel)]="activeMenu">
+                <label for="menu1">Branch</label>
+                <input type="radio" id="menu4" name="menu" value="Currency" (click)="onRedirect('Currency')" [(ngModel)]="activeMenu">
+                <label for="menu4">Currency</label>
+                <input type="radio" id="menu5" name="menu" value="Mail" (click)="onRedirect('Mail')" [(ngModel)]="activeMenu">
+                <label for="menu5">Mail</label>
+                <input type="radio" id="menu6" name="menu" value="Sms" (click)="onRedirect('Sms')" [(ngModel)]="activeMenu">
+                <label for="menu6">SMS</label>
+            </div>
+        </div>
+        <div class="vision-grid-item">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <div style="font-family: var(--our-font-family-new)!important;font-weight: 500;">
+                           Company Tax Details
+                        </div>
+                        <!-- <div>
+                           CountryId:{{CountryId}}
+                        </div> -->
+                    </div>
+                </div>
+                <div class="card-body">
+                <div class="row mt-1 ml-2">
+                  
+                    <div class="col-12 col-md-4 col-lg-4 mt-2" style="position: relative;">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Branch</label>
+                            <ng-select class="input-form-select" [(ngModel)]="branchValue" (change)="getTaxForList('change')" [items]="branchList" bindValue="Code" bindLabel="CodeDesc">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-4 mt-2">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Tax For</label>
+                            <ng-select class="input-form-select" [(ngModel)]="TaxFor" (change)="getTaxDetails()" [items]="TaxForList" bindValue="Code" bindLabel="CodeDesc">
+                            </ng-select>
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-4 mt-2">
+                        <label class="input-form-label">Effective Date</label>
+                        <mat-form-field appearance="fill">
+                            <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="onStartDateChange()" [(ngModel)]="effectiveDateStart">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end mt-2">
+                    <div></div>
+                    <div style="position: relative;bottom: 1rem;right: 1rem;font-family: var(--our-font-family-new)!important;font-weight: 500;">
+                        <button class="btn btn-primary" (click)="onAddNewEntry()">Add New</button>
+                    </div>
+                </div>
+                <div style="padding-left:3px !important;padding-right: 16px !important;">
+                <div class="row table-responsive">
+                    <div class="col-md-10 col-lg-10 col-xl-10 ml-1">
+                        <table class="table table-headerRow">
+                            <tr>
+                                <th class="tbl-header" style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Tax Name</th>
+                                <th class="tbl-header" style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Tax Code</th>
+                                <th class="tbl-header" style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Calculation Type</th>
+
+                                <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Value</th>
+                                <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Minimum Amount</th>
+                                <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Tax Exmpted</th>
+                                <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Status</th>
+                                <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Dependent Order</th>
+                                <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Regulatory Code</th>
+                                <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Core App Code</th>
+                                <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Remove</th>
+                            </tr>
+                            <tr *ngFor="let row of taxList;let i = index;">
+                                <td class="tbl-content">
+                                    <ng-select class="custom" name="TaxType" [(ngModel)]="row.TaxId" placeholder="Select Tax Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                        <ng-option *ngFor="let opt of taxType" [value]="opt.Code" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;">{{opt.CodeDesc}}</ng-option>
+                                    </ng-select>
+                                </td>
+                                <td class="tbl-content">
+                                    <div class="input-control-container">
+                                        <input type="text" [(ngModel)]="row.TaxCode" maxlength="30" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px !important;">
+                                    </div>
+                                </td>
+                                <td class="tbl-content">
+                                    <ng-select class="custom" name="calcType" [(ngModel)]="row.CalcType" placeholder="Select Calculation Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                        <ng-option *ngFor="let opt of calculationTypes2" [value]="opt.value" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;">{{opt.text}}</ng-option>
+                                    </ng-select>
+                                </td>
+                                <!-- <td class="tbl-content">
+                                    <div class="input-control-container">
+                                        <input type="text" style="width: 120px;" [(ngModel)]="row.CalcType" maxlength="50" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;">
+                                    </div>
+                                </td> -->
+                            
+                               
+                                <td class="tbl-content">
+                                    <div class="input-control-container">
+                                        <input type="text" maxlength="100" [(ngModel)]="row.Value" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px;">
+                                    </div>
+                                </td>
+                                <td class="tbl-content">
+                                    <div class="input-control-container">
+                                        <input type="text" maxlength="100" [(ngModel)]="row.MinimumAmount" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px;">
+                                    </div>
+                                </td>
+                                <td class="tbl-content">
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar" style="white-space: nowrap;">
+                                            <input [id]="'orginwarehouse_Yes'+i" type="radio" [(ngModel)]="row.TaxExemptAllowYn" [name]="'originatingWarehouse'+i" value="Y">
+                                            <label class="customRadioLabel" [for]="'orginwarehouse_Yes'+i">Yes</label>
+                                            <input type="radio" [id]="'orginwarehouse_No'+i" [(ngModel)]="row.TaxExemptAllowYn" [name]="'originatingWarehouse'+i" value="N">
+                                            <label class="customRadioLabel" [for]="'orginwarehouse_No'+i">No</label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="tbl-content">
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar" style="white-space: nowrap;">
+                                            <input [id]="'orginwarehouse_StatusYes'+i" type="radio" [(ngModel)]="row.Status" [name]="'originatingWareStatus'+i" value="Y">
+                                            <label class="customRadioLabel" [for]="'orginwarehouse_StatusYes'+i">Yes</label>
+                                            <input type="radio" [id]="'orginwarehouse_StatusNo'+i" [(ngModel)]="row.Status" [name]="'originatingWareStatus'+i" value="N">
+                                            <label class="customRadioLabel" [for]="'orginwarehouse_StatusNo'+i">No</label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="tbl-content">
+                                    <div class="input-control-container">
+                                        <input type="text" maxlength="20" [(ngModel)]="row.DependentYn" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px;">
+                                    </div>
+                                </td>
+                                <td class="tbl-content">
+                                    <div class="input-control-container">
+                                        <input type="text" maxlength="20" [(ngModel)]="row.RegulatoryCode" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px;">
+                                    </div>
+                                </td>
+                                <td class="tbl-content">
+                                    <div class="input-control-container">
+                                        <input type="text" maxlength="20" [(ngModel)]="row.CoreAppCode" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px;">
+                                    </div>
+                                </td>
+                           
+                                <td class="tbl-content">
+                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" id="remove" data-placement="top" title="Delete" (click)="deleteRow(row.TaxId,row.TaxName,i)"><i
+                                        class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                       
+                      
+                        </table>
+                    </div>
+                </div>
+            </div>
+                <div class="text-center mt-2" >
+                    <button class="ml-2 btn btn-success" (click)="onSaveTaxDetails()" style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Save</button>
+                </div>
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
