@@ -288,8 +288,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
       let fireData = new Medical();
       let entry = [];
       this.fields = fireData?.fields;
-      this.productItem = new ProductData();
-      this.formSection = true; this.viewSection = false;
+      this.getMedicalDetails();
+      
     }
     
    
@@ -781,7 +781,55 @@ export class DomesticRiskDetailsComponent implements OnInit {
       this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;
   }
   onMedicalSave(){
-    this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+    let date = null;
+    console.log("Final Product Value",this.productItem)
+    let ReqObj = {
+      "Createdby": this.loginId,
+      "SectionId": "70",
+      "ProductId": this.productId,
+      "InsuranceId": this.insuranceId,
+      "ProductEmployeeSaveReq": [
+          {
+              "RiskId": 1,
+              "LocationId": 1,
+              "EmployeeId": "1",
+              "EmployeeName": this.productItem.EmployeeName,
+              "OccupationId":null,
+              "OccupationDesc": null,
+              "Salary": null,
+              "ProductId": this.productId,
+              "ProductDesc": "Medical",
+              "Address": null,
+              "NationalityId": null,
+              "DateOfJoiningYear": this.productItem.DateOfJoiningYear,
+              "DateOfJoiningMonth": null,
+              "DateOfBirth": null,
+              "SectionId": "70",
+              "Rate": null,
+              "PremiumFc": "",
+              "PremiumLc": "",
+              "LocationName": "",
+              "HighestQualificationHeld": this.productItem.HighestQualificationHeld,
+              "IssuingAuthority": this.productItem.IssuingAuthority
+  
+          }
+      ],
+      "QuoteNo": this.quoteNo
+    }
+    let urlLink = `${this.motorApiUrl}api/saveemployees`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        let res: any = data;
+        if (data.ErrorMessage.length != 0) {
+          if (res.ErrorMessage) {
+          }
+        }
+          else  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+      },
+      (err) => { },
+    );
+
   }
   onCyberSaves(){
     if(this.DeviceType!=null && this.DeviceType!=undefined && this.DeviceType!=null){
@@ -1206,6 +1254,33 @@ onFidelitySave(){
     $('#osother').show();
     }else{
     $('#osother').hide();}}*/
+  getMedicalDetails(){
+    let ReqObj = {
+      "QuoteNo": this.quoteNo,
+      "SectionId": "70"
+    }
+    let urlLink = `${this.motorApiUrl}api/getallactiveemployees`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+           if(data.Result?.length!=0){
+            this.productItem = new ProductData();
+            this.formSection = true; this.viewSection = false;
+            this.productItem.EmployeeName = data.Result[0]?.EmployeeName;
+            this.productItem.DateOfJoiningYear = data.Result[0]?.DateOfJoiningYear;
+            this.productItem.HighestQualificationHeld = data.Result[0]?.HighestQualificationHeld;
+            this.productItem.IssuingAuthority = data.Result[0]?.IssuingAuthority;
+           }
+           else{
+              this.productItem = new ProductData();
+              this.formSection = true; this.viewSection = false;
+           }
+        }
+      },
+      (err) => { },
+    );
+  }
   getContentList(){
     let ReqObj = {
       "InsuranceId":this.insuranceId,

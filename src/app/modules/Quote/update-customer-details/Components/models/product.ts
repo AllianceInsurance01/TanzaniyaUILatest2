@@ -22,7 +22,7 @@ export class ProductData {
 	BenefitCoverMonth:any='';
 	SumInsured:any='';
     SectionId: string='';
-    IdProofType:string = '';
+    IdProofType:string = '';HighestQualificationHeld:any=null;
     IdNo:string = '';IndustryName:any;UsageType:any='S';
     JobJoiningMonth:string = '';NatureOfBusinessId:any;
     BetweenDiscontinued:string="N";MoneyInSafeBusinessSIYN:boolean=false;
@@ -67,7 +67,7 @@ export class ProductData {
 	ManuUnitsSi: any='0';
 	MachineEquipSi: any='0';
 	GeneralMachineSi: any='0';
-	EquipmentSi: any='0';
+	EquipmentSi: any='0';IssuingAuthority:any=null;
 	category_1:any[]=[];employeeList:any[]=[];
 	fidelityList: any[]=[];StockLossPercent:any='';
 	GoodsLossPercent:any='';FurnitureLossPercent:any='';
@@ -75,6 +75,7 @@ export class ProductData {
 	MiningPlantSi:any='0';NonminingPlantSi:any='0';GensetsSi:any='0';
 	ElectronicEquipSuminsured:any ='0';AooSumInsured:any=null;
 	PlanType: any = null;AggSumInsured:any=null;
+	DateOfJoiningYear:any=null;EmployeeName:any=null;
 	constructor(data?) {
 		this.id = data?.id ?? ''
 		this.CustomerName = data?.CustomerName ?? '';
@@ -101,6 +102,10 @@ export class ProductData {
 		this.IndustryId = data?.IndustryId ?? '';
 		this.CategoryId = data?.CategoryId ?? '';
 		this.Category = data?.Category ?? '';
+		this.HighestQualificationHeld = data?.HighestQualificationHeld ?? null;
+		this.IssuingAuthority = data?.IssuingAuthority ?? null;
+		this.DateOfJoiningYear = data?.DateOfJoiningYear ?? null;
+		this.EmployeeName = data?.EmployeeName ?? null;
 		this.BuildingOwnerYn = data?.BuildingOwnerYn ?? null;
 		this.InbuildConstructType = data?.InbuildConstructType ?? null;
 		this.OutbuildConstructType = data?.OutbuildConstructType ?? null;

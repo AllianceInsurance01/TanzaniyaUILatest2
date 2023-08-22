@@ -32,7 +32,7 @@ export class Medical {
                 fieldGroup: [
                   {
                     type: 'input',
-                    key: 'HighestQaualification',
+                    key: 'HighestQualificationHeld',
                     defaultValue: '',
                     className: 'col-sm-4 offset-1',
                     props: {
@@ -63,7 +63,7 @@ export class Medical {
                   {
                     type: 'input',
                     className: 'col-sm-4 offset-1',
-                    key: 'YearOfPassing',
+                    key: 'DateOfJoiningYear',
                     props: {
                       label: `Year Of Passing`,
                       required: true,
@@ -79,7 +79,7 @@ export class Medical {
                   {
                     type: 'input',
                     className: 'col-sm-4 offset-1',
-                    key: 'Employee Name',
+                    key: 'EmployeeName',
                     props: {
                       label: `Employer Name`,
                       required: true,

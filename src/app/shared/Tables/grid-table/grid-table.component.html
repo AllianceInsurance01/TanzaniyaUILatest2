@@ -44,6 +44,10 @@
                             {{ element[col.key] }}
                         </ng-container>
                     </ng-container>
+                    <ng-container *ngIf="columnHeader[i]['display']=='QuestionType'">
+                        <ng-container *ngIf="element[col.key]=='01'">RadioButton</ng-container>
+                        <ng-container *ngIf="element[col.key]!='01'">TextBox</ng-container>
+                    </ng-container>
                     <ng-container *ngIf="col.key=='Status'">
 
                         <span *ngIf="element[col.key]=='Y'">Active</span>
@@ -67,7 +71,7 @@
                             <span *ngIf="element[col.key]=='C' && element?.endorsementTypeId==842">Cancelled</span>
                             <span *ngIf="endorsementSection && element[col.key]==null">Base policy</span>
                     </ng-container>
-                    <ng-container *ngIf="col.key!='Status'  && columnHeader[i]['display']!='EndorsementStatus' && columnHeader[i]['display']!='BrokerConfigProductName' && columnHeader[i]['display']!='Endorsements Premium' && columnHeader[i]['display']!='Endorsement Premium'">
+                    <ng-container *ngIf="col.key!='Status' && columnHeader[i]['display']!='QuestionType'  && columnHeader[i]['display']!='EndorsementStatus' && columnHeader[i]['display']!='BrokerConfigProductName' && columnHeader[i]['display']!='Endorsements Premium' && columnHeader[i]['display']!='Endorsement Premium'">
                         {{ element[col.key] }}
                     </ng-container>
                     <ng-container *ngIf="columnHeader[i]['display']=='Endorsements Premium' || columnHeader[i]['display']=='Endorsement Premium'">
@@ -265,7 +269,7 @@
             <td mat-cell *matCellDef="let element" [ngClass]="[element?.Active == true && i==0 ? 'cutomBg1' : 'cutomBg2',col.key=='Status' && element[col.key]=='D' ? 'deletedBg' : 'cutomBg2']">
                 <ng-container *ngIf="!col.config; else hasConfig">
                     <ng-container *ngIf="columnHeader[i]['display']=='BrokerConfigProductName'">
-
+                        
                     </ng-container>
                 
                     <ng-container *ngIf="col.key=='Status'">
@@ -283,7 +287,10 @@
                         <span *ngIf="element[col.key]=='CA'" style="color:red;">Cancelled</span>
                       
                     </ng-container>
-                    
+                    <ng-container *ngIf="columnHeader[i]['display']=='QuestionType'">
+                        <ng-container *ngIf="element[col.key]=='01'">RadioButton</ng-container>
+                        <ng-container *ngIf="element[col.key]!='01'">TextBox</ng-container>
+                    </ng-container>
                     <ng-container *ngIf="columnHeader[i]['display']=='EndorsementStatus'">
                             <span *ngIf="element[col.key]=='P'">Pending</span>
                             <span *ngIf="element[col.key]=='N'">Cancelled</span>
@@ -291,7 +298,7 @@
                             <span *ngIf="element[col.key]=='C' && element?.endorsementTypeId==842">Cancelled</span>
                             <span *ngIf="endorsementSection && element[col.key]==null">Base policy</span>
                     </ng-container>
-                    <ng-container *ngIf="col.key!='Status'  && columnHeader[i]['display']!='EndorsementStatus' && columnHeader[i]['display']=='BrokerConfigProductName'">
+                    <ng-container *ngIf="col.key!='Status' && columnHeader[i]['display']!='QuestionType'  && columnHeader[i]['display']!='EndorsementStatus' && columnHeader[i]['display']=='BrokerConfigProductName'">
                         <div class="d-flex justify-content-between">
                             <div>
                                 <span class="mobile-label"> 
