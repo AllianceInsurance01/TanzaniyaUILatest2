@@ -39,14 +39,6 @@
                                                     menu.RiskDetails.Vehiclemake }} &nbsp;|&nbsp; {{ menu.RiskDetails.Vehcilemodel
                                                     }} &nbsp;|&nbsp; {{ menu.RiskDetails.Chassisnumber }} | &nbsp;</span>
                     
-                                                <!-- <ng-container *ngIf="menu.Status!='D'">
-                                                    <button class="fa fa-eye" style="border: none;border-radius: 100%; padding-top: 6px;padding-bottom: 6px;"  (click)="htmlcard(menu,mymodal)"></button>
-                                                    <span style="padding-left:10px;">|</span>&nbsp;
-                                                    <button class="fas fa-edit"  style="border: none;border-radius: 100%;padding-top: 6px; padding-bottom: 6px;" (click)="editcard(menu,mymodalEdit)"></button>&nbsp;
-                                                </ng-container> -->
-                                                <!-- <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm " *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button> -->
                                             </ng-container>
                                             <ng-container *ngIf="productId=='4'">
                                                 <ng-container *ngIf="menu.RiskDetails.TravelId=='1'">
@@ -75,9 +67,6 @@
                                                     {{menu.RiskDetails.DestinationCountry}}
                                                     &nbsp;|&nbsp; {{ menu.RiskDetails.TravelStartDate }} &nbsp;~&nbsp; {{
                                                     menu.RiskDetails.TravelEndDate }}</span>
-                                                <!-- <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button> -->
                                             </ng-container>
                                             <ng-container *ngIf="productId=='3' || productId=='19' || productId=='14' || productId=='32'">
                                                 
@@ -88,28 +77,11 @@
                                                     </ng-container> 
                                                     {{menu.SectionName}}
                                                 </span>
-                                                <!-- <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button> -->
                                             </ng-container>
                                             <ng-container *ngIf="productId!='3' && productId!='4' && productId!='5' && productId!='19' && productId!='14' && productId!='32'">
                                                 <span class="spancommon" style="color:navy;font-size: 1rem;"> {{productName}}
                                                 </span>
-                                                <!-- <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" (click)="WarrantyStatus(i,menu)">Warranties</button> -->
                                             </ng-container>
-                                            <!-- <ng-container *ngIf="productId!='3' && productId!='4' && productId!='5' && productId!='19'">
-                                                <span class="spancommon" style="color:navy;font-size: 1rem;">
-                                                    {{menu.RiskDetails.CustomerName}} &nbsp;|&nbsp; {{
-                                                    menu.RiskDetails.SalaryPerAnnum | number : '1.2-2'}}
-                                                    ({{currencyCode}})&nbsp;/Year &nbsp;~&nbsp; {{ menu.RiskDetails.BuildingAddress
-                                                    }}</span>
-                    
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button>
-                                            </ng-container> -->
                                             <ng-container *ngIf="menu.ReferralList.length!=0">
                                                 <span class="spancommon" style="color:navy;padding:10px !important;border-radius:10px;font-size: 1rem;background-color: #fd7e14!important;">Refferal</span>
                                             </ng-container>
@@ -129,11 +101,6 @@
                                                     <span style="padding-left:10px;">|</span>&nbsp;
                                                     <button class="fas fa-edit"  style="border: none;border-radius: 100%;padding-top: 6px; padding-bottom: 6px;" (click)="editcard(menu,mymodalEdit)"></button>&nbsp;
                                                 </ng-container>
-                                                <!-- <div style="text-align: center;margin-left: -50px;">
-                                                    <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">C</button>&nbsp;
-                                                    <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatus(i,menu)">E</button>&nbsp;
-                                                    <button class="btn clausebutton btn-sm " *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">W</button>
-                                                </div> -->
                                                 
                                             </ng-container>
                                             <ng-container *ngIf="productId=='4'">
@@ -163,35 +130,15 @@
                                                     {{menu.RiskDetails.DestinationCountry}}
                                                     &nbsp;|&nbsp; {{ menu.RiskDetails.TravelStartDate }} &nbsp;~&nbsp; {{
                                                     menu.RiskDetails.TravelEndDate }}</span>
-                                                <!-- <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button> -->
                                             </ng-container>
                                             <ng-container *ngIf="productId=='3' || productId=='19' || productId=='14' || productId=='32'">
                                                 <span class="spancommon" style="color:navy;font-size: 1rem;"> {{menu.SectionName}}
                                                 </span>
-                                                <!-- <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button> -->
                                             </ng-container>
                                             <ng-container *ngIf="productId!='3' && productId!='4' && productId!='5' && productId!='19' && productId!='14' && productId!='32'">
                                                 <span class="spancommon" style="color:navy;font-size: 1rem;"> {{productName}}
                                                 </span>
-                                                <!-- <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" (click)="WarrantyStatus(i,menu)">Warranties</button> -->
                                             </ng-container>
-                                            <!-- <ng-container *ngIf="productId!='3' && productId!='4' && productId!='5' && productId!='19'">
-                                                <span class="spancommon" style="color:navy;font-size: 1rem;">
-                                                    {{menu.RiskDetails.CustomerName}} &nbsp;|&nbsp; {{
-                                                    menu.RiskDetails.SalaryPerAnnum | number : '1.2-2'}}
-                                                    ({{currencyCode}})&nbsp;/Year &nbsp;~&nbsp; {{ menu.RiskDetails.BuildingAddress
-                                                    }}</span>
-                    
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="margin-left: 10px;font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ClausesStatus(i,menu)">Clauses</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="ExclusioStatus(i,menu)">Exclusion</button>&nbsp;
-                                                <button class="btn clausebutton btn-sm" *ngIf="menu.Status!='D'" style="font-family: var(--our-font-family-new)!important;font-weight: 600;" (click)="WarrantyStatus(i,menu)">Warranties</button>
-                                            </ng-container> -->
                                             <ng-container *ngIf="menu.ReferralList.length!=0">
                                                 <span class="spancommon" style="color:navy;padding:10px !important;border-radius:10px;font-size: 1rem;background-color: #fd7e14!important;">Refferal</span>
                                             </ng-container>
@@ -202,7 +149,6 @@
                 
                                         <div>
                                         </div>
-                                        <!--for Edit -->
                                         <div>
                                         </div>
                 
@@ -221,13 +167,7 @@
                                                     </div>
                                                 </div>
                                             </ng-container>
-                                            <!-- <div class="input-form-box mt-2 mr-2" id="gridstyle">
-                                                <input type="text" class="input-form-control with-icon" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-                                                <span class="input-form-icon">
-                                                    <i class="fas fa-filter"></i>
-                                                </span>
-                                            </div> -->
-                                            <div class="col-md-12 col-lg-12 p-3 display1" style="overflow-x: scroll !important;"><!--style="overflow-x: scroll !important;"-->
+                                            <div class="col-md-12 col-lg-12 p-3 display1" style="overflow-x: scroll !important;">
                                                 <table mat-table [dataSource]="menu.CoverList" class="outerTable" multiTemplateDataRows matSort >
                                                     <ng-container *ngIf="checkReferralStatus()">
                                                         <ng-container matColumnDef="header-row-first-group">
@@ -294,79 +234,7 @@
                                                                     <div class="d-flex justify-content-between">
                                                                         <div>
                                                                             <ng-container *ngIf="(element.Discounts!=null && element.Discounts.length!=0) || (element.Loadings!=null && element.Loadings.length!=0)">
-                                                                                <!-- <ng-template #discountCard>
-                                                                                    <div class="popover-card customTemplate shawdowcustom ">
-                                                                                        <div class="card-header" status="warning">
-                                                                                            <span class="spancommon span_font_size">Premium
-                                                                                                Details!</span>
-                
-                                                                                        </div>
-                                                                                        <div class="card-body p-0">
-                                                                                            <ul class="list-group">
-                                                                                                <li class="list-group-item list-seperate">
-                                                                                                    <div>
-                                                                                                        <span class="spancommon span_font_size">Before
-                                                                                                            Discount</span>
-                
-                                                                                                    </div>
-                                                                                                    <div>
-                                                                                                        <span class="spancommon span_font_size">{{beforeDiscount}}</span>
-                                                                                                    </div>
-                                                                                                </li>
-                                                                                                <ng-container *ngIf="discountList.length!=0">
-                                                                                                    <li class="list-group-item list-seperate">
-                                                                                                        <div>
-                                                                                                            <span class="spancommon span_font_size">Discounts</span>
-                                                                                                        </div>
-                                                                                                        <div>
-                                                                                                        </div>
-                                                                                                    </li>
-                                                                                                    <li class="list-group-item list-seperate" *ngFor="let discount of discountList">
-                                                                                                        <div>
-                                                                                                            <span class="spancommon span_font_size">{{discount.DiscountDesc}}</span>
-                
-                                                                                                        </div>
-                                                                                                        <div>
-                                                                                                            <span class="spancommon span_font_size">{{discount.DiscountAmount}}</span>
-                
-                                                                                                        </div>
-                                                                                                    </li>
-                                                                                                </ng-container>
-                                                                                                <ng-container *ngIf="loadingList.length!=0">
-                                                                                                    <li class="list-group-item list-seperate">
-                                                                                                        <div>
-                                                                                                            <span class="spancommon span_font_size">Loading</span>
-                
-                                                                                                        </div>
-                                                                                                        <div>
-                
-                                                                                                        </div>
-                                                                                                    </li>
-                                                                                                    <li class="list-group-item list-seperate" *ngFor="let loading of loadingList">
-                                                                                                        <div>
-                                                                                                            <span class="spancommon span_font_size">{{loading.LoadingDesc}}</span>
-                
-                                                                                                        </div>
-                                                                                                        <div>
-                                                                                                            <span class="spancommon span_font_size">{{loading.LoadingAmount}}</span>
-                
-                                                                                                        </div>
-                                                                                                    </li>
-                                                                                                </ng-container>
-                                                                                                <li class="list-group-item list-seperate">
-                                                                                                    <div>
-                                                                                                        <span class="spancommon span_font_size">Total
-                                                                                                            Premium</span>
-                                                                                                    </div>
-                                                                                                    <div>
-                                                                                                        <span class="spancommon span_font_size">{{afterDiscount}}</span>
-                
-                                                                                                    </div>
-                                                                                                </li>
-                                                                                            </ul>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </ng-template> -->
+                                                                                
                                                                                 &nbsp;&nbsp;<button type="button" class="btn maan-btn-blue btn-circle" (click)="setDiscountDetails(menu,element,discountModal)">?
                                                                                 </button>
                                                                             </ng-container>
@@ -499,61 +367,6 @@
                                                                                                     </span>
                                                                                                 </div>
                                                                                             </li>
-                                                                                            <!-- <li class="list-group-item list-seperate">
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">Maximum Endorsement Amount</span>
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">
-                                                                                                        <ng-container *ngIf="endorsementDetails?.MaxEndorsementAmount==null || endorsementDetails?.MaxEndorsementAmount==0"><b>0</b></ng-container>
-                                                                                                            <ng-container *ngIf="endorsementDetails?.MaxEndorsementAmount!=null && endorsementDetails?.MaxEndorsementAmount!=0"><b>{{endorsementDetails?.MaxEndorsementAmount | commaseparator}}</b></ng-container>
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </li> -->
-                                                                                            <!-- <li class="list-group-item list-seperate">
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">Premium Before Discount</span>
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">
-                                                                                                        <ng-container *ngIf="endorsementDetails?.PremiumBeforeDiscountLC==null || endorsementDetails?.PremiumBeforeDiscountLC==0"><b>0</b></ng-container>
-                                                                                                            <ng-container *ngIf="endorsementDetails?.PremiumBeforeDiscountLC!=null && endorsementDetails?.PremiumBeforeDiscountLC!=0"><b>{{endorsementDetails?.PremiumBeforeDiscountLC | commaseparator}}</b></ng-container>
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </li> -->
-                                                                                            <!-- <li class="list-group-item list-seperate">
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">Premium After Discount</span>
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">
-                                                                                                        <ng-container *ngIf="endorsementDetails?.PremiumAfterDiscount==null || endorsementDetails?.PremiumAfterDiscount==0"><b>0</b></ng-container>
-                                                                                                            <ng-container *ngIf="endorsementDetails?.PremiumAfterDiscount!=null && endorsementDetails?.PremiumAfterDiscount!=0"><b>{{endorsementDetails?.PremiumAfterDiscount | commaseparator}}</b></ng-container>
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </li> -->
-                                                                                            <!-- <li class="list-group-item list-seperate">
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">Premium Inculded Tax</span>
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">
-                                                                                                        <ng-container *ngIf="endorsementDetails?.PremiumIncludedTaxLC==null || endorsementDetails?.PremiumIncludedTaxLC==0"><b>0</b></ng-container>
-                                                                                                            <ng-container *ngIf="endorsementDetails?.PremiumIncludedTaxLC!=null && endorsementDetails?.PremiumIncludedTaxLC!=0"><b>{{endorsementDetails?.PremiumIncludedTaxLC | commaseparator}}</b></ng-container>
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </li> -->
-                                                                                            <!-- <li class="list-group-item list-seperate">
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">Premium Excluded Tax</span>
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">
-                                                                                                        <ng-container *ngIf="endorsementDetails?.PremiumExcludedTaxLC==null || endorsementDetails?.PremiumExcludedTaxLC==0"><b>0</b></ng-container>
-                                                                                                            <ng-container *ngIf="endorsementDetails?.PremiumExcludedTaxLC!=null && endorsementDetails?.PremiumExcludedTaxLC!=0"><b>{{endorsementDetails?.PremiumExcludedTaxLC | commaseparator}}</b></ng-container>
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </li> -->
                                                                                         </ul>
                                                                                     </div>
                                                                                 </div>
@@ -607,27 +420,22 @@
                                                                                                     <div class="card-body p-0">
                                                                                                         <ul class="list-group">
                                                                                                             <li class="list-group-item list-seperate">
-                                                                                                                <!-- <div class="d-flex justify-content-between"> -->
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">Minimum Premium</span>
                                                                                                                 </div>
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">{{MinimumPremium | number : '1.0' }}</span>
                                                                                                                 </div>
-                                                                                                                <!-- </div> -->
                                                                                                             </li>
                                                                                                             <li class="list-group-item list-seperate">
-                                                                                                                <!-- <div class="d-flex justify-content-between"> -->
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">Excluded Tax</span>
                                                                                                                 </div>
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">{{premiumExcluedTax}}</span>
                                                                                                                 </div>
-                                                                                                                <!-- </div> -->
                                                                                                             </li>
                                                                                                             <li class="list-group-item list-seperate">
-                                                                                                                <!-- <div class="d-flex justify-content-between"> -->
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">ProRata</span>
                                                                                                                 </div>
@@ -637,31 +445,25 @@
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">{{premiumExcluedTax}}</span>
                                                                                                                 </div>
-                                                                                                                <!-- </div> -->
                                                                                                             </li>
                                                                                                             <li class="list-group-item list-seperate">
-                                                                                                                <!-- <div class="d-flex justify-content-between"> -->
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">Excluded Tax</span>
                                                                                                                 </div>
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">{{premiumExcluedTax}}</span>
                                                                                                                 </div>
-                                                                                                                <!-- </div> -->
                                                                                                             </li>
                                                                                                             <ng-container *ngIf="taxList.length!=0">
                                                                                                                 <li class="list-group-item list-seperate">
-                                                                                                                    <!-- <div class="d-flex justify-content-between"> -->
                                                                                                                     <div>
                                                                                                                         <b>Taxes</b>
                                                                                                                     </div>
                                                                                                                     <div>
                 
                                                                                                                     </div>
-                                                                                                                    <!-- </div> -->
                                                                                                                 </li>
                                                                                                                 <li class="list-group-item list-seperate" *ngFor="let tax of taxList">
-                                                                                                                    <!-- <div class="d-flex justify-content-between"> -->
                                                                                                                     <div>
                                                                                                                         <span class="spancommon span_font_size">{{tax.TaxDesc}}</span>
                                                                                                                     </div>
@@ -671,18 +473,15 @@
                                                                                                                     <div>
                                                                                                                         <span class="spancommon span_font_size">{{tax.TaxAmount}}</span>
                                                                                                                     </div>
-                                                                                                                    <!-- </div> -->
                                                                                                                 </li>
                                                                                                             </ng-container>
                                                                                                             <li class="list-group-item list-seperate">
-                                                                                                                <!-- <div class="d-flex justify-content-between"> -->
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size"><b>Total Premium</b></span>
                                                                                                                 </div>
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size"><b>{{premiumIncluedTax}}</b></span>
                                                                                                                 </div>
-                                                                                                                <!-- </div> -->
                                                                                                             </li>
                                                                                                         </ul>
                                                                                                     </div>
@@ -835,10 +634,6 @@
                                                                             
                                                                             </button>
                                                                         </div>
-                                                                        <!--<button type="button" class="btn maan-btn-blue btn-circle" [ngbPopover]="taxCard" placement="left" (click)="ongetTaxDetails(element)">?</button>-->
-                                                                        <!--<i class="fa fa-hand-pointer-o" style="font-size:36px"></i>-->
-                                                                        
-                                                                        <!-- <button class="tooltip" type="button" style="float:right" class="btn maan-btn-blue circleclass" data-toggle="tooltip" data-placement="top" title="{{ element.CoverDesc}}" (click)="covername()">i</button> -->
                                                                     </ng-container>
                                                                 </ng-container>
                                                                 <ng-container *ngIf="columnHeader[i]['display']=='Sum Insured'">
@@ -950,8 +745,6 @@
                 
                                                                                     </th>
                                                                                 </ng-container>
-                
-                                                                                <!-- Header row second group -->
                                                                                 <ng-container matColumnDef="header-row-second-group">
                                                                                     <th mat-header-cell *matHeaderCellDef [attr.colspan]="3" [style.text-align]="center" class="innerHead mat-header-cell">
                                                                                         Premium </th>
@@ -999,9 +792,6 @@
                                                                                                     <mat-radio-button [value]="subElement[col.key]" id="customRadio{{subElement[col.key]}}" [name]="'customRadio'+i" (change)="onSelectCustomer.emit(subElement)">
                                                                                                     </mat-radio-button>
                                                                                                 </ng-container>
-                                                                                                <!-- <mat-radio-group>
-                                                                                                    <mat-radio-button [value]="subElement[col.key]" id="customRadio{{subElement[col.key]}}" name="customRadio" (change)="onSelectCustomer.emit(subElement)"></mat-radio-button>
-                                                                                                </mat-radio-group> -->
                                                                                             </ng-container>
                                                                                             <ng-container *ngIf="col.config.isEdit">
                                                                                                 <button class="btn btn-primary btn-sm" (click)="onEdit.emit(subElement)">
@@ -1134,24 +924,6 @@
                                                                      
                                                                 <div>
                                                                     <span class="mobile-label"> {{ columnHeader[i]["display"] }}</span>
-                                                                    <!-- <span class="mobile-label">
-                                                                    <ng-container *ngIf="columnHeader[i]['display']=='Sum Insured' || columnHeader[i]['display']=='Minimum' || columnHeader[i]['display']=='After Discount' || columnHeader[i]['display']=='Included Tax'">
-                                                                        {{ columnHeader[i]["display"] }}&nbsp;({{currencyCode}})
-                                                                    </ng-container>
-                                                                    <ng-container *ngIf="columnHeader[i]['display']=='Rate'">
-                                                                        {{ columnHeader[i]["display"] }}&nbsp;(%)
-                                                                    </ng-container>
-                                                                    <ng-container *ngIf="columnHeader[i]['display']=='Excess Percent'">
-                                                                        Excess&nbsp;(%)
-                                                                    </ng-container>
-                                                                    <ng-container *ngIf="columnHeader[i]['display']=='Excess Amount'">
-                                                                        Excess<br>({{currencyCode}})
-                                                                    </ng-container>
-                                                                    <ng-container *ngIf="columnHeader[i]['display']!='Sum Insured' && columnHeader[i]['display']!='Referral' && columnHeader[i]['display']!='Excess Amount' && columnHeader[i]['display']!='Excess Percent' && columnHeader[i]['display']!='Rate' && columnHeader[i]['display']!='Minimum' && columnHeader[i]['display']!='After Discount' && columnHeader[i]['display']!='Included Tax'"
-                                                                        >
-                                                                        {{ columnHeader[i]["display"] }}
-                                                                    </ng-container>
-                                                                </span> -->
                                                                 </div>
                                                                 <div>
                                                                 <ng-container *ngIf="col.key=='PremiumAfterDiscount'">
@@ -1159,81 +931,6 @@
                                                                     <div class="d-flex justify-content-between">
                                                                         <div>
                                                                             <ng-container *ngIf="(element.Discounts!=null && element.Discounts.length!=0) || (element.Loadings!=null && element.Loadings.length!=0)">
-                                                                                <!-- <ng-template #discountCard>
-                                                                                    <div class="popover-card customTemplate shawdowcustom ">
-                                                                                        <div class="card-header" status="warning">
-                                                                                            <span class="spancommon span_font_size">Premium
-                                                                                                Details!</span>
-                
-                                                                                        </div>
-                                                                                        <div class="card-body p-0">
-                                                                                            <ul class="list-group">
-                                                                                                <li class="list-group-item list-seperate">
-                                                                                                    <div>
-                                                                                                        <span class="spancommon span_font_size">Before
-                                                                                                            Discount</span>
-                
-                                                                                                    </div>
-                                                                                                    <div>
-                                                                                                        <span class="spancommon span_font_size">{{beforeDiscount}}</span>
-                                                                                                    </div>
-                                                                                                </li>
-                                                                                                <ng-container *ngIf="discountList.length!=0">
-                                                                                                    <li class="list-group-item list-seperate">
-                                                                                                        <div>
-                                                                                                            <span class="spancommon span_font_size">Discounts</span>
-                                                                                                        </div>
-                                                                                                        <div>
-                                                                                                        </div>
-                                                                                                    </li>
-                                                                                                    <li class="list-group-item list-seperate" *ngFor="let discount of discountList">
-                                                                                                        
-                                                                                                        <div>
-                                                                                                            <span class="spancommon span_font_size">{{discount.DiscountDesc}}</span>
-                
-                                                                                                        </div>
-                                                                                                        <div>
-                                                                                                            <span class="spancommon span_font_size">{{discount.DiscountAmount}}</span>
-                
-                                                                                                        </div>
-                                                                                                    </li>
-                                                                                                </ng-container>
-                                                                                                <ng-container *ngIf="loadingList.length!=0">
-                                                                                                    <li class="list-group-item list-seperate">
-                                                                                                        <div>
-                                                                                                            <span class="spancommon span_font_size">Loading</span>
-                
-                                                                                                        </div>
-                                                                                                        <div>
-                
-                                                                                                        </div>
-                                                                                                    </li>
-                                                                                                    <li class="list-group-item list-seperate" *ngFor="let loading of loadingList">
-                                                                                                        
-                                                                                                        <div>
-                                                                                                            <span class="spancommon span_font_size">{{loading.LoadingDesc}}</span>
-                
-                                                                                                        </div>
-                                                                                                        <div>
-                                                                                                            <span class="spancommon span_font_size">{{loading.LoadingAmount}}</span>
-                
-                                                                                                        </div>
-                                                                                                    </li>
-                                                                                                </ng-container>
-                                                                                                <li class="list-group-item list-seperate">
-                                                                                                    <div>
-                                                                                                        <span class="spancommon span_font_size">Total
-                                                                                                            Premium</span>
-                                                                                                    </div>
-                                                                                                    <div>
-                                                                                                        <span class="spancommon span_font_size">{{afterDiscount}}</span>
-                
-                                                                                                    </div>
-                                                                                                </li>
-                                                                                            </ul>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </ng-template> -->
                                                                                 &nbsp;&nbsp;<button type="button" class="btn maan-btn-blue btn-circle" (click)="setDiscountDetails(menu,element,discountModal)" style="margin-right:7px !important;">?
                                                                                 </button>
                                                                             </ng-container>
@@ -1268,7 +965,7 @@
                                                                                     <div class="card-body p-0">
                 
                                                                                         <div class="mt-1" style="background-color: #acbf8e;border:1px solid grey;padding: 4px;border-radius: 5px;">
-                                                                                            <!-- <span class="spancommon span_font_size"><b>Description</b>&nbsp;:&nbsp;</span> -->
+                                                                                            
                                                                                             
                                                                                             <span class="spancommon span_font_size">{{endorsementDetails?.EndorsementDesc}}</span>
                                                                                         </div>
@@ -1366,61 +1063,6 @@
                                                                                                     </span>
                                                                                                 </div>
                                                                                             </li>
-                                                                                            <!-- <li class="list-group-item list-seperate">
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">Maximum Endorsement Amount</span>
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">
-                                                                                                        <ng-container *ngIf="endorsementDetails?.MaxEndorsementAmount==null || endorsementDetails?.MaxEndorsementAmount==0"><b>0</b></ng-container>
-                                                                                                            <ng-container *ngIf="endorsementDetails?.MaxEndorsementAmount!=null && endorsementDetails?.MaxEndorsementAmount!=0"><b>{{endorsementDetails?.MaxEndorsementAmount | commaseparator}}</b></ng-container>
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </li> -->
-                                                                                            <!-- <li class="list-group-item list-seperate">
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">Premium Before Discount</span>
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">
-                                                                                                        <ng-container *ngIf="endorsementDetails?.PremiumBeforeDiscountLC==null || endorsementDetails?.PremiumBeforeDiscountLC==0"><b>0</b></ng-container>
-                                                                                                            <ng-container *ngIf="endorsementDetails?.PremiumBeforeDiscountLC!=null && endorsementDetails?.PremiumBeforeDiscountLC!=0"><b>{{endorsementDetails?.PremiumBeforeDiscountLC | commaseparator}}</b></ng-container>
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </li> -->
-                                                                                            <!-- <li class="list-group-item list-seperate">
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">Premium After Discount</span>
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">
-                                                                                                        <ng-container *ngIf="endorsementDetails?.PremiumAfterDiscount==null || endorsementDetails?.PremiumAfterDiscount==0"><b>0</b></ng-container>
-                                                                                                            <ng-container *ngIf="endorsementDetails?.PremiumAfterDiscount!=null && endorsementDetails?.PremiumAfterDiscount!=0"><b>{{endorsementDetails?.PremiumAfterDiscount | commaseparator}}</b></ng-container>
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </li> -->
-                                                                                            <!-- <li class="list-group-item list-seperate">
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">Premium Inculded Tax</span>
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">
-                                                                                                        <ng-container *ngIf="endorsementDetails?.PremiumIncludedTaxLC==null || endorsementDetails?.PremiumIncludedTaxLC==0"><b>0</b></ng-container>
-                                                                                                            <ng-container *ngIf="endorsementDetails?.PremiumIncludedTaxLC!=null && endorsementDetails?.PremiumIncludedTaxLC!=0"><b>{{endorsementDetails?.PremiumIncludedTaxLC | commaseparator}}</b></ng-container>
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </li> -->
-                                                                                            <!-- <li class="list-group-item list-seperate">
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">Premium Excluded Tax</span>
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    <span class="spancommon span_font_size">
-                                                                                                        <ng-container *ngIf="endorsementDetails?.PremiumExcludedTaxLC==null || endorsementDetails?.PremiumExcludedTaxLC==0"><b>0</b></ng-container>
-                                                                                                            <ng-container *ngIf="endorsementDetails?.PremiumExcludedTaxLC!=null && endorsementDetails?.PremiumExcludedTaxLC!=0"><b>{{endorsementDetails?.PremiumExcludedTaxLC | commaseparator}}</b></ng-container>
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </li> -->
                                                                                         </ul>
                                                                                     </div>
                                                                                 </div>
@@ -1474,27 +1116,22 @@
                                                                                                     <div class="card-body p-0">
                                                                                                         <ul class="list-group">
                                                                                                             <li class="list-group-item list-seperate">
-                                                                                                                <!-- <div class="d-flex justify-content-between"> -->
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">Minimum Premium</span>
                                                                                                                 </div>
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">{{MinimumPremium | number : '1.0' }}</span>
                                                                                                                 </div>
-                                                                                                                <!-- </div> -->
                                                                                                             </li>
                                                                                                             <li class="list-group-item list-seperate">
-                                                                                                                <!-- <div class="d-flex justify-content-between"> -->
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">Excluded Tax</span>
                                                                                                                 </div>
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">{{premiumExcluedTax}}</span>
                                                                                                                 </div>
-                                                                                                                <!-- </div> -->
                                                                                                             </li>
                                                                                                             <li class="list-group-item list-seperate">
-                                                                                                                <!-- <div class="d-flex justify-content-between"> -->
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">ProRata</span>
                                                                                                                 </div>
@@ -1504,31 +1141,25 @@
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">{{premiumExcluedTax}}</span>
                                                                                                                 </div>
-                                                                                                                <!-- </div> -->
                                                                                                             </li>
                                                                                                             <li class="list-group-item list-seperate">
-                                                                                                                <!-- <div class="d-flex justify-content-between"> -->
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">Excluded Tax</span>
                                                                                                                 </div>
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">{{premiumExcluedTax}}</span>
                                                                                                                 </div>
-                                                                                                                <!-- </div> -->
                                                                                                             </li>
                                                                                                             <ng-container *ngIf="taxList.length!=0">
                                                                                                                 <li class="list-group-item list-seperate">
-                                                                                                                    <!-- <div class="d-flex justify-content-between"> -->
                                                                                                                     <div>
                                                                                                                         <b>Taxes</b>
                                                                                                                     </div>
                                                                                                                     <div>
                 
                                                                                                                     </div>
-                                                                                                                    <!-- </div> -->
                                                                                                                 </li>
                                                                                                                 <li class="list-group-item list-seperate" *ngFor="let tax of taxList">
-                                                                                                                    <!-- <div class="d-flex justify-content-between"> -->
                                                                                                                     <div>
                                                                                                                         <span class="spancommon span_font_size">{{tax.TaxDesc}}</span>
                                                                                                                     </div>
@@ -1538,18 +1169,15 @@
                                                                                                                     <div>
                                                                                                                         <span class="spancommon span_font_size">{{tax.TaxAmount}}</span>
                                                                                                                     </div>
-                                                                                                                    <!-- </div> -->
                                                                                                                 </li>
                                                                                                             </ng-container>
                                                                                                             <li class="list-group-item list-seperate">
-                                                                                                                <!-- <div class="d-flex justify-content-between"> -->
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size"><b>Total Premium</b></span>
                                                                                                                 </div>
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size"><b>{{premiumIncluedTax}}</b></span>
                                                                                                                 </div>
-                                                                                                                <!-- </div> -->
                                                                                                             </li>
                                                                                                         </ul>
                                                                                                     </div>
@@ -1593,38 +1221,31 @@
                                                                                                                 </div>
                                                                                                             </li>
                                                                                                             <li class="list-group-item list-seperate">
-                                                                                                                <!-- <div class="d-flex justify-content-between"> -->
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">Minimum Premium</span>
                                                                                                                 </div>
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">{{MinimumPremium | number : '1.0' }}</span>
                                                                                                                 </div>
-                                                                                                                <!-- </div> -->
                                                                                                             </li>
                                                                                                             <li class="list-group-item list-seperate">
-                                                                                                                <!-- <div class="d-flex justify-content-between"> -->
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">Excluded Tax</span>
                                                                                                                 </div>
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size">{{premiumExcluedTax}}</span>
                                                                                                                 </div>
-                                                                                                                <!-- </div> -->
                                                                                                             </li>
                                                                                                             <ng-container *ngIf="taxList.length!=0">
                                                                                                                 <li class="list-group-item list-seperate">
-                                                                                                                    <!-- <div class="d-flex justify-content-between"> -->
                                                                                                                     <div>
                                                                                                                         <b>Taxes</b>
                                                                                                                     </div>
                                                                                                                     <div>
                 
                                                                                                                     </div>
-                                                                                                                    <!-- </div> -->
                                                                                                                 </li>
                                                                                                                 <li class="list-group-item list-seperate" *ngFor="let tax of taxList">
-                                                                                                                    <!-- <div class="d-flex justify-content-between"> -->
                                                                                                                     <div>
                                                                                                                         <span class="spancommon span_font_size">{{tax.TaxDesc}}</span>
                                                                                                                     </div>
@@ -1634,18 +1255,15 @@
                                                                                                                     <div>
                                                                                                                         <span class="spancommon span_font_size">{{tax.TaxAmount}}</span>
                                                                                                                     </div>
-                                                                                                                    <!-- </div> -->
                                                                                                                 </li>
                                                                                                             </ng-container>
                                                                                                             <li class="list-group-item list-seperate">
-                                                                                                                <!-- <div class="d-flex justify-content-between"> -->
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size"><b>Total Premium</b></span>
                                                                                                                 </div>
                                                                                                                 <div>
                                                                                                                     <span class="spancommon span_font_size"><b>{{premiumIncluedTax}}</b></span>
                                                                                                                 </div>
-                                                                                                                <!-- </div> -->
                                                                                                             </li>
                                                                                                         </ul>
                                                                                                     </div>
@@ -1700,16 +1318,12 @@
                                                                         &nbsp;{{ element[col.key]}}
                                                                     </ng-container>
                                                                     <ng-container *ngIf="col.key =='CoverName'" >
-                                                                        <div style="min-width: 150px !important;"><!--style="min-width: 150px !important;"-->
+                                                                        <div style="min-width: 150px !important;">
                                                                             
                                                                             {{ element[col.key]}}&nbsp;<button class="fa fa-question-circle" style="border: none;" placement="bottom" (click)="covernameinfo(myView,element)">
                                                                             
                                                                             </button>
                                                                         </div>
-                                                                        <!--<button type="button" class="btn maan-btn-blue btn-circle" [ngbPopover]="taxCard" placement="left" (click)="ongetTaxDetails(element)">?</button>-->
-                                                                        <!--<i class="fa fa-hand-pointer-o" style="font-size:36px"></i>-->
-                                                                        
-                                                                        <!-- <button class="tooltip" type="button" style="float:right" class="btn maan-btn-blue circleclass" data-toggle="tooltip" data-placement="top" title="{{ element.CoverDesc}}" (click)="covername()">i</button> -->
                                                                     </ng-container>
                                                                 </ng-container>
                                                                 <ng-container *ngIf="columnHeader[i]['display']=='Sum Insured'">
@@ -1807,15 +1421,6 @@
                 
                                                         </td>
                                                         <td mat-footer-cell *matFooterCellDef="let event">
-                                                            <!-- <ng-container *ngIf="col.key=='CoverName'">
-                                                                <b>Total</b>
-                                                            </ng-container>
-                                                            <ng-container *ngIf="col.key=='PremiumIncludedTax'">
-                                                                <div class="d-flex justify-content-between">
-                                                                    <div></div>
-                                                                    <div><b>{{getTotalCost(menu)|commaseparator}}</b></div>
-                                                                </div>
-                                                            </ng-container> -->
                                                         </td>
                                                     </ng-container>
                 
@@ -1831,8 +1436,6 @@
                 
                                                                                     </th>
                                                                                 </ng-container>
-                
-                                                                                <!-- Header row second group -->
                                                                                 <ng-container matColumnDef="header-row-second-group">
                                                                                     <th mat-header-cell *matHeaderCellDef [attr.colspan]="3" [style.text-align]="center" class="innerHead mat-header-cell">
                                                                                         Premium </th>
@@ -1860,10 +1463,6 @@
                                                                                                 <span *ngIf="subElement[col.key]=='Y'">Active</span>
                                                                                                 <span *ngIf="subElement[col.key]!='Y'">DeActive</span>
                                                                                             </ng-container>
-                                                                                            <!-- <span class="mobile-label">{{ innerColumnHeader[i]["display"] }}</span>
-                                                                                            <ng-container *ngIf="col.key!='Status' && col.key!='CalcType'">
-                                                                                                {{ subElement[col.key] }}
-                                                                                            </ng-container> -->
                                                                                             <div class="row">
                                                                                                 <div class="col-6">
                                                                                                     <span class="mobile-label">{{ innerColumnHeader[i]["display"] }}</span>
@@ -1893,9 +1492,6 @@
                                                                                                     <mat-radio-button [value]="subElement[col.key]" id="customRadio{{subElement[col.key]}}" [name]="'customRadio'+i" (change)="onSelectCustomer.emit(subElement)">
                                                                                                     </mat-radio-button>
                                                                                                 </ng-container>
-                                                                                                <!-- <mat-radio-group>
-                                                                                                    <mat-radio-button [value]="subElement[col.key]" id="customRadio{{subElement[col.key]}}" name="customRadio" (change)="onSelectCustomer.emit(subElement)"></mat-radio-button>
-                                                                                                </mat-radio-group> -->
                                                                                             </ng-container>
                                                                                             <ng-container *ngIf="col.config.isEdit">
                                                                                                 <button class="btn btn-primary btn-sm" (click)="onEdit.emit(subElement)">
@@ -1965,10 +1561,6 @@
         
                                             </div>
                                         </div>
-                                        <!--Master View Grid-->
-                                        <!--&& (tempVehicleId== menu.VehicleId || tempVehicleId==menu.SectionId)-->
-                                        
-                                        <!--finish of clauses grid-->
                                     </div>
                                 </li>
                             </ul>
@@ -2007,7 +1599,6 @@
                                                     <tr>
                                                         <td>
                                                             <input type="checkbox" (change)="onCheckUser(i,$event,clause)" [checked]="clause.TypeId == 'D' ? true : false"> 
-                                                            <!-- <input type="checkbox"  *ngIf="clause.TypeId=='O'" (change)="onCheckUser(i,$event,clause)">  -->
                                                         </td>
     
                                                         <td>
@@ -2031,19 +1622,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- && (tempVehicleId== menu.VehicleId || tempVehicleId==menu.SectionId)"-->
                             <div class="ClausesList" *ngIf="Exclusion && showGrid">
                                 <div>
                                     <div>
-                                        <!--<div class="d-flex justify-content-between maan-grid-item-title">
-                                            <span class="mx-1" style="position:absolute;top:3.5rem;font-size:1.2rem;font-family: var(--our-font-family-new)!important;">
-                                                Exclusion List Details
-                                            </span>
-    
-                                            <button type="button" class="btn btn-primary" *ngIf="button" (click)="editExclusion(i)">
-                                                Add Exclusion
-                                            </button>
-                                        </div>-->
                                         <div class="d-flex justify-content-between maan-grid-item-title">
                                           <p class="mx-1" st><span class="spancommon span_font_size"> Exclusion List
                                                   Details</span>
@@ -2096,18 +1677,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--&& (tempVehicleId== menu.VehicleId || tempVehicleId==menu.SectionId)"-->
                             <div class="ClausesList" *ngIf="warranty && showGrid">
                                 <div>
                                     <div>
-                                        <!--<div class="d-flex justify-content-between">
-                                            <span class="mx-1" style="position:absolute;top:3.5rem;font-size:1.2rem;font-family: var(--our-font-family-new)!important;">
-                                                Warranty List Details
-                                            </span>
-                                            <button type="button" class="btn btn-primary" *ngIf="button" (click)="editWarranty(i)">
-                                                Add Warranties
-                                            </button>
-                                        </div>-->
                                         <div class="d-flex justify-content-between maan-grid-item-title">
                                           <p class="mx-1" st><span class="spancommon span_font_size">Warranty List
                                                   Details</span>
@@ -2193,104 +1765,7 @@
                             </div>
                         </div>
                     </ng-container>
-                    <!-- <div class="col-12 col-md-6" *ngIf="isMannualReferal != 'Y' && gridshow">
-                        <div class="mb-3 mt-3">
-                            <div class="input-control-container">
-                                <label class="input-form-label">Do You Like to Choose EMI Option?</label>
-                                <div class="custom-radio-btn" style="position: relative;top: 1rem;right: 0.3rem;">
-                                    <div class="radio-toolbar">
-                                        <input id="emi_Yes" type="radio" [(ngModel)]="emiYN" (change)="onEmiYNChange()" name="emiYN" value="Y">
-                                        <label for="emi_Yes" class="yes">Yes</label>&nbsp;
-                                        <input type="radio" id="emi_No" [(ngModel)]="emiYN" (change)="onEmiYNChange()" name="emiYN" value="N">
-                                        <label for="emi_No" class="no">No</label>&nbsp;
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
-                <!-- <div class="col-md-12 col-lg-12" *ngIf="emiSection && Emilist1.length!=0 && emiYN=='Y'">
-                    <table class="firstclass" style="width:50%;">
-                        <thead>
-                            <tr class="firstclass">
-                                <th scope="col" colspan="3"></th>
-                                <th scope="col" colspan="4" style="text-align:center;" class="spancommon span_font_size">Installment Amount ({{localCurrency}})
-                                </th>
-                            </tr>
-                            <tr class="firstclass">
-                                <th scope="col" class="spancommon span_font_size" style="text-align:center;">EMI Month
-                                </th>
-                                <th scope="col" class="spancommon span_font_size" style="text-align:center;">
-                                    Installment Type</th>
-                                <th scope="col" class="spancommon span_font_size" style="text-align:center;">Due Date
-                                </th>
-                                <th scope="col" class="spancommon span_font_size" *ngIf="yearlySection" id="first" style="text-align:center">(12 Months)
-                                </th>
-                                <th scope="col" class="spancommon span_font_size" *ngIf="nineMonthSection" id="second" style="text-align:center">(9 Months)
-                                </th>
-                                <th scope="col" class="spancommon span_font_size" id="third" style="text-align:center" *ngIf="sixMonthSection">(6 Months)
-                                </th>
-                                <th scope="col" class="spancommon span_font_size" id="fourth" style="text-align:center" *ngIf="threeMonthSection">(3 Months)
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <ng-container>
-                                <tr *ngFor="let list of Emilist1;let i=index" class="firstclass">
-                                    <td class="spancommon span_font_size" style="text-align:center;">
-                                        {{list.EmiMonth}}</td>
-                                    <td class="spancommon span_font_size" style="text-align:center;">
-                                        {{list.InstallmentDesc}}</td>
-                                    <td class="spancommon span_font_size" style="text-align:center;">
-                                        {{list.DueDate}}</td>
-                                    <td class="spancommon span_font_size" *ngIf="yearlySection" id="first" style="text-align:center;">
-                                        {{list.yearlyAmount | commaseparator}}</td>
-                                    <td class="spancommon span_font_size" *ngIf="nineMonthSection" id="second" style="text-align:center;">
-                                        {{list.nineAmount|commaseparator}}</td>
-                                    <td class="spancommon span_font_size" *ngIf="sixMonthSection" id="third" style="text-align:center;">
-                                        {{list.sixAmount | commaseparator}}</td>
-                                    <td class="spancommon span_font_size" *ngIf="threeMonthSection" style="text-align:center;" id="fourth">
-                                        {{list.threeAmount | commaseparator}}</td>
-                                </tr>
-                            </ng-container>
-                        </tbody>
-    
-                    </table>
-    
-                </div>
-                <div class="col-12 col-md-6" *ngIf="isMannualReferal != 'Y' && emiYN=='Y'">
-                    <div class="mb-3 mt-3">
-                        <div class="input-control-container">
-                            <label class="input-form-label spancommon span_font_size">EMI Period</label>
-                            <div class="custom-radio-btn">
-                                <div class="radio-toolbar" style="position: relative;top: 0.5rem;">
-                                    <input id="emi_None" type="radio" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="N">
-                                    <label for="emi_None" class="spancommon span_font_size yes">None</label>&nbsp;
-                                    <ng-container *ngIf="yearlySection || nineMonthSection || sixMonthSection || threeMonthSection">
-                                        <input type="radio" id="emi_three" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="3">
-                                        <label for="emi_three" class="spancommon span_font_size yes">3
-                                            Months</label>&nbsp;
-                                    </ng-container>
-                                    <ng-container *ngIf="yearlySection || nineMonthSection || sixMonthSection">
-                                        <input type="radio" id="emi_six" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="6">
-                                        <label for="emi_six" class="spancommon span_font_size yes">6
-                                            Months</label>&nbsp;
-                                    </ng-container>
-                                    <ng-container *ngIf="yearlySection || nineMonthSection">
-                                        <input type="radio" id="emi_nine" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="9">
-                                        <label for="emi_nine" class="spancommon span_font_size yes">9
-                                            Months</label>&nbsp;
-                                    </ng-container>
-                                    <ng-container *ngIf="yearlySection">
-                                        <input type="radio" id="emi_twelve" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="9">
-                                        <label for="emi_twelve" class="spancommon span_font_size yes">12
-                                            Months</label>&nbsp;
-                                    </ng-container>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
                 
             </div>
         </div>
@@ -2335,6 +1810,7 @@
                 </div>
             </div>
         </div>
+    </div>
 </div>
 
     <ng-template #Add>
@@ -2376,7 +1852,6 @@
                         </div>
                         <div>
                             <ng-container>
-                                <!-- RefNo - {{customerDetails?.CustomerReferenceNo}} -->
                             </ng-container>
                         </div>
                     </div>
@@ -2590,7 +2065,6 @@
         </div>
         <div class="modal-body">
             <div class="maan-grid-item popover-card customTemplatess shawdowcustom" style="display: block;" data-keyboard="false" data-bs-backdrop="static">
-                <!--<ng-container *ngIf="vehicleDetailsList.length!=0">-->
                 <div class="maan-grid-item-title">
                     <div class="d-flex justify-content-between">
                         <div>
@@ -2707,7 +2181,6 @@
                         <div class="col-12 col-md-4 col-lg-4" *ngIf="productId!='4'">
                             <label class="input-form-label spancommon span_font_size">Policy Start Date</label>
                             <mat-form-field appearance="fill">
-                                <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
                                 <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" (dateChange)="onStartDateChange()" [(ngModel)]="policyStartDate">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
@@ -2716,7 +2189,6 @@
                         <div class="col-12 col-md-4 col-lg-4" *ngIf="productId!='4'">
                             <label class="input-form-label spancommon span_font_size">Policy End Date</label>
                             <mat-form-field appearance="fill">
-                                <!-- <mat-label class="spancommon span_font_size">Policy End Date<span class="text-danger">*</span></mat-label> -->
                                 <input matInput [matDatepicker]="picker2" [min]="endMinDate" (dateChange)="onChangeEndDate()" [(ngModel)]="policyEndDate">
                                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                 <mat-datepicker #picker2></mat-datepicker>
@@ -2732,246 +2204,7 @@
             <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" (click)="modal.dismiss('Cross click')" style="margin-left:10px;">Close</button>
         </div>
     </ng-template>
-            
-            <!-- <div class="col-12 col-md-6 col-lg-6 col-xl-6" style="left: 0.4rem;">
-                <ng-container *ngIf="statusValue">
-                    <div class="maan-grid-item-title">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                <span class="mx-1">
-                                    <i class="fas fa-user mx-1"></i>
-
-                                </span>
-                                <span class="spancommon"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w3-animate-top referal-status referal-data">
-                        <ul class="list-group mt-2">
-                            <li class="list-item-value">
-                                <div><span class="spancommon span_font_size" style="font-weight:600">Referral
-                                        Status</span></div>
-                                <div>
-                                    <ng-container *ngIf="statusValue=='RP'"><span class="text-danger spancommon span_font_size">Referral
-                                            Pending</span></ng-container>
-                                    <ng-container *ngIf="statusValue=='RA'"><span class="text-success spancommon span_font_size">Referral
-                                            Accepted</span></ng-container>
-                                    <ng-container *ngIf="statusValue=='RR'"> <span class="text-danger spancommon span_font_size">Referral
-                                            Rejected</span></ng-container>
-                                    <ng-container *ngIf="statusValue=='RE'"> <span class="text-danger spancommon span_font_size">Referral
-                                        ReQuote</span></ng-container>
-                                </div>
-                            </li>
-                            <li class="list-item-value" *ngIf="adminRemarks.length!=0">
-                                <div><span class="spancommon span_font_size" style="font-weight:600">Admin
-                                        Remarks</span></div>
-                                <div>
-                                    <ul *ngFor="let entry of adminRemarks" style="list-style-type: none;">
-                                        <li class="p-0"><span class="spancommon span_font_size">{{entry}}</span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </ng-container>
-
-            </div> -->
-            <!-- <div class="col-12 col-md-6 col-lg-6 col-xl-6" style="position: relative;right: 0.3rem;">
-                <div class="maan-grid-item-title">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <span class="mx-1">
-                                <i class="fas fa-book mx-1"></i>
-                            </span>
-                            <span class="spancommon">Quote Information</span>
-                        </div>
-                        <div>
-                            <div (click)="custPanelOpen = !custPanelOpen;" *ngIf="!custPanelOpen">
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div (click)="custPanelOpen = !custPanelOpen;" *ngIf="custPanelOpen">
-                                <i class="fas fa-chevron-up"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="w3-animate-top  referal-status">
-                    <ul class="list-group mt-2">
-                        <li class=" list-item-value">
-
-                            <div>
-                                <ng-container *ngIf="productId=='5'"><span class="spancommon span_font_size">No.Of.Vehicle</span></ng-container>
-                                <ng-container *ngIf="productId=='4'"><span class="spancommon span_font_size">No.Of.Passengers</span></ng-container>
-                                <ng-container *ngIf="productId=='3'"><span class="spancommon span_font_size">No.Of.Location</span></ng-container>
-                            </div>
-                            <div><span class="spancommon span_font_size">{{vehicleDetailsList.length}}</span></div>
-
-                        </li>
-                        <li class=" list-item-value">
-                            <div><b><span class="spancommon span_font_size">Total Premium</span></b></div>
-                            <div><b><span class="spancommon span_font_size">{{totalPremium | number :
-                                        '1.2-2'}}&nbsp;({{currencyCode}})</span></b></div>
-                        </li>
-                        <li class="list-item-value" *ngIf="custPanelOpen">
-
-                            <div><span class="spancommon">Customer Name</span></div>
-                            <div><span class="spancommon">{{clientName}}</span>
-                            </div>
-
-                        </li>
-                        <li class="list-item-value" *ngIf="custPanelOpen">
-
-                            <div><span class="spancommon">Customer Type</span></div>
-                            <div><span class="spancommon">{{clientType}}</span></div>
-
-                        </li>
-                        <li class="list-item-value" *ngIf="custPanelOpen">
-
-                            <div><span class="spancommon">Mobile No</span></div>
-                            <div><span class="spancommon">{{mobileNo}}</span></div>
-
-                        </li>
-                        <li class="list-item-value" *ngIf="promoCode && custPanelOpen">
-                            <div><span class="spancommon">Promo Code</span></div>
-                            <div><span class="spancommon">{{promoCode}}</span></div>
-                        </li>
-
-                    </ul>
-                </div>
-            </div> -->
-    <!-- Premium Details Strip -->
-    <!-- <div class="col-3 col-md-3 col-lg-3 col-xl-3 offset-9 display1 dialogContainer">
-        <div class="accordion" id="accordionPanelsStayOpenExample" style="width: 27rem;float: right; margin-right: 10px;">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-headingOne" style="height: 25px;">
-                    <span style="position: relative;font-size: 1.2rem;left: 1rem;font-family: var(--our-font-family-new) !important;font-weight: 600;">Premium Details</span>
-                </h2>
-                <div (click)="custPanelOpen = !custPanelOpen;" *ngIf="!custPanelOpen">
-                    <i class="fas fa-chevron-down" style="position: relative;left: 24rem;bottom: 0.7rem;font-size: 1rem;cursor: pointer;"></i>
-                </div>
-                <div (click)="custPanelOpen = !custPanelOpen;" *ngIf="custPanelOpen">
-                    <i class="fas fa-chevron-up" style="position: relative;left: 24rem;bottom: 0.7rem; font-size: 1rem;cursor: pointer;"></i>
-                </div>
-                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne" *ngIf="!custPanelOpen">
-                    <div class="accordion-body w3-animate-top  referal-status">
-                        <ul class="list-group mt-2">
-                            <li class="list-item-value" *ngIf="customerDetails">
-                                <div><span class="spancommon">Customer Name</span></div>
-                                <div><span class="spancommon" style="color: #0056b3!important;">{{clientName}}</span>
-                                </div>
-                            </li>
-                            <li class="list-item-value" *ngIf="customerDetails">
-                                <div><span class="spancommon">Customer Type</span></div>
-                                <div><span class="spancommon" style="color: #0056b3!important;">{{clientType}}</span></div>
-                            </li>
-                            <li class="list-item-value" *ngIf="customerDetails">
-                                <div><span class="spancommon">Mobile No</span></div>
-                                <div><span class="spancommon" style="color: #0056b3!important;">{{mobileNo}}</span>
-                                </div>
-                            </li>
-                            <li class="list-item-value">
-                                <div><span class="spancommon">Promo Code</span></div>
-                                <div><span class="spancommon" style="color: #0056b3!important;">{{promoCode}}</span>
-                                </div>
-                            </li>
-                            <li class=" list-item-value">
-                                <div><b><span class="spancommon span_font_size">Total Premium</span></b></div>
-                                <div><b><span class="spancommon span_font_size" style="color: #0056b3!important;">{{totalPremium | number :
-                                            '1.2-2'}}&nbsp;({{currencyCode}})</span></b></div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>-->
-        <!-- <div class="accordion" id="accordionExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Accordion Item #1
-                    </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show w3-animate-top  referal-status" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <ul class="list-group mt-2">
-                            <li class="list-item-value">
-                                <div><span class="spancommon">Customer Name</span></div>
-                                <div><span class="spancommon" style="color: #0056b3!important;">{{clientName}}</span>
-                                </div>
-                            </li>
-                            <li class="list-item-value">
-                                <div><span class="spancommon">Customer Type</span></div>
-                                <div><span class="spancommon" style="color: #0056b3!important;">{{clientType}}</span></div>
-                            </li>
-                            <li class="list-item-value">
-                                <div><span class="spancommon">Mobile No</span></div>
-                                <div><span class="spancommon" style="color: #0056b3!important;">{{mobileNo}}</span>
-                                </div>
-                            </li>
-                            <li class="list-item-value">
-                                <div><span class="spancommon">Promo Code</span></div>
-                                <div><span class="spancommon" style="color: #0056b3!important;">{{promoCode}}</span>
-                                </div>
-                            </li>
-                            <li class=" list-item-value">
-                                <div><b><span class="spancommon span_font_size">Total Premium</span></b></div>
-                                <div><b><span class="spancommon span_font_size" style="color: #0056b3!important;">{{totalPremium | number :
-                                            '1.2-2'}}&nbsp;({{currencyCode}})</span></b></div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
-    <!--</div>-->
-    <!--<div class="col-3 col-md-3 col-lg-3 col-xl-3 offset-9 display2 dialogContainer">
-        <div class="accordion" id="accordionPanelsStayOpenExample" style="width: 300px;float: right; margin-right: 10px;">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-headingOne" style="height: 25px;">
-                    <span style="position: relative;font-size: 1.2rem;left: 1rem;font-family: var(--our-font-family-new) !important;font-weight: 600;">Premium Details</span>
-                </h2>
-                <div (click)="custPanelOpen = !custPanelOpen;" *ngIf="!custPanelOpen">
-                    <i class="fas fa-chevron-down" style="position: relative;left: 260px;bottom: 0.7rem;font-size: 1rem;cursor: pointer;"></i>
-                </div>
-                <div (click)="custPanelOpen = !custPanelOpen;" *ngIf="custPanelOpen">
-                    <i class="fas fa-chevron-up" style="position: relative;left: 260px;bottom: 0.7rem; font-size: 1rem;cursor: pointer;"></i>
-                </div>
-                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne" *ngIf="!custPanelOpen">
-                    <div class="accordion-body w3-animate-top  referal-status">
-                        <ul class="list-group mt-2">
-                            <li class="list-item-value" *ngIf="customerDetails">
-                                <div><span class="spancommon">Customer Name</span></div>
-                                <div><span class="spancommon" style="color: #0056b3!important;">{{clientName}}</span>
-                                </div>
-                            </li>
-                            <li class="list-item-value" *ngIf="customerDetails">
-                                <div><span class="spancommon">Customer Type</span></div>
-                                <div><span class="spancommon" style="color: #0056b3!important;">{{clientType}}</span></div>
-                            </li>
-                            <li class="list-item-value" *ngIf="customerDetails">
-                                <div><span class="spancommon">Mobile No</span></div>
-                                <div><span class="spancommon" style="color: #0056b3!important;">{{mobileNo}}</span>
-                                </div>
-                            </li>
-                            <li class="list-item-value">
-                                <div><span class="spancommon">Promo Code</span></div>
-                                <div><span class="spancommon" style="color: #0056b3!important;">{{promoCode}}</span>
-                                </div>
-                            </li>
-                            <li class=" list-item-value">
-                                <div><b><span class="spancommon span_font_size">Total Premium</span></b></div>
-                                <div><b><span class="spancommon span_font_size" style="color: #0056b3!important;">{{totalPremium | number :
-                                            '1.2-2'}}&nbsp;({{currencyCode}})</span></b></div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div> -->
+           
     <ng-template #discountModal let-modal>
         <div class="modal-header">
             <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Premium
@@ -3071,128 +2304,6 @@
                       </table>
                 </div>
             </div>
-            <!-- <ul class="list-group">
-                <li class="list-group-item list-seperate">
-                    <div>
-                        <span class="spancommon span_font_size"><b><u>Description</u></b></span>
-
-                    </div>
-                    <div>
-                        <span class="spancommon span_font_size"><b><u>Rate (%)</u></b></span>
-
-                    </div>
-                    <div>
-                        <span class="spancommon span_font_size"><b><u></u></b></span>
-                    </div>
-                </li>
-                <li class="list-group-item list-seperate">
-                    <div>
-                        <span class="spancommon span_font_size">Before
-                            Discount</span>
-
-                    </div>
-                    <div>
-                        <span class="spancommon span_font_size">{{beforeDiscount | commaseparator}}</span>
-                    </div>
-                </li>
-                <ng-container *ngIf="discountList.length!=0">
-                    <li class="list-group-item list-seperate">
-                        <div>
-                            <span class="spancommon span_font_size"><b><u>Discounts</u></b></span>
-                        </div>
-                        <div>
-                        </div>
-                    </li>
-                    <li class="list-group-item list-seperate" *ngFor="let discount of discountList">
-                        
-                        <div>
-                            <span class="spancommon span_font_size">{{discount.DiscountDesc}}</span>
-
-                        </div>
-                        <div>
-                            <span class="spancommon span_font_size">{{discount.DiscountAmount | commaseparator}}</span>
-
-                        </div>
-                    </li>
-                </ng-container>
-                <ng-container *ngIf="loadingList.length!=0">
-                    <li class="list-group-item list-seperate">
-                        <div>
-                            <span class="spancommon span_font_size"><b><u>Loading</u></b></span>
-
-                        </div>
-                        <div>
-
-                        </div>
-                    </li>
-                    <li class="list-group-item list-seperate" *ngFor="let loading of loadingList;let i=index">
-                        
-                        <div style="min-width: 250px !important;">
-                            <span class="spancommon span_font_size" >{{loading.LoadingDesc}}</span>
-
-                        </div>
-                        <div style="float: left !important;">
-                            <ng-container *ngIf="(adminSection)">
-                                    <ng-container *ngIf="loading.LoadingCalcType!='P'">
-                                        <ng-container *ngIf="loading.LoadingRate!=null">
-                                            <span class="spancommon span_font_size">{{loading.LoadingRate}}</span>
-                                        </ng-container>
-                                    </ng-container>
-                                    <ng-container *ngIf="loading.LoadingCalcType=='P'">
-                                        <input type="text"  [id]="'Rate'+i" class="input-form-control without-icon" style="width: auto !important;max-width:150px;text-align:left !important" [(ngModel)]="loading['LoadingRate']" maxlength="5">
-                                    </ng-container>
-                            </ng-container>
-                            <ng-container *ngIf="(!adminSection)">
-                                <ng-container *ngIf="loading.LoadingRate==null">
-                                        0
-                                </ng-container>
-                                <ng-container *ngIf="loading.LoadingRate!=0 && loading.LoadingRate!=null">
-                                    <span class="spancommon span_font_size">{{loading.LoadingRate}}</span>
-                                </ng-container>
-                                
-                            </ng-container>
-
-                        </div>
-                        <div></div>
-                        <div >
-                            <ng-container *ngIf="(adminSection)">
-                                <ng-container *ngIf="loading.LoadingCalcType!='A'">
-                                    <ng-container *ngIf="loading.LoadingAmount==0 || loading.LoadingAmount==null">
-                                            0
-                                    </ng-container>
-                                    <ng-container *ngIf="loading.LoadingAmount!=0 && loading.LoadingAmount!=null">
-                                        <span class="spancommon span_font_size">{{loading.LoadingAmount}}</span>
-                                    </ng-container>
-                                </ng-container>
-                                <ng-container *ngIf="loading.LoadingCalcType=='A'">
-                                    <input type="text"  [id]="'Amount'+i" class="input-form-control without-icon" (keyup)="premiumComma(i,loading.LoadingAmount)" style="width: auto !important;max-width:300px;text-align:right !important" [(ngModel)]="loading['LoadingAmount']">
-                                </ng-container>
-                                
-                            </ng-container>
-                            <ng-container *ngIf="(!adminSection)">
-                                <ng-container *ngIf="loading.LoadingAmount==0 || loading.LoadingAmount==null">
-                                        0
-                                </ng-container>
-                                <ng-container *ngIf="loading.LoadingAmount!=0 && loading.LoadingAmount!=null">
-                                    <span class="spancommon span_font_size">{{loading.LoadingAmount | commaseparator}}</span>
-                                </ng-container>
-                                
-                            </ng-container>
-                            
-                        </div>
-                    </li>
-                </ng-container>
-                <li class="list-group-item list-seperate">
-                    <div>
-                        <span class="spancommon span_font_size">Total
-                            Premium</span>
-                    </div>
-                    <div>
-                        <span class="spancommon span_font_size">{{afterDiscount | commaseparator}}</span>
-
-                    </div>
-                </li>
-            </ul> -->
         </div>
         <div class="modal-footer">
             <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" (click)="modal.dismiss('Cross click')" style="margin-left:10px;">Close</button>
@@ -3225,7 +2336,6 @@
         <div class="paragraphFontSize" id="toastSpan" style="color:#ffffff!important;text-align: center;">
             <img src="./assets/img/error.png" alt="Warning" style="margin-left: 10px;float: left;">
             <span [innerHtml]="sharedService.errorApiMsg"></span>
-            <!-- Error: -->
         </div>
     </div>
 
@@ -3235,165 +2345,7 @@
             <img src="./assets/img/checkbox/white_tick_only.png" style="margin-left: 10px;float: left;">
             <span [innerHtml]="sharedService.successApiMsg"></span>
         </div>
-    </div>
-
-
-
-        <!--<ng-template #exampleModal let-modal>
-            <div class="modal-lg">
-
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Clauses</h5>
-                    <button type="button" class="close" #closeModal aria-label="Close" (click)="modal.dismiss('Cross click')">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <button class="btn btn-primary" style="float:right;margin-bottom:13px;" (click)="addItem()">Add
-                        New</button>
-                    <table class="mt-3 styled-table">
-                        <thead>
-                            <th>Select</th>
-
-                            <th>Clauses Description</th>
-                            <th>Delete</th>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let row of jsonList;let i = index">
-                                <td><input type="checkbox" style="width:20px;height:20px;"></td>
-                                <td>
-                                    <div class="input-form-box">
-
-                                        <textarea style="height:20px;" [(ngModel)]="row.SubIdDesc" cols="60" rows="2"> </textarea>
-                                    </div>
-                                </td>
-                                <td class="tbl-content">
-                                    <button class="btn btn-primary" (click)="deleteClauses(row)"> <i
-                                            class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="custom-btn btn-5" data-dismiss="modal" (click)="modal.dismiss('Cross click')">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveChanges(vehicleDetailsList,row)">Save
-                        changes</button>
-                </div>
-
-            </div>
-        </ng-template>-->
-
-       <!--<ng-template #ExclusionModal let-modal>
-            <div class="modal-lg ">
-
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Exclusion</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                    <button type="button" class="close" #closeModal aria-label="Close" (click)="modal.dismiss('Cross click')">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <button class="btn btn-primary" style="float:right" (click)="addExclusion(row)">Add New</button>
-                    <table class="mt-3">
-                        <thead class="mt-3">
-                            <th>Select</th>
-                            <th>Exclusion Description</th>
-                            <th>Delete</th>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let row of ExclusionList;let i = index" class="mt-3">
-                                <td><input type="checkbox" style="width:20px;height:20px;"></td>
-                                <td><textarea style="height:20px;" [(ngModel)]="row.SubIdDesc" cols="60" rows="2"> </textarea></td>
-                                <td style="height:20px;">
-                                    <button class="btn btn-primary" (click)="deleteExclusion(row)"> <i
-                                            class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="custom-btn btn-5" data-dismiss="modal" (click)="modal.dismiss('Cross click')">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveExclusion(vehicleDetailsList,row)">Save
-                        changes</button>
-                </div>
-
-            </div>
-        </ng-template>-->
-
-
-        <!--<ng-template #WarrantyModel let-modal>
-            <div class="modal-lg" id="WarrantyModel">
-
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal-basic-title">Add Warranty</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                    <<button type="button" class="close" #closeModal aria-label="Close" (click)="modal.dismiss('Cross click')">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <button class="btn btn-primary" style="float:right" (click)="addwarranty(row)">Add New</button>
-                    <table class="mt-3 maan-grid-item-body">
-                        <thead>
-                            <th>Select</th>
-                            <th>Warrranty Description</th>
-                            <th>Delete</th>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let row of json;let i = index">
-                                <td><input type="checkbox" style="width:20px;height:20px;"></td>
-                                <td><textarea style="height:20px;" [(ngModel)]="row.SubIdDesc" cols="60" rows="2"> </textarea></td>
-                                <td class="tbl-content">
-                                    <button class="btn btn-primary" (click)="delete(row)"> <i
-                                            class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="custom-btn btn-5 " data-dismiss="modal" (click)="modal.dismiss('Cross click')">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="saveWarranty(vehicleDetailsList,row)">Save
-                        changes</button>
-                </div>
-
-            </div>
-        </ng-template>-->
-        <!--Toast messages-->
-        
-
-        <!-- <div class="dialogContainer bottom left">
-            <div class="dialog" data-dialog-id="dm-accept-cookies" data-set-cookie="365">
-              <div class="dialogContent">
-                <div>
-                    <span class="mx-1">
-                        <i class="fas fa-book mx-1"></i>
-                    </span>
-                    <span class="spancommon">Quote Information</span>
-                </div>
-                <ul class="flex tinySpaces">
-                  <li class="col-6-12 tablet-col-1-2">
-                    <div class="button small passive hover-red wide cropSides" data-dialog-action="hide">I disagree</div>
-                  </li>
-                  <li class="col-6-12 tablet-col-1-2">
-                    <div class="button small passive hover-green wide cropSides" data-dialog-action="close">I agree</div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div> -->
-
-        
+    </div>      
 
 
     
