@@ -172,6 +172,15 @@ const routes: Routes = [
     }
   },
   {
+    path: 'CompanyTax',
+    loadChildren: () => import('./Masters/companytax/companytax.module').then(m => m.CompanyTaxListsModule),
+    data: {
+      preload: true,
+      title: "Warranty Master",
+      breadcrumb: 'Warranty Master',
+    }
+  },
+  {
     path: 'exclusionMaster',
     loadChildren: () => import('./Masters/Exclusion/exclusion-list/exclusion-list.module').then(m => m.ExclusionListModule),
     data: {
@@ -241,6 +250,15 @@ const routes: Routes = [
       preload: true,
       title: 'Mail Details',
       breadcrumb:  'Mail Details',
+    }
+  },
+  {
+    path: 'taxMaster',
+    loadChildren: () => import('./Masters/TaxMaster/tax-list/tax-list.module').then(m => m.TaxListsModule),
+    data: {
+      preload: true,
+      title: 'Tax Details',
+      breadcrumb:  'Tax Details',
     }
   },
   {

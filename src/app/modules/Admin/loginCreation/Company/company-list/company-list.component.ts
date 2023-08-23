@@ -107,10 +107,12 @@ export class CompanyListComponent implements OnInit {
     this.router.navigate(['/Admin/companyList/newCompanyDetails'])
   }
   onConfigure(rowData:any){
+    console.log('OOOOOOOOOOOO',rowData.CountryId);
     sessionStorage.removeItem('insuranceConfigureName');
     sessionStorage.setItem('insuranceConfigureName',rowData.CompanyName);
     sessionStorage.setItem('insuranceConfigureId',rowData.InsuranceId)
     sessionStorage.setItem('insReload',"true");
+    sessionStorage.setItem('CountryIds',rowData.CountryId);
     this.router.navigate(['/Admin/companyList/companyConfigure'])
   }
   onAddNewIns(){

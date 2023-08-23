@@ -20,6 +20,7 @@ export class NewCompanyDetailsComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   currencyList: any[]=[];loginId:any;
+  countryList:any[]=[];
   constructor(
     private sharedService: SharedService,private datePipe:DatePipe,private router:Router) {
     this.minDate = new Date();
@@ -31,6 +32,7 @@ export class NewCompanyDetailsComponent implements OnInit {
     if(this.InsuranceId==undefined) this.InsuranceId = null;
     this.insuranceDetails = new Insurance();
     this.getCurrencyList();
+    this.getCountryList();
   }
 
   ngOnInit(): void {
@@ -113,6 +115,7 @@ export class NewCompanyDetailsComponent implements OnInit {
       "Regards": this.insuranceDetails?.Regards,
       "Remarks": this.insuranceDetails?.Remarks,
       "Status": this.insuranceDetails?.Status,
+      "CountryId":this.insuranceDetails?.CountryId,
       "EffectiveDateStart": this.insuranceDetails?.EffectiveDateStart,
       "CreatedBy": this.loginId,
       "RegulatoryCode": this.insuranceDetails?.RegulatoryCode,
@@ -169,5 +172,16 @@ export class NewCompanyDetailsComponent implements OnInit {
         },
         (err) => { },
       );
+  }
+
+  getCountryList(){
+    let ReqObj = { "InsuranceId": this.InsuranceId}
+    let urlLink = `${this.CommonApiUrl}master/dropdown/country`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+          this.countryList = data?.Result;
+      },
+      (err) => { },
+    );
   }
 }
