@@ -1537,9 +1537,10 @@ export class VehicleDetailsComponent implements OnInit {
 
               this.uwQuestionList.forEach(x => {
                 if (x.QuestionType == '01') {
-                  if(x.Options!=null) this.showUWQUestion(x.Options.find(ele=>ele.UwQuesOptionId==x.UwQuestionId),x.Options,'direct');
+                 
                   console.log('gggggg', x.Value)
                   x.Value = x.Value ? '' || x.Value : x.Value
+                  if(x.Options!=null) this.showUWQUestion(x.Options.find(ele=>ele.UwQuesOptionDesc==x.Value),x.Options,'direct');
                 }
                 
               });

@@ -2483,7 +2483,7 @@ b {
 
 .referal_remark {
     height: auto!important;
-    padding: 12px!important;
+    padding: 5px!important;
     border-radius: 13px;
     background: #ffffff;
     box-shadow: inset 0 0 3px #a4b4c9, inset 0 0 #d4eaff;
@@ -2492,7 +2492,8 @@ b {
     position: relative;
     top: 0.5rem;
     left: 0.7rem;
-    width: auto !important;
+    min-width: 300px;
+    max-width: 500px;
 }
 
 .referal_data {
