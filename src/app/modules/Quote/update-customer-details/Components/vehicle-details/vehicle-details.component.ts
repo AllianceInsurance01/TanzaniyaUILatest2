@@ -88,6 +88,12 @@ export class VehicleDetailsComponent implements OnInit {
   enableFieldsSection: boolean = false;
   endorsementYn: any;tiraCoverNoteNo:any=null;
   endorseSIModification: boolean=false;
+  OldExchangeRate: any;
+  OldAcccessoriesSumInsured: any;
+  OldCurrency: any;
+  OldSumInsured: any;
+  OldTppdIncreaeLimit: any;
+  OldWindScreenSumInsured: any;
   constructor(private router:Router,private sharedService: SharedService,
     private updateComponent:UpdateCustomerDetailsComponent,
    private datePipe:DatePipe) {
@@ -615,6 +621,12 @@ export class VehicleDetailsComponent implements OnInit {
       (data: any) => {
         if(data.Result){
           this.vehicleDetails = data.Result;
+          this.vehicleDetails['OldExchangeRate'] = data?.Result.ExchangeRate;
+          this.vehicleDetails['OldAcccessoriesSumInsured'] = data?.Result.AcccessoriesSumInsured;
+          this.vehicleDetails['OldCurrency'] = data?.Result.Currency;
+          this.vehicleDetails['OldSumInsured'] = data?.Result.SumInsured;
+          this.vehicleDetails['OldTppdIncreaeLimit'] = data?.Result.TppdIncreaeLimit;
+          this.vehicleDetails['OldWindScreenSumInsured'] = data?.Result.WindScreenSumInsured;
           //this.updateComponent.vehicleDetails = this.vehicleDetails;
           if(type!='save'){
             this.setVehicleValues('edit');
@@ -1091,7 +1103,17 @@ export class VehicleDetailsComponent implements OnInit {
       "EndtPrevQuoteNo": this.endtPrevQuoteNo,
       "EndtStatus": this.endtStatus,
       "IsFinanceEndt": this.isFinanceEndt,
-      "OrginalPolicyNo": this.orginalPolicyNo
+      "OrginalPolicyNo": this.orginalPolicyNo,
+      "Scenarios": {
+        "ExchangeRateScenario": {
+          "OldAcccessoriesSumInsured": this.vehicleDetails.OldAcccessoriesSumInsured,
+          "OldCurrency": this.vehicleDetails.OldCurrency,
+          "OldExchangeRate": this.vehicleDetails.OldExchangeRate,
+          "OldSumInsured": this.vehicleDetails.OldSumInsured,
+          "OldTppdIncreaeLimit": this.vehicleDetails.OldTppdIncreaeLimit,
+          "OldWindScreenSumInsured": this.vehicleDetails.OldWindScreenSumInsured
+        }
+      }
       }
       ReqObj['FleetOwnerYn'] = "N";
       if(this.endorsementSection){
@@ -1297,29 +1319,29 @@ export class VehicleDetailsComponent implements OnInit {
 
     // format number
     if (this.vehicleSI) {
-     this.vehicleSI = this.vehicleSI.replace(/\D/g, "")
+      this.vehicleSI = this.vehicleSI.replace(/[^0-9.]|(?<=\..*)\./g, "")
        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }}
     TppdCommaFormatted() {
 
       // format number
       if (this.tppdSI) {
-       this.tppdSI = this.tppdSI.replace(/\D/g, "")
-         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+       this.tppdSI = this.tppdSI.replace(/[^0-9.]|(?<=\..*)\./g, "")
+       .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }}
     accessoriesCommaFormatted() {
 
       // format number
       if (this.accessoriesSI) {
-       this.accessoriesSI = this.accessoriesSI.replace(/\D/g, "")
-         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+       this.accessoriesSI = this.accessoriesSI.replace(/[^0-9.]|(?<=\..*)/g, "")
+       .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
     }
     WindSICommaFormatted() {
       // format number
       if (this.windShieldSI) {
-       this.windShieldSI = this.windShieldSI.replace(/\D/g, "")
-         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+       this.windShieldSI = this.windShieldSI.replace(/[^0-9.]|(?<=\..*)\./g, "")
+       .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
     }
   onWindSIValueChange(event){
@@ -1741,6 +1763,7 @@ export class VehicleDetailsComponent implements OnInit {
           (data: any) => {
             if(data.Result){
               let vehicleDetails:any = data.Result;
+              
               let startDate = "",endDate = ""
               //this.updateComponent.vehicleDetails = this.vehicleDetails;
               if(this.endorsementSection && this.enableAddVehicle && vehicleDetails.EndorsementYn=='Y'){
@@ -1929,7 +1952,17 @@ export class VehicleDetailsComponent implements OnInit {
               "EndtPrevQuoteNo": vehicleDetails?.EndtPrevQuoteNo,
               "EndtStatus": vehicleDetails?.EndtStatus,
               "IsFinanceEndt": vehicleDetails?.IsFinanceEndt,
-              "OrginalPolicyNo": vehicleDetails?.OrginalPolicyNo
+              "OrginalPolicyNo": vehicleDetails?.OrginalPolicyNo,
+              "Scenarios": {
+                  "ExchangeRateScenario": {
+                    "OldAcccessoriesSumInsured": vehicleDetails.AcccessoriesSumInsured,
+                    "OldCurrency": vehicleDetails.Currency,
+                    "OldExchangeRate": vehicleDetails.ExchangeRate,
+                    "OldSumInsured": vehicleDetails.SumInsured,
+                    "OldTppdIncreaeLimit": vehicleDetails.TppdIncreaeLimit,
+                    "OldWindScreenSumInsured": vehicleDetails.WindScreenSumInsured
+                  }
+                }
               }
               if(this.endorsementSection){
                 if(vehicleDetails?.Status == undefined || vehicleDetails?.Status == null || vehicleDetails?.Status == 'Y'){

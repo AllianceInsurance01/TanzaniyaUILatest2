@@ -431,7 +431,7 @@
 
                                                             <div class="d-flex justify-content-between">
                                                                 <div>
-                                                                    <ng-container>
+                                                                    <ng-container *ngIf="element[col.key]!=0 && element[col.key]!='0' && element[col.key]!=null">
 
                                                                         &nbsp;&nbsp;<button type="button"
                                                                             class="btn maan-btn-blue btn-circle"
@@ -2741,7 +2741,7 @@
                             0
                         </ng-container>
                         <ng-container *ngIf="!checkReferralStatus()">
-                            {{totalPremium | number : '1.2-2'}}
+                            {{totalPremium | number : '1.3-3'}}
                         </ng-container>
                         </b></span></div>
                 </div>
@@ -3263,7 +3263,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr *ngIf="productId!='42'">
                             <td>Sum Insured</td>
                             <td></td>
                             <td style="text-align: end;"><span class="spancommon span_font_size">{{sumInsured | commaseparator}}</span></td>
@@ -3383,8 +3383,19 @@
                                     </ng-container>
                                 </td>
                             </tr>
+
                         </ng-container>
+                       
+                        
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><b>Total</b></td>
+                            <td></td>
+                            <td style="text-align: end;"><span class="spancommon span_font_size">
+                                <b>{{afterDiscount | commaseparator}}</b></span></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

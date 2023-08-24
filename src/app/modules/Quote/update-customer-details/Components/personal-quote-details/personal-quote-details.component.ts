@@ -3485,6 +3485,7 @@ getAooSIList(){
   );
 }
 ongetAggSIList(type){
+  if(type=='change'){this.productItem.AggSumInsured = null; console.log("Final Agg Data",this.productItem,this.fields)}
   this.aggSIList = [];
   let ReqObj = {
     "Aoo":this.productItem.AooSumInsured,
@@ -3493,6 +3494,7 @@ ongetAggSIList(type){
   let urlLink = `${this.motorApiUrl}api/dropdown/medmalinsuranceagg`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
+     
       let defaultObj = [{ 'label': '-Select-', 'value': null }]
       this.aggSIList = data.Result;
       for (let i = 0; i < this.aggSIList.length; i++) {
@@ -3501,7 +3503,7 @@ ongetAggSIList(type){
         delete this.aggSIList[i].CodeDesc;
         if (i == this.aggSIList.length - 1) {
           this.fields[0].fieldGroup[0].fieldGroup[2].props.options = defaultObj.concat(this.aggSIList);
-          if(type=='change') this.productItem.AggSumInsured = null;
+          if(type=='change'){this.fields[0].fieldGroup[0].fieldGroup[2].formControl.setValue(null);this.productItem.AggSumInsured = null;}
         }
       }
     },
