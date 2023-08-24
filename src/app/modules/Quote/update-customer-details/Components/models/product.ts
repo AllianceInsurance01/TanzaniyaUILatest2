@@ -76,6 +76,27 @@ export class ProductData {
 	ElectronicEquipSuminsured:any ='0';AooSumInsured:any=null;
 	PlanType: any = null;AggSumInsured:any=null;
 	DateOfJoiningYear:any=null;EmployeeName:any=null;
+	LocationNameBuilding:any =null;
+	LocationAddress:any =null; BuildingSumInsureds:any;
+	PALocationName:any= null; PALocationAddress:any; PAName:any;
+	PASalary:any ='0'; PANationalityID:any;PADob:any;
+	ContentSI:any ='0';
+	ContentDesc: any
+	ContentSerialNo: any
+	ContentType: any; ContentLocation:any;
+	AccDob:any = ''; AccNationID:any; AccSI:any ='';AccName:any; AccOccupation:any;
+	AccidentLocation:any ='';
+	IndDob:any = null; IndNationID:any=null; IndSI:any =null;IndName:any = null; IndOccupation:any =null;
+	IndLocation:any =null; DeviceLocation:any=null;DeviceType: any=null; DeviceMake:any=null;
+	DeviceYear:any=null;DeviceSNo:any=null; RiskSI:any=null;RiskDescription:any=null;RiskSerialNo:any;
+	RiskContentType:any;RiskLocation:any; MLocation:any=null;MDescription:any=null;MName:any=null;
+	MContentType:any=null;MBrand:any=null;MSerialNo:any=null;MSI:any;
+	EmpsName:any=null; EmpsOccupation:any =null;EmpsAddress:any=null;EmpsNationality:any=null;
+	EmpsDob:any=null;EmpsJoin:any=null;EmpsPeriod:any=null;EmpsLocation:any=null;EmpsSI:any=null;
+	fdName:any=null; fdOccupation:any =null;fdAddress:any=null;fdNationality:any=null;
+	fdDob:any=null;fdJoin:any=null;fdPeriod:any=null;fdLocation:any=null;fdSI:any=null;
+	
+
 	constructor(data?) {
 		this.id = data?.id ?? ''
 		this.CustomerName = data?.CustomerName ?? '';
@@ -193,6 +214,29 @@ export class ProductData {
 		this.PlanType = data?.PlanType ?? 'S';
 		this.AooSumInsured = data?.AooSumInsured ?? null;
 		this.AggSumInsured = data?.AggSumInsured ?? null;
+		this.LocationNameBuilding = data ?.LocationName ?? '';
+		this.LocationAddress = data ?.LocationAddress ?? '';
+		this.BuildingSumInsureds = data?.BuildingSuminsured ?? '0';
+		// this.PALocationAddress = data?.accidentOccupation ?? '';
+		this.PALocationName = data?.LocationName ?? '';
+		this.ContentSI = data?.SumInsured ?? '';
+		this.ContentDesc= data?.ContentRiskDesc ?? '';
+		this.ContentSerialNo = data?.SerialNo ?? '';
+		this.ContentType = data?.ItemDesc ?? '';
+		this.AccOccupation = data?.OccupationDesc ??'';
+		this.AccName = data?.PersonName ?? '';
+		this.AccDob = data?.Dob ?? '';
+		this.AccNationID = data?.NationalityId ?? '';
+		this.AccSI = data?.Salary ?? '';
+		this.IndLocation = data?.RiskId ?? null;
+		this.IndOccupation = data?.OccupationDesc ?? null;
+		this.IndName = data?.PersonName ?? null;
+		this.IndDob = data?.Dob ?? null;
+		this.IndNationID = data?.NationalityId ?? null;
+		this.IndSI = data?.Salary ?? null;
+		this.EmpsLocation = data?.RiskId ?? null;
+		this.EmpsDob = data?.DateOfBirth  ?? null;
+	
 		// this.EquipmentSi = data?.EquipmentSi ?? '0';
 		// this.ElectronicEquipSuminsured = data.ElectronicEquipSuminsured ?? '0';
 	}
