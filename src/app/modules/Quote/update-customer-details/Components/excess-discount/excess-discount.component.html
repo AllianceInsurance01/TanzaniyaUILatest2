@@ -9,7 +9,8 @@
                             <i class="fas fa-user mx-1"></i>
                         </span> <span class="spancommon">Customer Details</span>
                     </div>
-                    <div>
+                    <div *ngIf="promoCode" style="background-color: #333b85;padding-left: 5px;padding-right: 5px;">
+                        <span class="spancommon" style="font-weight: 600;color: #fff;">PromoCode - {{promoCode}}</span>
                     </div>
                 </div>
             </div>
@@ -47,7 +48,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-1"></div>
                 <div class="col-12 col-md-2">
                     <div class="input-control-container" style="text-wrap: nowrap !important">
                         <label class="input-form-label">Date Of Birth / RegDate</label>
@@ -56,8 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-1"></div>
-                <div class="col-12 col-md-2">
+                <div class="col-12 col-md-3">
                     <div class="input-control-container">
                         <label class="input-form-label">Email Id</label>
                         <div class="input-form-radio-box">
@@ -81,12 +80,20 @@
                         </div>
                     </div>
                 </div>
+                <!-- <div class="col-12 col-md-2" *ngIf="promoCode">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Promo Code</label>
+                        <div class="input-form-radio-box">
+                            <span class="spancommon span_font_size" style="font-weight: 600;color: #ee6d04;">{{promoCode}}</span>
+                        </div>
+                    </div>
+                </div> -->
             </div>
         </div>
     </div>
 </div>
 <div class="row p-0 mt-2">
-    <div class="col-12 col-md-9 col-lg-9 col-9 col-sm-12  p-0">
+    <div [ngClass]="vehicleDetailsList.length==1 ?'col-12 col-md-12 col-lg-12 col-12 col-sm-12  p-0':'col-12 col-md-9 col-lg-9 col-9 col-sm-12  p-0'" >
 
         <div class="maan-grid-item customPadding" *ngIf="coverSection">
             <div class="maan-grid-item-title" style="margin: 0px !important;top:0rem;bottom: 0rem !important;padding-top: 9px !important;">
@@ -120,7 +127,7 @@
             <div class="maan-grid-item-body" style="min-height: 385px !important;">
                 <div class="row p-0">
                     <div class="col-md-8 col-lg-8 col-xl-8">
-                        <div class="input-control-container">
+                        <div class="input-control-container" *ngIf="vehicleDetailsList.length!=0 && vehicleDetailsList.length!=1">
                             <ng-select class="input-form-select" [searchable]="true" [clearable]="true"
                                 [(ngModel)]="selectedRowData" (change)="onSelectSection($event)">
                                 <ng-container *ngFor="let menu of vehicleDetailsList">
@@ -182,6 +189,62 @@
 
 
                             </ng-select>
+                        </div>
+                        <div *ngIf="vehicleDetailsList.length==1" style="padding-left: 15px;padding-top: 15px;">
+                            <ng-container *ngFor="let menu of vehicleDetailsList">
+                                <ng-container *ngIf="productId=='5'">
+                                    <span class="spancommon" style="color:navy;font-size: 1rem;font-weight: 600;">
+                                        {{menu.RiskDetails.PolicyTypeDesc}}&nbsp;|&nbsp;{{
+                                        menu.RiskDetails.Vehiclemake }} &nbsp;|&nbsp; {{
+                                        menu.RiskDetails.Vehcilemodel
+                                        }} &nbsp;|&nbsp; {{ menu.RiskDetails.Chassisnumber }} &nbsp;</span>
+    
+                                </ng-container>
+                                <ng-container *ngIf="productId=='4'">
+                                    <ng-container *ngIf="menu.RiskDetails.TravelId=='1'">
+                                        <span class="spancommon"
+                                            style="color:navy;font-size: 1rem;font-weight: 600;">Kids&nbsp;({{menu.RiskDetails.TotalPassengers}})</span>
+    
+                                    </ng-container>
+                                    <ng-container *ngIf="menu.RiskDetails.TravelId=='2'">
+                                        <span class="spancommon"
+                                            style="color:navy;font-size: 1rem;font-weight: 600;">Adults&nbsp;({{menu.RiskDetails.TotalPassengers}})</span>
+    
+                                    </ng-container>
+                                    <ng-container *ngIf="menu.RiskDetails.TravelId=='3'">
+                                        <span class="spancommon"
+                                            style="color:navy;font-size: 1rem;font-weight: 600;">Seniors&nbsp;({{menu.RiskDetails.TotalPassengers}})</span>
+    
+                                    </ng-container>
+                                    <ng-container *ngIf="menu.RiskDetails.TravelId=='4'">
+                                        <span class="spancommon" style="color:navy;font-size: 1rem;font-weight: 600;">Super
+                                            Seniors&nbsp;({{menu.RiskDetails.TotalPassengers}})</span>
+    
+                                    </ng-container>
+                                    <ng-container *ngIf="menu.RiskDetails.TravelId=='5'">
+                                        <span class="spancommon" style="color:navy;font-size: 1rem;font-weight: 600;">Grand
+                                            Seniors&nbsp;({{menu.RiskDetails.TotalPassengers}})</span>
+    
+                                    </ng-container>
+                                    <span class="spancommon" style="color:navy;font-size: 1rem;font-weight: 600;"> &nbsp;|&nbsp;
+                                        {{menu.RiskDetails.DestinationCountry}}
+                                        &nbsp;|&nbsp; {{ menu.RiskDetails.TravelStartDate }} &nbsp;~&nbsp; {{
+                                        menu.RiskDetails.TravelEndDate }}</span>
+                                </ng-container>
+                                <ng-container
+                                    *ngIf="productId!='3' && productId!='4' && productId!='5' && productId!='19' && productId!='14' && productId!='32'">
+                                    <span class="spancommon" style="color:navy;font-size: 1rem;font-weight: 600;">
+                                        {{productName}}
+                                    </span>
+                                </ng-container>
+                                <ng-container
+                                    *ngIf="productId=='3' || productId=='19' || productId=='14' || productId=='32'">
+    
+                                    <span class="spancommon" style="color:navy;font-size: 1rem;font-weight: 600;">
+                                        {{menu.SectionName}}
+                                    </span>
+                                </ng-container>
+                            </ng-container>
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-4 mt-3" *ngIf="selectedVehicleList.length!=0">
@@ -933,7 +996,7 @@
                                                             </ng-container>
                                                             <ng-container *ngIf="col.key =='CoverName'">
                                                                 <div
-                                                                    style="min-width: 150px !important;white-space: normal !important;">
+                                                                    style="min-width: 150px !important;white-space: normal !important;padding: 3px !important">
                                                                     {{ element[col.key]}}&nbsp;<button
                                                                         class="fa fa-question-circle"
                                                                         style="border: none;" placement="bottom"
@@ -2555,7 +2618,7 @@
         </div>
         
     </div>
-    <div class="col-12 col-md-3 col-lg-3 col-3 col-sm-12 p-0">
+    <div class="col-12 col-md-3 col-lg-3 col-3 col-sm-12 p-0" *ngIf="vehicleDetailsList.length!=1 && vehicleDetailsList.length!=0">
         <div class="maan-grid-item customPadding2" *ngIf="coverSection">
             <div class="maan-grid-item-title" style="margin: 0px !important;top:0rem;bottom: 0rem !important;padding-top: 9px !important;">
                 <div class="d-flex justify-content-between">

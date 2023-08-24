@@ -3631,64 +3631,78 @@ getMotorUsageList(vehicleValue){
         if(this.selectedCoverList.length!=0){
           let i=0;
           for(let vehicle of this.vehicleDetailsList){
-              let entry = this.selectedCoverList.filter(ele=>ele.Id==vehicle.Vehicleid);
-              if(entry.length!=0){
-                let j=0; let covers = [];
-                for(let veh of entry){
-                    let k=0;
-                    for(let selectedCover of veh.Covers){
-                      let coverList = vehicle.CoverList.filter(ele=>ele.CoverId == selectedCover.CoverId)
-                      covers = covers.concat(coverList);
-                      k+=1;
-                      if(k==veh.Covers.length){
-                        j+=1;
-                        if(j==entry.length){
-
-                            let ReqObj = {
-                              "RequestReferenceNo": this.quoteRefNo,
-                              "VehicleId": veh.Id,
-                              "SectionId": vehicle.SectionId,
-                              "ProductId": this.productId,
-                              "InsuranceId": this.insuranceId,
-                              "Covers":covers
-                            }
-                            console.log("Final Req",vehicle,veh,ReqObj)
-                            let urlLink = `${this.CommonApiUrl}api/updatefactorrate`;
-                            this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-                              (data: any) => {
-                                  if(data.Result){
-                                    i+=1;
-                                    if(i==this.vehicleDetailsList.length){
-                                      if(type=='calculate'){
-                                        
-                                        // this.getcall();
-                                        //sessionStorage.removeItem('vehicleDetailsList');
-                                        window.location.reload();
+              let vehEntry = this.selectedCoverList.filter(ele=>ele.Id==vehicle.Vehicleid);
+              if(vehEntry.length!=0){
+                let entry = vehEntry.filter(ele=>ele.SectionId==vehicle.SectionId);
+                if(entry.length!=0){
+                  let j=0; let covers = [];
+                  for(let veh of entry){
+                      let k=0;
+                      for(let selectedCover of veh.Covers){
+                        let coverList = vehicle.CoverList.filter(ele=>ele.CoverId == selectedCover.CoverId)
+                        covers = covers.concat(coverList);
+                        k+=1;
+                        if(k==veh.Covers.length){
+                          j+=1;
+                          if(j==entry.length){
+  
+                              let ReqObj = {
+                                "RequestReferenceNo": this.quoteRefNo,
+                                "VehicleId": veh.Id,
+                                "SectionId": vehicle.SectionId,
+                                "ProductId": this.productId,
+                                "InsuranceId": this.insuranceId,
+                                "Covers":covers
+                              }
+                              console.log("Final Req",vehicle,veh,ReqObj)
+                              let urlLink = `${this.CommonApiUrl}api/updatefactorrate`;
+                              this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+                                (data: any) => {
+                                    if(data.Result){
+                                      i+=1;
+                                      if(i==this.vehicleDetailsList.length){
+                                        if(type=='calculate'){
+                                          
+                                          // this.getcall();
+                                          //sessionStorage.removeItem('vehicleDetailsList');
+                                          window.location.reload();
+                                        }
+                                        else this.updateReferralStatus();
                                       }
-                                      else this.updateReferralStatus();
                                     }
-                                  }
-                                },
-                                (err) => { },
-                              );
+                                  },
+                                  (err) => { },
+                                );
+                          }
                         }
                       }
-                    }
-                    
-
+                      
+  
+                  }
+                      console.log("Entry",entry)
                 }
-                    console.log("Entry",entry)
+                else{
+                  i+=1;
+                  if(i==this.vehicleDetailsList.length){
+                    if(type=='calculate'){
+                      //this.getcall();
+                      //sessionStorage.removeItem('vehicleDetailsList');
+                        window.location.reload();
+                    }
+                    else this.updateReferralStatus();
+                  }
+                }
               }
               else{
                 i+=1;
-                if(i==this.vehicleDetailsList.length){
-                  if(type=='calculate'){
-                    //this.getcall();
-                    //sessionStorage.removeItem('vehicleDetailsList');
-                   window.location.reload();
+                  if(i==this.vehicleDetailsList.length){
+                    if(type=='calculate'){
+                      //this.getcall();
+                      //sessionStorage.removeItem('vehicleDetailsList');
+                        window.location.reload();
+                    }
+                    else this.updateReferralStatus();
                   }
-                  else this.updateReferralStatus();
-                }
               }
           }
           // for(let veh of this.selectedCoverList){
