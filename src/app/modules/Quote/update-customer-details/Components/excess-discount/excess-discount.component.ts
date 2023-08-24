@@ -51,7 +51,7 @@ export class ExcessDiscountComponent implements OnInit {
   sortProperty: any = 'AllotedYN';loadingList:any[]=[];
   sortDirection: any = 'desc';taxList:any[]=[];
   filterValue: any = '';innerColumnHeader:any[]=[];
-  dataExt: any[] = [];
+  dataExt: any[] = [];selectedRowData:any=null;
   ClausesDataId:any[]=[];
   columnsToDisplay = [
     'Id',
@@ -214,6 +214,12 @@ emiyn="N";
   selectedCoverId: any;
   selectedSectionId: any;
   uwReferralSection: boolean=false;
+  selectedVehicleList: any;
+  ratePercent: any;
+  excessPercent: any;
+  excessAmount: any;
+  calcType: any=null;
+  sumInsured: any;
   constructor(public sharedService: SharedService,private router:Router,private modalService: NgbModal,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe,public dialog: MatDialog) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -421,6 +427,11 @@ emiyn="N";
               vehicleList.push(veh);
               if(i==vehicles.length){
                   this.vehicleDetailsList = vehicleList;
+                  if(this.vehicleDetailsList.some(ele=>ele.ManualReferalYn=='Y') && !this.adminSection){
+                    this.isMannualReferal = "Y";
+                  }
+                  this.selectedRowData = this.vehicleDetailsList[0];
+                  this.onSelectSection();
                   this.coverSection = true;
                   if(((this.uwReferralSection && !this.adminSection && (this.statusValue=='RP' || this.statusValue==null || this.statusValue==undefined))  || (!this.adminSection && this.statusValue=='RP') || (this.statusValue=='RP' && !this.adminSection))){
                     this.columnHeader = [
@@ -443,8 +454,8 @@ emiyn="N";
                       { key: 'CoverName', display: 'Cover Name' },
                       // { key: 'ReferalDescription', display: 'Referral' },
                       { key: 'SumInsured', display: 'Sum Insured' },
-                      { key: 'ExcessPercent', display: 'Excess Percent' },
-                      { key: 'ExcessAmount', display: 'Excess Amount' },
+                      // { key: 'ExcessPercent', display: 'Excess Percent' },
+                      // { key: 'ExcessAmount', display: 'Excess Amount' },
                       //{ key: 'MinimumPremium', display: 'Minimum' },
               
                     ]
@@ -470,9 +481,9 @@ emiyn="N";
                       { key: 'CoverName', display: 'Cover Name' },
                       // { key: 'ReferalDescription', display: 'Referral' },
                       { key: 'SumInsured', display: 'Sum Insured' },
-                      { key: 'Rate', display: 'Rate' },
-                      { key: 'ExcessPercent', display: 'Excess Percent' },
-                      { key: 'ExcessAmount', display: 'Excess Amount' },
+                      // { key: 'Rate', display: 'Rate' },
+                      // { key: 'ExcessPercent', display: 'Excess Percent' },
+                      // { key: 'ExcessAmount', display: 'Excess Amount' },
                       //{ key: 'MinimumPremium', display: 'Minimum' },
                       { key: 'PremiumAfterDiscount', display: 'After Discount' },
                       { key: 'PremiumIncludedTax', display: 'Included Tax' },
@@ -1010,6 +1021,7 @@ getMotorUsageList(vehicleValue){
               this.selectedCoverList.push(element);
               console.log("Selected Covers",this.selectedCoverList)
               if(vehicle?.totalPremium){
+                alert('Entered')
                 if(cover.Endorsements!=null){
                   vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxLC;
                   vehicle['totalPremium'] =  vehicle['totalPremium']+cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTax;
@@ -1286,7 +1298,7 @@ getMotorUsageList(vehicleValue){
               
               let vehicleList:any[]=[];
               if(this.vehicleData.length!=0){
-                let referralList = this.vehicleData.filter(ele=>ele.UWReferral!=null && ele.UWReferral.length!=0);
+                let referralList = this.vehicleData.filter(ele=>(ele.UWReferral!=null && ele.UWReferral.length!=0) || ele.MasterReferral.length!=0);
                 if(referralList.length!=0) this.uwReferralSection = true;
                 if(this.vehicleData[0].EndtTypeMaster!=null){
                   let quoteDetails = this.vehicleData[0].EndtTypeMaster
@@ -1408,6 +1420,9 @@ getMotorUsageList(vehicleValue){
         (err) => { },
       );
     }
+  }
+  checkManualReferral(){
+    return this.vehicleDetailsList.some(ele=>ele.ManualReferalYn=='Y')
   }
   filterVehicleList(){
     let vehicleList = [];
@@ -1891,6 +1906,7 @@ getMotorUsageList(vehicleValue){
       }
       let j=0;
       for(let veh of this.vehicleDetailsList){
+        veh['totalPremium'] = 0;
         let i=0;
         let coverList:any[]=veh.CoverList;
         for(let cover of coverList){
@@ -1932,6 +1948,7 @@ getMotorUsageList(vehicleValue){
             //   this.onSelectCover(cover,false,veh.Vehicleid,veh,'coverList','change');
             // }
             // else{
+              console.log("Final Selection",veh)
               cover['selected']= true;
               this.onSelectCover(cover,true,veh.Vehicleid,veh,'coverList','direct');
             //}
@@ -1966,6 +1983,7 @@ getMotorUsageList(vehicleValue){
               let otherList = coverList.filter(ele=>ele.isSelected!='D' && ele.UserOpt != 'Y')
               veh.CoverList = defaultList.concat(otherList);
               if(this.adminSection) veh.CoverList = coverList.filter(ele=>ele.isSelected=='D' || ele?.UserOpt=='Y')
+              
             }
           }
           
@@ -2073,7 +2091,18 @@ getMotorUsageList(vehicleValue){
     let coverList = rowData.CoverList;
     return (!coverList.some(ele=>ele.UserOpt=='Y' || ele.isSelected=='D' || ele.isSelected=='O'))
   }
+  onSelectSection(){
+    console.log("Current Id",this.selectedRowData)
+    if(this.selectedRowData!=null){
+      this.coverSection = false;
+      this.selectedVehicleList = [this.selectedRowData]
+      this.coverSection = true;
+
+    }
+  }
   onSelectSections(event,rowData){
+      this.selectedRowData = rowData;
+      this.selectedVehicleList = [rowData];
       let coverList:any[]=rowData.CoverList;
         for(let cover of coverList){
           if(cover.UserOpt=='Y' || cover.isSelected=='D' || cover.isSelected=='O'){
@@ -2081,6 +2110,12 @@ getMotorUsageList(vehicleValue){
             else{cover['selected']=false; this.onSelectCover(cover,false,rowData.Vehicleid,rowData,'coverList','change')}
           }
         }
+  }
+  onSelectSectionIndex(rowData){
+    this.coverSection = false;
+    this.selectedRowData = rowData;
+    this.selectedVehicleList = [rowData];
+    this.coverSection = true;
   }
   ongetBack(){
     // if(this.statusValue=='RA'){
@@ -2184,8 +2219,12 @@ getMotorUsageList(vehicleValue){
 
         if(i==this.vehicleDetailsList.length){
           this.showSection = true;
+          if(this.vehicleDetailsList.some(ele=>ele.ManualReferalYn=='Y') && !this.adminSection && this.statusValue){
+            this.isMannualReferal = "Y";
+          }
+          this.selectedRowData = this.vehicleDetailsList[0];
+          this.onSelectSection();
           this.coverSection = true;
-          console.log("Dtatus Value",this.statusValue)
           if(((this.uwReferralSection && !this.adminSection && (this.statusValue=='RP' || this.statusValue=='' || this.statusValue==null || this.statusValue==undefined))  || (!this.adminSection && this.statusValue=='RP'))){
             this.columnHeader = [
 
@@ -2207,8 +2246,8 @@ getMotorUsageList(vehicleValue){
               { key: 'CoverName', display: 'Cover Name' },
               // { key: 'ReferalDescription', display: 'Referral' },
               { key: 'SumInsured', display: 'Sum Insured' },
-              { key: 'ExcessPercent', display: 'Excess Percent' },
-              { key: 'ExcessAmount', display: 'Excess Amount' },
+              // { key: 'ExcessPercent', display: 'Excess Percent' },
+              // { key: 'ExcessAmount', display: 'Excess Amount' },
               //{ key: 'MinimumPremium', display: 'Minimum' },
       
             ]
@@ -2234,9 +2273,9 @@ getMotorUsageList(vehicleValue){
               { key: 'CoverName', display: 'Cover Name' },
               // { key: 'ReferalDescription', display: 'Referral' },
               { key: 'SumInsured', display: 'Sum Insured' },
-              { key: 'Rate', display: 'Rate' },
-              { key: 'ExcessPercent', display: 'Excess Percent' },
-              { key: 'ExcessAmount', display: 'Excess Amount' },
+              // { key: 'Rate', display: 'Rate' },
+              // { key: 'ExcessPercent', display: 'Excess Percent' },
+              // { key: 'ExcessAmount', display: 'Excess Amount' },
               //{ key: 'MinimumPremium', display: 'Minimum' },
               { key: 'PremiumAfterDiscount', display: 'After Discount' },
               { key: 'PremiumIncludedTax', display: 'Included Tax' },
@@ -2272,7 +2311,7 @@ getMotorUsageList(vehicleValue){
   }
   onSelectCover(rowData,event,vehicleId,vehicleData,type,directType){
     console.log("Cover Selected received",rowData,type,this.selectedCoverList,this.endorsementType,this.enableFieldsList)
-   
+    
     if(type=='coverList'){
         let vehicle:any;
         if(this.productId!='4' && this.productId!='5'){
@@ -2284,12 +2323,11 @@ getMotorUsageList(vehicleValue){
         
         let coverList = vehicle?.CoverList;
         if(event){
-          
+          rowData['selected']= true;
           if(rowData.DifferenceYN==undefined && this.coverModificationYN=='Y'){
             rowData['DifferenceYN'] = 'Y'
           }
           if(this.selectedCoverList.length!=0){
-           
             let entry = this.selectedCoverList.filter(ele=>ele.Id==vehicleId);
             if(entry.length==0){
               
@@ -2339,6 +2377,7 @@ getMotorUsageList(vehicleValue){
                 }
               }
               else if(vehicle?.totalPremium){
+                
                 rowData['Modifiable']='N';
                 if(this.endorseAddOnCovers || this.endorseCovers){
                   rowData['ModifiedYN'] = 'N';
@@ -2357,11 +2396,13 @@ getMotorUsageList(vehicleValue){
                 
               }
               else{
+                
                 rowData['Modifiable']='N';
                 if(this.endorseAddOnCovers || this.endorseCovers){
                   rowData['ModifiedYN'] = 'N';
                 }
                 if(rowData.Endorsements!=null && rowData.Endorsements!=undefined){
+                 
                   if(this.coverModificationYN!='Y' || this.endorseSIModification){
                     if(!vehicle?.totalLcPremium) {vehicle['totalLcPremium'] = 0;vehicle['totalPremium']=0;}
                     vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxLC;
@@ -2370,12 +2411,12 @@ getMotorUsageList(vehicleValue){
                   }
                 }
                 else{
+                 
                     vehicle['totalLcPremium'] =  rowData.PremiumIncludedTaxLC;
                     vehicle['totalPremium'] =  rowData.PremiumIncludedTax;
                 }
                 
               }
-              
                 console.log("Total Premium",rowData,vehicle)
               this.getTotalVehiclesCost();
               //this.totalPremium = this.totalPremium+rowData.PremiumIncludedTax
@@ -2686,6 +2727,7 @@ getMotorUsageList(vehicleValue){
           }
         }
         else{
+          rowData['selected']= false;
           let entry = this.selectedCoverList.filter(ele=>ele.Id==vehicleId);
           if(entry){
             let sectionEntry = entry.find(ele=>ele.SectionId==rowData.SectionId);
@@ -2763,14 +2805,18 @@ getMotorUsageList(vehicleValue){
       else if(this.endorseAddOnCovers && this.adminSection )return false;
       else return true;  
     }
-    else if(!this.adminSection && this.statusValue=='RA') return true
-    else if(this.statusValue && this.adminSection) return true;
+    else if(!this.adminSection && this.statusValue=='RA') return true;
     else return false;
   }
   setDiscountDetails(vehData,rowData,modal){
     this.selectedVehId = vehData.VehicleId;
     this.selectedCoverId = rowData.CoverId;
+    this.sumInsured = rowData.SumInsured;
+    this.calcType = rowData.CalcType;
     this.selectedSectionId = vehData.SectionId;
+    this.ratePercent = rowData.Rate;
+    this.excessPercent = rowData.ExcessPercent;
+    this.excessAmount = rowData.ExcessAmount;
     this.beforeDiscount = rowData.PremiumBeforeDiscount;
     this.afterDiscount = rowData.PremiumAfterDiscount;
     if(rowData.Discounts) this.discountList = rowData.Discounts;
@@ -2778,28 +2824,43 @@ getMotorUsageList(vehicleValue){
     this.discountOpen(modal);
   }
   SaveLoadingDetails(modal){
+    if(this.loadingList.length!=0){
+      let i=0;
+      for(let load of this.loadingList){
+        console.log("Entry Load",load)
+        if(load.LoadingAmount!=0 && String(load.LoadingAmount).includes(',')) load['LoadingAmount'] = Number(load.LoadingAmount.replaceAll(',',''));
+        i+=1;
+        if(i==this.loadingList.length) this.finalSaveLoading(modal)
+      }
+    }
+    else this.finalSaveLoading(modal)
+    
+  }
+  finalSaveLoading(modal){
     let vehData = this.vehicleDetailsList.filter(ele=>ele.VehicleId==this.selectedVehId);
     let secData = vehData.filter(ele=>ele.SectionId==this.selectedSectionId);
     let coverData = secData[0].CoverList.filter(ele=>ele.CoverId==this.selectedCoverId);
     coverData[0].PremiumAfterDiscount = this.afterDiscount;
-    this.selectedVehId = null;
-    this.selectedCoverId = null;
-    this.selectedSectionId = null;
+    coverData[0].Discounts = this.discountList;
+    coverData[0].ratePercent = this.ratePercent;
+    coverData[0].ExcessPercent = this.excessPercent;
+    coverData[0].ExcessAmount = this.excessAmount;
+    coverData[0].Rate = this.ratePercent;
+    this.selectedVehId = null;this.excessPercent = null;
+    this.selectedCoverId = null;this.excessAmount=null;
+    this.selectedSectionId = null;this.ratePercent = null;
     this.beforeDiscount = null;this.loadingList =[];
     this.afterDiscount = null;this.discountList =[];
     if(coverData){
-      console.log("Final Covers",coverData)
       modal.dismiss('Cross click');
       $('#discountModal').modal('hide');
     }
-    
   }
   premiumComma(i,LoadingAmount){
     console.log('HHHHHHH',LoadingAmount);
     let entry = this.loadingList[i];
     console.log("Entry Came")
     if(entry.LoadingAmount){
-      console.log("Entry Came 2")
       let value = entry.LoadingAmount.replace(/\D/g, "")
       .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       this.loadingList[i]['LoadingAmount'] = value;
@@ -2830,11 +2891,10 @@ getMotorUsageList(vehicleValue){
               }
           }
       }
-      console.log("Final Premium",this.afterDiscount)
   }
   getTotalVehiclesCost(){
     let totalCost = 0,i=0,totalLocalCost=0;
-
+    
     for(let veh of this.vehicleDetailsList){
       if(veh?.totalPremium) totalCost = totalCost+veh?.totalPremium;
       if(veh?.totalLcPremium) totalLocalCost = totalLocalCost+veh?.totalLcPremium;
@@ -2851,6 +2911,7 @@ getMotorUsageList(vehicleValue){
         }
     }
     console.log("Total Premium",this.vehicleDetailsList)
+    console.log("Final Cost Of Vehicle",this.vehicleDetailsList)
       console.log('TTTTTTTT',this.totalPremium);
     }
   }
@@ -3570,63 +3631,78 @@ getMotorUsageList(vehicleValue){
         if(this.selectedCoverList.length!=0){
           let i=0;
           for(let vehicle of this.vehicleDetailsList){
-              let entry = this.selectedCoverList.filter(ele=>ele.Id==vehicle.Vehicleid);
-              if(entry.length!=0){
-                let j=0; let covers = [];
-                for(let veh of entry){
-                    let k=0;
-                    for(let selectedCover of veh.Covers){
-                      let coverList = vehicle.CoverList.filter(ele=>ele.CoverId == selectedCover.CoverId)
-                      covers = covers.concat(coverList);
-                      k+=1;
-                      if(k==veh.Covers.length){
-                        j+=1;
-                        if(j==entry.length){
-
-                            let ReqObj = {
-                              "RequestReferenceNo": this.quoteRefNo,
-                              "VehicleId": veh.Id,
-                              "SectionId": vehicle.SectionId,
-                              "ProductId": this.productId,
-                              "InsuranceId": this.insuranceId,
-                              "Covers":covers
-                            }
-                            console.log("Final Req",vehicle,veh,ReqObj)
-                            let urlLink = `${this.CommonApiUrl}api/updatefactorrate`;
-                            this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-                              (data: any) => {
-                                  if(data.Result){
-                                    i+=1;
-                                    if(i==this.vehicleDetailsList.length){
-                                      if(type=='calculate'){
-                                        this.getcall();
-                                        //sessionStorage.removeItem('vehicleDetailsList');
-                                        //window.location.reload();
+              let vehEntry = this.selectedCoverList.filter(ele=>ele.Id==vehicle.Vehicleid);
+              if(vehEntry.length!=0){
+                let entry = vehEntry.filter(ele=>ele.SectionId==vehicle.SectionId);
+                if(entry.length!=0){
+                  let j=0; let covers = [];
+                  for(let veh of entry){
+                      let k=0;
+                      for(let selectedCover of veh.Covers){
+                        let coverList = vehicle.CoverList.filter(ele=>ele.CoverId == selectedCover.CoverId)
+                        covers = covers.concat(coverList);
+                        k+=1;
+                        if(k==veh.Covers.length){
+                          j+=1;
+                          if(j==entry.length){
+  
+                              let ReqObj = {
+                                "RequestReferenceNo": this.quoteRefNo,
+                                "VehicleId": veh.Id,
+                                "SectionId": vehicle.SectionId,
+                                "ProductId": this.productId,
+                                "InsuranceId": this.insuranceId,
+                                "Covers":covers
+                              }
+                              console.log("Final Req",vehicle,veh,ReqObj)
+                              let urlLink = `${this.CommonApiUrl}api/updatefactorrate`;
+                              this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+                                (data: any) => {
+                                    if(data.Result){
+                                      i+=1;
+                                      if(i==this.vehicleDetailsList.length){
+                                        if(type=='calculate'){
+                                          
+                                          // this.getcall();
+                                          //sessionStorage.removeItem('vehicleDetailsList');
+                                          window.location.reload();
+                                        }
+                                        else this.updateReferralStatus();
                                       }
-                                      else this.updateReferralStatus();
                                     }
-                                  }
-                                },
-                                (err) => { },
-                              );
+                                  },
+                                  (err) => { },
+                                );
+                          }
                         }
                       }
-                    }
-                    
-
+                      
+  
+                  }
+                      console.log("Entry",entry)
                 }
-                    console.log("Entry",entry)
+                else{
+                  i+=1;
+                  if(i==this.vehicleDetailsList.length){
+                    if(type=='calculate'){
+                      //this.getcall();
+                      //sessionStorage.removeItem('vehicleDetailsList');
+                        window.location.reload();
+                    }
+                    else this.updateReferralStatus();
+                  }
+                }
               }
               else{
                 i+=1;
-                if(i==this.vehicleDetailsList.length){
-                  if(type=='calculate'){
-                    this.getcall();
-                    //sessionStorage.removeItem('vehicleDetailsList');
-                   // window.location.reload();
+                  if(i==this.vehicleDetailsList.length){
+                    if(type=='calculate'){
+                      //this.getcall();
+                      //sessionStorage.removeItem('vehicleDetailsList');
+                        window.location.reload();
+                    }
+                    else this.updateReferralStatus();
                   }
-                  else this.updateReferralStatus();
-                }
               }
           }
           // for(let veh of this.selectedCoverList){
@@ -3678,7 +3754,6 @@ getMotorUsageList(vehicleValue){
   getcall(){
     let referenceNo =  sessionStorage.getItem('customerReferenceNo');
     this.getCustomerDetails(referenceNo);
-   this.viewCondition('direct');
    if(this.productId=='5'  || this.productId=='3'){
     let vehicles:any;
     if(this.statusValue=='RA'){
@@ -3695,26 +3770,24 @@ getMotorUsageList(vehicleValue){
           vehicleList.push(veh);
           if(i==vehicles.length){
               this.vehicleDetailsList = vehicleList;
-              this.coverSection = true;
-              this.EmiInstallment();
+              this.getEditQuoteDetails();
           }
         }
       }
       else{
-
         this.getUpdatedVehicleDetails();
       }
     }
   }
-  else if(this.productId!='5' && this.productId!='3'){
+  else{
     this.quoteRefNo = sessionStorage.getItem('quoteReferenceNo');
     this.requestReferenceNo = this.quoteRefNo;
     let quoteNo = sessionStorage.getItem('quoteNo');
     if(quoteNo) this.quoteNo = quoteNo;
     this.getUpdatedVehicleDetails();
   }
-this.checkSelectedCovers();
-this.ViewDropDown();
+    this.checkSelectedCovers();
+    this.ViewDropDown();
   }
  
   checkEndorseValue(rowData,type,menu){

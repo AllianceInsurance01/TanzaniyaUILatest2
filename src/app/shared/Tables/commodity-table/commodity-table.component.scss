@@ -5,7 +5,9 @@ td.mat-footer-cell {
     border-bottom-color: #ccc;
 
 }
-
+::ng-deep  .mdc-data-table__cell, .mdc-data-table__header-cell {
+    padding: 0px 8px !important;
+}
 th.mat-header-cell {
     //color: lightslategrey;
     font-size: 14px;
