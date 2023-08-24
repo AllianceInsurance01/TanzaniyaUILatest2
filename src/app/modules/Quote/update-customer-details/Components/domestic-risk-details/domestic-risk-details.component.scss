@@ -180,4 +180,31 @@ input:checked+.slider:before {
 }
 
 
+.buildingcss{
+    padding: 10px;
+    width: 100%;
+    border: none !important;
+    border-radius: 0.7rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: all .3s;
+    height: max-content;
+    background: none !important;
+    box-shadow:none !important;
+    -webkit-backdrop-filter: blur(18.5px);
+    backdrop-filter: blur(18.5px);
+    list-style-type: none;
+}
+.buildingcss .fieldGroup{
+    margin-top: -20px !important;
+}
+
+.buildingsuminsureds{
+    margin-top: -20px !important;
+    flex: 0 0 auto !important;
+    width: 41.66666667% !important;
+}
+
+
+
 

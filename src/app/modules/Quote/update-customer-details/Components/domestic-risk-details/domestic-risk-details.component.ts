@@ -13,6 +13,17 @@ import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { Medical } from '../models/additionalDetails/medical';
 import { ProductData } from '../models/product';
 import { FormlyFieldConfig } from "@ngx-formly/core";
+import { LocationDetails } from '../models/additionalDetails/locationdetails';
+import { ContentRisk } from '../models/additionalDetails/contentRisk';
+import { PersonalAccident } from '../models/additionalDetails/perosonalaccident';
+import { PersonalIndemenitys } from '../models/additionalDetails/personalIndemenity';
+import { DeviceDetails } from '../models/additionalDetails/Devicedetails';
+import { AllRisks } from '../models/additionalDetails/AllRisk';
+import { Machineryss } from '../models/additionalDetails/Machinery';
+import { EmployeeLiablityss } from '../models/additionalDetails/Employeeliability';
+import { Fedilitis } from '../models/additionalDetails/Fedilitiys';
+import { ElectronicEquip } from '../models/additionalDetails/Electronicequip';
+
 export class ForceLengthValidators {
   static maxLength(maxLength: number) {
     return (control: FormControl): ValidationErrors => {
@@ -95,7 +106,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
   second: any;
   third: any;
   occupationList: any[] = [];
-  userDetails: any;risk:any[]=[];
+  userDetails: any;
+  risk:any []=[];
   allriskList:any[]=[];actualAccessoriesSI:any='0';
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
@@ -158,14 +170,20 @@ export class DomesticRiskDetailsComponent implements OnInit {
   currentBuildingIndex: number;
   currentCyberIndex:number;
   enableBuildingEditSection: boolean = false;enableContentEditSection:boolean = false;
+  enablePersonalAccEditSection:boolean=false;
+  enablePersonalIndEditSection:boolean = false;
   buildingSIError: boolean=false;
   buildingLocationError: boolean=false;
   buildingAddressError: boolean=false;
   editBuildingSection: boolean=false;
   totalBuildSIError: boolean=false;
   currentContentIndex: number;
+  currentPersonalAccidentIndex: number;
+  currentPersonalIndIndex: number;
+  currentRiskIndex: number;
   MachineryIndex:number;
   editContentSection: boolean;
+  editPersonalAccidentSection  : boolean;
   LocationId: any;
   serialNoDesc: any;
   contentRiskDesc: any='';
@@ -195,6 +213,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   employeeDojError: boolean;
   employeeSalaryError: boolean;
   enableEmployeeUploadSection: boolean=false;
+  enableAllriskEditSection:boolean=false;
   imageUrl: any=null;
   uploadDocList: any[]=[];
   uploadFedDocList:any[]=[];
@@ -212,6 +231,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
   currentFidelityIndex: number;
   enableFidelityUploadSection: boolean=false;
   showFidelityRecordsSection: boolean=false;
+  editRiskSection:boolean;
+  
   originalFidelityList: any;
   totalFidelityIntSI: number;
   empLocation: any;
@@ -247,10 +268,24 @@ export class DomesticRiskDetailsComponent implements OnInit {
   Cyberyear:any;
   CyberSNo:any;
   fields: any[] = [];
+  field:any[]=[];
+  fieldsContent:any []= [];
+  PAFields:any[]=[];
+  fieldss:any[]=[];
+  fieldsPersonalAccident:any[]=[];
+  fieldsPersonalInd:any[]=[];
+  fieldsDevice:any[]=[];
+  fieldsRisk:any[]=[];
+  fieldsMachinery:any[]=[];
+  fieldsEmpFields:any[]=[];
+  fieldFEFields:any[]=[];
+  fieldsElectronic:any[]=[];
+
   formSection: boolean = false; viewSection: boolean = false;
   form = new FormGroup({});
 
   model = {};
+  editPersonalIndSection: boolean;
 
   constructor(private router: Router,private datePipe:DatePipe,private modalService: NgbModal,
      private sharedService: SharedService,private formlyJsonschema: FormlyJsonschema,) {
@@ -282,7 +317,51 @@ export class DomesticRiskDetailsComponent implements OnInit {
       this.Section = false;
     }
     if(this.productId=='5') this.buildingDetailsSection=false;
-    else if(this.productId!='43')this.buildingDetailsSection = true;
+    else if(this.productId!='43'){
+      this.buildingDetailsSection = true;
+      let fireData = new LocationDetails();
+      let entry = [];
+      this.field = [
+        {
+              fieldGroupClassName: 'row buildingsuminsureds',
+              fieldGroup: [
+                    {
+                      type: 'commaSeparator',
+                      key: 'BuildingSumInsureds',
+                      className: 'col-sm-5 offset-1',
+                      props: {
+                        label: `Sum Insured`,
+                      },
+                      validators: {
+                        validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                      },
+                      hooks: {
+                        onInit: (field: FormlyFieldConfig) => {
+                          field.formControl.valueChanges.subscribe(() => {
+                            this.individualCommaFormatted('building');
+                          });
+                        },
+                      },
+                      expressions: {
+                      },
+                    },
+                 
+              ]
+        }
+      ];
+      let items = this.item?.find((Code) => Code == '1' || Code=='40');
+
+      if(items){
+        this.fieldss = fireData?.fields.concat(this.field);
+      }
+      else{
+        this.fieldss = fireData?.fields
+      }
+     
+      this.productItem = new ProductData();
+      this.formSection = true; this.viewSection = false;
+
+    }
     if(this.productId=='43'){
       this.newten = true;
       let fireData = new Medical();
@@ -300,20 +379,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   }
   public productItem: ProductData;
   ngOnInit(): void {
-    this.monthList = [
-      {"Code":"01","CodeDesc":"January"},
-      {"Code":"02","CodeDesc":"February"},
-      {"Code":"03","CodeDesc":"March"},
-      {"Code":"04","CodeDesc":"April"},
-      {"Code":"05","CodeDesc":"May"},
-      {"Code":"06","CodeDesc":"June"},
-      {"Code":"07","CodeDesc":"July"},
-      {"Code":"08","CodeDesc":"August"},
-      {"Code":"09","CodeDesc":"September"},
-      {"Code":"10","CodeDesc":"October"},
-      {"Code":"11","CodeDesc":"November"},
-      {"Code":"12","CodeDesc":"December"},
-    ]
+
     if(this.productId!='14' && this.productId!='32') this.getOccupationList(null);
     this.getEditQuoteDetails();
       var d = new Date();
@@ -404,8 +470,14 @@ export class DomesticRiskDetailsComponent implements OnInit {
     
     if(this.productId=='42'){
       this.cyberSectionId=this.item[0];
+
       this.ten=true;
-      
+      let fireData = new DeviceDetails();
+      let entry = [];
+      this.fieldsDevice = fireData?.fields;
+      this.form = new FormGroup({});
+      this.productItem = new ProductData();
+      console.log('ten',this.fieldsDevice);  
       // this.CyberItem=[{'Make':'Honda','DeviceType':'1','Making':'2022','SerialNo':1,"DeviceTypeDesc":"Desktop","SumInsured":"123,45"}];
     }
     
@@ -421,6 +493,20 @@ export class DomesticRiskDetailsComponent implements OnInit {
         let first = this.item.find((Code) => Code == '47' || Code=='40');
         if (first && this.productId!='6') {
           this.first=true;
+          let fireData = new ContentRisk();
+          let entry = [];
+          this.fieldsContent = fireData?.fields;
+
+          console.log('TTTTTTTTTTTT',this.fieldsContent);
+
+          let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
+            field.formControl.valueChanges.subscribe(() => {
+              this.individualCommaFormatted('content')
+            });
+          } }
+          //this.fields[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].hooks = regionHooks;
+          this.fieldsContent[0].fieldGroup[0].fieldGroup[0].fieldGroup[4].hooks = regionHooks;
+          // this.getMedicalDetails();
         }
         else {
           this.first =false;
@@ -430,6 +516,19 @@ export class DomesticRiskDetailsComponent implements OnInit {
         let first = this.item.find((Code) => Code == '47');
         if (first && this.productId!='6') {
           this.first=true;
+          let fireData = new ContentRisk();
+          let entry = [];
+          this.fieldsContent = fireData?.fields;
+          
+          console.log('TTTTTTTTTTTT',this.fieldsContent);
+
+          let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
+            field.formControl.valueChanges.subscribe(() => {
+              this.individualCommaFormatted('content')
+            });
+          } }
+          //this.fields[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].hooks = regionHooks;
+          this.fieldsContent[0].fieldGroup[0].fieldGroup[0].fieldGroup[4].hooks = regionHooks;
         }
         else {
           this.first =false;
@@ -438,6 +537,19 @@ export class DomesticRiskDetailsComponent implements OnInit {
       const second = this.item.find((Code) => Code == '35');
       if (second) {
         this.second = true;
+        let fireData = new PersonalAccident();
+        let entry = [];
+        this.fieldsPersonalAccident = fireData?.fields;
+
+        console.log('Second',this.fieldsPersonalAccident);
+
+        let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
+          field.formControl.valueChanges.subscribe(() => {
+            this.individualCommaFormatted('PersonalAccident');
+          });
+        } }
+        this.fieldsPersonalAccident[0].fieldGroup[0].fieldGroup[0].fieldGroup[3].hooks = regionHooks;
+        // this.productItem.AccOccupation = this.accidentOccupation;
       }
       else {
         this.second = false;
@@ -447,13 +559,41 @@ export class DomesticRiskDetailsComponent implements OnInit {
       
       if (third && this.productId!='21') {
         this.third = true;
+        let fireData = new AllRisks();
+        let entry = [];
+        this.fieldsRisk = fireData?.fields;
+
+        console.log('third',this.fieldsRisk);
+
+        let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
+          field.formControl.valueChanges.subscribe(() => {
+            this.individualCommaFormatted('AllRisk');
+          });
+        } }
+        this.fieldsRisk[0].fieldGroup[0].fieldGroup[0].fieldGroup[4].hooks = regionHooks;
       }
       else {
         this.third = false;
       }
       const fifth = this.item.find((Code) => Code == '36');
       if (fifth) {
+
         this.fifth = true;
+
+
+        let fireData = new PersonalIndemenitys();
+        let entry = [];
+        this.fieldsPersonalInd = fireData?.fields;
+        this.form = new FormGroup({});
+        this.productItem = new ProductData();
+        console.log('fifth',this.fieldsPersonalInd);
+
+        let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
+          field.formControl.valueChanges.subscribe(() => {
+            this.individualCommaFormatted('PersonalInd');
+          });
+        } }
+        this.fieldsPersonalInd[0].fieldGroup[0].fieldGroup[0].fieldGroup[3].hooks = regionHooks;
       }
       else {
         this.fifth = false;
@@ -461,6 +601,19 @@ export class DomesticRiskDetailsComponent implements OnInit {
       const six = this.item.find((Code) => Code == '39');
       if (six && this.productId!='19') {
         this.six = true;
+        // let fireData = new ElectronicEquip();
+        // let entry = [];
+        // this.fieldsElectronic = fireData?.fields;
+        // this.form = new FormGroup({});
+        // this.productItem = new ProductData();
+        // console.log('fifth',this.fieldsElectronic);
+
+        // let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
+        //   field.formControl.valueChanges.subscribe(() => {
+        //     this.individualCommaFormatted('PersonalInd');
+        //   });
+        // } }
+        // this.fieldsElectronic[0].fieldGroup[0].fieldGroup[0].fieldGroup[3].hooks = regionHooks;
       }
       else {
         this.six = false;
@@ -469,19 +622,103 @@ export class DomesticRiskDetailsComponent implements OnInit {
       if(seven){
         this.seven = true;
         this.getEmployeeDetails();
-        this.getOccupationList(seven)
+        this.getOccupationList(seven);
+
+        let fireData = new EmployeeLiablityss();
+        let entry = [];
+        this.fieldsEmpFields = fireData?.fields;
+        this.form = new FormGroup({});
+        this.productItem = new ProductData();
+        console.log('Seven',this.fieldsEmpFields);
+
+        let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
+          field.formControl.valueChanges.subscribe(() => {
+            this.individualCommaFormatted('employee');
+          });
+        } }
+        this.fieldsEmpFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[8].hooks = regionHooks;
+        this.monthList = [
+          {"Code":"01","CodeDesc":"January"},
+          {"Code":"02","CodeDesc":"February"},
+          {"Code":"03","CodeDesc":"March"},
+          {"Code":"04","CodeDesc":"April"},
+          {"Code":"05","CodeDesc":"May"},
+          {"Code":"06","CodeDesc":"June"},
+          {"Code":"07","CodeDesc":"July"},
+          {"Code":"08","CodeDesc":"August"},
+          {"Code":"09","CodeDesc":"September"},
+          {"Code":"10","CodeDesc":"October"},
+          {"Code":"11","CodeDesc":"November"},
+          {"Code":"12","CodeDesc":"December"},
+        ]
+          for (let i = 0; i < this.monthList.length; i++) {
+            this.monthList[i].label = this.monthList[i]['CodeDesc'];
+            this.monthList[i].value = this.monthList[i]['Code'];
+            delete this.monthList[i].CodeDesc;
+            if (i == this.monthList.length - 1) {
+              this.fieldsEmpFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[5].props.options = this.monthList;
+            }
+          }
        } 
        else this.seven = false;
        const eight = this.item.find((Code) => Code == '43');
       if(eight){
         this.eight = true;
         this.getFidelityDetails();
-        this.getOccupationList(eight)
+        this.getOccupationList(eight);
+        let fireData = new Fedilitis();
+        let entry = [];
+        this.fieldFEFields = fireData?.fields;
+        this.form = new FormGroup({});
+        this.productItem = new ProductData();
+        console.log('eight',this.fieldFEFields);
+
+        let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
+          field.formControl.valueChanges.subscribe(() => {
+            this.individualCommaFormatted('fidelity');
+          });
+        } }
+        this.fieldFEFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[8].hooks = regionHooks;
+        this.monthList = [
+          {"Code":"01","CodeDesc":"January"},
+          {"Code":"02","CodeDesc":"February"},
+          {"Code":"03","CodeDesc":"March"},
+          {"Code":"04","CodeDesc":"April"},
+          {"Code":"05","CodeDesc":"May"},
+          {"Code":"06","CodeDesc":"June"},
+          {"Code":"07","CodeDesc":"July"},
+          {"Code":"08","CodeDesc":"August"},
+          {"Code":"09","CodeDesc":"September"},
+          {"Code":"10","CodeDesc":"October"},
+          {"Code":"11","CodeDesc":"November"},
+          {"Code":"12","CodeDesc":"December"},
+        ]
+          for (let i = 0; i < this.monthList.length; i++) {
+            this.monthList[i].label = this.monthList[i]['CodeDesc'];
+            this.monthList[i].value = this.monthList[i]['Code'];
+            delete this.monthList[i].CodeDesc;
+            if (i == this.monthList.length - 1) {
+              this.fieldFEFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[5].props.options = this.monthList;
+            }
+          }
        } 
        else this.eight = false;
        const nine = this.item.find((Code) => Code == '41');
         if (nine && this.productId!='19' && this.productId!='16') {
           this.nine = true;
+          let fireData = new Machineryss();
+          let entry = [];
+          this.fieldsMachinery = fireData?.fields;
+          this.form = new FormGroup({});
+          this.productItem = new ProductData();
+          console.log('nine',this.fieldsMachinery);
+  
+          let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
+            field.formControl.valueChanges.subscribe(() => {
+              this.individualCommaFormatted('machinery');
+            });
+          } }
+          this.fieldsMachinery[0].fieldGroup[0].fieldGroup[0].fieldGroup[5].hooks = regionHooks;
         }
         else {
           this.nine = false;
@@ -586,7 +823,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
        "RiskId": "1",
        "SectionId": SectionId
     }
-    let urlLink = `${this.motorApiUrl}api/getallproductemployees`;
+    let urlLink = `${this.motorApiUrl}api/getallactiveemployees`;//api/getallproductemployees`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         if(data?.Result){
@@ -606,7 +843,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
       else if(type == 'personalIndeminity') return (!this.personalIntermeditySection && !this.enableAllSection);
       else if(type=='allRisk') return (!this.allRiskSection && !this.enableAllSection);
       else if(type == 'electronic') return (!this.electronicEquipSection && !this.enableAllSection);
-      //else if(type == 'Cyber') return (!this.electronicEquipSection && !this.enableAllSection);
+      else if(type == 'Cyber') return (!this.enableCyberSection && !this.enableAllSection);
     }
     else return false;
   }
@@ -753,8 +990,11 @@ export class DomesticRiskDetailsComponent implements OnInit {
   }
   onMachineryCancel(){
     if(!this.editMachinerySection)  this.machineries.splice(this.currentMachineryIndex,1);
-    this.MachineryName = null;this.BrandName=null;this.serialNoDesc=null;this.SumInsured=null;
-    this.currentMachineryIndex = null;
+  this.productItem.MBrand =null; this.productItem.MContentType=null; this.productItem.MLocation=null;
+  this.productItem.MName =null; this.productItem.MSI=null;
+  this.productItem.MSerialNo=null;
+    // this.MachineryName = null;this.BrandName=null;this.serialNoDesc=null;this.SumInsured=null;
+    // this.currentMachineryIndex = null;
     this.enableMachineryEditSection = false;
   }
   onContentCancel(){
@@ -762,6 +1002,26 @@ export class DomesticRiskDetailsComponent implements OnInit {
     this.LocationId = null;this.serialNoDesc = null;this.contentRiskDesc = null;
     this.contentSI = null;this.contentId = null;this.enableContentEditSection=false;
   }
+  onPeronalAccidentCancel(){
+    if(!this.editPersonalAccidentSection) this.PersonalAssistantList.splice(this.currentPersonalAccidentIndex,1);
+   this.productItem.AccDob=null; this.productItem.AccName=null; this.productItem.AccNationID = null;
+   this.productItem.AccSI=null; this.productItem.AccName =null; this.productItem.AccOccupation = null;
+   this.enablePersonalAccEditSection = false;
+  }
+  onAllRiskCancel(){
+    if(!this.editRiskSection) this.risk.splice(this.currentPersonalAccidentIndex,1);
+   this.productItem.RiskContentType=null; this.productItem.RiskDescription=null; this.productItem.RiskLocation= null;
+   this.productItem.RiskSerialNo=null; this.productItem.RiskSI =null;
+   this.enableAllriskEditSection=false;
+  }
+
+  onPeronalIndCancel(){
+    if(!this.editPersonalIndSection) this.Intermedity.splice(this.currentPersonalIndIndex,1);
+   this.productItem.IndDob=null; this.productItem.IndName=null; this.productItem.IndNationID = null;
+   this.productItem.IndSI=null; this.productItem.IndName =null; this.productItem.IndOccupation = null;
+   this.enablePersonalIndEditSection = false;
+  }
+
   onAccessoriesCancel(){
     if(!this.editAccessoriesSection) this.accessoriesList.splice(this.currentAccessoriesIndex,1);
     this.chassisNo = null;this.accessoriesType=null;this.serialNoDesc=null;this.SumInsured=null;
@@ -832,161 +1092,169 @@ export class DomesticRiskDetailsComponent implements OnInit {
 
   }
   onCyberSaves(){
-    if(this.DeviceType!=null && this.DeviceType!=undefined && this.DeviceType!=null){
         //this.CyberItem[this.currentCyberIndex].ContentRiskDesc = this.BuildingSuminsured;
-        this.CyberItem[this.currentCyberIndex].ContentRiskDesc = this.CyperList.find(ele=>ele.Code==this.DeviceType).CodeDesc;
-        this.CyberItem[this.currentCyberIndex].SerialNoDesc = this.CyberSNo;
-        this.CyberItem[this.currentCyberIndex].MakeAndModel = this.CyberMake;
-        this.CyberItem[this.currentCyberIndex].ManufactureYear = this.Cyberyear;
-        this.CyberItem[this.currentCyberIndex].ItemId = this.DeviceType;
+        console.log('UUUUUUUUUUUUUUUUUU',this.CyperList);
+        this.CyberItem[this.currentCyberIndex].ContentRiskDesc = this.CyperList.find(ele=>ele.Code==this.productItem.DeviceType).label;
+        this.CyberItem[this.currentCyberIndex].SerialNoDesc = this.productItem.DeviceSNo;
+        this.CyberItem[this.currentCyberIndex].MakeAndModel = this.productItem.DeviceMake;
+        this.CyberItem[this.currentCyberIndex].ManufactureYear = this.productItem.DeviceYear;
+        this.CyberItem[this.currentCyberIndex].ItemId = this.productItem.DeviceType;
         // if(this.DeviceType!=null){
         //   this.CyberItem[this.currentCyberIndex].ItemDesc = this.CyperList.find(ele=>ele.Code==this.DeviceType)?.CodeDesc;
         // }
-        this.CyberItem[this.currentCyberIndex].RiskId = this.LocationId;
-        this.CyberItem[this.currentCyberIndex].Name= this.CyperList.find(ele=>ele.Code==this.DeviceType).CodeDesc;
+        this.CyberItem[this.currentCyberIndex].RiskId = this.productItem.DeviceLocation;
+        this.CyberItem[this.currentCyberIndex].Name= this.CyperList.find(ele=>ele.Code==this.productItem.DeviceType).label;
         this.CyberSNo=null;this.CyberMake=null;this.Cyberyear=null;this.DeviceType=null;this.LocationId=null;
+
+        this.productItem=new ProductData();
         this.editCyberSection = false;
        this.enableCyberSection = false;
         // this.LocationName = null; this.BuildingAddress = null; this.BuildingSuminsured = null;
-    }
   }
   
   onBuildingSave(){
-    this.buildingSIError = false;this.buildingLocationError=false; this.buildingAddressError = false;this.totalBuildSIError = false;
-    if(this.LocationName!=null && this.LocationName!=undefined && this.BuildingAddress!=null){
-      if(!this.sumInsured){
-        if(this.BuildingSuminsured==0 || this.BuildingSuminsured=='' || this.BuildingSuminsured==null || this.BuildingSuminsured==undefined) this.BuildingSuminsured = 0;  
-        this.building[this.currentBuildingIndex].BuildingSuminsured = this.BuildingSuminsured;
-        this.building[this.currentBuildingIndex].LocationName = this.LocationName;
-        this.building[this.currentBuildingIndex].BuildingAddress = this.BuildingAddress;
-        this.editBuildingSection = false;
-        this.enableBuildingEditSection = false;
-        this.LocationName = null; this.BuildingAddress = null; this.BuildingSuminsured = null;
-      }
-      else if(this.BuildingSuminsured==0 || this.BuildingSuminsured=='' || this.BuildingSuminsured==null || this.BuildingSuminsured==undefined) this.buildingSIError = true;
-      else if(this.totalBuildingSumInsured>this.actualBuildingSI){
-        this.totalBuildSIError = true;
-      }
-      else{
-        this.building[this.currentBuildingIndex]['LocationName'] = this.LocationName;
-        this.building[this.currentBuildingIndex]['BuildingAddress'] = this.BuildingAddress;
-        this.building[this.currentBuildingIndex]['BuildingSuminsured'] = this.BuildingSuminsured;
-        this.editBuildingSection = false;
-        this.enableBuildingEditSection = false;
-        this.LocationName = null; this.BuildingAddress = null; this.BuildingSuminsured = null;
-      }
+    // this.buildingSIError = false;this.buildingLocationError=false; this.buildingAddressError = false;this.totalBuildSIError = false;
+    // if(this.LocationName!=null && this.LocationName!=undefined && this.BuildingAddress!=null){
+    //   if(!this.sumInsured){
+    //     if(this.BuildingSuminsured==0 || this.BuildingSuminsured=='' || this.BuildingSuminsured==null || this.BuildingSuminsured==undefined) this.BuildingSuminsured = 0;  
+    //     this.building[this.currentBuildingIndex].BuildingSuminsured = this.BuildingSuminsured;
+    //     this.building[this.currentBuildingIndex].LocationName = this.LocationName;
+    //     this.building[this.currentBuildingIndex].BuildingAddress = this.BuildingAddress;
+    //     this.editBuildingSection = false;
+    //     this.enableBuildingEditSection = false;
+    //     this.LocationName = null; this.BuildingAddress = null; this.BuildingSuminsured = null;
+    //   }
+    //   else if(this.BuildingSuminsured==0 || this.BuildingSuminsured=='' || this.BuildingSuminsured==null || this.BuildingSuminsured==undefined) this.buildingSIError = true;
+    //   else if(this.totalBuildingSumInsured>this.actualBuildingSI){
+    //     this.totalBuildSIError = true;
+    //   }
+    //   else{
+    //     this.building[this.currentBuildingIndex]['LocationName'] = this.LocationName;
+    //     this.building[this.currentBuildingIndex]['BuildingAddress'] = this.BuildingAddress;
+    //     this.building[this.currentBuildingIndex]['BuildingSuminsured'] = this.BuildingSuminsured;
+    //     this.editBuildingSection = false;
+    //     this.enableBuildingEditSection = false;
+    //     this.LocationName = null; this.BuildingAddress = null; this.BuildingSuminsured = null;
+    //   }
+    // }
+    // else if(this.LocationName==null || this.LocationName==undefined){this.buildingLocationError=true;}
+    // else if(this.BuildingAddress==null || this.BuildingAddress==undefined){this.buildingAddressError = true;}
+    
+    if(this.productItem.LocationAddress!= null && this.productItem.LocationAddress !=undefined && this.productItem.LocationAddress!=null){
+      this.building[this.currentBuildingIndex]['LocationName'] =  this.productItem.LocationNameBuilding;
+      this.building[this.currentBuildingIndex]['BuildingAddress'] = this.productItem.LocationAddress;
+      this.building[this.currentBuildingIndex]['BuildingSuminsured'] = this.productItem.BuildingSumInsureds;
     }
-    else if(this.LocationName==null || this.LocationName==undefined){this.buildingLocationError=true;}
-    else if(this.BuildingAddress==null || this.BuildingAddress==undefined){this.buildingAddressError = true;}
-    else{
-      this.building[this.currentBuildingIndex]['LocationName'] = this.LocationName;
-      this.building[this.currentBuildingIndex]['BuildingAddress'] = this.BuildingAddress;
-      this.building[this.currentBuildingIndex]['BuildingSuminsured'] = 0;
       this.editBuildingSection = false;
       this.enableBuildingEditSection = false;
-      this.LocationName = null; this.BuildingAddress = null; this.BuildingSuminsured = null;
-    }
+      this.productItem.BuildingSumInsureds=null; this.productItem.LocationAddress=null;
+      this.productItem.LocationNameBuilding=null;
+      // this.LocationName = null; this.BuildingAddress = null; this.BuildingSuminsured = null;
+    
   
 }
 onMachinerySave(){
  
  
-    this.locationIdError = false;this.contentIdError=false; this.serialNoError = false;this.contentDescError = false;this.contentSIError = false;
-    let i=0;
-    if(this.MachineryLocation==null || this.MachineryLocation==undefined || this.MachineryLocation==''){ i+=1; this.locationIdError = true;}
-    if(this.machineryItemId==null || this.machineryItemId==undefined || this.machineryItemId==''){ i+=1; this.contentIdError = true;}
-    if(this.serialNoDesc==null || this.serialNoDesc==undefined || this.serialNoDesc==''){ i+=1; this.serialNoError = true;}
-    if(this.MachineryName==null || this.MachineryName==undefined || this.MachineryName==''){ i+=1; this.contentDescError = true;}
-    if(this.MiSumInsured==null || this.MiSumInsured==undefined || this.MiSumInsured=='' || this.MiSumInsured == '0'){ i+=1; this.contentSIError = true;}
-    console.log('uuuuuuuuu',i)
-    if(i==0){
-      this.machineries[this.currentMachineryIndex]['SumInsured'] = this.MiSumInsured;
-      this.machineries[this.currentMachineryIndex]['RiskId'] =this.MachineryLocation;
-      this.machineries[this.currentMachineryIndex]['SerialNoDesc'] = this.serialNoDesc;
-      this.machineries[this.currentMachineryIndex]['MachinaryDesc'] = this.MachineryName;
-      this.machineries[this.currentMachineryIndex]['ItemId'] = this.machineryItemId;
-      this.machineries[this.currentMachineryIndex]['Name'] = this.NameDesc;
-      this.machineries[this.currentMachineryIndex]['Brand'] = this.BrandName;
-      this.MachineryName = null;this.BrandName=null;this.serialNoDesc=null;this.SumInsured=null;
+    // this.locationIdError = false;this.contentIdError=false; this.serialNoError = false;this.contentDescError = false;this.contentSIError = false;
+    // let i=0;
+    // if(this.MachineryLocation==null || this.MachineryLocation==undefined || this.MachineryLocation==''){ i+=1; this.locationIdError = true;}
+    // if(this.machineryItemId==null || this.machineryItemId==undefined || this.machineryItemId==''){ i+=1; this.contentIdError = true;}
+    // if(this.serialNoDesc==null || this.serialNoDesc==undefined || this.serialNoDesc==''){ i+=1; this.serialNoError = true;}
+    // if(this.MachineryName==null || this.MachineryName==undefined || this.MachineryName==''){ i+=1; this.contentDescError = true;}
+    // if(this.MiSumInsured==null || this.MiSumInsured==undefined || this.MiSumInsured=='' || this.MiSumInsured == '0'){ i+=1; this.contentSIError = true;}
+    // console.log('uuuuuuuuu',i)
+    // if(i==0){
+      this.machineries[this.currentMachineryIndex]['SumInsured'] = this.productItem.MSI;//this.MiSumInsured;
+      this.machineries[this.currentMachineryIndex]['RiskId'] = this.productItem.MLocation;
+      this.machineries[this.currentMachineryIndex]['SerialNoDesc'] = this.productItem.MSerialNo; //this.serialNoDesc;
+      this.machineries[this.currentMachineryIndex]['MachinaryDesc'] = this.productItem.MDescription; //this.MachineryName;
+      this.machineries[this.currentMachineryIndex]['ItemId'] = this.productItem.MContentType; //this.machineryItemId;
+      this.machineries[this.currentMachineryIndex]['Name'] = this.productItem.MName;//this.NameDesc;
+      this.machineries[this.currentMachineryIndex]['Brand'] = this.productItem.MBrand;//this.BrandName;
+      this.productItem = new ProductData();
+      // this.MachineryName = null;this.BrandName=null;this.serialNoDesc=null;this.SumInsured=null;
       this.currentMachineryIndex = null;
       this.enableMachineryEditSection = false;
       // this.machineries[this.currentContentIndex]['LocationName'] = this.LocationList.find(ele=>ele.Code==this.LocationId).CodeDesc;
       // this.LocationId = null;this.currentContentIndex=null;this.contentSI=null;this.serialNoDesc=null;this.contentRiskDesc=null;this.contentId=null;
       // this.editContentSection = false;
       // this.enableContentEditSection = false;
-    }
+    //}
 
 }
 onFidelitySave(){
-  this.employeeNameError = false;this.employeeOccupationError = false;this.employeeAddressError=false;
-  this.employeeNationalityError = false;this.employeeDobError = false;this.employeeDojError = false;
-  this.employeeSalaryError = false;this.employeeLocationError=false;let i=0;
-  if(this.employeeName=='' || this.employeeName==null || this.employeeName == undefined){i+=1;this.employeeNameError=true};
-  if(this.occupationType=='' || this.occupationType==null || this.occupationType == undefined){i+=1;this.employeeOccupationError=true};
-  // if(this.empAddress=='' || this.empAddress==null || this.empAddress == undefined){i+=1;this.employeeAddressError=true};
-  if(this.nationality=='' || this.nationality==null || this.nationality == undefined){i+=1;this.employeeNationalityError=true};
-  if(this.empDob=='' || this.empDob==null || this.empDob == undefined){i+=1;this.employeeDobError=true};
-  if(this.empJoiningDate=='' || this.empJoiningDate==null || this.empJoiningDate == undefined){i+=1;this.employeeDojError=true};
-  if(this.empLocation=='' || this.empLocation==null || this.empLocation == undefined){i+=1;this.employeeLocationError=true};
-  if(this.employeeSalary=='' || this.employeeSalary==null || this.employeeSalary == undefined){i+=1;this.employeeSalaryError=true};
-  if(i==0){
+  // this.employeeNameError = false;this.employeeOccupationError = false;this.employeeAddressError=false;
+  // this.employeeNationalityError = false;this.employeeDobError = false;this.employeeDojError = false;
+  // this.employeeSalaryError = false;this.employeeLocationError=false;let i=0;
+  // if(this.employeeName=='' || this.employeeName==null || this.employeeName == undefined){i+=1;this.employeeNameError=true};
+  // if(this.occupationType=='' || this.occupationType==null || this.occupationType == undefined){i+=1;this.employeeOccupationError=true};
+  // // if(this.empAddress=='' || this.empAddress==null || this.empAddress == undefined){i+=1;this.employeeAddressError=true};
+  // if(this.nationality=='' || this.nationality==null || this.nationality == undefined){i+=1;this.employeeNationalityError=true};
+  // if(this.empDob=='' || this.empDob==null || this.empDob == undefined){i+=1;this.employeeDobError=true};
+  // if(this.empJoiningDate=='' || this.empJoiningDate==null || this.empJoiningDate == undefined){i+=1;this.employeeDojError=true};
+  // if(this.empLocation=='' || this.empLocation==null || this.empLocation == undefined){i+=1;this.employeeLocationError=true};
+  // if(this.employeeSalary=='' || this.employeeSalary==null || this.employeeSalary == undefined){i+=1;this.employeeSalaryError=true};
+  // if(i==0){
     let SectionId = null;
     if(this.productId=='32') SectionId = '43';
-    this.fidelityList[this.currentFidelityIndex]['RiskId'] = this.empLocation;
-    this.fidelityList[this.currentFidelityIndex]['LocationId'] = this.empLocation;
-    this.fidelityList[this.currentFidelityIndex]['LocationName'] = this.LocationList.find(ele=>ele.Code==this.empLocation).CodeDesc;
+    this.fidelityList[this.currentFidelityIndex]['RiskId'] = this.productItem.fdLocation;//this.empLocation;
+    this.fidelityList[this.currentFidelityIndex]['LocationId'] = this.productItem.fdLocation;//this.empLocation;
+    this.fidelityList[this.currentFidelityIndex]['LocationName'] = this.LocationList.find(ele=>ele.Code==this.productItem.fdLocation).label;
     this.fidelityList[this.currentFidelityIndex]['Createdby'] = this.loginId;
-    this.fidelityList[this.currentFidelityIndex]['Address'] = this.empAddress;
-    this.fidelityList[this.currentFidelityIndex]['EmployeeName'] = this.employeeName;
-    this.fidelityList[this.currentFidelityIndex]['OccupationId'] = this.occupationType;
-    this.fidelityList[this.currentFidelityIndex]['OccupationDesc'] = this.fidelityOccupationList.find(ele=>ele.Code==this.occupationType).CodeDesc;
-    this.fidelityList[this.currentFidelityIndex]['DateOfBirth'] = this.datePipe.transform(this.empDob, "dd/MM/yyyy");
-    this.fidelityList[this.currentFidelityIndex]['DateOfJoiningYear'] = this.empJoiningDate;
-    this.fidelityList[this.currentFidelityIndex]['DateOfJoiningMonth'] = this.empJoiningMonth;
+    this.fidelityList[this.currentFidelityIndex]['Address'] =  this.productItem.fdAddress;//this.empAddress;
+    this.fidelityList[this.currentFidelityIndex]['EmployeeName'] = this.productItem.fdName;
+    this.fidelityList[this.currentFidelityIndex]['OccupationId'] = this.productItem.fdOccupation//this.occupationType;
+    this.fidelityList[this.currentFidelityIndex]['OccupationDesc'] = this.fidelityOccupationList.find(ele=>ele.Code==this.productItem.fdOccupation).label;
+    this.fidelityList[this.currentFidelityIndex]['DateOfBirth'] = this.datePipe.transform(this.productItem.fdDob, "dd/MM/yyyy");
+    this.fidelityList[this.currentFidelityIndex]['DateOfJoiningYear'] = this.productItem.fdPeriod;//this.empJoiningDate;
+    this.fidelityList[this.currentFidelityIndex]['DateOfJoiningMonth'] = this.productItem.fdJoin;//this.empJoiningMonth;
     this.fidelityList[this.currentFidelityIndex]['SectionId'] = SectionId;
-    let salary = '';
-    if(this.employeeSalary.includes(',')){ salary = this.employeeSalary.replace(/,/g, '')}
-    else salary = this.employeeSalary;
-    this.fidelityList[this.currentFidelityIndex]['Salary'] = salary;
-    this.fidelityList[this.currentFidelityIndex]['NationalityId'] = this.nationality;
+    // let salary = '';
+    // if(this.employeeSalary.includes(',')){ salary = this.employeeSalary.replace(/,/g, '')}
+    // else salary = this.employeeSalary;
+    this.fidelityList[this.currentFidelityIndex]['Salary'] = this.productItem.fdSI;
+    this.fidelityList[this.currentFidelityIndex]['NationalityId'] = this.productItem.fdNationality;//this.nationality;
     this.editFidelitySection = false;this.enableFidelityEditSection = false;this.currentFidelityIndex=null;
-    this.empAddress = null;this.employeeName = null;this.occupationType = null;this.empJoiningMonth = null;
-    this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;this.empLocation = null;
-  }
+    this.productItem = new ProductData();
+    // this.empAddress = null;this.employeeName = null;this.occupationType = null;this.empJoiningMonth = null;
+    // this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;this.empLocation = null;
+  //}
 }
   onEmployeeSave(){
-    this.employeeNameError = false;this.employeeOccupationError = false;this.employeeAddressError=false;
-    this.employeeNationalityError = false;this.employeeDobError = false;this.employeeDojError = false;
-    this.employeeSalaryError = false;this.employeeLocationError=false;let i=0;
-    if(this.employeeName=='' || this.employeeName==null || this.employeeName == undefined){i+=1;this.employeeNameError=true};
-    if(this.occupationType=='' || this.occupationType==null || this.occupationType == undefined){i+=1;this.employeeOccupationError=true};
-    // if(this.empAddress=='' || this.empAddress==null || this.empAddress == undefined){i+=1;this.employeeAddressError=true};
-    if(this.nationality=='' || this.nationality==null || this.nationality == undefined){i+=1;this.employeeNationalityError=true};
-    if(this.empDob=='' || this.empDob==null || this.empDob == undefined){i+=1;this.employeeDobError=true};
-    if(this.empJoiningDate=='' || this.empJoiningDate==null || this.empJoiningDate == undefined){i+=1;this.employeeDojError=true};
-    if(this.empLocation=='' || this.empLocation==null || this.empLocation == undefined){i+=1;this.employeeLocationError=true};
-    if(this.employeeSalary=='' || this.employeeSalary==null || this.employeeSalary == undefined){i+=1;this.employeeSalaryError=true};
-    if(i==0){
-      this.employeeList[this.currentEmployeeIndex]['Address'] = this.empAddress;
+    // this.employeeNameError = false;this.employeeOccupationError = false;this.employeeAddressError=false;
+    // this.employeeNationalityError = false;this.employeeDobError = false;this.employeeDojError = false;
+    // this.employeeSalaryError = false;this.employeeLocationError=false;let i=0;
+    // if(this.employeeName=='' || this.employeeName==null || this.employeeName == undefined){i+=1;this.employeeNameError=true};
+    // if(this.occupationType=='' || this.occupationType==null || this.occupationType == undefined){i+=1;this.employeeOccupationError=true};
+    // // if(this.empAddress=='' || this.empAddress==null || this.empAddress == undefined){i+=1;this.employeeAddressError=true};
+    // if(this.nationality=='' || this.nationality==null || this.nationality == undefined){i+=1;this.employeeNationalityError=true};
+    // if(this.empDob=='' || this.empDob==null || this.empDob == undefined){i+=1;this.employeeDobError=true};
+    // if(this.empJoiningDate=='' || this.empJoiningDate==null || this.empJoiningDate == undefined){i+=1;this.employeeDojError=true};
+    // if(this.empLocation=='' || this.empLocation==null || this.empLocation == undefined){i+=1;this.employeeLocationError=true};
+    // if(this.employeeSalary=='' || this.employeeSalary==null || this.employeeSalary == undefined){i+=1;this.employeeSalaryError=true};
+    //if(i==0){
+      this.employeeList[this.currentEmployeeIndex]['Address'] = this.productItem.EmpsAddress;//this.empAddress;
       this.employeeList[this.currentEmployeeIndex]['Createdby'] = this.loginId;
-      this.employeeList[this.currentEmployeeIndex]['RiskId'] = this.empLocation;
-      this.employeeList[this.currentEmployeeIndex]['LocationId'] = this.empLocation;
-      this.employeeList[this.currentEmployeeIndex]['EmployeeName'] = this.employeeName;
-      this.employeeList[this.currentEmployeeIndex]['OccupationId'] = this.occupationType;
-      this.employeeList[this.currentEmployeeIndex]['LocationName'] = this.LocationList.find(ele=>ele.Code==this.empLocation).CodeDesc;
-      this.employeeList[this.currentEmployeeIndex]['OccupationDesc'] = this.employeeOccupationList.find(ele=>ele.Code==this.occupationType).CodeDesc;
-      this.employeeList[this.currentEmployeeIndex]['DateOfBirth'] = this.datePipe.transform(this.empDob, "dd/MM/yyyy");
-      this.employeeList[this.currentEmployeeIndex]['DateOfJoiningYear'] = this.empJoiningDate;
-      this.employeeList[this.currentEmployeeIndex]['DateOfJoiningMonth'] = this.empJoiningMonth;
+      this.employeeList[this.currentEmployeeIndex]['RiskId'] = this.productItem.EmpsLocation;//this.empLocation;
+      this.employeeList[this.currentEmployeeIndex]['LocationId'] = this.productItem.EmpsLocation; //this.empLocation;
+      this.employeeList[this.currentEmployeeIndex]['EmployeeName'] = this.productItem.EmpsName;//this.employeeName;
+      this.employeeList[this.currentEmployeeIndex]['OccupationId'] = this.productItem.EmpsOccupation;//this.occupationType;
+      this.employeeList[this.currentEmployeeIndex]['LocationName'] = this.LocationList.find(ele=>ele.Code==this.productItem.EmpsLocation).label;//.CodeDesc;
+      this.employeeList[this.currentEmployeeIndex]['OccupationDesc'] = this.employeeOccupationList.find(ele=>ele.Code==this.productItem.EmpsOccupation).label//this.occupationType).CodeDesc;
+      this.employeeList[this.currentEmployeeIndex]['DateOfBirth'] = this.productItem.EmpsDob//this.datePipe.transform(this.empDob, "dd/MM/yyyy");
+      this.employeeList[this.currentEmployeeIndex]['DateOfJoiningYear'] =this.productItem.EmpsPeriod; //this.empJoiningDate;
+      this.employeeList[this.currentEmployeeIndex]['DateOfJoiningMonth'] = this.productItem.EmpsJoin;//this.empJoiningMonth;
       let salary = '';
-      if(this.employeeSalary.includes(',')){ salary = this.employeeSalary.replace(/,/g, '')}
-      else salary = this.employeeSalary;
-      this.employeeList[this.currentEmployeeIndex]['Salary'] = salary;
-      this.employeeList[this.currentEmployeeIndex]['NationalityId'] = this.nationality;
+      // if(this.employeeSalary.includes(',')){ salary = this.employeeSalary.replace(/,/g, '')}
+      // else salary = this.employeeSalary;
+      this.employeeList[this.currentEmployeeIndex]['Salary'] = this.productItem.EmpsSI;//salary;
+      this.employeeList[this.currentEmployeeIndex]['NationalityId'] = this.productItem.EmpsNationality; //this.nationality;
       this.editEmployeeSection = false;this.enableEmployeeEditSection = false;this.currentEmployeeIndex=null;
-      this.empAddress = null;this.employeeName = null;this.occupationType = null;this.empJoiningMonth = null;
-      this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;
-    }
+      this.productItem=new ProductData();
+      // this.empAddress = null;this.employeeName = null;this.occupationType = null;this.empJoiningMonth = null;
+      // this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;
+    //}
   }
   employeedownload(){
     let ReqObj = {
@@ -1009,6 +1277,9 @@ onFidelitySave(){
     );
   }
   onSaveFidelityDetails(type){
+    let urlLink = null;
+    if(type=='save') urlLink = `${this.motorApiUrl}api/saveemployees`;
+    else urlLink = `${this.motorApiUrl}api/proceedemployees`;
     if(this.fidelityList.length!=0){
         let empList = [],i=0;
         for(let emp of this.fidelityList){
@@ -1018,7 +1289,7 @@ onFidelitySave(){
           empList.push(entry);
           i+=1;
           if(i==this.fidelityList.length){
-            let urlLink = `${this.motorApiUrl}api/saveproductemployees`;
+            //let urlLink = `${this.motorApiUrl}api/saveproductemployees`;
             let SectionId = null;
             let validYN='N';
             if(type=='alter') validYN = 'Y';
@@ -1050,29 +1321,29 @@ onFidelitySave(){
                             <div style="color: darkgreen;">Field<span class="mx-2">:</span>${element?.Field}</div>
                             <div style="color: red;">Message<span class="mx-2">:</span>${element?.Message}</div>
                           </li>`
-                          if(index==res.ErrorMessage.length-1){
-                            Swal.fire({
-                              title: '<strong>MisMatch Error</strong>',
-                              icon: 'info',
-                              html:
-                                `<ul class="list-group errorlist">
-                                  ${ulList}
-                                  <li>Do you want to continue?</li>
-                             </ul>`,
-                              showCloseButton: true,
-                              //focusConfirm: false,
-                              showCancelButton:true,
+                          // if(index==res.ErrorMessage.length-1){
+                          //   Swal.fire({
+                          //     title: '<strong>MisMatch Error</strong>',
+                          //     icon: 'info',
+                          //     html:
+                          //       `<ul class="list-group errorlist">
+                          //         ${ulList}
+                          //         <li>Do you want to continue?</li>
+                          //    </ul>`,
+                          //     showCloseButton: true,
+                          //     //focusConfirm: false,
+                          //     showCancelButton:true,
                   
-                             //confirmButtonColor: '#3085d6',
-                             cancelButtonColor: '#d33',
-                             confirmButtonText: 'Yes,Proceed!',
-                             cancelButtonText: 'Cancel',
-                            }).then((result) => {
-                              if (result.isConfirmed) {
-                                  this.onSaveFidelityDetails('alter');
-                              }
-                            });
-                          }
+                          //    //confirmButtonColor: '#3085d6',
+                          //    cancelButtonColor: '#d33',
+                          //    confirmButtonText: 'Yes,Proceed!',
+                          //    cancelButtonText: 'Cancel',
+                          //   }).then((result) => {
+                          //     if (result.isConfirmed) {
+                          //         this.onSaveFidelityDetails('alter');
+                          //     }
+                          //   });
+                          // }
                         }
                         
                       }
@@ -1097,6 +1368,9 @@ onFidelitySave(){
         let empList = [],i=0;
         for(let emp of this.employeeList){
           let entry = emp;
+           if(entry.DateOfBirth!=null){
+              entry['DateOfBirth']= this.datePipe.transform(entry.DateOfBirth, "dd/MM/yyyy");
+          }
           if(emp.LocationName==undefined) emp['LocationName'] = this.LocationList.find(ele=>ele.Code==emp['LocationId']).CodeDesc;
           entry['EmployeeId'] = String(i+1);
           empList.push(entry);
@@ -1210,22 +1484,79 @@ onFidelitySave(){
     console.log('PPPPPPPPPPPP')
     this.locationIdError = false;this.contentIdError=false; this.serialNoError = false;this.contentDescError = false;this.contentSIError = false;
     let i=0;
-    if(this.LocationId==null || this.LocationId==undefined || this.LocationId==''){ i+=1; this.locationIdError = true;}
-    if(this.contentId==null || this.contentId==undefined || this.contentId==''){ i+=1; this.contentIdError = true;}
-    if(this.serialNoDesc==null || this.serialNoDesc==undefined || this.serialNoDesc==''){ i+=1; this.serialNoError = true;}
-    if(this.contentRiskDesc==null || this.contentRiskDesc==undefined || this.contentRiskDesc==''){ i+=1; this.contentDescError = true;}
-    if(this.contentSI==null || this.contentSI==undefined || this.contentSI=='' || this.contentSI == '0'){ i+=1; this.contentSIError = true;}
-    if(i==0){
-      this.Cotentrisk[this.currentContentIndex]['SumInsured'] = this.contentSI;
-      this.Cotentrisk[this.currentContentIndex]['RiskId'] = this.LocationId;
-      this.Cotentrisk[this.currentContentIndex]['SerialNoDesc'] = this.serialNoDesc;
-      this.Cotentrisk[this.currentContentIndex]['ContentRiskDesc'] = this.contentRiskDesc;
-      this.Cotentrisk[this.currentContentIndex]['ItemId'] = this.contentId;
-      this.Cotentrisk[this.currentContentIndex]['LocationName'] = this.LocationList.find(ele=>ele.Code==this.LocationId).CodeDesc;
-      this.LocationId = null;this.currentContentIndex=null;this.contentSI=null;this.serialNoDesc=null;this.contentRiskDesc=null;this.contentId=null;
+    // if(this.LocationId==null || this.LocationId==undefined || this.LocationId==''){ i+=1; this.locationIdError = true;}
+    // if(this.contentId==null || this.contentId==undefined || this.contentId==''){ i+=1; this.contentIdError = true;}
+    // if(this.serialNoDesc==null || this.serialNoDesc==undefined || this.serialNoDesc==''){ i+=1; this.serialNoError = true;}
+    // if(this.contentRiskDesc==null || this.contentRiskDesc==undefined || this.contentRiskDesc==''){ i+=1; this.contentDescError = true;}
+    // if(this.contentSI==null || this.contentSI==undefined || this.contentSI=='' || this.contentSI == '0'){ i+=1; this.contentSIError = true;}
+      this.Cotentrisk[this.currentContentIndex]['SumInsured'] = this.productItem.ContentSI//this.contentSI;
+      this.Cotentrisk[this.currentContentIndex]['RiskId'] = this.productItem.ContentLocation;
+      this.Cotentrisk[this.currentContentIndex]['SerialNoDesc'] = this.productItem.ContentSerialNo;//this.serialNoDesc
+      this.Cotentrisk[this.currentContentIndex]['ContentRiskDesc'] =this.productItem.ContentDesc; //this.contentRiskDesc;
+      this.Cotentrisk[this.currentContentIndex]['ItemId'] = this.productItem.ContentType//this.contentId;
+      this.Cotentrisk[this.currentContentIndex]['LocationName'] = this.LocationList.find(ele=>ele.Code==this.productItem.ContentLocation).CodeDesc;
+      // this.LocationId = null;this.currentContentIndex=null;this.contentSI=null;this.serialNoDesc=null;this.contentRiskDesc=null;this.contentId=null;
+      this.productItem.ContentSI=null; this.productItem.ContentLocation=null;this.productItem.ContentSerialNo=null;
+      this.productItem.ContentDesc=null;this.productItem.ContentType=null;this.currentContentIndex=null;
       this.editContentSection = false;
       this.enableContentEditSection = false;
-    }
+    
+  }
+  onAllRiskSubmit(){
+    
+    this.risk[this.currentRiskIndex]['SumInsured'] = this.productItem.RiskSI;
+    this.risk[this.currentRiskIndex]['ContentRiskDesc'] = this.productItem.RiskDescription;
+    this.risk[this.currentRiskIndex]['SerialNoDesc'] = this.productItem.RiskSerialNo,
+    this.risk[this.currentRiskIndex]['RiskId'] = this.productItem.RiskLocation;//this.serialNoDesc
+    this.risk[this.currentRiskIndex]['ItemId'] =this.productItem.RiskContentType; 
+    this.productItem=new ProductData();//this.contentRiskDesc;
+    this.editRiskSection= false;
+    this.enableAllriskEditSection=false;
+  }
+
+  onAccidentSubmit(){
+    console.log('PPPPPPPPPPPP')
+    this.locationIdError = false;this.contentIdError=false; this.serialNoError = false;this.contentDescError = false;this.contentSIError = false;
+    let i=0;
+   
+      this.PersonalAssistantList[this.currentPersonalAccidentIndex]['Salary'] = this.productItem.AccSI;
+      this.PersonalAssistantList[this.currentPersonalAccidentIndex]['RiskId'] = this.productItem.AccidentLocation;
+      this.PersonalAssistantList[this.currentPersonalAccidentIndex]['OccupationId'] = this.accidentOccupationId,
+      this.PersonalAssistantList[this.currentPersonalAccidentIndex]['OccupationDesc'] = this.accidentOccupation;//this.serialNoDesc
+      this.PersonalAssistantList[this.currentPersonalAccidentIndex]['PersonName'] =this.productItem.AccName; //this.contentRiskDesc;
+      this.PersonalAssistantList[this.currentPersonalAccidentIndex]['Dob'] = this.productItem.AccDob;
+      this.PersonalAssistantList[this.currentPersonalAccidentIndex]['NationalityId'] = this.productItem.AccNationID;
+      //this.contentId;
+      //this.Cotentrisk[this.currentContentIndex]['LocationName'] = this.LocationList.find(ele=>ele.Code==this.productItem.ContentLocation).CodeDesc;
+      // this.LocationId = null;this.currentContentIndex=null;this.contentSI=null;this.serialNoDesc=null;this.contentRiskDesc=null;this.contentId=null;
+      this.productItem.AccSI=null;this.productItem.AccidentLocation=null;this.productItem.AccName=null;this.productItem.AccDob=null;
+      this.productItem.AccNationID =null;
+      this.currentPersonalAccidentIndex=null;
+      this.editPersonalAccidentSection= false;
+      this.enablePersonalAccEditSection =false;
+    
+  }
+
+  onIndSubmit(){
+    console.log('PPPPPPPPPPPP')
+    this.locationIdError = false;this.contentIdError=false; this.serialNoError = false;this.contentDescError = false;this.contentSIError = false;
+    let i=0;
+      this.Intermedity[this.currentPersonalIndIndex]['Salary'] = this.productItem.IndSI;
+      this.Intermedity[this.currentPersonalIndIndex]['RiskId'] = this.productItem.IndLocation;
+      this.Intermedity[this.currentPersonalIndIndex]['OccupationId'] = this.liabilityOccupationId;
+      this.Intermedity[this.currentPersonalIndIndex]['OccupationDesc'] = this.liabilityOccupation;//this.serialNoDesc
+      this.Intermedity[this.currentPersonalIndIndex]['PersonName'] =this.productItem.IndName; //this.contentRiskDesc;
+      this.Intermedity[this.currentPersonalIndIndex]['Dob'] = this.productItem.IndDob;
+      this.Intermedity[this.currentPersonalIndIndex]['NationalityId'] = this.productItem.IndNationID;
+      //this.contentId;
+      //this.Cotentrisk[this.currentContentIndex]['LocationName'] = this.LocationList.find(ele=>ele.Code==this.productItem.ContentLocation).CodeDesc;
+      // this.LocationId = null;this.currentContentIndex=null;this.contentSI=null;this.serialNoDesc=null;this.contentRiskDesc=null;this.contentId=null;
+      this.productItem.IndSI=null;this.productItem.IndLocation=null;this.productItem.IndName=null;this.productItem.IndDob=null;
+      this.productItem.IndNationID =null;
+      this.currentPersonalIndIndex=null;
+      this.editPersonalIndSection= false;
+      this.enablePersonalIndEditSection =false;
+    
   }
 
   valuechange(row) {
@@ -1292,6 +1623,7 @@ onFidelitySave(){
         console.log(data);
         if(data.Result){
             this.contentList = data.Result;
+
             
         }
       },
@@ -1322,11 +1654,46 @@ onFidelitySave(){
         if(data.Result){
           if(this.productId=='14' || sectionId=='45'){
                   this.employeeOccupationList = data.Result;
+                  for (let i = 0; i < this.employeeOccupationList.length; i++) {
+                    this.employeeOccupationList[i].label = this.employeeOccupationList[i]['CodeDesc'];
+                    this.employeeOccupationList[i].value = this.employeeOccupationList[i]['Code'];
+                    delete this.employeeOccupationList[i].CodeDesc;
+                    if (i == this.employeeOccupationList.length - 1) {
+                      this.fieldsEmpFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].props.options = this.employeeOccupationList;
+                    }
+                  }
           }
           else if(this.productId=='32' || sectionId=='43'){
             this.fidelityOccupationList = data.Result;
+            for (let i = 0; i < this.fidelityOccupationList.length; i++) {
+              this.fidelityOccupationList[i].label = this.fidelityOccupationList[i]['CodeDesc'];
+              this.fidelityOccupationList[i].value = this.fidelityOccupationList[i]['Code'];
+              delete this.fidelityOccupationList[i].CodeDesc;
+              if (i == this.fidelityOccupationList.length - 1) {
+                this.fieldFEFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].props.options = this.fidelityOccupationList;
+              }
+              console.log('JJJJJJJJJJJJJJJJJJJ',this.fieldFEFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].props.options)
+            }
           }
-          else this.occupationList = data.Result;
+          else 
+          {
+            this.occupationList = data.Result;
+            for (let i = 0; i < this.occupationList.length; i++) {
+              this.occupationList[i].label = this.occupationList[i]['CodeDesc'];
+              this.occupationList[i].value = this.occupationList[i]['Code'];
+              delete this.occupationList[i].CodeDesc;
+              if (i == this.occupationList.length - 1) {
+                if(this.eight){
+                  this.fieldFEFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].props.options = this.occupationList;
+                }
+                if(this.seven){
+                  this.fieldsEmpFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].props.options = this.occupationList;
+                }
+                console.log('JJJJJJJJJJJJJJJJJJJ',this.fieldFEFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[7].props.options);
+                //this.fieldsEmpFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[7].props.options = this.employeeOccupationList;
+              }
+            }
+          }
           this.getdropList();
         }
       },
@@ -1343,7 +1710,18 @@ onFidelitySave(){
       (data: any) => {
         console.log(data);
         if(data.Result){
-            this.dropList = data.Result;
+          let defaultObj = [{ 'label': '-Select-', 'value': null }]
+          this.dropList = data.Result;
+          for (let i = 0; i < this.dropList.length; i++) {
+            this.dropList[i].label = this.dropList[i]['CodeDesc'];
+            this.dropList[i].value = this.dropList[i]['Code'];
+            delete this.dropList[i].CodeDesc;
+            if (i == this.dropList.length - 1) {
+              this.fieldsContent[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].props.options = defaultObj.concat(this.dropList);
+            }
+          }
+            
+
             //this.getOccupationList();
         }
       },
@@ -1396,7 +1774,16 @@ onFidelitySave(){
       (data: any) => {
         console.log(data);
         if(data.Result){
+          
             this.CyperList = data.Result;
+            for (let i = 0; i < this.CyperList.length; i++) {
+              this.CyperList[i].label = this.CyperList[i]['CodeDesc'];
+              this.CyperList[i].value = this.CyperList[i]['Code'];
+              delete this.CyperList[i].CodeDesc;
+              if (i == this.CyperList.length - 1) {
+                this.fieldsDevice[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].props.options = this.CyperList;
+              }
+            }
             console.log('CyberContent List',this.CyperList);
         }
       },
@@ -1414,6 +1801,14 @@ onFidelitySave(){
         console.log(data);
         if(data.Result){
             this.allriskList = data.Result;
+            for (let i = 0; i < this.allriskList.length; i++) {
+              this.allriskList[i].label = this.allriskList[i]['CodeDesc'];
+              this.allriskList[i].value = this.allriskList[i]['Code'];
+              delete this.allriskList[i].CodeDesc;
+              if (i == this.allriskList.length - 1) {
+                this.fieldsRisk[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].props.options = this.allriskList;
+              }
+            }
 
         }
       },
@@ -1433,6 +1828,15 @@ onFidelitySave(){
         console.log(data);
         if(data.Result){
             this.allriskList = data.Result.ContentTypeRes;
+            for (let i = 0; i < this.allriskList.length; i++) {
+              this.allriskList[i].label = this.allriskList[i]['CodeDesc'];
+              this.allriskList[i].value = this.allriskList[i]['Code'];
+              delete this.allriskList[i].CodeDesc;
+              if (i == this.allriskList.length - 1) {
+                this.fieldsMachinery[0].fieldGroup[0].fieldGroup[0].fieldGroup[3].props.options = this.allriskList;
+              }
+            }
+
             //this.getOccupationList();
 
         }
@@ -1451,7 +1855,7 @@ onFidelitySave(){
         let sumInsured = null;
         if(this.sumInsured == true){
            if(build.BuildingSuminsured==undefined || build.BuildingSuminsured==null) sumInsured = null;
-          else if(build.BuildingSuminsured.includes(',')){ sumInsured = build.BuildingSuminsured.replace(/,/g, '') }
+          // else if(build.BuildingSuminsured.includes(',')){ sumInsured = build.BuildingSuminsured.replace(/,/g, '') }
           else sumInsured = build.BuildingSuminsured;
         }
         else{
@@ -1459,6 +1863,7 @@ onFidelitySave(){
         }
 
         this.LocationList.push({ "Code": String(i + 1), "CodeDesc": build.LocationName })
+       
         let ReqObj = {
 
           "BuildingSuminsured":sumInsured,
@@ -1501,6 +1906,42 @@ onFidelitySave(){
           this.saveBuildingDetails(buildReqList,type);
         }
       }
+      console.log('TTTTTTTTTTTTTTTT',this.LocationList)
+      if(this.first || this.second || this.fifth || this.ten || this.third || this.nine || this.seven || this.eight){
+        if(this.LocationList.length !=0){
+          for (let j = 0; j < this.LocationList.length; j++) {
+            this.LocationList[j].label = this.LocationList[j]['CodeDesc'];
+            this.LocationList[j].value = this.LocationList[j]['Code'];
+            delete this.LocationList[j].CodeDesc;
+            if (j == this.LocationList.length - 1) {
+              if(this.first){
+                this.fieldsContent[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].props.options = this.LocationList;
+              }
+              if(this.second){
+                this.fieldsPersonalAccident[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].props.options = this.LocationList;
+              }
+             if(this.fifth){
+              this.fieldsPersonalInd[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].props.options = this.LocationList;
+             }
+             if(this.ten){
+              this.fieldsDevice[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].props.options = this.LocationList;
+             }
+             if(this.third){
+              this.fieldsRisk[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].props.options = this.LocationList;
+            }
+            if(this.nine){
+              this.fieldsMachinery[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].props.options = this.LocationList;
+            }
+            if(this.seven){
+              this.fieldsEmpFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[7].props.options = this.LocationList;
+            }
+            if(this.eight){
+              this.fieldFEFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[7].props.options = this.LocationList;
+            }
+            }
+          }
+        }
+      }
     }
 
     //this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
@@ -1512,7 +1953,7 @@ onFidelitySave(){
       for(let entry of this.PersonalAssistantList){
         let salary;
         if(entry.Salary==undefined || entry.Salary==null) salary = null;
-        else if(entry.Salary.includes(',')){ salary = entry.Salary.replace(/,/g, '') }
+        // else if(entry.Salary.includes(',')){ salary = entry.Salary.replace(/,/g, '') }
         else salary = entry.Salary;
           let data = {
             "Dob": entry.Dob,
@@ -1615,7 +2056,7 @@ onFidelitySave(){
       for(let entry of this.Intermedity){
         let salary;
         if(entry.Salary==undefined || entry.Salary==null) salary = null;
-        else if(entry.Salary.includes(',')){ salary = entry.Salary.replace(/,/g, '') }
+        // else if(entry.Salary.includes(',')){ salary = entry.Salary.replace(/,/g, '') }
         else salary = entry.Salary;
           let data = {
               "Dob": entry.Dob,
@@ -1813,6 +2254,39 @@ onFidelitySave(){
     (err) => { },
   );
   }
+  onSaveAllRisk(){
+    if (this.risk.length != 0) {
+      let i=0, reqList =[];
+      for(let entry of this.risk){
+        let sumInsured;
+        if(entry.SumInsured==undefined || entry.SumInsured==null) sumInsured = null;
+        // else if(entry.SumInsured.includes(',')){ sumInsured = entry.SumInsured.replace(/,/g, '') }
+        else sumInsured = entry.SumInsured;
+          let data = {
+              "ItemId":entry.ItemId,
+              "RiskId":entry.RiskId,
+              "ContentRiskDesc":entry.ContentRiskDesc,
+              "SerialNoDesc": entry.SerialNoDesc,
+              "MakeAndModel":"TN123",
+              "SerialNo":"155685",
+              "ItemValue":"26534556",
+              "SumInsured":sumInsured
+          }
+          /*if(data.Dob!=null){
+              data.Dob = this.datePipe.transform(data.Dob, "dd/MM/yyyy")
+          }*/
+          reqList.push(data)
+          i+=1;
+          if(i==this.risk.length)  this.finalSaveRiskDetails(reqList,'A');
+          // reqList.push(data);
+          // i+=1;
+          // if(i==this.Cotentrisk.length){
+          //   this.finalSaveRiskDetails(reqList,'C');
+          // }
+      }
+
+    }
+  }
 
   onSaveContentRisk(){
     if (this.Cotentrisk.length != 0) {
@@ -1820,7 +2294,7 @@ onFidelitySave(){
       for(let entry of this.Cotentrisk){
         let sumInsured;
         if(entry.SumInsured==undefined || entry.SumInsured==null) sumInsured = null;
-        else if(entry.SumInsured.includes(',')){ sumInsured = entry.SumInsured.replace(/,/g, '') }
+        // else if(entry.SumInsured.includes(',')){ sumInsured = entry.SumInsured.replace(/,/g, '') }
         else sumInsured = entry.SumInsured;
           let data = {
               "ItemId":entry.ItemId,
@@ -1850,7 +2324,7 @@ onFidelitySave(){
       for(let entry of this.machineries){
         let sumInsured;
         if(entry.SumInsured==undefined || entry.SumInsured==null) sumInsured = null;
-        else if(entry.SumInsured.includes(',')){ sumInsured = entry.SumInsured.replace(/,/g, '') }
+        // else if(entry.SumInsured.includes(',')){ sumInsured = entry.SumInsured.replace(/,/g, '') }
         else sumInsured = entry.SumInsured;
           let data = {
               "ItemId":entry.ItemId,
@@ -1876,22 +2350,22 @@ onFidelitySave(){
 
     }
   }
-  onSaveAllRisk(){
-    if (this.risk.length != 0) {
-      let i=0, reqList =[];
-      for(let entry of this.risk){
-          let obj = entry;
-          let sumInsured;
-          if(entry.SumInsured==undefined || entry.SumInsured==null) sumInsured = null;
-          else if(entry.SumInsured.includes(',')){ sumInsured = entry.SumInsured.replace(/,/g, '') }
-          else sumInsured = entry.SumInsured;
-          obj['SumInsured'] = sumInsured
-          reqList.push(obj)
-          i+=1;
-          if(i==this.risk.length)  this.finalSaveRiskDetails(reqList,'A');
-        }
-      }
-  }
+  // onSaveAllRisk(){
+  //   if (this.risk.length != 0) {
+  //     let i=0, reqList =[];
+  //     for(let entry of this.risk){
+  //         let obj = entry;
+  //         let sumInsured;
+  //         if(entry.SumInsured==undefined || entry.SumInsured==null) sumInsured = null;
+  //         // else if(entry.SumInsured.includes(',')){ sumInsured = entry.SumInsured.replace(/,/g, '') }
+  //         else sumInsured = entry.SumInsured;
+  //         obj['SumInsured'] = sumInsured
+  //         reqList.push(obj)
+  //         i+=1;
+  //         if(i==this.risk.length)  this.finalSaveRiskDetails(reqList,'A');
+  //       }
+  //     }
+  // }
 
   finalSavecontentDetails(reqList,type){
     let ReqObj = {
@@ -2095,6 +2569,44 @@ onFidelitySave(){
             this.LocationList.push({ "Code": String(this.LocationList.length+1), "CodeDesc": entry.LocationName })
             i+=1;
           }
+
+          if(this.first || this.second || this.fifth || this.ten || this.third || this.nine || this.seven || this.eight){
+            if(this.LocationList.length !=0){
+              for (let j = 0; j < this.LocationList.length; j++) {
+                this.LocationList[j].label = this.LocationList[j]['CodeDesc'];
+                this.LocationList[j].value = this.LocationList[j]['Code'];
+                delete this.LocationList[j].CodeDesc;
+                if (j == this.LocationList.length - 1) {
+                  if(this.first){
+                    this.fieldsContent[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].props.options = this.LocationList;
+                  }
+                  if(this.second){
+                    this.fieldsPersonalAccident[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].props.options = this.LocationList;
+                  }
+                  if(this.fifth){
+                    this.fieldsPersonalInd[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].props.options = this.LocationList;
+                  }
+                  if(this.ten){
+                    this.fieldsDevice[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].props.options = this.LocationList;
+                  }
+                  if(this.third){
+                    this.fieldsRisk[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].props.options = this.LocationList;
+                  }
+                  if(this.nine){
+                    this.fieldsMachinery[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].props.options = this.LocationList;
+                  }
+                  if(this.seven){
+                    this.fieldsEmpFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[7].props.options = this.LocationList;
+                  }
+                  if(this.eight){
+                    this.fieldFEFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[7].props.options = this.LocationList;
+                  }
+                }
+              }
+            }
+          }
+   
+       
           this.fourth = true;
           this.getTotalSICost('building');
         }
@@ -2170,14 +2682,29 @@ onFidelitySave(){
     // }
   }
   getLocationName(Id){
+    // console.log('IIIIIIIIIII',Id)
+    // console.log('NNNNNNNNNN',this.LocationList)
     let entry = this.LocationList.find(ele=>ele.Code==Id);
     if(entry){
-      return entry.CodeDesc;
+      return entry.label;
+      //return entry.CodeDesc;
+    }
+  }
+  getDeviceName(Id){
+    let entry = this.CyperList.find(ele=>ele.Code==Id);
+    if(entry){
+      return entry.label;
+      //return entry.CodeDesc;
     }
   }
   getContentName(rowData){
     let entry = this.dropList.find(ele=>ele.Code==rowData.ItemId);
-    if(entry) return entry.CodeDesc;
+    if(entry) return entry.label;
+    else return '';
+  }
+  getContentssName(ItemId){
+    let entry = this.allriskList.find(ele=>ele.Code==ItemId);
+    if(entry) return entry.label;
     else return '';
   }
 
@@ -2256,56 +2783,92 @@ onFidelitySave(){
   }
   individualCommaFormatted(type){
       if(type=='building'){
-        let entry = this.BuildingSuminsured;
-        console.log("Entry Came")
-          console.log("Entry Came 2")
-          let value = entry.replace(/\D/g, "")
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          this.building[this.currentBuildingIndex]['BuildingSuminsured'] = value;
-          this.BuildingSuminsured = value;
+        let entry = this.productItem.BuildingSumInsureds;
+        console.log("Entry Came",entry)
+          // let value = entry.replace(/\D/g, "")
+          // .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          this.building[this.currentBuildingIndex]['BuildingSuminsured'] = entry;
+          this.productItem.BuildingSumInsureds= entry;
+          console.log("Entry Came 2",this.productItem.BuildingSumInsureds);
           this.getTotalSICost('building');
       }
       if(type=='content'){
-        let entry = this.contentSI;
-        if(this.contentSI){
-          let value = this.contentSI.replace(/\D/g, "")
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          this.Cotentrisk[this.currentContentIndex]['SumInsured'] = value;
-          this.contentSI = value;
+        let entry = this.productItem.ContentSI
+        if(this.productItem.ContentSI){
+          // let value = this.contentSI.replace(/\D/g, "")
+          // .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          this.Cotentrisk[this.currentContentIndex]['SumInsured'] = entry;
+          this.productItem.ContentSI = entry;
           this.getTotalSICost('content');
         }
       }
+
+      if(type=='PersonalAccident'){
+        let entry = this.productItem.AccSI
+        if(this.productItem.AccSI){
+          // let value = this.contentSI.replace(/\D/g, "")
+          // .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          this.PersonalAssistantList[this.currentPersonalAccidentIndex]['Salary'] = entry;
+          this.productItem.AccSI = entry;
+          this.getTotalSICost('PersonalAccident');
+        }
+      }
+      if(type=='PersonalInd'){
+        let entry = this.productItem.IndSI
+        if(this.productItem.IndSI){
+          // let value = this.contentSI.replace(/\D/g, "")
+          // .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          this.Intermedity[this.currentPersonalIndIndex]['Salary'] = entry;
+          this.productItem.IndSI = entry;
+          this.getTotalSICost('PersonalIndemenity');
+        }
+      }
+      
+      
       if(type=='employee'){
-        let entry = this.employeeSalary;
-        if(this.employeeSalary){
-          if(this.employeeSalary.includes('.')) this.employeeSalary = this.employeeSalary.split('.')[0];
-          let value = this.employeeSalary.replace(/\D/g, "")
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          this.employeeList[this.currentEmployeeIndex]['Salary'] = value.replace(/,/g, '');
-          this.employeeSalary = value;
+        let entry = this.productItem.EmpsSI;
+        if(entry){
+          this.employeeList[this.currentEmployeeIndex]['SumInsured'] = entry;
+          this.productItem.EmpsSI = entry;
           this.getTotalSICost('Employee');
         }
+        // if(this.employeeSalary){
+        //   if(this.employeeSalary.includes('.')) this.employeeSalary = this.employeeSalary.split('.')[0];
+        //   let value = this.employeeSalary.replace(/\D/g, "")
+        //   .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        //   this.employeeList[this.currentEmployeeIndex]['Salary'] = value.replace(/,/g, '');
+        //   this.employeeSalary = value;
+        //   this.getTotalSICost('Employee');
+        // }
       }
       if(type=='fidelity'){
-        let entry = this.employeeSalary;
-        if(this.employeeSalary){
-          if(this.employeeSalary.includes('.')) this.employeeSalary = this.employeeSalary.split('.')[0];
-          let value = this.employeeSalary.replace(/\D/g, "")
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          this.fidelityList[this.currentFidelityIndex]['Salary'] = value.replace(/,/g, '');
-          this.employeeSalary = value;
+        let entry = this.productItem.fdSI;
+        if(entry){
+          this.fidelityList[this.currentFidelityIndex]['SumInsured'] = entry;
+          this.productItem.fdSI = entry;
           this.getTotalSICost('Fidelity');
         }
+        // let entry = this.employeeSalary;
+        // if(this.employeeSalary){
+        //   if(this.employeeSalary.includes('.')) this.employeeSalary = this.employeeSalary.split('.')[0];
+        //   let value = this.employeeSalary.replace(/\D/g, "")
+        //   .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        //   this.fidelityList[this.currentFidelityIndex]['Salary'] = value.replace(/,/g, '');
+        //   this.employeeSalary = value;
+        //   this.getTotalSICost('Fidelity');
+        // }
       }
       if(type=='machinery'){
-        let entry = this.MiSumInsured;
-        if(this.MiSumInsured){
-          if(this.MiSumInsured.includes('.')) this.MiSumInsured = this.MiSumInsured.split('.')[0];
-          let value = this.MiSumInsured.replace(/\D/g, "")
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          this.machineries[this.currentMachineryIndex]['SumInsured'] = value.replace(/,/g, '');
-          this.MiSumInsured = value;
+        let entry = this.productItem.MSI;//this.MiSumInsured;
+        if(entry){
+          this.machineries[this.currentMachineryIndex]['SumInsured'] = entry;
+          this.productItem.MSI = entry;
           this.getTotalSICost('Machinery');
+          // if(this.MiSumInsured.includes('.')) this.MiSumInsured = this.MiSumInsured.split('.')[0];
+          // let value = this.MiSumInsured.replace(/\D/g, "")
+          // .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          // this.machineries[this.currentMachineryIndex]['SumInsured'] = value.replace(/,/g, '');
+          // this.MiSumInsured = value;
         }
       }
       if(type=='accessories'){
@@ -2319,6 +2882,17 @@ onFidelitySave(){
           this.getTotalSICost('Accessories');
         }
       }
+      if(type=='AllRisk'){
+        let entry = this.productItem.RiskSI;
+        if(entry){
+            // let value = this.contentSI.replace(/\D/g, "")
+            // .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            this.risk[this.currentRiskIndex]['SumInsured'] = entry;
+            this.productItem.RiskSI = entry;
+            this.getTotalSICost('AllRisk');
+          
+        }
+      }
   }
   getTotalSICost(type){
     if(type=='building'){
@@ -2327,7 +2901,7 @@ onFidelitySave(){
         for(let build of this.building){
           let SI = build.BuildingSuminsured,entry=0;
           if(SI==undefined || SI=='' || SI ==null) SI = 0;
-          else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
+          // else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
           else entry = SI
           this.totalBuildingSumInsured = Number(entry)+this.totalBuildingSumInsured
         }
@@ -2337,11 +2911,14 @@ onFidelitySave(){
         this.totalContentSI = 0;
         if(this.Cotentrisk.length!=0){
           for(let content of this.Cotentrisk){
+            console.log('Contentsss SumInsured',content.SumInsured);
             let SI = content.SumInsured,entry=0;
             if(SI==undefined || SI=='' || SI ==null) SI = 0;
-            else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
+            //else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
             else entry = SI
             this.totalContentSI = Number(entry)+this.totalContentSI
+            console.log('PPPPPPPPPP',this.totalContentSI);
+
           }
         }
     }
@@ -2351,7 +2928,7 @@ onFidelitySave(){
           for(let content of this.risk){
             let SI = content.SumInsured,entry=0;
             if(SI==undefined || SI=='' || SI ==null) SI = 0;
-            else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
+            // else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
             else entry = SI
             this.totalAllRiskSI = Number(entry)+this.totalAllRiskSI
           }
@@ -2385,9 +2962,10 @@ onFidelitySave(){
       this.totalPASI = 0;
         if(this.PersonalAssistantList.length!=0){
           for(let content of this.PersonalAssistantList){
+            console.log('IIIIIIII',content.Salary);
             let SI = content.Salary,entry=0;
             if(SI==undefined || SI=='' || SI ==null) SI = 0;
-            else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
+            // else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
             else entry = SI
             this.totalPASI = Number(entry)+this.totalPASI
           }
@@ -2399,7 +2977,7 @@ onFidelitySave(){
           for(let content of this.Intermedity){
             let SI = content.Salary,entry=0;
             if(SI==undefined || SI=='' || SI ==null) SI = 0;
-            else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
+            // else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
             else entry = SI
             this.totalPersIntSI = Number(entry)+this.totalPersIntSI
           }
@@ -2412,7 +2990,7 @@ onFidelitySave(){
             let SI = emp.Salary,entry=0;
             //if(emp?.EmployeeId) delete emp['EmployeeId'];
             if(SI==undefined || SI=='' || SI ==null) SI = 0;
-            else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
+            // else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
             else entry = SI
             this.totalEmpIntSI = Number(entry)+this.totalEmpIntSI
           }
@@ -2425,7 +3003,7 @@ onFidelitySave(){
             let SI = emp.Salary,entry=0;
             //if(emp?.EmployeeId) delete emp['EmployeeId'];
             if(SI==undefined || SI=='' || SI ==null) SI = 0;
-            else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
+            // else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
             else entry = SI
             this.totalFidelityIntSI = Number(entry)+this.totalFidelityIntSI
           }
@@ -2451,7 +3029,7 @@ onFidelitySave(){
             let SI = emp.SumInsured,entry=0;
             //if(emp?.EmployeeId) delete emp['EmployeeId'];
             if(SI==undefined || SI=='' || SI ==null) SI = 0;
-            else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
+            // else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
             else entry = SI
             this.totalAccessoriesSI = Number(entry)+this.totalAccessoriesSI
           }
@@ -2576,7 +3154,7 @@ onFidelitySave(){
     console.log("Final File List",this.uploadDocList)
   }
   onUploadEmployeeDetails(){
-      if(this.uploadDocList.length!=0){
+      if(this.uploadDocList.length!=0 && this.employeeList.length!=0 || this.fidelityList.length!=0){
         Swal.fire({
           title: '<strong>Merge / Replace Records</strong>',
           icon: 'info',
@@ -2601,6 +3179,9 @@ onFidelitySave(){
             this.onProceedUpload('Add')
           }
         })
+      }
+      else{
+        this.onProceedUpload('Add');
       }
   }
   onProceedUpload(type){
@@ -2761,8 +3342,10 @@ onFidelitySave(){
           ); 
   }
   onEditEmployeeError(rowData,modal){
+    console.log('OOOOOOOOOOOO',rowData);
     this.errorRowNum = rowData?.RowNum;
     this.employeeName = rowData?.EmployeeName;
+    console.log('SSSSSSSSSS',rowData?.EmployeeName);
     this.occupationType = rowData?.OccupationId;
     this.nationality = rowData?.NationalityId;
     if(rowData.DateOfBirth){
@@ -2996,37 +3579,37 @@ onFidelitySave(){
            
           }
           else {
-            this.PersonalAssistantList = [
-              {
-                "Dob": null,
-                "Height": null,
-                "OccupationId": this.accidentOccupationId,
-                "OccupationDesc": this.accidentOccupation,
-                "NationalityId": null,
-                "PersonName": null,
-                "Salary": null,
-                "Weight": null,
-                "RiskId": null,
-                "SerialNo": null
-              }
-            ]
+            // this.PersonalAssistantList = [
+            //   {
+            //     "Dob": null,
+            //     "Height": null,
+            //     "OccupationId": this.accidentOccupationId,
+            //     "OccupationDesc": this.accidentOccupation,
+            //     "NationalityId": null,
+            //     "PersonName": null,
+            //     "Salary": null,
+            //     "Weight": null,
+            //     "RiskId": null,
+            //     "SerialNo": null
+            //   }
+            // ]
           }
         }
         else {
-          this.PersonalAssistantList = [
-            {
-              "Dob": null,
-              "Height": null,
-              "OccupationId": this.accidentOccupationId,
-              "OccupationDesc": this.accidentOccupation,
-              "NationalityId": null,
-              "PersonName": null,
-              "Salary": null,
-              "Weight": null,
-              "RiskId": null,
-              "SerialNo": null
-            }
-          ]
+          // this.PersonalAssistantList = [
+          //   {
+          //     "Dob": null,
+          //     "Height": null,
+          //     "OccupationId": this.accidentOccupationId,
+          //     "OccupationDesc": this.accidentOccupation,
+          //     "NationalityId": null,
+          //     "PersonName": null,
+          //     "Salary": null,
+          //     "Weight": null,
+          //     "RiskId": null,
+          //     "SerialNo": null
+          //   }
+          // ]
         }
         if(this.third){
           this.getallriskDetails();
@@ -3070,20 +3653,20 @@ onFidelitySave(){
             
           }
           else {
-            this.Intermedity = [
-              {
-                "Dob": null,
-                "Height": null,
-                "OccupationId": this.liabilityOccupationId,
-                "OccupationDesc": this.liabilityOccupation,
-                "PersonName": null,
-                "NationalityId": null,
-                "Salary": null,
-                "Weight": null,
-                "RiskId": null,
-                "SerialNo": null
-              }
-            ]
+            // this.Intermedity = [
+            //   {
+            //     "Dob": null,
+            //     "Height": null,
+            //     "OccupationId": this.liabilityOccupationId,
+            //     "OccupationDesc": this.liabilityOccupation,
+            //     "PersonName": null,
+            //     "NationalityId": null,
+            //     "Salary": null,
+            //     "Weight": null,
+            //     "RiskId": null,
+            //     "SerialNo": null
+            //   }
+            // ]
           }
         }
         else {
@@ -3126,48 +3709,48 @@ onFidelitySave(){
                  this.getTotalSICost('AllRisk');
                }
                else{
-                this.risk=[
-                  {
-                "ItemId":null,
-                "RiskId":null,
-                "MakeAndModel":"TN123",
-                "ContentRiskDesc":null,
-                "SerialNoDesc": null,
-                "SerialNo":"155685",
-                "ItemValue":"26534556",
-                "SumInsured":null,
-                  }
-                ]
+                // this.risk=[
+                //   {
+                // "ItemId":null,
+                // "RiskId":null,
+                // "MakeAndModel":"TN123",
+                // "ContentRiskDesc":null,
+                // "SerialNoDesc": null,
+                // "SerialNo":"155685",
+                // "ItemValue":"26534556",
+                // "SumInsured":null,
+                //   }
+                // ]
                }
               }
               else {
-                this.risk=[
-                  {
-                "ItemId":null,
-                "RiskId":null,
-                "MakeAndModel":"TN123",
-                "ContentRiskDesc":null,
-                "SerialNoDesc": null,
-                "SerialNo":"155685",
-                "ItemValue":"26534556",
-                "SumInsured":null,
-                  }
-                ]
+                // this.risk=[
+                //   {
+                // "ItemId":null,
+                // "RiskId":null,
+                // "MakeAndModel":"TN123",
+                // "ContentRiskDesc":null,
+                // "SerialNoDesc": null,
+                // "SerialNo":"155685",
+                // "ItemValue":"26534556",
+                // "SumInsured":null,
+                //   }
+                // ]
               }
             }
             else {
-              this.risk=[
-                {
-              "ItemId":null,
-              "RiskId":null,
-              "MakeAndModel":"TN123",
-              "ContentRiskDesc":null,
-              "SerialNoDesc": null,
-              "SerialNo":"155685",
-              "ItemValue":"26534556",
-              "SumInsured":null,
-                }
-              ]
+              // this.risk=[
+              //   {
+              // "ItemId":null,
+              // "RiskId":null,
+              // "MakeAndModel":"TN123",
+              // "ContentRiskDesc":null,
+              // "SerialNoDesc": null,
+              // "SerialNo":"155685",
+              // "ItemValue":"26534556",
+              // "SumInsured":null,
+              //   }
+              // ]
             }
             if(this.fifth){
               this.getPersonalIntermediaryDetails();
@@ -3224,6 +3807,7 @@ onFidelitySave(){
     this.currentFidelityIndex = this.fidelityList.length;
     this.fidelityList.push(entry);
     this.editFidelitySection = false;this.enableFidelityEditSection = true;
+    this.productItem = new ProductData();
     this.empAddress = null;this.employeeName = null;this.occupationType = null;this.empJoiningMonth = null;
     this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;
 }
@@ -3250,12 +3834,17 @@ onFidelitySave(){
       this.currentEmployeeIndex = this.employeeList.length;
     this.employeeList.push(entry);
     this.editEmployeeSection = false;this.enableEmployeeEditSection = true;
+    this.productItem = new ProductData();
     this.empAddress = null;this.employeeName = null;this.occupationType = null;this.empJoiningMonth = null;
     this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;
   }
   ContentAdd() {
     //this.Section=true;
     //this.Cotentrisk.push(rowss);
+    this.productItem.ContentDesc=null;
+    this.productItem.ContentLocation =null;this.productItem.ContentSI=null;
+    this.productItem.ContentSerialNo =null;this.productItem.ContentSuminsured=null;
+    this.productItem.ContentType =null;
     let entry = [{
       "ItemId":null,
       "RiskId":null,
@@ -3276,24 +3865,68 @@ onFidelitySave(){
     this.currentContentIndex = index;
     this.editContentSection = true;
     this.enableContentEditSection = true;
-    this.LocationId = this.Cotentrisk[index].RiskId;
-    this.serialNoDesc = this.Cotentrisk[index].SerialNoDesc;
-    this.contentRiskDesc = this.Cotentrisk[index].ContentRiskDesc;
-    this.contentSI = this.Cotentrisk[index].SumInsured;this.contentId = this.Cotentrisk[index].ItemId;
+    this.productItem.ContentLocation = this.Cotentrisk[index].RiskId;
+    this.productItem.ContentSerialNo = this.Cotentrisk[index].SerialNoDesc;
+    this.productItem.ContentDesc = this.Cotentrisk[index].ContentRiskDesc;
+    this.productItem.ContentSI = this.Cotentrisk[index].SumInsured;
+    this.productItem.ContentType = this.Cotentrisk[index].ItemId;
+
+    // this.LocationId = this.Cotentrisk[index].RiskId;
+    // this.serialNoDesc = this.Cotentrisk[index].SerialNoDesc;
+    // this.contentRiskDesc = this.Cotentrisk[index].ContentRiskDesc;
+    // this.contentSI = this.Cotentrisk[index].SumInsured;this.contentId = this.Cotentrisk[index].ItemId;
     this.individualCommaFormatted('content');
+  }
+  onEditPersonalAccident(index){
+    this.currentPersonalAccidentIndex= index;
+    this.editPersonalAccidentSection= true;
+    this.enablePersonalAccEditSection= true;
+    this.productItem.AccidentLocation = this.PersonalAssistantList[index].RiskId;
+    this.productItem.AccName = this.PersonalAssistantList[index].PersonName;
+    this.productItem.AccSI = this.PersonalAssistantList[index].Salary;
+    this.productItem.AccOccupation = this.PersonalAssistantList[index].OccupationDesc;
+    this.productItem.AccNationID = this.PersonalAssistantList[index].NationalityId;
+    this.productItem.AccDob = this.PersonalAssistantList[index].Dob;
+    this.individualCommaFormatted('PersonalAccident');
+  }
+
+  onEditPersonalInd(index){
+    this.currentPersonalIndIndex= index;
+    this.editPersonalIndSection= true;
+    this.enablePersonalIndEditSection= true;
+    this.productItem.IndLocation = this.Intermedity[index].RiskId;
+    this.productItem.IndName = this.Intermedity[index].PersonName;
+    this.productItem.IndSI = this.Intermedity[index].Salary;
+    this.productItem.IndOccupation = this.Intermedity[index].OccupationDesc;
+    this.productItem.IndNationID = this.Intermedity[index].NationalityId;
+    this.productItem.IndDob = this.Intermedity[index].Dob;
+    this.individualCommaFormatted('PersonalInd');
+  }
+  onEditAllRisk(index){
+    this.currentRiskIndex= index;
+    this.editRiskSection= true;
+    this.enableAllriskEditSection= true;
+    this.productItem.RiskLocation = this.risk[index].RiskId;
+    this.productItem.RiskSerialNo = this.risk[index].SerialNoDesc;
+    this.productItem.RiskDescription = this.risk[index].ContentRiskDesc;
+    this.productItem.RiskContentType = this.risk[index].ItemId;
+    this.productItem.RiskSI = this.risk[index].SumInsured;
+    this.individualCommaFormatted('AllRisk');
   }
 
   onEditMachinery(index){
     console.log('LLLL');
     this.currentMachineryIndex = index;
     this.enableMachineryEditSection = true;
-    this.MachineryLocation = this.machineries[index].RiskId;
-    this.serialNoDesc = this.machineries[index].SerialNoDesc;
-    this.MachineryName = this.machineries[index].ContentRiskDesc;
-    this.MiSumInsured = this.machineries[index].SumInsured;this.machineryItemId = this.machineries[index].ItemId;
-    this.NameDesc=this.machineries[index].Name;
-    this.BrandName=this.machineries[index].Brand;
-
+    this.editMachinerySection=true;
+    //this.MachineryLocation 
+    this.productItem.MLocation= this.machineries[index].RiskId;
+     this.productItem.MSerialNo = this.machineries[index].SerialNoDesc;//this.serialNoDesc
+     this.productItem.MDescription = this.machineries[index].ContentRiskDesc; //this.MachineryName // this.MiSumInsured
+    this.productItem.MSI = this.machineries[index].SumInsured;//this.machineryItemId = this.machineries[index].ItemId;
+    this.productItem.MName=this.machineries[index].Name;//this.NameDesc; //this.BrandName
+    this.productItem.MBrand=this.machineries[index].Brand;
+    this.productItem.MContentType = this.machineries[index].ItemId;
     this.individualCommaFormatted('machinery');
   }
 
@@ -3301,34 +3934,42 @@ onFidelitySave(){
     this.currentEmployeeIndex = index;
     this.editEmployeeSection = true;
     this.enableEmployeeEditSection = true;
-    this.empLocation = this.employeeList[index].RiskId;
-    this.employeeName = this.employeeList[index].EmployeeName;
-    this.empAddress = this.employeeList[index].Address;
-    this.occupationType = this.employeeList[index].OccupationId;
-    this.employeeSalary = this.employeeList[index].Salary;
-    this.nationality = this.employeeList[index].NationalityId;
+    console.log('TTTTTTTTTTTTTTTTT',this.LocationList);
+    this.productItem.EmpsLocation= String(this.employeeList[index].RiskId);
+    console.log('UUUUUUUU',this.productItem.EmpsLocation)//this.empLocation 
+    this.productItem.EmpsName= this.employeeList[index].EmployeeName;// this.employeeName
+    this.productItem.EmpsAddress = this.employeeList[index].Address;//this.empAddress 
+    this.productItem.EmpsOccupation = this.employeeList[index].OccupationId;//this.occupationType 
+    this.productItem.EmpsSI= this.employeeList[index].Salary;//this.employeeSalary
+    this.productItem.EmpsNationality = this.employeeList[index].NationalityId;//this.nationality
     var dateParts = this.employeeList[index].DateOfBirth.split("/");
+    // this.productItem.EmpsDob = this.employeeList[index].DateOfBirth;
+    // console.log('NNNNNNNNNNNNN',this.productItem.EmpsDob);
     // month is 0-based, that's why we need dataParts[1] - 1
-    this.empDob = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
-    this.empJoiningDate = this.employeeList[index].DateOfJoiningYear;
-    this.empJoiningMonth = this.employeeList[index].DateOfJoiningMonth;
+    this.productItem.EmpsDob  = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
+     this.productItem.EmpsPeriod= this.employeeList[index].DateOfJoiningYear;//this.empJoiningDate
+   this.productItem.EmpsJoin= this.employeeList[index].DateOfJoiningMonth;// this.empJoiningMonth 
     this.individualCommaFormatted('employee');
   }
   onEditFidelity(index){
     this.currentFidelityIndex = index;
     this.editFidelitySection = true;
     this.enableFidelityEditSection = true;
-    this.empLocation = this.fidelityList[index].RiskId;
-    this.employeeName = this.fidelityList[index].EmployeeName;
-    this.empAddress = this.fidelityList[index].Address;
-    this.occupationType = this.fidelityList[index].OccupationId;
-    this.employeeSalary = this.fidelityList[index].Salary;
-    this.nationality = this.fidelityList[index].NationalityId;
+
+   this.productItem.fdLocation= String(this.fidelityList[index].RiskId);// this.empLocation 
+   this.productItem.fdName= this.fidelityList[index].EmployeeName;//this.employeeName
+   this.productItem.fdAddress= this.fidelityList[index].Address;//this.empAddress 
+   this.productItem.fdOccupation = this.fidelityList[index].OccupationId;
+   this.productItem.fdSI = this.fidelityList[index].Salary;
+   this.productItem.fdNationality= this.fidelityList[index].NationalityId;
     var dateParts = this.fidelityList[index].DateOfBirth.split("/");
     // month is 0-based, that's why we need dataParts[1] - 1
-    this.empDob = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
-    this.empJoiningDate = this.fidelityList[index].DateOfJoiningYear;
-    this.empJoiningMonth = this.fidelityList[index].DateOfJoiningMonth;
+   this.productItem.fdDob= dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
+    this.productItem.fdPeriod= this.fidelityList[index].DateOfJoiningYear;
+    this.productItem.fdJoin = this.fidelityList[index].DateOfJoiningMonth;
+    //this.productItem.fdJoin = String(0)+join;
+    console.log('MMMMMMMMMMMM', this.monthList);
+    console.log('KKKKKKKKKKKKKKKKK', this.productItem.fdJoin);
     this.individualCommaFormatted('fidelity');
   }
   FidelityDelete(rowData,index){
@@ -3414,6 +4055,9 @@ onFidelitySave(){
     //this.value;
     //this.Section=true;
     //this.jsonList.push(row);
+    this.productItem.LocationAddress=null;
+    this.productItem.LocationNameBuilding=null;
+    this.productItem.BuildingSumInsureds=null;
     let entry = {
       "BuildingAddress": null,
       "BuildingBuildYear": null,
@@ -3456,14 +4100,18 @@ onFidelitySave(){
     this.editMachinerySection = false;
     this.enableMachineryEditSection = true;
     this.machineries.push(entry);
+    this.productItem = new ProductData();
   }
   onEditBuilding(index){
     this.currentBuildingIndex = index;
     this.editBuildingSection = true;
     this.enableBuildingEditSection = true;
-    this.LocationName = this.building[index].LocationName;
-    this.BuildingAddress = this.building[index].BuildingAddress;
-    this.BuildingSuminsured = this.building[index].BuildingSuminsured;
+    this.productItem.LocationAddress = this.building[index].BuildingAddress;
+    this.productItem.LocationNameBuilding = this.building[index].LocationName;
+    this.productItem.BuildingSumInsureds = this.building[index].BuildingSuminsured;
+    // this.LocationName = this.building[index].LocationName;
+    // this.BuildingAddress = this.building[index].BuildingAddress;
+    // this.BuildingSuminsured = this.building[index].BuildingSuminsured;
     this.individualCommaFormatted('building');
   }
 
@@ -3471,17 +4119,28 @@ onFidelitySave(){
     this.currentCyberIndex= index;
     this.editCyberSection = true;
     this.enableCyberSection= true;
-    this.LocationId = this.CyberItem[index].RiskId;
-    this.DeviceType = this.CyberItem[index].ItemId;
-    this.Cyberyear= this.CyberItem[index].ManufactureYear;
-    this.CyberMake = this.CyberItem[index].MakeAndModel;
-    this.CyberSNo=this.CyberItem[index].SerialNoDesc;
+    this.productItem.DeviceLocation = this.CyberItem[index].RiskId;
+    this.productItem.DeviceType = this.CyberItem[index].ItemId;
+    this.productItem.DeviceSNo = this.CyberItem[index].SerialNoDesc;
+    this.productItem.DeviceMake = this.CyberItem[index].MakeAndModel;
+    this.productItem.DeviceYear = this.CyberItem[index].ManufactureYear;
+    // this.LocationId = this.CyberItem[index].RiskId;
+    // this.DeviceType = this.CyberItem[index].ItemId;
+    // this.Cyberyear= this.CyberItem[index].ManufactureYear;
+    // this.CyberMake = this.CyberItem[index].MakeAndModel;
+    // this.CyberSNo=this.CyberItem[index].SerialNoDesc;
     // this.individualCommaFormatted('Cyber');
   }
 
   PersonalAdd() {
     //this.Section=true;
     //this.PersonalAssistantList.push(rows);
+    this.productItem.AccOccupation = this.accidentOccupation;
+    this.productItem.AccidentLocation = null;
+    this.productItem.AccDob =null;
+    this.productItem.AccName =null;
+    this.productItem.AccNationID =null;
+    this.productItem.AccSI=null;
     let entry = [{
       "Dob": null,
       "Height": null,
@@ -3494,7 +4153,12 @@ onFidelitySave(){
       "RiskId": null,
       "SerialNo": null
     }]
-    this.PersonalAssistantList = entry.concat(this.PersonalAssistantList);
+    this.currentPersonalAccidentIndex = this.PersonalAssistantList.length;
+    this.PersonalAssistantList.push(entry);
+    //this.editContentSection = false;
+    this.editPersonalAccidentSection = false;
+    this.enablePersonalAccEditSection = true;
+    //this.PersonalAssistantList = entry.concat(this.PersonalAssistantList);
   }
 
   delete(row: any) {
@@ -3517,6 +4181,21 @@ onFidelitySave(){
     this.Cotentrisk.splice(index, 1);
     this.getTotalSICost('content');
   }
+  PersonalAccidentDelete(rowss: any) {
+    const index = this.PersonalAssistantList.indexOf(rowss);
+   this.PersonalAssistantList.splice(index,1);
+    this.getTotalSICost('PersonalAccident');
+  }
+  AllRiskDelete(rowss: any) {
+    const index = this.risk.indexOf(rowss);
+   this.risk.splice(index,1);
+    this.getTotalSICost('AllRisk');
+  }
+  PersonalIndDelete(rowss: any) {
+    const index = this.Intermedity.indexOf(rowss);
+   this.Intermedity.splice(index,1);
+    this.getTotalSICost('PersonalIndemenity');
+  }
 
   MachineryDelete(rows:any){
     const index = this.machineries.indexOf(rows);
@@ -3524,6 +4203,7 @@ onFidelitySave(){
     this.getTotalSICost('machinery');
   }
   AllAdd(){
+    console.log('IIIIIIIII',this.risk);
     let entry = [{
       "ItemId":"",
       "RiskId":"",
@@ -3534,7 +4214,17 @@ onFidelitySave(){
       "ItemValue":"26534556",
       "SumInsured":"",
     }]
-    this.risk = entry.concat(this.risk);
+    this.currentRiskIndex = this.risk.length;
+    console.log('NNNNNNNN',this.currentRiskIndex);
+    this.risk.push(entry);
+    this.enableAllriskEditSection = true;
+   
+    this.editRiskSection= false; 
+    this.form = new FormGroup({});
+    this.productItem = new ProductData();
+   
+    //this.risk = entry.concat(this.risk);
+  
   }
 
   AllAdds(){
@@ -3553,6 +4243,7 @@ onFidelitySave(){
     this.ElectronicItem.push(entry);
   }
   AllCyber(){
+
     let entry = {
       "ItemId":"",
       "ItemDesc":"",
@@ -3571,6 +4262,7 @@ onFidelitySave(){
     this.editCyberSection = false;
     this.currentCyberIndex= this.CyberItem.length;
     this.CyberItem.push(entry);
+    this.productItem = new ProductData();
   }
   AllDelete(row:any){
     const index = this.risk.indexOf(row);
@@ -3583,6 +4275,7 @@ onFidelitySave(){
     this.getTotalSICost('ElectricalEquipment');
   }
   IntermedityAdd(){
+  
     let entry = [{
       "Dob": null,
       "Height": null,
@@ -3595,7 +4288,20 @@ onFidelitySave(){
       "RiskId": null,
       "SerialNo": null
     }]
-    this.Intermedity=entry.concat(this.Intermedity)
+    this.currentPersonalIndIndex = this.Intermedity.length;
+    this.Intermedity.push(entry);
+    this.editPersonalIndSection= false;
+    this.enablePersonalIndEditSection = true;
+    this.form = new FormGroup({});
+    this.productItem = new ProductData();
+    this.productItem.IndOccupation = this.liabilityOccupation;
+    // this.productItem.IndLocation = "";
+    // this.productItem.IndDob = "";
+    // this.productItem.IndName ="";
+    // this.productItem.IndNationID ="";
+    // this.productItem.IndSI="";
+    // this.productItem = new ProductData();
+    //this.Intermedity=entry.concat(this.Intermedity)
   }
   deleteCyber(index){
       this.CyberItem.splice(index,1);
@@ -3616,6 +4322,15 @@ onFidelitySave(){
           console.log(data);
           if(data.Result){
             this.ElectronicList = data?.Result;
+            // for (let j = 0; j < this.ElectronicList.length; j++) {
+            //   this.ElectronicList[j].label = this.ElectronicList[j]['CodeDesc'];
+            //   this.ElectronicList[j].value = this.ElectronicList[j]['Code'];
+            //   delete this.ElectronicList[j].CodeDesc;
+            //   if (j == this.ElectronicList.length - 1) {
+            //     //this.fieldFEFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[7].props.options = this.LocationList;
+              
+            //   }
+            // }
           }
         },
         (err) => { },
