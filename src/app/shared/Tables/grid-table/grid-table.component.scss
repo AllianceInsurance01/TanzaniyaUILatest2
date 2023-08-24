@@ -37,6 +37,9 @@
     // border-spacing: 0;
     table-layout: fixed;
 }
+::ng-deep  .mdc-data-table__cell, .mdc-data-table__header-cell {
+    padding: 0px !important;
+}
 ::ng-deep .mdc-data-table__row .mdc-data-table__cell {
     // box-shadow: none !important;
 
