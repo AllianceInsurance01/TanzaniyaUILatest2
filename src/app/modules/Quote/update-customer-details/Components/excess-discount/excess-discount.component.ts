@@ -2805,8 +2805,7 @@ getMotorUsageList(vehicleValue){
       else if(this.endorseAddOnCovers && this.adminSection )return false;
       else return true;  
     }
-    else if(!this.adminSection && this.statusValue=='RA') return true
-    else if(this.statusValue && this.adminSection) return true;
+    else if(!this.adminSection && this.statusValue=='RA') return true;
     else return false;
   }
   setDiscountDetails(vehData,rowData,modal){
