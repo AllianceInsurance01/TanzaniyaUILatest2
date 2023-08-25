@@ -1361,6 +1361,7 @@ onFidelitySave(){
     else{alert("No Fidelity Details Found")}
   }
   onSaveEmployeeDetails(type){
+    
     let urlLink = null;
     if(type=='save') urlLink = `${this.motorApiUrl}api/saveemployees`;
     else urlLink = `${this.motorApiUrl}api/proceedemployees`;
@@ -1369,7 +1370,7 @@ onFidelitySave(){
         for(let emp of this.employeeList){
           let entry = emp;
            if(entry.DateOfBirth!=null){
-              entry['DateOfBirth']= this.datePipe.transform(entry.DateOfBirth, "dd/MM/yyyy");
+              if(!entry.DateOfBirth.includes('/')) entry['DateOfBirth']= this.datePipe.transform(entry.DateOfBirth, "dd/MM/yyyy");
           }
           if(emp.LocationName==undefined) emp['LocationName'] = this.LocationList.find(ele=>ele.Code==emp['LocationId']).CodeDesc;
           entry['EmployeeId'] = String(i+1);
@@ -1408,29 +1409,7 @@ onFidelitySave(){
                           <div style="color: darkgreen;">Field<span class="mx-2">:</span>${element?.Field}</div>
                           <div style="color: red;">Message<span class="mx-2">:</span>${element?.Message}</div>
                         </li>`
-                        // if(index==res.ErrorMessage.length-1){
-                        //   Swal.fire({
-                        //     title: '<strong>MisMatch Error</strong>',
-                        //     icon: 'info',
-                        //   //   html:
-                        //   //     `<ul class="list-group errorlist">
-                        //   //       ${ulList}
-                        //   //      <li>Do you want to continue?</li>
-                        //   //  </ul>`,
-                        //   //   showCloseButton: true,
-                        //   //   //focusConfirm: false,
-                        //   //   showCancelButton:true,
-                
-                        //   //  //confirmButtonColor: '#3085d6',
-                        //   //  cancelButtonColor: '#d33',
-                        //   //  confirmButtonText: 'Yes,Proceed!',
-                        //    cancelButtonText: 'Cancel',
-                        //   }).then((result) => {
-                        //     if (result.isConfirmed) {
-                        //         this.onSaveEmployeeDetails('alter');
-                        //     }
-                        //   });
-                        // }
+                        
                       }
                       
                     }
