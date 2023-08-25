@@ -1242,7 +1242,7 @@ onFidelitySave(){
       this.employeeList[this.currentEmployeeIndex]['OccupationId'] = this.productItem.EmpsOccupation;//this.occupationType;
       this.employeeList[this.currentEmployeeIndex]['LocationName'] = this.LocationList.find(ele=>ele.Code==this.productItem.EmpsLocation).label;//.CodeDesc;
       this.employeeList[this.currentEmployeeIndex]['OccupationDesc'] = this.employeeOccupationList.find(ele=>ele.Code==this.productItem.EmpsOccupation).label//this.occupationType).CodeDesc;
-      this.employeeList[this.currentEmployeeIndex]['DateOfBirth'] = this.productItem.EmpsDob//this.datePipe.transform(this.empDob, "dd/MM/yyyy");
+      if(this.productItem.EmpsDob!=null && this.productItem.EmpsDob!='') this.employeeList[this.currentEmployeeIndex]['DateOfBirth'] = this.datePipe.transform(this.productItem.EmpsDob, "dd/MM/yyyy");
       this.employeeList[this.currentEmployeeIndex]['DateOfJoiningYear'] =this.productItem.EmpsPeriod; //this.empJoiningDate;
       this.employeeList[this.currentEmployeeIndex]['DateOfJoiningMonth'] = this.productItem.EmpsJoin;//this.empJoiningMonth;
       let salary = '';
@@ -1252,6 +1252,7 @@ onFidelitySave(){
       this.employeeList[this.currentEmployeeIndex]['NationalityId'] = this.productItem.EmpsNationality; //this.nationality;
       this.editEmployeeSection = false;this.enableEmployeeEditSection = false;this.currentEmployeeIndex=null;
       this.productItem=new ProductData();
+      this.getTotalSICost('Employee')
       // this.empAddress = null;this.employeeName = null;this.occupationType = null;this.empJoiningMonth = null;
       // this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;
     //}
@@ -3913,9 +3914,8 @@ onFidelitySave(){
     this.currentEmployeeIndex = index;
     this.editEmployeeSection = true;
     this.enableEmployeeEditSection = true;
-    console.log('TTTTTTTTTTTTTTTTT',this.LocationList);
     this.productItem.EmpsLocation= String(this.employeeList[index].RiskId);
-    console.log('UUUUUUUU',this.productItem.EmpsLocation)//this.empLocation 
+    console.log('UUUUUUUU',this.employeeList[index])//this.empLocation 
     this.productItem.EmpsName= this.employeeList[index].EmployeeName;// this.employeeName
     this.productItem.EmpsAddress = this.employeeList[index].Address;//this.empAddress 
     this.productItem.EmpsOccupation = this.employeeList[index].OccupationId;//this.occupationType 

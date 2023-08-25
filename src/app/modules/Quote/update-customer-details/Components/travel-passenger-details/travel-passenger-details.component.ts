@@ -677,7 +677,7 @@ updateEmployeeRecordsTable(){
                   this.enableEmployeeUploadSection = false;
                   this.enableEmployeeEditSection = false;
                 this.errorRecords = [];this.uploadStatus=null;
-                this.getEmployeeDetails();
+                this.getpassengerDetails(0);
               }
             }
         },  

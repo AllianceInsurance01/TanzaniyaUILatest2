@@ -60,11 +60,11 @@
                     <div class="row mb-2" *ngIf="!editSection">
                         
                         <div class="col-md-10 col-lg-10 col-xl-10 offset-1">
-                        <div class="row">
-                            <div class="text-start mt-2 col-4" *ngIf="!editSection">
+                        <div class="d-flex justify-content-between">
+                            <div class=" mt-2" *ngIf="!editSection">
                                 <button class="btn btn-warning"  (click)="AddPassenger()">Add Passenger</button>
                             </div>
-                            <div class="text-start mt-2 col-4" *ngIf="!editSection">
+                            <div class=" mt-2" *ngIf="!editSection">
                                 <button class="btn btn-primary" (click)="UploadTravel()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
                             </div>
                         </div>
@@ -89,7 +89,6 @@
                             </div>
                             <div class="headcommon mr-3"  *ngIf="enableEmployeeUploadSection"> 
                                 <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data" (click)="employeedownload()"><i class="fas fa-download mx-1"></i>Sample</button>
-                                <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2" *ngIf="showEmpRecordsSection" (click)="onUploadEmployeeSection()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
                             </div>
                             </div>
                             <div  class="addMembers" *ngIf="employeeList.length!=0 && !enableEmployeeUploadSection">
