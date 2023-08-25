@@ -3796,9 +3796,9 @@ getMotorUsageList(vehicleValue){
       if(endorse.length!=0){
         let entry = endorse[endorse.length-1];
         if(type == 'empty'){
-            return (entry.PremiumIncludedTaxFC === 0 || entry.PremiumIncludedTaxFC == null)
+            return (entry.PremiumIncludedTax === 0 || entry.PremiumIncludedTax == null)
         }
-        else if(type=='value' && this.coverModificationYN=='N') return  entry.PremiumIncludedTaxFC;
+        else if(type=='value' && this.coverModificationYN=='N') return  entry.PremiumIncludedTax;
         else if(type=='value'){
           let vehicleData = this.selectedCoverList.filter(ele=>ele.Id==menu.Vehicleid)
           if(vehicleData.length!=0){
@@ -3807,7 +3807,7 @@ getMotorUsageList(vehicleValue){
               let covers:any[] = sectionEntry.Covers;
               let findCover = covers.find(ele=>ele.CoverId==rowData.CoverId);
               if(findCover==undefined) return 0;
-              else return entry.PremiumIncludedTaxFC
+              else return entry.PremiumIncludedTax
             }
           }
         }
