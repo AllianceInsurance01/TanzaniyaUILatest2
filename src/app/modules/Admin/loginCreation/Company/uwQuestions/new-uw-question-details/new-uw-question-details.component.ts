@@ -226,6 +226,9 @@ export class NewUwQuestionDetailsComponent implements OnInit {
   ongetBack(){
     this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/uwQuestionsList'])
   }
+  onChangeOptionDependant(rowData){
+    if(rowData.DependentYn!='Y') rowData.DependentUnderwriterId = null;
+  }
   onProceed(){
     if(this.remarks==undefined) this.remarks = "";
     if(this.questionDesc==undefined) this.questionDesc = "";
