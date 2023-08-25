@@ -759,6 +759,35 @@
                                                                                                                 class="spancommon span_font_size">{{premiumExcluedTax}}</span>
                                                                                                         </div>
                                                                                                     </li>
+                                                                                                     <ng-container
+                                                                                                        *ngIf="dependantTaxList.length!=0">
+                                                                                                        <li class="list-group-item list-seperate"
+                                                                                                            *ngFor="let tax of dependantTaxList">
+                                                                                                            <div>
+                                                                                                                <span
+                                                                                                                    class="spancommon span_font_size">{{tax.TaxDesc}}</span>
+                                                                                                            </div>
+                                                                                                            <div>
+                                                                                                                <span
+                                                                                                                    class="spancommon span_font_size">({{tax.TaxRate}}&nbsp;%)</span>
+                                                                                                            </div>
+                                                                                                            <div>
+                                                                                                                <span
+                                                                                                                    class="spancommon span_font_size">{{tax.TaxAmount}}</span>
+                                                                                                            </div>
+                                                                                                        </li>
+                                                                                                        <li class="list-group-item list-seperate">
+                                                                                                            <div>
+                                                                                                                <span
+                                                                                                                    class="spancommon span_font_size">Premium Before
+                                                                                                                    Tax</span>
+                                                                                                            </div>
+                                                                                                            <div>
+                                                                                                                <span
+                                                                                                                    class="spancommon span_font_size">{{premiumBeforeTax}}</span>
+                                                                                                            </div>
+                                                                                                        </li>
+                                                                                                    </ng-container>
                                                                                                     <ng-container
                                                                                                         *ngIf="taxList.length!=0">
                                                                                                         <li
@@ -888,6 +917,35 @@
                                                                                                         </div>
                                                                                                         <!-- </div> -->
                                                                                                     </li>
+                                                                                                     <ng-container
+                                                                                                        *ngIf="dependantTaxList.length!=0">
+                                                                                                        <li class="list-group-item list-seperate"
+                                                                                                            *ngFor="let tax of dependantTaxList">
+                                                                                                            <div>
+                                                                                                                <span
+                                                                                                                    class="spancommon span_font_size">{{tax.TaxDesc}}</span>
+                                                                                                            </div>
+                                                                                                            <div>
+                                                                                                                <span
+                                                                                                                    class="spancommon span_font_size">({{tax.TaxRate}}&nbsp;%)</span>
+                                                                                                            </div>
+                                                                                                            <div>
+                                                                                                                <span
+                                                                                                                    class="spancommon span_font_size">{{tax.TaxAmount}}</span>
+                                                                                                            </div>
+                                                                                                        </li>
+                                                                                                        <li class="list-group-item list-seperate">
+                                                                                                            <div>
+                                                                                                                <span
+                                                                                                                    class="spancommon span_font_size">Premium Before
+                                                                                                                    Tax</span>
+                                                                                                            </div>
+                                                                                                            <div>
+                                                                                                                <span
+                                                                                                                    class="spancommon span_font_size">{{premiumBeforeTax}}</span>
+                                                                                                            </div>
+                                                                                                        </li>
+                                                                                                    </ng-container>
                                                                                                     <ng-container
                                                                                                         *ngIf="taxList.length!=0">
                                                                                                         <li
@@ -1773,6 +1831,64 @@
                                                                                                                         class="spancommon span_font_size">{{premiumExcluedTax}}</span>
                                                                                                                 </div>
                                                                                                             </li>
+                                                                                                             <ng-container
+                                                                                                                *ngIf="dependantTaxList.length!=0">
+                                                                                                                <li class="list-group-item list-seperate"
+                                                                                                                    *ngFor="let tax of dependantTaxList">
+                                                                                                                    <div>
+                                                                                                                        <span
+                                                                                                                            class="spancommon span_font_size">{{tax.TaxDesc}}</span>
+                                                                                                                    </div>
+                                                                                                                    <div>
+                                                                                                                        <span
+                                                                                                                            class="spancommon span_font_size">({{tax.TaxRate}}&nbsp;%)</span>
+                                                                                                                    </div>
+                                                                                                                    <div>
+                                                                                                                        <span
+                                                                                                                            class="spancommon span_font_size">{{tax.TaxAmount}}</span>
+                                                                                                                    </div>
+                                                                                                                </li>
+                                                                                                                <li class="list-group-item list-seperate">
+                                                                                                                    <div>
+                                                                                                                        <span
+                                                                                                                            class="spancommon span_font_size">Premium Before
+                                                                                                                            Tax</span>
+                                                                                                                    </div>
+                                                                                                                    <div>
+                                                                                                                        <span
+                                                                                                                            class="spancommon span_font_size">{{premiumBeforeTax}}</span>
+                                                                                                                    </div>
+                                                                                                                </li>
+                                                                                                            </ng-container>
+                                                                                                             <ng-container
+                                                                                                                *ngIf="dependantTaxList.length!=0">
+                                                                                                                <li class="list-group-item list-seperate"
+                                                                                                                    *ngFor="let tax of dependantTaxList">
+                                                                                                                    <div>
+                                                                                                                        <span
+                                                                                                                            class="spancommon span_font_size">{{tax.TaxDesc}}</span>
+                                                                                                                    </div>
+                                                                                                                    <div>
+                                                                                                                        <span
+                                                                                                                            class="spancommon span_font_size">({{tax.TaxRate}}&nbsp;%)</span>
+                                                                                                                    </div>
+                                                                                                                    <div>
+                                                                                                                        <span
+                                                                                                                            class="spancommon span_font_size">{{tax.TaxAmount}}</span>
+                                                                                                                    </div>
+                                                                                                                </li>
+                                                                                                                <li class="list-group-item list-seperate">
+                                                                                                                    <div>
+                                                                                                                        <span
+                                                                                                                            class="spancommon span_font_size">Premium Before
+                                                                                                                            Tax</span>
+                                                                                                                    </div>
+                                                                                                                    <div>
+                                                                                                                        <span
+                                                                                                                            class="spancommon span_font_size">{{premiumBeforeTax}}</span>
+                                                                                                                    </div>
+                                                                                                                </li>
+                                                                                                            </ng-container>
                                                                                                             <ng-container
                                                                                                                 *ngIf="taxList.length!=0">
                                                                                                                 <li
@@ -1907,6 +2023,35 @@
                                                                                                                         class="spancommon span_font_size">{{premiumExcluedTax}}</span>
                                                                                                                 </div>
                                                                                                             </li>
+                                                                                                            <ng-container
+                                                                                                                *ngIf="dependantTaxList.length!=0">
+                                                                                                                <li class="list-group-item list-seperate"
+                                                                                                                    *ngFor="let tax of dependantTaxList">
+                                                                                                                    <div>
+                                                                                                                        <span
+                                                                                                                            class="spancommon span_font_size">{{tax.TaxDesc}}</span>
+                                                                                                                    </div>
+                                                                                                                    <div>
+                                                                                                                        <span
+                                                                                                                            class="spancommon span_font_size">({{tax.TaxRate}}&nbsp;%)</span>
+                                                                                                                    </div>
+                                                                                                                    <div>
+                                                                                                                        <span
+                                                                                                                            class="spancommon span_font_size">{{tax.TaxAmount}}</span>
+                                                                                                                    </div>
+                                                                                                                </li>
+                                                                                                                <li class="list-group-item list-seperate">
+                                                                                                                    <div>
+                                                                                                                        <span
+                                                                                                                            class="spancommon span_font_size">Premium Before
+                                                                                                                            Tax</span>
+                                                                                                                    </div>
+                                                                                                                    <div>
+                                                                                                                        <span
+                                                                                                                            class="spancommon span_font_size">{{premiumBeforeTax}}</span>
+                                                                                                                    </div>
+                                                                                                                </li>
+                                                                                                            </ng-container>
                                                                                                             <ng-container
                                                                                                                 *ngIf="taxList.length!=0">
                                                                                                                 <li

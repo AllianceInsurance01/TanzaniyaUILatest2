@@ -220,6 +220,8 @@ emiyn="N";
   excessAmount: any;
   calcType: any=null;
   sumInsured: any;
+  dependantTaxList: any;
+  premiumBeforeTax: number;
   constructor(public sharedService: SharedService,private router:Router,private modalService: NgbModal,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe,public dialog: MatDialog) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -3074,8 +3076,22 @@ getMotorUsageList(vehicleValue){
     console.log("Tax Details",rowData);
     this.MinimumPremium = (rowData.MinimumPremium/rowData.ExchangeRate);
     this.premiumExcluedTax = rowData.PremiumExcluedTax;
-    this.premiumIncluedTax = rowData.PremiumIncludedTax
-    if(rowData.Taxes) this.taxList = rowData.Taxes;
+    this.premiumIncluedTax = rowData.PremiumIncludedTax;
+    this.dependantTaxList = [];this.taxList =[];
+    this.premiumBeforeTax = 0;
+    if(rowData.Taxes){
+      if(rowData.Taxes.length!=0){
+        this.dependantTaxList = rowData.Taxes.filter(ele=>ele.DependentYN=='Y');
+        if(this.dependantTaxList.length!=0){
+          let i=0;
+          for(let tax of this.dependantTaxList){this.premiumBeforeTax = this.premiumBeforeTax+tax.TaxAmount;i+=1;
+              if(i==this.dependantTaxList.length) this.premiumBeforeTax = this.premiumBeforeTax + this.premiumExcluedTax;
+          }
+        }
+        this.taxList = rowData.Taxes.filter(ele=>ele.DependentYN!='Y');
+      }
+     
+    }
   }
   onGetEndorsement(rowData){
     console.log("End Details",rowData);

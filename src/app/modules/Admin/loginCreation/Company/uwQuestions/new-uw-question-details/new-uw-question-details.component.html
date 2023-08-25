@@ -219,9 +219,9 @@
                                         <td class="tbl-content">
                                             <div class="input-form-radio-box">
                                                 <div class="radio-toolbar" style="white-space: nowrap;">
-                                                    <input [id]="'dependant_Yes'+i" type="radio" [name]="'dependantYN'+i" [(ngModel)]="row.DependentYn" value="Y">
+                                                    <input [id]="'dependant_Yes'+i" type="radio" [name]="'dependantYN'+i" (change)="onChangeOptionDependant(row)" [(ngModel)]="row.DependentYn" value="Y">
                                                     <label class="customRadioLabel" [for]="'dependant_Yes'+i">Yes</label>
-                                                    <input type="radio" [id]="'dependant_No'+i" [name]="'dependantYN'+i" [(ngModel)]="row.DependentYn" value="N">
+                                                    <input type="radio" [id]="'dependant_No'+i" [name]="'dependantYN'+i" (change)="onChangeOptionDependant(row)" [(ngModel)]="row.DependentYn" value="N">
                                                     <label class="customRadioLabel" [for]="'dependant_No'+i">No</label>
                                                 </div>
                                             </div>
