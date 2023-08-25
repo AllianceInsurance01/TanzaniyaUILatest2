@@ -659,19 +659,19 @@
                                                                                     0
                                                                                 </ng-container>
                                                                                 <ng-container
-                                                                                    *ngIf="(coverModificationYN=='Y' && !endorseSIModification) && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=0 && element.DifferenceYN=='N'">
+                                                                                    *ngIf="(coverModificationYN=='Y' && !endorseSIModification) && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxFC!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxFC!=0 && element.DifferenceYN=='N'">
                                                                                     {{
-                                                                                    element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC
+                                                                                    element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxFC
                                                                                     |commaseparator }}
                                                                                 </ng-container>
                                                                                 <ng-container
-                                                                                    *ngIf="(coverModificationYN=='N' || endorseSIModification) && !element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC  && (element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC==null || element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC==0)">
+                                                                                    *ngIf="(coverModificationYN=='N' || endorseSIModification) && !element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxFC  && (element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxFC==null || element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxFC==0)">
                                                                                     0
                                                                                 </ng-container>
                                                                                 <ng-container
-                                                                                    *ngIf="(coverModificationYN=='N' || endorseSIModification )  && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=0 ">
+                                                                                    *ngIf="(coverModificationYN=='N' || endorseSIModification )  && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxFC!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxFC!=0 ">
                                                                                     {{
-                                                                                    element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC
+                                                                                    element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxFC
                                                                                     |commaseparator }}
                                                                                 </ng-container>
                                                                             </div>
@@ -691,7 +691,7 @@
                                                                 <ng-container
                                                                     *ngIf="element[col.key]!=null || element[col.key]!=0">
                                                                     <ng-container
-                                                                        *ngIf="endorsementSection && element.DiffPremiumIncludedTaxLC!=null && element.DiffPremiumIncludedTaxLC!=0">
+                                                                        *ngIf="endorsementSection && element.DiffPremiumIncludedTaxFC!=null && element.DiffPremiumIncludedTaxFC!=0">
                                                                         <div class="d-flex justify-content-between">
                                                                             <div>
                                                                                 <ng-container
@@ -1647,19 +1647,19 @@
                                                                                             0
                                                                                         </ng-container>
                                                                                         <ng-container
-                                                                                            *ngIf="coverModificationYN=='Y' && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=0 && element.DifferenceYN=='N'">
+                                                                                            *ngIf="coverModificationYN=='Y' && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxFC!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxFC!=0 && element.DifferenceYN=='N'">
                                                                                             {{
-                                                                                            element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC
+                                                                                            element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxFC
                                                                                             |commaseparator }}
                                                                                         </ng-container>
                                                                                         <ng-container
-                                                                                            *ngIf="coverModificationYN=='N' && !element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC  && (element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC==null || element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC==0)">
+                                                                                            *ngIf="coverModificationYN=='N' && !element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxFC  && (element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxFC==null || element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxFC==0)">
                                                                                             0
                                                                                         </ng-container>
                                                                                         <ng-container
-                                                                                            *ngIf="coverModificationYN=='N' && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC!=0">
+                                                                                            *ngIf="coverModificationYN=='N' && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxFC!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxFC!=0">
                                                                                             {{
-                                                                                            element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxLC
+                                                                                            element.Endorsements[element.Endorsements.length-1].PremiumIncludedTaxFC
                                                                                             |commaseparator }}
                                                                                         </ng-container>
                                                                                     </div>
@@ -1679,7 +1679,7 @@
                                                                         <ng-container
                                                                             *ngIf="element[col.key]!=null || element[col.key]!=0">
                                                                             <ng-container
-                                                                                *ngIf="endorsementSection && element.DiffPremiumIncludedTaxLC!=null && element.DiffPremiumIncludedTaxLC!=0">
+                                                                                *ngIf="endorsementSection && element.DiffPremiumIncludedTaxFC!=null && element.DiffPremiumIncludedTaxFC!=0">
                                                                                 <div
                                                                                     class="d-flex justify-content-between">
                                                                                     <div>

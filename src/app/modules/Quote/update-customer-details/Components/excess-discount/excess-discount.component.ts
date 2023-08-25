@@ -1014,7 +1014,7 @@ getMotorUsageList(vehicleValue){
                   "SectionId": cover.SectionId,
 
                 }
-              cover.PremiumIncludedTaxLC = cover.PremiumIncludedTaxLC+subCover.PremiumIncludedTaxLC;
+              cover.PremiumIncludedTaxFC = cover.PremiumIncludedTaxFC+subCover.PremiumIncludedTaxFC;
               cover.PremiumIncludedTax = cover.PremiumIncludedTax+subCover.PremiumIncludedTax;
               cover.selected = true;
               subCover['selected'] = true;
@@ -1023,7 +1023,7 @@ getMotorUsageList(vehicleValue){
               if(vehicle?.totalPremium){
                 alert('Entered')
                 if(cover.Endorsements!=null){
-                  vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxLC;
+                  vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxFC;
                   vehicle['totalPremium'] =  vehicle['totalPremium']+cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTax;
                 }
                 else{
@@ -1034,21 +1034,21 @@ getMotorUsageList(vehicleValue){
               }
               else{
                 if(cover.Endorsements!=null){
-                  vehicle['totalLcPremium'] = cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxLC;
+                  vehicle['totalLcPremium'] = cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxFC;
                   vehicle['totalPremium'] = cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTax;
                 }
                 else{
-                  vehicle['totalLcPremium'] =  cover.PremiumIncludedTaxLC;
+                  vehicle['totalLcPremium'] =  cover.PremiumIncludedTaxFC;
                   vehicle['totalPremium'] =  cover.PremiumIncludedTax;
                 }
                 
               }
               // if(vehicle?.totalPremium){
-              //   vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + cover.PremiumIncludedTaxLC;
+              //   vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + cover.PremiumIncludedTaxFC;
               //   vehicle['totalPremium'] =  vehicle['totalPremium']+cover.PremiumIncludedTax;
               // }
               // else{
-              //   vehicle['totalLcPremium'] =  cover.PremiumIncludedTaxLC;
+              //   vehicle['totalLcPremium'] =  cover.PremiumIncludedTaxFC;
               //   vehicle['totalPremium'] =  cover.PremiumIncludedTax;
               // }
                 console.log("Total Premium",cover,vehicle)
@@ -1070,7 +1070,7 @@ getMotorUsageList(vehicleValue){
                 "Id": vehicle.VehicleId,
                 "SectionId": cover.SectionId
               }
-              cover.PremiumIncludedTaxLC = cover.PremiumIncludedTaxLC+subCover.PremiumIncludedTaxLC;
+              cover.PremiumIncludedTaxFC = cover.PremiumIncludedTaxFC+subCover.PremiumIncludedTaxFC;
               cover.PremiumIncludedTax = cover.PremiumIncludedTax+subCover.PremiumIncludedTax;
 
               cover.selected = true;
@@ -1078,7 +1078,7 @@ getMotorUsageList(vehicleValue){
               this.selectedCoverList.push(element);
               if(vehicle?.totalPremium){
                 if(cover.Endorsements!=null){
-                  vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxLC;
+                  vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxFC;
                   vehicle['totalPremium'] =  vehicle['totalPremium']+cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTax;
                 }
                 else{
@@ -1089,21 +1089,21 @@ getMotorUsageList(vehicleValue){
               }
               else{
                 if(cover.Endorsements!=null){
-                  vehicle['totalLcPremium'] = cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxLC;
+                  vehicle['totalLcPremium'] = cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxFC;
                   vehicle['totalPremium'] = cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTax;
                 }
                 else{
-                  vehicle['totalLcPremium'] =  cover.PremiumIncludedTaxLC;
+                  vehicle['totalLcPremium'] =  cover.PremiumIncludedTaxFC;
                   vehicle['totalPremium'] =  cover.PremiumIncludedTax;
                 }
                 
               }
                 // if(vehicle?.totalPremium){
-                //   vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + cover.PremiumIncludedTaxLC;
+                //   vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + cover.PremiumIncludedTaxFC;
                 //   vehicle['totalPremium'] =  vehicle['totalPremium']+cover.PremiumIncludedTax;
                 // }
                 // else{
-                //   vehicle['totalLcPremium'] =  cover.PremiumIncludedTaxLC;
+                //   vehicle['totalLcPremium'] =  cover.PremiumIncludedTaxFC;
                 //   vehicle['totalPremium'] =  cover.PremiumIncludedTax;
                 // }
                 console.log("Total Premium",cover,vehicle)
@@ -1120,29 +1120,29 @@ getMotorUsageList(vehicleValue){
                   "SubCoverYn": "Y"
                   //"isReferal": rowData.isReferal
                 }
-                cover.PremiumIncludedTaxLC = cover.PremiumIncludedTaxLC+subCover.PremiumIncludedTaxLC;
+                cover.PremiumIncludedTaxFC = cover.PremiumIncludedTaxFC+subCover.PremiumIncludedTaxFC;
                 cover.PremiumIncludedTax = cover.PremiumIncludedTax+subCover.PremiumIncludedTax;
                 cover.selected = true;
                 subCover['selected'] = true;
                 sectionEntry.Covers.push(newEntry);
                 if(vehicle?.totalPremium){
                   if(cover.Endorsements!=null){
-                    vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxLC;
+                    vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxFC;
                     vehicle['totalPremium'] =  vehicle['totalPremium']+cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTax;
                   }
                   else{
-                    vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + subCover.PremiumIncludedTaxLC;
+                    vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + subCover.PremiumIncludedTaxFC;
                     vehicle['totalPremium'] =  vehicle['totalPremium']+subCover.PremiumIncludedTax;
                   }
                 
                 }
                 else{
                   if(cover.Endorsements!=null){
-                    vehicle['totalLcPremium'] = cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxLC;
+                    vehicle['totalLcPremium'] = cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxFC;
                     vehicle['totalPremium'] = cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTax;
                   }
                   else{
-                    vehicle['totalLcPremium'] =  cover.PremiumIncludedTaxLC;
+                    vehicle['totalLcPremium'] =  cover.PremiumIncludedTaxFC;
                     vehicle['totalPremium'] =  cover.PremiumIncludedTax;
                   }
                   
@@ -1160,29 +1160,29 @@ getMotorUsageList(vehicleValue){
                     "SubCoverYn": "Y"
                     //"isReferal": rowData.isReferal
                   }
-                  cover.PremiumIncludedTaxLC = cover.PremiumIncludedTaxLC+subCover.PremiumIncludedTaxLC;
+                  cover.PremiumIncludedTaxFC = cover.PremiumIncludedTaxFC+subCover.PremiumIncludedTaxFC;
                   cover.PremiumIncludedTax = cover.PremiumIncludedTax+subCover.PremiumIncludedTax;
                   cover.selected = true;
                   subCover['selected'] = true;
                   sectionEntry.Covers.push(newEntry);
                   if(vehicle?.totalPremium){
                     if(cover.Endorsements!=null){
-                      vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxLC;
+                      vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxFC;
                       vehicle['totalPremium'] =  vehicle['totalPremium']+cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTax;
                     }
                     else{
-                      vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + subCover.PremiumIncludedTaxLC;
+                      vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + subCover.PremiumIncludedTaxFC;
                       vehicle['totalPremium'] =  vehicle['totalPremium']+subCover.PremiumIncludedTax;
                     }
                   
                   }
                   else{
                     if(cover.Endorsements!=null){
-                      vehicle['totalLcPremium'] = cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxLC;
+                      vehicle['totalLcPremium'] = cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxFC;
                       vehicle['totalPremium'] = cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTax;
                     }
                     else{
-                      vehicle['totalLcPremium'] =  cover.PremiumIncludedTaxLC;
+                      vehicle['totalLcPremium'] =  cover.PremiumIncludedTaxFC;
                       vehicle['totalPremium'] =  cover.PremiumIncludedTax;
                     }
                     
@@ -1208,7 +1208,7 @@ getMotorUsageList(vehicleValue){
               "Id": vehicle.VehicleId,
               "SectionId": cover.SectionId
             }
-            cover.PremiumIncludedTaxLC = cover.PremiumIncludedTaxLC+subCover.PremiumIncludedTaxLC;
+            cover.PremiumIncludedTaxFC = cover.PremiumIncludedTaxFC+subCover.PremiumIncludedTaxFC;
             cover.PremiumIncludedTax = cover.PremiumIncludedTax+subCover.PremiumIncludedTax;
 
             cover.selected = true;
@@ -1216,7 +1216,7 @@ getMotorUsageList(vehicleValue){
             this.selectedCoverList.push(element);
             if(vehicle?.totalPremium){
               if(cover.Endorsements!=null){
-                vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxLC;
+                vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxFC;
                 vehicle['totalPremium'] =  vehicle['totalPremium']+cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTax;
               }
               else{
@@ -1227,11 +1227,11 @@ getMotorUsageList(vehicleValue){
             }
             else{
               if(cover.Endorsements!=null){
-                vehicle['totalLcPremium'] = cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxLC;
+                vehicle['totalLcPremium'] = cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxFC;
                 vehicle['totalPremium'] = cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTax;
               }
               else{
-                vehicle['totalLcPremium'] =  cover.PremiumIncludedTaxLC;
+                vehicle['totalLcPremium'] =  cover.PremiumIncludedTaxFC;
                 vehicle['totalPremium'] =  cover.PremiumIncludedTax;
               }
               
@@ -1249,17 +1249,17 @@ getMotorUsageList(vehicleValue){
             let findCover = covers.filter(ele=>ele.CoverId==cover.CoverId);
             subCover['selected'] = false;
             
-            cover.PremiumIncludedTaxLC = cover.PremiumIncludedTaxLC-subCover.PremiumIncludedTaxLC;
+            cover.PremiumIncludedTaxFC = cover.PremiumIncludedTaxFC-subCover.PremiumIncludedTaxFC;
             cover.PremiumIncludedTax = cover.PremiumIncludedTax-subCover.PremiumIncludedTax;
             if(vehicle?.totalPremium==null || vehicle?.totalPremium==undefined){ vehicle['totalLcPremium']=0;vehicle['totalPremium']=0 }
             if(vehicle?.totalPremium){
-              vehicle['totalLcPremium'] = vehicle['totalLcPremium'] - subCover.PremiumIncludedTaxLC;
+              vehicle['totalLcPremium'] = vehicle['totalLcPremium'] - subCover.PremiumIncludedTaxFC;
               vehicle['totalPremium'] =  vehicle['totalPremium']-subCover.PremiumIncludedTax;
-              if(findCover.length==0){cover['selected'] = false;  vehicle['totalPremium'] =  vehicle['totalPremium']-cover.PremiumIncludedTax; vehicle['totalLcPremium'] =  vehicle['totalLcPremium']-cover.PremiumIncludedTaxLC;}
+              if(findCover.length==0){cover['selected'] = false;  vehicle['totalPremium'] =  vehicle['totalPremium']-cover.PremiumIncludedTax; vehicle['totalLcPremium'] =  vehicle['totalLcPremium']-cover.PremiumIncludedTaxFC;}
             }
             else{
               if(findCover.length!=0){
-                vehicle['totalLcPremium'] =  cover.PremiumIncludedTaxLC;
+                vehicle['totalLcPremium'] =  cover.PremiumIncludedTaxFC;
                 vehicle['totalPremium'] =  cover.PremiumIncludedTax;
               }
             }
@@ -2369,10 +2369,10 @@ getMotorUsageList(vehicleValue){
                     vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax;
                     vehicle['totalPremium'] =  vehicle['totalPremium']+rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax;
                   }
-                  //rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxLC = 0;
+                  //rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxFC = 0;
                 }
                 else{
-                  vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.PremiumIncludedTaxLC;
+                  vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.PremiumIncludedTaxFC;
                   vehicle['totalPremium'] =  vehicle['totalPremium']+rowData.PremiumIncludedTax;
                 }
               }
@@ -2384,13 +2384,13 @@ getMotorUsageList(vehicleValue){
                 }
                 if(rowData.Endorsements!=null && rowData.Endorsements!=undefined){
                   if(this.coverModificationYN!='Y' || this.endorseSIModification){
-                    vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxLC;
+                    vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxFC;
                     vehicle['totalPremium'] =  vehicle['totalPremium']+rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax;
                   }
                   
                 }
                 else{
-                    vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.PremiumIncludedTaxLC;
+                    vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.PremiumIncludedTaxFC;
                     vehicle['totalPremium'] =  vehicle['totalPremium']+rowData.PremiumIncludedTax;
                 }
                 
@@ -2405,14 +2405,14 @@ getMotorUsageList(vehicleValue){
                  
                   if(this.coverModificationYN!='Y' || this.endorseSIModification){
                     if(!vehicle?.totalLcPremium) {vehicle['totalLcPremium'] = 0;vehicle['totalPremium']=0;}
-                    vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxLC;
+                    vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxFC;
                     vehicle['totalPremium'] =  vehicle['totalPremium']+rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax;
                     
                   }
                 }
                 else{
                  
-                    vehicle['totalLcPremium'] =  rowData.PremiumIncludedTaxLC;
+                    vehicle['totalLcPremium'] =  rowData.PremiumIncludedTaxFC;
                     vehicle['totalPremium'] =  rowData.PremiumIncludedTax;
                 }
                 
@@ -2471,7 +2471,7 @@ getMotorUsageList(vehicleValue){
                   }
                   if(rowData.Endorsements!=null && rowData.Endorsements!=undefined){
                     if(this.coverModificationYN!='Y' || this.endorseSIModification){
-                      vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxLC;
+                      vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxFC;
                       vehicle['totalPremium'] =  vehicle['totalPremium']+rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax;
                     }
   
@@ -2479,7 +2479,7 @@ getMotorUsageList(vehicleValue){
                   }
                   else{
                     
-                      vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.PremiumIncludedTaxLC;
+                      vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.PremiumIncludedTaxFC;
                       vehicle['totalPremium'] =  vehicle['totalPremium']+rowData.PremiumIncludedTax;
                   }
                   
@@ -2491,12 +2491,12 @@ getMotorUsageList(vehicleValue){
                   }
                   if(rowData.Endorsements!=null && rowData.Endorsements!=undefined){
                     if(this.coverModificationYN!='Y' || this.endorseSIModification){
-                      vehicle['totalLcPremium'] = rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxLC;
+                      vehicle['totalLcPremium'] = rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxFC;
                       vehicle['totalPremium'] = rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax;
                     }
                   }
                   else{
-                      vehicle['totalLcPremium'] =  rowData.PremiumIncludedTaxLC;
+                      vehicle['totalLcPremium'] =  rowData.PremiumIncludedTaxFC;
                       vehicle['totalPremium'] =  rowData.PremiumIncludedTax;
                   }
                 }
@@ -2509,7 +2509,7 @@ getMotorUsageList(vehicleValue){
                 }
                 if(rowData.Endorsements!=null && rowData.Endorsements!=undefined){
                   if(this.coverModificationYN!='Y' || this.endorseSIModification){
-                    vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxLC;
+                    vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxFC;
                     vehicle['totalPremium'] =  vehicle['totalPremium']+rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax;
                   }
 
@@ -2517,7 +2517,7 @@ getMotorUsageList(vehicleValue){
                 }
                 else{
                   
-                    vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.PremiumIncludedTaxLC;
+                    vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.PremiumIncludedTaxFC;
                     vehicle['totalPremium'] =  vehicle['totalPremium']+rowData.PremiumIncludedTax;
                 }
                 
@@ -2529,12 +2529,12 @@ getMotorUsageList(vehicleValue){
                 }
                 if(rowData.Endorsements!=null && rowData.Endorsements!=undefined){
                   if(this.coverModificationYN!='Y' || this.endorseSIModification){
-                    vehicle['totalLcPremium'] = rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxLC;
+                    vehicle['totalLcPremium'] = rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxFC;
                     vehicle['totalPremium'] = rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax;
                   }
                 }
                 else{
-                    vehicle['totalLcPremium'] =  rowData.PremiumIncludedTaxLC;
+                    vehicle['totalLcPremium'] =  rowData.PremiumIncludedTaxFC;
                     vehicle['totalPremium'] =  rowData.PremiumIncludedTax;
                 }
               }
@@ -2589,7 +2589,7 @@ getMotorUsageList(vehicleValue){
                   }
                   else{
                     if(!vehicle?.totalLcPremium) {vehicle['totalLcPremium'] = 0;vehicle['totalPremium']=0;}
-                      vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.PremiumIncludedTaxLC;
+                      vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.PremiumIncludedTaxFC;
                       vehicle['totalPremium'] =  vehicle['totalPremium']+rowData.PremiumIncludedTax;
                   }
                 }
@@ -2600,12 +2600,12 @@ getMotorUsageList(vehicleValue){
                   if(rowData.Endorsements!=null && rowData.Endorsements!=undefined){
                     
                     if(this.coverModificationYN!='Y' || this.endorseSIModification){
-                      vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxLC;
+                      vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxFC;
                       vehicle['totalPremium'] =  vehicle['totalPremium']+rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax;
                     }
                   }
                   else{
-                      vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.PremiumIncludedTaxLC;
+                      vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.PremiumIncludedTaxFC;
                       vehicle['totalPremium'] =  vehicle['totalPremium']+rowData.PremiumIncludedTax;
                   }
                   
@@ -2618,14 +2618,14 @@ getMotorUsageList(vehicleValue){
                     if(this.coverModificationYN!='Y' || this.endorseSIModification){
                       
                       if(!vehicle?.totalLcPremium) {vehicle['totalLcPremium'] = 0;vehicle['totalPremium']=0;}
-                      vehicle['totalLcPremium'] = rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxLC;
+                      vehicle['totalLcPremium'] = rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxFC;
                       vehicle['totalPremium'] = rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax;
                     }
                     
                   }
                   else{
                     if(!vehicle?.totalLcPremium) {vehicle['totalLcPremium'] = 0;vehicle['totalPremium']=0;}
-                      vehicle['totalLcPremium'] =  rowData.PremiumIncludedTaxLC;
+                      vehicle['totalLcPremium'] =  rowData.PremiumIncludedTaxFC;
                       vehicle['totalPremium'] =  rowData.PremiumIncludedTax;
                   }
                   
@@ -2679,7 +2679,7 @@ getMotorUsageList(vehicleValue){
               
             }
             else{
-              vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.PremiumIncludedTaxLC;
+              vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.PremiumIncludedTaxFC;
               vehicle['totalPremium'] =  vehicle['totalPremium']+rowData.PremiumIncludedTax;
             }
             
@@ -2689,13 +2689,13 @@ getMotorUsageList(vehicleValue){
             if(rowData.Endorsements!=null && rowData.Endorsements!=undefined){
               
               if(this.coverModificationYN!='Y' || this.endorseSIModification){
-                vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxLC;
+                vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxFC;
                 vehicle['totalPremium'] =  vehicle['totalPremium']+rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax;
               }
             }
             else{
               
-                vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.PremiumIncludedTaxLC;
+                vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.PremiumIncludedTaxFC;
                 vehicle['totalPremium'] =  vehicle['totalPremium']+rowData.PremiumIncludedTax;
             }
           
@@ -2705,7 +2705,7 @@ getMotorUsageList(vehicleValue){
             if(rowData.Endorsements!=null && rowData.Endorsements!=undefined){
               
               if(this.coverModificationYN!='Y' || this.endorseSIModification){
-                vehicle['totalLcPremium'] = rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxLC;
+                vehicle['totalLcPremium'] = rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxFC;
                 vehicle['totalPremium'] = rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax;
               }
               else{
@@ -2713,12 +2713,12 @@ getMotorUsageList(vehicleValue){
               }
             }
             else{
-              vehicle['totalLcPremium'] =  rowData.PremiumIncludedTaxLC;
+              vehicle['totalLcPremium'] =  rowData.PremiumIncludedTaxFC;
               vehicle['totalPremium'] =  rowData.PremiumIncludedTax;
             }
             
           }
-          // vehicle['totalLcPremium'] = rowData.PremiumIncludedTaxLC;
+          // vehicle['totalLcPremium'] = rowData.PremiumIncludedTaxFC;
           // vehicle['totalPremium'] = rowData.PremiumIncludedTax;
           console.log("Premium Total ",vehicle,this.selectedCoverList)
           this.getTotalVehiclesCost();
@@ -2750,24 +2750,24 @@ getMotorUsageList(vehicleValue){
                     
                   }
                   else{
-                    vehicle['totalLcPremium'] = vehicle['totalLcPremium'] - rowData.PremiumIncludedTaxLC;
+                    vehicle['totalLcPremium'] = vehicle['totalLcPremium'] - rowData.PremiumIncludedTaxFC;
                     vehicle['totalPremium'] =  vehicle['totalPremium']-rowData.PremiumIncludedTax;
                   }
                 
               }
               else if(vehicle?.totalPremium){
                 if(rowData.Endorsements!=null && rowData.Endorsements!=undefined){
-                  vehicle['totalLcPremium'] = vehicle['totalLcPremium'] - rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxLC;
+                  vehicle['totalLcPremium'] = vehicle['totalLcPremium'] - rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxFC;
                   vehicle['totalPremium'] =  vehicle['totalPremium']-rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax;
                 }
                 else{
-                  vehicle['totalLcPremium'] = vehicle['totalLcPremium'] - rowData.PremiumIncludedTaxLC;
+                  vehicle['totalLcPremium'] = vehicle['totalLcPremium'] - rowData.PremiumIncludedTaxFC;
                   vehicle['totalPremium'] =  vehicle['totalPremium']-rowData.PremiumIncludedTax;
                 }
               
               }
               // vehicle['totalPremium'] = vehicle['totalPremium'] - rowData.PremiumIncludedTax;
-              // vehicle['totalLcPremium'] = vehicle['totalLcPremium'] - rowData.PremiumIncludedTaxLC;
+              // vehicle['totalLcPremium'] = vehicle['totalLcPremium'] - rowData.PremiumIncludedTaxFC;
               this.getTotalVehiclesCost();
             }
 
@@ -3796,9 +3796,9 @@ getMotorUsageList(vehicleValue){
       if(endorse.length!=0){
         let entry = endorse[endorse.length-1];
         if(type == 'empty'){
-            return (entry.PremiumIncludedTaxLC === 0 || entry.PremiumIncludedTaxLC == null)
+            return (entry.PremiumIncludedTaxFC === 0 || entry.PremiumIncludedTaxFC == null)
         }
-        else if(type=='value' && this.coverModificationYN=='N') return  entry.PremiumIncludedTaxLC;
+        else if(type=='value' && this.coverModificationYN=='N') return  entry.PremiumIncludedTaxFC;
         else if(type=='value'){
           let vehicleData = this.selectedCoverList.filter(ele=>ele.Id==menu.Vehicleid)
           if(vehicleData.length!=0){
@@ -3807,7 +3807,7 @@ getMotorUsageList(vehicleValue){
               let covers:any[] = sectionEntry.Covers;
               let findCover = covers.find(ele=>ele.CoverId==rowData.CoverId);
               if(findCover==undefined) return 0;
-              else return entry.PremiumIncludedTaxLC
+              else return entry.PremiumIncludedTaxFC
             }
           }
         }
