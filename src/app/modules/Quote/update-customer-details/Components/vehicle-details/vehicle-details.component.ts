@@ -94,6 +94,7 @@ export class VehicleDetailsComponent implements OnInit {
   OldSumInsured: any;
   OldTppdIncreaeLimit: any;
   OldWindScreenSumInsured: any;
+  changeUwSection: boolean;
   constructor(private router:Router,private sharedService: SharedService,
     private updateComponent:UpdateCustomerDetailsComponent,
    private datePipe:DatePipe) {
@@ -1165,7 +1166,81 @@ export class VehicleDetailsComponent implements OnInit {
             entry['RequestReferenceNo'] = data?.Result?.RequestReferenceNo;
             entry['Active'] = true;
             entry['VehicleId'] = data.Result?.VehicleId;
-            this.getCalculationDetails(entry,type,null);
+            if(type=='proceedSave'){
+              if(this.uwQuestionList.length!=0 && this.changeUwSection){
+                let j = 0;
+                let uwList:any[]=new Array();
+                for(let ques of this.uwQuestionList){
+                  ques['BranchCode'] = this.branchCode;
+                  let createdBy="";
+                    let quoteStatus = sessionStorage.getItem('QuoteStatus');
+                    if(quoteStatus=='AdminRP'){
+                        createdBy = this.vehicleDetailsList[0].CreatedBy;
+                    }
+                    else{
+                      createdBy = this.loginId;
+                    }
+                    let status = null,loading = null;
+                    if(ques.QuestionType == '01' && ques.Value!=null && ques.Value!='' && ques.Options!=null){
+                      let obj = ques.Options.find(ele=>ele.UwQuesOptionDesc==ques.Value);
+                      console.log("Found Obj",ques,obj)
+                      if(obj){
+                        loading = obj.LoadingPercent
+                        if(obj.ReferralYn=='Y') status = 'R';
+                        else status = 'Y';
+                      }
+                      else status = 'Y';
+                    }
+                    else status = ques.Status;
+                    let entry = {
+                      "InsuranceId": this.insuranceId,
+                      "ProductId": this.productId,
+                      "UwQuestionId": ques.UwQuestionId,
+                      "UwQuestionDesc": ques.UwQuestionDesc,
+                      "QuestionType": ques.QuestionType,
+                      "EffectiveDateStart": ques.EffectiveDateStart,
+                      "Status": status,
+                      "LoadingPercent": loading,
+                      "MandatoryYn": ques.MandatoryYn,
+                      "DataType": ques.DataType,
+                      "CreatedBy": createdBy,
+                      "UpdatedBy":  this.loginId,
+                      "Value": ques.Value,
+                      "BranchCode": this.branchCode,
+                      "RequestReferenceNo": this.requestReferenceNo,
+                      "VehicleId": this.vehicleId
+                    }
+                    uwList.push(entry);
+                  // if(ques.QuestionType == '01'){
+                  //   ques['CreatedBy'] = createdBy;
+                  //   ques['RequestReferenceNo'] = this.requestReferenceNo;
+                  //   ques['UpdatedBy'] = this.loginId;
+                  //   ques["VehicleId"] = this.vehicleId
+                  //   let entry = new Object();
+                  //   entry = ques;
+                  //   delete entry['Options'];
+                  //   uwList.push(entry);
+                  // } 
+                  // else if(ques.Value!=""){
+                  //   ques['CreatedBy'] = createdBy;
+                  //   ques['RequestReferenceNo'] = this.requestReferenceNo;
+                  //   ques['UpdatedBy'] = this.loginId;
+                  //   ques["VehicleId"] = this.vehicleId
+                  //   let entry = new Object();
+                  //   entry = ques;
+                  //   delete entry['Options'];
+                  //   uwList.push(entry);
+                  // } 
+                  j+=1;
+                  if(j==this.uwQuestionList.length) this.onSaveUWQues(uwList,entry,type,this.currentIndex-1);
+                }
+              }
+              else{
+                
+                this.getCalculationDetails(entry,type,this.currentIndex-1,'direct');
+              }
+            }
+            else this.getCalculationDetails(entry,type,null,'direct');
             
           }
   
@@ -1347,7 +1422,7 @@ export class VehicleDetailsComponent implements OnInit {
   onWindSIValueChange(event){
     this.windShieldSI = event;
   }
-  getCalculationDetails(vehicleDetails,type,index){
+  getCalculationDetails(vehicleDetails,type,index,returnType){
     let createdBy="";
           let coverModificationYN = 'N';
           if(this.endorsementSection){
@@ -1407,7 +1482,11 @@ export class VehicleDetailsComponent implements OnInit {
 
               }
               else if(type=='proceedSave'){
-                this.onFinalProceed();
+                
+                this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
+              }
+              else if(type=='finalProceed'){
+                if(index==this.vehicleDetailsList.length) this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
               }
               else{
                 if(type==null){
@@ -1465,6 +1544,7 @@ export class VehicleDetailsComponent implements OnInit {
           );
   }
   onChangeUWValue(rowData,index,optionList){
+    this.changeUwSection = true;
     this.uwQuestionList[index].Value = rowData.UwQuesOptionDesc;
     this.showUWQUestion(rowData,optionList,'change');
   }
@@ -1642,7 +1722,7 @@ export class VehicleDetailsComponent implements OnInit {
     let i=0,j=0;
     for(let veh of this.vehicleDetailsList){
       let refNo = veh?.MSRefNo;
-      if(refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection)){
+      if(refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection || this.changeUwSection)){
         i+=1;
       }
       j+=1;
@@ -1650,77 +1730,57 @@ export class VehicleDetailsComponent implements OnInit {
         console.log("Final I",i)
         if(i==0){
           sessionStorage.setItem('vehicleDetailsList',JSON.stringify(this.vehicleDetailsList));
-          if(this.uwQuestionList.length!=0){
-            let i = 0;
-            let uwList:any[]=new Array();
-            for(let ques of this.uwQuestionList){
-              ques['BranchCode'] = this.branchCode;
-              let createdBy="";
-                let quoteStatus = sessionStorage.getItem('QuoteStatus');
-                if(quoteStatus=='AdminRP'){
-                    createdBy = this.vehicleDetailsList[0].CreatedBy;
-                }
-                else{
-                  createdBy = this.loginId;
-                }
-                let status = null,loading = null;
-                if(ques.QuestionType == '01' && ques.Value!=null && ques.Value!='' && ques.Options!=null){
-                  let obj = ques.Options.find(ele=>ele.UwQuesOptionDesc==ques.Value);
-                  console.log("Found Obj",ques,obj)
-                  if(obj){
-                    loading = obj.LoadingPercent
-                    if(obj.ReferralYn=='Y') status = 'R';
-                    else status = 'Y';
-                  }
-                  else status = 'Y';
-                }
-                else status = ques.Status;
-                let entry = {
-                  "InsuranceId": this.insuranceId,
-                  "ProductId": this.productId,
-                  "UwQuestionId": ques.UwQuestionId,
-                  "UwQuestionDesc": ques.UwQuestionDesc,
-                  "QuestionType": ques.QuestionType,
-                  "EffectiveDateStart": ques.EffectiveDateStart,
-                  "Status": status,
-                  "LoadingPercent": loading,
-                  "MandatoryYn": ques.MandatoryYn,
-                  "DataType": ques.DataType,
-                  "CreatedBy": createdBy,
-                  "UpdatedBy":  this.loginId,
-                  "Value": ques.Value,
-                  "BranchCode": this.branchCode,
-                  "RequestReferenceNo": this.requestReferenceNo,
-                  "VehicleId": this.vehicleId
-                }
-                uwList.push(entry);
-              // if(ques.QuestionType == '01'){
-              //   ques['CreatedBy'] = createdBy;
-              //   ques['RequestReferenceNo'] = this.requestReferenceNo;
-              //   ques['UpdatedBy'] = this.loginId;
-              //   ques["VehicleId"] = this.vehicleId
-              //   let entry = new Object();
-              //   entry = ques;
-              //   delete entry['Options'];
-              //   uwList.push(entry);
-              // } 
-              // else if(ques.Value!=""){
-              //   ques['CreatedBy'] = createdBy;
-              //   ques['RequestReferenceNo'] = this.requestReferenceNo;
-              //   ques['UpdatedBy'] = this.loginId;
-              //   ques["VehicleId"] = this.vehicleId
-              //   let entry = new Object();
-              //   entry = ques;
-              //   delete entry['Options'];
-              //   uwList.push(entry);
-              // } 
-              i+=1;
-              if(i==this.uwQuestionList.length) this.onSaveUWQues(uwList);
-            }
-          }
-          else{
+          // if(this.uwQuestionList.length!=0){
+          //   let i = 0;
+          //   let uwList:any[]=new Array();
+          //   for(let ques of this.uwQuestionList){
+          //     ques['BranchCode'] = this.branchCode;
+          //     let createdBy="";
+          //       let quoteStatus = sessionStorage.getItem('QuoteStatus');
+          //       if(quoteStatus=='AdminRP'){
+          //           createdBy = this.vehicleDetailsList[0].CreatedBy;
+          //       }
+          //       else{
+          //         createdBy = this.loginId;
+          //       }
+          //       let status = null,loading = null;
+          //       if(ques.QuestionType == '01' && ques.Value!=null && ques.Value!='' && ques.Options!=null){
+          //         let obj = ques.Options.find(ele=>ele.UwQuesOptionDesc==ques.Value);
+          //         console.log("Found Obj",ques,obj)
+          //         if(obj){
+          //           loading = obj.LoadingPercent
+          //           if(obj.ReferralYn=='Y') status = 'R';
+          //           else status = 'Y';
+          //         }
+          //         else status = 'Y';
+          //       }
+          //       else status = ques.Status;
+          //       let entry = {
+          //         "InsuranceId": this.insuranceId,
+          //         "ProductId": this.productId,
+          //         "UwQuestionId": ques.UwQuestionId,
+          //         "UwQuestionDesc": ques.UwQuestionDesc,
+          //         "QuestionType": ques.QuestionType,
+          //         "EffectiveDateStart": ques.EffectiveDateStart,
+          //         "Status": status,
+          //         "LoadingPercent": loading,
+          //         "MandatoryYn": ques.MandatoryYn,
+          //         "DataType": ques.DataType,
+          //         "CreatedBy": createdBy,
+          //         "UpdatedBy":  this.loginId,
+          //         "Value": ques.Value,
+          //         "BranchCode": this.branchCode,
+          //         "RequestReferenceNo": this.requestReferenceNo,
+          //         "VehicleId": this.vehicleId
+          //       }
+          //       uwList.push(entry);
+          //     i+=1;
+          //     if(i==this.uwQuestionList.length) this.onSaveUWQues(uwList);
+          //   }
+          // }
+          // else{
             this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
-          }
+          //}
           
         }
         else{
@@ -1730,13 +1790,14 @@ export class VehicleDetailsComponent implements OnInit {
       }
     }
   }
-  onSaveUWQues(uwList){
+  onSaveUWQues(uwList,veh,type,i){
     if(uwList.length!=0){ 
       let urlLink = `${this.CommonApiUrl}api/saveuwquestions`;
       this.sharedService.onPostMethodSync(urlLink, uwList).subscribe(
         (data: any) => {
           if(data.Result){
-              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
+            this.getCalculationDetails(veh,type,i,'uwQues');
+              // this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
           }
         },
         (err) => { },
@@ -1747,7 +1808,7 @@ export class VehicleDetailsComponent implements OnInit {
     let i = 0;
     for(let veh of this.vehicleDetailsList){
       let refNo = veh?.MSRefNo;
-      if(refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection)){
+      if(refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection || this.changeUwSection)){
         let reqRefNo = veh?.RequestReferenceNo;
         if(reqRefNo == undefined){
           reqRefNo = null;
@@ -2012,7 +2073,77 @@ export class VehicleDetailsComponent implements OnInit {
                     veh['Active'] = true;
                     console.log("Save Iterate",veh)
                     i+=1;
-                    this.getCalculationDetails(veh,null,i);
+                    if(this.uwQuestionList.length!=0){
+                      let j = 0;
+                      let uwList:any[]=new Array();
+                      for(let ques of this.uwQuestionList){
+                        ques['BranchCode'] = this.branchCode;
+                        let createdBy="";
+                          let quoteStatus = sessionStorage.getItem('QuoteStatus');
+                          if(quoteStatus=='AdminRP'){
+                              createdBy = this.vehicleDetailsList[0].CreatedBy;
+                          }
+                          else{
+                            createdBy = this.loginId;
+                          }
+                          let status = null,loading = null;
+                          if(ques.QuestionType == '01' && ques.Value!=null && ques.Value!='' && ques.Options!=null){
+                            let obj = ques.Options.find(ele=>ele.UwQuesOptionDesc==ques.Value);
+                            console.log("Found Obj",ques,obj)
+                            if(obj){
+                              loading = obj.LoadingPercent
+                              if(obj.ReferralYn=='Y') status = 'R';
+                              else status = 'Y';
+                            }
+                            else status = 'Y';
+                          }
+                          else status = ques.Status;
+                          let entry = {
+                            "InsuranceId": this.insuranceId,
+                            "ProductId": this.productId,
+                            "UwQuestionId": ques.UwQuestionId,
+                            "UwQuestionDesc": ques.UwQuestionDesc,
+                            "QuestionType": ques.QuestionType,
+                            "EffectiveDateStart": ques.EffectiveDateStart,
+                            "Status": status,
+                            "LoadingPercent": loading,
+                            "MandatoryYn": ques.MandatoryYn,
+                            "DataType": ques.DataType,
+                            "CreatedBy": createdBy,
+                            "UpdatedBy":  this.loginId,
+                            "Value": ques.Value,
+                            "BranchCode": this.branchCode,
+                            "RequestReferenceNo": this.requestReferenceNo,
+                            "VehicleId": veh.Vehicleid
+                          }
+                          uwList.push(entry);
+                        // if(ques.QuestionType == '01'){
+                        //   ques['CreatedBy'] = createdBy;
+                        //   ques['RequestReferenceNo'] = this.requestReferenceNo;
+                        //   ques['UpdatedBy'] = this.loginId;
+                        //   ques["VehicleId"] = this.vehicleId
+                        //   let entry = new Object();
+                        //   entry = ques;
+                        //   delete entry['Options'];
+                        //   uwList.push(entry);
+                        // } 
+                        // else if(ques.Value!=""){
+                        //   ques['CreatedBy'] = createdBy;
+                        //   ques['RequestReferenceNo'] = this.requestReferenceNo;
+                        //   ques['UpdatedBy'] = this.loginId;
+                        //   ques["VehicleId"] = this.vehicleId
+                        //   let entry = new Object();
+                        //   entry = ques;
+                        //   delete entry['Options'];
+                        //   uwList.push(entry);
+                        // } 
+                        j+=1;
+                        if(j==this.uwQuestionList.length) this.onSaveUWQues(uwList,veh,null,i);
+                      }
+                    }
+                    else{
+                      this.getCalculationDetails(veh,null,i,'finalProceed');
+                    }
                     
                     // sessionStorage.setItem('editVehicleId',this.vehicleId);
                     // sessionStorage.removeItem('vehicleDetails');
@@ -2030,7 +2161,7 @@ export class VehicleDetailsComponent implements OnInit {
       }
       else{
         i+=1;
-        this.getCalculationDetails(veh,null,i);
+        this.getCalculationDetails(veh,null,i,'finalProceed');
         // i+=1;
         // if(i==this.vehicleDetailsList.length) this.onFinalProceed();
       }

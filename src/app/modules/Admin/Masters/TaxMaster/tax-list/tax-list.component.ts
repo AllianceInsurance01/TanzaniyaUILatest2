@@ -147,7 +147,7 @@ export class TaxListComponent implements OnInit {
       "TaxId":event.TaxId
     }
     console.log("Edit Req Obj",event);
-    sessionStorage.setItem('CountryDetais',JSON.stringify(ReqObj));
+    sessionStorage.setItem('CountryDetails',JSON.stringify(ReqObj));
     this.router.navigate(['Admin/taxMaster/newtaxlist'])
   }
   EditStatus(event){

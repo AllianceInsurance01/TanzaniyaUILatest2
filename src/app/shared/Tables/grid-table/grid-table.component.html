@@ -44,6 +44,12 @@
                             {{ element[col.key] }}
                         </ng-container>
                     </ng-container>
+                    <ng-container *ngIf="columnHeader[i]['display']=='Cover Type'">
+                        <ng-container *ngIf="element[col.key]=='L'">Loading</ng-container>
+                        <ng-container *ngIf="element[col.key]=='B'">Base</ng-container>
+                        <ng-container *ngIf="element[col.key]=='O'">Optional</ng-container>
+                        <ng-container *ngIf="element[col.key]=='D'">Discount</ng-container>
+                    </ng-container>
                     <ng-container *ngIf="columnHeader[i]['display']=='QuestionType'">
                         <ng-container *ngIf="element[col.key]=='01'">RadioButton</ng-container>
                         <ng-container *ngIf="element[col.key]!='01'">TextBox</ng-container>
@@ -71,7 +77,7 @@
                             <span *ngIf="element[col.key]=='C' && element?.endorsementTypeId==842">Cancelled</span>
                             <span *ngIf="endorsementSection && element[col.key]==null">Base policy</span>
                     </ng-container>
-                    <ng-container *ngIf="col.key!='Status' && columnHeader[i]['display']!='QuestionType'  && columnHeader[i]['display']!='EndorsementStatus' && columnHeader[i]['display']!='BrokerConfigProductName' && columnHeader[i]['display']!='Endorsements Premium' && columnHeader[i]['display']!='Endorsement Premium'">
+                    <ng-container *ngIf="col.key!='Status' && columnHeader[i]['display']!='QuestionType'  && columnHeader[i]['display']!='EndorsementStatus' && columnHeader[i]['display']!='BrokerConfigProductName' && columnHeader[i]['display']!='Cover Type' && columnHeader[i]['display']!='Endorsements Premium' && columnHeader[i]['display']!='Endorsement Premium'">
                         {{ element[col.key] }}
                     </ng-container>
                     <ng-container *ngIf="columnHeader[i]['display']=='Endorsements Premium' || columnHeader[i]['display']=='Endorsement Premium'">

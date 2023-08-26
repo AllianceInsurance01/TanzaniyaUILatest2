@@ -3081,14 +3081,14 @@ getMotorUsageList(vehicleValue){
     this.premiumBeforeTax = 0;
     if(rowData.Taxes){
       if(rowData.Taxes.length!=0){
-        this.dependantTaxList = rowData.Taxes.filter(ele=>ele.DependentYN=='Y');
+        this.dependantTaxList = rowData.Taxes.filter(ele=>ele.DependentYN=='N');
         if(this.dependantTaxList.length!=0){
           let i=0;
           for(let tax of this.dependantTaxList){this.premiumBeforeTax = this.premiumBeforeTax+tax.TaxAmount;i+=1;
               if(i==this.dependantTaxList.length) this.premiumBeforeTax = this.premiumBeforeTax + this.premiumExcluedTax;
           }
         }
-        this.taxList = rowData.Taxes.filter(ele=>ele.DependentYN!='Y');
+        this.taxList = rowData.Taxes.filter(ele=>ele.DependentYN!='N');
       }
      
     }

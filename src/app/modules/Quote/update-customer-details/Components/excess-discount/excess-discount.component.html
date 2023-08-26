@@ -3363,15 +3363,15 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col"><b>Description</b></th>
-                            <th scope="col" style="text-align: end;"><b>Rate (%)</b></th>
-                            <th scope="col" style="text-align: end;"><b>Amount ({{currencyCode}})</b></th>
+                            <th scope="col"></th>
+                            <th scope="col" style="text-align: end;"><b>Excess (%)</b></th>
+                            <th scope="col" style="text-align: end;"><b>Excess Amount ({{currencyCode}})</b></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>Excess</td>
-                            <td style="text-align: end;">
+                            <td style="text-align: center;">
                                 <ng-container *ngIf="!adminSection">
                                     <span class="spancommon span_font_size">{{excessPercent}}</span>
                                 </ng-container>
