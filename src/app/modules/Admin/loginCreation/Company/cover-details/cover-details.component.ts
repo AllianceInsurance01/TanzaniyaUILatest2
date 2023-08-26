@@ -38,7 +38,7 @@ export class CoverDetailsComponent implements OnInit {
     this.columnHeader = [
       { key: 'CoverName', display: 'Cover Name' },
       { key: 'CoverDesc', display: 'Cover Desc' },
-      { key: 'EffectiveDateStart', display: 'Effective Date' },
+      { key: 'CoverageType', display: 'Cover Type'},
       { key: 'Status', display: 'Status' },
       {
         key: 'actions',
