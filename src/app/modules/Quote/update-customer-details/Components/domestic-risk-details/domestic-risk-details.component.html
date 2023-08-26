@@ -168,7 +168,7 @@
                                     
                                     <div class="text-center">
                                         <button class="btn btn-danger btn-sm mr-5" (click)="onBuildingCancel()"> Cancel</button>&nbsp;&nbsp;
-                                        <button class="btn btn-primary btn-sm" (click)="onBuildingSave()"> Save</button>
+                                        <button class="btn btn-primary btn-sm" [disabled]="checkMandatories()" (click)="onBuildingSave()"> Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -592,10 +592,10 @@
                                                 <b style="white-space: nowrap;">Total</b>
                                             </div>
                                         </div>
-                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalPASI==0 || totalPASI=='0' || totalPASI==null">
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalPASI==0 || totalPASI=='0' || totalPASI==null || totalPASI ==''">
                                             <b style="white-space: nowrap;">0</b>
                                         </div>
-                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalPASI!=0 && totalPASI!='0' && totalPASI!=null">
+                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalPASI!=0 && totalPASI!='0' && totalPASI!=null && totalPASI !=''">
                                             <b style="white-space: nowrap;">{{totalPASI | commaseparator }} &nbsp;({{currencyValue}})</b>
                                         </div>
                                     </div>

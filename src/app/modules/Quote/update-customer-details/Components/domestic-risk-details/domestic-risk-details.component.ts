@@ -1139,19 +1139,32 @@ export class DomesticRiskDetailsComponent implements OnInit {
     // }
     // else if(this.LocationName==null || this.LocationName==undefined){this.buildingLocationError=true;}
     // else if(this.BuildingAddress==null || this.BuildingAddress==undefined){this.buildingAddressError = true;}
-    
-    if(this.productItem.LocationAddress!= null && this.productItem.LocationAddress !=undefined && this.productItem.LocationAddress!=null){
+    console.log("Final Additional Info",this.form,this.productItem)
+    let i=0;
+    if(this.productItem.LocationAddress=='' || this.productItem.LocationAddress==null){
+      i+=1;
+      this.form.markAllAsTouched();
+    }
+    if(this.productItem.LocationNameBuilding=='' || this.productItem.LocationNameBuilding==null){
+      i+=1;
+      this.form.markAllAsTouched();
+    }
+    if(i==0){
       this.building[this.currentBuildingIndex]['LocationName'] =  this.productItem.LocationNameBuilding;
       this.building[this.currentBuildingIndex]['BuildingAddress'] = this.productItem.LocationAddress;
       this.building[this.currentBuildingIndex]['BuildingSuminsured'] = this.productItem.BuildingSumInsureds;
-    }
-      this.editBuildingSection = false;
+         this.editBuildingSection = false;
       this.enableBuildingEditSection = false;
       this.productItem.BuildingSumInsureds=null; this.productItem.LocationAddress=null;
       this.productItem.LocationNameBuilding=null;
+    }
+   
       // this.LocationName = null; this.BuildingAddress = null; this.BuildingSuminsured = null;
     
   
+}
+checkMandatories(){
+  return this.form.errors!=null;
 }
 onMachinerySave(){
  
@@ -1256,6 +1269,13 @@ onFidelitySave(){
       // this.empAddress = null;this.employeeName = null;this.occupationType = null;this.empJoiningMonth = null;
       // this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;
     //}
+  }
+  isValid(field: FormlyFieldConfig): boolean {
+    
+    if (field.key) {
+      return field.formControl.value!='';
+    }
+    return field.fieldGroup ? field.fieldGroup.every((f) => this.isValid(f)) : true;
   }
   employeedownload(){
     let ReqObj = {
@@ -1469,6 +1489,12 @@ onFidelitySave(){
     // if(this.serialNoDesc==null || this.serialNoDesc==undefined || this.serialNoDesc==''){ i+=1; this.serialNoError = true;}
     // if(this.contentRiskDesc==null || this.contentRiskDesc==undefined || this.contentRiskDesc==''){ i+=1; this.contentDescError = true;}
     // if(this.contentSI==null || this.contentSI==undefined || this.contentSI=='' || this.contentSI == '0'){ i+=1; this.contentSIError = true;}
+    if(this.productItem.ContentSI==null || this.productItem.ContentSI==''){i+=1;this.form.markAllAsTouched();}
+    if(this.productItem.ContentLocation==null || this.productItem.ContentLocation==''){i+=1;this.form.markAllAsTouched();}
+    if(this.productItem.ContentSerialNo==null || this.productItem.ContentSerialNo==''){i+=1;this.form.markAllAsTouched();}
+    if(this.productItem.ContentType==null || this.productItem.ContentType==''){i+=1;this.form.markAllAsTouched();}
+    if(this.productItem.ContentDesc==null || this.productItem.ContentDesc==''){i+=1;this.form.markAllAsTouched();}
+    if(i==0){
       this.Cotentrisk[this.currentContentIndex]['SumInsured'] = this.productItem.ContentSI//this.contentSI;
       this.Cotentrisk[this.currentContentIndex]['RiskId'] = this.productItem.ContentLocation;
       this.Cotentrisk[this.currentContentIndex]['SerialNoDesc'] = this.productItem.ContentSerialNo;//this.serialNoDesc
@@ -1480,7 +1506,7 @@ onFidelitySave(){
       this.productItem.ContentDesc=null;this.productItem.ContentType=null;this.currentContentIndex=null;
       this.editContentSection = false;
       this.enableContentEditSection = false;
-    
+    }   
   }
   onAllRiskSubmit(){
     
@@ -1498,7 +1524,13 @@ onFidelitySave(){
     console.log('PPPPPPPPPPPP')
     this.locationIdError = false;this.contentIdError=false; this.serialNoError = false;this.contentDescError = false;this.contentSIError = false;
     let i=0;
-   
+    if(this.productItem.AccSI==null || this.productItem.AccSI==''){i+=1;this.form.markAllAsTouched();}
+    if(this.productItem.AccidentLocation==null || this.productItem.AccidentLocation==''){i+=1;this.form.markAllAsTouched();}
+    if(this.accidentOccupationId==null || this.accidentOccupationId==''){i+=1;this.form.markAllAsTouched();}
+    if(this.productItem.AccName==null || this.productItem.AccName==''){i+=1;this.form.markAllAsTouched();}
+    if(this.productItem.AccNationID==null || this.productItem.AccNationID==''){i+=1;this.form.markAllAsTouched();}
+    if(this.productItem.AccDob==null || this.productItem.AccDob==''){i+=1;this.form.markAllAsTouched();}
+    if(i==0){
       this.PersonalAssistantList[this.currentPersonalAccidentIndex]['Salary'] = this.productItem.AccSI;
       this.PersonalAssistantList[this.currentPersonalAccidentIndex]['RiskId'] = this.productItem.AccidentLocation;
       this.PersonalAssistantList[this.currentPersonalAccidentIndex]['OccupationId'] = this.accidentOccupationId,
@@ -1514,7 +1546,7 @@ onFidelitySave(){
       this.currentPersonalAccidentIndex=null;
       this.editPersonalAccidentSection= false;
       this.enablePersonalAccEditSection =false;
-    
+    }
   }
 
   onIndSubmit(){
@@ -1933,7 +1965,7 @@ onFidelitySave(){
       for(let entry of this.PersonalAssistantList){
         let salary;
         if(entry.Salary==undefined || entry.Salary==null) salary = null;
-        // else if(entry.Salary.includes(',')){ salary = entry.Salary.replace(/,/g, '') }
+        else if(entry.Salary.includes(',')){ salary = entry.Salary.replace(/,/g, '') }
         else salary = entry.Salary;
           let data = {
             "Dob": entry.Dob,
@@ -2036,7 +2068,7 @@ onFidelitySave(){
       for(let entry of this.Intermedity){
         let salary;
         if(entry.Salary==undefined || entry.Salary==null) salary = null;
-        // else if(entry.Salary.includes(',')){ salary = entry.Salary.replace(/,/g, '') }
+        else if(entry.Salary.includes(',')){ salary = entry.Salary.replace(/,/g, '') }
         else salary = entry.Salary;
           let data = {
               "Dob": entry.Dob,
