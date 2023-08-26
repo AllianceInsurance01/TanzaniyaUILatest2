@@ -40,7 +40,7 @@ export class PersonalAccident{
                         type: 'select',
                         key: 'AccidentLocation',
                         defaultValue: '',
-                        className: 'col-sm-4',
+                        className: 'col-sm-4 col-lg-4 col-md-4',
                         props: {
                           label: `Location`,
                           required: true,
@@ -58,7 +58,7 @@ export class PersonalAccident{
                         },
                       },
                       {
-                        className: 'col-sm-4',
+                        className: 'col-sm-8 col-lg-8 col-md-8',
                         type: 'input',
                         key: 'AccOccupation',
                         templateOptions: {
@@ -72,7 +72,7 @@ export class PersonalAccident{
                       },
                      
                       {
-                        className: 'col-sm-4',
+                        className: 'col-sm-4 col-lg-4 col-md-4',
                         type: 'input',
                         key: 'AccName',
                         templateOptions: {
@@ -85,7 +85,7 @@ export class PersonalAccident{
                       
                       }, 
                       {
-                        className: 'col-sm-4',
+                        className: 'col-sm-4 col-lg-4 col-md-4',
                         type: 'commaSeparator',
                         key: 'AccSI',
                         templateOptions: {
@@ -102,7 +102,7 @@ export class PersonalAccident{
                       
                       },
                       {
-                        className: 'col-sm-4',
+                        className: 'col-sm-4 col-lg-4 col-md-4',
                         type: 'input',
                         key: 'AccNationID',
                         templateOptions: {
@@ -114,7 +114,7 @@ export class PersonalAccident{
                         },
                       },
                       {
-                        className: 'col-sm-4',
+                        className: 'col-sm-4 col-lg-4 col-md-4',
                         key: 'AccDob',
                         type: 'datepicker',
                         props: {

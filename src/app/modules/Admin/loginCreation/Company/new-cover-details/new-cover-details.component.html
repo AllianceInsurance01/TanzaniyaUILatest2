@@ -258,7 +258,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="coverageTypeValue!='A'">
                                         <div class="input-control-container">
                                             <label class="input-form-label">Is Tax Excempted?<span class="text-required">*</span></label>
                                             <div class="input-form-radio-box">
@@ -272,21 +272,21 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4 col-lg-4 col-xl-4">
+                                    <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="coverageTypeValue!='A'">
                                         <div class="input-control-container">
                                             <label class="input-form-label">Calculation Type</label>
                                             <ng-select class="input-form-select" appendTo="body" [items]="calcTypeList" [(ngModel)]="calcType" (change)="onChangeCalcType()" bindValue="value" bindLabel="text">
                                             </ng-select>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="calcType=='F'">
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="calcType=='F' && coverageTypeValue!='A'">
                                         <div class="input-control-container">
                                             <label class="input-form-label">Factor Type<span class="text-required">*</span></label>
                                                 <ng-select class="input-form-select" appendTo="body" [items]="factorList" [(ngModel)]="factorValue" (change)="onCoverFactorTypeChange()" bindValue="Code" bindLabel="CodeDesc">
                                                 </ng-select>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="calcType!='G' && calcType!='F'">
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="calcType!='G' && calcType!='F'  && coverageTypeValue!='A'">
                                         <div class="input-control-container">
                                             <label class="input-form-label">Base Rate<span class="text-required">*</span></label>
                                             <div class="input-form-box">
@@ -294,10 +294,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    
-                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="calcType!='G' && calcType!='F'">
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="calcType!='G' && calcType!='F'  && coverageTypeValue!='A'">
                                         <div class="input-control-container">
                                             <label class="input-form-label">Minimum Premium<span class="text-required">*</span></label>
                                             <div class="input-form-box">
@@ -305,7 +302,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="calcType!='G' && calcType!='F'">
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="calcType!='G' && calcType!='F' && coverageTypeValue!='A'">
                                         <div class="input-control-container">
                                             <label class="input-form-label">Maximum SumInsured<span class="text-required">*</span></label>
                                             <div class="input-form-box">
@@ -313,23 +310,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="coverDetails.IsTaxExcempted=='N'">
-                                        <div class="input-control-container">
-                                            <label class="input-form-label">Tax Amount<span class="text-required">*</span></label>
-                                            <div class="input-form-box">
-                                                <input type="text" [(ngModel)]="coverDetails.TaxAmount" class="input-form-control without-icon" maxlength="100">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="coverDetails.IsTaxExcempted=='N'">
-                                        <div class="input-control-container">
-                                            <label class="input-form-label">Tax Code<span class="text-required">*</span></label>
-                                            <div class="input-form-box">
-                                                <input type="text" [(ngModel)]="coverDetails.TaxCode" class="input-form-control without-icon" maxlength="100">
-                                            </div>
-                                        </div>
-                                    </div> -->
-                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="calcType!='A'">
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="calcType!='A' && coverageTypeValue!='A'">
                                         <div class="input-control-container">
                                             <label class="input-form-label">Cover Based On <span class="text-required">*</span></label>
                                                 <ng-select class="input-form-select" appendTo="body" [items]="basedOnColumnList" [(ngModel)]="basedOnColumnValue" bindValue="Code" bindLabel="CodeDesc">
@@ -353,38 +334,31 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-
-                                <div class="row mt-2">
-                                  <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="coverageTypeValue!='A'">
                                     <div class="input-control-container">
                                         <label class="input-form-label">ExcessPercent<span class="text-required">*</span></label>
                                         <div class="input-form-box">
                                             <input type="text" class="input-form-control without-icon" [(ngModel)]="excessValue" maxlength="100">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-md-4 col-lg-4">
-                                  <div class="input-control-container">
-                                      <label class="input-form-label">ExcessAmount<span class="text-required">*</span></label>
-                                      <div class="input-form-box">
-                                          <input type="text" class="input-form-control without-icon" [(ngModel)]="excessamount" maxlength="100">
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">ExcessDesc<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="excessDesc" maxlength="100">
                                     </div>
-                                </div>
-                            </div>
-                                 </div>
-
-                                <div class="row mt-2">
-                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="coverageTypeValue!='D' && coverageTypeValue!='L'">
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="coverageTypeValue!='A'">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">ExcessAmount<span class="text-required">*</span></label>
+                                        <div class="input-form-box">
+                                            <input type="text" class="input-form-control without-icon" [(ngModel)]="excessamount" maxlength="100">
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="coverageTypeValue!='A'">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">ExcessDesc<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" class="input-form-control without-icon" [(ngModel)]="excessDesc" maxlength="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="coverageTypeValue!='D' && coverageTypeValue!='L' && coverageTypeValue!='A'">
                                         <div class="input-control-container">
                                             <label class="input-form-label">Dependent Cover?<span class="text-required">*</span></label>
                                             <div class="input-form-radio-box">
@@ -397,7 +371,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="coverDetails.DependentCoverYn=='Y'">
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="coverDetails.DependentCoverYn=='Y' ">
                                         <div class="input-control-container">
                                             <label class="input-form-label">Dependant Cover Name</label>
                                             <ng-select class="input-form-select" appendTo="body" [items]="coverList" [(ngModel)]="coverDetails.DependentCoverId" bindValue="Code" bindLabel="CodeDesc">
@@ -425,6 +399,36 @@
                                             </mat-form-field>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
+                                    
+                                    
+                                    <!-- <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="coverDetails.IsTaxExcempted=='N'">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Tax Amount<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" [(ngModel)]="coverDetails.TaxAmount" class="input-form-control without-icon" maxlength="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="coverDetails.IsTaxExcempted=='N'">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Tax Code<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" [(ngModel)]="coverDetails.TaxCode" class="input-form-control without-icon" maxlength="100">
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    
+                                </div>
+
+
+                                <div class="row mt-2">
+                                    
+                                </div>
+
+                                <div class="row mt-2">
+                                    
                                 </div>
 
 

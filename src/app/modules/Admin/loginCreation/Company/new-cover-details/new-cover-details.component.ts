@@ -961,6 +961,11 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     }
   }
   onCoverTypeChange(){
+    if(this.coverageTypeValue=='A'){
+      this.baseRate = 0;this.calcType='A';this.minPremium=0;this.maxSumInsured = 0;
+      this.basedOnColumnValue = null;this.excessValue = null;this.excessamount=0;this.excessDesc = null;
+      this.coverDetails.DependentCoverId = null;this.coverDetails.DependentCoverYn = 'N';
+    }
     this.coverDetails.DiscountCoverId = null;
   }
   onChangeSubCalcType(){
