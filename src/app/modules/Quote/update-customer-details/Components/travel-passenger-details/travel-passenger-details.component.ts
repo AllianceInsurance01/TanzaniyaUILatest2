@@ -524,6 +524,9 @@ export class TravelPassengerDetailsComponent implements OnInit {
     (data: any) => {
       if(data.Result){
         this.historyRecordsList = data.Result;
+        this.enableEmployeeUploadSection = false;
+        this.uploadStatus = null;this.showgrid=false;
+        this.enableEmployeeEditSection = false;this.editSection=false;
         // this.validRecordsList = data.Result;
         // this.getHistoryRecords(data.Result);
         // this.PassengerDetails = data.Result;
@@ -564,7 +567,7 @@ onUploadDocuments(target:any,fileType:any,type:any){
   console.log("Final File List",this.uploadDocList)
 }
 onUploadEmployeeDetails(){
-    if(this.uploadDocList.length!=0){
+    if(this.uploadDocList.length!=0 && this.historyRecordsList.length!=0){
       Swal.fire({
         title: '<strong>Merge / Replace Records</strong>',
         icon: 'info',
@@ -589,6 +592,9 @@ onUploadEmployeeDetails(){
           this.onProceedUpload('Add')
         }
       })
+    }
+    else{
+      this.onProceedUpload('Add')
     }
 }
 onProceedUpload(type){

@@ -74,7 +74,7 @@
                         </div>
                             
                         <div class="row" *ngIf="showgrid">
-                            <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                            <div class="col-md-10 col-lg-10 col-xl-10 offset-1">
                                 <div class="boxForm">
                                     <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
                             <div class="headcommon" *ngIf="enableEmployeeUploadSection">
@@ -196,23 +196,19 @@
                                                 <thead>
                                                     <tr>
                                                         <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
-                                                        <th scope="col"><span class="spancommon">Employee Name</span></th>
+                                                        <th scope="col"><span class="spancommon">Passenger Name</span></th>
                                                         <th scope="col"><span class="spancommon">Date Of Birth</span></th>
-                                                        <th scope="col"><span class="spancommon">Nationality</span></th>
+                                                        <th scope="col"><span class="spancommon">Relation</span></th>
                                                         <th scope="col"><span class="spancommon">Error Reason</span></th>
-                                                        <th scope="col"><span class="spancommon">Action</span></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr *ngFor="let records of errorRecords|paginate:{itemsPerPage: 5, currentPage:j , id:'j'};let i=index">
                                                         <th scope="row">{{i+1}}</th>
-                                                        <td><span class="spancommon">{{records.EmployeeName}}</span></td>
+                                                        <td><span class="spancommon">{{records.FirstName}}&nbsp;{{records.LastName}}</span></td>
                                                         <td> <span class="spancommon">{{records.DateOfBirth}}</span> </td>
-                                                        <td> <span class="spancommon">{{records.NationalityId}}</span> </td>
+                                                        <td> <span class="spancommon">{{records.Relation}}</span> </td>
                                                         <td> <span class="spancommon">{{records.ErrorDesc}}</span> </td>
-                                                        <td> 
-                                                                <button class="btn btn-primary" (click)="onEditEmployeeError(records,mymodal)"><i class="fa fa-pencil"></i></button>    
-                                                        </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -427,8 +423,8 @@
         
         <div class="text-center mt-2" *ngIf="!editSection">
             <button class="custom-btn btn-5 maan-btn-red mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active" matRipple (click)="onGetBack()"><<&nbsp;Back</button>
-            <button class="custom-btn btn-8 mx-2" *ngIf="historyRecordsList.length!=0" (click)="onFinalSavePassemgers('save')">Save & Proceed</button>
-            <button class="custom-btn btn-6 mx-2" *ngIf="historyRecordsList.length!=0" (click)="onFinalSavePassemgers('proceed')">Proceed</button>
+            <button class="custom-btn btn-8 mx-2" *ngIf="historyRecordsList.length!=0 && !enableEmployeeUploadSection" (click)="onFinalSavePassemgers('save')">Save & Proceed</button>
+            <button class="custom-btn btn-6 mx-2" *ngIf="historyRecordsList.length!=0 && !enableEmployeeUploadSection" (click)="onFinalSavePassemgers('proceed')">Proceed</button>
         </div>
     </div>
 </div>
