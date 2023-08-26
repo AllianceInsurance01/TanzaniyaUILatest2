@@ -50,7 +50,7 @@ export class Machineryss{
           
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(50), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -58,7 +58,7 @@ export class Machineryss{
                         },
                       },
                       {
-                        className: 'col-sm-4',
+                        className: 'col-sm-8 col-lg-8 col-xl-8 col-md-8',
                         type: 'input',
                         key: 'MDescription',
                         templateOptions: {
@@ -66,7 +66,7 @@ export class Machineryss{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(500), ForceLengthValidators.min(1)]
                         },
                       
                       },
@@ -80,7 +80,7 @@ export class Machineryss{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(150), ForceLengthValidators.min(1)]
                         },
                       
                       }, 
@@ -98,7 +98,7 @@ export class Machineryss{
           
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(50), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -114,7 +114,7 @@ export class Machineryss{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(150), ForceLengthValidators.min(1)]
                         },
                       },
                       {
@@ -126,7 +126,7 @@ export class Machineryss{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
                         },
                       },
                       {
@@ -138,7 +138,7 @@ export class Machineryss{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(50), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },

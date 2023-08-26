@@ -40,7 +40,7 @@ export class Medical {
                       required: true,
                     },
                     validators: {
-                      validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                      validation: [ForceLengthValidators.maxLength(1000), ForceLengthValidators.min(1)]
                     },
                     hooks: {
                     },
@@ -56,7 +56,7 @@ export class Medical {
                       required: true,
                     },
                     validators: {
-                      validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                      validation: [ForceLengthValidators.maxLength(500), ForceLengthValidators.min(1)]
                     },
                   },
 
@@ -85,7 +85,7 @@ export class Medical {
                       required: true,
                     },
                     validators: {
-                      validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                      validation: [ForceLengthValidators.maxLength(150), ForceLengthValidators.min(1)]
                     },
                     hooks: {
                     },

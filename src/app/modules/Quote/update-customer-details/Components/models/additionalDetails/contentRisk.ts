@@ -86,7 +86,7 @@ export class ContentRisk{
                       
                       },
                       {
-                        className: 'col-sm-4',
+                        className: 'col-sm-7 col-lg-7 col-xl-7',
                         type: 'input',
                         key: 'ContentDesc',
                         templateOptions: {
@@ -94,7 +94,7 @@ export class ContentRisk{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(1000), ForceLengthValidators.min(1)]
                         },
                       
                       },
@@ -107,7 +107,7 @@ export class ContentRisk{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(50), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },

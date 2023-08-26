@@ -50,7 +50,7 @@ export class ElectronicEquip{
           
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(50), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -71,7 +71,7 @@ export class ElectronicEquip{
           
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(50), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -87,7 +87,7 @@ export class ElectronicEquip{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
                         },
                       
                       },
@@ -105,7 +105,7 @@ export class ElectronicEquip{
           
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -121,7 +121,7 @@ export class ElectronicEquip{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(4), ForceLengthValidators.min(1)]
                         },
                       
                       }, 
@@ -134,7 +134,7 @@ export class ElectronicEquip{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(4), ForceLengthValidators.min(1)]
                         },
                       
                       },
@@ -147,7 +147,7 @@ export class ElectronicEquip{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },

@@ -45,7 +45,7 @@ export class EmployeeLiablityss{
                               required: true,
                             },
                             validators: {
-                              validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                              validation: [ForceLengthValidators.maxLength(150), ForceLengthValidators.min(1)]
                             },
                           
                        },
@@ -63,7 +63,7 @@ export class EmployeeLiablityss{
           
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(500), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -79,7 +79,7 @@ export class EmployeeLiablityss{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(500), ForceLengthValidators.min(1)]
                         },
                       
                       }, 
@@ -92,7 +92,7 @@ export class EmployeeLiablityss{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(150), ForceLengthValidators.min(1)]
                         },
                       
                       }, 
@@ -123,7 +123,7 @@ export class EmployeeLiablityss{
           
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(25), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -139,7 +139,7 @@ export class EmployeeLiablityss{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(4), ForceLengthValidators.min(1)]
                         },
                       
                       }, 
@@ -157,7 +157,7 @@ export class EmployeeLiablityss{
           
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -173,7 +173,7 @@ export class EmployeeLiablityss{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(50), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },

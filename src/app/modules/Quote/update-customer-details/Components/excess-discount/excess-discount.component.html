@@ -561,7 +561,7 @@
                                                                                             </div>
                                                                                             <div>
                                                                                                 <span
-                                                                                                    class="spancommon span_font_size">({{tax.TaxRate}}&nbsp;%)</span>
+                                                                                                    class="spancommon span_font_size" >({{tax.TaxRate}}&nbsp;%)</span>
                                                                                             </div>
                                                                                             <div>
                                                                                                 <span
@@ -596,7 +596,7 @@
                                                                                             </div>
                                                                                             <div>
                                                                                                 <span
-                                                                                                    class="spancommon span_font_size">({{tax.TaxRate}}&nbsp;%)</span>
+                                                                                                    class="spancommon span_font_size" >({{tax.TaxRate}}&nbsp;%)</span>
                                                                                             </div>
                                                                                             <div>
                                                                                                 <span
@@ -769,7 +769,7 @@
                                                                                                             </div>
                                                                                                             <div>
                                                                                                                 <span
-                                                                                                                    class="spancommon span_font_size">({{tax.TaxRate}}&nbsp;%)</span>
+                                                                                                                    class="spancommon span_font_size" *ngIf="tax.TaxCalcType!='A'">({{tax.TaxRate}}&nbsp;%)</span>
                                                                                                             </div>
                                                                                                             <div>
                                                                                                                 <span
@@ -807,7 +807,7 @@
                                                                                                             </div>
                                                                                                             <div>
                                                                                                                 <span
-                                                                                                                    class="spancommon span_font_size">({{tax.TaxRate}}&nbsp;%)</span>
+                                                                                                                    class="spancommon span_font_size" >({{tax.TaxRate}}&nbsp;%)</span>
                                                                                                             </div>
                                                                                                             <div>
                                                                                                                 <span
@@ -927,7 +927,7 @@
                                                                                                             </div>
                                                                                                             <div>
                                                                                                                 <span
-                                                                                                                    class="spancommon span_font_size">({{tax.TaxRate}}&nbsp;%)</span>
+                                                                                                                    class="spancommon span_font_size" *ngIf="tax.TaxCalcType!='A'">({{tax.TaxRate}}&nbsp;%)</span>
                                                                                                             </div>
                                                                                                             <div>
                                                                                                                 <span
@@ -937,12 +937,12 @@
                                                                                                         <li class="list-group-item list-seperate">
                                                                                                             <div>
                                                                                                                 <span
-                                                                                                                    class="spancommon span_font_size">Premium Before
-                                                                                                                    Tax</span>
+                                                                                                                    class="spancommon span_font_size"><b>Premium Before
+                                                                                                                    Tax</b></span>
                                                                                                             </div>
                                                                                                             <div>
                                                                                                                 <span
-                                                                                                                    class="spancommon span_font_size">{{premiumBeforeTax}}</span>
+                                                                                                                    class="spancommon span_font_size"><b>{{premiumBeforeTax}}</b></span>
                                                                                                             </div>
                                                                                                         </li>
                                                                                                     </ng-container>
@@ -2033,7 +2033,7 @@
                                                                                                                     </div>
                                                                                                                     <div>
                                                                                                                         <span
-                                                                                                                            class="spancommon span_font_size">({{tax.TaxRate}}&nbsp;%)</span>
+                                                                                                                            class="spancommon span_font_size" *ngIf="tax.TaxCalcType!='A'">({{tax.TaxRate}}&nbsp;%)</span>
                                                                                                                     </div>
                                                                                                                     <div>
                                                                                                                         <span

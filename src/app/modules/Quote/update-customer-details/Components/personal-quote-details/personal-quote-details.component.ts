@@ -4770,7 +4770,6 @@ checkDisable(fieldName) {
   console.log("Disable Check", fieldName);
   if (this.endorsementSection) {
     let entry = this.enableFieldsList.some(ele => ele == fieldName);
-    console.log("Entry ", fieldName, entry)
     return !entry;
   }
   else return false;
@@ -4821,10 +4820,7 @@ onCalculate(buildDetails,type,formType) {
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
           if (data) {
-
             let entry = data?.Result;
-
-
             i += 1;
             console.log("Indexxx", i, buildDetails.length,formType,type)
             if (i == buildDetails.length) {
