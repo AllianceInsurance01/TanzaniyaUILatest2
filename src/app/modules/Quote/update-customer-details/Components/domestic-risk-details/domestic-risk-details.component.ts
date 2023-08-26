@@ -1706,7 +1706,7 @@ onFidelitySave(){
               }
             }
           }
-          this.getdropList();
+          
         }
       },
       (err) => { },
@@ -1818,6 +1818,7 @@ onFidelitySave(){
               this.allriskList[i].value = this.allriskList[i]['Code'];
               delete this.allriskList[i].CodeDesc;
               if (i == this.allriskList.length - 1) {
+                if(this.third)
                 this.fieldsRisk[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].props.options = this.allriskList;
               }
             }
@@ -2636,6 +2637,7 @@ onFidelitySave(){
           // ]
         }
         if(this.first){
+          this.getdropList();
           this.getContentDetails();
         }
         else if(this.second){
@@ -3109,7 +3111,7 @@ onFidelitySave(){
         }
         if(this.second){
           this.getPersonalAccidentDetails();
-          this.getdropList();
+          
         }
         else if(this.third){
           this.getallriskDetails();

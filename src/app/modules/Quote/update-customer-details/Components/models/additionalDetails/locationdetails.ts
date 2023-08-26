@@ -39,7 +39,7 @@ export class LocationDetails{
                             required: true,
                           },
                           validators: {
-                            validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                            validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
                           },
                           hooks: {
                           },
@@ -55,7 +55,7 @@ export class LocationDetails{
                             required: true,
                           },
                           validators: {
-                            validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                            validation: [ForceLengthValidators.maxLength(250), ForceLengthValidators.min(1)]
                           },
                         
                         },
