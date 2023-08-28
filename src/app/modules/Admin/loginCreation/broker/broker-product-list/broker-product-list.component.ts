@@ -33,6 +33,9 @@ export class BrokerProductListComponent implements OnInit {
   selectedList: any[]=[];
   selectedProductList: any;
   nonOptedProductList: any;
+  newList: any =[];
+  newslist: any =[];
+  LossList:any;
   constructor(private router:Router,private sharedService: SharedService,private datePipe: DatePipe) {
     this.minDate = new Date();
     let brokerObj = JSON.parse(sessionStorage.getItem('brokerConfigureDetails'));
@@ -97,7 +100,7 @@ export class BrokerProductListComponent implements OnInit {
   ngOnInit(): void {
   }
   ngOnChanges() {
-    this.dataSource = new MatTableDataSource(this.filteredList);
+    this.dataSource = new MatTableDataSource(this.filteredList);//this.filteredList
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.applyFilter(this.filterValue);
@@ -107,6 +110,8 @@ export class BrokerProductListComponent implements OnInit {
     this.dataSource.paginator = this.paginator
   }
   getOptedProductDetails(){
+    this.newList =[];
+    this.newslist=[];
     let ReqObj = {
       "LoginId": this.brokerLoginId,
       "InsuranceId": this.insuranceId,
@@ -119,23 +124,62 @@ export class BrokerProductListComponent implements OnInit {
         (data: any) => {
             if(data.Result){
               let selectedList = data.Result;
+
+              console.log('KKKKKKKKKK',selectedList);
               if(selectedList.length!=0){
                 let i=0;
+                 
                   for(let product of selectedList){
-                      product['SelectedYN'] = 'Y';
+                      // product['SelectedYN'] = 'Y';
                       if(product?.CreditYn==null) product.CreditYn = 'N';
                       if(product?.CheckerYn==null) product.CheckerYn = 'N';
                       if(product?.SumInsuredEnd!=null){product.SumInsuredEnd =String(product?.SumInsuredEnd).split('.')[0]; this.CommaFormatted(product);}
                       if (product?.EffectiveDateStart != null) {
                         product['EffectiveDate'] = this.onDateFormatInEdit(product?.EffectiveDateStart)
                       }
+                      // if(product.SelectedYn=='Y'){
+                      //   this.newList = selectedList;
+                      // }
+                      if(product.SelectedYn!='Y'){
+                        this.newslist.push(product);
+                        // this.newslist=this.selectedList[i];
+                        console.log('MMMMMMMMMM',this.newslist);
+                      }
+                      else{
+                        this.newList.push(product);
+                        //this.newList=this.selectedList[i];
+                        console.log('RRRRRRRRRRR',this.newList);
+                      }
+                    
                       i+=1;
-                      if(i==selectedList.length){this.selectedProductList= selectedList;this.getNonOptedProctList();}
+                      if(i==selectedList.length){
+                        this.selectedProductList= selectedList;
+                        this.dataSource = new MatTableDataSource(this.selectedProductList);
+                        console.log('OOOOOOOOOOOOOOO',this.selectedProductList);
+                        this.dataSource.sort = this.sort;
+                        this.dataSource.paginator = this.paginator;
+                        this.applyFilter(this.filterValue);
+                        this.editSection = false;
+                      
+                        //this.getNonOptedProctList();
+                      }
+                    
+                    
                   }
+                  // if(this.selectedList.length-1 == i){
+                  //   this.LossList = this.newList;
+                  //   console.log('JJJJJJJJJJJJJ',this.LossList);
+                  // }
               }
               else{
                 this.selectedProductList = [];
-                this.getNonOptedProctList();
+                this.productData = this.selectedProductList;
+                this.dataSource = new MatTableDataSource(this.productData);
+                this.dataSource.sort = this.sort;
+                this.dataSource.paginator = this.paginator;
+                this.applyFilter(this.filterValue);
+                this.editSection = false;
+                //this.getNonOptedProctList();
               }
             }
       },
@@ -171,6 +215,7 @@ export class BrokerProductListComponent implements OnInit {
                         this.nonOptedProductList= selectedList;
                         this.productData = this.selectedProductList.concat(this.nonOptedProductList);
                         this.dataSource = new MatTableDataSource(this.productData);
+                        console.log('OOOOOOOOOOOOOOO',this.productData);
                         this.dataSource.sort = this.sort;
                         this.dataSource.paginator = this.paginator;
                         this.applyFilter(this.filterValue);
@@ -199,11 +244,11 @@ export class BrokerProductListComponent implements OnInit {
     this.dataSource.filter = filterValue?.trim().toLowerCase();
   }
   checkSelectedProducts(rowData){
-    return rowData.SelectedYN=='Y';
+    return rowData.SelectedYn=='Y';
   }
   onChangeSelectedProduct(rowData){
-    if(rowData.SelectedYN=='Y') rowData.SelectedYN = 'N';
-    else rowData.SelectedYN = 'Y';
+    if(rowData.SelectedYn=='Y') rowData.SelectedYn = 'N';
+    else rowData.SelectedYn = 'Y';
   }
   getBrokerProductList(){
     let ReqObj = {
@@ -254,8 +299,6 @@ export class BrokerProductListComponent implements OnInit {
   ongetBack(){
     this.router.navigate(['/Admin/brokersList/newBrokerDetails']);
   }
-
-  
   onConfigure(event:any){
      sessionStorage.setItem('productbroker',this.insuranceId);
      sessionStorage.setItem('brokerproduct',event.ProductId);
@@ -278,6 +321,7 @@ export class BrokerProductListComponent implements OnInit {
     if(this.activeMenu=='Branch') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerBranchList']);
     if(value=='Product') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerProductList']);
     if(value=='Cover') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerCoverList']);
+    if(value=='Deposit') this.router.navigate(['/Admin/depositMaster']);
   }
   onEditProduct(rowData:any){
     let ReqObj = {
@@ -292,7 +336,9 @@ export class BrokerProductListComponent implements OnInit {
 
   }
   onSaveProductDetails(){
-    let selectedList = this.productData.filter(ele=>ele.SelectedYN=='Y');
+    //let selectedList = this.productData.filter(ele=>ele.SelectedYn=='Y');
+    console.log('KKKKKKKKKKKKK',this.selectedProductList);
+    let selectedList = this.selectedProductList.filter(ele=>ele.SelectedYn=='Y');
     console.log("Final Selected List",selectedList)
     let finalObj = [];let i=0;
     for(let entry of selectedList){

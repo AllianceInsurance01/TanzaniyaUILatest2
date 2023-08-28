@@ -11,6 +11,8 @@
 
                     <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
                     <label for="menu2">Cover</label>
+                    <!-- <input type="radio" id="menu3" name="menu" value="Deposit" (click)="onRedirect('Deposit')" [(ngModel)]="activeMenu">
+                    <label for="menu3">Deposit</label> -->
                 </div>
             </div>
             <div class="vision-grid-item">
@@ -66,37 +68,37 @@
                                                     <ng-container *ngIf="col.key=='CommissionPercent'">
                                                         <div class="input-control-container">
                                                             <div class="input-form-box">
-                                                                <input type="text" class="input-form-control without-icon" [disabled]="element.SelectedYN!='Y'" style="width: 90px;" maxlength="5" [(ngModel)]="element[col.key]">
+                                                                <input type="text" class="input-form-control without-icon" [disabled]="element.SelectedYn!='Y'" style="width: 90px;" maxlength="5" [(ngModel)]="element[col.key]">
                                                             </div>
                                                         </div>
                                                     </ng-container>
                                                     <ng-container *ngIf="col.key=='BackDays'">
                                                         <div class="input-control-container">
                                                             <div class="input-form-box">
-                                                                <input type="text" class="input-form-control without-icon" [disabled]="element.SelectedYN!='Y'" style="width: 80px;" maxlength="5" [(ngModel)]="element[col.key]">
+                                                                <input type="text" class="input-form-control without-icon" [disabled]="element.SelectedYn!='Y'" style="width: 80px;" maxlength="5" [(ngModel)]="element[col.key]">
                                                             </div>
                                                         </div>
                                                     </ng-container>
                                                     <ng-container *ngIf="col.key=='SumInsuredEnd'">
                                                         <div class="input-control-container">
                                                             <div class="input-form-box">
-                                                                <input type="text" class="input-form-control without-icon" digitOnly [disabled]="element.SelectedYN!='Y'" (keydown)="onSIEndChange($event)" (keyup)="CommaFormatted(element)" style="width: 150px;" maxlength="25" [(ngModel)]="element[col.key]">
+                                                                <input type="text" class="input-form-control without-icon" digitOnly [disabled]="element.SelectedYn!='Y'" (keydown)="onSIEndChange($event)" (keyup)="CommaFormatted(element)" style="width: 150px;" maxlength="25" [(ngModel)]="element[col.key]">
                                                             </div>
                                                         </div>
                                                     </ng-container>
                                                     <ng-container *ngIf="col.key=='CreditYn'">
                                                         <div class="input-form-radio-box">
                                                             <div class="radio-toolbar" style="width: 120px;">
-                                                                <input [id]="'credit_Yes'+j" type="radio" [name]="'creditYN'+j" [disabled]="element.SelectedYN!='Y'" [(ngModel)]="element[col.key]" value="Y">
+                                                                <input [id]="'credit_Yes'+j" type="radio" [name]="'creditYN'+j" [disabled]="element.SelectedYn!='Y'" [(ngModel)]="element[col.key]" value="Y">
                                                                 <label [for]="'credit_Yes'+j" class="customLabel">Yes</label>
-                                                                <input type="radio" [id]="'credit_No'+j" [name]="'creditYN'+j" [disabled]="element.SelectedYN!='Y'" [(ngModel)]="element[col.key]" value="N">
+                                                                <input type="radio" [id]="'credit_No'+j" [name]="'creditYN'+j" [disabled]="element.SelectedYn!='Y'" [(ngModel)]="element[col.key]" value="N">
                                                                 <label [for]="'credit_No'+j" class="customLabel">No</label>
                                                             </div>
                                                         </div>
                                                     </ng-container>
                                                     <ng-container *ngIf="col.key=='EffectiveDate'">
                                                         <mat-form-field appearance="fill" style="width: 130px;">
-                                                            <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="element[col.key]" [disabled]="element.SelectedYN!='Y'" [ngModelOptions]="{standalone: true}">
+                                                            <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="element[col.key]" [disabled]="element.SelectedYn!='Y'" [ngModelOptions]="{standalone: true}">
                                                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                                             <mat-datepicker #picker></mat-datepicker>
                                                         </mat-form-field>
@@ -104,9 +106,9 @@
                                                     <ng-container *ngIf="col.key=='CheckerYn'">
                                                         <div class="input-form-radio-box">
                                                             <div class="radio-toolbar" style="width: 120px;">
-                                                                <input [id]="'checker_Yes'+j" type="radio" [name]="'checkerYN'+j" [disabled]="element.SelectedYN!='Y'" [(ngModel)]="element[col.key]" value="Y">
+                                                                <input [id]="'checker_Yes'+j" type="radio" [name]="'checkerYN'+j" [disabled]="element.SelectedYn!='Y'" [(ngModel)]="element[col.key]" value="Y">
                                                                 <label [for]="'checker_Yes'+j" class="customLabel">Yes</label>
-                                                                <input type="radio" [id]="'checker_No'+j" [name]="'checkerYN'+j" [disabled]="element.SelectedYN!='Y'" [(ngModel)]="element[col.key]" value="N">
+                                                                <input type="radio" [id]="'checker_No'+j" [name]="'checkerYN'+j" [disabled]="element.SelectedYn!='Y'" [(ngModel)]="element[col.key]" value="N">
                                                                 <label [for]="'checker_No'+j" class="customLabel">No</label>
                                                             </div>
                                                         </div>
@@ -307,11 +309,11 @@
                                 </mat-paginator>
                             </div>
                             <ng-container *ngIf="!editSection">
-                                <ng-container *ngIf="selectedProductList.length!=0">
-                                    <app-grid-table [cols]="productHeaderAlt" [data]="selectedProductList" [filterValue]="filterValue" (onEdit)="onEditProduct($event)" (onConfigure)="onConfigure($event)">
+                                <ng-container *ngIf="newList.length!=0">
+                                    <app-grid-table [cols]="productHeaderAlt" [data]="newList" [filterValue]="filterValue" (onEdit)="onEditProduct($event)" (onConfigure)="onConfigure($event)">
                                     </app-grid-table>
                                 </ng-container>
-                                <ng-container *ngIf="selectedProductList.length==0">
+                                <ng-container *ngIf="newList.length==0">
                                     <div class="text-center">
                                         No Products Added
                                     </div>
