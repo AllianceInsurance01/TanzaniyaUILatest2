@@ -150,10 +150,36 @@ export class NavbarComponent implements OnInit {
     }
   }
   clearSubSelection(){
+    sessionStorage.removeItem('vehicleDetailsList');
+    sessionStorage.removeItem('customerReferenceNo')
+    sessionStorage.removeItem('quoteReferenceNo');
+    sessionStorage.removeItem('homeCommonDetails');
+    sessionStorage.removeItem('HomeInsQuoteRefNo')
+    sessionStorage.removeItem('TravelQuoteRefNo')
+    sessionStorage.removeItem('QuoteStatus');
+    sessionStorage.removeItem('endorsePolicyNo');
+    sessionStorage.removeItem('endorseTypeId');
+    sessionStorage.removeItem('quoteNo');
+    sessionStorage.removeItem('updatebar');
+    sessionStorage.removeItem('endorseTypeId')
     this.parentSection = true;
     this.expanded = false;
     this.currentIndex = null;
     this.submenuList = [];
+  }
+  clearOldRecords(){
+    sessionStorage.removeItem('vehicleDetailsList');
+    sessionStorage.removeItem('customerReferenceNo')
+    sessionStorage.removeItem('quoteReferenceNo');
+    sessionStorage.removeItem('homeCommonDetails');
+    sessionStorage.removeItem('HomeInsQuoteRefNo')
+    sessionStorage.removeItem('TravelQuoteRefNo')
+    sessionStorage.removeItem('QuoteStatus');
+    sessionStorage.removeItem('endorsePolicyNo');
+    sessionStorage.removeItem('endorseTypeId');
+    sessionStorage.removeItem('quoteNo');
+    sessionStorage.removeItem('updatebar');
+    sessionStorage.removeItem('endorseTypeId')
   }
   // subusertypedropdown(){
   //   $("#dropdownMenuLink").click(function(){

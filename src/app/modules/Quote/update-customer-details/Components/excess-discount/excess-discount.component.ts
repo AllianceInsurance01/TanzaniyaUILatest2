@@ -276,6 +276,7 @@ emiyn="N";
       {"Code":"RA","CodeDesc":"Referral Approved"},
       {"Code":"RR","CodeDesc":"Referral Rejected"},
       {"Code":"RE","CodeDesc":"Referral Re-Quote"},
+      {"Code":"REV","CodeDesc":"Referal Reverted"},
     ]
     this.innerColumnHeader =  [
       {

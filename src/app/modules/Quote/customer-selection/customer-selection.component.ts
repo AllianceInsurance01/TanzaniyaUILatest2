@@ -63,14 +63,7 @@ export class CustomerSelectionComponent implements OnInit {
         console.log("Router",data,JSON.parse(sessionStorage.getItem('vehicleDetailsList')));
       }
     });*/
-    let refno = sessionStorage.getItem('customerReferenceNo')
-    console.log("Ref No",refno);
-    if (refno){
-      this.customerValue=refno;
-      this.referenceNo = refno;
-    }
-    else{this.referenceNo=null;this.customerValue=null}
-    console.log(refno);
+    
 
   }
   onCustomerSearch(){
@@ -126,7 +119,14 @@ export class CustomerSelectionComponent implements OnInit {
               sessionStorage.removeItem('customerReferenceNo')
               this.clearSearchSection = false;
             }
-
+            let refno = sessionStorage.getItem('customerReferenceNo')
+            console.log("Ref No",refno);
+            if (refno){
+              this.customerValue=refno;
+              this.referenceNo = refno;
+            }
+            else{this.referenceNo=null;this.customerValue=null}
+            console.log(refno);
         }
 
       },
