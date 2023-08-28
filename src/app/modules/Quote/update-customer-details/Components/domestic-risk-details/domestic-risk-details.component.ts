@@ -286,6 +286,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
 
   model = {};
   editPersonalIndSection: boolean;
+  enableType: any;
 
   constructor(private router: Router,private datePipe:DatePipe,private modalService: NgbModal,
      private sharedService: SharedService,private formlyJsonschema: FormlyJsonschema,) {
@@ -3357,7 +3358,8 @@ onFidelitySave(){
           (err) => { },
           ); 
   }
-  onEditEmployeeError(rowData,modal){
+  onEditEmployeeError(rowData,modal,type){
+    this.enableType= type;
     console.log('OOOOOOOOOOOO',rowData);
     this.errorRowNum = rowData?.RowNum;
     this.empLocation = rowData?.RiskId;
@@ -4002,11 +4004,11 @@ onFidelitySave(){
         if(this.productId=='32' || this.productId=='19') SectionId = '43';
         let ReqObj = {
           "QuoteNo": this.quoteNo,
-          "RiskId": "1",
+          "RiskId": rowData.RiskId,
          "EmployeeId": rowData.EmployeeId,
          "SectionId": SectionId
       }
-      let urlLink = `${this.motorApiUrl}api/deleteproductemployees`;
+      let urlLink = `${this.motorApiUrl}api/deleteemployeebyid`;
         this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
           (data: any) => {
             console.log(data);
