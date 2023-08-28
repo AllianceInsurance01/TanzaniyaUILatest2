@@ -1159,7 +1159,7 @@
                                                             <td> <span class="spancommon">{{records.NationalityId}}</span> </td>
                                                             <td> <span class="spancommon">{{records.ErrorDesc}}</span> </td>
                                                             <td> 
-                                                                    <button class="btn btn-primary" (click)="onEditEmployeeError(records,mymodal)"><i class="fa fa-pencil"></i></button>    
+                                                                    <button class="btn btn-primary" (click)="onEditEmployeeError(records,mymodal,'employee')"><i class="fa fa-pencil"></i></button>    
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -1362,7 +1362,6 @@
                                     </div>
                                     <div class="headcommon mr-3"  *ngIf="enableFidelityUploadSection"> 
                                         <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data" (click)="employeedownload()"><i class="fas fa-download mx-1"></i>Sample</button>
-                                        <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2"  (click)="onUploadFidelitySection()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
                                     </div>
                                     <div *ngIf="!enableEmployeeUploadSection">Currency&nbsp;({{currencyValue}})</div>
                                 </div>
@@ -1535,7 +1534,7 @@
                                                             <td> <span class="spancommon">{{records.NationalityId}}</span> </td>
                                                             <td> <span class="spancommon">{{records.ErrorDesc}}</span> </td>
                                                             <td> 
-                                                                    <button class="btn btn-primary" (click)="onEditEmployeeError(records,mymodal)"><i class="fa fa-pencil"></i></button>    
+                                                                    <button class="btn btn-primary" (click)="onEditEmployeeError(records,mymodal,'fidelity')"><i class="fa fa-pencil"></i></button>    
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -1545,7 +1544,7 @@
                                                 <pagination-controls (pageChange)="j=$event"  id="j"></pagination-controls>
                                             </div>
                                             <div style="text-align: center;">
-                                                <button class="btn btn-danger btn-sm mr-5" (click)="newFidelity()"> Cancel</button>&nbsp;&nbsp;
+                                                <button class="btn btn-danger btn-sm mr-5" (click)="onFidelityCancel()"> Cancel</button>&nbsp;&nbsp;
                                             </div>
                                         </ng-container>
                                     </div>
@@ -2161,6 +2160,14 @@
         </ng-container>
         <div class="row">
             <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                <label class="input-form-label">Location</label><span class="text-danger">*</span>
+                <div class="input-form-box mt-2">
+                    <ng-select class="custom" [items]="LocationList" [(ngModel)]="empLocation" placeholder="Select Location" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="value" bindLabel="label">
+                    </ng-select>
+                </div>
+                
+            </div>
+            <div class="col-12 col-md-6 col-lg-6 input-control-container">
                 <label class="input-form-label">Employee Name</label><span class="text-danger">*</span>
                 <div class="input-form-box mt-2">
                     <input type="text" style="position: relative;bottom: 0.35rem;" class="input-form-control without-icon" maxlength="100" [(ngModel)]="employeeName" [ngModelOptions]="{standalone: true}">
@@ -2174,8 +2181,14 @@
             <div class="col-12 col-md-6 col-lg-6 input-control-container">
                 <label class="input-form-label">Occupation</label><span class="text-danger">*</span>
                 <div class="input-form-box" style="position: relative;top:.2rem">
-                    <ng-select class="custom" [items]="occupationList" [(ngModel)]="occupationType" placeholder="Select Occupation" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
-                    </ng-select>
+                    <ng-container *ngIf="enableType=='fidelity'">
+                        <ng-select class="custom" [items]="fidelityOccupationList" [(ngModel)]="occupationType" placeholder="Select Occupation" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="value" bindLabel="label">
+                        </ng-select>
+                    </ng-container>
+                    <ng-container *ngIf="enableType!='fidelity'">
+                        <ng-select class="custom" [items]="employeeOccupationList" [(ngModel)]="occupationType" placeholder="Select Occupation" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="value" bindLabel="label">
+                        </ng-select>
+                    </ng-container>
                 </div>
                 <div class="input-form-error" *ngIf="employeeOccupationError">
                     <div class="error-text text-danger">
@@ -2211,7 +2224,7 @@
                 <label class="input-form-label">Joining Period</label><span class="text-danger">*</span>
                 <div class="row p-0" style="margin-left: 0px !important;">
                     <div class="col-md-8 col-lg-8 p-0 input-form-box mt-1">
-                        <ng-select class="custom" [items]="monthList" [disabled]="checkEndorseDisable('employee')" [(ngModel)]="empJoiningMonth" placeholder="Select Month" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                        <ng-select class="custom" [items]="monthList" [disabled]="checkEndorseDisable('employee')" [(ngModel)]="empJoiningMonth" placeholder="Select Month" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="value" bindLabel="label">
                         </ng-select>
                     </div>
                     <div class="col-md-4 col-lg-4 p-0 input-form-box mt-1">

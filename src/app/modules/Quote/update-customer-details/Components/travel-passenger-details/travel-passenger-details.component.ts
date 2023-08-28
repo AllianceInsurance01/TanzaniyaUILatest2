@@ -1040,12 +1040,7 @@ onEditPassenger(rowData){
 }
 onDeletePassengerList(rowData){
   console.log("Index Received",rowData);
-  if(rowData.PassengerId!=null){
-
-  }
-  else{
       this.historyRecordsList = this.historyRecordsList.filter(ele=>(ele.PassportNo!=rowData.PassportNo) && (ele.Dob!=rowData.Dob))
-  }
 }
 onDeletePassenger(rowData){
   let index =  this.PassengerDetails.findIndex(ele=>(ele.PassengerId==rowData.PassengerId && ele.GroupId==rowData.GroupId));
