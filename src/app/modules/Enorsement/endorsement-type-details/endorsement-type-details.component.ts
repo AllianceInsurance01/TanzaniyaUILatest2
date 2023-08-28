@@ -274,7 +274,8 @@ export class EndorsementTypeDetailsComponent {
   getEndorsementTypes(){
     let ReqObj = {
       "CompanyId": this.insuranceId,
-      "ProductId": this.productId 
+      "ProductId": this.productId,
+      "LoginId": this.loginId 
     }
     let urlLink = `${this.CommonApiUrl}endorsment/endorsementTypes`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
