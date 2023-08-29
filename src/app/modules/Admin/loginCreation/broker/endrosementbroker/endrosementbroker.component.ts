@@ -190,42 +190,50 @@ export class EndrosementBrokerComponent {
                 
     //   }
 
-    onSelectProduct(rowData,event){
-      let endrose;let endroseData:any[]=[]; let endorsements :any;
-      let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('brokerproduct'))
-      console.log('MMMMMMMMMMMMMMMMMMM',entry);
-      if(entry){
-        if(this.endorseData.length!=0){
-          endorsements = entry?.EndorsementIds[0]?.split(',');
-          console.log('EEEEEEEEEE',endorsements);
-        }
+    onSelectProduct(rowData,event,i){
+      console.log('HHHHHHHHHH',rowData,event,i)
+      if(event){
+          rowData.SelectedYn = 'Y';
+          //rowData.Checked = true;
       }
-      if(event==true){
-        if(this.endorseData.length!=0){
-          let exist = this.endorseData.find(ele=>ele.EndtTypeId == rowData.EndtTypeId);
-          console.log('EEBBBBBBBBBBBBB',exist);
-          if(exist){
-            if(endorsements.length!=0){
-              let exists = endorsements.some(ele=>ele == exist.EndtTypeId);
-              console.log('Not Exists',exists);
-              if(!exists){
-                this.reqlist.push(exist.EndtTypeId);
-              }
-            }
-            console.log('UUUUUUU',this.reqlist);
-          }
-        }    
+      else{
+          rowData.SelectedYn = 'N';
       }
-      else if(event== false){
-        let exists = endorsements.some(ele=>ele == rowData.EndtTypeId);
-        console.log('Not Exists',exists);
-        if(exists){
-          let index = this.reqlist.findIndex(ele=>ele==rowData.EndtTypeId);
-          this.reqlist.splice(index,1);
-          console.log('TTTTTTTTTTTTT',this.reqlist);   
-        }
+      // let endrose;let endroseData:any[]=[]; let endorsements :any;
+      // let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('brokerproduct'))
+      // console.log('MMMMMMMMMMMMMMMMMMM',entry);
+      // if(entry){
+      //   if(this.endorseData.length!=0){
+      //     endorsements = entry?.EndorsementIds[0]?.split(',');
+      //     console.log('EEEEEEEEEE',endorsements);
+      //   }
+      // }
+      // if(event==true){
+      //   if(this.endorseData.length!=0){
+      //     let exist = this.endorseData.find(ele=>ele.EndtTypeId == rowData.EndtTypeId);
+      //     console.log('EEBBBBBBBBBBBBB',exist);
+      //     if(exist){
+      //       if(endorsements.length!=0){
+      //         let exists = endorsements.some(ele=>ele == exist.EndtTypeId);
+      //         console.log('Not Exists',exists);
+      //         if(!exists){
+      //           this.reqlist.push(exist.EndtTypeId);
+      //         }
+      //       }
+      //       console.log('UUUUUUU',this.reqlist);
+      //     }
+      //   }    
+      // }
+      // else if(event== false){
+      //   let exists = endorsements.some(ele=>ele == rowData.EndtTypeId);
+      //   console.log('Not Exists',exists);
+      //   if(exists){
+      //     let index = this.reqlist.findIndex(ele=>ele==rowData.EndtTypeId);
+      //     this.reqlist.splice(index,1);
+      //     console.log('TTTTTTTTTTTTT',this.reqlist);   
+      //   }
            
-      }
+      // }
     }
 
      getProductList(){
@@ -248,16 +256,17 @@ export class EndrosementBrokerComponent {
         }
       }
       onCheckEndorseSelect(rowData){
-        if(this.productDetails.length!=0){
-            let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('brokerproduct'))
-            if(entry){
+        return rowData.SelectedYn=='Y';
+        // if(this.productDetails.length!=0){
+        //     let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('brokerproduct'))
+        //     if(entry){
              
-                let endorsements = entry?.EndorsementIds[0]?.split(',');
+        //         let endorsements = entry?.EndorsementIds[0]?.split(',');
 
-                return endorsements.some(ele=>ele==rowData.EndtTypeId);
+        //         return endorsements.some(ele=>ele==rowData.EndtTypeId);
                
-            }
-        }
+        //     }
+        // }
       }
       back(){
         sessionStorage.removeItem('brokerproduct');
@@ -271,9 +280,10 @@ export class EndrosementBrokerComponent {
         let ReqObj={
           "CompanyId":this.insurance,
           "EndtTypeCategoryId": this.categoryId,
-          "ProductId": s
+          "ProductId": s,
+          "LoginId":this.issuerId
         }
-        let urlLink = `${this.CommonApiUrl}master/getallendorsement`;
+        let urlLink = `${this.CommonApiUrl}master/getactiveendorsement`;
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
           (data: any) => {
             console.log(data);
@@ -355,7 +365,7 @@ export class EndrosementBrokerComponent {
               console.log('Entries',entry);
                   reqList=entry.EndorsementIds;
                   console.log('ENTRY LISTSSSS',reqList);
-                  this.onsubmit(this.reqlist);
+                  //this.onsubmit(this.reqlist);
                       // this.onsubmit(this.reqlist);
         
             }
@@ -375,7 +385,13 @@ export class EndrosementBrokerComponent {
             //     }
             }
       }
-      onsubmit(reqList){
+      onsubmit(){
+        let i=0; let req:any=[];
+        let selectedList = this.endorseData.filter(ele=>ele.SelectedYn=='Y');
+        for(let s of selectedList){
+        req.push(s.EndtTypeId);
+        i+=1;
+        }
         let type:any;let types:any;
         let categoryId=this.categoryList.find(ele=>ele.Code==this.categoryId)
         if(categoryId){
@@ -400,7 +416,7 @@ export class EndrosementBrokerComponent {
            "CreatedBy":this.loginId,
            "ProductId":sessionStorage.getItem('brokerproduct'),
           "IdType":types,
-          "Ids":reqList
+          "Ids":req
           }
         let urlLink = `${this.CommonApiUrl}admin/attachloginendtids`;
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(

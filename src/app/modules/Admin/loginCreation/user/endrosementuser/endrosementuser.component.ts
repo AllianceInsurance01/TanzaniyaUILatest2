@@ -73,14 +73,14 @@ export class EndrosementUserComponent {
       }
 
       onCheckEndorseSelect(rowData){
-       
-        if(this.productDetails.length!=0){
-            let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('userproduct'))
-            if(entry){
-                let endorsements = entry?.EndorsementIds[0]?.split(',');
-                return endorsements.some(ele=>ele==rowData?.EndtTypeId);
-            }
-        }
+        return rowData.SelectedYn=='Y';
+        // if(this.productDetails.length!=0){
+        //     let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('userproduct'))
+        //     if(entry){
+        //         let endorsements = entry?.EndorsementIds[0]?.split(',');
+        //         return endorsements.some(ele=>ele==rowData?.EndtTypeId);
+        //     }
+        // }
       }
 
        
@@ -136,37 +136,45 @@ export class EndrosementUserComponent {
 
 
 
-    onSelectProduct(rowData,event){
-      let endrose;let endroseData:any[]=[]; let endorsements :any;
-      let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('userproduct'))
-      console.log('MMMMMMMMMMMMMMMMMMM',entry);
-      if(entry){
-        if(this.endorseData.length!=0){
-          endorsements = entry?.EndorsementIds[0]?.split(',');
-          console.log('EEEEEEEEEE',endorsements);
-        }
+    onSelectProduct(rowData,event,i){
+      console.log('HHHHHHHHHH',rowData,event,i)
+      if(event){
+          rowData.SelectedYn = 'Y';
+          //rowData.Checked = true;
       }
-      if(event==true){
-        if(this.endorseData.length!=0){
-          let exist = this.endorseData.find(ele=>ele.EndtTypeId == rowData.EndtTypeId);
-          console.log('EEBBBBBBBBBBBBB',exist);
-          if(exist){
-            if(endorsements.length!=0){
-              let exists = endorsements.some(ele=>ele == exist.EndtTypeId);
-              console.log('Not Exists',exists);
-              if(!exists){
-                this.reqlist.push(exist.EndtTypeId);
-              }
-            }
-            console.log('UUUUUUU',this.reqlist);
-          }
-        }    
+      else{
+          rowData.SelectedYn = 'N';
       }
-      else if(event== false){
-        let index = this.reqlist.findIndex(ele=>ele==rowData.EndtTypeId);
-        this.reqlist.splice(index,1);
-        console.log('TTTTTTTTTTTTT',this.reqlist);       
-      }
+      // let endrose;let endroseData:any[]=[]; let endorsements :any;
+      // let entry = this.productDetails.find(ele=>ele.ProductId==sessionStorage.getItem('userproduct'))
+      // console.log('MMMMMMMMMMMMMMMMMMM',entry);
+      // if(entry){
+      //   if(this.endorseData.length!=0){
+      //     endorsements = entry?.EndorsementIds[0]?.split(',');
+      //     console.log('EEEEEEEEEE',endorsements);
+      //   }
+      // }
+      // if(event==true){
+      //   if(this.endorseData.length!=0){
+      //     let exist = this.endorseData.find(ele=>ele.EndtTypeId == rowData.EndtTypeId);
+      //     console.log('EEBBBBBBBBBBBBB',exist);
+      //     if(exist){
+      //       if(endorsements.length!=0){
+      //         let exists = endorsements.some(ele=>ele == exist.EndtTypeId);
+      //         console.log('Not Exists',exists);
+      //         if(!exists){
+      //           this.reqlist.push(exist.EndtTypeId);
+      //         }
+      //       }
+      //       console.log('UUUUUUU',this.reqlist);
+      //     }
+      //   }    
+      // }
+      // else if(event== false){
+      //   let index = this.reqlist.findIndex(ele=>ele==rowData.EndtTypeId);
+      //   this.reqlist.splice(index,1);
+      //   console.log('TTTTTTTTTTTTT',this.reqlist);       
+      // }
     }
       back(){
         sessionStorage.removeItem('userproduct');
@@ -182,7 +190,7 @@ export class EndrosementUserComponent {
           "ProductId": s,
           "LoginId":this.userLoginId
         }
-        let urlLink = `${this.CommonApiUrl}master/getallbrokerendorsement`;
+        let urlLink = `${this.CommonApiUrl}master/getactiveendorsement `;
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
           (data: any) => {
             console.log(data);
@@ -247,6 +255,12 @@ export class EndrosementUserComponent {
       // }
 
       onsubmit(){
+        let i=0; let req:any=[];
+    let selectedList = this.endorseData.filter(ele=>ele.SelectedYn=='Y');
+    for(let s of selectedList){
+    req.push(s.EndtTypeId);
+    i+=1;
+    }
         let product:any;let productid=sessionStorage.getItem('userproduct');
         if(productid){
            product=productid
@@ -276,7 +290,7 @@ export class EndrosementUserComponent {
            "CreatedBy":this.loginId,
            "ProductId":product,
            "IdType":types,
-           "Ids":this.reqlist
+           "Ids":req
           }
         let urlLink = `${this.CommonApiUrl}admin/attachloginendtids`;
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
