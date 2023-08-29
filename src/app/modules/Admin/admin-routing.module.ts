@@ -176,10 +176,19 @@ const routes: Routes = [
     loadChildren: () => import('./Masters/companytax/companytax.module').then(m => m.CompanyTaxListsModule),
     data: {
       preload: true,
-      title: "Warranty Master",
-      breadcrumb: 'Warranty Master',
+      title: "Company Tax",
+      breadcrumb: 'Company Tax',
     }
   },
+  // {
+  //   path: 'depositMaster',
+  //   loadChildren: () => import('./Masters/DepositMaster/depositmaster/depositmaster.module').then(m => m.DepositesModule),
+  //   data: {
+  //     preload: true,
+  //     title: "Deposit Master",
+  //     breadcrumb: 'Deposit Master',
+  //   }
+  // },
   {
     path: 'exclusionMaster',
     loadChildren: () => import('./Masters/Exclusion/exclusion-list/exclusion-list.module').then(m => m.ExclusionListModule),
@@ -243,6 +252,15 @@ const routes: Routes = [
       breadcrumb: 'Product Group Master',
 	  }
 	},
+  {
+    path: 'uwreferralpendinglist',
+    loadChildren: () => import('./underwriterQuestions/underwriter.module').then(m => m.UnderWriterModule),
+    data: {
+      preload: true,
+      title: "UWReferralPending",
+      breadcrumb: 'UW Referral Pending',
+	  }
+	},
 	{
     path: 'mailMaster',
     loadChildren: () => import('./Masters/mailMaster/mail.module').then(m => m.MailModule),
@@ -288,6 +306,7 @@ const routes: Routes = [
       breadcrumb: 'Referral Rejected Quotes',
     }
   },
+  
   {
     path: 'referralApproved',
     component: ReferralApprovedComponent,

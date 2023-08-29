@@ -1,0 +1,128 @@
+<div class="vision-grid-item">
+    <div class="card">
+        <div class="card-header"> 
+            <div class="d-flex justify-content-between">
+                <div>
+                   Under Writer Pending Referral
+                </div>
+                <!-- <div>
+                 
+                    <button class="btn btn-warning" (click)="onAddSection()">Add New</button>
+                </div> -->
+            </div>
+            
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 col-lg-4 col-xl-4 ml-3">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Product<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="productId" (change)="getUserProductList()" [items]="productList" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                </div>
+                <!-- <div class="col-md-4 col-lg-4 col-xl-4 ml-3">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Branch<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" appendTo="body" [items]="branchList" [(ngModel)]="branchValue" bindValue="Code" bindLabel="CodeDesc" (change)="getExistingBank()">
+                        </ng-select>
+                    </div>
+                </div> -->
+            </div>
+            <ng-container *ngIf="productData.length!=0">
+                <app-grid-table [cols]="columnHeader1" [data]="productData" [filterValue]="filterValue" (onEdit)="EditStatus($event,mymodal)">
+                </app-grid-table>
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+
+
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Underwriter
+                Details</span></h4>
+                <div class="text-center">
+                   <span>Request ReferenceNo:</span> {{requestref}}
+                </div>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="maan-grid-item">
+
+            <!-- <div class="maan-grid-item-title">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <span class="mx-1">
+                            <i class="fa fa-user mx-1"></i>
+                        </span>
+                        <span class="spancommon span_font_size" style="font-weight:600">Customer Details</span>
+                    </div>
+                    <div>
+                        <ng-container>
+                        </ng-container>
+                    </div>
+                </div>
+            </div> -->
+            <div class="card-body">
+                            <table class="table table-headerRow styled-table">
+                                <tr>
+                                    <th class="tbl-header">Select</th>
+                                    <th class="tbl-header">UW LoginId</th>
+                                    <!-- <th class="tbl-header">Request ReferenceNo</th> -->
+                                    <th class="tbl-header">Status</th>
+                                    <th class="tbl-header">EntryDate</th>
+                                </tr>
+                                <tr *ngFor="let row of productData1|paginate:{itemsPerPage: 5, currentPage:p,id: 'p'};let i = index"><!--|paginate:{itemsPerPage: 5, currentPage:p,id: 'p'}-->
+            
+                                    <td class="tbl-content">
+                                        <mat-checkbox class="example-margin" [checked]="onCheckEndorseSelect(row)" (change)="onSelectCustomer(row,$event.checked,i)"></mat-checkbox>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-control-container">
+                                            <div class="input-form-box">
+                                                {{row.UnderWriterLoginId}}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <!-- <td class="tbl-content">
+                                        <div class="input-control-container">
+                                            <div class="input-form-box">
+                                                {{row.RequestReferenceNo}}
+                                            </div>
+                                        </div>
+                                       
+                                    </td> -->
+                                    
+                                    <td class="tbl-content">
+                                        <div class="input-control-container">
+                                            <div class="input-form-box">
+                                                {{row.Status}}
+                                            </div>
+                                        </div>
+                                    </td>
+            
+                                    <td class="tbl-content">
+                                        <div class="input-control-container">
+                                            <div class="input-form-box">
+                                                {{row.EntryDate}}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            
+                            </table>
+                    <div class="d-flex justify-content-end">
+                        <pagination-controls (pageChange)="p=$event" id="p"></pagination-controls>
+                    </div>
+        </div>
+    </div>
+    </div>
+    <div class="text-center">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="submitForm(modal)">Save</button>
+    </div>
+</ng-template>
