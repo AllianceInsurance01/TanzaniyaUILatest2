@@ -286,6 +286,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
 
   model = {};
   editPersonalIndSection: boolean;
+  enableType: any;
 
   constructor(private router: Router,private datePipe:DatePipe,private modalService: NgbModal,
      private sharedService: SharedService,private formlyJsonschema: FormlyJsonschema,) {
@@ -1306,7 +1307,8 @@ onFidelitySave(){
         for(let emp of this.fidelityList){
           let entry = emp;
           if(emp.LocationName==undefined) emp['LocationName'] = this.LocationList.find(ele=>ele.Code==emp['LocationId']).CodeDesc;
-          entry['EmployeeId'] = String(i+1);
+          if(entry['EmployeeId']==null || entry['EmployeeId']==undefined || entry['EmployeeId']=='') entry['EmployeeId'] = null;
+          else entry['EmployeeId'] = String(entry.EmployeeId);
           empList.push(entry);
           i+=1;
           if(i==this.fidelityList.length){
@@ -1394,7 +1396,8 @@ onFidelitySave(){
               if(!entry.DateOfBirth.includes('/')) entry['DateOfBirth']= this.datePipe.transform(entry.DateOfBirth, "dd/MM/yyyy");
           }
           if(emp.LocationName==undefined) emp['LocationName'] = this.LocationList.find(ele=>ele.Code==emp['LocationId']).CodeDesc;
-          entry['EmployeeId'] = String(i+1);
+          if(entry['EmployeeId']==null || entry['EmployeeId']==undefined || entry['EmployeeId']=='') entry['EmployeeId'] = null;
+          else entry['EmployeeId'] = String(entry.EmployeeId);
           empList.push(entry);
           i+=1;
           if(i==this.employeeList.length){
@@ -3355,9 +3358,11 @@ onFidelitySave(){
           (err) => { },
           ); 
   }
-  onEditEmployeeError(rowData,modal){
+  onEditEmployeeError(rowData,modal,type){
+    this.enableType= type;
     console.log('OOOOOOOOOOOO',rowData);
     this.errorRowNum = rowData?.RowNum;
+    this.empLocation = rowData?.RiskId;
     this.employeeName = rowData?.EmployeeName;
     console.log('SSSSSSSSSS',rowData?.EmployeeName);
     this.occupationType = rowData?.OccupationId;
@@ -3394,7 +3399,7 @@ onFidelitySave(){
           "RequestRefNo": this.quoteRefNo,
           "QuoteNo": this.quoteNo,
           "CompanyId": this.insuranceId,
-          "RiskId": "1",
+          "RiskId": this.empLocation,
           "Salary": salary,
           "DateOfBirth": this.datePipe.transform(this.empDob, "dd/MM/yyyy"),
           "NationalityId": this.nationality,
@@ -3999,11 +4004,11 @@ onFidelitySave(){
         if(this.productId=='32' || this.productId=='19') SectionId = '43';
         let ReqObj = {
           "QuoteNo": this.quoteNo,
-          "RiskId": "1",
+          "RiskId": rowData.RiskId,
          "EmployeeId": rowData.EmployeeId,
          "SectionId": SectionId
       }
-      let urlLink = `${this.motorApiUrl}api/deleteproductemployees`;
+      let urlLink = `${this.motorApiUrl}api/deleteemployeebyid`;
         this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
           (data: any) => {
             console.log(data);
