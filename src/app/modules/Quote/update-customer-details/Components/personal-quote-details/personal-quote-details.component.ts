@@ -4794,41 +4794,44 @@ onCheckUWQuestionProceed(buildDetails,type,formType){
           let uwList: any[] = [];
           //let branchCode = '';
           for (let ques of this.uwQuestionList) {
-               ques['BranchCode'] = this.branchCode;
+              if(ques.Value!='' && ques.Value!=null){
+                ques['BranchCode'] = this.branchCode;
        
-                  let status = null,loading = null,vehicleId=null;
-                  if(this.productId=='42' || this.productId=='43') vehicleId = '1';
-                  else vehicleId = build.LocationId
-                  if(ques.QuestionType == '01' && ques.Value!=null && ques.Value!='' && ques.Options!=null){
-                    let obj = ques.Options.find(ele=>ele.UwQuesOptionDesc==ques.Value);
-                    console.log("Found Obj",ques,obj)
-                    if(obj){
-                      loading = obj.LoadingPercent
-                      if(obj.ReferralYn=='Y') status = 'R';
-                      else status = 'Y';
-                    }
+                let status = null,loading = null,vehicleId=null;
+                if(this.productId=='42' || this.productId=='43') vehicleId = '1';
+                else vehicleId = build.LocationId
+                if(ques.QuestionType == '01' && ques.Value!=null && ques.Value!='' && ques.Options!=null){
+                  let obj = ques.Options.find(ele=>ele.UwQuesOptionDesc==ques.Value);
+                  console.log("Found Obj",ques,obj)
+                  if(obj){
+                    loading = obj.LoadingPercent
+                    if(obj.ReferralYn=='Y') status = 'R';
                     else status = 'Y';
                   }
-                  else status = ques.Status;
-                  let entry = {
-                    "InsuranceId": this.insuranceId,
-                    "ProductId": this.productId,
-                    "UwQuestionId": ques.UwQuestionId,
-                    "UwQuestionDesc": ques.UwQuestionDesc,
-                    "QuestionType": ques.QuestionType,
-                    "EffectiveDateStart": ques.EffectiveDateStart,
-                    "Status": status,
-                    "LoadingPercent": loading,
-                    "MandatoryYn": ques.MandatoryYn,
-                    "DataType": ques.DataType,
-                    "CreatedBy": createdBy,
-                    "UpdatedBy":  this.loginId,
-                    "Value": ques.Value,
-                    "BranchCode": this.branchCode,
-                    "RequestReferenceNo": this.requestReferenceNo,
-                    "VehicleId": vehicleId
-                  }
-                  uwList.push(entry);
+                  else status = 'Y';
+                }
+                else status = ques.Status;
+                let entry = {
+                  "InsuranceId": this.insuranceId,
+                  "ProductId": this.productId,
+                  "UwQuestionId": ques.UwQuestionId,
+                  "UwQuestionDesc": ques.UwQuestionDesc,
+                  "QuestionType": ques.QuestionType,
+                  "EffectiveDateStart": ques.EffectiveDateStart,
+                  "Status": status,
+                  "LoadingPercent": loading,
+                  "MandatoryYn": ques.MandatoryYn,
+                  "DataType": ques.DataType,
+                  "CreatedBy": createdBy,
+                  "UpdatedBy":  this.loginId,
+                  "Value": ques.Value,
+                  "BranchCode": this.branchCode,
+                  "RequestReferenceNo": this.requestReferenceNo,
+                  "VehicleId": vehicleId
+                }
+                uwList.push(entry);
+              }
+              
             // if (ques.QuestionType == '01') {
             //   ques['CreatedBy'] = createdBy;
             //   ques['RequestReferenceNo'] = this.requestReferenceNo;
@@ -4846,7 +4849,10 @@ onCheckUWQuestionProceed(buildDetails,type,formType){
             //   uwList.push(ques);
             // }
             i += 1;
-            if (i == this.uwQuestionList.length){ j+=1; this.onSaveUWQuestions(uwList,buildDetails,type,formType,j);}
+            if (i == this.uwQuestionList.length){ j+=1; 
+              if(uwList.length!=0) this.onSaveUWQuestions(uwList,buildDetails,type,formType,j);
+              else if(j==buildDetails.length) this.onCalculate(buildDetails,type,formType)
+            }
           }
         }
     }
