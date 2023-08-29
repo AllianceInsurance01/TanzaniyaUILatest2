@@ -1236,18 +1236,34 @@ onFidelitySave(){
   //}
 }
   onEmployeeSave(){
-    // this.employeeNameError = false;this.employeeOccupationError = false;this.employeeAddressError=false;
-    // this.employeeNationalityError = false;this.employeeDobError = false;this.employeeDojError = false;
-    // this.employeeSalaryError = false;this.employeeLocationError=false;let i=0;
-    // if(this.employeeName=='' || this.employeeName==null || this.employeeName == undefined){i+=1;this.employeeNameError=true};
-    // if(this.occupationType=='' || this.occupationType==null || this.occupationType == undefined){i+=1;this.employeeOccupationError=true};
-    // // if(this.empAddress=='' || this.empAddress==null || this.empAddress == undefined){i+=1;this.employeeAddressError=true};
-    // if(this.nationality=='' || this.nationality==null || this.nationality == undefined){i+=1;this.employeeNationalityError=true};
-    // if(this.empDob=='' || this.empDob==null || this.empDob == undefined){i+=1;this.employeeDobError=true};
-    // if(this.empJoiningDate=='' || this.empJoiningDate==null || this.empJoiningDate == undefined){i+=1;this.employeeDojError=true};
-    // if(this.empLocation=='' || this.empLocation==null || this.empLocation == undefined){i+=1;this.employeeLocationError=true};
-    // if(this.employeeSalary=='' || this.employeeSalary==null || this.employeeSalary == undefined){i+=1;this.employeeSalaryError=true};
-    //if(i==0){
+    let i =0; this.employeeSalaryError=false;
+    if(this.productItem.EmpsSI =='' || this.productItem.EmpsSI==null){
+      i+=1;
+      this.form.markAllAsTouched();
+    }
+    if(this.productItem.EmpsLocation=='' || this.productItem.EmpsLocation==null){
+      i+=1;
+      this.form.markAllAsTouched();
+    }
+    if(this.productItem.EmpsName =='' || this.productItem.EmpsName==null){
+      i+=1;
+      this.form.markAllAsTouched();
+    }
+    if(this.productItem.EmpsOccupation=='' || this.productItem.EmpsOccupation==null){
+      i+=1;
+      this.form.markAllAsTouched();
+    }
+    if(this.productItem.EmpsPeriod=='' || this.productItem.EmpsPeriod==null){
+      i+=1;
+      this.form.markAllAsTouched();
+    }
+    if(this.productItem.EmpsJoin=='' || this.productItem.EmpsJoin==null){
+      i+=1;
+      this.form.markAllAsTouched();
+    }
+   
+   
+    if(i==0){
       this.employeeList[this.currentEmployeeIndex]['Address'] = this.productItem.EmpsAddress;//this.empAddress;
       this.employeeList[this.currentEmployeeIndex]['Createdby'] = this.loginId;
       this.employeeList[this.currentEmployeeIndex]['RiskId'] = this.productItem.EmpsLocation;//this.empLocation;
@@ -1264,12 +1280,12 @@ onFidelitySave(){
       // else salary = this.employeeSalary;
       this.employeeList[this.currentEmployeeIndex]['Salary'] = this.productItem.EmpsSI;//salary;
       this.employeeList[this.currentEmployeeIndex]['NationalityId'] = this.productItem.EmpsNationality; //this.nationality;
-      this.editEmployeeSection = false;this.enableEmployeeEditSection = false;this.currentEmployeeIndex=null;
-      this.productItem=new ProductData();
-      this.getTotalSICost('Employee')
+      this.getTotalSICost('Employee');
+      this.onsubmitemployee();
+     
       // this.empAddress = null;this.employeeName = null;this.occupationType = null;this.empJoiningMonth = null;
       // this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;
-    //}
+    }
   }
   isValid(field: FormlyFieldConfig): boolean {
     
@@ -2802,8 +2818,6 @@ onFidelitySave(){
       if(type=='building'){
         let entry = this.productItem.BuildingSumInsureds;
         console.log("Entry Came",entry)
-          // let value = entry.replace(/\D/g, "")
-          // .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           this.building[this.currentBuildingIndex]['BuildingSuminsured'] = entry;
           this.productItem.BuildingSumInsureds= entry;
           console.log("Entry Came 2",this.productItem.BuildingSumInsureds);
@@ -2851,11 +2865,17 @@ onFidelitySave(){
       
       if(type=='employee'){
         let entry = this.productItem.EmpsSI;
-        if(entry){
-          this.employeeList[this.currentEmployeeIndex]['SumInsured'] = entry;
-          this.productItem.EmpsSI = entry;
+        console.log("Entry Came",entry)
+        this.employeeList[this.currentEmployeeIndex]['Salary'] = entry;
+          this.productItem.EmpsSI= entry;
+          console.log("Entry Came 2",this.productItem.EmpsSI);
           this.getTotalSICost('Employee');
-        }
+        // let entry = this.productItem.EmpsSI;
+        // if(entry){
+        //   this.employeeList[this.currentEmployeeIndex]['SumInsured'] = entry;
+        //   this.productItem.EmpsSI = entry;
+        //   this.getTotalSICost('Employee');
+        // }
         // if(this.employeeSalary){
         //   if(this.employeeSalary.includes('.')) this.employeeSalary = this.employeeSalary.split('.')[0];
         //   let value = this.employeeSalary.replace(/\D/g, "")
@@ -2868,7 +2888,7 @@ onFidelitySave(){
       if(type=='fidelity'){
         let entry = this.productItem.fdSI;
         if(entry){
-          this.fidelityList[this.currentFidelityIndex]['SumInsured'] = entry;
+          this.fidelityList[this.currentFidelityIndex]['Salary'] = entry;
           this.productItem.fdSI = entry;
           this.getTotalSICost('Fidelity');
         }
@@ -3016,7 +3036,10 @@ onFidelitySave(){
             if(SI==undefined || SI=='' || SI ==null) SI = 0;
             // else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
             else entry = SI
-            this.totalEmpIntSI = Number(entry)+this.totalEmpIntSI
+            this.totalEmpIntSI = Number(entry)+this.totalEmpIntSI;
+            if(this.totalEmpIntSI > this.actualEmployeeSI){
+              
+            }
           }
         }
     }
@@ -3176,6 +3199,39 @@ onFidelitySave(){
 
     }
     console.log("Final File List",this.uploadDocList)
+  }
+
+
+  onsubmitemployee(){
+    if(this.totalEmpIntSI > this.actualEmployeeSI){
+      Swal.fire({
+        title: '<strong>Error</strong>',
+        icon: 'info',
+        html:
+          `<ul class="list-group errorlist">
+           <li>Entered Salary Amount Greater than Actual Total Salary</li>
+       </ul>`,
+        showCloseButton: false,
+        //focusConfirm: false,
+        // showCancelButton:true,
+
+       //confirmButtonColor: '#3085d6',
+       cancelButtonColor: '#d33',
+       cancelButtonText: 'Ok',
+      })
+      // }).then((result) => {
+      //   if (result.isConfirmed) {
+      //         this.onProceedUpload('Merge')
+      //   }
+      //   else{
+      //     this.onProceedUpload('Add')
+      //   }
+      // })
+    }
+    else{
+      this.editEmployeeSection = false;this.enableEmployeeEditSection = false;this.currentEmployeeIndex=null;
+      this.productItem=new ProductData();
+    }
   }
   onUploadEmployeeDetails(){
       if(this.uploadDocList.length!=0 && this.employeeList.length!=0 || this.fidelityList.length!=0){
