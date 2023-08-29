@@ -66,6 +66,10 @@ export class MakePayementComponent implements OnInit {
   redirectUrl: string;
   stickerNo: any;
   CoverNoteNo: any;
+  quoteLoginId: any;
+  quoteSubUsertype: any;
+  quoteUsertype: any;
+  quoteBranchCode: any;
   constructor(private router:Router,private sharedService: SharedService,
     private updateComponent:UpdateCustomerDetailsComponent,private route:ActivatedRoute,
    private datePipe:DatePipe) {
@@ -88,13 +92,10 @@ export class MakePayementComponent implements OnInit {
     this.productName = this.userDetails.Result.ProductName
     this.subuserType = sessionStorage.getItem('typeValue');
     this.insuranceId = this.userDetails.Result.InsuranceId;
-    let paymentId = sessionStorage.getItem('quotePaymentId');
+   
     this.redirectUrl = "aHR0cHM6Ly90ei5zZWxjb20ub25saW5lL3BheW1lbnRndy9jaGVja291dC9XbXRLVmpWbVVGWmtWRTFTY2xGWlVIbEpWR1ZFYTFWbFlqQmFkWHBEWmtJelpFOXdlR1JSTUhZNGQwTjBZa2hZVTFFMVJVNXZTbmwwYWs1cGNHd3dhV3BrYWxZMGFGVkdZbUpWUFE9PS8=";
     this.decodeUrl();
-    console.log("Payment Id",paymentId)
-      if(paymentId){
-        this.getPaymentTypeList();
-      }
+      
     let endorseObj = JSON.parse(sessionStorage.getItem('endorseTypeId'))
       if(endorseObj){
         this.endorsementSection = true;
@@ -157,6 +158,10 @@ export class MakePayementComponent implements OnInit {
             let quoteDetails = data?.Result?.QuoteDetails;
             this.orgPolicyNo = quoteDetails?.OriginalPolicyNo;
             this.endorsePolicyNo = quoteDetails?.policyNo;
+            this.quoteLoginId = quoteDetails?.LoginId;
+            this.quoteSubUsertype = quoteDetails?.SubUserType;
+            this.quoteUsertype = quoteDetails?.UserType;
+            this.quoteBranchCode = quoteDetails?.BrokerBranchCode;
             this.currencyCode = quoteDetails?.Currency;
             this.IsChargeOrRefund = quoteDetails?.IsChargeOrRefund;
             this.endtPremium = quoteDetails?.TotalEndtPremium;
@@ -177,6 +182,10 @@ export class MakePayementComponent implements OnInit {
               this.emiMonth = null;
             }
             this.getBankList();
+            let paymentId = sessionStorage.getItem('quotePaymentId');
+            if(paymentId){
+              this.getPaymentTypeList();
+            }
           }
       },
       (err) => { },
@@ -393,10 +402,10 @@ export class MakePayementComponent implements OnInit {
   }
   getPaymentTypeList(){
     let ReqObj = {
-      "BranchCode": this.branchCode,
+      "BranchCode": this.quoteBranchCode,
       "InsuranceId": this.insuranceId,
-      "UserType": this.userType,
-      "SubUserType": this.subuserType,
+      "UserType": this.quoteUsertype,
+      "SubUserType": this.quoteSubUsertype,
       "ProductId": this.productId
     }
     let urlLink = `${this.CommonApiUrl}master/dropdown/paymenttypes`;
