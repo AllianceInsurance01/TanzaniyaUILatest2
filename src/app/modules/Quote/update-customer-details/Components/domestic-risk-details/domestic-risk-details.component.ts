@@ -1969,7 +1969,7 @@ onFidelitySave(){
       for(let entry of this.PersonalAssistantList){
         let salary;
         if(entry.Salary==undefined || entry.Salary==null) salary = null;
-        else if(entry.Salary.includes(',')){ salary = entry.Salary.replace(/,/g, '') }
+        // else if(entry.Salary.includes(',')){ salary = entry.Salary.replace(/,/g, '') }
         else salary = entry.Salary;
           let data = {
             "Dob": entry.Dob,
@@ -2072,7 +2072,7 @@ onFidelitySave(){
       for(let entry of this.Intermedity){
         let salary;
         if(entry.Salary==undefined || entry.Salary==null) salary = null;
-        else if(entry.Salary.includes(',')){ salary = entry.Salary.replace(/,/g, '') }
+        // else if(entry.Salary.includes(',')){ salary = entry.Salary.replace(/,/g, '') }
         else salary = entry.Salary;
           let data = {
               "Dob": entry.Dob,
@@ -2821,18 +2821,25 @@ onFidelitySave(){
       }
 
       if(type=='PersonalAccident'){
-        let entry = this.productItem.AccSI
-        if(this.productItem.AccSI){
-          // let value = this.contentSI.replace(/\D/g, "")
+        let entry = this.productItem.AccSI;
+        console.log("Entry Came Personal Accident",entry)
+          // let value = entry.replace(/\D/g, "")
           // .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           this.PersonalAssistantList[this.currentPersonalAccidentIndex]['Salary'] = entry;
-          this.productItem.AccSI = entry;
+          this.productItem.AccSI= entry;
+          console.log("Entry Came 2",this.productItem.AccSI);
           this.getTotalSICost('PersonalAccident');
-        }
+        // let entry = this.productItem.AccSI
+        // if(entry){
+        //   this.PersonalAssistantList[this.currentPersonalAccidentIndex]['Salary'] = entry;
+        //   this.productItem.AccSI = entry;
+        //   console.log('jjjjjjjjjjjj',this.productItem.AccSI);
+        //   this.getTotalSICost('PersonalAccident');
+        // }
       }
       if(type=='PersonalInd'){
         let entry = this.productItem.IndSI
-        if(this.productItem.IndSI){
+        if(entry){
           // let value = this.contentSI.replace(/\D/g, "")
           // .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
           this.Intermedity[this.currentPersonalIndIndex]['Salary'] = entry;
@@ -2951,18 +2958,18 @@ onFidelitySave(){
           }
         }
     }
-    else if(type=='personalInt'){
-      this.totalPersIntSI = 0;
-        if(this.Intermedity.length!=0){
-          for(let content of this.Intermedity){
-            let SI = content.Salary,entry=0;
-            if(SI==undefined || SI=='' || SI ==null) SI = 0;
-            else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
-            else entry = SI
-            this.totalPersIntSI = Number(entry)+this.totalPersIntSI
-          }
-        }
-    }
+    // else if(type=='personalInt'){
+    //   this.totalPersIntSI = 0;
+    //     if(this.Intermedity.length!=0){
+    //       for(let content of this.Intermedity){
+    //         let SI = content.Salary,entry=0;
+    //         if(SI==undefined || SI=='' || SI ==null) SI = 0;
+    //         //else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
+    //         else entry = SI
+    //         this.totalPersIntSI = Number(entry)+this.totalPersIntSI
+    //       }
+    //     }
+    // }
     else if(type=='ElectricalEquipment'){
       this.totalElectrIntSI = 0;
         if(this.ElectronicItem.length!=0){
@@ -3590,7 +3597,8 @@ onFidelitySave(){
                   
                 }
                 this.PersonalAssistantList.push(entry);
-                  this.CommaFormatted(i,'personalAccident');
+                this.getTotalSICost('PersonalAccident');
+                  //this.CommaFormatted(i,'personalAccident');
                   i+=1;
                   if(i==personalList.length) console.log("Personal Acc",this.PersonalAssistantList);
               }
@@ -3664,7 +3672,8 @@ onFidelitySave(){
                   entry.Dob =  this.onDateFormatInEdit(entry.Dob);
                 }
                 this.Intermedity.push(entry);
-                  this.CommaFormatted(i,'personalIndemenity');
+                this.getTotalSICost('PersonalIndemenity');
+                  //this.CommaFormatted(i,'personalIndemenity');
                 i+=1;
                 if(i==this.Intermedity.length) this.getTotalSICost('Intermedity');
               }
@@ -3902,11 +3911,13 @@ onFidelitySave(){
     this.enablePersonalAccEditSection= true;
     this.productItem.AccidentLocation = this.PersonalAssistantList[index].RiskId;
     this.productItem.AccName = this.PersonalAssistantList[index].PersonName;
-    this.productItem.AccSI = this.PersonalAssistantList[index].Salary;
     this.productItem.AccOccupation = this.PersonalAssistantList[index].OccupationDesc;
     this.productItem.AccNationID = this.PersonalAssistantList[index].NationalityId;
     this.productItem.AccDob = this.PersonalAssistantList[index].Dob;
+    this.productItem.AccSI = this.PersonalAssistantList[index].Salary;
+    console.log('NNNNNNN',this.PersonalAssistantList[index].Salary);
     this.individualCommaFormatted('PersonalAccident');
+   
   }
 
   onEditPersonalInd(index){
@@ -3915,11 +3926,11 @@ onFidelitySave(){
     this.enablePersonalIndEditSection= true;
     this.productItem.IndLocation = this.Intermedity[index].RiskId;
     this.productItem.IndName = this.Intermedity[index].PersonName;
-    this.productItem.IndSI = this.Intermedity[index].Salary;
     this.productItem.IndOccupation = this.Intermedity[index].OccupationDesc;
     this.productItem.IndNationID = this.Intermedity[index].NationalityId;
     this.productItem.IndDob = this.Intermedity[index].Dob;
     this.individualCommaFormatted('PersonalInd');
+    this.productItem.IndSI = this.Intermedity[index].Salary;
   }
   onEditAllRisk(index){
     this.currentRiskIndex= index;
