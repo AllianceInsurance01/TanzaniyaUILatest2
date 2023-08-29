@@ -157,7 +157,8 @@ export class SharedService {
           () => this.timeLimit = null,
         );
           console.log('Alert Time Out', router, this.redirectSection, this.timeLimit);
-          alert('Time Out Happend For 20 mins');
+          sessionStorage.clear();
+          this.router.navigate(['/Login/Home']);
       }
     }
   }
