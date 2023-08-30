@@ -7,6 +7,7 @@ export class ENdorsementType {
     "EndtTypeCategory":null;
     "Priority":null;
     "EndtDependantFields":null;
+    "IsCoverEndorsementYN":null;
     "ProductId":null;
     "CoreAppCode":null;
     "CompanyId":null;

@@ -86,7 +86,7 @@ export class NewEndorsementTypeDetailsComponent {
       this.endorsementDetails.EndtDependantIds=[];
       this.endorsementDetails.Priority=null;
       this.endorsementDetails.EndtTypeDesc=null;
-      this.endorsementDetails.EndtType=null;
+      this.endorsementDetails.EndtType=null;this.endorsementDetails.IsCoverEndorsementYN = 'N';
       this.endorsementDetails.EndtFeeYn = 'N';this.endorsementDetails.Status = 'Y';
       this.endorsementDetails.SectionModificationYn = 'N';
     }
@@ -113,6 +113,7 @@ export class NewEndorsementTypeDetailsComponent {
             if(this.endorsementDetails?.EffectiveDateStart!=null){
               this.endorsementDetails.EffectiveDateStart = this.onDateFormatInEdit(this.endorsementDetails?.EffectiveDateStart)
             }
+            if(this.endorsementDetails?.IsCoverEndorsementYN==null) this.endorsementDetails.IsCoverEndorsementYN = 'N';
             this.onChangeEndFeeYN();
           }
       },
@@ -199,6 +200,7 @@ export class NewEndorsementTypeDetailsComponent {
       "EndtTypeCategoryId": this.endorsementDetails.EndtTypeCategoryId,
       "EndtTypeDesc":this.endorsementDetails.EndtTypeDesc,
       "EndtTypeId":end,
+      "IsCoverEndorsementYN":this.endorsementDetails.IsCoverEndorsementYN,
       "Priority": this.endorsementDetails.Priority,
       "ProductId": this.productId,
       "Remarks": this.endorsementDetails.Remarks,
