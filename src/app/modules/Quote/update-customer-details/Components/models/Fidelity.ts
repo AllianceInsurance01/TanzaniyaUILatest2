@@ -60,7 +60,7 @@ export class Fidelity{
                       key: 'FidEmpCount',
                       templateOptions: {
                         label: 'Employee Count',
-                        disabled: this.checkDisable('EmployeeCount'),
+                        disabled: this.checkDisable('SumInsured'),
                         required: true,
                       },
                       validators: {
