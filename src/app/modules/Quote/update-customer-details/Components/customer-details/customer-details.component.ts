@@ -359,7 +359,6 @@ export class CustomerDetailsComponent implements OnInit {
 
 
     });
-    if(!this.endorsementSection){
       if(this.productId=='5' || this.productId=='4'){
         this.minDate = new Date();
         var d = this.minDate;
@@ -368,11 +367,6 @@ export class CustomerDetailsComponent implements OnInit {
         var day = d.getDate();
         this.maxDate = new Date(year, month, day+90);
       }
-      
-    }
-    else{
-  
-    }
     
     
   }
