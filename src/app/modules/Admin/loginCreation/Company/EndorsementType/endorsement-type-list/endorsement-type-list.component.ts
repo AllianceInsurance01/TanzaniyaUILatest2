@@ -58,10 +58,8 @@ export class EndorsementTypeListComponent {
     this.columnHeader = [
       //{ key: 'DependantFieldName', display: 'DependantFieldName' },
       //{ key: 'EffectiveDateStart', display: 'Effective Date' },
-      { key: 'EndtType', display: 'End tType' },
-      { key: 'EndtTypeDesc', display: 'Endt TypeDesc' },
-      { key: 'CoreAppCode', display: 'Core AppCode' },
-      { key: 'RegulatoryCode', display: 'Regulatory Code' },
+      { key: 'EndtType', display: 'Endorsement Type' },
+      { key: 'IsCoverEndorsementYN', display: 'CoverBased Endt' },
 
     { key: 'EffectiveDateStart', display: 'EffectiveDate Start' },     
      { key: 'Status', display: 'Status' },

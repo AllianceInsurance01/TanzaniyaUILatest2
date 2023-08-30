@@ -359,17 +359,14 @@ export class CustomerDetailsComponent implements OnInit {
 
 
     });
-    if(!this.endorsementSection){
-      this.minDate = new Date();
-      var d = this.minDate;
-      var year = d.getFullYear();
-      var month = d.getMonth();
-      var day = d.getDate();
-      this.maxDate = new Date(year, month, day+90);
-    }
-    else{
-  
-    }
+      if(this.productId=='5' || this.productId=='4'){
+        this.minDate = new Date();
+        var d = this.minDate;
+        var year = d.getFullYear();
+        var month = d.getMonth();
+        var day = d.getDate();
+        this.maxDate = new Date(year, month, day+90);
+      }
     
     
   }

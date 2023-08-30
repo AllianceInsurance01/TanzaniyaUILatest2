@@ -10,6 +10,7 @@ export class ENdorsementType {
     "EndtTypeCategoryId":null;
     "EndtTypeDesc":null;
     "EndtTypeId": "";
+    "isCoverEndorsementYN":null;
     "Priority":null;
     "ProductId":null;
     "Remarks":null;

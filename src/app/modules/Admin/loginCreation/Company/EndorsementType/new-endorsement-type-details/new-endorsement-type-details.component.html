@@ -95,11 +95,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4 col-lg-4">
+                            <!-- <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
                                     <div class="input-form-box">
                                         <input type="text" class="input-form-control without-icon" [(ngModel)]="endorsementDetails.CoreAppCode" maxlength="10">
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Cover Based Endorsement? <span class="text-required">*</span></label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="coverBased_Yes" type="radio" name="coverBasedEndt" [(ngModel)]="endorsementDetails.IsCoverEndorsementYN" value="Y">
+                                            <label for="coverBased_Yes">Yes</label>
+                                            <input id="coverBased_No" type="radio" name="coverBasedEndt" [(ngModel)]="endorsementDetails.IsCoverEndorsementYN" value="N">
+                                            <label for="coverBased_No">No</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -143,14 +156,14 @@
                                     <mat-datepicker #picker></mat-datepicker>
                                 </mat-form-field>
                             </div>
-                            <div class="col-12 col-md-4 col-lg-4">
+                            <!-- <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Regulatory Code<span class="text-required">*</span></label>
                                     <div class="input-form-box">
                                         <input type="text" class="input-form-control without-icon" [(ngModel)]="endorsementDetails.RegulatoryCode" maxlength="10">
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Remarks<span class="text-required">*</span></label>
