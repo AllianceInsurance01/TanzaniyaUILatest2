@@ -299,14 +299,19 @@
                
                 <a class="bg_Logo p-2" >
                     <img src="./assets/images/logo-2.png" width="170" />
-                    <button mat-icon-button style="background-color: #fff;color:black;padding: 7px!important;"  (click)="sidenav.toggle();openSideNav=!openSideNav"> <i class="fa-solid fa-bars" style="font-size: 1.4rem;"></i></button>
+                    <button mat-icon-button style="background-color: #fff;color:black;padding: 7px!important;" (click)='toggleSideNav()' class="display1" [ngClass]="showToggle"> <i class="fa-solid fa-bars" style="font-size: 1.4rem;"></i></button>
+                    <button mat-icon-button style="background-color: #fff;color:black;padding: 7px!important;" (click)='sidenav.toggle()' class="display2" [ngClass]="showToggle"> <i class="fa-solid fa-bars" style="font-size: 1.4rem;"></i></button>
+                    <!-- (click) ='sidenav.toggle()' class ='toogleSidenav' [ngClass]="showToggle"-->
+                    <!--(click)="sidenav.toggle();openSideNav=!openSideNav"-->
                   </a>
                   
             </ng-container>
             <ng-container *ngIf="insuranceid == '100004'">
                 <a class="bg_Logo p-2">
                     <img src="./assets/images/mgen-logo.png" width="170" />
-                    <button mat-icon-button style="background-color: #fff;color:black;padding: 7px!important;"  (click)="sidenav.toggle();openSideNav=!openSideNav"> <i class="fa-solid fa-bars" style="font-size: 1.1rem;"></i></button>
+                    <button mat-icon-button style="background-color: #fff;color:black;padding: 7px!important;" (click)='toggleSideNav()' class="display1" [ngClass]="showToggle"> <i class="fa-solid fa-bars" style="font-size: 1.4rem;"></i></button>
+                    <button mat-icon-button style="background-color: #fff;color:black;padding: 7px!important;" (click)='sidenav.toggle()' class="display2" [ngClass]="showToggle"> <i class="fa-solid fa-bars" style="font-size: 1.4rem;"></i></button>
+                    <!-- <button mat-icon-button style="background-color: #fff;color:black;padding: 7px!important;" (click)="sidenav.toggle();openSideNav=!openSideNav"> <i class="fa-solid fa-bars" style="font-size: 1.1rem;"></i></button> -->
                   </a>
             </ng-container>
          
@@ -351,7 +356,7 @@
    
 </div>
   <mat-sidenav-container style="margin-top:70px !important;" class="customSideNave">
-    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8" [mode]="mode"><!--[mode]="mode" [opened]="openSideNav"-->
         <div class="navigation">
             <ul id="dropdown2" class="scrollbar">
                 <!-- <li class="bg_Logo">

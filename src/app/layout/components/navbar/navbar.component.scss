@@ -649,6 +649,12 @@ a:hover {
   }
 }
 
+// @media (max-width:650px){
+//   .hide-on-small-screens {
+//     display: none;
+// }
+// }
+
 .navbar-mobile {
   position: fixed;
   overflow: hidden;
@@ -741,3 +747,20 @@ a:hover {
 // .content{
 //   padding:0px !important;
 // }
+.show{
+  display:block;
+}
+// .hide{
+//   display: inline-block;
+// }
+@media screen and (min-width: 280px) and (max-width: 640px){
+  .display1{
+display:none;
+  }
+}
+  @media screen and (min-width: 640px) and (max-width: 2048px){
+    .display2{
+  display:none;
+    }
+}
+
