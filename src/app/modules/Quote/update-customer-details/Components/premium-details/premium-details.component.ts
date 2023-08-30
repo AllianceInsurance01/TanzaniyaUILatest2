@@ -558,6 +558,7 @@ export class PremiumDetailsComponent implements OnInit {
         (data: any) => {
             if(data?.Result){
                     this.individualDocumentList = data?.Result?.InduvidualDocuments;
+                    console.log('Indivijual List',data?.Result?.InduvidualDocuments);
             }
           },
           (err) => { },
@@ -743,6 +744,7 @@ toggle(index: number) {
     console.log("Final File List",this.uploadDocList)
   }
   onUploadListDocuments(target:any,fileType:any,type:any,i:any){
+    
     console.log("Event ",target);
     let event:any = target.target.files;
 
@@ -759,9 +761,17 @@ toggle(index: number) {
           imageUrl = res.target.result;
           this.imageUrl = imageUrl;
           let entry = { 'url': element,'DocTypeId':'','Id':'','typeList':[],'sectionList':[],'sectionId':'','locationId':'','locationList':this.individualDocumentList,'docTypeList':[],'filename':element.name, 'JsonString': {} }
+          console.log('KKKKKKKKKK',entry);
+          console.log('OOOOOOOOOO',this.individualDocumentList.length);
           if(this.individualDocumentList.length==1){
+            console.log('NNNNNNNNNNNNN',this.individualDocumentList);
             entry.locationId = this.individualDocumentList[0].LocationId;
             entry.sectionList = this.individualDocumentList[0].SectionList;
+            this.uploadListDoc.push(entry)
+            if(entry.sectionList.length==1){this.uploadListDoc[this.uploadListDoc.length-1].sectionId= entry.sectionList[0].SectionId; this.onChangeSectionType(this.uploadListDoc[this.uploadListDoc.length-1],this.uploadListDoc.length-1)}
+          }
+          else{
+            // entry.sectionList = this.individualDocumentList[0].SectionList;
             this.uploadListDoc.push(entry)
             if(entry.sectionList.length==1){this.uploadListDoc[this.uploadListDoc.length-1].sectionId= entry.sectionList[0].SectionId; this.onChangeSectionType(this.uploadListDoc[this.uploadListDoc.length-1],this.uploadListDoc.length-1)}
           }
