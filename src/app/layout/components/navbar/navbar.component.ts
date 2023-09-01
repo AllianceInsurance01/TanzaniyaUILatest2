@@ -1,6 +1,5 @@
 declare var $:any;
-import { Component, OnInit, ViewChild,HostListener } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { navItems } from './_nav';
 import { navSubItem } from './_nav_oc';
 import { navQuoteSubMenu } from './_nav_oc_quote';
@@ -14,7 +13,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { delay, filter } from 'rxjs';
 import { MatSidenav } from '@angular/material/sidenav';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { truncateSync } from 'fs';
+import { BehaviorSubject, Observable } from 'rxjs'
 @UntilDestroy()
 @Component({
   selector: 'app-navbar',
@@ -29,12 +28,8 @@ export class NavbarComponent implements OnInit {
   public menu: any[] = []; branchList: any[] = [];
   productName: any; userDetails: any;submenuList:any[]=[];
   productname: any; currentIndex: any = null;
-  showToggle: string;
-  mode: string;
-  openSidenav:boolean;
-  private screenWidth$ = new BehaviorSubject<number>
-    (window.innerWidth);
-  @ViewChild(MatSidenav) sidenav: MatSidenav;
+  @ViewChild(MatSidenav)
+  sidenav!: MatSidenav;
   config = {
     classname: 'my-custom-class',
     listBackgroundColor: `#fff`,
@@ -51,12 +46,14 @@ export class NavbarComponent implements OnInit {
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   typeList: any[] = []; typeValue: any;parentSection:boolean = true;
   branchName: any; menuSection: boolean = true;
-  typeName: any;openSideNav:boolean;  //=false;
+  typeName: any;openSideNav:boolean;//false;
   insuranceid: any;
   innerWidth: number;
-  isShowing: boolean;
-  screenWidth: number;
-  
+  showToggle: string;
+  mode: string;
+  openSidenav:boolean;
+  private screenWidth$ = new BehaviorSubject<number>
+    (window.innerWidth);
   constructor(
     private authService: AuthService,
     private service: HttpService,
@@ -64,7 +61,6 @@ export class NavbarComponent implements OnInit {
     private router: Router, private SharedService: SharedService
   ) {
     //this.menu = navItems;
-    this.screenWidth = window.innerWidth;
     this.productName = sessionStorage.getItem('productName');
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.typeValue = sessionStorage.getItem('typeValue');
@@ -77,10 +73,10 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.innerWidth = window.innerWidth;
-    if(this.innerWidth<=850){
-      $('#sidenav').toggle();
-      this.openSideNav=false;
-    }
+    // if(this.innerWidth<=850){
+    //   $('#sidenav').toggle();
+    //   this.openSideNav=false;
+    // }
     this.getTypeList();
     $("#dropdownMenuLink").on('click', function (evt) {  
       console.log("evt***",evt);
@@ -94,42 +90,38 @@ export class NavbarComponent implements OnInit {
         console.log("evt***",evt);
         $('.branchsubName').toggle();
       });
-
+      this.getScreenWidth().subscribe(width => {
+        if (width < 800) {
+         this.showToggle = 'show';
+         this.mode = 'over';
+         this.openSideNav =true;
+        //  console.log('HHHHHHHHHHHHH',width);
+       }
+       else if (width > 800) {
+         this.showToggle = 'hide';
+         this.mode = 'side';
+         this.openSideNav = false;
+        //  console.log('greater',width);
+       }
+     });
       // let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       this.insuranceid = this.userDetails.Result.LoginBranchDetails[0].InsuranceId;
       console.log('INSURNACRRR',this.insuranceid)
       console.log('IIIIIIIIII',this.insuranceid);
-
-      this.getScreenWidth().subscribe(width => {
-        if (width < 640) {
-          console.log('MMMMMMMMMMMMMM');
-         this.showToggle = 'show';
-         this.mode = 'over';
-         this.openSideNav = true;
-       }
-       else if (width > 640) {
-        console.log('EEEEEEEEEE');
-         this.showToggle = 'hide';
-         this.mode = 'side';
-         this.openSideNav = false;
-         
-       }
-     });
   }
   ngAfterViewInit() {
     this.observer
-      .observe(['(max-width: 640px)'])
+      .observe(['(max-width: 800px)'])
       .pipe(delay(1), untilDestroyed(this))
       .subscribe((res:any) => {
         if (res.matches) {
           this.sidenav.mode = 'over';
-          console.log('NNNNNNNNNN',this.sidenav.mode);
-          // this.openSideNav=!this.openSideNav;
           this.sidenav.close();
+          // console.log('small',this.sidenav.mode);
         } else {
           this.sidenav.mode = 'side';
-          console.log('RRRRRRRRRRRRR',this.sidenav.mode);
           this.sidenav.open();
+          // console.log('large',this.sidenav.mode);
         }
       });
 
@@ -140,7 +132,6 @@ export class NavbarComponent implements OnInit {
       )
       .subscribe(() => {
         if (this.sidenav.mode === 'over') {
-          console.log('GRRRRRRRRRRRR',this.sidenav.mode);
           this.sidenav.close();
         }
       });
@@ -179,8 +170,6 @@ export class NavbarComponent implements OnInit {
         this.parentSection = false;
     }
   }
-
-
   clearSubSelection(){
     sessionStorage.removeItem('vehicleDetailsList');
     sessionStorage.removeItem('customerReferenceNo')
@@ -249,7 +238,6 @@ export class NavbarComponent implements OnInit {
   getTypeList() {
     let urlLink = `${this.ApiUrl1}dropdown/subusertype`;
     let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
-    console.log('NNNNNNNNNNN',userDetails?.Result?.InsuranceId);
     if (userDetails) {
       let ReqObj = {
         "InsuranceId": userDetails?.Result?.InsuranceId,
@@ -454,7 +442,6 @@ export class NavbarComponent implements OnInit {
     this.onTypeChange(changeType);
   }
   selectedItem(rowData) {
-    console.log('NNNNNNNNNN');
     this.openSideNav = false;
     console.log("rowData", rowData);
     sessionStorage.removeItem('vehicleDetailsList');
@@ -513,29 +500,14 @@ export class NavbarComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
-
-//   toggleSidenav() {
-//     console.log('JJJJJJJJJJJJJJ',this.openSideNav);
-//     if (!this.openSideNav){
-//       return this.openSideNav= true;
-//   }
-//   else{
-//       return this.openSideNav = false;
-//   }
-//     // this.openSideNav = !this.openSideNav;
-//  }
   toggle() {
     //Menu toggle
-
-  
-    //this.openSideNav = !this.openSideNav;
-    console.log('SSSSSSSSSSSS');
+    // this.openSideNav = !this.openSideNav;
     let toggle:any = document.querySelector('.navigation');
     let navigation:any = document.querySelector('.navigation');
     let main:any= document.querySelector('.main');
     let breadcrumb:any = document.querySelector('.bread_crumb');
     toggle.click();{
-      console.log('TTTTTTTTTTTTT');
       navigation.classList.toggle('active');
       main.classList.toggle('active');
       breadcrumb.classList.toggle('active');
@@ -568,9 +540,6 @@ export class NavbarComponent implements OnInit {
     list.forEach((item) =>
       item.addEventListener('mouseover', activeLink));
   }
-
-
-
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.screenWidth$.next(event.target.innerWidth);
@@ -578,17 +547,5 @@ export class NavbarComponent implements OnInit {
   getScreenWidth(): Observable<number> {
     return this.screenWidth$.asObservable();
   }
-  toggleSideNav() {
-    this.sidenav.toggle();
-    console.log('JJJJJJJJJJJJJ',this.openSideNav);
-    if (!this.openSideNav){
-      this.openSideNav = true;
-  }
-  else{
-      this.openSideNav = false;
-  }
-      //this.openSideNav = !this.openSideNav;
-  }
-
 }
 

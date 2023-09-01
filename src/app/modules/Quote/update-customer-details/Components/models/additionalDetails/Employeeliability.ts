@@ -53,7 +53,7 @@ export class EmployeeLiablityss{
                         type: 'select',
                         key: 'EmpsOccupation',
                         defaultValue: '',
-                        className: 'col-sm-4',
+                        className: 'col-sm-8',
                         props: {
                           label: `Occupation`,
                           required: true,

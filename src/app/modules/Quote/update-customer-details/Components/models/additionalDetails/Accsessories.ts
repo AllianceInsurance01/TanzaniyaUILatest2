@@ -4,7 +4,7 @@ import { ForceLengthValidators } from '../../domestic-risk-details/domestic-risk
 import { FormlyFieldConfig } from "@ngx-formly/core";
 
 
-export class Fedilitis{
+export class Accessories{
     customerDetails: any;
     commonDetails: any[]=[];
     endorsementSection: boolean=false;
@@ -14,11 +14,6 @@ export class Fedilitis{
         this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
         let commonDetails = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
         if (commonDetails) this.commonDetails = commonDetails;
-        var d = new Date();
-        var year = d.getFullYear();
-        var month = d.getMonth();
-        var day = d.getDate();
-        this.dobDate = new Date(year - 18, month, day);
         if (sessionStorage.getItem('endorsePolicyNo')) {
             this.endorsementSection = true;
             let endorseObj = JSON.parse(sessionStorage.getItem('endorseTypeId'))
@@ -36,26 +31,13 @@ export class Fedilitis{
                   {
                     fieldGroupClassName: 'row',
                     fieldGroup: [
-                        {
-                            className: 'col-sm-4',
-                            type: 'input',
-                            key: 'fdName',
-                            templateOptions: {
-                              label: 'Employee Name',
-                              required: true,
-                            },
-                            validators: {
-                              validation: [ForceLengthValidators.maxLength(150), ForceLengthValidators.min(1)]
-                            },
-                          
-                       },
                       {
                         type: 'select',
-                        key: 'fdOccupation',
+                        key: 'AccessoriesChassisNo',
                         defaultValue: '',
-                        className: 'col-sm-8',
+                        className: 'col-sm-6',
                         props: {
-                          label: `Occupation`,
+                          label: `Chassis No`,
                           required: true,
                           options: [
           
@@ -71,51 +53,12 @@ export class Fedilitis{
                         },
                       },
                       {
-                        className: 'col-sm-4',
-                        type: 'input',
-                        key: 'fdAddress',
-                        templateOptions: {
-                          label: 'Address',
-                          required: true,
-                        },
-                        validators: {
-                          validation: [ForceLengthValidators.maxLength(300), ForceLengthValidators.min(1)]
-                        },
-                      
-                      }, 
-                      {
-                        className: 'col-sm-4',
-                        type: 'input',
-                        key: 'fdNationality',
-                        templateOptions: {
-                          label: 'Nationality ID',
-                          required: true,
-                        },
-                        validators: {
-                          validation: [ForceLengthValidators.maxLength(50), ForceLengthValidators.min(1)]
-                        },
-                      
-                      }, 
-                      {
-                        className: 'col-sm-4',
-                        key: 'fdDob',
-                        type: 'datepicker',
-                        props: {
-                          label: 'Date Of Birth',
-                          required: true,
-                          type: 'date',
-                          datepickerOptions: {
-                            max: this.dobDate
-                          },
-                        }
-                      },
-                      {
                         type: 'select',
-                        key: 'fdJoin',
+                        key: 'AccessoriesType',
                         defaultValue: '',
-                        className: 'col-sm-4',
+                        className: 'col-sm-6',
                         props: {
-                          label: `Joining Period`,
+                          label: `Accessories`,
                           required: true,
                           options: [
           
@@ -131,49 +74,28 @@ export class Fedilitis{
                         },
                       },
                       {
-                        className: 'col-sm-4',
+                        className: 'col-sm-6',
                         type: 'input',
-                        key: 'fdPeriod',
+                        key: 'AccessoriesSerialNo',
                         templateOptions: {
-                          label: 'Join Year',
-                          required: true,
-                        },
-                        validators: {
-                          validation: [ForceLengthValidators.maxLength(4), ForceLengthValidators.min(1)]
-                        },
-                      
-                      }, 
-                      {
-                        type: 'select',
-                        key: 'fdLocation',
-                        defaultValue: '',
-                        className: 'col-sm-4',
-                        props: {
-                          label: `Location`,
-                          required: true,
-                          options: [
-          
-                          ],
-          
-                        },
-                        validators: {
-                          validation: [ForceLengthValidators.maxLength(150), ForceLengthValidators.min(1)]
-                        },
-                        hooks: {
-                        },
-                        expressions: {
-                        },
-                      },
-                      {
-                        className: 'col-sm-4',
-                        type: 'commaSeparator',
-                        key: 'fdSI',
-                        templateOptions: {
-                          label: 'Salary',
+                          label: 'Serial No',
                           required: true,
                         },
                         validators: {
                           validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                        },
+                      
+                      },
+                      {
+                        className: 'col-sm-6',
+                        type: 'commaSeparator',
+                        key: 'AccessoriesSI',
+                        templateOptions: {
+                          label: 'Sum Insured',
+                          required: true,
+                        },
+                        validators: {
+                          validation: [ForceLengthValidators.maxLength(50), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -182,7 +104,7 @@ export class Fedilitis{
                       
                       },
                      
-
+                     
                     ]
                   }
                 ]

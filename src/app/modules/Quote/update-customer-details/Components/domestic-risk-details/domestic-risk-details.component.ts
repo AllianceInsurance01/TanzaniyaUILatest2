@@ -23,6 +23,7 @@ import { Machineryss } from '../models/additionalDetails/Machinery';
 import { EmployeeLiablityss } from '../models/additionalDetails/Employeeliability';
 import { Fedilitis } from '../models/additionalDetails/Fedilitiys';
 import { ElectronicEquip } from '../models/additionalDetails/Electronicequip';
+import { Accessories } from '../models/additionalDetails/Accsessories';
 
 export class ForceLengthValidators {
   static maxLength(maxLength: number) {
@@ -88,7 +89,9 @@ export class DomesticRiskDetailsComponent implements OnInit {
   jsonList: any[] = [];
   PersonalAssistantList: any[] = [];
   LocationList: any[] = [];
+  ChassisList: any[]=[];
   CyperList:any[]=[];
+  AccLists:any[]=[];
   Cotentrisk: any[] = [];
   MachineryContentrisk:any[]=[];
   policyEndDate: any;
@@ -152,6 +155,9 @@ export class DomesticRiskDetailsComponent implements OnInit {
   ar:Number=1;
   pi:Number=1;emp:Number=1;
   E:Number=1;LocationName:any;
+  fd:Number =1;
+  ma:Number =1;
+  accs:Number =1;
   endorsementSection: boolean;BuildingSuminsured:any;
   orgPolicyNo: string;BuildingAddress:any;
   endorsementId: any;
@@ -272,6 +278,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   fieldsContent:any []= [];
   PAFields:any[]=[];
   fieldss:any[]=[];
+  Accfieldss:any[]=[];
   fieldsPersonalAccident:any[]=[];
   fieldsPersonalInd:any[]=[];
   fieldsDevice:any[]=[];
@@ -287,6 +294,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
   model = {};
   editPersonalIndSection: boolean;
   enableType: any;
+  actualAssSI: any;
+
 
   constructor(private router: Router,private datePipe:DatePipe,private modalService: NgbModal,
      private sharedService: SharedService,private formlyJsonschema: FormlyJsonschema,) {
@@ -317,7 +326,25 @@ export class DomesticRiskDetailsComponent implements OnInit {
       this.quoteRefNo = referenceNo;
       this.Section = false;
     }
-    if(this.productId=='5') this.buildingDetailsSection=false;
+    if(this.productId=='5'){
+      this.buildingDetailsSection=false;
+      let fireData = new Accessories();
+      let entry = [];
+      this.Accfieldss = fireData?.fields;
+
+      console.log('TTTTTTTTTTTT',this.fieldsContent);
+
+      let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
+        field.formControl.valueChanges.subscribe(() => {
+          this.individualCommaFormatted('accessories')
+        });
+      } }
+      //this.fields[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].hooks = regionHooks;
+      this.Accfieldss[0].fieldGroup[0].fieldGroup[0].fieldGroup[3].hooks = regionHooks;
+      this.productItem = new ProductData();
+      this.formSection = true; this.viewSection = false;
+
+      }
     else if(this.productId!='43'){
       this.buildingDetailsSection = true;
       let fireData = new LocationDetails();
@@ -719,7 +746,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
               this.individualCommaFormatted('machinery');
             });
           } }
-          this.fieldsMachinery[0].fieldGroup[0].fieldGroup[0].fieldGroup[5].hooks = regionHooks;
+          this.fieldsMachinery[0].fieldGroup[0].fieldGroup[0].fieldGroup[6].hooks = regionHooks;
         }
         else {
           this.nine = false;
@@ -748,6 +775,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
           this.customerDetails=data?.Result?.CustomerDetails;
           if(this.Riskdetails[0].AcccessoriesSumInsured!=null)
           this.actualAccessoriesSI = String(this.Riskdetails[0].AcccessoriesSumInsured);
+      
           for (let cover of this.Riskdetails) {
             let j = 0;
             for (let section of cover?.SectionDetails) {
@@ -876,6 +904,10 @@ export class DomesticRiskDetailsComponent implements OnInit {
           if(this.productId=='21'){
             this.getallriskLists();
           }
+          if(this.productId=='5'){
+            this.getAccesroies();
+            this.getchassisAcc();
+          }
           else if(this.productId=='26'){
             this.getallriskListsplant();
           }
@@ -896,6 +928,9 @@ export class DomesticRiskDetailsComponent implements OnInit {
             // if(this.third) this.pASumInsured = this.sumInsuredDetails.ProductSuminsuredDetails.ContentSuminsured;
             // if(this.fifth) this.pASumInsured = this.sumInsuredDetails.ProductSuminsuredDetails.ContentSuminsured;
             this.currencyValue = this.sumInsuredDetails.ProductSuminsuredDetails.CurrencyId;
+            if(this.productId=='5'){
+              this.currencyValue = this.sumInsuredDetails.ProductSuminsuredDetails.Currency;
+            }
             this.accidentOccupation = this.sumInsuredDetails.ProductSuminsuredDetails.OccupationTypeDesc;
             this.accidentOccupationId = this.sumInsuredDetails.ProductSuminsuredDetails.OccupationType;
             this.liabilityOccupation = this.sumInsuredDetails.ProductSuminsuredDetails.LiabilityOccupationDesc;
@@ -915,6 +950,13 @@ export class DomesticRiskDetailsComponent implements OnInit {
               this.actualAllRiskSI = allRiskSI;
             }
             else this.actualAllRiskSI = 0;
+
+            let AccSI = this.sumInsuredDetails.ProductSuminsuredDetails.AccessoriesSuminsured;
+            if(AccSI!='' && AccSI!=null && AccSI!=undefined){
+              this.actualAssSI = AccSI;
+            }
+            else this.actualAssSI  = 0;
+
             let EquipmentSi = this.sumInsuredDetails.ProductSuminsuredDetails.EquipmentSi;
             if(EquipmentSi!='' && EquipmentSi!=null && EquipmentSi!=undefined){
               this.EquipmentSi = EquipmentSi;
@@ -953,6 +995,9 @@ export class DomesticRiskDetailsComponent implements OnInit {
             console.log("SI Rec",this.sumInsuredDetails);
           }
             this.getbuilding();
+            if(this.productId=='5'){
+              this.getAccessories();
+            }
         }
       },
       (err) => { },
@@ -1182,7 +1227,7 @@ onMachinerySave(){
       this.machineries[this.currentMachineryIndex]['SumInsured'] = this.productItem.MSI;//this.MiSumInsured;
       this.machineries[this.currentMachineryIndex]['RiskId'] = this.productItem.MLocation;
       this.machineries[this.currentMachineryIndex]['SerialNoDesc'] = this.productItem.MSerialNo; //this.serialNoDesc;
-      this.machineries[this.currentMachineryIndex]['MachinaryDesc'] = this.productItem.MDescription; //this.MachineryName;
+      this.machineries[this.currentMachineryIndex]['ContentRiskDesc'] = this.productItem.MDescription; //this.MachineryName;
       this.machineries[this.currentMachineryIndex]['ItemId'] = this.productItem.MContentType; //this.machineryItemId;
       this.machineries[this.currentMachineryIndex]['Name'] = this.productItem.MName;//this.NameDesc;
       this.machineries[this.currentMachineryIndex]['Brand'] = this.productItem.MBrand;//this.BrandName;
@@ -1470,32 +1515,59 @@ onFidelitySave(){
     else{alert("No Employees Found")}
   }
   onAccessoriesSubmit(){
-    this.chassisNoError = false;this.accessoriesTypeError = false;this.serialNoError = false;this.sumInsuredError = false;
-    this.totalAccSIError = false;let i =0;
-    if(this.chassisNo==null || this.chassisNo==''){
+    // this.chassisNoError = false;this.accessoriesTypeError = false;this.serialNoError = false;this.sumInsuredError = false;
+    // this.totalAccSIError = false;
+    // if(i==0){
+    //   this.Cotentrisk[this.currentContentIndex]['SumInsured'] = this.productItem.ContentSI//this.contentSI;
+    //   this.Cotentrisk[this.currentContentIndex]['RiskId'] = this.productItem.ContentLocation;
+    //   this.Cotentrisk[this.currentContentIndex]['SerialNoDesc'] = this.productItem.ContentSerialNo;//this.serialNoDesc
+    //   this.Cotentrisk[this.currentContentIndex]['ContentRiskDesc'] =this.productItem.ContentDesc; //this.contentRiskDesc;
+    //   this.Cotentrisk[this.currentContentIndex]['ItemId'] = this.productItem.ContentType//this.contentId;
+    //   this.Cotentrisk[this.currentContentIndex]['LocationName'] = this.LocationList.find(ele=>ele.Code==this.productItem.ContentLocation).CodeDesc;
+    //   this.productItem.ContentSI=null; this.productItem.ContentLocation=null;this.productItem.ContentSerialNo=null;
+    //   this.productItem.ContentDesc=null;this.productItem.ContentType=null;this.currentContentIndex=null;
+    //   this.editContentSection = false;
+    //   this.enableContentEditSection = false;
+    // } 
+    let i =0;
+    if(this.productItem.AccessoriesChassisNo==null || this.productItem.AccessoriesChassisNo==''){
       i+=1;
-      this.chassisNoError = true;
+      this.form.markAllAsTouched();
     }
-    if(this.accessoriesType==null || this.accessoriesType==''){
+    if(this.productItem.AccessoriesType==null || this.productItem.AccessoriesType==''){
       i+=1;
-      this.accessoriesTypeError = true;
+      this.form.markAllAsTouched();
     }
-    if(this.serialNoDesc==null || this.serialNoDesc==''){
+    if(this.productItem.AccessoriesSerialNo==null || this.productItem.AccessoriesSerialNo==''){
       i+=1;
-      this.serialNoError = true;
+      this.form.markAllAsTouched();
     }
-    if(this.SumInsured==null || this.SumInsured=='0' || this.SumInsured==''){
+    if(this.productItem.AccessoriesSI==null || this.productItem.AccessoriesSI=='0' || this.productItem.AccessoriesSI==''){
       i+=1;
-      this.sumInsuredError = true;
+      this.form.markAllAsTouched();
     }
     else if(this.totalAccessoriesSI>this.actualAccessoriesSI){
       i+=1;
       this.totalAccSIError = true;
     }
     if(i==0){
+      // this.Cotentrisk[this.currentContentIndex]['SumInsured'] = this.productItem.ContentSI//this.contentSI;
+      // this.Cotentrisk[this.currentContentIndex]['RiskId'] = this.productItem.ContentLocation;
+      // this.Cotentrisk[this.currentContentIndex]['SerialNoDesc'] = this.productItem.ContentSerialNo;//this.serialNoDesc
+      // this.Cotentrisk[this.currentContentIndex]['ContentRiskDesc'] =this.productItem.ContentDesc; //this.contentRiskDesc;
+      // this.Cotentrisk[this.currentContentIndex]['ItemId'] = this.productItem.ContentType//this.contentId;
+      // this.Cotentrisk[this.currentContentIndex]['LocationName'] = this.LocationList.find(ele=>ele.Code==this.productItem.ContentLocation).CodeDesc;
+      this.accessoriesList[this.currentAccessoriesIndex]['SumInsured'] = this.productItem.AccessoriesSI//this.contentSI;
+      this.accessoriesList[this.currentAccessoriesIndex]['RiskId'] = this.productItem.AccessoriesChassisNo;
+      this.accessoriesList[this.currentAccessoriesIndex]['SerialNoDesc'] = this.productItem.AccessoriesSerialNo;//this.serialNoDesc
+      this.accessoriesList[this.currentAccessoriesIndex]['ItemId'] = this.productItem.AccessoriesType//this.contentId;
+      this.accessoriesList[this.currentAccessoriesIndex]['LocationId'] = this.productItem.AccessoriesChassisNo;
+      this.accessoriesList[this.currentAccessoriesIndex]['ContentRiskDesc'] =this.AccLists.find(ele=>ele.Code==this.productItem.AccessoriesType).label;
+      //this.AccLists.find(ele=>ele.Code==this.productItem.AccessoriesType).label;
       this.currentAccessoriesIndex = null;
       this.editAccessoriesSection = false;
       this.enableAccessoriesEditSection = false;
+      this.productItem = new ProductData();
     }
       
   }
@@ -1795,6 +1867,75 @@ onFidelitySave(){
       (err) => { },
     );
   }
+getchassisAcc(){
+//   if(this.productId=='5' && !this.buildingSection){
+//     let i=0; this.ChassisList=[];
+//     for (let cover of this.Riskdetails) {
+//       //this.ChassisList=cover.Chassisnumber;
+//       this.ChassisList.push({ "Code": String(i + 1), "CodeDesc": cover.Chassisnumber})
+//       i+=1;
+//     }
+//     console.log('Chasssis list',this.ChassisList)
+//     if(this.ChassisList.length!=0){
+//       for (let i = 0; i < this.ChassisList.length; i++) {
+//         this.ChassisList[i].label = this.ChassisList[i]['CodeDesc'];
+//         this.ChassisList[i].value = this.ChassisList[i]['Code'];
+//         delete this.ChassisList[i].CodeDesc;
+//         if (i == this.ChassisList.length - 1) {
+//           this.Accfieldss[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].props.options = this.ChassisList;
+//         }
+//       }
+//       console.log('Risk List',this.ChassisList);
+//     }
+// }
+let ReqObj = {
+  "QuoteNo":sessionStorage.getItem('quoteNo')
+}
+let urlLink = `${this.CommonApiUrl}dropdown/motorWithaccessories`;
+this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+  (data: any) => {
+    console.log(data);
+    if(data.Result){   
+      this.ChassisList = data.Result;
+        for (let i = 0; i < this.ChassisList.length; i++) {
+          this.ChassisList[i].label = this.ChassisList[i]['CodeDesc'];
+          this.ChassisList[i].value = this.ChassisList[i]['Code'];
+          delete this.ChassisList[i].CodeDesc;
+          if (i == this.ChassisList.length - 1) {
+            this.Accfieldss[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].props.options = this.ChassisList;
+          }
+        }
+        console.log('Risk List',this.ChassisList);
+    }
+  },
+  (err) => { },
+); 
+}
+  getAccesroies(){
+    let ReqObj = {
+      "InsuranceId":this.insuranceId,
+      "BranchCode": this.branchCode
+    }
+    let urlLink = `${this.CommonApiUrl}dropdown/motorcontent`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){   
+          this.AccLists = data.Result;
+          for (let i = 0; i < this.AccLists.length; i++) {
+            this.AccLists[i].label = this.AccLists[i]['CodeDesc'];
+            this.AccLists[i].value = this.AccLists[i]['Code'];
+            delete this.AccLists[i].CodeDesc;
+            if (i == this.AccLists.length - 1) {
+              this.Accfieldss[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].props.options = this.AccLists;
+            }
+          }
+          console.log('Accessories List',this.AccLists);
+        }
+      },
+      (err) => { },
+    ); 
+  }
   getcontenttype(){
     let ReqObj = {
       "InsuranceId":this.insuranceId,
@@ -1805,7 +1946,6 @@ onFidelitySave(){
       (data: any) => {
         console.log(data);
         if(data.Result){
-          
             this.CyperList = data.Result;
             for (let i = 0; i < this.CyperList.length; i++) {
               this.CyperList[i].label = this.CyperList[i]['CodeDesc'];
@@ -2153,6 +2293,19 @@ onFidelitySave(){
       }
       urlLink = `${this.motorApiUrl}api/savecontentrisk`;
     }
+    if(type=='EA' && this.productId=='5')
+    {
+      console.log('AAAAAAAAA')
+      ReqObj = {
+        "CreatedBy": this.loginId,
+      "QuoteNo":sessionStorage.getItem('quoteNo'),
+      "RequestReferenceNo":this.quoteRefNo,
+      "SectionId": "99999",
+       "Type":type,
+       "ContentRiskDetails":reqList
+      }
+      urlLink = `${this.motorApiUrl}api/savecontentrisk`;
+    }
     if(type=='E' && this.productId!='42')
     {
       ReqObj = {
@@ -2319,6 +2472,33 @@ onFidelitySave(){
 
     }
   }
+  onSaveAccessories(){
+    if (this.accessoriesList.length != 0) {
+      let i=0, reqList =[];
+      for(let entry of this.accessoriesList){
+        let sumInsured;
+        if(entry.SumInsured==undefined || entry.SumInsured==null) sumInsured = null;
+        // else if(entry.SumInsured.includes(',')){ sumInsured = entry.SumInsured.replace(/,/g, '') }
+        else sumInsured = entry.SumInsured;
+          let data = {
+            "ItemId":entry.ItemId,
+            "RiskId":entry.RiskId,
+            "ContentRiskDesc":entry.ContentRiskDesc,
+            "SerialNoDesc": entry.SerialNoDesc,
+            "MakeAndModel":"TN123",
+            "SerialNo":"155685",
+            "ItemValue":"26534556",
+            "SumInsured":sumInsured
+          }
+          reqList.push(data);
+          i+=1;
+          if(i==this.accessoriesList.length){
+            this.finalSaveRiskDetails(reqList,'EA');
+          }
+      }
+
+    }
+  }
 
   onSaveContentRisk(){
     if (this.Cotentrisk.length != 0) {
@@ -2361,7 +2541,7 @@ onFidelitySave(){
           let data = {
               "ItemId":entry.ItemId,
               "RiskId":entry.RiskId,
-              "ContentRiskDesc":entry.MachinaryDesc,
+              "ContentRiskDesc":entry.ContentRiskDesc,
               "SerialNoDesc": entry.SerialNoDesc,
               "MakeAndModel":"TN123",
               "SerialNo":"155685",
@@ -2522,11 +2702,12 @@ onFidelitySave(){
       (err) => { },
     );
   }
+  onAccsSave(){
+
+  }
   onContentSave() {
     {
-
       let ReqObj = {
-
         "CreatedBy": this.loginId,
         "QuoteNo": "12345",
         "RequestReferenceNo": this.quoteRefNo,
@@ -2534,8 +2715,6 @@ onFidelitySave(){
         "SectionId": this.SectionId,
         "Type": "C",
         "ContentRiskDetails": this.Cotentrisk
-
-
       }
 
       let urlLink = `${this.motorApiUrl}api/savecontentrisk`;
@@ -2674,6 +2853,9 @@ onFidelitySave(){
           else if(this.nine){
             this.getMachineryRisk();
             }
+            else if(this.nine){
+              this.getMachineryRisk();
+              }
       })
   }
   onSIValueChange (args) {
@@ -2723,6 +2905,13 @@ onFidelitySave(){
       //return entry.CodeDesc;
     }
   }
+
+  getAssName(Id){
+    let entry = this.ChassisList.find(ele=>ele.Code==Id);
+    if(entry){
+      return entry.label;
+    }
+  }
   getDeviceName(Id){
     let entry = this.CyperList.find(ele=>ele.Code==Id);
     if(entry){
@@ -2740,6 +2929,12 @@ onFidelitySave(){
     if(entry) return entry.label;
     else return '';
   }
+  getAssCont(ItemId){
+    let entry = this.AccLists.find(ele=>ele.Code==ItemId);
+    if(entry) return entry.label;
+    else return '';
+  }
+
 
   getContentsName(rowData){
     let entry = this.allriskList.find(ele=>ele.Code==rowData.ItemId);
@@ -2916,13 +3111,13 @@ onFidelitySave(){
         }
       }
       if(type=='accessories'){
-        let entry = this.SumInsured;
-        if(this.SumInsured){
-          if(this.SumInsured.includes('.')) this.SumInsured = this.SumInsured.split('.')[0];
-          let value = this.SumInsured.replace(/\D/g, "")
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          this.accessoriesList[this.currentAccessoriesIndex]['SumInsured'] = value.replace(/,/g, '');
-          this.SumInsured = value;
+        let entry = this.productItem.AccessoriesSI;
+        if(entry){
+          //if(this.SumInsured.includes('.')) this.SumInsured = this.SumInsured.split('.')[0];
+          // let value = this.SumInsured.replace(/\D/g, "")
+          // .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          this.accessoriesList[this.currentAccessoriesIndex]['SumInsured'] = entry;
+          this.productItem.AccessoriesSI= entry;
           this.getTotalSICost('Accessories');
         }
       }
@@ -3063,7 +3258,7 @@ onFidelitySave(){
             let SI = emp.SumInsured,entry=0;
             //if(emp?.EmployeeId) delete emp['EmployeeId'];
             if(SI==undefined || SI=='' || SI ==null) SI = 0;
-            else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
+            // else if(SI.includes(',')){ entry = SI.replace(/,/g, '') }
             else entry = SI
             this.totalMachinerySI = Number(entry)+this.totalMachinerySI
           }
@@ -3082,6 +3277,36 @@ onFidelitySave(){
           }
         }
     }
+  }
+
+  getAccessories(){
+    let urlLink = `${this.motorApiUrl}api/getallcontentrisk`;
+    let ReqObj = {
+      "QuoteNo": sessionStorage.getItem('quoteNo'),
+      "SectionId": "99999"
+    }
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        let res: any = data;
+        if(res.Result){
+          if (res.Result.ContentRiskDetails) {
+           if(res.Result.ContentRiskDetails.length!=0){
+            // if(this.endorsementSection){
+            //   this.contentRiskSection = !this.enableFieldsList.some(ele=>ele=='ContentSuminsured');
+            // }
+            // else this.contentRiskSection = true;
+             this.accessoriesList= res.Result.ContentRiskDetails;
+             console.log('Get details of Accessories', this.accessoriesList);
+             this.getTotalSICost('Accessories');
+           }
+           else{
+        
+           }
+          }
+       
+        }
+      })
   }
   getContentDetails(){
     let urlLink = `${this.motorApiUrl}api/getallcontentrisk`;
@@ -3961,32 +4186,35 @@ onFidelitySave(){
     // this.contentSI = this.Cotentrisk[index].SumInsured;this.contentId = this.Cotentrisk[index].ItemId;
     this.individualCommaFormatted('content');
   }
-  onEditPersonalAccident(index){
-    this.currentPersonalAccidentIndex= index;
+  onEditPersonalAccident(index,rowdata){
+    //this.currentPersonalAccidentIndex= index;
+    let edit = this.PersonalAssistantList.findIndex(ele=>ele.NationalityId == rowdata.NationalityId && ele.PersonName == rowdata.PersonName);
+    this.currentPersonalAccidentIndex= edit;
     this.editPersonalAccidentSection= true;
     this.enablePersonalAccEditSection= true;
-    this.productItem.AccidentLocation = this.PersonalAssistantList[index].RiskId;
-    this.productItem.AccName = this.PersonalAssistantList[index].PersonName;
-    this.productItem.AccOccupation = this.PersonalAssistantList[index].OccupationDesc;
-    this.productItem.AccNationID = this.PersonalAssistantList[index].NationalityId;
-    this.productItem.AccDob = this.PersonalAssistantList[index].Dob;
-    this.productItem.AccSI = this.PersonalAssistantList[index].Salary;
-    console.log('NNNNNNN',this.PersonalAssistantList[index].Salary);
+    this.productItem.AccidentLocation = rowdata.RiskId;
+    this.productItem.AccName = rowdata.PersonName;
+    this.productItem.AccOccupation = rowdata.OccupationDesc;
+    this.productItem.AccNationID = rowdata.NationalityId;
+    this.productItem.AccDob = rowdata.Dob;
+    this.productItem.AccSI = rowdata.Salary;
+    console.log('NNNNNNN',rowdata.Salary);
     this.individualCommaFormatted('PersonalAccident');
    
   }
 
-  onEditPersonalInd(index){
-    this.currentPersonalIndIndex= index;
+  onEditPersonalInd(index,rowdata){
+    let edit = this.Intermedity.findIndex(ele=>ele.NationalityId == rowdata.NationalityId && ele.PersonName == rowdata.PersonName);
+    this.currentPersonalIndIndex= edit;
     this.editPersonalIndSection= true;
     this.enablePersonalIndEditSection= true;
-    this.productItem.IndLocation = this.Intermedity[index].RiskId;
-    this.productItem.IndName = this.Intermedity[index].PersonName;
-    this.productItem.IndOccupation = this.Intermedity[index].OccupationDesc;
-    this.productItem.IndNationID = this.Intermedity[index].NationalityId;
-    this.productItem.IndDob = this.Intermedity[index].Dob;
+    this.productItem.IndLocation = rowdata.RiskId;
+    this.productItem.IndName = rowdata.PersonName;
+    this.productItem.IndOccupation = rowdata.OccupationDesc;
+    this.productItem.IndNationID = rowdata.NationalityId;
+    this.productItem.IndDob = rowdata.Dob;
     this.individualCommaFormatted('PersonalInd');
-    this.productItem.IndSI = this.Intermedity[index].Salary;
+    this.productItem.IndSI = rowdata.Salary;
   }
   onEditAllRisk(index){
     this.currentRiskIndex= index;
@@ -4000,58 +4228,79 @@ onFidelitySave(){
     this.individualCommaFormatted('AllRisk');
   }
 
-  onEditMachinery(index){
+  onEditMachinery(index,rowdata){
+    let edit = this.machineries.findIndex(ele=>ele.SerialNoDesc == rowdata.SerialNoDesc && ele.Brand == rowdata.Brand);
     console.log('LLLL');
-    this.currentMachineryIndex = index;
+    this.currentMachineryIndex = edit;
     this.enableMachineryEditSection = true;
     this.editMachinerySection=true;
     //this.MachineryLocation 
-    this.productItem.MLocation= this.machineries[index].RiskId;
-     this.productItem.MSerialNo = this.machineries[index].SerialNoDesc;//this.serialNoDesc
-     this.productItem.MDescription = this.machineries[index].ContentRiskDesc; //this.MachineryName // this.MiSumInsured
-    this.productItem.MSI = this.machineries[index].SumInsured;//this.machineryItemId = this.machineries[index].ItemId;
-    this.productItem.MName=this.machineries[index].Name;//this.NameDesc; //this.BrandName
-    this.productItem.MBrand=this.machineries[index].Brand;
-    this.productItem.MContentType = this.machineries[index].ItemId;
+    this.productItem.MLocation= rowdata.RiskId;
+     this.productItem.MSerialNo = rowdata.SerialNoDesc;//this.serialNoDesc
+     this.productItem.MDescription = rowdata.ContentRiskDesc; //this.MachineryName // this.MiSumInsured
+    this.productItem.MSI = rowdata.SumInsured;//this.machineryItemId = this.machineries[index].ItemId;
+    this.productItem.MName = rowdata.Name;//this.NameDesc; //this.BrandName
+    this.productItem.MBrand = rowdata.Brand;
+    this.productItem.MContentType = rowdata.ItemId;
     this.individualCommaFormatted('machinery');
   }
+  onEditAccessories(index,rowdata){
+    let edit = this.accessoriesList.findIndex(ele=>ele.SerialNoDesc == rowdata.SerialNoDesc);
+    console.log('LLLL',rowdata.ItemId);
+    this.currentAccessoriesIndex = edit;
+    this.enableAccessoriesEditSection = true;
+    this.editAccessoriesSection=true;
 
-  onEditEmployee(index){
-    this.currentEmployeeIndex = index;
+    this.productItem.AccessoriesType= rowdata.ItemId;
+     this.productItem.AccessoriesSerialNo = rowdata.SerialNoDesc;//this.serialNoDesc
+     this.productItem.AccessoriesChassisNo = rowdata.RiskId; //this.MachineryName // this.MiSumInsured
+    this.productItem.AccessoriesSI= rowdata.SumInsured;
+ //this.machineryItemId = this.machineries[index].ItemId;
+    this.individualCommaFormatted('accessories');
+  }
+
+  onEditEmployee(index,rowdata){
+    //this.currentEmployeeIndex = index;
+    let edit = this.employeeList.findIndex(ele=>ele.NationalityId == rowdata.NationalityId && ele.EmployeeName == rowdata.EmployeeName);
+    this.currentEmployeeIndex = edit;
+    console.log('SSSSSSSSSSSSSSSS',edit);
     this.editEmployeeSection = true;
     this.enableEmployeeEditSection = true;
-    this.productItem.EmpsLocation= String(this.employeeList[index].RiskId);
-    console.log('UUUUUUUU',this.employeeList[index])//this.empLocation 
-    this.productItem.EmpsName= this.employeeList[index].EmployeeName;// this.employeeName
-    this.productItem.EmpsAddress = this.employeeList[index].Address;//this.empAddress 
-    this.productItem.EmpsOccupation = this.employeeList[index].OccupationId;//this.occupationType 
-    this.productItem.EmpsSI= this.employeeList[index].Salary;//this.employeeSalary
-    this.productItem.EmpsNationality = this.employeeList[index].NationalityId;//this.nationality
-    var dateParts = this.employeeList[index].DateOfBirth.split("/");
+    console.log('PPPPPPPPP',rowdata);
+    this.productItem.EmpsLocation= String(rowdata.RiskId);
+    console.log('UUUUUUUU',rowdata.RiskId)//this.employeeList[index] this.empLocation 
+    this.productItem.EmpsName=rowdata.EmployeeName;// this.employeeName this.employeeList[index].
+    this.productItem.EmpsAddress = rowdata.Address;//this.empAddress 
+    this.productItem.EmpsOccupation = rowdata.OccupationId;//this.occupationType 
+    this.productItem.EmpsSI= rowdata.Salary;//this.employeeSalary
+    this.productItem.EmpsNationality = rowdata.NationalityId;//this.nationality
+    var dateParts = rowdata.DateOfBirth.split("/");
     // this.productItem.EmpsDob = this.employeeList[index].DateOfBirth;
     // console.log('NNNNNNNNNNNNN',this.productItem.EmpsDob);
     // month is 0-based, that's why we need dataParts[1] - 1
     this.productItem.EmpsDob  = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
-     this.productItem.EmpsPeriod= this.employeeList[index].DateOfJoiningYear;//this.empJoiningDate
-   this.productItem.EmpsJoin= this.employeeList[index].DateOfJoiningMonth;// this.empJoiningMonth 
+     this.productItem.EmpsPeriod= rowdata.DateOfJoiningYear;//this.empJoiningDate
+   this.productItem.EmpsJoin= rowdata.DateOfJoiningMonth;// this.empJoiningMonth 
     this.individualCommaFormatted('employee');
   }
-  onEditFidelity(index){
-    this.currentFidelityIndex = index;
+  onEditFidelity(index,rowdata){
+    //this.currentFidelityIndex = index;
+    let edit = this.fidelityList.findIndex(ele=>ele.NationalityId == rowdata.NationalityId && ele.EmployeeName == rowdata.EmployeeName);
     this.editFidelitySection = true;
     this.enableFidelityEditSection = true;
+    this.currentFidelityIndex = edit;
 
-   this.productItem.fdLocation= String(this.fidelityList[index].RiskId);// this.empLocation 
-   this.productItem.fdName= this.fidelityList[index].EmployeeName;//this.employeeName
-   this.productItem.fdAddress= this.fidelityList[index].Address;//this.empAddress 
-   this.productItem.fdOccupation = this.fidelityList[index].OccupationId;
-   this.productItem.fdSI = this.fidelityList[index].Salary;
-   this.productItem.fdNationality= this.fidelityList[index].NationalityId;
-    var dateParts = this.fidelityList[index].DateOfBirth.split("/");
+   this.productItem.fdLocation= String(rowdata.RiskId);// this.empLocation 
+   this.productItem.fdName= rowdata.EmployeeName;//this.employeeName
+   this.productItem.fdAddress= rowdata.Address;//this.empAddress 
+   this.productItem.fdOccupation = rowdata.OccupationId;
+   this.productItem.fdSI = rowdata.Salary;
+   this.productItem.fdNationality= rowdata.NationalityId;
+    var dateParts = rowdata.DateOfBirth.split("/");
     // month is 0-based, that's why we need dataParts[1] - 1
    this.productItem.fdDob= dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
-    this.productItem.fdPeriod= this.fidelityList[index].DateOfJoiningYear;
-    this.productItem.fdJoin = this.fidelityList[index].DateOfJoiningMonth;
+    this.productItem.fdPeriod= rowdata.DateOfJoiningYear;
+    this.productItem.fdJoin =rowdata.DateOfJoiningMonth;
     //this.productItem.fdJoin = String(0)+join;
     console.log('MMMMMMMMMMMM', this.monthList);
     console.log('KKKKKKKKKKKKKKKKK', this.productItem.fdJoin);
@@ -4158,18 +4407,29 @@ onFidelitySave(){
     this.building.push(entry);
   }
   AddNewAccessories(){
-    let entry = {
-      "AccessoriesType": null,
-      "ChassisNo": null,
-      "SerialNo": null,
-      "SumInsured": null,
-      "RiskId": null,
-      "SectionId": ""
-    }
-    this.currentAccessoriesIndex = this.machineries.length;
+    // let entry = {
+    //   "AccessoriesType": null,
+    //   "ChassisNo": null,
+    //   "SerialNo": null,
+    //   "SumInsured": null,
+    //   "RiskId": null,
+    //   "SectionId": ""
+    // }
+    let entry = [{
+      "ItemId":null,
+      "RiskId":null,
+      "MakeAndModel":null,
+      "ContentRiskDesc":null,
+      "SerialNoDesc": null,
+      "SerialNo":null,
+      "ItemValue":null,
+      "SumInsured":null,
+    }]
+    this.currentAccessoriesIndex = this.accessoriesList.length;
     this.editAccessoriesSection = false;
     this.enableAccessoriesEditSection = true;
     this.accessoriesList.push(entry);
+    this.productItem = new ProductData();
   }
   AddNewMachinery(){
     let entry = {
@@ -4286,6 +4546,11 @@ onFidelitySave(){
     const index = this.machineries.indexOf(rows);
     this.machineries.splice(index, 1);
     this.getTotalSICost('machinery');
+  }
+  AccessoriesDelete(rows:any){
+    const index = this.accessoriesList.indexOf(rows);
+    this.accessoriesList.splice(index, 1);
+    this.getTotalSICost('Accessories');
   }
   AllAdd(){
     console.log('IIIIIIIII',this.risk);

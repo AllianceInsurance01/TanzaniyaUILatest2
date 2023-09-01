@@ -29,6 +29,9 @@ export class UnderWriterComponent implements OnInit {
     NewList: any[]=[];
     p:any=1;
   requestref: any;
+  referralData: any;
+  section: any=null;
+  endorsementHeader: any;
   constructor(private router:Router,private sharedService:SharedService,private modalService: NgbModal) {
     // let userObj = JSON.parse(sessionStorage.getItem('userEditDetails'));
     // if(userObj){
@@ -85,6 +88,22 @@ export class UnderWriterComponent implements OnInit {
       }
   
     ];
+
+    this.endorsementHeader =  [
+      { key: 'RequestReferenceNo', display: 'Reference No' },
+      { key: 'ClientName', display: 'Customer Name' },
+      { key: 'EndorsementTypeDesc', display: 'Endt Type'},
+      { key: 'PolicyStartDate', display: 'Policy Start Date' },
+      { key: 'PolicyEndDate', display: 'Policy End Date' },
+      { key: 'ReferalRemarks', display: 'ReferralRemarks' },
+      {
+        key: 'actions',
+        display: 'Action',
+        config: {
+          isEdit: true,
+        },
+      },
+    ];
   }
   getProductList(){
     console.log('KKKKKKKKKKKK',this.insuranceId);
@@ -126,15 +145,21 @@ export class UnderWriterComponent implements OnInit {
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         if(data.Result){
-       
-          this.productData = data.Result.PendingGrid;
+          this.referralData = data.Result.PendingGrid.filter(ele=>ele.EndorsementDate!=null);
+          this.productData = data.Result.PendingGrid.filter(ele=>ele.EndorsementDate==null);
+          this.section = 'quote';
           console.log('PPPPPPPPPPPPPPPPPP',this.productData);
-        }
+            //this.quoteData = data?.Result;
+           }
+        else this.section = 'quote';
+          //this.productData = data.Result.PendingGrid
 
       },
       (err) => { },
     );
   }
+
+  setSection(val){this.section = val;}
 
 //   onConfigure(event:any){
 //     sessionStorage.setItem('productuser',this.insuranceId);
@@ -172,6 +197,7 @@ export class UnderWriterComponent implements OnInit {
 //   }
 
 EditStatus(rowData,modal){
+  this.open(modal);
   this.productData1=[];
 let ReqObj={
     "RequestReferenceNo":rowData.RequestReferenceNo,
@@ -186,9 +212,9 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
   (data: any) => {
     if(data.Result){
       this.productData1 = data.Result?.PendingList;
-      this.requestref = data.Result?.PendingList[0].RequestReferenceNo;
+      this.requestref = data.Result?.PendingList[0]?.RequestReferenceNo;
       console.log('NNNNNNNNNNN',this.productData1);
-      this.open(modal);
+      
     }
 
   },

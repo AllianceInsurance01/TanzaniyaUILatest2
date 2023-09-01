@@ -528,12 +528,12 @@
                                         </div>
                                     </div>
                                     <div  class="addMembers" *ngIf="PersonalAssistantList.length!=0">
-                                        <div class="addMembers__item" *ngFor="let entry of PersonalAssistantList;let i=index">
+                                        <div class="addMembers__item" *ngFor="let entry of PersonalAssistantList|paginate:{itemsPerPage: 5, currentPage:pa, id:'pa'};let i=index">
                                             <div class="addMembers__header">
                                                 <div class="addMembers__name">{{getLocationName(entry.RiskId)}}</div>
                                                 <div class="addMembers__edit">
                                                     <button class="circle btn btn-danger btn-sm mr-2" (click)="PersonalAccidentDelete(entry)" *ngIf="!checkEndorseDisable('personalAccident')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
-                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditPersonalAccident(i)" *ngIf="!checkEndorseDisable('personalAccident')"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditPersonalAccident(i,entry)" *ngIf="!checkEndorseDisable('personalAccident')"> <i class="fa fa-pencil"></i></button>&nbsp;
                                                     
                                                     
                                                 </div>
@@ -563,9 +563,12 @@
                                             </div>
                                         </div>  
                                     </div>
+                                    <div class="d-flex justify-content-end">
+                                        <pagination-controls (pageChange)="pa=$event" id="pa"></pagination-controls>
+                                      </div>
                                 </div>
-                                    
                             </div>
+                        
                         </div>
                         <div class="row" *ngIf="enablePersonalAccEditSection">
                             <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
@@ -616,6 +619,7 @@
 
                         <button class="custom-btn btn-6  maan-button-data mx-2" matRipple (click)="onSavePersonalAccident()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
+                  
 
                     <!-- <div class="d-flex justify-content-end">
                       <pagination-controls (pageChange)="pa=$event" id="pa"></pagination-controls>
@@ -670,10 +674,10 @@
                                                 <span ><b>Actual&nbsp;&nbsp;{{actualPersonalAccSI | commaseparator }}</b></span>
                                             </div>
                                             <div class="totalProsession">
-                                                <ng-container *ngIf="totalPASI!=0 && totalPASI!='0' && totalPASI!=null">
-                                                    &nbsp;<span style="text-align: end !important;"><b>{{totalPASI | commaseparator }}</b></span>
+                                                <ng-container *ngIf="totalAllRiskSI!=0 && totalAllRiskSI!='0' && totalAllRiskSI!=null">
+                                                    &nbsp;<span style="text-align: end !important;"><b>{{totalAllRiskSI | commaseparator }}</b></span>
                                                 </ng-container>
-                                                <ng-container *ngIf="totalPASI==0 || totalPASI=='0' || totalPASI==null">
+                                                <ng-container *ngIf="totalAllRiskSI==0 || totalAllRiskSI=='0' || totalAllRiskSI==null">
                                                     <span style="text-align: end !important;"><b>0</b></span>
                                                 </ng-container>
                                                 
@@ -770,7 +774,7 @@
                                                 <div class="addMembers__name">{{getLocationName(entry.RiskId)}}</div>
                                                 <div class="addMembers__edit">
                                                     <button class="circle btn btn-danger btn-sm mr-2" (click)="PersonalIndDelete(entry)" *ngIf="!checkEndorseDisable('personalIndeminity')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
-                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditPersonalInd(i)" *ngIf="!checkEndorseDisable('personalIndeminity')"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditPersonalInd(i,entry)" *ngIf="!checkEndorseDisable('personalIndeminity')"> <i class="fa fa-pencil"></i></button>&nbsp;
                                                     
                                                     
                                                 </div>
@@ -800,6 +804,9 @@
                                             </div>
                                         </div>  
                                     </div>
+                                    <div class="d-flex justify-content-end">
+                                        <pagination-controls (pageChange)="pi=$event" id="pi"></pagination-controls>
+                                      </div>
                                 </div>
                                     
                             </div>
@@ -851,9 +858,7 @@
                         <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
                         <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="onSavePersonalIntermedity()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
-                    <div class="d-flex justify-content-end">
-                      <pagination-controls (pageChange)="pi=$event" id="pi"></pagination-controls>
-                    </div>
+                
                 </mat-tab>
                 <mat-tab label="ElectricalEquipment" [disabled]="!fourth" *ngIf="six">
 
@@ -1007,7 +1012,7 @@
                                             <div class="addMembers__name">{{entry.EmployeeName}} &nbsp;|&nbsp;{{entry.DateOfJoiningYear}}</div>
                                             <div class="addMembers__edit">
                                                 <button class="circle btn btn-danger btn-sm mr-2" (click)="EmployeeDelete(entry,i)"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
-                                                <button class="circle btn btn-primary btn-sm" (click)="onEditEmployee(i)"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                <button class="circle btn btn-primary btn-sm" (click)="onEditEmployee(i,entry)"> <i class="fa fa-pencil"></i></button>&nbsp;
                                             </div>
                                             <div class="addMembers__edit mr-5">
                                                 <span>{{entry.Salary| commaseparator }}</span>
@@ -1377,12 +1382,12 @@
                                     </div>
                                 </div>
                                 <div  class="addMembers" *ngIf="fidelityList.length!=0 && !enableFidelityUploadSection">
-                                    <div class="addMembers__item" *ngFor="let entry of fidelityList|paginate:{itemsPerPage: 5, currentPage:emp, id:'emp'};;let i=index">
+                                    <div class="addMembers__item" *ngFor="let entry of fidelityList|paginate:{itemsPerPage: 5, currentPage:fd, id:'fd'};;let i=index">
                                         <div class="addMembers__header">
                                             <div class="addMembers__name">{{entry.EmployeeName}} &nbsp;|&nbsp;{{entry.DateOfJoiningYear}}</div>
                                             <div class="addMembers__edit">
                                                 <button class="circle btn btn-danger btn-sm mr-2" (click)="FidelityDelete(entry,i)"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
-                                                <button class="circle btn btn-primary btn-sm" (click)="onEditFidelity(i)"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                <button class="circle btn btn-primary btn-sm" (click)="onEditFidelity(i,entry)"> <i class="fa fa-pencil"></i></button>&nbsp;
                                             </div>
                                             <div class="addMembers__edit mr-5">
                                                 <span>{{entry.Salary| commaseparator }}</span>
@@ -1416,7 +1421,7 @@
                                         
                                     </div>
                                     <div class="d-flex justify-content-end">
-                                        <pagination-controls (pageChange)="emp=$event"  id="emp"></pagination-controls>
+                                        <pagination-controls (pageChange)="fd=$event" id="fd"></pagination-controls>
                                     </div>
                                     <!-- <div  class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
                                         <div class="totalProsession">
@@ -1734,12 +1739,12 @@
                                     </div>
                                 </div>
                                 <div  class="addMembers" *ngIf="machineries.length!=0">
-                                    <div class="addMembers__item" *ngFor="let entry of machineries;let i=index">
+                                    <div class="addMembers__item" *ngFor="let entry of machineries|paginate:{itemsPerPage: 5, currentPage:ma, id:'ma'};let i=index">
                                         <div class="addMembers__header">
                                             <div class="addMembers__name">{{getLocationName(entry.RiskId)}}</div>
                                             <div class="addMembers__edit">
                                                 <button class="circle btn btn-danger btn-sm mr-2" (click)="MachineryDelete(entry)" *ngIf="!checkEndorseDisable('machinery')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
-                                                <button class="circle btn btn-primary btn-sm" (click)="onEditMachinery(i)" *ngIf="!checkEndorseDisable('machinery')"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                <button class="circle btn btn-primary btn-sm" (click)="onEditMachinery(i,entry)" *ngIf="!checkEndorseDisable('machinery')"> <i class="fa fa-pencil"></i></button>&nbsp;
                                             </div>
                                             <div class="addMembers__edit">
                                                 <span>{{entry.SumInsured| commaseparator }} </span>&nbsp;&nbsp;
@@ -1766,6 +1771,9 @@
                                             
                                         </div>
                                     </div>  
+                                    <div class="d-flex justify-content-end">
+                                        <pagination-controls (pageChange)="ma=$event" id="ma"></pagination-controls>
+                                      </div>
                                 </div>
                             </div>
                         </div>
@@ -1882,13 +1890,51 @@
                                         <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('accessories') && accessoriesList.length!=0"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNewAccessories()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
                                     </div>
                                     <!-- <span><u> Building Risk Details </u></span> -->
-                                    <div  *ngIf="accessoriesList.length==0">
+                                    <div *ngIf="accessoriesList.length==0">
                                         <div class="groupBtnMembers text-center">
                                             <div class="groupBtnMembers__desc groupBtnMembers__desc_top">
                                                 Enter All Accessories Details that you want to insure
                                             </div>
                                                 <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNewAccessories()"><i class="fa fa-plus-circle"></i>&nbsp; Add New</button>
                                         </div>
+                                    </div>
+                                    <div  class="addMembers" *ngIf="accessoriesList.length!=0">
+                                        <div class="addMembers__item" *ngFor="let entry of accessoriesList|paginate:{itemsPerPage: 5, currentPage:accs, id:'acss'};let i=index">
+                                            <div class="addMembers__header">
+                                                <div class="addMembers__name">{{getAssName(entry.RiskId)}}</div>
+                                                <div class="addMembers__edit">
+                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="AccessoriesDelete(entry)" *ngIf="!checkEndorseDisable('machinery')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditAccessories(i,entry)" *ngIf="!checkEndorseDisable('machinery')"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                </div>
+                                                <div class="addMembers__edit">
+                                                    <span>{{entry.SumInsured| commaseparator }} </span>&nbsp;&nbsp;
+                                                </div>
+                                            </div>
+                                            <ul class="addMembers__list">
+                                                 <li>{{getAssCont(entry.ItemId)}} &nbsp; | &nbsp;{{entry.SerialNoDesc}}</li>
+                                                <!-- <li>{{getContentssName(entry.ItemId)}} &nbsp; | &nbsp; {{entry.SerialNoDesc}}</li> -->
+                                            </ul>
+                                        </div>
+                                        <div  class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                            <div class="totalProsession">
+                                                <span ><b>Sum Insured</b></span>
+                                            </div>
+                                            <div class="totalProsession">
+                                                <span ><b>Actual&nbsp;&nbsp;{{actualAssSI | commaseparator }}</b></span>
+                                            </div>
+                                            <div class="totalProsession">
+                                                <ng-container *ngIf="totalAccessoriesSI!=0 && totalAccessoriesSI!='0' && totalAccessoriesSI!=null">
+                                                    &nbsp;<span style="text-align: end !important;"><b>{{totalAccessoriesSI | commaseparator }}</b></span>
+                                                </ng-container>
+                                                <ng-container *ngIf="totalAccessoriesSI==0 || totalAccessoriesSI=='0' || totalAccessoriesSI==null">
+                                                    <span style="text-align: end !important;"><b>0</b></span>
+                                                </ng-container>
+                                                
+                                            </div>
+                                        </div>  
+                                        <div class="d-flex justify-content-end">
+                                            <pagination-controls (pageChange)="accs=$event" id="accs"></pagination-controls>
+                                          </div>
                                     </div>
                                 </div>
                                     
@@ -1899,7 +1945,12 @@
                                 <div class="boxForm" >
                                         <span><u>Accessories Risk Details </u></span>
                                     <div class="row">
-                                        <div class="col-12 col-md-6 col-lg-6 input-control-container">
+                                        <div class="buildingcss">
+                                            <form [formGroup]="form">
+                                                <formly-form [form]="form" [fields]="Accfieldss" [model]="productItem"></formly-form>
+                                            </form>
+                                        </div>
+                                        <!-- <div class="col-12 col-md-6 col-lg-6 input-control-container">
                                             <label class="input-form-label">Chassis No</label><span class="text-danger">*</span>
                                             <ng-select class="custom" [items]="LocationList"  [disabled]="checkEndorseDisable('accessories')" [(ngModel)]="chassisNo" placeholder="Select Chassis no" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
                                             </ng-select>
@@ -1945,7 +1996,7 @@
                                                     SumInsured Exceeds than Actual SumInsured
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="row">
                                         <span><u> Sum Insured </u></span>
@@ -1966,7 +2017,7 @@
                                             <b style="white-space: nowrap;">Actual</b>
                                         </div>
                                         <div class="col-6 col-md-6 col-lg-6 col-xl-6">
-                                            <b style="white-space: nowrap;float: right !important;">{{actualAccessoriesSI | commaseparator }} &nbsp;({{currencyValue}})</b>
+                                            <b style="white-space: nowrap;float: right !important;">{{actualAssSI | commaseparator }} &nbsp;({{currencyValue}})</b>
                                         </div>
                                         
                                     </div>
@@ -1978,6 +2029,12 @@
                             </div>
                         </div>
                     </div>
+                    <div class="text-center mt-1 mb-2">
+                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack()"  routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                     
+                        <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="accessoriesList.length!=0 && !enableAccessoriesEditSection" matRipple (click)="onSaveAccessories()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
+                    </div>
+
                 </mat-tab>
 
                 <mat-tab label="Device Details" *ngIf="ten">

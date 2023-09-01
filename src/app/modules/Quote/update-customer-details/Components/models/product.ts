@@ -95,6 +95,10 @@ export class ProductData {
 	EmpsDob:any=null;EmpsJoin:any=null;EmpsPeriod:any=null;EmpsLocation:any=null;EmpsSI:any=null;
 	fdName:any=null; fdOccupation:any =null;fdAddress:any=null;fdNationality:any=null;
 	fdDob:any=null;fdJoin:any=null;fdPeriod:any=null;fdLocation:any=null;fdSI:any=null;
+	AccessoriesSI:any=null;
+AccessoriesSerialNo:any=null;
+AccessoriesType:any=null;
+AccessoriesChassisNo:any=null;
 	
 
 	constructor(data?) {

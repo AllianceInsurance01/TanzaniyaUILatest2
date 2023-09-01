@@ -658,6 +658,7 @@ export class PremiumDetailsComponent implements OnInit {
           if(data?.Result){
             this.uploadedDocList = data?.Result?.CommmonDocument;
             this.uploadedIndividualList = data?.Result?.InduvidualDocument;
+            console.log('Indivjual documents',this.uploadedIndividualList);
           }
         },
         (err) => { },
@@ -943,6 +944,22 @@ toggle(index: number) {
     },
     (err) => { },
   );
+  }
+
+  getBacks(){
+    if(this.productId=='5'){
+      console.log('JJJJJJJJJJ',this.Riskdetails);
+      let entry=this.Riskdetails.filter(ele => ele.AcccessoriesSumInsured!=0)
+      if(entry.length!=0){
+        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
+      }
+      else{
+        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
+      }
+    }
+    else{
+      this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
+    }
 
   }
   getBack(){

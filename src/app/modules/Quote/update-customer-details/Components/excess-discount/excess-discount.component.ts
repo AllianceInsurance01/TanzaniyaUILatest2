@@ -3452,8 +3452,19 @@ getMotorUsageList(vehicleValue){
          // this.getExistingEserviceDetails();
         //}
       }
+      else if(this.productId=='5'){
+        console.log('NNNNNNNNNNNN',this.vehicleData);
+        let element = this.vehicleData.filter(ele => ele.AccessoriesSumInsured!=0)
+           console.log('eeeeeeee',element.length,element);
+           if(element.length!=0){
+            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
+           }
+           else {
+            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+           }
+      }
       else{
-        
+        console.log("BBBBBBBBBBBYYYYYYYYYYYYYY");
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
       }
     }
