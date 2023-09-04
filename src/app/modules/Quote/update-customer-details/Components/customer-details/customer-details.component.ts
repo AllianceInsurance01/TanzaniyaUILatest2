@@ -113,11 +113,14 @@ export class CustomerDetailsComponent implements OnInit {
     if(this.searchValue='' && this.searchValue==undefined && this.searchValue==null){
         
     }
-
+    if(this.userType!='Issuer'){
+        this.customerCode = this.userDetails.Result.CustomerCode;
+        this.customerName = this.userDetails.Result.CustomerName;
+    }
    }
 
   ngOnInit(): void {
-    if(this.productId=='3') this.getBackDaysDetails();
+    if(this.productId=='3' && this.userType!='Issuer') this.getBackDaysDetails();
     this.cyrrencylogin=sessionStorage.getItem('CurrencyidLogin');
     if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='21' || this.productId=='26' || this.productId == '25'){this.getIndustryList()}
     this.customerHeader =  [
@@ -373,9 +376,14 @@ export class CustomerDetailsComponent implements OnInit {
     
   }
   getBackDaysDetails(){
+    let loginId = null;
+    if(this.userType!='Issuer') loginId = this.loginId;
+    else{
+      loginId = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode)?.Name;
+    }
     let ReqObj = { 
       "InsuranceId": this.insuranceId,
-      "LoginId": this.loginId,
+      "LoginId": loginId,
       "ProductId": this.productId
     }
     let urlLink = `${this.CommonApiUrl}master/brokerbackdays`;
@@ -383,6 +391,16 @@ export class CustomerDetailsComponent implements OnInit {
       (data: any) => {
         if(data.Result){
           this.backDays = data.Result.BackDays;
+          if(this.backDays!=null){
+            let backDate = new Date();
+            var d = backDate;
+            var year = d.getFullYear();
+            var month = d.getMonth();
+            var day = d.getDate();
+            backDate = new Date(year, month, day-Number(this.backDays));
+            this.minDate = new Date(year, month, (day-Number(this.backDays))+1);
+          }
+          
         }
           
       },
@@ -647,6 +665,7 @@ export class CustomerDetailsComponent implements OnInit {
               this.brokerBranchCode = entry?.BrokerBranchCode;
               this.customerCode = entry?.CustomerCode;
               this.brokerCode = entry?.BrokerCode;
+              
               this.currentStatus = entry?.Status;
               this.onSourceTypeChange('direct');
               let quoteStatus = sessionStorage.getItem('QuoteStatus');
@@ -839,6 +858,7 @@ export class CustomerDetailsComponent implements OnInit {
           }
           else{
             //if(this.Code=='Broker' || this.Code=='Agent'){
+              if(this.productId=='3' && this.userType=='Issuer') this.getBackDaysDetails();
               let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
               if(entry){
                 this.brokerLoginId = entry.Name; 
@@ -872,6 +892,7 @@ export class CustomerDetailsComponent implements OnInit {
   }
   onBrokerChange(){
     //if(this.Code=='Broker' || this.Code=='Agent'){
+      if(this.productId=='3') this.getBackDaysDetails();
       if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
       let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
       if(entry){
@@ -896,6 +917,8 @@ export class CustomerDetailsComponent implements OnInit {
   }
   onBrokerBranchChange(){
     this.updateComponent.brokerBranchCode = this.brokerBranchCode;
+    console.log("Final Branches",this.brokerBranchList.find(ele=>ele.Code==this.brokerBranchCode))
+    this.onGetCustomerList('direct',this.customerCode);
     if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
   }
   getBrokerBranchList(type){
@@ -912,9 +935,12 @@ export class CustomerDetailsComponent implements OnInit {
         console.log(data);
         if(data.Result){
             this.brokerBranchList = data?.Result;
-            if(type=='change' && this.brokerBranchList.length==1){
+            if(this.brokerBranchList.length==1){
               this.brokerBranchCode = this.brokerBranchList[0].Code;
               this.updateComponent.brokerBranchCode = this.brokerBranchCode;
+            }
+            if(this.brokerBranchCode!=null){
+              this.onGetCustomerList('direct',this.customerCode);
             }
           }
         },
@@ -942,37 +968,54 @@ export class CustomerDetailsComponent implements OnInit {
     );
   }
   onGetCustomerList(type,code){
-    console.log("Code",code)
-    if(code!='' && code!=null && code!=undefined){
-      let ReqObj = {
-        "SourceType": this.Code,
-      "BranchCode":  this.branchValue,
-      "InsuranceId": this.insuranceId,
-      "SearchValue":code,
-      "ProductId": this.productId
+    if(this.userType=='Issuer'){
+      if(this.brokerBranchCode!='' && this.brokerBranchCode!=null && this.brokerBranchCode!=undefined){
+        if(this.brokerBranchList.length!=0){
+          let entry = this.brokerBranchList.find(ele=>ele.Code==this.brokerBranchCode);
+          if(entry){
+            this.customerCode = entry.CustomerCode;
+            this.customerName = entry.CustomerName;
+            this.updateComponent.CustomerCode = entry.CustomerCode;
+          }
+        }
       }
-      let urlLink = `${this.ApiUrl1}api/search/premiacustomercode`;
-      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-        (data: any) => {
-              this.customerList = data.Result;
-              if(type=='change'){
-                this.showCustomerList = true;
-                this.customerName = null;
-              }
-              else{
-                this.showCustomerList = false;
-                let entry = this.customerList.find(ele=>ele.Code==this.customerCode);
-                this.customerName = entry.Name;
-                this.setCustomerValue(this.customerCode,this.customerName,'direct')
-              }
-              
-        },
-        (err) => { },
-      );
     }
     else{
-      this.customerList = [];
+      this.customerCode = this.userDetails.Result.CustomerCode;
+        this.customerName = this.userDetails.Result.CustomerName;
+        this.updateComponent.CustomerCode = this.userDetails.Result.CustomerCode;
     }
+    // if(code!='' && code!=null && code!=undefined){
+    //   let branch = null;
+    //   if(this.userType=='issuer'){branch = this.brokerBranchCode;}
+    //   else branch = this.branchValue
+    //   let ReqObj = {
+    //     "BranchCode":  branch,
+    //     "InsuranceId": this.insuranceId,
+    //     "SearchValue":code
+    //   }
+    //   let urlLink = `${this.ApiUrl1}api/search/premiacustomercode`;
+    //   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    //     (data: any) => {
+    //           this.customerList = data.Result;
+    //           if(type=='change'){
+    //             this.showCustomerList = true;
+    //             this.customerName = null;
+    //           }
+    //           else{
+    //             this.showCustomerList = false;
+    //             let entry = this.customerList.find(ele=>ele.Code==this.customerCode);
+    //             this.customerName = entry.Name;
+    //             this.setCustomerValue(this.customerCode,this.customerName,'direct')
+    //           }
+              
+    //     },
+    //     (err) => { },
+    //   );
+    // }
+    // else{
+    //   this.customerList = [];
+    // }
   }
   setCustomerValue(code,name,type){
     this.showCustomerList = false;
@@ -1555,17 +1598,13 @@ export class CustomerDetailsComponent implements OnInit {
     if(!this.endorsementSection){
       let validDetais = this.checkMandatories();
       if(validDetais){
-        console.log("Form Validated")
         if(rowData.length==0){
-          console.log("Form Validated 2")
           // let type: NbComponentStatus = 'danger';
           // const config = {status: type,destroyByClick: true,duration: 4000,
           //   hasIcon: true,position: NbGlobalPhysicalPosition.TOP_RIGHT,
           //   preventDuplicates: false,};
-  
               if(this.policyStartDate!='' && this.policyStartDate!=undefined && this.policyStartDate!=null){
                 this.policyStartError = false;
-                
                 if( (this.productId=='5' || this.productId=='4') && (new Date(this.policyStartDate)).setHours(0,0,0,0) >= (new Date()).setHours(0,0,0,0) ){
                  
                   this.policyPassDate = false;
@@ -1800,7 +1839,7 @@ export class CustomerDetailsComponent implements OnInit {
                     var month = d.getMonth();
                     var day = d.getDate();
                     backDate = new Date(year, month, day-Number(this.backDays));
-                    if( (new Date(this.policyStartDate)).setHours(0,0,0,0) >= (backDate).setHours(0,0,0,0) ){
+                    if( (new Date(this.policyStartDate)).setHours(0,0,0,0) > (backDate).setHours(0,0,0,0) ){
                       this.policyPassDate = false;
                       console.log("Policy Start Date Moved");
                       Details[0].PolicyStartDate = policyStartDate;

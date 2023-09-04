@@ -227,6 +227,8 @@ export class NavbarComponent implements OnInit {
         userDetails.Result['BrokerBranchCode'] = this.branchValue;
         let branchData: any = this.branchList.find(ele => ele.BrokerBranchCode == this.branchValue);
         userDetails.Result['BranchCode'] = branchData?.BranchCode;
+        userDetails.Result['CustomerCode'] = branchData?.CustomerCode;
+        userDetails.Result['CustomerName'] = branchData?.CustomerName;
         userDetails.Result['CurrencyId'] = branchData?.CurrencyId;
         userDetails.Result['InsuranceId'] = branchData?.InsuranceId;
         sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));

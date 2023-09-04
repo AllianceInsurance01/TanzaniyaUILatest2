@@ -4121,11 +4121,12 @@ onCyperSave(type,formType){
       this.bdmCode = this.commonDetails[0].BrokerCode;
       this.brokerCode = this.commonDetails[0].BrokerCode;
       this.brokerbranchCode =  this.commonDetails[0].BrokerBranchCode;
-      this.customerCode = this.commonDetails[0].CustomerCode;
+     
     }
     else{
       this.sourceType = this.subuserType;
     }
+    this.customerCode = this.commonDetails[0].CustomerCode;
   let ReqObj = {
     "AcexecutiveId": this.commonDetails[0].AcexecutiveId,
     "AgencyCode": this.agencyCode,

@@ -523,6 +523,7 @@ export class LoginComponent {
         userDetails.Result['BranchCode'] = branchData.BranchCode;
         userDetails.Result['CurrencyId'] = branchData?.CurrencyId;
         userDetails.Result['InsuranceId'] = branchData?.InsuranceId;
+        
         sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
         this.router.navigate(['/product']);
       }
@@ -534,6 +535,8 @@ export class LoginComponent {
         userDetails.Result['BranchCode'] = branchData.BranchCode;
         userDetails.Result['CurrencyId'] = branchData?.CurrencyId;
         userDetails.Result['InsuranceId'] = branchData?.InsuranceId;
+        userDetails.Result['CustomerCode'] = branchData?.CustomerCode;
+        userDetails.Result['CustomerName'] = branchData?.CustomerName;
         sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
         this.router.navigate(['/product']);
       }
