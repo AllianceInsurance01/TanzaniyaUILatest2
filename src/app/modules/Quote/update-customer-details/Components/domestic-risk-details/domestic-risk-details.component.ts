@@ -155,9 +155,9 @@ export class DomesticRiskDetailsComponent implements OnInit {
   ar:Number=1;
   pi:Number=1;emp:Number=1;
   E:Number=1;LocationName:any;
-  fd:Number =1;
-  ma:Number =1;
-  accs:Number =1;
+  fd:Number=1;
+  ma:Number=1;
+  accs:Number=1;
   endorsementSection: boolean;BuildingSuminsured:any;
   orgPolicyNo: string;BuildingAddress:any;
   endorsementId: any;

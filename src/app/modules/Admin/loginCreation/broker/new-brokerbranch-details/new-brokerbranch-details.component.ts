@@ -279,7 +279,7 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
         "InsuranceId": this.insuranceId,
          "SearchValue": code,
       }
-      let urlLink = `${this.ApiUrl1}api/search/premiacustomercode`;
+      let urlLink = `${this.ApiUrl1}api/search/premiabrokercustomercode`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
               this.customerList = data.Result;
