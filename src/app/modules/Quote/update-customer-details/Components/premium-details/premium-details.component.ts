@@ -69,6 +69,7 @@ export class PremiumDetailsComponent implements OnInit {
   individualDocumentList: any;
   PinCode: any;
   endorsementType: any;
+  coverlist:any[]=[];
   constructor(private sharedService: SharedService,
     private router:Router,public dialogService: MatDialog,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe) {
@@ -948,18 +949,52 @@ toggle(index: number) {
 
   getBacks(){
     if(this.productId=='5'){
-      console.log('JJJJJJJJJJ',this.Riskdetails);
-      let entry=this.Riskdetails.filter(ele => ele.AcccessoriesSumInsured!=0)
-      if(entry.length!=0){
-        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
+    //   console.log('JJJJJJJJJJ',this.Riskdetails);
+    //   let entry=this.Riskdetails.filter(ele => ele.AcccessoriesSumInsured!=0)
+    //   if(entry.length!=0){
+    //     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
+    //   }
+    //   else{
+    //     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
+    //   }
+    // }
+    // else{
+    //   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
+    // }
+
+    this.coverlist=[];let i=0;
+    console.log('TTTTTTTTTT',this.Riskdetails);
+    for(let vehicle of this.Riskdetails){
+      let vehEntry = vehicle.SectionDetails;
+      console.log('VVVVVVVVV',vehEntry);
+      if(vehEntry.length!=0){
+        let j=0;
+        for(let s of vehEntry){
+        let covers = s.Covers;
+        console.log('NNNNNNNNN',covers);
+        if(covers.length!=0){
+          let entry = covers.filter(ele=>ele.CoverId == '55');
+          if(entry.length!=0){
+            console.log('RRRRRRR',entry);
+            this.coverlist.push(entry)
+          }
+        }
+        j+=1;
       }
-      else{
-        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
       }
+      i+=1;
+    }           
+    console.log('if entry of cover id 55',this.coverlist);
+            if(this.coverlist.length!=0){
+              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
+             }
+             else{
+              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
+             }
     }
     else{
-      this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
-    }
+         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
+      }
 
   }
   getBack(){

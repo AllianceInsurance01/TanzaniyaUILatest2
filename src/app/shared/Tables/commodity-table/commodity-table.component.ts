@@ -41,6 +41,8 @@ export class CommodityTableComponent implements OnInit {
   @Output('onGetEndorsements') onGetEndorsements = new EventEmitter();
   @Output('onAdd') onAdd = new EventEmitter();
   @Output('onSchedule') onSchedule = new EventEmitter();
+  @Output('onCredit') onCredit = new EventEmitter();
+  @Output('onDebit') onDebit = new EventEmitter();
   @Output('onEdit') onEdit = new EventEmitter();
   @Output('onActive')onActive= new EventEmitter();
   @Output('isActionBtn') isActionBtn = new EventEmitter();

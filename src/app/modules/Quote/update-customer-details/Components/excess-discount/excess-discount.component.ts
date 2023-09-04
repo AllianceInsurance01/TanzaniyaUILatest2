@@ -139,6 +139,7 @@ emiyn="N";
   maxDate: Date;
   endMinDate: Date;
   PromoCode: any;
+  coverlist:any[]=[];
   ClausesColumnHeader:any[]=[];ClausesData:any[]=[];
   ClauseColumnHeader:any[]=[];
   ExclusionColumnHeader:any[]=[];ExclusionData:any[]=[];
@@ -187,6 +188,8 @@ emiyn="N";
   Id: string;
   Ids: string;
   id: string;
+  newcoverlist:any[]=[];
+  newendrosementcoverlist:any[]=[];
   productName: any;
   endorsementSection: boolean;
   endorsementId: any;
@@ -3192,6 +3195,8 @@ getMotorUsageList(vehicleValue){
                 "ReferralRemarks": this.remarks,
                 "Vehicles" : orgCoverList
               }
+              this.newcoverlist=coverList;
+              console.log('in if block',this.newcoverlist)
               console.log("Final COvers",coverList,orgCoverList,ReqObj)
               this.finalFormSubmit(ReqObj);
             } 
@@ -3207,6 +3212,8 @@ getMotorUsageList(vehicleValue){
           "ReferralRemarks": this.remarks,
           "Vehicles" : coverList
         }
+        this.newcoverlist=coverList;
+        console.log('in else',this.newcoverlist)
         if(this.subuserType=='B2C' && this.loginId=='guest'){
             sessionStorage.setItem('buyPolicyDetails',JSON.stringify(ReqObj));
             this.router.navigate(['./Home/existingQuotes/customerSelection/customerDetails/userDetails'])
@@ -3453,15 +3460,28 @@ getMotorUsageList(vehicleValue){
         //}
       }
       else if(this.productId=='5'){
-        console.log('NNNNNNNNNNNN',this.vehicleData);
-        let element = this.vehicleData.filter(ele => ele.AccessoriesSumInsured!=0)
-           console.log('eeeeeeee',element.length,element);
-           if(element.length!=0){
-            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
-           }
-           else {
-            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
-           }
+        this.coverlist=[];let i=0;
+        console.log('TTTTTTTTTT', this.vehicleDetailsList);
+        console.log('NNNNNNNNNNNN', this.newcoverlist);
+        for(let vehicle of this.newcoverlist){
+          let vehEntry = vehicle.Covers;
+          console.log('VVVVVVVVV',vehEntry);
+          if(vehEntry.length!=0){
+            let entry = vehEntry.filter(ele=>ele.CoverId == '55');
+            if(entry.length!=0){
+              console.log('RRRRRRR',entry);
+              this.coverlist.push(entry)
+            }
+          }
+          i+=1;
+        }           
+        console.log('if entry of cover id 55',this.coverlist);
+       if(this.coverlist.length!=0){
+          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
+         }
+         else {
+          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+         }
       }
       else{
         console.log("BBBBBBBBBBBYYYYYYYYYYYYYY");

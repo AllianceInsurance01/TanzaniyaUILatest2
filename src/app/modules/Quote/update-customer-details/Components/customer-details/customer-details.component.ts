@@ -1871,6 +1871,7 @@ export class CustomerDetailsComponent implements OnInit {
     
   }
   saveCommonDetails(commonDetails){
+    let sourcecode:any;
     let endorsementDate=null,EndorsementEffectiveDate=null,EndorsementRemarks=null,
     EndorsementType=null,EndorsementTypeDesc=null,EndtCategoryDesc=null,EndtCount=null,
     EndtPrevPolicyNo=null,EndtPrevQuoteNo=null,EndtStatus=null,IsFinanceEndt=null,OrginalPolicyNo=null;
@@ -1923,6 +1924,12 @@ export class CustomerDetailsComponent implements OnInit {
     else{ this.issuerSection = false; brokerbranchCode = this.userDetails.Result.BrokerBranchCode; }
     if (quoteStatus == 'AdminRP' || quoteStatus == 'AdminRA' || quoteStatus == 'AdminRR') {
     }
+    if(this.userType!= 'Broker' && this.userType != 'User'){
+      sourcecode=this.Code
+    }
+    else{
+      sourcecode=sessionStorage.getItem('typeValue')
+    }
     let section = [];
     if(this.productId=='6'){section.push('40');};
     if(this.productId=='39'){section.push('41'); };
@@ -1949,7 +1956,7 @@ export class CustomerDetailsComponent implements OnInit {
         "BrokerCode": this.brokerCode,
         "BuildingOwnerYn": this.buildingOwnerYN,
         "Createdby": this.loginId,
-        "SourceType": this.Code,
+        "SourceType":sourcecode,//this.Code
         "Currency": this.currencyCode,
         "CustomerReferenceNo": this.customerDetails?.CustomerReferenceNo,
         "CustomerCode": this.customerCode,

@@ -302,6 +302,9 @@ getIndustryList() {
       brokerbranchCode = this.commonDetails[0].BrokerBranchCode;
       
     }
+    else{
+      this.sourceType = this.subuserType
+    }
     if(this.endorsementSection){
       this.endorsementDate = this.endorsementDetails.EndorsementDate;
       this.endorsementEffectiveDate = this.endorsementDetails?.EndorsementEffectiveDate;
@@ -525,7 +528,9 @@ getIndustryList() {
       this.bdmCode = this.commonDetails[0].BrokerCode;
       this.brokerCode = this.commonDetails[0].BrokerCode;
      brokerbranchCode = this.commonDetails[0].BrokerBranchCode;
-  
+    }
+    else {
+      this.sourceType = this.subuserType = sessionStorage.getItem('typeValue');
     }
     let ReqObj = { 
       "BranchCode":this.branchCode,

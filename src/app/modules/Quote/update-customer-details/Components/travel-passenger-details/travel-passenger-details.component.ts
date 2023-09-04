@@ -1040,7 +1040,26 @@ onEditPassenger(rowData){
 }
 onDeletePassengerList(rowData){
   console.log("Index Received",rowData);
-      this.historyRecordsList = this.historyRecordsList.filter(ele=>(ele.PassportNo!=rowData.PassportNo) && (ele.Dob!=rowData.Dob))
+  let urlLink=`${this.motorApiUrl}api/deletepassenger`
+  if(rowData.PassengerId!=null){
+     let ReqObj={
+             "QuoteNo":this.quoteNo,
+             "PassengerId":rowData.PassengerId
+          }
+          this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+            (data: any) => {
+              if(data.Result){
+               console.log('llll',data.Result);
+               this.getpassengerDetails('1');
+              }
+            },
+            (err) => { },
+          );
+  }
+  else{
+    this.historyRecordsList = this.historyRecordsList.filter(ele=>(ele.PassportNo!=rowData.PassportNo) && (ele.Dob!=rowData.Dob))
+  }
+     
 }
 onDeletePassenger(rowData){
   let index =  this.PassengerDetails.findIndex(ele=>(ele.PassengerId==rowData.PassengerId && ele.GroupId==rowData.GroupId));

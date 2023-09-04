@@ -551,7 +551,7 @@ export class TravelQuoteDetailsComponent implements OnInit {
     }
     else{
       customerCode = this.updateComponent.CustomerCode;
-      sourceType = 'Broker';
+      sourceType = this.subuserType;
       branchValue = this.branchCode;
       brokerCode = this.brokerCode;
       brokerBranchCode = this.brokerbranchCode
@@ -574,7 +574,7 @@ export class TravelQuoteDetailsComponent implements OnInit {
       "CreatedBy": createdBy,
       "CustomerCode": customerCode,
       "InsuranceId": this.insuranceId,
-      "SourceType": sourceType,
+      "SourceType":sourceType,//this.subuserType,
       "SectionId": this.TravelForm.controls['SectionId'].value,
       "TravelCoverId": this.TravelForm.controls['SectionId'].value,
       "Currency": currencyCode,

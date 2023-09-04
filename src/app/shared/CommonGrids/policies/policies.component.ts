@@ -21,6 +21,9 @@ export class PoliciesComponent implements OnInit {
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   branchCode:any;productId:any;userType:any;insuranceId:any;quoteHeader:any[]=[];
   PolicyNo: any;
+  show: boolean = false;
+  OthersList:any[]=[];
+  searchValue:any[]=[];
   constructor(private router:Router,private sharedService: SharedService) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -29,6 +32,7 @@ export class PoliciesComponent implements OnInit {
     this.branchCode = this.userDetails.Result.BranchCode;
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails?.Result?.UserType;
+    console.log('JJJJJJJJJJJJJJJJJJ',this.userType);
     this.insuranceId = this.userDetails.Result.InsuranceId;
    }
 
@@ -115,6 +119,54 @@ export class PoliciesComponent implements OnInit {
       ];
     }
     this.getExistingQuotes();
+    // if(this.userType == 'Issuer'){
+    //   let s=sessionStorage.getItem('PolicyNos')
+    //   if(s){
+    //     this.show = true;
+    //     this.eventothers(s);
+    //   }
+    //   else{
+    //     this.show = false;
+    //     this.getExistingQuotes();
+    //   }
+    // }
+  }
+  onCreditdownload(rowData){
+    console.log('KKKKKKKKKKK',rowData.QuoteNo);
+    let urlLink = `${this.CommonApiUrl}pdf/creditNote?quoteNo=${rowData.QuoteNo}`
+
+    this.sharedService.onGetMethodSync(urlLink).subscribe(
+      (data: any) => {
+        console.log(data);
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', data?.Result.PdfOutFile);
+        link.setAttribute('download','Creditpdf');
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    },
+      (err) => { },
+    );
+  }
+
+  onDebitdownload(rowData){
+    console.log('KKKKKKKKKKK',rowData.QuoteNo);
+    let urlLink = `${this.CommonApiUrl}pdf/taxInvoice?quoteNo=${rowData.QuoteNo}`
+
+    this.sharedService.onGetMethodSync(urlLink).subscribe(
+      (data: any) => {
+        console.log(data);
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', data?.Result.PdfOutFile);
+        link.setAttribute('download','DebitPdf');
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    },
+      (err) => { },
+    );
   }
   onGetSchedule(rowData){
     let ReqObj = {
@@ -213,11 +265,37 @@ export class PoliciesComponent implements OnInit {
         (err) => { },
       );
   }
+
+  eventothers(searchvalues){
+    console.log('MMMMMMMMM',searchvalues);
+    let searchvalue:any=searchvalues;
+    this.searchValue=searchvalues
+    sessionStorage.setItem('PolicyNos',searchvalue)
+    let ReqObj = {
+      "PolicyNo":searchvalues,//this.searchValue,
+   "BranchCode":this.branchCode,
+   "InsuraceId":this.insuranceId,
+   "ProductId":this.productId,
+   "Limit":"0",
+   "Offset":"10"
+    }
+    let urlLink = `${this.CommonApiUrl}api/searchbrokerpolicies`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result.PortFolioList){
+           this.OthersList = data.Result?.PortFolioList;
+        }
+      },
+      (err) => { },
+    );
+  }
   onGetEndorsements(rowData){
     sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
     sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
     sessionStorage.setItem('quoteNo',rowData.QuoteNo);
     sessionStorage.setItem('endorsePolicyNo',rowData.OriginalPolicyNo);
+    sessionStorage.setItem('PolicyNo','NonSelectedEndorsement');
     this.router.navigate(['Home/policies/Endorsements']);
   }
 
@@ -248,4 +326,34 @@ export class PoliciesComponent implements OnInit {
   //    //sessionStorage.setItem('FromDetails',JSON.stringify(quoteObj));
   //   sessionStorage.setItem('FromDetails', JSON.stringify(quote));
   // }
+
+  onCheckEndorseSelect(){
+    // let s=sessionStorage.getItem('PolicyNos')
+    // if(s){
+    //   return this.show=true;
+    // }
+    // else{
+    //   return this.show=false;
+    // }
+      //return this.show=true;
+  }
+  onSelectCustomer(event){
+console.log('Eventsss',event);
+
+if(event){
+this.show= true;
+}
+else{
+  this.show=false;
+}
+  }
+
+  onendrosements(rowData){
+    sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+    sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
+    sessionStorage.setItem('quoteNo',rowData.QuoteNo);
+    sessionStorage.setItem('endorsePolicyNo',rowData.OriginalPolicyNo);
+    sessionStorage.setItem('PolicyNo','Selectedendorese');
+    this.router.navigate(['Home/policies/Endorsements']);
+  }
 }

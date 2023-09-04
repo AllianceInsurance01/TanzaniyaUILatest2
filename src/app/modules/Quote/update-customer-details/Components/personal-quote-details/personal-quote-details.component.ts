@@ -3903,7 +3903,9 @@ onSubmit(productData) {
       this.bdmCode = this.commonDetails[0].BrokerCode;
       this.brokerCode = this.commonDetails[0].BrokerCode;
       this.brokerbranchCode = this.commonDetails[0].BrokerBranchCode;
-
+    }
+    else{
+      this.sourceType = this.subuserType;
     }
     let promocode = null;
     if (this.commonDetails[0].Promocode) {
@@ -4120,6 +4122,9 @@ onCyperSave(type,formType){
       this.brokerCode = this.commonDetails[0].BrokerCode;
       this.brokerbranchCode =  this.commonDetails[0].BrokerBranchCode;
       this.customerCode = this.commonDetails[0].CustomerCode;
+    }
+    else{
+      this.sourceType = this.subuserType;
     }
   let ReqObj = {
     "AcexecutiveId": this.commonDetails[0].AcexecutiveId,
