@@ -3633,7 +3633,7 @@ getIndemityPeriodList(){
   else if(this.productId=='19'){this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].props.options = [];}
   let ReqObj = {
     "IntemType":"INDEMITY_PERIOD",
-    "InsurancedId":this.insuranceId,
+    "InsuranceId":this.insuranceId,
     "BranchCode": this.branchCode
   }
   let urlLink = `${this.commonApiUrl}dropdown/indemity`;
