@@ -78,6 +78,7 @@ export class CustomerDetailsComponent implements OnInit {
   countryId: any;
   cyrrencylogin: string;
   currentStatus: any;
+  backDays: any=null;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       
@@ -116,6 +117,7 @@ export class CustomerDetailsComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    if(this.productId=='3') this.getBackDaysDetails();
     this.cyrrencylogin=sessionStorage.getItem('CurrencyidLogin');
     if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='21' || this.productId=='26' || this.productId == '25'){this.getIndustryList()}
     this.customerHeader =  [
@@ -369,6 +371,23 @@ export class CustomerDetailsComponent implements OnInit {
       }
     
     
+  }
+  getBackDaysDetails(){
+    let ReqObj = { 
+      "InsuranceId": this.insuranceId,
+      "LoginId": this.loginId,
+      "ProductId": this.productId
+    }
+    let urlLink = `${this.CommonApiUrl}master/brokerbackdays`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+          this.backDays = data.Result.BackDays;
+        }
+          
+      },
+      (err) => { },
+    );
   }
   getIndustryList(){
     this.industryList = [];
@@ -1547,7 +1566,7 @@ export class CustomerDetailsComponent implements OnInit {
               if(this.policyStartDate!='' && this.policyStartDate!=undefined && this.policyStartDate!=null){
                 this.policyStartError = false;
                 
-                if( (new Date(this.policyStartDate)).setHours(0,0,0,0) >= (new Date()).setHours(0,0,0,0) ){
+                if( (this.productId=='5' || this.productId=='4') && (new Date(this.policyStartDate)).setHours(0,0,0,0) >= (new Date()).setHours(0,0,0,0) ){
                  
                   this.policyPassDate = false;
                   if(this.policyEndDate!='' && this.policyEndDate!=undefined && this.policyEndDate!=null){
@@ -1634,21 +1653,100 @@ export class CustomerDetailsComponent implements OnInit {
                     //this.toastrService.show('Policy End Date','Please Select Policy End Date', config);
                   }
                 }
+                else if(this.productId!='5' && this.productId!='4' && this.productId!='3'){
+                  if(this.policyEndDate!='' && this.policyEndDate!=undefined && this.policyEndDate!=null){
+                    this.policyEndError = false;
+                    console.log("Form Validated 2")
+                    if(this.currencyCode!='' && this.currencyCode!=undefined && this.currencyCode!=null){
+                      this.currencyError = false;
+                      console.log("Form Validated 22")
+                      if(Number(this.exchangeRate) >= Number(this.minCurrencyRate) && Number(this.exchangeRate) <= Number(this.maxCurrencyRate)){
+                        this.exchangeMaxError = false;this.exchangeMinError = false;
+                        console.log("Form Validated 222")
+                        if(this.HavePromoCode!='' && this.HavePromoCode!=undefined && this.HavePromoCode!=null){
+                          this.promoYNError = false;
+                          if(this.HavePromoCode=='N'){
+                            console.log("Form Validated 2222")
+                            this.PromoCode = null;
+                            this.promoError = false;
+                            this.setVehicleValue();
+                            // if(this.executiveSection){
+                            //   if(this.executiveValue!='' && this.executiveValue!=undefined && this.executiveValue!=null){
+                            //     if(this.commissionValue!='' && this.commissionValue!=undefined && this.commissionValue!=null){
+                                  
+                            //     }
+                            //     else{
+                            //       //this.toastrService.show('Commission Type','Please Select Commission Type', config);
+                            //     }
+                            //   }
+                            //   else{
+                            //     //this.toastrService.show('Executive','Please Select AcExecutive', config);
+                            //   }
+                            // }
+                            // else{
+                            //     this.setVehicleValue();
+                            // }
+                          }
+                          else if(this.PromoCode!='' && this.PromoCode!=undefined && this.PromoCode!=null){
+                            this.promoError = false;
+                            if(this.executiveSection){
+                              if(this.executiveValue!='' && this.executiveValue!=undefined && this.executiveValue!=null){
+                                if(this.commissionValue!='' && this.commissionValue!=undefined && this.commissionValue!=null){
+                                  this.setVehicleValue();
+                                }
+                                else{
+                                  //this.toastrService.show('Commission Type','Please Select Commission Type', config);
+                                }
+                              }
+                              else{
+                                //this.toastrService.show('Executive','Please Select AcExecutive', config);
+                              }
+                            }
+                            else{
+                                this.setVehicleValue();
+                            }
+                          }
+                          else{
+                            this.promoError = true;
+                            //this.toastrService.show('Promo Code','Please Enter PromoCode', config);
+                          }
+                        }
+                        else{
+                          this.promoYNError = true;
+                          //this.toastrService.show('PromoYN','Please Select PromoCode Available or Not', config);
+                        }
+                      }
+                      else{
+                        if(Number(this.exchangeRate) < Number(this.minCurrencyRate)){
+                          this.exchangeMaxError = true;
+                          //this.toastrService.show('Exchange Rate',`Please Enter Exchange Rate More than ${this.minCurrencyRate}`,config);
+                        }
+                        if(Number(this.exchangeRate) > Number(this.maxCurrencyRate)){
+                          this.exchangeMinError = true;
+                          //this.toastrService.show('Exchange Rate',`Please Enter Exchange Rate Less than ${this.maxCurrencyRate}`,config);
+                        }
+                      }
+  
+                    }
+                    else{
+                      this.currencyError = true;
+                      //this.toastrService.show('Currency','Please Select Currency', config);
+                    }
+                  }
+                  else{
+                    this.policyEndError = true;
+                    //this.toastrService.show('Policy End Date','Please Select Policy End Date', config);
+                  }
+                }
                 else{
                   this.policyPassDate = true;
-                  //this.toastrService.show('Policy Start Date','Policy Start Date Should Not be Pass Days', config);
                 }
               }
               else{
                 this.policyStartError = true;
-                
-                //this.toastrService.show('Policy Start Date','Please Select Policy Start Date', config);
               }
-  
         }
         else{
-          console.log("Form Validated 3")
-          console.log("Entered Vehicle List",this.policyStartDate,this.policyEndDate,this.HavePromoCode,this.currencyCode)
             this.setVehicleList(rowData,'direct',null);
         }
       }
@@ -1668,7 +1766,7 @@ export class CustomerDetailsComponent implements OnInit {
       let mandatory:boolean = this.checkMandatories();
       if(mandatory){
         let policyStartDate="";
-        let policyEndDate="";
+        
         // let type : NbComponentStatus = 'danger';
         //           const config = {
         //             status: type,
@@ -1695,120 +1793,25 @@ export class CustomerDetailsComponent implements OnInit {
                   if(this.policyStartDate!='' && this.policyStartDate!=null && this.policyStartDate!=undefined){
                   policyStartDate = this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy");
                   console.log('PolicyDate',this.policyStartDate);
-                  if( (new Date(this.policyStartDate)).setHours(0,0,0,0) >= (new Date()).setHours(0,0,0,0) ){
-                    this.policyPassDate = false;
-                    console.log("Policy Start Date Moved");
-                    Details[0].PolicyStartDate = policyStartDate;
-                    if(this.policyEndDate!='' && this.policyEndDate!=null && this.policyEndDate!=undefined){
-                      console.log("Policy End Date Moved");
-                      policyEndDate = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
-                      Details[0].NoOfDays = this.noOfDays;
-                      Details[0].PolicyEndDate=policyEndDate;
-                      console.log("Currency Code",this.currencyCode);
-                      if(this.currencyCode!='' && this.currencyCode!=null && this.currencyCode!=undefined){
-                        Details[0].Currency = this.currencyCode;
-                        console.log('CurrencyCodessss',this.currencyCode);
-                        if(this.exchangeRate!='' && this.exchangeRate!=null && this.exchangeRate!=undefined){
-                          if(Number(this.exchangeRate) >= Number(this.minCurrencyRate) && Number(this.exchangeRate) <= Number(this.maxCurrencyRate)){
-                              Details[0].ExchangeRate = this.exchangeRate;
-                              Details[0].SectionId = this.InsuranceType;
-                              if(this.HavePromoCode!='' && this.HavePromoCode!=null && this.HavePromoCode!=undefined){
-                                Details[0].HavePromoCode = this. HavePromoCode;
-                                Details[0].Promocode = this.PromoCode;
-                                if(this.executiveSection){
-                                  if(this.executiveValue!='' && this.executiveValue!=null && this.executiveValue!=undefined){
-                                    Details[0].AcexecutiveId = this.executiveValue;
-                                    if(this.issuerSection){
-                                      Details[0]['SourceType'] = this.Code;
-                                      Details[0]['BrokerCode'] = this.brokerCode;
-                                      Details[0]['BranchCode'] = this.branchValue;
-                                      Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
-                                      Details[0]['CustomerCode'] = this.customerCode;
-                                      Details[0]['LoginId'] = this.brokerLoginId;
-                                      if(this.IndustryId && this.industryList!=null)
-                                      Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
-                                    }
-                                    else{
-                                      Details[0]['SourceType'] = 'Agent';
-                                      Details[0]['BrokerCode'] = this.brokerCode;
-                                      Details[0]['BranchCode'] = this.branchValue;
-                                      Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
-                                      Details[0]['CustomerCode'] = this.customerCode;
-                                      Details[0]['LoginId'] = this.loginId;
-                                      if(this.IndustryId && this.industryList!=null)
-                                      Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
-                                    }
-                                    sessionStorage.setItem('homeCommonDetails',JSON.stringify(Details))
-                                    console.log("On First Save",Details);
-                                    if(this.productId=='19'){
-                                      this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
-                                    }
-                                    else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='43') this.saveCommonDetails(Details); 
-                                    else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
-                                  }
-                                  else{
-                                    //this.toastrService.show('AcexecutiveId',"Please Enter AcexecutiveId",config);
-                                  }
-                                }
-                                else{
-                                  if(this.issuerSection){
-                                    Details[0]['SourceType'] = this.Code;
-                                    Details[0]['BrokerCode'] = this.brokerCode;
-                                    Details[0]['BranchCode'] = this.branchValue;
-                                    Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
-                                    Details[0]['CustomerCode'] = this.customerCode;
-                                    Details[0]['LoginId'] = this.brokerLoginId;
-                                    if(this.IndustryId && this.industryList!=null)
-                                      Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
-                                  }
-                                  else{
-                                    Details[0]['SourceType'] = 'Agent';
-                                    Details[0]['BrokerCode'] = this.brokerCode;
-                                    Details[0]['BranchCode'] = this.branchValue;
-                                    Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
-                                    Details[0]['CustomerCode'] = this.customerCode;
-                                    Details[0]['LoginId'] = this.loginId;
-                                    if(this.IndustryId && this.industryList!=null)
-                                      Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
-                                  }
-                                  sessionStorage.setItem('homeCommonDetails',JSON.stringify(Details))
-                                  if(this.productId=='19'){
-                                    this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
-                                  }
-                                  else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId =='21' || this.productId=='43') this.saveCommonDetails(Details); 
-                                  else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
-                                }
-                              }
-                              else{
-                                // this.toastrService.show('HavePromCode',"Please  PromCode",config)
-                              }
-                          }
-                          else{
-                            if(Number(this.exchangeRate) < Number(this.minCurrencyRate)){
-                              //this.toastrService.show('Exchange Rate',`Please Enter Exchange Rate More than ${this.minCurrencyRate}`,config);
-                            }
-                            if(Number(this.exchangeRate) > Number(this.maxCurrencyRate)){
-                              //this.toastrService.show('Exchange Rate',`Please Enter Exchange Rate Less than Or Equal to ${this.maxCurrencyRate}`,config);
-                            }
-                          }
-                        }
-                        else{
-                          //this.toastrService.show('ExchangeRate',"Please Enter Exchange Rate",config);
-                        }
-    
-                      }
-                      else{
-                        //this.toastrService.show('CurrencyCode',"Please select CurrencyCode",config);
-                      }
+                  if(this.backDays){
+                   let backDate = new Date();
+                    var d = backDate;
+                    var year = d.getFullYear();
+                    var month = d.getMonth();
+                    var day = d.getDate();
+                    backDate = new Date(year, month, day-Number(this.backDays));
+                    if( (new Date(this.policyStartDate)).setHours(0,0,0,0) >= (backDate).setHours(0,0,0,0) ){
+                      this.policyPassDate = false;
+                      console.log("Policy Start Date Moved");
+                      Details[0].PolicyStartDate = policyStartDate;
+                      this.onProceedValidation(Details);
                     }
                     else{
-                      //this.toastrService.show('PolicyEndDate',"Please Select PolicyEndDate",config);
+                      this.policyPassDate = true;
+                      //this.toastrService.show('Policy Start Date','Policy Start Date Should Not be Pass Days', config);
                     }
                   }
-                  else{
-                    this.policyPassDate = true;
-                    //this.toastrService.show('Policy Start Date','Policy Start Date Should Not be Pass Days', config);
-                  }
+                  
     
                   }
                   else{
@@ -1869,6 +1872,114 @@ export class CustomerDetailsComponent implements OnInit {
         else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
     }
     
+  }
+  onProceedValidation(Details){
+    let policyEndDate="";
+    if(this.policyEndDate!='' && this.policyEndDate!=null && this.policyEndDate!=undefined){
+      console.log("Policy End Date Moved");
+      policyEndDate = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
+      Details[0].NoOfDays = this.noOfDays;
+      Details[0].PolicyEndDate=policyEndDate;
+      console.log("Currency Code",this.currencyCode);
+      if(this.currencyCode!='' && this.currencyCode!=null && this.currencyCode!=undefined){
+        Details[0].Currency = this.currencyCode;
+        console.log('CurrencyCodessss',this.currencyCode);
+        if(this.exchangeRate!='' && this.exchangeRate!=null && this.exchangeRate!=undefined){
+          if(Number(this.exchangeRate) >= Number(this.minCurrencyRate) && Number(this.exchangeRate) <= Number(this.maxCurrencyRate)){
+              Details[0].ExchangeRate = this.exchangeRate;
+              Details[0].SectionId = this.InsuranceType;
+              if(this.HavePromoCode!='' && this.HavePromoCode!=null && this.HavePromoCode!=undefined){
+                Details[0].HavePromoCode = this. HavePromoCode;
+                Details[0].Promocode = this.PromoCode;
+                if(this.executiveSection){
+                  if(this.executiveValue!='' && this.executiveValue!=null && this.executiveValue!=undefined){
+                    Details[0].AcexecutiveId = this.executiveValue;
+                    if(this.issuerSection){
+                      Details[0]['SourceType'] = this.Code;
+                      Details[0]['BrokerCode'] = this.brokerCode;
+                      Details[0]['BranchCode'] = this.branchValue;
+                      Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
+                      Details[0]['CustomerCode'] = this.customerCode;
+                      Details[0]['LoginId'] = this.brokerLoginId;
+                      if(this.IndustryId && this.industryList!=null)
+                      Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
+                    }
+                    else{
+                      Details[0]['SourceType'] = 'Agent';
+                      Details[0]['BrokerCode'] = this.brokerCode;
+                      Details[0]['BranchCode'] = this.branchValue;
+                      Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
+                      Details[0]['CustomerCode'] = this.customerCode;
+                      Details[0]['LoginId'] = this.loginId;
+                      if(this.IndustryId && this.industryList!=null)
+                      Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
+                    }
+                    sessionStorage.setItem('homeCommonDetails',JSON.stringify(Details))
+                    console.log("On First Save",Details);
+                    if(this.productId=='19'){
+                      this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
+                    }
+                    else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='43') this.saveCommonDetails(Details); 
+                    else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+                  }
+                  else{
+                    //this.toastrService.show('AcexecutiveId',"Please Enter AcexecutiveId",config);
+                  }
+                }
+                else{
+                  if(this.issuerSection){
+                    Details[0]['SourceType'] = this.Code;
+                    Details[0]['BrokerCode'] = this.brokerCode;
+                    Details[0]['BranchCode'] = this.branchValue;
+                    Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
+                    Details[0]['CustomerCode'] = this.customerCode;
+                    Details[0]['LoginId'] = this.brokerLoginId;
+                    if(this.IndustryId && this.industryList!=null)
+                      Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
+                  }
+                  else{
+                    Details[0]['SourceType'] = 'Agent';
+                    Details[0]['BrokerCode'] = this.brokerCode;
+                    Details[0]['BranchCode'] = this.branchValue;
+                    Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
+                    Details[0]['CustomerCode'] = this.customerCode;
+                    Details[0]['LoginId'] = this.loginId;
+                    if(this.IndustryId && this.industryList!=null)
+                      Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
+                  }
+                  sessionStorage.setItem('homeCommonDetails',JSON.stringify(Details))
+                  if(this.productId=='19'){
+                    this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
+                  }
+                  else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId =='21' || this.productId=='43') this.saveCommonDetails(Details); 
+                  else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+                }
+              }
+              else{
+                // this.toastrService.show('HavePromCode',"Please  PromCode",config)
+              }
+          }
+          else{
+            if(Number(this.exchangeRate) < Number(this.minCurrencyRate)){
+              //this.toastrService.show('Exchange Rate',`Please Enter Exchange Rate More than ${this.minCurrencyRate}`,config);
+            }
+            if(Number(this.exchangeRate) > Number(this.maxCurrencyRate)){
+              //this.toastrService.show('Exchange Rate',`Please Enter Exchange Rate Less than Or Equal to ${this.maxCurrencyRate}`,config);
+            }
+          }
+        }
+        else{
+          //this.toastrService.show('ExchangeRate',"Please Enter Exchange Rate",config);
+        }
+
+      }
+      else{
+        //this.toastrService.show('CurrencyCode',"Please select CurrencyCode",config);
+      }
+    }
+    else{
+      //this.toastrService.show('PolicyEndDate',"Please Select PolicyEndDate",config);
+    }
   }
   saveCommonDetails(commonDetails){
     let sourcecode:any;
