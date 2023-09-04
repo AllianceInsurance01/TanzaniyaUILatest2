@@ -26,7 +26,8 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
   effectiveDateStart:any;minDate:Date;remarks:any;
   subInsuranceList: any[]=[];coreAppCode:any;
   branchName: any;loginId:any;agencyCode:any;
-  DepartmentCode: any;
+  DepartmentCode: any; customerName: any;
+  customerList:any[]=[];showCustomerList:boolean = false;customerCode:any;
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,) {
     this.minDate = new Date();
@@ -78,6 +79,8 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
             this.CustomerNo=branchDetails?.CustomerCode;
             this.DepartmentCode="11";
             this.onBranchChange();
+            this.customerCode = branchDetails.CustomerCode;
+            this.onGetCustomerList('direct',this.customerCode);
             //this.branchName = branchDetails?.BranchName;
             if(branchDetails.EffectiveDateStart!=null){
               this.effectiveDateStart = this.onDateFormatInEdit(branchDetails.EffectiveDateStart)
@@ -184,6 +187,7 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
     this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerBranchList']);
   }
   onFormSubmit(){
+    console.log('kkkkkkkkkk',this.customerCode);
     let ReqObj = {
       "Address1": this.address1,
       "Address2": this.address2,
@@ -203,7 +207,7 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
       "Status": this.statusValue,
       "SourceType":this.subSourceId,
       "DepartmentCode":this.DepartmentCode,
-      "CustomerCode":this.CustomerNo
+      "CustomerCode":this.customerCode//this.CustomerNo
     }
     if (ReqObj.EffectiveDateStart != '' && ReqObj.EffectiveDateStart != null && ReqObj.EffectiveDateStart != undefined) {
       ReqObj['EffectiveDateStart'] =  this.datePipe.transform(ReqObj.EffectiveDateStart, "dd/MM/yyyy")
@@ -259,5 +263,48 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
     if(this.activeMenu=='Branch') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerBranchList']);
     if(value=='Product') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerProductList']);
     if(value=='Cover') this.router.navigate(['/Admin/globalConfigure/existingSections']);
+  }
+
+  onGetCustomerList(type,code){
+    console.log("Code",code); let branch:any;
+//     if(this.branchCode!=null && this.branchCode!=''){
+// branch=this.branchCode
+//     }
+//     else{
+//       branch =this.subBranchId
+//     }
+    if(code!='' && code!=null && code!=undefined){
+      let ReqObj = {
+        "BranchCode": this.subBranchId,
+        "InsuranceId": this.insuranceId,
+         "SearchValue": code,
+      }
+      let urlLink = `${this.ApiUrl1}api/search/premiacustomercode`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+              this.customerList = data.Result;
+              if(type=='change'){
+                this.showCustomerList = true;
+                this.customerName = null;
+              }
+              else{
+                this.showCustomerList = false;
+                let entry = this.customerList.find(ele=>ele.Code==this.customerCode);
+                this.customerName = entry.Name;
+                this.setCustomerValue(this.customerCode,this.customerName,'direct')
+              }
+              
+        },
+        (err) => { },
+      );
+    }
+    else{
+      this.customerList = [];
+    }
+  }
+  setCustomerValue(code,name,type){
+    this.showCustomerList = false;
+      this.customerCode = code;
+      this.customerName = name;
   }
 }

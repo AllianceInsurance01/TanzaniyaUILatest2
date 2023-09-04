@@ -100,6 +100,37 @@
                                     </ng-select>
                                 </div>
                             </div>
+                            <div class="col-12 col-md-4 col-lg-4" *ngIf="subBranchId!=null">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Customer Code</label><span class="text-danger">*</span>
+                                    <div class="input-form-box">
+                                        <input id="CustomerInput" class="input-form-control without-icon" [(ngModel)]="customerCode" type="text" (keyup)="onGetCustomerList('change',$event.target.value)" autocomplete="off" placeholder="Search here" data-toggle="dropdown" /><br>
+                                        <ul class="dropdown-menu dropdown-list-style CustomerInput" appendTo="body"   [ngClass]="{dropdownDisplay: showCustomerList, dropdownNotDisplay: !showCustomerList}">
+                                            <li *ngFor="let item of customerList" (click)="setCustomerValue(item.Code, item.Name,'change')">
+                                                {{item.Code}} - {{ item.Name }}
+                                            </li>
+                                            <div class="text-center" *ngIf="customerList.length == 0">
+                                                <p>Enter any code to Search...</p>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                    <!-- <div class="input-form-error" *ngIf="customerCodeError">
+                                        <div class="error-text text-danger">
+                                            Please Select Valid Customer Code
+                                        </div>
+                                    </div> -->
+
+                                </div>
+
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4" *ngIf="subBranchId!=null">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Customer Name</label><span class="text-danger">*</span>
+                                    <div class="input-form-box">
+                                        <input id="CustomerInput" disabled class="input-form-control without-icon"  [(ngModel)]="customerName" type="text" /><br>
+                                    </div>
+                                </div>
+                            </div>
 
                             <!-- <div class="col-12 col-md-4 col-lg-4">
                               <div class="input-control-container">
@@ -160,8 +191,10 @@
                                     </div>
                                 </div>
                             </div>
+                          
                         </div>
                         <div class="row">
+                       
                             <!-- <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Contact Person Name<span class="text-required">*</span></label>
