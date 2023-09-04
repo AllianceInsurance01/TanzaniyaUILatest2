@@ -100,8 +100,8 @@
                             </button>
                             <mat-menu #menu="matMenu">
                                 <button mat-menu-item (click)="onSchedule.emit(element)"><i class="fas fa-file"></i>&nbsp;Schedule</button>
-                                <button mat-menu-item (click)="onCredit.emit(element)"><i class="fas fa-file"></i>&nbsp;Credit Note</button>
-                                <button mat-menu-item (click)="onDebit.emit(element)"><i class="fas fa-file"></i>&nbsp;Debit Note</button>
+                                <button mat-menu-item (click)="onCredit.emit(element)" *ngIf="element.CreditNo!=null && element.CreditNo!=''"><i class="fas fa-file"></i>&nbsp;Credit Note</button>
+                                <button mat-menu-item (click)="onDebit.emit(element)" *ngIf="element.DebitNoteNo!=null && element.DebitNoteNo!=''"><i class="fas fa-file"></i>&nbsp;Debit Note</button>
                                 <button mat-menu-item (click)="onGetEndorsements.emit(element)"><i class="fas fa-address-card"></i>&nbsp;Endorsement</button>
                                 <button mat-menu-item (click)="onView.emit(element)"><i class="fas fa-eye"></i>&nbsp;View Quote Details</button>
                                 <button mat-menu-item><i class="fas fa-credit-card"></i>&nbsp;Pay EMI</button>
