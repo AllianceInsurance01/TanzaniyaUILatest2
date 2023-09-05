@@ -1,6 +1,4 @@
-* {
-    font-family: 'Inter';
-}
+
 
 .card-header {
     background-color: #fff !important;
@@ -14,7 +12,6 @@
 }
 
 .cuslabel {
-    font-family: 'Inter';
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
@@ -25,7 +22,6 @@
 .cuslabel2 {
     color: #FC4412;
     text-align: center;
-    font-family: 'Inter';
     font-size: 12px;
     font-style: normal;
     font-weight: 500;
@@ -35,7 +31,6 @@
 .main-header2 {
     color: #343A40;
     font-feature-settings: 'clig' off, 'liga' off;
-    font-family: Roboto;
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -43,7 +38,6 @@
 }
 
 .commontext {
-    font-family: Inter;
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -83,7 +77,6 @@
 .headings {
     color: var(--theme1);
     font-feature-settings: 'clig' off, 'liga' off;
-    font-family: Inter;
     font-size: 18px;
     font-style: normal;
     font-weight: 600;
@@ -92,7 +85,6 @@
 
 .headinglbels {
     color: #212121;
-    font-family: Inter;
     font-size: 12px;
     font-style: normal;
     font-weight: 600;
@@ -101,7 +93,6 @@
 
 .star {
     color: #EA4335;
-    font-family: Inter;
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
@@ -173,7 +164,6 @@
     color: #fff;
     text-align: center;
     font-feature-settings: 'clig' off, 'liga' off;
-    font-family: Inter;
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
