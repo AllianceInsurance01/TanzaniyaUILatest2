@@ -197,3 +197,14 @@
     padding: 0px !important;
     transition: .25s;
 }
+
+
+@media screen and (min-width: 850px) and (max-width: 20000px) {
+    .display2{
+        display:none;
+    }
+  }
+  
+  @media screen and (min-width: 280px) and (max-width: 849px) {
+    .display1{ display: none; } 
+  }
