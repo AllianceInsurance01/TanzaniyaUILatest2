@@ -20,6 +20,7 @@ import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyMatDatepickerModule } from '@ngx-formly/material/datepicker';
 import { FormlyMatToggleModule } from '@ngx-formly/material/toggle';
 import { MatNativeDateModule } from '@angular/material/core';
+import { NewCustomerDetailsComponent } from '../new-customer-details/new-customer-details.component';
 
 
 
@@ -28,7 +29,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
   declarations: [
     ProductFormComponent,
-    ExistingCustomersComponent
+    ExistingCustomersComponent,
+    NewCustomerDetailsComponent
   ],
   imports: [
     CommonModule,

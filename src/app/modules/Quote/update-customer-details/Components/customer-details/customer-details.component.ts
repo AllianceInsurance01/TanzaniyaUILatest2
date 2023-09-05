@@ -441,7 +441,7 @@ export class CustomerDetailsComponent implements OnInit {
 
   }
   editChange(){
-    this.router.navigate(['/Home/customer/Client']);
+    this.router.navigate(['/Home/customer/ClientDetails']);
   }
   onchange()
   {

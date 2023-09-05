@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ExistingCustomersComponent } from './existing-customers.component';
 import { ProductFormComponent } from '../product-form/product-form.component';
+import { NewCustomerDetailsComponent } from '../new-customer-details/new-customer-details.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,15 @@ const routes: Routes = [
   //     breadcrumb: 'Update Customer Details',
   //   }
   // },
+  {
+    path: 'ClientDetails',
+    component: NewCustomerDetailsComponent,
+    data: {
+      preload: true,
+      title: "",
+      breadcrumb: 'Customers',
+    }
+  },
   {
     path: 'Client',
     component: ProductFormComponent,

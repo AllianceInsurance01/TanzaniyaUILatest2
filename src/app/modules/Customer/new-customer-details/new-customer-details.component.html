@@ -1,0 +1,229 @@
+<div class="mt-2 container">
+    <div class="card">
+     <div class="card-header">
+   <div class="row">
+     <div class="col-9 col-md-9 col-lg-9 col-xl-9 main-header">
+       <div class="cuslabel"> Customer Details
+         <!-- <div class="commontext"style="color: #667085;font-weight: 400;font-size:13px;">Reference No:MOT-023645</div> -->
+       </div>
+      
+       <div class="main-header2">Select Account type :</div>
+      
+     </div>
+     <div class="col-3 col-md-3 col-lg-3 col-xl-3 d-flex">
+       <div class="main-he5" (click)="setPolicyType(1)" *ngIf="productItem.IdType == 2">
+         <div class="commontext" style="color: #000;">Personal</div> 
+       </div>
+       <div class="main-he4" *ngIf="productItem.IdType == 1">
+        <div class="commontext" style="color: #fff;">Personal</div> 
+      </div>
+      <div class="main-he5" (click)="setPolicyType(2)" *ngIf="productItem.IdType == 1">
+        <div class="commontext" style="color: #000">Corporate</div> 
+      </div>
+       <div class="main-he4" *ngIf="productItem.IdType == 2">
+         <div class="commontext" style="color: #fff">Corporate</div> 
+       </div>
+       <!-- <div class="main-he4" style="border-radius: 8px !important; margin-left:50px;">
+         <div class="commontext" style="color:#fff;"> Customer Change </div>
+        </div> -->
+     </div>
+   </div>
+ </div>
+ <div class="card-body">
+    <div class="row mt-4">
+      <div class="col-7">
+     
+       <div><h1 class="headings">Personal Information</h1></div>
+       <div class="d-flex mt-3 justify-content-between">
+       <div>
+         <div class="headinglbels">Customer Title <span class="star">*</span></div> 
+         <div class="mt-1">
+           <ng-select class="custom" appendTo="body"  [items]="titleList" (change)="onTitleChange()" [(ngModel)]="productItem.Title" bindValue="Code" bindLabel="CodeDesc">
+           </ng-select>
+         </div>
+       </div>
+       <div style="min-width: 260px;">
+         <div class="headinglbels">Customer Name<span class="star">*</span></div> 
+         <div class="mt-1">
+           <input type="text" maxlength="150" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.ClientName">
+         </div>
+       </div>
+       <div style="min-width: 260px;">
+         <div class="headinglbels">Occupation<span class="star">*</span></div> 
+         <div class="mt-1">
+            <ng-select class="custom" appendTo="body" [items]="occupationList"  [(ngModel)]="productItem.Occupation" bindValue="Code" bindLabel="CodeDesc">
+            </ng-select>
+         </div>
+       </div>
+        </div>
+        <div class="d-flex mt-3 justify-content-between">
+            <div>
+                <div class="headinglbels">Gender <span class="star">*</span></div> 
+                <div class="mt-1">
+                  <ng-select class="custom" appendTo="body"  [items]="genderList"  [(ngModel)]="productItem.Gender" bindValue="Code" bindLabel="CodeDesc">
+                  </ng-select>
+                </div>
+            </div>
+            <div style="min-width: 260px;">
+                <div class="headinglbels">Identity Type<span class="star">*</span></div> 
+                <div class="mt-1">
+                   <ng-select class="custom" appendTo="body" [items]="policyHolderTypeList"  [(ngModel)]="productItem.PolicyHolderTypeid" bindValue="Code" bindLabel="CodeDesc">
+                   </ng-select>
+                </div>
+            </div>
+            <div style="min-width: 260px;">
+                <div class="headinglbels">ID Number<span class="star">*</span></div> 
+                <div class="mt-1">
+                   <input type="text" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.IdNumber" maxlength="20">
+                </div>
+            </div>
+        </div>
+        <div class="d-flex mt-3 justify-content-between">
+            <div>
+                <div class="headinglbels">Code <span class="star">*</span></div> 
+                <div class="mt-1">
+                  <ng-select class="custom" appendTo="body"  [items]="mobileCodeList"  [(ngModel)]="productItem.MobileCode" bindValue="Code" bindLabel="CodeDesc">
+                  </ng-select>
+                </div>
+            </div>
+            <div style="min-width: 260px;">
+                <div class="headinglbels">Mobile No<span class="star">*</span></div> 
+                <div class="mt-1">
+                    <input type="text" maxlength="10" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.MobileNo">
+                </div>
+            </div>
+            <div style="min-width: 260px;">
+                <div class="headinglbels">Email ID<span class="star">*</span></div> 
+                <div class="mt-1">
+                    <input type="text" class="layout" email [(ngModel)]="productItem.EmailId" #prmEmail="ngModel">
+                </div>
+                <div *ngIf="prmEmail.errors?.email" class="text-danger"> 
+                    Please Enter Valid Email Id
+               </div> 
+            </div>
+            
+        </div>
+      </div>
+        <div class="line-middle"></div>
+      <div class="col-4">
+       <div><h1 class="headings">Additional Information</h1></div>
+       <div class="row mt-3">
+         <div class="col-6" >
+           <div class="headinglbels" *ngIf="productItem.IdType == 2">Registration Date <span class="star">*</span></div> 
+           <div class="headinglbels" *ngIf="productItem.IdType != 2">Date Of Birth <span class="star">*</span></div> 
+           <ng-container >
+                <mat-form-field appearance="fill">
+                    <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
+                    <input matInput [matDatepicker]="picker1" [max]="maxDate" [(ngModel)]="productItem.dobOrRegDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </ng-container>
+         </div>
+         <div class="col-6" *ngIf="productItem.IdType!='1'">
+           <div class="headinglbels">VRN/GST Number<span class="star">*</span></div> 
+           <div class="mt-1">
+             <input type="text" class="layout" style="width:130% !important;" (keypress)="omit_special_char($event)" placeholder="ex:7654321888"  [(ngModel)]="productItem.vrngst" maxlength="20">
+           </div>
+         </div>
+         <div class="col-6">
+            <div class="headinglbels">Prefered Notification <span class="star">*</span></div> 
+            <div class="mt-1">
+              <ng-select class="auto-grow" style="font-size: 14px !important;width:100% !important;" appendTo="body" bindValue="Code" [items]="notificationList"  [(ngModel)]="productItem.PreferredNotification" bindLabel="CodeDesc">
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-6" *ngIf="productItem.IdType!='1'">
+            <div class="headinglbels">Business Type<span class="star">*</span></div> 
+            <div class="mt-1">
+              <ng-select class="custom" appendTo="body" style="width:130% !important;" [items]="businessTypeList" [(ngModel)]="productItem.BusinessType" bindValue="Code" bindLabel="CodeDesc">
+             </ng-select>
+            </div>
+          </div>
+          <div class="col-6 mt-2">
+            <div class="headinglbels">Tax Exempted<span class="star">*</span></div> 
+            <div class="mt-1">
+              <ng-select class="custom"  appendTo="body" [items]="taxExcemptedList"  [(ngModel)]="productItem.isTaxExempted" bindValue="Code" bindLabel="CodeDesc">
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-6 mt-2" *ngIf="productItem.isTaxExempted=='Y'">
+            <div class="headinglbels">Tax Exempted No<span class="star">*</span></div> 
+            <div class="mt-1">
+              <input type="text" class="layout" style="width:130% !important;" [(ngModel)]="productItem.TaxExemptedId"  maxlength="20" (keypress)="omit_special_char($event)">
+            </div>
+          </div>
+       </div>
+      </div>
+    </div>
+    <div class="row">
+       <div><h1 class="headings">Address Details</h1></div>
+       <div class="row mt-3">
+            <div class="col-4">
+                <div class="headinglbels">Address<span class="star">*</span></div> 
+                <div class="mt-1">
+                    <input type="text" maxlength="100" (keypress)="omit_special_char($event)"  class="layout"   [(ngModel)]="productItem.Address1">
+                </div>
+            </div>
+              <div class="col-4">
+                <div class="headinglbels">Street<span class="star">*</span></div> 
+                <div class="mt-1">
+                    <input type="text" maxlength="100" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.Street">
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="headinglbels">Country<span class="star">*</span></div> 
+                <div class="mt-1">
+                    <ng-select class="custom" appendTo="body" [items]="countryList" (change)="getRegionList('change')" [(ngModel)]="productItem.Country" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+              </div>
+              <div class="col-4 mt-2">
+               <div class="headinglbels">Region<span class="star">*</span></div> 
+               <div class="mt-1">
+                    <ng-select class="custom" appendTo="body"  [items]="regionList" (change)="getStateList('change')"  [(ngModel)]="productItem.state" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+               </div>
+              </div>
+              <div class="col-4  mt-2">
+                <div class="headinglbels">District<span class="star">*</span></div> 
+                <div class="mt-1">
+                    <ng-select class="custom" appendTo="body" [items]="stateList" [(ngModel)]="productItem.CityName" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+             </div>
+             <div class="col-4  mt-2">
+                <div class="headinglbels">Zip Code<span class="star">*</span></div> 
+                <div class="mt-1">
+                    <input type="text" maxlength="15" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.PinCode">
+                </div>
+             </div>
+             <div class="col-4 mt-2">
+                <div class="headinglbels">Status<span class="star">*</span></div> 
+                <div class="mt-1">
+                    <ng-select class="auto-grow" appendTo="body" [items]="statusList" [(ngModel)]="productItem.Clientstatus" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+             </div>
+       </div>
+    </div>
+    <div class="row  mt-3">
+        <div class="text-center">
+            <button class="backbtn" style="border:none !important;background:#D9D9D9;" (click)="getBack()"><span class="backbtntext"><< Back</span></button>&nbsp;
+            <button class="backbtn" style="background: #FC4412 !important;" (click)="onSubmit(productItem)"><span class="backbtntext">Submit</span></button>
+        </div>
+    </div>
+ </div>
+ </div>
+
+</div>
+<!--   
+     <div class="col-2 main-he3" style="width:auto !important;height:auto !important;">
+       <h3 class="commontext" style="color:#FFF">Personal</h3>
+     </div>
+     <div class="col-2 main-he5" style="width:auto !important;height:auto !important;">
+       <h3 class="commontext" style="color:#FFF">Corporate</h3>
+     </div>
+     <div class="col-2 main-he4" style="width:auto !important;height:auto !important;">
+           <h3 class="commontext" style="color:#FFF">Change Customer</h3>
+     </div>-->
