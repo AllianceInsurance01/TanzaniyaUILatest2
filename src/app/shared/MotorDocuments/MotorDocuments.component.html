@@ -35,54 +35,52 @@
                 <div style="font-family: 'Inter', sans-serif !important;">
                     <!--style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)!important"-->
                 <div class="row p-5 ml-4 mr-4" *ngFor="let Cus of customerInfo"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
-                    <div class="col-5">
+                    <div class="col-md-5 col-12">
                         <div>
                             <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;">Personal Details</h1></div>
                             <div class="Personal Details mt-2 pl-5 pr-5">
 
                                 <div class="row mt-2">
                                  
-                                    <div class="col-4 mt-2">
+                                    <div class="col-md-4 col-6 mt-2">
                                         <div class="heading1">Mobile Code</div>
                                         <div class="heading2">{{Cus.MobileCode1}}</div>
                                     </div>
-                                    <div class="col-4 mt-2">
+                                    <div class="col-md-4 col-6 mt-2">
                                         <div class="heading1">Mobile No</div>
                                         <div class="heading2" >{{Cus.MobileNo1}}</div>
                                     </div>
-                                    <div class="col-4 mt-2">
+                                    <div class="col-md-4 col-6 mt-2">
                                         <div class="heading1">City</div>
                                         <div class="heading2">{{Cus.CityName}}</div>
                                     </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-4 mt-2">
+                                    <div class="col-6 col-md-4 mt-2">
                                        <div class="heading1">Gender</div>
                                        <div class="heading2">{{Cus.Gender}}</div>
                                     </div>
-                                    <div class="col-4 mt-2">
+                                    <div class="col-6 col-md-4 mt-2">
                                         <div class="heading1">Occupation</div>
                                         <div class="heading2" >{{Cus.Occupation}}</div>
                                     </div>
-                                    <div class="col-4 mt-2">
+                                    <div class="col-6 col-md-4 mt-2">
                                         <div class="heading1">Nationality</div>
                                         <div class="heading2"> {{Cus.Nationality}}</div>
                                     </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-4 mt-2">
+                            
+                                    <div class="col-6 col-md-4 mt-2">
                                        <div class="heading1">Date Of Birth</div>
                                        <div class="heading2"> {{Cus.DobOrRegDate}}</div>
                                     </div>
-                                    <div class="col-4 mt-2">
+                                    <div class="col-6 col-md-4 mt-2">
                                         <div class="heading1">WhatsApp Code</div>
                                         <div class="heading2">{{Cus.WhatsappcodeDesc}}</div>
                                      </div>
-                                     <div class="col-4 mt-2">
+                                     <div class="col-6 col-md-4 mt-2">
                                         <div class="heading1">WhatsApp No</div>
                                         <div class="heading2">{{Cus.WhatsappNo}}</div>
                                      </div>
-                                </div>
+                                    </div>
+                              
                                 <div class="row mt-2">
                                     <div class="col-10 mt-2">
                                         <div class="heading1">Address</div>
@@ -95,43 +93,41 @@
                     </div>
                         
                     <div class="line-in-middle"></div>
-                    <div class="col-6">
+                    <div class="col-md-6 col-12">
                                 <div>
                                     <div class="Personal Details">
                                         <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">Additional Information</h1></div>
                                        </div>
                                        <div class="row mt-2">
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 mt-2">
     
                                            <div class="heading1">LoginId</div>
                                            <div class="heading2">{{Cus.LoginId}}</div>
                                         </div>
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">ApplicationId</div>
                                             <div class="heading2">{{Cus.ApplicationId}}</div>
                                         </div>
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">Source</div>
                                             <div class="heading2">{{Cus.Source}}</div>
                                         </div>
-                                        
-                                    </div>
-                                    <div class="row mt-2">
-                                           <div class="col-4 mt-2">
+                                           <div class="col-6 col-md-4 mt-2">
                                                 <div class="heading1">Source Type</div>
                                                 <div class="heading2">{{Cus.SourceType}}</div>
                                             </div>
                                         
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">CustomerCodeName</div>
                                             <div class="heading2">broker</div>
                                         </div>
                                      
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">Division</div>
                                             <div class="heading2">{{Cus.Division}}</div>
                                         </div>
-                                    </div>
+                                   
+                                </div>
                                     <div class="row mt-2">
                                         <div class="col-12 mt-2">
                                             <div class="heading1">Email</div>
@@ -169,54 +165,47 @@
                     <div class="ml-5 mt-2" *ngFor="let vech of ViewRisk"><!--class="message"-->
                         <div class="container">
                             <div class="row p-5 ml-4 mr-4" *ngIf="vech.Chassisnumber==chhassisno"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
-                                <div class="col-6">
+                                <div class="col-md-6 col-12">
                                     <div>
                                         <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;">Vechile Info</h1></div>
                                         <div class="Personal Details mt-2 pl-5 pr-5">
             
                                             <div class="row mt-2">
-                                                <div class="col-4 mt-2">
+                                                <div class="col-6 col-md-4 mt-2">
                                                     <div class="heading1">Make</div>
                                                     <div class="heading2" >{{vech.VehiclemakeDesc}}</div>
                                                 </div>
-                                                <div class="col-4 mt-2">
+                                                <div class="col-6 col-md-4 mt-2">
                                                     <div class="heading1">Model</div>
                                                     <div class="heading2"> {{vech.VehcilemodelDesc}}</div>
                                                 </div>
-                                                <div class="col-4 mt-2">
+                                                <div class="col-6 col-md-4 mt-2">
                                                     <div class="heading1">Body Type</div>
                                                     <div class="heading2"> {{vech.VehicleTypeDesc}}</div>
                                                  </div>
                                                
-                                               
-                                            </div>
-                                         
-                                                <div class="row mt-2">
-                                                <div class="col-4 mt-2">
+                                                <div class="col-6 col-md-4 mt-2">
                                                     <div class="heading1">Registration Number</div>
                                                     <div class="heading2">{{vech.Registrationnumber}}</div>
                                                  </div>
-                                                 <div class="col-4 mt-2">
+                                                 <div class="col-6 col-md-4 mt-2">
                                                     <div class="heading1">Chassis Number</div>
                                                     <div class="heading2">{{vech.Chassisnumber}}</div>
                                                  </div>
-                                                 <div class="col-4 mt-2">
+                                                 <div class="col-6 col-md-4 mt-2">
                                                     <div class="heading1">Engine Number</div>
                                                     <div class="heading2">{{vech.EngineNumber}}</div>
                                                 </div>
-                                               
-                                            </div>
-                                            <div class="row mt-2">
-                                                <div class="col-4 mt-2">
+                                                <div class="col-6 col-md-4 mt-2">
                                                     <div class="heading1">Motor Desc</div>
                                                     <div class="heading2"> {{vech.InsuranceTypeDesc}}</div>
                                                  </div>
                                              
-                                                 <div class="col-4 mt-2">
+                                                 <div class="col-6 col-md-4 mt-2">
                                                     <div class="heading1">Manufacture Year</div>
                                                     <div class="heading2"> {{vech.ManufactureYear}}</div>
                                                  </div>
-                                                 <div class="col-3 mt-2">
+                                                 <div class="col-6 col-md-4 mt-2">
                                                     <div class="heading1">Fuel Type</div>
                                                     <div class="heading2"> {{vech.FuelTypeDesc}}</div>
                                                  </div>
@@ -224,23 +213,23 @@
                                                     <div class="heading1">PolicyType</div>
                                                     <div class="heading2"> {{vech.PolicyTypeDesc}}</div>
                                                  </div> -->
-                                                </div>
-                                                <div class="row mt-2">
+                                              
+                                               
                                                   
-                                                 <div class="col-4 mt-2">
+                                                 <div class="col-6 col-md-4 mt-2">
                                                     <div class="heading1">Motor Category</div>
                                                     <div class="heading2"> {{vech.MotorCategoryDesc}}</div>
                                                  </div>
-                                                 <div class="col-4 mt-2">
+                                                 <div class="col-6 col-md-4 mt-2">
                                                     <div class="heading1">Inception Date</div>
                                                     <div class="heading2">{{vech.InceptionDate}}</div>
                                                 </div>
-                                                <div class="col-4 mt-2">
+                                                <div class="col-6 col-md-4 mt-2">
                                                     <div class="heading1">Expiry Date</div>
                                                     <div class="heading2" >{{vech.ExpiryDate}}</div>
                                                 </div>
                                                 
-                                                 </div>
+                                                
                                                  <!-- <div class="row mt-2">
                                                     <div class="col-4 mt-2">
                                                         <div class="heading1">Motor Usage</div>
@@ -255,13 +244,13 @@
                                                  </div>
                                                  </div> -->
                                            
-
+                                                </div>
                                         </div>
                                      </div>
                                 </div>
                                     
                                 <div class="line-in-middle"></div>
-                                <div class="col-5" *ngIf="vech.Chassisnumber==chhassisno">
+                                <div class="col-md-5 col-12" *ngIf="vech.Chassisnumber==chhassisno">
                                             <div>
                                                 <div class="Personal Details">
                                                     <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">SumInsured</h1>
@@ -269,15 +258,15 @@
                                                     </div>
                                                    </div>
                                                    <div class="row mt-2">
-                                                    <div class="col-4 mt-2">
+                                                    <div class="col-6 col-md-4 mt-2">
                                                         <div class="heading3">Currency</div>
                                                         <div class="heading2">{{vech.Currency}}</div>
                                                     </div>
-                                                    <div class="col-4 mt-2">
+                                                    <div class="col-6 col-md-4 mt-2">
                                                         <div class="heading3">Vechile Value</div>
                                                         <div class="heading2">{{vech.SumInsured | commaseparator}}</div>
                                                     </div>
-                                                    <div class="col-4 mt-2">
+                                                    <div class="col-6 col-md-4 mt-2">
                                                         <div class="heading3">Acccessories</div>
                                                         <div class="heading2" >{{vech.AcccessoriesSumInsured | commaseparator}}</div>
                                                     </div>
@@ -288,16 +277,16 @@
                                                 </div>
                                              
                                                     <div class="row mt-2">
-                                                        <div class="col-4 mt-2">
+                                                        <div class="col-6 col-md-4 mt-2">
                                                             <div class="heading3">WindScreen</div>
                                                             <div class="heading2"> {{vech.WindScreenSumInsured | commaseparator}}</div>
                                                         </div>
                                                           
-                                                        <div class="col-4 mt-2">
+                                                        <div class="col-6 col-md-4 mt-2">
                                                             <div class="heading3">ExtendedTPPD</div>
                                                             <div class="heading2"> {{vech.ExtendedTPPDSumInsured | commaseparator}}</div>
                                                          </div>
-                                                         <div class="col-4 mt-2">
+                                                         <div class="col-6 col-md-4 mt-2">
                                                             <div class="heading3">Ncd Yn</div>
                                                             <div class="heading2">{{vech.NcdYn}}</div>
                                                          </div>
@@ -318,11 +307,11 @@
 
                                                 <div class="row mt-2">
                                                   
-                                                       <div class="col-4 mt-2" *ngIf="vech.NcdYn == 'Y'">
+                                                       <div class="col-6 col-md-4 mt-2" *ngIf="vech.NcdYn == 'Y'">
                                                         <div class="heading3">Ncd Years</div>
                                                         <div class="heading2">{{vech.NcdYears}}</div>
                                                      </div>
-                                                     <div class="col-4 mt-2">
+                                                     <div class="col-6 col-md-4 mt-2">
                                                         <div class="heading3">First LossPayee</div>
                                                         <div class="heading2"> {{vech.FirstLossPayee}}</div>
                                                      </div>
@@ -332,15 +321,15 @@
                                                     <!-- <h3 class="heading3" style="text-decoration: underline;">SumInsured</h3> -->
                                                 </div>
                                                 <div class="row mt-1">
-                                                    <div class="col-4 mt-2">
+                                                    <div class="col-6 col-md-4 mt-2">
                                                         <div class="heading3">Collateral Yn</div>
                                                         <div class="heading2"> {{vech.CollateralYn}}</div>
                                                     </div>
-                                                    <div class="col-4 mt-2">
+                                                    <div class="col-6 col-md-4 mt-2">
                                                         <div class="heading3">Bank Name</div>
                                                         <div class="heading2"></div>
                                                     </div>
-                                                    <div class="col-4 mt-2" *ngIf="vech.CollateralYn == 'Y'">
+                                                    <div class="col-6 col-md-4 mt-2" *ngIf="vech.CollateralYn == 'Y'">
                                                         <div class="heading3">Collateral Name</div>
                                                         <div class="heading2"> {{vech.CollateralName}}</div>
                                                      </div>
@@ -360,7 +349,7 @@
 
                    <ng-container *ngIf="productId == '4'">
                     <div class="row p-5 ml-4 mr-4"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
-                        <div class="col-6">
+                        <div class="col-md-6 col-12">
                             <div>
                                 <div>
                                     <h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;">Travel Info</h1>
@@ -370,44 +359,44 @@
                                 <div class="Personal Details mt-2 pl-5 pr-5">
     
                                     <div class="row mt-2">
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">Depature Date</div>
                                             <div class="heading2">{{ViewRisk?.TravelStartDate}}</div>
                                         </div>
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">Arrival Date</div>
                                             <div class="heading2">{{ViewRisk?.TravelEndDate}}</div>
                                         </div>
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">Number Of Days</div>
                                             <div class="heading2">{{ViewRisk?.TravelCoverDuration}}</div>
                                         </div>
                                     </div>
                                  
                                         <div class="row mt-2">
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">Currency</div>
                                             <div class="heading2">{{ViewRisk?.Currency}}</div>
                                          </div>
-                                         <div class="col-4 mt-2">
+                                         <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">Have PromoCode</div>
                                             <div class="heading2">{{ViewRisk?.HavePromoCode}}</div>
                                          </div>
-                                         <div class="col-4 mt-2">
+                                         <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">Type of Paln</div>
                                             <div class="heading2" >{{ViewRisk?.SectionName}}</div>
                                         </div>
                                     </div>
                                     <div class="row mt-2">
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">Destination Country</div>
                                             <div class="heading2"> {{ViewRisk?.DestinationCountryDesc}}</div>
                                         </div>
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">Premium Plan</div>
                                             <div class="heading2"> {{ViewRisk?.PremiumPlan}}</div>
                                          </div>
-                                         <div class="col-4 mt-2">
+                                         <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">No Of Persons</div>
                                             <div class="heading2"> {{ViewRisk?.TotalPassengers}}</div>
                                          </div>
@@ -417,14 +406,14 @@
                         </div>
                             
                         <div class="line-in-middle"></div>
-                        <div class="col-5">
+                        <div class="col-md-5 col-12">
                                     <div >
                                         <div class="Personal Details">
                                             <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">Passenger Info</h1></div>
                                            </div>
 
                                            <div class="row">
-                                            <div class="col-4" *ngFor="let h of historyRecords">
+                                            <div class="col-6 col-md-4" *ngFor="let h of historyRecords">
                                                 <div class="card my_class2" style="padding:10px 10px 10px 10px !important;cursor: pointer;background-color:lightblue"
                                                 [ngClass]="{'my_class': h.PassengerName != passengerName, 'my_class2' :  h.PassengerName == passengerName }" (click)="passnger(h?.PassengerName)">
                                                     <div class="mails">
@@ -439,25 +428,25 @@
                                            </div>
                                           <ng-container *ngFor="let h of historyRecords">
                                            <div class="row mt-2" *ngIf="h.PassengerName == passengerName">
-                                            <div class="col-4 mt-2">
+                                            <div class="col-6 col-md-4 mt-2">
                                                 <div class="heading1">Relationship</div>
                                                 <div class="heading2">{{h.RelationDesc}}</div>
                                             </div>
-                                            <div class="col-4 mt-2">
+                                            <div class="col-6 col-md-4 mt-2">
                                                 <div class="heading1">Gender</div>
                                                 <div class="heading2">{{h.GenderDesc}}</div>
                                             </div>
-                                            <div class="col-4 mt-2">
+                                            <div class="col-6 col-md-4 mt-2">
                                                 <div class="heading1">Date Of Birth</div>
                                                 <div class="heading2">{{h.Dob}}</div>
                                             </div>
                                         </div>
                                         <div class="row mt-2" *ngIf="h.PassengerName == passengerName">
-                                            <div class="col-4 mt-2">
+                                            <div class="col-6 col-md-4 mt-2">
                                                 <div class="heading1">Nationality</div>
                                                 <div class="heading2">{{h.Nationality}}</div>
                                             </div>
-                                            <div class="col-4 mt-2">
+                                            <div class="col-6 col-md-4 mt-2">
                                                 <div class="heading1">PassportNo</div>
                                                 <div class="heading2">{{h.PassportNo}}</div>
                                             </div>
@@ -529,50 +518,50 @@
                    
                    <ng-container *ngIf="productId == '3'">
                     <div class="row p-5 ml-4 mr-4" *ngFor="let vech of ViewRisk;let i=index;"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
-                        <div class="col-6">
+                        <div class="col-12 col-md-6">
                             <div>
                                 <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;">Domestic Info</h1></div>
                                 <div class="mt-2 pl-5 pr-5">
     
                                     <div class="row mt-2">
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">BuildingType</div>
                                             <div class="heading2">{{vech?.BuildingType}}</div>
                                         </div>
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">InbuildConstructType</div>
                                             <div class="heading2">{{vech.InbuildConstructType}}</div>
                                         </div>
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">OutbuildConstructType</div>
                                             <div class="heading2">{{vech.OutbuildConstructType}}</div>
                                         </div>
                                     </div>
                                  
                                         <div class="row mt-2">
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">Occupation</div>
                                             <div class="heading2">{{vech.OccupationTypeDesc}}</div>
                                          </div>
-                                         <div class="col-4 mt-2">
+                                         <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">Built Year</div>
                                             <div class="heading2">{{vech.BuildingBuildYear}}</div>
                                          </div>
-                                         <div class="col-4 mt-2">
+                                         <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">Currency</div>
                                             <div class="heading2" >{{vech.Currency}}</div>
                                         </div>
                                     </div>
                                     <div class="row mt-2">
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">Buiding Area Sqm</div>
                                             <div class="heading2"> {{vech.BuidingAreaSqm}}</div>
                                         </div>
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">Building Condition</div>
                                             <div class="heading2"> {{vech.BuildingCondition}}</div>
                                          </div>
-                                         <div class="col-4 mt-2">
+                                         <div class="col-6 col-md-4 mt-2">
                                             <div class="heading3">Building Usage</div>
                                             <div class="heading2">{{vech.BuildingUsageDesc}}</div>
                                         </div>
@@ -589,15 +578,15 @@
                                            </div>
                                            <div class="row mt-2">
                                          
-                                            <div class="col-4 mt-2">
+                                            <div class="col-6 col-md-4 mt-2">
                                                 <div class="heading3">BuildingSI</div>
                                                 <div class="heading2">{{vech.BuildingSuminsured}}</div>
                                             </div>
-                                            <div class="col-4 mt-2">
+                                            <div class="col-6 col-md-4 mt-2">
                                                 <div class="heading3">Personal Accident SI</div>
                                                 <div class="heading2"> {{vech.PersonalAccSuminsured}}</div>
                                              </div>
-                                             <div class="col-4 mt-2">
+                                             <div class="col-6 col-md-4 mt-2">
                                                 <div class="heading3">Pa Total disability SI</div>
                                                 <div class="heading2">{{vech.NcdYears}}</div>
                                              </div>
@@ -606,17 +595,17 @@
                                      
                                             <div class="row mt-2">
                                            
-                                             <div class="col-4 mt-2">
+                                             <div class="col-6 col-md-4 mt-2">
                                                 <div class="heading3">All Risk SI</div>
                                                 <div class="heading2">{{vech.AllriskSumInsured
                                                 }}</div>
                                              </div>
-                                             <div class="col-4 mt-2">
+                                             <div class="col-6 col-md-4 mt-2">
                                                 <div class="heading3">ContentSI</div>
                                                 <div class="heading2"> {{vech.ContentSuminsured
                                                 }}</div>
                                              </div>
-                                             <div class="col-4 mt-2">
+                                             <div class="col-6 col-md-4 mt-2">
                                                 <div class="heading3">Pa Medical SI</div>
                                                 <div class="heading2"> {{vech.CollateralName}}</div>
                                              </div>
@@ -624,7 +613,7 @@
                                         </div>
                                         <div class="row mt-2">
                                          
-                                             <div class="col-4 mt-2">
+                                             <div class="col-6 col-md-4 mt-2">
                                                 <div class="heading3">Personal Intermediary SI</div>
                                                 <div class="heading4">{{vech.PersonalIntermediarySuminsured
                                                 }}</div>
@@ -1023,6 +1012,53 @@
                                 </div>
                             </div>
                         
+                       
+                </div>
+            </div>
+           </mat-tab>
+
+           <mat-tab label="Document">
+            <div class="card">
+                <div class="row p-5 ml-4 mr-4"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
+                        <table class="table">
+                            <tbody>
+                                <tr *ngFor="let document of DocumentInfo;let i=index" style="display:flex;flex-direction: column;width:250px;">
+                                    <td>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            S.No
+                                        </div>
+                                        <div class="col-6">
+                                            <span>{{i+1}}</span>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                   
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                Document Type
+                                            </div>
+                                            <div class="col-6">
+                                                <span class="spancommon">{{document.DocumentTypeDesc}}</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                FileName
+                                            </div>
+                                            <div class="col-12">
+                                 {{document.DocumentDescription}}
+                                            </div>
+                                            </div>
+                                    </td>
+                                 
+                                </tr>
+                            </tbody>
+                        </table>
                        
                 </div>
             </div>
