@@ -112,6 +112,7 @@ export class NewCompanyDetailsComponent implements OnInit {
       "BrokerYn": this.insuranceDetails?.BrokerYn,
       "FooterImage": this.insuranceDetails?.FooterImage,
       "FooterDescription": this.insuranceDetails?.FooterDescription,
+      "PoBox": this.insuranceDetails?.PoBox,
       "Regards": this.insuranceDetails?.Regards,
       "Remarks": this.insuranceDetails?.Remarks,
       "Status": this.insuranceDetails?.Status,

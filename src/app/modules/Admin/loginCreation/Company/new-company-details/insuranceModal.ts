@@ -17,6 +17,7 @@ export class Insurance
         "Status":null;
         "EffectiveDateStart":null;
         "CreatedBy":null;
+        "PoBox": null;
         "RegulatoryCode":null;
         "Signature":null;
         "VrnNumber":null;

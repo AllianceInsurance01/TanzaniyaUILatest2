@@ -10,6 +10,14 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-4 col-lg-4 col-xl-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Currency</label>
+                    <ng-select class="input-form-select" appendTo="body" [items]="currencyList" [(ngModel)]="insuranceDetails.CurrencyId" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+            
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
                     <label class="input-form-label">Email<span class="text-required">*</span></label>
@@ -18,6 +26,9 @@
                     </div>
                 </div>
             </div>
+           
+        </div>
+        <div class="row">
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
                     <label class="input-form-label">Mobile No<span class="text-required">*</span></label>
@@ -26,8 +37,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
                     <label class="input-form-label">Address<span class="text-required">*</span></label>
@@ -44,20 +53,15 @@
                     </div>
                 </div>
             </div> -->
-            <div class="col-md-4 col-lg-4 col-xl-4">
+            <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
-                    <label class="input-form-label">Currency</label>
-                    <ng-select class="input-form-select" appendTo="body" [items]="currencyList" [(ngModel)]="insuranceDetails.CurrencyId" bindValue="Code" bindLabel="CodeDesc">
-                    </ng-select>
+                    <label class="input-form-label">PO Box No<span class="text-danger">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" [(ngModel)]="insuranceDetails.PoBox" class="input-form-control without-icon" maxlength="20">
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4 col-lg-4 col-xl-4">
-                <div class="input-control-container">
-                    <label class="input-form-label">Country</label>
-                    <ng-select class="input-form-select" appendTo="body" [items]="countryList" [(ngModel)]="insuranceDetails.CountryId" bindValue="Code" bindLabel="CodeDesc">
-                    </ng-select>
-                </div>
-            </div>
+            
         </div>
         <!-- <div class="row">
             <div class="col-12 col-md-4 col-lg-4">
@@ -86,19 +90,14 @@
             </div>
         </div> -->
         <div class="row">
-            <div class="col-12 col-md-4 col-lg-4">
+            <div class="col-md-4 col-lg-4 col-xl-4">
                 <div class="input-control-container">
-                    <label class="input-form-label">BrokerYN<span class="text-required">*</span></label>
-                    <div class="input-form-radio-box">
-                        <div class="radio-toolbar">
-                            <input id="orginwarehouse_Yes1" type="radio" name="originatingWarehouse2" [(ngModel)]="insuranceDetails.BrokerYn" value="Y">
-                            <label for="orginwarehouse_Yes1">Yes</label>
-                            <input type="radio" id="orginwarehouse_No1" name="originatingWarehouse2" [(ngModel)]="insuranceDetails.BrokerYn" value="N">
-                            <label for="orginwarehouse_No1">No</label>
-                        </div>
-                    </div>
+                    <label class="input-form-label">Country</label>
+                    <ng-select class="input-form-select" appendTo="body" [items]="countryList" [(ngModel)]="insuranceDetails.CountryId" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
                 </div>
             </div>
+            
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
                     <label class="input-form-label">VRN Number<span class="text-required">*</span></label>
@@ -132,6 +131,19 @@
                 </div>
             </div>
             <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">BrokerYN<span class="text-required">*</span></label>
+                    <div class="input-form-radio-box">
+                        <div class="radio-toolbar">
+                            <input id="orginwarehouse_Yes1" type="radio" name="originatingWarehouse2" [(ngModel)]="insuranceDetails.BrokerYn" value="Y">
+                            <label for="orginwarehouse_Yes1">Yes</label>
+                            <input type="radio" id="orginwarehouse_No1" name="originatingWarehouse2" [(ngModel)]="insuranceDetails.BrokerYn" value="N">
+                            <label for="orginwarehouse_No1">No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
                 <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
                 <mat-form-field appearance="fill">
                     <mat-label>Effective Date</mat-label>
@@ -140,6 +152,15 @@
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
                
+            </div>
+            
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <textarea cols="120" rows="2" class="input-form-control without-icon" [(ngModel)]="insuranceDetails.Remarks" maxlength="200"></textarea>
+                    </div>
+                </div>
             </div>
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
@@ -151,14 +172,6 @@
                             <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="insuranceDetails.Status" value="N">
                             <label for="orginwarehouse_No">DeActive</label>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-4 col-lg-4">
-                <div class="input-control-container">
-                    <label class="input-form-label">Remarks<span class="text-required">*</span></label>
-                    <div class="input-form-box">
-                        <textarea cols="120" rows="2" class="input-form-control without-icon" [(ngModel)]="insuranceDetails.Remarks" maxlength="200"></textarea>
                     </div>
                 </div>
             </div>
