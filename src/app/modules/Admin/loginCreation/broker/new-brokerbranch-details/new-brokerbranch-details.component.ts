@@ -26,7 +26,7 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
   effectiveDateStart:any;minDate:Date;remarks:any;
   subInsuranceList: any[]=[];coreAppCode:any;
   branchName: any;loginId:any;agencyCode:any;
-  DepartmentCode: any; customerName: any;
+  DepartmentCode: any; customerName: any;poBox:any=null;
   customerList:any[]=[];showCustomerList:boolean = false;customerCode:any;
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,) {
@@ -74,6 +74,7 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
             this.subInsuranceId = branchDetails?.AttachedCompany;
             this.branchCode = branchDetails?.BrokerBranchCode;
             this.branchName = branchDetails?.BrokerBranchName;
+            this.poBox = branchDetails?.PoBox;
             this.remarks = branchDetails?.Remarks;
             this.subSourceId = branchDetails?.SourceType;
             this.CustomerNo = branchDetails?.CustomerCode;
@@ -198,6 +199,7 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
       "InsuranceId": this.insuranceId,
       "LoginId": this.brokerLoginId,
       "Mobile": this.mobileNo,
+      "PoBox": this.poBox,
       "Remarks": this.remarks,
       "Status": this.statusValue,
       "SourceType":this.subSourceId,
