@@ -1001,10 +1001,11 @@ export class VehicleDetailsComponent implements OnInit {
         this.brokerCode = this.updateComponent.brokerCode;
         brokerbranchCode =  this.updateComponent.brokerBranchCode;
         this.customerCode = this.updateComponent.CustomerCode;
-      }
-    else{
-      this.sourceType=this.subuserType;
-    }
+        }
+        else {
+          this.sourceType = this.subuserType;
+          this.customerCode = this.userDetails?.Result.CustomerCode;
+        }
       let refNo = "99999",regYear="99999",IdType="99999",IdNo="99999";
       if(this.customerDetails){refNo = this.customerDetails?.CustomerReferenceNo;
         IdNo = this.customerDetails?.IdNumber;
@@ -1915,7 +1916,9 @@ export class VehicleDetailsComponent implements OnInit {
               }
               else {
                 this.sourceType = this.subuserType;
+                this.customerCode = this.userDetails?.Result.CustomerCode;
               }
+               
               let refNo = "99999",regYear="99999",IdType="99999",IdNo="99999";
               if(this.customerDetails){refNo = this.customerDetails?.CustomerReferenceNo;
                 IdNo = this.customerDetails?.IdNumber;

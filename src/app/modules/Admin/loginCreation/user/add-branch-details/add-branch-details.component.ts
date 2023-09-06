@@ -86,7 +86,6 @@ export class AddBranchDetailsComponent implements OnInit {
             if(branchDetails.EffectiveDateStart!=null){
               this.effectiveDateStart = this.onDateFormatInEdit(branchDetails.EffectiveDateStart)
             }
-            this.coreAppCode = branchDetails?.CoreAppCode;
             this.emailId = branchDetails?.Email;
             this.mobileNo = branchDetails?.Mobile;
             this.statusValue = branchDetails?.Status;
@@ -178,7 +177,6 @@ export class AddBranchDetailsComponent implements OnInit {
       "BrokerBranchCode": this.brokerBranchCode,
       "BranchType":this.branchType,
       "BrokerBranchName": this.branchName,
-      "CoreAppCode": this.coreAppCode,
       "CreatedBy": this.loginId,
       "Email": this.emailId,
       "EffectiveDateStart": this.effectiveDateStart,

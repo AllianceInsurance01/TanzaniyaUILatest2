@@ -53,7 +53,6 @@ export class UserBranchListComponent implements OnInit {
             { key: 'BrokerBranchName', display: 'Branch Name' },
             { key: 'EffectiveDateStart', display: 'Effective Date' },
             { key: 'Mobile', display: 'Mobile No' },
-            { key: 'CoreAppCode', display: 'Core App Code' },
             { key: 'Status', display: 'Status' },
             {
               key: 'actions',

@@ -63,7 +63,6 @@ export class NewUserbranchDetailsComponent implements OnInit {
             { key: 'BrokerBranchName', display: 'Branch Name' },
             { key: 'EffectiveDateStart', display: 'Start Date' },
             { key: 'Mobile', display: 'Mobile Number' },
-            { key: 'CoreAppCode', display: 'Core App Code' },
             { key: 'Status', display: 'Status' },
             // {
             //   key: 'AmendId',

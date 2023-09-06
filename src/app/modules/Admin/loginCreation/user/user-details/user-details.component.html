@@ -11,9 +11,25 @@
         <div class="row mt-2">
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
-                    <label class="input-form-label">User Name</label>
+                    <label class="input-form-label">Customer Code<span class="text-danger">*</span></label>
                     <div class="input-form-box">
-                        <input type="text" [(ngModel)]="userName" class="input-form-control without-icon" maxlength="100">
+                        <input id="CustomerInput" class="input-form-control without-icon" [(ngModel)]="customerCode" type="text" (keyup)="onGetCustomerList('change',$event.target.value)" autocomplete="off" placeholder="Search here" data-toggle="dropdown" /><br>
+                        <ul class="dropdown-menu dropdown-list-style CustomerInput" appendTo="body"   [ngClass]="{dropdownDisplay: showCustomerList, dropdownNotDisplay: !showCustomerList}">
+                            <li *ngFor="let item of customerList" (click)="setCustomerValue(item.Code, item.Name,'change')">
+                                {{item.Code}} - {{ item.Name }}
+                            </li>
+                            <div class="text-center" *ngIf="customerList.length == 0">
+                                <p>Enter any code to Search...</p>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Name<span class="text-danger">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" [(ngModel)]="userName" disabled class="input-form-control without-icon" maxlength="300">
                     </div>
                 </div>
             </div>
@@ -24,6 +40,11 @@
                     </ng-select>
                 </div>
             </div>
+            
+
+
+        </div>
+        <div class="row">
             <div class="col-12 col-md-4 col-lg-4">
                 <!--<div class="input-control-container">
                     <label class="input-form-label">Broker</label>
@@ -44,10 +65,6 @@
                   </div>
               </div>-->
             </div>
-
-
-        </div>
-        <div class="row">
             <!-- <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
                     <label class="input-form-label">Is it Brokerage Company?<span class="text-required">*</span></label>
@@ -78,14 +95,7 @@
                     </div>
                 </div>
             </div> -->
-            <div class="col-12 col-md-4 col-lg-4">
-                <div class="input-control-container">
-                    <label class="input-form-label">ContactPerson Name<span class="text-required">*</span></label>
-                    <div class="input-form-box">
-                        <input type="text" [(ngModel)]="contactPersonName" class="input-form-control without-icon" maxlength="100">
-                    </div>
-                </div>
-            </div>
+           
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
                     <label class="input-form-label">Address 1<span class="text-required">*</span></label>
@@ -144,7 +154,14 @@
                     </div>
                 </div>
             </div>
-
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">ContactPerson Name<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" [(ngModel)]="contactPersonName" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div>
             <!-- <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
                     <label class="input-form-label">Address 3<span class="text-required">*</span></label>
@@ -481,7 +498,7 @@
         </div>
 
         <div class="text-center mt-2">
-            <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+            <button class="btn btn-danger" (click)="ongetBack()">Back</button>&nbsp;
             <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
         </div>
     </div>

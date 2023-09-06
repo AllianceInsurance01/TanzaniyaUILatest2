@@ -19,5 +19,7 @@ export class Insurance
         "CreatedBy":null;
         "RegulatoryCode":null;
         "Signature":null;
+        "VrnNumber":null;
+        "TinNumber": null
 
 }

@@ -111,12 +111,18 @@ export class ExistingCustomersComponent implements OnInit {
   onEditCovers(rowData){
     sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
     //this.router.navigate(['Home/customer/Client/client-details']);
-    this.router.navigate(['Home/customer/Client']);
-
+    //this.router.navigate(['Home/customer/Client']);
+    this.router.navigate(['/Home/customer/ClientDetails']);
+  }
+  onAddAltCustomer(){
+    sessionStorage.removeItem('customerReferenceNo');
+    //this.router.navigate(['/Home/customer/Client/client-details']);
+    this.router.navigate(['/Home/customer/ClientDetails']);
   }
   onAddCustomer(){
     sessionStorage.removeItem('customerReferenceNo');
     //this.router.navigate(['/Home/customer/Client/client-details']);
-    this.router.navigate(['/Home/customer/Client']);
+    //this.router.navigate(['/Home/customer/Client']);
+    this.router.navigate(['/Home/customer/ClientDetails']);
   }
 }

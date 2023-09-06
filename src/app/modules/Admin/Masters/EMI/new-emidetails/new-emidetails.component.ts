@@ -202,8 +202,7 @@ event.target.value=0;
     let ReqObj = {
       "InsuranceId":this.insuranceId,
       "ProductId":this.policylList,
-      "BranchCode":"03",
-      "LoginId":this.loginId
+      "BranchCode":"03"
     }
     let urlLink = `${this.ApiUrl1}master/dropdown/policytype`;
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(

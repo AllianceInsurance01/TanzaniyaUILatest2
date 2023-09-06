@@ -168,7 +168,7 @@ export class CustomerSelectionComponent implements OnInit {
   }
   onAddCustomer(){
     sessionStorage.removeItem('customerReferenceNo');
-    this.router.navigate(['/Home/customer/Client']);
+    this.router.navigate(['/Home/customer/ClientDetails']);
   }
 
 }

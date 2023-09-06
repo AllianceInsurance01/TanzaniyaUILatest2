@@ -101,6 +101,22 @@
             </div>
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
+                    <label class="input-form-label">VRN Number<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="insuranceDetails.VrnNumber" maxlength="20">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">TIN Number<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="insuranceDetails.TinNumber" maxlength="20">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
                     <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
                     <div class="input-form-box">
                         <input type="text" class="input-form-control without-icon" [(ngModel)]="insuranceDetails.CoreAppCode" maxlength="10">
@@ -115,10 +131,6 @@
                     </div>
                 </div>
             </div>
-
-        </div>
-        <div class="row">
-           
             <div class="col-12 col-md-4 col-lg-4">
                 <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
                 <mat-form-field appearance="fill">
@@ -151,27 +163,11 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <!-- <div class="col-12 col-md-4 col-lg-4">
-                <div class="input-control-container">
-                    <label class="input-form-label">Status<span class="text-required">*</span></label>
-                    <div class="input-form-radio-box">
-                        <div class="radio-toolbar">
-                            <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="statusValue" value="YES">
-                            <label for="orginwarehouse_Yes">Active</label>
-                            <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="statusValue" value="NO">
-                            <label for="orginwarehouse_No">DeActive</label>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
-        </div>
     </div>
     <div>
 
 
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center mb-1">
 
                     <div>
                         <button class="btn btn-danger ml-2" (click)="dismiss()">Cancel</button>

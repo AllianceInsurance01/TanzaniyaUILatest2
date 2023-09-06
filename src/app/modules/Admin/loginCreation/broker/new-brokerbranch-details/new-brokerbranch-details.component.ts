@@ -75,21 +75,20 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
             this.branchCode = branchDetails?.BrokerBranchCode;
             this.branchName = branchDetails?.BrokerBranchName;
             this.remarks = branchDetails?.Remarks;
-            this.subSourceId=branchDetails?.SourceType;
-            this.CustomerNo=branchDetails?.CustomerCode;
+            this.subSourceId = branchDetails?.SourceType;
+            this.CustomerNo = branchDetails?.CustomerCode;
             this.DepartmentCode="11";
             this.onBranchChange();
-            this.customerCode = branchDetails.CustomerCode;
-            this.onGetCustomerList('direct',this.customerCode);
+            //this.customerCode = branchDetails.CustomerCode;
+            //this.onGetCustomerList('direct',this.customerCode);
             //this.branchName = branchDetails?.BranchName;
             if(branchDetails.EffectiveDateStart!=null){
               this.effectiveDateStart = this.onDateFormatInEdit(branchDetails.EffectiveDateStart)
             }
-            this.coreAppCode = branchDetails?.CoreAppCode;
+            //this.coreAppCode = branchDetails?.CoreAppCode;
             this.emailId = branchDetails?.Email;
             this.mobileNo = branchDetails?.Mobile;
             this.statusValue = branchDetails?.Status;
-
         }
       },
       (err) => { },
@@ -132,7 +131,6 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
                 this.subBranchList = data.Result;
                 this.SourceType();
               }
-
           }
         },
         (err) => { },
@@ -160,8 +158,7 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
       this.subInsuranceId = this.insuranceId;
       let branch = this.branchList.find(ele=>ele.Code==this.subBranchId);
       if(branch){
-
-        this.branchName = branch.CodeDesc;
+          this.branchName = branch.CodeDesc;
       }
     }
   }
@@ -175,7 +172,6 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
     let urlLink = `${this.ApiUrl1}master/dropdown/company`;
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
-        console.log(data);
         if(data.Result){
             this.subInsuranceList = data.Result;
         }
@@ -196,7 +192,6 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
       "BrokerBranchCode": this.branchCode,
       "BranchType":this.branchType,
       "BrokerBranchName": this.branchName,
-      "CoreAppCode": this.coreAppCode,
       "CreatedBy": this.loginId,
       "Email": this.emailId,
       "EffectiveDateStart": this.effectiveDateStart,
@@ -206,8 +201,7 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
       "Remarks": this.remarks,
       "Status": this.statusValue,
       "SourceType":this.subSourceId,
-      "DepartmentCode":this.DepartmentCode,
-      "CustomerCode":this.customerCode//this.CustomerNo
+      "DepartmentCode":this.DepartmentCode
     }
     if (ReqObj.EffectiveDateStart != '' && ReqObj.EffectiveDateStart != null && ReqObj.EffectiveDateStart != undefined) {
       ReqObj['EffectiveDateStart'] =  this.datePipe.transform(ReqObj.EffectiveDateStart, "dd/MM/yyyy")
