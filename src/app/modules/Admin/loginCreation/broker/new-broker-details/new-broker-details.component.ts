@@ -34,7 +34,9 @@ export class NewBrokerDetailsComponent implements OnInit {
   executiveId: any = null; stateList: any[] = [];
   editsSection = false;taxExcemptedCode:any=null;
   editValue: boolean = false;taxExcemptedYN:any='N';
-  regulatoryCode: any=null;
+  regulatoryCode: any=null;customerCode:any=null;
+  customerList: any[]=[];
+  showCustomerList: boolean=false;
   constructor(private router: Router, private sharedService: SharedService,
     private datePipe: DatePipe) {
     this.minDate = new Date();
@@ -67,6 +69,49 @@ export class NewBrokerDetailsComponent implements OnInit {
     }
     if (this.commissionVatYN == null) this.commissionVatYN = 'N';
 
+  }
+  onGetCustomerList(type,code){
+    console.log("Code",code); let branch:any;
+//     if(this.branchCode!=null && this.branchCode!=''){
+// branch=this.branchCode
+//     }
+//     else{
+//       branch =this.subBranchId
+//     }
+    if(code!='' && code!=null && code!=undefined){
+      let ReqObj = {
+        "BranchCode": null,
+        "InsuranceId": this.insuranceId,
+         "SearchValue": code,
+         "SourceType":this.subUserType
+      }
+      let urlLink = `${this.ApiUrl1}api/search/premiabrokercustomercode`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+              this.customerList = data.Result;
+              if(type=='change'){
+                this.showCustomerList = true;
+                this.userName = null;
+              }
+              else{
+                this.showCustomerList = false;
+                let entry = this.customerList.find(ele=>ele.Code==this.customerCode);
+                this.userName = entry.Name;
+                this.setCustomerValue(this.customerCode,this.userName,'direct')
+              }
+              
+        },
+        (err) => { },
+      );
+    }
+    else{
+      this.customerList = [];
+    }
+  }
+  setCustomerValue(code,name,type){
+    this.showCustomerList = false;
+      this.customerCode = code;
+      this.userName = name;
   }
   getChannelList() {
     let ReqObj = {
@@ -201,6 +246,7 @@ export class NewBrokerDetailsComponent implements OnInit {
           this.address1 = PersonalInformation?.Address1;
           this.address2 = PersonalInformation?.Address2;
           this.checkerYN = PersonalInformation?.CheckerYn;
+          this.customerCode = PersonalInformation?.CustomerCode;
           if(PersonalInformation?.TaxExemptedYn!=null){
             this.taxExcemptedYN=PersonalInformation?.TaxExemptedYn;
             if(this.taxExcemptedYN=='Y') this.taxExcemptedCode = PersonalInformation?.TaxExemptedCode;
@@ -400,8 +446,10 @@ export class NewBrokerDetailsComponent implements OnInit {
     let bankCode = null;
     if (this.subUserType == 'bank' && this.bankCode != null && this.bankCode != undefined) bankCode = this.bankCode
     let creditLimit = null;
-    if(this.creditLimit.includes(',')) creditLimit = this.creditLimit.replace(',','');
-    else creditLimit = this.creditLimit
+    if(this.creditLimit){
+      if(this.creditLimit.includes(',')) creditLimit = this.creditLimit.replace(',','');
+      else creditLimit = this.creditLimit
+    }
     console.log('this', this.brokerCompanyYn)
     if (this.brokerCompanyYn == null || this.brokerCompanyYn == '' || this.brokerCompanyYn == undefined) {
       this.brokerCompanyYn = 'N';
@@ -454,7 +502,8 @@ export class NewBrokerDetailsComponent implements OnInit {
         "MobileCode": this.mobileCode,
         "WhatsappCode": this.whatsAppCode,
         "WhatsappNo": this.whatsAppNo,
-        "VatRegNo": this.vatRegNo
+        "VatRegNo": this.vatRegNo,
+        "CustomerCode":this.customerCode
       }
     }
     if (ReqObj.LoginInformation.EffectiveDateStart != '' && ReqObj.LoginInformation.EffectiveDateStart != null && ReqObj.LoginInformation.EffectiveDateStart != undefined) {

@@ -29,60 +29,11 @@
                         <div class="row">
                             <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
-                                    <label class="input-form-label">Branch Name<span class="text-required">*</span></label>
+                                    <label class="input-form-label">Branch Name<span class="text-danger">*</span></label>
                                     <div class="input-form-box">
                                         <!-- <ng-select class="input-form-select" appendTo="body" (change)="onBranchChange()" [(ngModel)]="branchCode" [items]="branchList" bindValue="Code" bindLabel="CodeDesc">
                                         </ng-select> -->
                                         <input type="text" [(ngModel)]="branchName" class="input-form-control without-icon" maxlength="100">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Address 1<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" [(ngModel)]="address1" class="input-form-control without-icon" maxlength="100">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Address 2<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" [(ngModel)]="address2" class="input-form-control without-icon" maxlength="100">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <!-- <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">City</label>
-                                    <ng-select class="input-form-select" [items]="cityList" bindValue="Code" bindLabel="CodeDescription">
-                                    </ng-select>
-                                </div>
-                            </div> -->
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Email<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" [(ngModel)]="emailId" class="input-form-control without-icon" maxlength="100">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Mobile No<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" [(ngModel)]="mobileNo" class="input-form-control without-icon" maxlength="10">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" [(ngModel)]="coreAppCode" class="input-form-control without-icon" maxlength="10">
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +51,104 @@
                                     </ng-select>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4 col-lg-4" *ngIf="subBranchId!=null">
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Branch Type<span class="text-danger">*</span></label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="orginwarehouse_Yes2" type="radio" name="BranchType" [(ngModel)]="branchType" value="Main">
+                                            <label for="orginwarehouse_Yes2">Main</label>
+                                            <input type="radio" id="orginwarehouse_No2" name="BranchType" [(ngModel)]="branchType" value="SubBranch">
+                                            <label for="orginwarehouse_No2">Sub</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Address 1<span class="text-danger">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" [(ngModel)]="address1" class="input-form-control without-icon" maxlength="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Address 2<span class="text-danger">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" [(ngModel)]="address2" class="input-form-control without-icon" maxlength="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Email<span class="text-danger">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" [(ngModel)]="emailId" class="input-form-control without-icon" maxlength="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Mobile No<span class="text-danger">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" [(ngModel)]="mobileNo" class="input-form-control without-icon" maxlength="10">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Effective Date<span class="text-danger">*</span></label>
+                                    <mat-form-field appearance="fill">
+                                        <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="effectiveDateStart">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Remarks<span class="text-danger">*</span></label>
+                                    <div class="input-form-box">
+                                        <textarea cols="120" rows="2" [(ngModel)]="remarks" class="input-form-control without-icon" maxlength="200"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Status<span class="text-danger">*</span></label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse1" [(ngModel)]="statusValue" value="Y">
+                                            <label for="orginwarehouse_Yes">Active</label>
+                                            <input type="radio" id="orginwarehouse_No" name="originatingWarehouse1" [(ngModel)]="statusValue" value="N">
+                                            <label for="orginwarehouse_No">DeActive</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">City</label>
+                                    <ng-select class="input-form-select" [items]="cityList" bindValue="Code" bindLabel="CodeDescription">
+                                    </ng-select>
+                                </div>
+                            </div> -->
+                            
+                            <!-- <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Core App Code<span class="text-danger">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" [(ngModel)]="coreAppCode" class="input-form-control without-icon" maxlength="10">
+                                    </div>
+                                </div>
+                            </div> -->
+                           
+                            <!-- <div class="col-12 col-md-4 col-lg-4" *ngIf="subBranchId!=null">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Customer Code</label><span class="text-danger">*</span>
                                     <div class="input-form-box">
@@ -114,14 +162,7 @@
                                             </div>
                                         </ul>
                                     </div>
-                                    <!-- <div class="input-form-error" *ngIf="customerCodeError">
-                                        <div class="error-text text-danger">
-                                            Please Select Valid Customer Code
-                                        </div>
-                                    </div> -->
-
                                 </div>
-
                             </div>
                             <div class="col-12 col-md-4 col-lg-4" *ngIf="subBranchId!=null">
                                 <div class="input-control-container">
@@ -130,74 +171,31 @@
                                         <input id="CustomerInput" disabled class="input-form-control without-icon"  [(ngModel)]="customerName" type="text" /><br>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- <div class="col-12 col-md-4 col-lg-4">
                               <div class="input-control-container">
-                                  <label class="input-form-label">SourceType<span class="text-required">*</span></label>
+                                  <label class="input-form-label">SourceType<span class="text-danger">*</span></label>
                                   <ng-select class="input-form-select" [(ngModel)]="subSourceId" [items]="sourceList" bindValue="Code" bindLabel="CodeDesc">
                                   </ng-select>
                               </div>
                             </div>
                             <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
-                                    <label class="input-form-label">CustomerCode<span class="text-required">*</span></label>
+                                    <label class="input-form-label">CustomerCode<span class="text-danger">*</span></label>
                                     <div class="input-form-box">
                                         <input type="text" [(ngModel)]="CustomerNo" class="input-form-control without-icon" maxlength="10">
                                     </div>
                                 </div>
                             </div> -->
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Branch Type<span class="text-required">*</span></label>
-                                    <div class="input-form-radio-box">
-                                        <div class="radio-toolbar">
-                                            <input id="orginwarehouse_Yes2" type="radio" name="BranchType" [(ngModel)]="branchType" value="Main">
-                                            <label for="orginwarehouse_Yes2">Main</label>
-                                            <input type="radio" id="orginwarehouse_No2" name="BranchType" [(ngModel)]="branchType" value="SubBranch">
-                                            <label for="orginwarehouse_No2">Sub</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Status<span class="text-required">*</span></label>
-                                    <div class="input-form-radio-box">
-                                        <div class="radio-toolbar">
-                                            <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse1" [(ngModel)]="statusValue" value="Y">
-                                            <label for="orginwarehouse_Yes">Active</label>
-                                            <input type="radio" id="orginwarehouse_No" name="originatingWarehouse1" [(ngModel)]="statusValue" value="N">
-                                            <label for="orginwarehouse_No">DeActive</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
-                                    <mat-form-field appearance="fill">
-                                        <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="effectiveDateStart">
-                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker></mat-datepicker>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Remarks<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <textarea cols="120" rows="2" [(ngModel)]="remarks" class="input-form-control without-icon" maxlength="200"></textarea>
-                                    </div>
-                                </div>
-                            </div>
+                            
                           
                         </div>
                         <div class="row">
                        
                             <!-- <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
-                                    <label class="input-form-label">Contact Person Name<span class="text-required">*</span></label>
+                                    <label class="input-form-label">Contact Person Name<span class="text-danger">*</span></label>
                                     <div class="input-form-box">
                                         <input type="text" class="input-form-control without-icon" maxlength="100">
                                     </div>
@@ -205,7 +203,7 @@
                             </div> -->
                             <!-- <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
-                                    <label class="input-form-label">BrokerCode<span class="text-required">*</span></label>
+                                    <label class="input-form-label">BrokerCode<span class="text-danger">*</span></label>
                                     <div class="input-form-box">
                                         <input type="text" class="input-form-control without-icon" maxlength="10">
                                     </div>
@@ -214,7 +212,7 @@
 
                         </div>
                         <div class="text-center mt-2">
-                            <button class="btn btn-danger" (click)="getBackPage()">Back</button>
+                            <button class="btn btn-danger" (click)="getBackPage()">Back</button>&nbsp;
                             <button class="btn btn-success ml-2" (click)="onFormSubmit()">Submit</button>
                         </div>
                     </div>

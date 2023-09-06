@@ -31,13 +31,15 @@ export class UserDetailsComponent implements OnInit {
   coreAppBrokerCode:any;brokerCompanyYn:any="Y";loginId:any;makerYN:any="Y";
   companyCode: any;editSection:boolean = false;vatRegNo:any=null;
   agencyCode: any=null;cityCode:any;
-  userLoginId: any;
+  userLoginId: any;customerCode:any=null;
   oaCode: any=null;brokerList:any[]=[];
   productIds:any[]=[];
   executiveId: any=null;brokerId:any;
   brokerValue: any;
   stateCode:any;typeValue:any;
   stateList:any[]=[];
+  customerList: any[]=[];
+  showCustomerList: boolean=false;
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe) {
     this.minDate = new Date();
@@ -131,6 +133,49 @@ export class UserDetailsComponent implements OnInit {
       );
     }
   }*/
+  onGetCustomerList(type,code){
+    console.log("Code",code); let branch:any;
+//     if(this.branchCode!=null && this.branchCode!=''){
+// branch=this.branchCode
+//     }
+//     else{
+//       branch =this.subBranchId
+//     }
+    if(code!='' && code!=null && code!=undefined){
+      let ReqObj = {
+        "BranchCode": null,
+        "InsuranceId": this.insuranceId,
+         "SearchValue": code,
+         "SourceType":this.subUserType
+      }
+      let urlLink = `${this.ApiUrl1}api/search/premiabrokercustomercode`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+              this.customerList = data.Result;
+              if(type=='change'){
+                this.showCustomerList = true;
+                this.userName = null;
+              }
+              else{
+                this.showCustomerList = false;
+                let entry = this.customerList.find(ele=>ele.Code==this.customerCode);
+                this.userName = entry.Name;
+                this.setCustomerValue(this.customerCode,this.userName,'direct')
+              }
+              
+        },
+        (err) => { },
+      );
+    }
+    else{
+      this.customerList = [];
+    }
+  }
+  setCustomerValue(code,name,type){
+    this.showCustomerList = false;
+      this.customerCode = code;
+      this.userName = name;
+  }
   getBrokerList(){
     let ReqObj = {
       "SubUserType": this.subUserType,
@@ -287,6 +332,7 @@ export class UserDetailsComponent implements OnInit {
             //this.onStateChange('direct');
             this.cityCode = PersonalInformation?.CityName;
             this.designation = PersonalInformation?.Designation;
+            this.customerCode = PersonalInformation?.CustomerCode;
             this.contactPersonName = PersonalInformation?.ContactPersonName;
             this.coreAppBrokerCode = PersonalInformation?.CoreAppBrokerCode;
             this.commissionVatYN = PersonalInformation?.CommissionVatYn
@@ -508,7 +554,8 @@ export class UserDetailsComponent implements OnInit {
         "MobileCode": this.mobileCode,
         "WhatsappCode": this.whatsAppCode,
         "WhatsappNo":this.whatsAppNo,
-        "VatRegNo": this.vatRegNo
+        "VatRegNo": this.vatRegNo,
+        "CustomerCode": this.customerCode
       }
     }
      if (ReqObj.LoginInformation.EffectiveDateStart != '' && ReqObj.LoginInformation.EffectiveDateStart != null && ReqObj.LoginInformation.EffectiveDateStart != undefined) {

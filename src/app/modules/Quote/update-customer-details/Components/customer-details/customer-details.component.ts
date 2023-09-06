@@ -115,7 +115,7 @@ export class CustomerDetailsComponent implements OnInit {
     }
     if(this.userType!='Issuer'){
         this.customerCode = this.userDetails.Result.CustomerCode;
-        this.customerName = this.userDetails.Result.CustomerName;
+        this.customerName = this.userDetails.Result.UserName;
     }
    }
 
@@ -969,9 +969,9 @@ export class CustomerDetailsComponent implements OnInit {
   }
   onGetCustomerList(type,code){
     if(this.userType=='Issuer'){
-      if(this.brokerBranchCode!='' && this.brokerBranchCode!=null && this.brokerBranchCode!=undefined){
-        if(this.brokerBranchList.length!=0){
-          let entry = this.brokerBranchList.find(ele=>ele.Code==this.brokerBranchCode);
+      if(this.brokerCode!='' && this.brokerCode!=null && this.brokerCode!=undefined){
+        if(this.brokerList.length!=0){
+          let entry = this.brokerList.find(ele=>ele.Code==this.brokerCode);
           if(entry){
             this.customerCode = entry.CustomerCode;
             this.customerName = entry.CustomerName;
@@ -982,7 +982,7 @@ export class CustomerDetailsComponent implements OnInit {
     }
     else{
       this.customerCode = this.userDetails.Result.CustomerCode;
-        this.customerName = this.userDetails.Result.CustomerName;
+        this.customerName = this.userDetails.Result.UserName;
         this.updateComponent.CustomerCode = this.userDetails.Result.CustomerCode;
     }
     // if(code!='' && code!=null && code!=undefined){
