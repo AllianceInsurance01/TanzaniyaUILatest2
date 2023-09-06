@@ -116,6 +116,8 @@ export class NewCompanyDetailsComponent implements OnInit {
       "Remarks": this.insuranceDetails?.Remarks,
       "Status": this.insuranceDetails?.Status,
       "CountryId":this.insuranceDetails?.CountryId,
+      "VrnNumber": this.insuranceDetails?.VrnNumber,
+      "TinNumber": this.insuranceDetails?.TinNumber,
       "EffectiveDateStart": this.insuranceDetails?.EffectiveDateStart,
       "CreatedBy": this.loginId,
       "RegulatoryCode": this.insuranceDetails?.RegulatoryCode,
