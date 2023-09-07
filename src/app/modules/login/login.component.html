@@ -237,19 +237,57 @@
         </div>
     </div>
 </div>
-<!-- ======= Header ======= -->
-<header id="header" class="fixed-top header-scrolled">
-    <div class="container d-flex align-items-center">
-        <nav id="navbar" class="navbar navbar-expand-sm bg-motor navbar-motor">
-            <div class="container-fluid">
-              <!-- <a class="navbar-brand" href="#" width="170">
-                <img src="./assets/images/logo-2.png" width="170" />
-              </a> -->
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
-                <ul  class="navbar-nav">
+
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top header-scrolled">
+        <div class="container d-flex align-items-center">
+            <nav id="navbar" class="navbar navbar-expand-sm bg-motor navbar-motor">
+                <div class="container-fluid">
+                    <button class="btn btn-warning" style="cursor: not-allowed;margin-left: 10px;">Live Environment</button>
+                <!-- <a class="navbar-brand" href="#" width="170">
+                    <img src="./assets/images/logo-2.png" width="170" />
+                </a> -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+                    <ul  class="navbar-nav">
+                        <li (click)="tohome()"><a style="cursor:pointer">Home</a></li>
+                        <li (click)="toAbout()"><a style="cursor:pointer">About</a></li>
+                        <li class="dropdown"><a (click)="toServices()" style="cursor:pointer"><span>Services</span> <i
+                                    class="bi bi-chevron-down"></i></a>
+                            <ul>
+                                <li><a (click)="toServices()" style="cursor:pointer">Policy Endorsement</a></li>
+                                <li><a (click)="toServices()" style="cursor:pointer">Claim Intimation</a></li>
+                                <li><a (click)="toServices()" style="cursor:pointer">Claim Status</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown" (click)="toProduct()"><a style="cursor:pointer"><span>Product</span> <i
+                                    class="bi bi-chevron-down"></i></a>
+                            <ul>
+                                <li><a (click)="toProduct()" style="cursor:pointer">Motor</a></li>
+                                <li><a (click)="toProduct()" style="cursor:pointer">Travel</a></li>
+                                <li><a (click)="toProduct()" style="cursor:pointer">Corporate Plus</a></li>
+                                <li><a (click)="toProduct()" style="cursor:pointer">Marine Corgo</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown"><a style="cursor:pointer"><span>Portal</span> <i
+                                    class="bi bi-chevron-down"></i></a>
+                            <ul>
+                                <li><a style="cursor:pointer">Broker Portal</a></li>
+                                <li><a style="cursor:pointer">Bancasurance</a></li>
+                                <li><a style="cursor:pointer">Agent</a></li>
+                            </ul>
+                        </li>
+                        <li><a style="cursor:pointer" (click)="tocontact()">Contact</a></li>&nbsp;&nbsp;
+                        <li><button class="custom-btn btn-3 ml-4" (click)="onPress()"><span>Login</span></button></li>
+                    </ul>
+                </div>
+                </div>
+            </nav>
+            <!-- <h1 class="logo me-auto"><img src="./assets/images/logo-2.png"></h1>
+            <nav id="navbar" class="navbar">
+                <ul>
                     <li (click)="tohome()"><a style="cursor:pointer">Home</a></li>
                     <li (click)="toAbout()"><a style="cursor:pointer">About</a></li>
                     <li class="dropdown"><a (click)="toServices()" style="cursor:pointer"><span>Services</span> <i
@@ -280,655 +318,615 @@
                     <li><a style="cursor:pointer" (click)="tocontact()">Contact</a></li>&nbsp;&nbsp;
                     <li><button class="custom-btn btn-3 ml-4" (click)="onPress()"><span>Login</span></button></li>
                 </ul>
-              </div>
-            </div>
-          </nav>
-        <!-- <h1 class="logo me-auto"><img src="./assets/images/logo-2.png"></h1>
-        <nav id="navbar" class="navbar">
-            <ul>
-                <li (click)="tohome()"><a style="cursor:pointer">Home</a></li>
-                <li (click)="toAbout()"><a style="cursor:pointer">About</a></li>
-                <li class="dropdown"><a (click)="toServices()" style="cursor:pointer"><span>Services</span> <i
-                            class="bi bi-chevron-down"></i></a>
-                    <ul>
-                        <li><a (click)="toServices()" style="cursor:pointer">Policy Endorsement</a></li>
-                        <li><a (click)="toServices()" style="cursor:pointer">Claim Intimation</a></li>
-                        <li><a (click)="toServices()" style="cursor:pointer">Claim Status</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown" (click)="toProduct()"><a style="cursor:pointer"><span>Product</span> <i
-                            class="bi bi-chevron-down"></i></a>
-                    <ul>
-                        <li><a (click)="toProduct()" style="cursor:pointer">Motor</a></li>
-                        <li><a (click)="toProduct()" style="cursor:pointer">Travel</a></li>
-                        <li><a (click)="toProduct()" style="cursor:pointer">Corporate Plus</a></li>
-                        <li><a (click)="toProduct()" style="cursor:pointer">Marine Corgo</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown"><a style="cursor:pointer"><span>Portal</span> <i
-                            class="bi bi-chevron-down"></i></a>
-                    <ul>
-                        <li><a style="cursor:pointer">Broker Portal</a></li>
-                        <li><a style="cursor:pointer">Bancasurance</a></li>
-                        <li><a style="cursor:pointer">Agent</a></li>
-                    </ul>
-                </li>
-                <li><a style="cursor:pointer" (click)="tocontact()">Contact</a></li>&nbsp;&nbsp;
-                <li><button class="custom-btn btn-3 ml-4" (click)="onPress()"><span>Login</span></button></li>
-            </ul>
-            <i class="bi bi-list mobile-nav-toggle"></i>
-        </nav> -->
-        <!-- navbar -->
-    </div>
-</header>
-<!-- End Header -->
-
-<!-- ======= Hero Section ======= -->
-<section id="hero" class="d-flex align-items-center">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1"
-                data-aos="fade-up" data-aos-delay="200">
-                <h1>Better Solutions For Your Business</h1>
-                <h2>Broker | Bancasurance | Agent <br>Get Enrolled For Online Portals</h2>
-                <div class="d-flex justify-content-center justify-content-lg-start">
-                    <a href="#about" class="btn-get-started scrollto">Get Started</a>
-                    <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="glightbox btn-watch-video"><i
-                            class="bi bi-play-circle"></i><span>Watch Video</span></a>
-                </div>
-            </div>
-            <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
-                <img src="./assets/img/hero-img.png" class="img-fluid animated" alt="">
-            </div>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav> -->
+            <!-- navbar -->
         </div>
-    </div>
-</section>
-<!-- ======= End Hero ============== -->
-
-<main id="main">
-    <!-- ======= Clients Section ======= -->
-    <section id="clients" class="clients section-bg">
+    </header>
+    <!-- End Header -->
+    <div style="overflow-y: scroll !important;height: 100vh !important;">
+            <!-- ======= Hero Section ======= -->
+    <section id="hero" class="d-flex align-items-center">
         <div class="container">
-            <div class="row" data-aos="zoom-in">
-
-                <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                    <img src="./assets/img/clients/client-1.png" class="img-fluid" alt="">
-                </div>
-
-                <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                    <img src="./assets/img/clients/client-2.png" class="img-fluid" alt="">
-                </div>
-
-                <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                    <img src="./assets/img/clients/client-3.png" class="img-fluid" alt="">
-                </div>
-
-                <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                    <img src="./assets/img/clients/client-4.png" class="img-fluid" alt="">
-                </div>
-
-                <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                    <img src="./assets/img/clients/client-5.png" class="img-fluid" alt="">
-                </div>
-
-                <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                    <img src="./assets/img/clients/client-6.png" class="img-fluid" alt="">
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ======= End Cliens Section====== -->
-
-    <!-- ======= About Us Section ======= -->
-    <section id="about" class="section-aboutus" style="padding: 40px 0;">
-        <div class="container aboutcontainer" data-aos="fade-up">
-            <div class="section-title">
-                <h2>About Us</h2>
-            </div>
-            <div class="content-section">
-                <div class="content">
-                    <p>Alliance Insurance Corporation is one of the most dynamic insurance companies setting benchmarks
-                        in the Insurance sector of Tanzania. Whether it is corporate governance and transparency or
-                        taking a leadership stance in promoting the insurance sector into the hinterlands of the
-                        country; Alliance Insurance is proud to be leading from the front.</p>
-                    <p>Alliance Insurance is among the top companies in the insurance sector in Tanzania in terms of
-                        various parameters under which insurance companies are rated and ranked such as premium income,
-                        financial strength & claims paying ability. Alliance has booked a Gross Written Premium of Tshs
-                        72.4 bn in 2017 and has been performing consistently in its 20 years of operations.
-                    </p>
-                </div>
-            </div>
-            <div class="image-section">
-                <img src="https://alliance.co.tz/images/about-image-1.jpg" alt="">
-            </div>
-        </div>
-    </section>
-    <!-- ======= End About Us Section =======  -->
-    <!-- ======= Services Section ======= -->
-    <section id="services" class="services section-bg">
-        <div class="container" data-aos="fade-up">
-
-            <div class="section-title">
-                <h2>Services</h2>
-                <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Magnam dolores commodi suscipit.
-                    Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-                    consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
-                    fugiat sit
-                    in iste officiis commodi quidem hic quas.</p>
-            </div>
-
             <div class="row">
-                <div class="col-xl-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="icon-box">
-                        <div class="icon"><i class="bx bxl-dribbble"></i></div>
-                        <h4><a href="">Policy Endorsemnet</a></h4>
-                        <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Voluptatum deleniti
-                            atque corrupti quos dolores et quas molestias excepturi</p>
-                        <button class="custom-btn btn-3"
-                            style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 5rem;"><span>Read
-                                More</span></button>
+                <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1">
+                    <h1>Better Solutions For Your Business</h1>
+                    <h2>Broker | Bancasurance | Agent <br>Get Enrolled For Online Portals</h2>
+                    <div class="d-flex justify-content-center justify-content-lg-start">
+                        <a href="#about" class="btn-get-started scrollto">Get Started</a>
+                        <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="glightbox btn-watch-video"><i
+                                class="bi bi-play-circle"></i><span>Watch Video</span></a>
                     </div>
                 </div>
-
-                <div class="col-xl-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in"
-                    data-aos-delay="200">
-                    <div class="icon-box">
-                        <div class="icon"><i class="bx bx-file"></i></div>
-                        <h4><a href="">Claim Intimation</a></h4>
-                        <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Duis aute irure dolor in
-                            reprehenderit in voluptate velit esse cillum dolore</p>
-                        <button class="custom-btn btn-3"
-                            style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 5rem;"><span>Read
-                                More</span></button>
-                    </div>
+                <div class="col-lg-6 order-1 order-lg-2 hero-img">
+                    <img src="./assets/img/hero-img.png" class="img-fluid animated" alt="">
                 </div>
+            </div>
+        </div>
+    </section>
+    <!-- ======= End Hero ============== -->
 
-                <div class="col-xl-4 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in"
-                    data-aos-delay="300">
-                    <div class="icon-box">
-                        <div class="icon"><i class="bx bx-tachometer"></i></div>
-                        <h4><a href="">Claim Status</a></h4>
-                        <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia</p>
-                        <button class="custom-btn btn-3"
-                            style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 5rem;"><span>Read
-                                More</span></button>
+    <main id="main">
+        <!-- ======= Clients Section ======= -->
+        <section id="clients" class="clients section-bg">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                        <img src="./assets/img/clients/client-1.png" class="img-fluid" alt="">
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                        <img src="./assets/img/clients/client-2.png" class="img-fluid" alt="">
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                        <img src="./assets/img/clients/client-3.png" class="img-fluid" alt="">
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                        <img src="./assets/img/clients/client-4.png" class="img-fluid" alt="">
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                        <img src="./assets/img/clients/client-5.png" class="img-fluid" alt="">
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                        <img src="./assets/img/clients/client-6.png" class="img-fluid" alt="">
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!--======= End Services Section ======= -->
-    <!--======= Cta Section ======= -->
-    <section id="cta" class="cta">
-        <div class="container" data-aos="zoom-in">
-            <div class="row">
-                <div class="col-lg-9 text-center text-lg-start">
-                    <h3>Call To Action</h3>
-                    <p
-                        style="font-size: 1.2rem;width: inherit;font-weight: 500 !important;position: relative;right: .5rem;">
-                        Alliance has booked a Gross Written Premium of Tshs 72.4 bn in 2017 and has been performing
-                        consistently in its 20 years of operations.Our performance over the years speaks of our ability
-                        to perform in a tough and a demanding market.</p>
+        </section>
+        <!-- ======= End Cliens Section====== -->
+
+        <!-- ======= About Us Section ======= -->
+        <section id="about" class="section-aboutus" style="padding: 40px 0;">
+            <div class="container aboutcontainer">
+                <div class="section-title">
+                    <h2>About Us</h2>
                 </div>
-                <div class="col-lg-3 cta-btn-container text-center inner-contact">
-                    <div class="number hvr-wobble-horizontal "><span
-                            style="color: #f3202e;font-weight:600;">(+255)</span><span style="color:white"> 411 200 104
-                        </span> </div>
-                    <a class="cta-btn align-middle" href="callto://+255411200104">Call Now</a>
+                <div class="content-section">
+                    <div class="content">
+                        <p>Alliance Insurance Corporation is one of the most dynamic insurance companies setting benchmarks
+                            in the Insurance sector of Tanzania. Whether it is corporate governance and transparency or
+                            taking a leadership stance in promoting the insurance sector into the hinterlands of the
+                            country; Alliance Insurance is proud to be leading from the front.</p>
+                        <p>Alliance Insurance is among the top companies in the insurance sector in Tanzania in terms of
+                            various parameters under which insurance companies are rated and ranked such as premium income,
+                            financial strength & claims paying ability. Alliance has booked a Gross Written Premium of Tshs
+                            72.4 bn in 2017 and has been performing consistently in its 20 years of operations.
+                        </p>
+                    </div>
+                </div>
+                <div class="image-section">
+                    <img src="https://alliance.co.tz/images/about-image-1.jpg" alt="">
                 </div>
             </div>
-        </div>
-    </section>
-    <!--======== End Cta Section =======-->
-    <!--======== Products Section ======= -->
-    <section id="products" class="services section-bg">
-        <div class="container" data-aos="fade-up">
+        </section>
+        <!-- ======= End About Us Section =======  -->
+        <!-- ======= Services Section ======= -->
+        <section id="services" class="services section-bg">
+            <div class="container">
 
-            <div class="section-title">
-                <h2>Products</h2>
-                <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Magnam dolores commodi suscipit.
-                    Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-                    consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
-                    fugiat sit
-                    in iste officiis commodi quidem hic quas.</p>
+                <div class="section-title">
+                    <h2>Services</h2>
+                    <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Magnam dolores commodi suscipit.
+                        Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
+                        consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
+                        fugiat sit
+                        in iste officiis commodi quidem hic quas.</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-4 col-md-6 d-flex align-items-stretch">
+                        <div class="icon-box">
+                            <div class="icon"><i class="bx bxl-dribbble"></i></div>
+                            <h4><a href="">Policy Endorsemnet</a></h4>
+                            <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Voluptatum deleniti
+                                atque corrupti quos dolores et quas molestias excepturi</p>
+                            <button class="custom-btn btn-3"
+                                style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 5rem;"><span>Read
+                                    More</span></button>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" >
+                        <div class="icon-box">
+                            <div class="icon"><i class="bx bx-file"></i></div>
+                            <h4><a href="">Claim Intimation</a></h4>
+                            <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Duis aute irure dolor in
+                                reprehenderit in voluptate velit esse cillum dolore</p>
+                            <button class="custom-btn btn-3"
+                                style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 5rem;"><span>Read
+                                    More</span></button>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" >
+                        <div class="icon-box">
+                            <div class="icon"><i class="bx bx-tachometer"></i></div>
+                            <h4><a href="">Claim Status</a></h4>
+                            <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Excepteur sint occaecat
+                                cupidatat non proident, sunt in culpa qui officia</p>
+                            <button class="custom-btn btn-3"
+                                style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 5rem;"><span>Read
+                                    More</span></button>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </section>
+        <!--======= End Services Section ======= -->
+        <!--======= Cta Section ======= -->
+        <section id="cta" class="cta">
+            <div class="container" >
+                <div class="row">
+                    <div class="col-lg-9 text-center text-lg-start">
+                        <h3>Call To Action</h3>
+                        <p
+                            style="font-size: 1.2rem;width: inherit;font-weight: 500 !important;position: relative;right: .5rem;">
+                            Alliance has booked a Gross Written Premium of Tshs 72.4 bn in 2017 and has been performing
+                            consistently in its 20 years of operations.Our performance over the years speaks of our ability
+                            to perform in a tough and a demanding market.</p>
+                    </div>
+                    <div class="col-lg-3 cta-btn-container text-center inner-contact">
+                        <div class="number hvr-wobble-horizontal "><span
+                                style="color: #f3202e;font-weight:600;">(+255)</span><span style="color:white"> 411 200 104
+                            </span> </div>
+                        <a class="cta-btn align-middle" href="callto://+255411200104">Call Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--======== End Cta Section =======-->
+        <!--======== Products Section ======= -->
+        <section id="products" class="services section-bg">
+            <div class="container">
 
-            <div class="row">
-                <div class="col-xl-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="icon-box" style="height: fit-content;">
-                        <div class="icon"><i class="fas fa-motorcycle"></i></div>
-                        <h4><a href="">Motor</a></h4>
-                        <div>
-                            <p [ngClass]="{'limitTextHeight': isReadMore}"
+                <div class="section-title">
+                    <h2>Products</h2>
+                    <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Magnam dolores commodi suscipit.
+                        Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
+                        consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
+                        fugiat sit
+                        in iste officiis commodi quidem hic quas.</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-3 col-md-6 d-flex align-items-stretch">
+                        <div class="icon-box" style="height: fit-content;">
+                            <div class="icon"><i class="fas fa-motorcycle"></i></div>
+                            <h4><a href="">Motor</a></h4>
+                            <div>
+                                <p [ngClass]="{'limitTextHeight': isReadMore}"
+                                    style="color: #444444;font-size: 1.14rem;font-weight: 400!important;position:relative;right: 0.45rem;width: 106%;">
+                                    Alliance covers both private and commercial vehicles of different types on third party
+                                    as
+                                    well as comprehensive basis.<br>
+
+                                    Alliance Africa General Insurance Limited covers both private and commercial vehicles of
+                                    different types on third party as well as comprehensive basis.<br>
+                                    Get the right insurance coverage for your car, truck, van or other vehicles.<br>
+                                    <span style="font-weight:600;font-size: 1.1rem;">Motorcycle Insurance </span>– Ride safe
+                                    and insure your motorcycle.<br>
+                                    <span style="font-weight:600;font-size: 1.1rem;">Classic Car Insurance</span>– Your
+                                    classic car is an icon. Insure it well.<br>
+                                </p>
+                            </div>
+                            <button class="custom-btn btn-3"
+                                style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 3rem;"
+                                (click)="readmore()"><span> {{ isReadMore ? 'Read More': 'Read Less' }}</span></button>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" >
+                        <div class="icon-box" style="height: fit-content;">
+                            <div class="icon"><i class="fas fa-location-dot"></i></div>
+                            <h4><a href="">Travel</a></h4>
+                            <p [ngClass]="{'limitTextHeight1':  isReadMoretravel}"
                                 style="color: #444444;font-size: 1.14rem;font-weight: 400!important;position:relative;right: 0.45rem;width: 106%;">
-                                Alliance covers both private and commercial vehicles of different types on third party
-                                as
-                                well as comprehensive basis.<br>
-
-                                Alliance Africa General Insurance Limited covers both private and commercial vehicles of
-                                different types on third party as well as comprehensive basis.<br>
-                                Get the right insurance coverage for your car, truck, van or other vehicles.<br>
-                                <span style="font-weight:600;font-size: 1.1rem;">Motorcycle Insurance </span>– Ride safe
-                                and insure your motorcycle.<br>
-                                <span style="font-weight:600;font-size: 1.1rem;">Classic Car Insurance</span>– Your
-                                classic car is an icon. Insure it well.<br>
+                                Our Travel insurance provides multiple plans to suit individual customer requirements
+                                depends on nature & area of travel and cater to Executives etc.<br>
+                                <span style="font-weight:600;font-size: 1.1rem;">Benefits :</span><br>
+                                Emergency Medical and Related Expenses<br>
+                                Dental Expenses<br>Accidental Death or Disablement<br>Repatriation of Remains<br>Medical
+                                Evacuation<br>Cancellation and curtailment<br>Travel Delay<br> Personal
+                                Liability<br>Hijack<br>Loss of checked Baggage<br>Baggage Delay<br>Loss of
+                                Passport<br>Hospital Cash<br>Legal Assistance Abroad<br>Transmission of urgent
+                                messages<br>Accompanying family member<br>Return of accompanying children<br>Return of
+                                Travel Companion<br>
                             </p>
+                            <button class="custom-btn btn-3"
+                                style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 3rem;"
+                                (click)="readmoretravel()"><span> {{ isReadMoretravel ? 'Read More': 'Read Less'
+                                    }}</span></button>
                         </div>
-                        <button class="custom-btn btn-3"
-                            style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 3rem;"
-                            (click)="readmore()"><span> {{ isReadMore ? 'Read More': 'Read Less' }}</span></button>
                     </div>
-                </div>
-                <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in"
-                    data-aos-delay="200">
-                    <div class="icon-box" style="height: fit-content;">
-                        <div class="icon"><i class="fas fa-location-dot"></i></div>
-                        <h4><a href="">Travel</a></h4>
-                        <p [ngClass]="{'limitTextHeight1':  isReadMoretravel}"
-                            style="color: #444444;font-size: 1.14rem;font-weight: 400!important;position:relative;right: 0.45rem;width: 106%;">
-                            Our Travel insurance provides multiple plans to suit individual customer requirements
-                            depends on nature & area of travel and cater to Executives etc.<br>
-                            <span style="font-weight:600;font-size: 1.1rem;">Benefits :</span><br>
-                            Emergency Medical and Related Expenses<br>
-                            Dental Expenses<br>Accidental Death or Disablement<br>Repatriation of Remains<br>Medical
-                            Evacuation<br>Cancellation and curtailment<br>Travel Delay<br> Personal
-                            Liability<br>Hijack<br>Loss of checked Baggage<br>Baggage Delay<br>Loss of
-                            Passport<br>Hospital Cash<br>Legal Assistance Abroad<br>Transmission of urgent
-                            messages<br>Accompanying family member<br>Return of accompanying children<br>Return of
-                            Travel Companion<br>
-                        </p>
-                        <button class="custom-btn btn-3"
-                            style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 3rem;"
-                            (click)="readmoretravel()"><span> {{ isReadMoretravel ? 'Read More': 'Read Less'
-                                }}</span></button>
+
+                    <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" >
+                        <div class="icon-box" style="height: fit-content;">
+                            <div class="icon"><i class="bx bx-tachometer"></i></div>
+                            <h4><a href="">Corporate Plus</a></h4>
+                            <p [ngClass]="{'limitTextHeight2':  isReadMorecorporate}"
+                                style="color: #444444;font-size: 1.14rem;font-weight: 400!important;position:relative;right: 0.45rem;width: 106%;">
+                                Business entities are prone to lots of risks as opposed by many factors. Corporate Plus is a
+                                comprehensive policy that blankets many of the diverse requirements<br>
+                                <span style="font-weight:600;font-size: 1.1rem;">Benefits :</span><br>
+
+                                Fire Insurance Business Interruption <br>Theft Money Glass <br>Fidelity <br>Goods in
+                                Transit<br>
+                                Business All Risks<br>
+                                Public Liability<br>
+                                Employer’s Liability<br>
+                                Group Personal Accident<br>Motor Electronic Equipment<br>Accidental DamageBuilding
+                                CombinedOffice ContentsMoneyGlass1Stated Benefits
+                            </p>
+                            <button class="custom-btn btn-3"
+                                style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 3rem;"
+                                (click)="readmorecorporate()"><span>{{ isReadMorecorporate ? 'Read More': 'Read Less'
+                                    }}</span></button>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in"
-                    data-aos-delay="300">
-                    <div class="icon-box" style="height: fit-content;">
-                        <div class="icon"><i class="bx bx-tachometer"></i></div>
-                        <h4><a href="">Corporate Plus</a></h4>
-                        <p [ngClass]="{'limitTextHeight2':  isReadMorecorporate}"
-                            style="color: #444444;font-size: 1.14rem;font-weight: 400!important;position:relative;right: 0.45rem;width: 106%;">
-                            Business entities are prone to lots of risks as opposed by many factors. Corporate Plus is a
-                            comprehensive policy that blankets many of the diverse requirements<br>
-                            <span style="font-weight:600;font-size: 1.1rem;">Benefits :</span><br>
-
-                            Fire Insurance Business Interruption <br>Theft Money Glass <br>Fidelity <br>Goods in
-                            Transit<br>
-                            Business All Risks<br>
-                            Public Liability<br>
-                            Employer’s Liability<br>
-                            Group Personal Accident<br>Motor Electronic Equipment<br>Accidental DamageBuilding
-                            CombinedOffice ContentsMoneyGlass1Stated Benefits
-                        </p>
-                        <button class="custom-btn btn-3"
-                            style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 3rem;"
-                            (click)="readmorecorporate()"><span>{{ isReadMorecorporate ? 'Read More': 'Read Less'
-                                }}</span></button>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in"
-                    data-aos-delay="400">
-                    <div class="icon-box" style="height: fit-content;">
-                        <div class="icon"><i class="fas fa-anchor-lock"></i></div>
-                        <h4><a href="">Marine Corgo</a></h4>
-                        <p [ngClass]="{'limitTextHeight3':  isReadMoremarine}"
-                            style="color: #444444;font-size: 1.14rem;font-weight: 400!important;position:relative;right: 0.45rem;width: 106%;">
-                            The policy covers loss or damage to cargo during single voyage as well as multiple voyages
-                            during a given period-usually annual-when carried by water, air and/or land.<br>
-                            <span style="font-weight:600;font-size: 1.1rem;">Benefits :</span><br>
-                            <span style="font-weight:600;font-size: 1.1rem;">Sum Insured:</span><br>
-                            The cargo is usually covered for CIF+10%<br>
-                            <span style="font-weight:600;font-size: 1.1rem;">Premium:</span><br>
-                            Premium charged depends upon factors like mode of transport,the nature of cargo carried
-                            ,distance involved, mode of packing, clause incorporating the perils opted for and so on.
-                        </p>
-                        <button class="custom-btn btn-3"
-                            style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 3rem;"
-                            (click)="readmoremarine()"><span>{{ isReadMoremarine ? 'Read More': 'Read Less'
-                                }}</span></button>
+                    <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" >
+                        <div class="icon-box" style="height: fit-content;">
+                            <div class="icon"><i class="fas fa-anchor-lock"></i></div>
+                            <h4><a href="">Marine Corgo</a></h4>
+                            <p [ngClass]="{'limitTextHeight3':  isReadMoremarine}"
+                                style="color: #444444;font-size: 1.14rem;font-weight: 400!important;position:relative;right: 0.45rem;width: 106%;">
+                                The policy covers loss or damage to cargo during single voyage as well as multiple voyages
+                                during a given period-usually annual-when carried by water, air and/or land.<br>
+                                <span style="font-weight:600;font-size: 1.1rem;">Benefits :</span><br>
+                                <span style="font-weight:600;font-size: 1.1rem;">Sum Insured:</span><br>
+                                The cargo is usually covered for CIF+10%<br>
+                                <span style="font-weight:600;font-size: 1.1rem;">Premium:</span><br>
+                                Premium charged depends upon factors like mode of transport,the nature of cargo carried
+                                ,distance involved, mode of packing, clause incorporating the perils opted for and so on.
+                            </p>
+                            <button class="custom-btn btn-3"
+                                style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 3rem;"
+                                (click)="readmoremarine()"><span>{{ isReadMoremarine ? 'Read More': 'Read Less'
+                                    }}</span></button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <!--======== End Products Section ========-->
-    <!--======== Team Section ======= -->
-    <section id="team" class="team section-bg">
-        <div class="container" data-aos="fade-up">
+        </section>
+        <!--======== End Products Section ========-->
+        <!--======== Team Section ======= -->
+        <section id="team" class="team section-bg">
+            <div class="container" >
 
-            <div class="section-title">
-                <h2>Customer Reviews</h2>
-                <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Magnam dolores commodi suscipit.
-                    Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-                    consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
-                    fugiat sit
-                    in iste officiis commodi quidem hic quas.</p>
-            </div>
-
-            <div class="row">
-
-                <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="member d-flex align-items-start">
-                        <div class="pic"><img src="./assets/img/team/team-1.jpg" class="img-fluid" alt=""></div>
-                        <div class="member-info">
-                            <h4>Walter White</h4>
-                            <span>Chief Executive Officer</span>
-                            <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Explicabo voluptatem
-                                mollitia et repellat qui dolorum quasi</p>
-                            <div class="social">
-                                <a href=""><i class="ri-twitter-fill"></i></a>
-                                <a href=""><i class="ri-facebook-fill"></i></a>
-                                <a href=""><i class="ri-instagram-fill"></i></a>
-                                <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="section-title">
+                    <h2>Customer Reviews</h2>
+                    <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Magnam dolores commodi suscipit.
+                        Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
+                        consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
+                        fugiat sit
+                        in iste officiis commodi quidem hic quas.</p>
                 </div>
 
-                <div class="col-lg-6 mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="member d-flex align-items-start">
-                        <div class="pic"><img src="./assets/img/team/team-2.jpg" class="img-fluid" alt=""></div>
-                        <div class="member-info">
-                            <h4>Sarah Jhonson</h4>
-                            <span>Product Manager</span>
-                            <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Aut maiores
-                                voluptates amet et quis praesentium qui senda para</p>
-                            <div class="social">
-                                <a href=""><i class="ri-twitter-fill"></i></a>
-                                <a href=""><i class="ri-facebook-fill"></i></a>
-                                <a href=""><i class="ri-instagram-fill"></i></a>
-                                <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="row">
 
-                <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="member d-flex align-items-start">
-                        <div class="pic"><img src="./assets/img/team/team-3.jpg" class="img-fluid" alt=""></div>
-                        <div class="member-info">
-                            <h4>William Anderson</h4>
-                            <span>CTO</span>
-                            <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Quisquam facilis cum
-                                velit laborum corrupti fuga rerum quia</p>
-                            <div class="social">
-                                <a href=""><i class="ri-twitter-fill"></i></a>
-                                <a href=""><i class="ri-facebook-fill"></i></a>
-                                <a href=""><i class="ri-instagram-fill"></i></a>
-                                <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="400">
-                    <div class="member d-flex align-items-start">
-                        <div class="pic"><img src="./assets/img/team/team-4.jpg" class="img-fluid" alt=""></div>
-                        <div class="member-info">
-                            <h4>Amanda Jepson</h4>
-                            <span>Accountant</span>
-                            <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Dolorum tempora
-                                officiis odit laborum officiis et et accusamus</p>
-                            <div class="social">
-                                <a href=""><i class="ri-twitter-fill"></i></a>
-                                <a href=""><i class="ri-facebook-fill"></i></a>
-                                <a href=""><i class="ri-instagram-fill"></i></a>
-                                <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-    <!--======== End Team Section ========-->
-    <!--======== Frequently Asked Questions Section ======= -->
-    <section id="faq" class="faq section-bg">
-        <div class="container" data-aos="fade-up">
-
-            <div class="section-title">
-                <h2>Frequently Asked Questions</h2>
-                <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Magnam dolores commodi suscipit.
-                    Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-                    consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
-                    fugiat sit
-                    in iste officiis commodi quidem hic quas.</p>
-            </div>
-
-            <div class="faq-list">
-                <ul>
-                    <li data-aos="fade-up" data-aos-delay="100">
-                        <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" class="collapse"
-                            data-bs-target="#faq-list-1">Non consectetur a erat nam at lectus urna duis? <i
-                                class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-                        <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
-                            <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">
-                                Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non
-                                curabitur
-                                gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
-                            </p>
-                        </div>
-                    </li>
-
-                    <li data-aos="fade-up" data-aos-delay="200">
-                        <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse"
-                            data-bs-target="#faq-list-2" class="collapsed">Feugiat scelerisque varius morbi enim nunc?
-                            <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-                        <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
-                            <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">
-                                Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum
-                                velit laoreet id
-                                donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est
-                                pellentesque elit
-                                ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
-                            </p>
-                        </div>
-                    </li>
-
-                    <li data-aos="fade-up" data-aos-delay="300">
-                        <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse"
-                            data-bs-target="#faq-list-3" class="collapsed">Dolor sit amet consectetur adipiscing elit?
-                            <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
-                        <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
-                            <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">
-                                Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus
-                                pulvinar elementum
-                                integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque
-                                eu tincidunt.
-                                Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed
-                                odio morbi
-                                quis
-                            </p>
-                        </div>
-                    </li>
-
-                    <li data-aos="fade-up" data-aos-delay="400">
-                        <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse"
-                            data-bs-target="#faq-list-4" class="collapsed">Tempus quam pellentesque nec nam aliquam sem
-                            et tortor consequat? <i class="bx bx-chevron-down icon-show"></i><i
-                                class="bx bx-chevron-up icon-close"></i></a>
-                        <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
-                            <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">
-                                Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est
-                                ante in. Nunc
-                                vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum
-                                est. Purus
-                                gravida quis blandit turpis cursus in.
-                            </p>
-                        </div>
-                    </li>
-
-                    <li data-aos="fade-up" data-aos-delay="500">
-                        <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse"
-                            data-bs-target="#faq-list-5" class="collapsed">Tortor vitae purus faucibus ornare. Varius
-                            vel pharetra vel turpis nunc eget lorem
-                            dolor? <i class="bx bx-chevron-down icon-show"></i><i
-                                class="bx bx-chevron-up icon-close"></i></a>
-                        <div id="faq-list-5" class="collapse" data-bs-parent=".faq-list">
-                            <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">
-                                Laoreet sit amet cursus sit amet dictum sit amet justo. Mauris vitae ultricies leo
-                                integer malesuada
-                                nunc vel. Tincidunt eget nullam non nisi est sit amet. Turpis nunc eget lorem dolor sed.
-                                Ut venenatis
-                                tellus in metus vulputate eu scelerisque.
-                            </p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    <!--========  End Frequently Asked Questions Section ======== -->
-    <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact">
-        <div class="container" data-aos="fade-up">
-
-            <div class="section-title">
-                <h2>Contact</h2>
-                <p style="color: #444444; font-size: 1.2rem; font-weight: 400!important;">Magnam dolores commodi
-                    suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-                    consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
-                    fugiat sit
-                    in iste officiis commodi quidem hic quas.</p>
-            </div>
-
-            <div class="row">
-
-                <div class="col-lg-5 d-flex align-items-stretch">
-                    <div class="info">
-                        <mat-tab-group>
-                            <mat-tab label="DARESSALAAM">
-                                <p style="position: relative;right: 3rem;top: 1rem;">Board Exclusive Incoming:</p>
-                                <div style="overflow: hidden;">
-                                    <h3
-                                        style="position: relative;left: 1.4rem;color: red;font-family: var(--our-font-family-new)!important;">
-                                        Tel</h3>
-                                    <span
-                                        style="position: relative;bottom: 2.5rem;float:right;font-weight: 600;font-family: var(--our-font-family-new)!important;">Airtel
-                                        - 0689 885 043 <br>Tigo - 0677 920 484<br>Voda - 0754 780 050</span>
-                                    <div style="position: relative;top: 2.5rem;">
-                                        <h3
-                                            style="position: relative;left: 1.4rem;color: red;font-family: var(--our-font-family-new)!important;">
-                                            E-mail</h3>
-                                        <span
-                                            style="position: relative;bottom: 2.5rem;float: right;font-weight: 600;font-family: var(--our-font-family-new)!important;left: 8.8rem;">admin@alliance.co.tz</span>
-                                    </div>
-                                    <div style="position: relative;top: 2rem;">
-                                        <h3
-                                            style="position: relative;left: 1.4rem;color: red;font-family: var(--our-font-family-new)!important;">
-                                            website</h3>
-                                        <span style="position: relative;bottom: 2.5rem;float:right;right: 1.3rem;"><a
-                                                href="http://alliance.co.tz"
-                                                style="font-family: var(--our-font-family-new)!important;"
-                                                target=" _blank">www.alliance.co.tz</a></span>
-                                    </div>
+                    <div class="col-lg-6" >
+                        <div class="member d-flex align-items-start">
+                            <div class="pic"><img src="./assets/img/team/team-1.jpg" class="img-fluid" alt=""></div>
+                            <div class="member-info">
+                                <h4>Walter White</h4>
+                                <span>Chief Executive Officer</span>
+                                <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Explicabo voluptatem
+                                    mollitia et repellat qui dolorum quasi</p>
+                                <div class="social">
+                                    <a href=""><i class="ri-twitter-fill"></i></a>
+                                    <a href=""><i class="ri-facebook-fill"></i></a>
+                                    <a href=""><i class="ri-instagram-fill"></i></a>
+                                    <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
 
-                            </mat-tab>
-                            <mat-tab label="MOSHI">
-                                <div style="overflow: hidden;">
-                                    <h3
-                                        style="position: relative;left: 1.4rem;color: red;font-family: var(--our-font-family-new)!important;top: 1.5rem;">
-                                        Tel</h3>
-                                    <span
-                                        style="position: relative;bottom: 1rem;float:right;font-weight: 600;font-family: var(--our-font-family-new)!important;">+255
-                                        (0) 27 2752537</span>
-
-                                    <div style="position: relative;top: 1.5rem;">
-                                        <h3
-                                            style="position: relative;left: 1.4rem;color: red;font-family: var(--our-font-family-new)!important;">
-                                            Fax</h3>
-                                        <span
-                                            style="position: relative;bottom: 2.5rem;float: right;font-weight: 600;font-family: var(--our-font-family-new)!important;left: 0rem;">+255
-                                            (0) 27 2752500</span>
-                                    </div>
-                                    <div style="position: relative;top: 1.2rem;">
-                                        <h3
-                                            style="position: relative;left: 1.4rem;color: red;font-family: var(--our-font-family-new)!important;">
-                                            E-mail</h3>
-                                        <span
-                                            style="position: relative;bottom: 2.5rem;float:right;right: 0rem;font-weight: 600; font-family: var(--our-font-family-new)!important;">moshi@alliance.co.tz</span>
-                                    </div>
-
+                    <div class="col-lg-6 mt-4 mt-lg-0">
+                        <div class="member d-flex align-items-start">
+                            <div class="pic"><img src="./assets/img/team/team-2.jpg" class="img-fluid" alt=""></div>
+                            <div class="member-info">
+                                <h4>Sarah Jhonson</h4>
+                                <span>Product Manager</span>
+                                <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Aut maiores
+                                    voluptates amet et quis praesentium qui senda para</p>
+                                <div class="social">
+                                    <a href=""><i class="ri-twitter-fill"></i></a>
+                                    <a href=""><i class="ri-facebook-fill"></i></a>
+                                    <a href=""><i class="ri-instagram-fill"></i></a>
+                                    <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
                                 </div>
-                            </mat-tab>
-                            <mat-tab label="MWANZA">
-                                <div style="overflow: hidden;">
-                                    <h3
-                                        style="position: relative;left: 1.4rem;color: red;font-family: var(--our-font-family-new)!important;top: 1.5rem;">
-                                        Tel</h3>
-                                    <span
-                                        style="position: relative;bottom: 1rem;float:right;font-weight: 600;font-family: var(--our-font-family-new)!important;">+255
-                                        (0) 28 2500545</span>
+                            </div>
+                        </div>
+                    </div>
 
-                                    <div style="position: relative;top: 1.5rem;">
-                                        <h3
-                                            style="position: relative;left: 1.4rem;color: red;font-family: var(--our-font-family-new)!important;">
-                                            Fax</h3>
-                                        <span
-                                            style="position: relative;bottom: 2.5rem;float: right;font-weight: 600;font-family: var(--our-font-family-new)!important;left: 0rem;">+255
-                                            (0) 28 2500759</span>
-                                    </div>
-                                    <div style="position: relative;top: 1.2rem;">
-                                        <h3
-                                            style="position: relative;left: 1.4rem;color: red;font-family: var(--our-font-family-new)!important;">
-                                            E-mail</h3>
-                                        <span
-                                            style="position: relative;bottom: 2.5rem;float:right;right: 0rem;font-weight: 600; font-family: var(--our-font-family-new)!important;">mwanza@alliance.co.tz</span>
-                                    </div>
-
+                    <div class="col-lg-6 mt-4">
+                        <div class="member d-flex align-items-start">
+                            <div class="pic"><img src="./assets/img/team/team-3.jpg" class="img-fluid" alt=""></div>
+                            <div class="member-info">
+                                <h4>William Anderson</h4>
+                                <span>CTO</span>
+                                <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Quisquam facilis cum
+                                    velit laborum corrupti fuga rerum quia</p>
+                                <div class="social">
+                                    <a href=""><i class="ri-twitter-fill"></i></a>
+                                    <a href=""><i class="ri-facebook-fill"></i></a>
+                                    <a href=""><i class="ri-instagram-fill"></i></a>
+                                    <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
                                 </div>
-                            </mat-tab>
-                        </mat-tab-group>
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"
-                            frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mt-4">
+                        <div class="member d-flex align-items-start">
+                            <div class="pic"><img src="./assets/img/team/team-4.jpg" class="img-fluid" alt=""></div>
+                            <div class="member-info">
+                                <h4>Amanda Jepson</h4>
+                                <span>Accountant</span>
+                                <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Dolorum tempora
+                                    officiis odit laborum officiis et et accusamus</p>
+                                <div class="social">
+                                    <a href=""><i class="ri-twitter-fill"></i></a>
+                                    <a href=""><i class="ri-facebook-fill"></i></a>
+                                    <a href=""><i class="ri-instagram-fill"></i></a>
+                                    <a href=""> <i class="ri-linkedin-box-fill"></i> </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
 
-                <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-                    <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="name">Your Name</label>
-                                <input type="text" name="name" class="form-control" id="name" required>
+            </div>
+        </section>
+        <!--======== End Team Section ========-->
+        <!--======== Frequently Asked Questions Section ======= -->
+        <section id="faq" class="faq section-bg">
+            <div class="container">
+
+                <div class="section-title">
+                    <h2>Frequently Asked Questions</h2>
+                    <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Magnam dolores commodi suscipit.
+                        Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
+                        consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
+                        fugiat sit
+                        in iste officiis commodi quidem hic quas.</p>
+                </div>
+
+                <div class="faq-list">
+                    <ul>
+                        <li>
+                            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" class="collapse"
+                                data-bs-target="#faq-list-1">Non consectetur a erat nam at lectus urna duis? <i
+                                    class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                            <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
+                                <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">
+                                    Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non
+                                    curabitur
+                                    gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
+                                </p>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="name">Your Email</label>
-                                <input type="email" class="form-control" name="email" id="email" required>
+                        </li>
+
+                        <li>
+                            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse"
+                                data-bs-target="#faq-list-2" class="collapsed">Feugiat scelerisque varius morbi enim nunc?
+                                <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                            <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
+                                <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">
+                                    Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum
+                                    velit laoreet id
+                                    donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est
+                                    pellentesque elit
+                                    ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
+                                </p>
                             </div>
+                        </li>
+
+                        <li>
+                            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse"
+                                data-bs-target="#faq-list-3" class="collapsed">Dolor sit amet consectetur adipiscing elit?
+                                <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+                            <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
+                                <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">
+                                    Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus
+                                    pulvinar elementum
+                                    integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque
+                                    eu tincidunt.
+                                    Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed
+                                    odio morbi
+                                    quis
+                                </p>
+                            </div>
+                        </li>
+
+                        <li >
+                            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse"
+                                data-bs-target="#faq-list-4" class="collapsed">Tempus quam pellentesque nec nam aliquam sem
+                                et tortor consequat? <i class="bx bx-chevron-down icon-show"></i><i
+                                    class="bx bx-chevron-up icon-close"></i></a>
+                            <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
+                                <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">
+                                    Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est
+                                    ante in. Nunc
+                                    vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum
+                                    est. Purus
+                                    gravida quis blandit turpis cursus in.
+                                </p>
+                            </div>
+                        </li>
+
+                        <li>
+                            <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse"
+                                data-bs-target="#faq-list-5" class="collapsed">Tortor vitae purus faucibus ornare. Varius
+                                vel pharetra vel turpis nunc eget lorem
+                                dolor? <i class="bx bx-chevron-down icon-show"></i><i
+                                    class="bx bx-chevron-up icon-close"></i></a>
+                            <div id="faq-list-5" class="collapse" data-bs-parent=".faq-list">
+                                <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">
+                                    Laoreet sit amet cursus sit amet dictum sit amet justo. Mauris vitae ultricies leo
+                                    integer malesuada
+                                    nunc vel. Tincidunt eget nullam non nisi est sit amet. Turpis nunc eget lorem dolor sed.
+                                    Ut venenatis
+                                    tellus in metus vulputate eu scelerisque.
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!--========  End Frequently Asked Questions Section ======== -->
+        <!-- ======= Contact Section ======= -->
+        <section id="contact" class="contact">
+            <div class="container">
+
+                <div class="section-title">
+                    <h2>Contact</h2>
+                    <p style="color: #444444; font-size: 1.2rem; font-weight: 400!important;">Magnam dolores commodi
+                        suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
+                        consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
+                        fugiat sit
+                        in iste officiis commodi quidem hic quas.</p>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-5 d-flex align-items-stretch">
+                        <div class="info">
+                            <mat-tab-group>
+                                <mat-tab label="DARESSALAAM">
+                                    <p style="position: relative;right: 3rem;top: 1rem;">Board Exclusive Incoming:</p>
+                                    <div style="overflow: hidden;">
+                                        <h3
+                                            style="position: relative;left: 1.4rem;font-size: 23px;color: red;font-family: var(--our-font-family-new)!important;">
+                                            Tel</h3>
+                                        <span
+                                            style="position: relative;bottom: 2.5rem;float:right;font-weight: 600;font-family: var(--our-font-family-new)!important;">Airtel
+                                            - 0689 885 043 <br>Tigo - 0677 920 484<br>Voda - 0754 780 050</span>
+                                        <div style="position: relative;top: 2.5rem;">
+                                            <h3
+                                                style="position: relative;left: 1.4rem;font-size: 23px;color: red;font-family: var(--our-font-family-new)!important;">
+                                                E-mail</h3>
+                                            <span
+                                                style="position: relative;bottom: 2.5rem;float: right;font-weight: 600;font-family: var(--our-font-family-new)!important;left: 8.8rem;">admin@alliance.co.tz</span>
+                                        </div>
+                                        <div style="position: relative;top: 2rem;">
+                                            <h3
+                                                style="position: relative;left: 1.4rem;font-size: 23px;color: red;font-family: var(--our-font-family-new)!important;">
+                                                website</h3>
+                                            <span style="position: relative;bottom: 2.5rem;float: right;font-weight: 600;font-family: var(--our-font-family-new)!important;left: 8.8rem;"><a
+                                                    href="http://alliance.co.tz"
+                                                    style="font-family: var(--our-font-family-new)!important;"
+                                                    target=" _blank">www.alliance.co.tz</a></span>
+                                        </div>
+                                    </div>
+
+                                </mat-tab>
+                                <mat-tab label="MOSHI">
+                                    <div style="overflow: hidden;">
+                                        <h3
+                                            style="position: relative;left: 1.4rem;color: red;font-family: var(--our-font-family-new)!important;top: 1.5rem;">
+                                            Tel</h3>
+                                        <span
+                                            style="position: relative;bottom: 1rem;float:right;font-weight: 600;font-family: var(--our-font-family-new)!important;">+255
+                                            (0) 27 2752537</span>
+
+                                        <div style="position: relative;top: 1.5rem;">
+                                            <h3
+                                                style="position: relative;left: 1.4rem;color: red;font-family: var(--our-font-family-new)!important;">
+                                                Fax</h3>
+                                            <span
+                                                style="position: relative;bottom: 2.5rem;float: right;font-weight: 600;font-family: var(--our-font-family-new)!important;left: 0rem;">+255
+                                                (0) 27 2752500</span>
+                                        </div>
+                                        <div style="position: relative;top: 1.2rem;">
+                                            <h3
+                                                style="position: relative;left: 1.4rem;color: red;font-family: var(--our-font-family-new)!important;">
+                                                E-mail</h3>
+                                            <span
+                                                style="position: relative;bottom: 2.5rem;float:right;right: 0rem;font-weight: 600; font-family: var(--our-font-family-new)!important;">moshi@alliance.co.tz</span>
+                                        </div>
+
+                                    </div>
+                                </mat-tab>
+                                <mat-tab label="MWANZA">
+                                    <div style="overflow: hidden;">
+                                        <h3
+                                            style="position: relative;left: 1.4rem;color: red;font-family: var(--our-font-family-new)!important;top: 1.5rem;">
+                                            Tel</h3>
+                                        <span
+                                            style="position: relative;bottom: 1rem;float:right;font-weight: 600;font-family: var(--our-font-family-new)!important;">+255
+                                            (0) 28 2500545</span>
+
+                                        <div style="position: relative;top: 1.5rem;">
+                                            <h3
+                                                style="position: relative;left: 1.4rem;color: red;font-family: var(--our-font-family-new)!important;">
+                                                Fax</h3>
+                                            <span
+                                                style="position: relative;bottom: 2.5rem;float: right;font-weight: 600;font-family: var(--our-font-family-new)!important;left: 0rem;">+255
+                                                (0) 28 2500759</span>
+                                        </div>
+                                        <div style="position: relative;top: 1.2rem;">
+                                            <h3
+                                                style="position: relative;left: 1.4rem;color: red;font-family: var(--our-font-family-new)!important;">
+                                                E-mail</h3>
+                                            <span
+                                                style="position: relative;bottom: 2.5rem;float:right;right: 0rem;font-weight: 600; font-family: var(--our-font-family-new)!important;">mwanza@alliance.co.tz</span>
+                                        </div>
+
+                                    </div>
+                                </mat-tab>
+                            </mat-tab-group>
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"
+                                frameborder="0" style="border:0; width: 100%; height: 290px;" allowfullscreen></iframe>
                         </div>
-                        <div class="form-group">
-                            <label for="name">Subject</label>
-                            <input type="text" class="form-control" name="subject" id="subject" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Message</label>
-                            <textarea class="form-control" name="message" rows="10" required></textarea>
-                        </div>
-                        <div class="my-3">
-                            <div class="loading">Loading</div>
-                            <div class="error-message"></div>
-                            <div class="sent-message">Your message has been sent. Thank you!</div>
-                        </div>
-                        <div class="text-center"><button type="submit">Send Message</button></div>
-                    </form>
+
+                    </div>
+
+                    <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
+                        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="name">Your Name</label>
+                                    <input type="text" name="name" class="form-control" id="name" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="name">Your Email</label>
+                                    <input type="email" class="form-control" name="email" id="email" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Subject</label>
+                                <input type="text" class="form-control" name="subject" id="subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Message</label>
+                                <textarea class="form-control" name="message" rows="10" required></textarea>
+                            </div>
+                            <div class="my-3">
+                                <div class="loading">Loading</div>
+                                <div class="error-message"></div>
+                                <div class="sent-message">Your message has been sent. Thank you!</div>
+                            </div>
+                            <div class="text-center"><button type="submit">Send Message</button></div>
+                        </form>
+                    </div>
+
                 </div>
 
             </div>
+        </section>
+        <!-- End Contact Section -->
+    </main>
+</div>
 
-        </div>
-    </section>
-    <!-- End Contact Section -->
-</main>
 
 <a href="https:/wa.me/255743000301" target="_blank" class="whatsapp_float"><i
         class="fa-brands fa-whatsapp whatsapp-icon"></i></a>
