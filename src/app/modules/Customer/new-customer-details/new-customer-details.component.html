@@ -37,16 +37,16 @@
             <div class="col-12 col-md-12 col-lg-12 col-xl-12 d-flex">
                 <div class="main-header2 mt-2">Account type :</div><br>
             <div class="main-he5" (click)="setPolicyType(1)" *ngIf="productItem.IdType == 2">
-                <div class="commontext" style="color: #000;">Personal</div> 
-            </div>
-            <div class="main-he4" *ngIf="productItem.IdType == 1">
                 <div class="commontext" style="color: #fff;">Personal</div> 
             </div>
+            <div class="main-he4" *ngIf="productItem.IdType == 1">
+                <div class="commontext" style="color: #000;" >Personal</div> 
+            </div>
             <div class="main-he5" (click)="setPolicyType(2)" *ngIf="productItem.IdType == 1">
-                <div class="commontext" style="color: #000">Corporate</div> 
+                <div class="commontext" style="color: #fff">Corporate</div> 
             </div>
             <div class="main-he4" *ngIf="productItem.IdType == 2">
-                <div class="commontext" style="color: #fff">Corporate</div> 
+                <div class="commontext" style="color: #000" >Corporate</div> 
             </div>
             </div>
         </div>
@@ -79,14 +79,14 @@
         </div>
             </div>
             <div class="d-flex mt-3 justify-content-between">
-                <div style="max-width: 130px;min-width: 130px;" *ngIf="productItem.IdType == 2"> 
+                <div style="max-width: 130px;min-width: 130px;" *ngIf="productItem.IdType != 2"> 
                     <div class="headinglbels">Gender <span class="star">*</span></div> 
                     <div class="mt-1">
                     <ng-select class="custom" appendTo="body"  [items]="genderList"  [(ngModel)]="productItem.Gender" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                     </div>
                 </div>
-                <div [ngClass]="productItem.IdType == 2 ? 'customFieldWidth2':'customFieldWidth'">
+                <div [ngClass]="productItem.IdType != 2 ? 'customFieldWidth2':'customFieldWidth'">
                     <div class="headinglbels">Identity Type<span class="star">*</span></div> 
                     <div class="mt-1">
                     <ng-select class="custom" appendTo="body" [items]="policyHolderTypeList"  [(ngModel)]="productItem.PolicyHolderTypeid" bindValue="Code" bindLabel="CodeDesc">
@@ -202,7 +202,7 @@
                         </ng-select>
                     </div>
                 </div>
-                <div class="col-12 mt-1" *ngIf="productItem.IdType == 2"> 
+                <div class="col-12 mt-1" *ngIf="productItem.IdType != 2"> 
                     <div class="headinglbels">Gender <span class="star">*</span></div> 
                     <div class="mt-1">
                     <ng-select class="custom" appendTo="body"  [items]="genderList"  [(ngModel)]="productItem.Gender" bindValue="Code" bindLabel="CodeDesc">

@@ -382,7 +382,9 @@ export class NewCustomerDetailsComponent {
 					this.productItem.PinCode = customerDetails.PinCode;
 					this.productItem.Gender = customerDetails.Gender;
 					this.productItem.IdNumber = customerDetails.IdNumber;
-					this.productItem.IdType = customerDetails.PolicyHolderType;
+					if(customerDetails.PolicyHolderType!=null && customerDetails.PolicyHolderType!=''){
+						this.productItem.IdType = Number(customerDetails.PolicyHolderType);
+					}
 					this.getPolicyIdTypeList(null);
 					this.getRegionList(null);
 					this.productItem.isTaxExempted = customerDetails.IsTaxExempted;
