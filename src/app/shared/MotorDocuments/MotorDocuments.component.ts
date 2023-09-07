@@ -6,6 +6,7 @@ import * as Mydatas from '../../app-config.json';
 import { MatDialog } from '@angular/material/dialog';
 // import { CoverDetailsComponent } from '../cover-details/cover-details.component';
 import { CoverDetailsComponent } from 'src/app/modules/Quote/update-customer-details/Components/cover-details/cover-details.component';
+import { ViewDocumnetDetailsComponent } from '../view-documnet-details/view-documnet-details.component';
 
 
 @Component({
@@ -614,7 +615,7 @@ this.passengerName=type;
            
                 this.PremiumInfo=data?.Result;
                 this.sectionnameopted=this.PremiumInfo[0]?.SectionName;
-                this.Currency=data.Result?.CoverId.Currency;
+                this.Currency=data.Result?.CoverId?.Currency;
                 console.log('PREEEEEEEEEEEEEEE',this.PremiumInfo)
                 //this.quoteno=data.Result.QuoteNo
   
@@ -787,22 +788,94 @@ Documentview(){
 }
 
 
-onListDocumentDownload(vehicleIndex,doc){
-  let ReqObj = {
-    "DocumentId": doc.DocumentId,
-    "DocumentReferenceNo":String(doc.DocumentReferenceNumber),
-    "Id":doc.Id,
-    //"Id":"0",
-    "QuoteNo": this.quoteNo
+onViewListDocument(index,doc)
+  {
+    let ReqObj = {
+      "Id": doc.Id,
+      "QuoteNo": this.quoteNo,
+      "UniqueId": doc.UniqueId
+    }
+  let urlLink = `${this.CommonApiUrl}document/getcompressedimage`;
+  this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+    (data:any) => {
+      console.log(data);
+      const dialogRef = this.dialogService.open(ViewDocumnetDetailsComponent,{
+        data: {
+          title: data.Result.OrginalFileName,
+               imageUrl: data.Result.ImgUrl
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+
+    },
+    (err) => { },
+  );
+}
+onViewCommonDocument(index)
+  {
+    let entry = this.CommonDoc[index];
+    let ReqObj = {
+      "Id": entry.Id,
+      "QuoteNo": this.quoteNo,
+      "UniqueId": entry.UniqueId
   }
-  let urlLink = `${this.ApiUrl1}document/getoriginalimage`;
+  let urlLink = `${this.CommonApiUrl}document/getcompressedimage`;
+  this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+    (data:any) => {
+      console.log(data);
+      const dialogRef = this.dialogService.open(ViewDocumnetDetailsComponent,{
+        data: {
+          title: data.Result.OrginalFileName,
+               imageUrl: data.Result.ImgUrl
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+    },
+    (err) => { },
+  );
+}
+onCommonDocumentDownload(index){
+  let entry = this.CommonDoc[index];
+  let ReqObj = {
+    "Id": entry.Id,
+    "QuoteNo": this.quoteNo,
+    "UniqueId": entry.UniqueId
+  }
+  let urlLink = `${this.CommonApiUrl}document/getoriginalimage`;
   this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
     (data: any) => {
       console.log(data);
       const link = document.createElement('a');
       link.setAttribute('target', '_blank');
       link.setAttribute('href', data?.Result?.ImgUrl);
-      link.setAttribute('download', data?.Result?.filePathOrginal);
+      link.setAttribute('download', data?.Result?.OriginalFileName);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+  },
+    (err) => { },
+  );
+}
+onListDocumentDownload(vehicleIndex,doc){
+  let ReqObj = {
+    "Id": doc.Id,
+    "QuoteNo": this.quoteNo,
+    "UniqueId": doc.UniqueId
+  }
+  let urlLink = `${this.CommonApiUrl}document/getoriginalimage`;
+  this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+    (data: any) => {
+      console.log(data);
+      const link = document.createElement('a');
+      link.setAttribute('target', '_blank');
+      link.setAttribute('href', data?.Result?.ImgUrl);
+      link.setAttribute('download', data?.Result?.OriginalFileName);
       document.body.appendChild(link);
       link.click();
       link.remove();

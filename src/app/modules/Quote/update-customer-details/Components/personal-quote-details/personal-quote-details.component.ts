@@ -4976,8 +4976,8 @@ onStartDateChange() {
 }
 getbuildingpurposeList() {
   let ReqObj = {
-    "InsuranceId": "",
-    "BranchCode": "",
+    "InsuranceId": this.insuranceId,
+    "BranchCode": this.branchCode,
   }
   let urlLink = `${this.CommonApiUrl}dropdown/buildingusage`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(

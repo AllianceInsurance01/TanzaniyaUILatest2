@@ -145,7 +145,7 @@
             <mat-tab label="Quote Info">
                 <div class="card">
                 <div class="row" *ngIf="productId == '5'" style="margin-left:10px !important;margin-right:10px !important;"> <!--d-flex justify-content-between *ngFor="let vech of ViewRisk"-->
-                    <div class="col-4 col-md-4" *ngFor="let vech of ViewRisk;let i=index;">
+                    <div class="col-12 col-md-4" *ngFor="let vech of ViewRisk;let i=index;">
                     <div class="scroll-cards">
                       <div class="card my_class2 ml-2 mr-2" (click)="ChasNo(vech,vech.Chassisnumber,i)" style="padding:10px 10px 10px 10px !important;background-color:lightblue;cursor:pointer;"
                       [ngClass]="{'my_class': vech.Chassisnumber != chhassisno, 'my_class2' : vech.Chassisnumber== chhassisno }">
@@ -164,7 +164,7 @@
                    <ng-container *ngIf="productId == '5'">
                     <div class="ml-5 mt-2" *ngFor="let vech of ViewRisk"><!--class="message"-->
                         <div class="container">
-                            <div class="row p-5 ml-4 mr-4" *ngIf="vech.Chassisnumber==chhassisno"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
+                            <div class="row p-3 ml-4 mr-4" *ngIf="vech.Chassisnumber==chhassisno"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
                                 <div class="col-md-6 col-12">
                                     <div>
                                         <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;">Vechile Info</h1></div>
@@ -348,7 +348,7 @@
                    </ng-container>
 
                    <ng-container *ngIf="productId == '4'">
-                    <div class="row p-5 ml-4 mr-4"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
+                    <div class="row p-3 ml-4 mr-4"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
                         <div class="col-md-6 col-12">
                             <div>
                                 <div>
@@ -517,10 +517,10 @@
                    </ng-container>
                    
                    <ng-container *ngIf="productId == '3'">
-                    <div class="row p-5 ml-4 mr-4" *ngFor="let vech of ViewRisk;let i=index;"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
+                    <div class="row p-3 ml-4 mr-4" *ngFor="let vech of ViewRisk;let i=index;"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
                         <div class="col-12 col-md-6">
                             <div>
-                                <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;">Domestic Info</h1></div>
+                                <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;" class="mt-2">Domestic Info</h1></div>
                                 <div class="mt-2 pl-5 pr-5">
     
                                     <div class="row mt-2">
@@ -571,10 +571,10 @@
                         </div>
                             
                         <div class="line-in-middle"></div>
-                        <div class="col-5">
+                        <div class="col-12 col-md-5">
                                     <div>
                                         <div class="Personal Details">
-                                            <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">Additional Information</h1></div>
+                                            <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral" class="mt-2">Additional Information</h1></div>
                                            </div>
                                            <div class="row mt-2">
                                          
@@ -591,10 +591,6 @@
                                                 <div class="heading2">{{vech.NcdYears}}</div>
                                              </div>
                                            
-                                        </div>
-                                     
-                                            <div class="row mt-2">
-                                           
                                              <div class="col-6 col-md-4 mt-2">
                                                 <div class="heading3">All Risk SI</div>
                                                 <div class="heading2">{{vech.AllriskSumInsured
@@ -609,22 +605,20 @@
                                                 <div class="heading3">Pa Medical SI</div>
                                                 <div class="heading2"> {{vech.CollateralName}}</div>
                                              </div>
-                                            
-                                        </div>
-                                        <div class="row mt-2">
-                                         
+                                        
                                              <div class="col-6 col-md-4 mt-2">
                                                 <div class="heading3">Personal Intermediary SI</div>
                                                 <div class="heading4">{{vech.PersonalIntermediarySuminsured
                                                 }}</div>
                                             </div>
+                                        </div>
                                            
                                              <!-- <div class="col-4 mt-2">
                                                 <div class="heading3">AcccessoriesSI</div>
                                                 <div class="heading2" >{{vech.AcccessoriesSumInsured}}</div>
                                             </div> -->
                                              
-                                            </div>
+                                            
                                             <!-- <div class="row mt-2">
                                                 <div class="col-4 mt-2">
                                                     <div class="heading3">WindScreenSI</div>
@@ -771,13 +765,13 @@
                 <div class="card-body">
                     <div style="font-family: 'Inter', sans-serif !important;">
                     <div class="row p-4 ml-2 mr-4" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)!important" *ngFor="let cuss of PremiumInfo"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
-                        <div class="col-5">
-                            <div class="heading1">Opted Covers</div>
+                        <div class="col-md-5 col-12">
+                            <div class="heading5">Opted Covers</div>
                             <div>
                                 <div class="card" style="padding:10px 10px 10px 10px !important;background-color:lightblue !important;">
                                   <div class="mails">
                                     <div class="mail-names">
-                                     <span>Section Name:{{sectionnameopted}}</span>
+                                     <span>Section Name:{{cuss.SectionName}}</span>
                                     </div>
                                   </div>
                                   <div>
@@ -799,24 +793,24 @@
                                 <div class="Personal Details">
     
                                     <div class="row mt-1">
-                                        <div class="col-3 mt-2">
+                                        <div class="col-md-3 col-lg-3 col-4 mt-2">
                                             <div class="heading3">SumInsured</div>
                                             <div class="heading4">{{Cus.SumInsured |commaseparator}}</div>
                                         </div>
-                                        <div class="col-3 mt-2">
+                                        <div class="col-4 col-lg-3 col-md-4 mt-2">
                                             <div class="heading3">IncludedTax</div>
                                             <div class="heading4"> {{Cus.PremiumIncludedTax|commaseparator}}</div>
                                          </div>
-                                         <div class="col-2 mt-2">
+                                         <div class="col-md-2 col-lg-2 col-4 mt-2">
                                             <div class="heading3">Excess</div>
                                             <div class="heading4">{{Cus.ExcessAmount}}</div>
                                          </div>
                                          
-                                        <div class="col-2 mt-2">
+                                        <div class="col-md-2 col-lg-2 col-4 mt-2">
                                             <div class="heading3">Before</div>
                                             <div class="heading4" >{{Cus.PremiumBeforeDiscount|commaseparator}}</div>
                                         </div>
-                                        <div class="col-2 mt-2">
+                                        <div class="col-md-2 col-lg-2 col-4 mt-2">
                                             <div class="heading3">AfterDiscount</div>
                                             <div class="heading4"> {{Cus.PremiumAfterDiscount|commaseparator}}</div>
                                         </div>
@@ -832,13 +826,13 @@
                         </div>
                             
                         <div class="line-in-middle"></div>
-                        <div class="col-6">
-                            <div class="heading1">NonOpted Covers</div>
+                        <div class="col-md-6 col-12">
+                            <div class="heading5">NonOpted Covers</div>
                             <div>
                                 <div class="card" style="padding:10px 10px 10px 10px !important;background-color:lightblue !important;">
                                   <div class="mails">
                                     <div class="mail-names">
-                                     <span>Section Name:{{sectionnamenonopted}}</span>
+                                     <span>Section Name:{{cuss.SectionName}}</span><!--sectionnamenonopted-->
                                     </div>
                                   </div>
                                   <div>
@@ -855,24 +849,24 @@
                                        
                                        </div>
                                        <div class="row mt-1">
-                                        <div class="col-3 mt-2">
+                                        <div class="col-md-3 col-lg-3 col-4 mt-2">
                                             <div class="heading3">SumInsured</div>
                                             <div class="heading4">{{Cus.SumInsured|commaseparator}}</div>
                                         </div>
-                                        <div class="col-3 mt-2">
+                                        <div class="col-4 col-md-3 col-lg-3 mt-2">
                                             <div class="heading3">IncludedTax</div>
                                             <div class="heading4"> {{Cus.PremiumIncludedTax|commaseparator}}</div>
                                          </div>
-                                         <div class="col-2 mt-2">
+                                         <div class="col-4 col-md-2 col-lg-2 mt-2">
                                             <div class="heading3">Excess</div>
                                             <div class="heading4">{{Cus.ExcessAmount}}</div>
                                          </div>
                                          
-                                        <div class="col-2 mt-2">
+                                        <div class="col-4 col-md-2 col-lg-2 mt-2">
                                             <div class="heading3">Before</div>
                                             <div class="heading4" >{{Cus.PremiumBeforeDiscount|commaseparator}}</div>
                                         </div>
-                                        <div class="col-2 mt-2">
+                                        <div class="col-4 col-md-2 col-lg-2 mt-2">
                                             <div class="heading3">AfterDiscount</div>
                                             <div class="heading4"> {{Cus.PremiumAfterDiscount|commaseparator}}</div>
                                         </div>
@@ -935,7 +929,7 @@
            <mat-tab label="Tira Details">
             <div class="card">
                 <div class="row p-5 ml-4 mr-4"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
-                    <div class="col-3">
+                    <div class="col-12 col-md-3 col-lg-3">
                         <div>
                             <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;">Tira Details</h1></div>
                             <div class="Personal Details mt-2 pl-5 pr-5">
@@ -967,30 +961,30 @@
                     </div>
                         
                     <div class="line-in-middle"></div>
-                    <div class="col-8">
+                    <div class="col-12 col-md-8 col-lg-8">
                                 <div>
                                     <div class="Personal Details">
                                         <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">History</h1></div>
                                        </div>
                                        <div *ngFor="let s of History">
                                        <div class="row mt-2">
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 col-md-4 mt-2">
     
                                            <div class="heading3">Status</div>
                                            <div class="heading4">{{s.Status}}</div>
                                         </div>
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 col-md-4 mt-2">
                                             <div class="heading3">AcknowledgementId</div>
                                             <div class="heading4">{{s.AcknowledgementId}}</div>
                                         </div>
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-4 col-md-4 mt-2">
                                             <div class="heading3">RequestStatusCode</div>
                                             <div class="heading4">{{s.RequestStatusCode}}</div>
                                         </div>
                                         
                                     </div>
                                     <div class="row mt-2">
-                                           <div class="col-6 mt-2">
+                                           <div class="col-12 col-md-12 col-lg-12 mt-2">
                                                 <div class="heading3">RequestFilePath</div>
                                                 <div class="heading4">
                                                     <a style="text-decoration:underline;color: rgb(18, 174, 236);cursor: pointer;">{{s.RequestFilePath}}</a></div>
@@ -998,7 +992,7 @@
                                             </div>
                                         
                                             <div class="row mt-2"> 
-                                        <div class="col-6 mt-2">
+                                        <div class="col-12 col-md-12 col-lg-12 mt-2">
                                             <div class="heading1">ResponseFilePath</div>
                                             <div class="heading2">
                                                 <a style="text-decoration:underline;color: rgb(18, 174, 236);cursor: pointer;"> {{s.ResponseFilePath}}</a>
@@ -1019,47 +1013,197 @@
 
            <mat-tab label="Document">
             <div class="card">
-                <div class="row p-5 ml-4 mr-4"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
-                        <table class="table">
-                            <tbody>
-                                <tr *ngFor="let document of DocumentInfo;let i=index" style="display:flex;flex-direction: column;width:250px;">
-                                    <td>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            S.No
-                                        </div>
-                                        <div class="col-6">
-                                            <span>{{i+1}}</span>
-                                        </div>
-                                    </div>
-                                </td>
-
-                                   
-                                    <td>
-                                        <div class="row">
+                <div class="row mt-4 p-2">
+                    <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                        <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;">Common Documents</h1></div>
+                        <ng-container *ngIf="CommonDoc.length!=0">
+                            <table class="table" id="capture_table">
+                                <thead class="display1">
+                                    <tr>
+                                        <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                        <th scope="col"><span class="spancommon">FileName</span></th>
+                                        <th scope="col"><span class="spancommon">Document Type</span></th>
+                                        <th scope="col"><span class="spancommon">View</span></th>
+                                        <th scope="col"><span class="spancommon">Download</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="display1">
+                                    <tr *ngFor="let document of CommonDoc;let i=index">
+                                        <td class="row">
+                                                    <span class="spancommon span_font_size">{{i+1}}</span>
+                                        </td>
+                                        <td>
+                                                <span class="spancommon span_font_size">{{document.DocumentFile}}</span>
+                                        </td>
+                                        <td>
+                                          
+                                            {{document.DocumentDescription}}
+                                        </td>
+                                        <td>
+                                           
+                                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewCommonDocument(i)"><i class="fas fa-eye mx-1"></i></a>
+                                        </td>
+                                        <td>
+                                          
+                                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onCommonDocumentDownload(i)"><i class="fas fa-download mx-1"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody class="display2 customcss">
+                                    <tr *ngFor="let document of CommonDoc;let i=index">
+                                        <td class="row">
+                                                <div class="col-6">
+                                                    <span class="mobile-label"> S.No</span>
+                                                </div>
+                                                <div class="col-6">
+                                                    <span class="spancommon span_font_size">{{i+1}}</span>
+                                                </div>
+                                        </td>
+                                        <td class="row">
                                             <div class="col-6">
-                                                Document Type
+                                                <span class="mobile-label">FileName</span>
                                             </div>
                                             <div class="col-6">
-                                                <span class="spancommon">{{document.DocumentTypeDesc}}</span>
+                                                <span class="spancommon span_font_size">{{document.DocumentFile}}</span>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="row">
+                                           
+                                        </td>
+                                        <td class="row">
+                                            <div class="col-6"><span class="mobile-label">Document Type</span></div>
+                                            <div class="col-6">{{document.DocumentDescription}}</div>
+                                        </td>
+                                        <td>
+                                            <span class="mobile-label">View</span>
+                                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewCommonDocument(i)"><i class="fas fa-eye mx-1"></i></a>
+                                        </td>
+                                        <td>
+                                            <span class="mobile-label">Download</span>
+                                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onCommonDocumentDownload(i)"><i class="fas fa-download mx-1"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </ng-container>
+                        <ng-container *ngIf="CommonDoc.length==0">
+                            <div class="text-center">
+                                No Document Available
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-12 col-xl-12 mt-3">
+                        <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;">
+                            <ng-container *ngIf="productId!='5' && productId!='4' && productId!='3'">Individual Documents</ng-container>
+                            <ng-container *ngIf="productId=='5'">Vehicle Documents</ng-container>
+                            <ng-container *ngIf="productId=='4'">Passenger Documents</ng-container>
+                            <ng-container *ngIf="productId=='3'">Location Documents</ng-container>
+                        </h1></div>
+                        <ng-container *ngIf="DocumentInfo.length!=0">
+                            <table class="table" id="capture_table" style="width:100%;">
+                                <thead class="display1">
+                                    <tr>
+                                        <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                        <th scope="col"><span class="spancommon">FileName</span></th>
+                                        <th scope="col" *ngIf="productId!='5' && productId!='4'"><span class="spancommon">Location</span></th>
+                                        <th scope="col" ><span class="spancommon">Section</span></th>
+                                        <th scope="col">
+                                            <span class="spancommon">
+                                                <ng-container *ngIf="productId=='5'">Chassis Number</ng-container>
+                                                <ng-container *ngIf="productId=='4'">Passpport No</ng-container>
+                                                <ng-container *ngIf="productId!='4' && productId!='5'">ID</ng-container>
+                                            </span>
+                                        </th>
+                                        <th scope="col"><span class="spancommon">Document Type</span></th>
+                                        <th scope="col"><span class="spancommon">View</span></th>
+                                        <th scope="col"><span class="spancommon">Download</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="display1">
+                                    <tr *ngFor="let document of DocumentInfo;let i=index">
+                                        <td>
+                                            <span class="spancommon span_font_size col-6">{{i+1}}</span>
+                                        </td>
+                                        <td>
+                                            <span class="spancommon span_font_size col-6">{{document.DocumentFile}}</span>
+                                        </td>
+                                        <td *ngIf="productId!='5' && productId!='4'">
+                                            <span class="spancommon span_font_size">{{document.LocationName}}</span>
+                                        </td>
+                                        <td>
+                                            <span class="spancommon span_font_size">{{document.SectionName}}</span>
+                                        </td>
+                                        <td>
+                                            <span class="spancommon span_font_size">{{document.Id}}</span>
+                                        </td>
+                                        <td>
+                                            <span class="spancommon span_font_size">{{document.DocumentTypeDesc}}</span>
+                                        </td>
+                                        <td>
+                                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewListDocument(j,document)"><i
+                                                    class="fa fa-eye"></i></a>
+                                        </td>
+                                        <td>
+                                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onListDocumentDownload(j,document)"><i
+                                                    class="fa fa-download"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody class="display2">
+                                    <tr *ngFor="let document of DocumentInfo;let i=index" class="customcss">
+                                        <td class="row">
+                                            <div class="mobile-label col-6">S.No</div>
+                                            <div class="spancommon span_font_size col-6">{{i+1}}</div>
+                                        </td>
+                                        <td class="row">
+                                            <div class="mobile-label col-6">FileName</div>
+                                            <div class="spancommon span_font_size col-6">{{document.DocumentFile}}</div>
+                                        </td>
+                                        <td *ngIf="productId!='5' && productId!='4'" class="row">
+                                            <div class="mobile-label col-6">Location</div>
+                                            <div class="spancommon span_font_size col-6">{{document.LocationName}}</div>
+                                        </td>
+                                        <td class="row">
+                                            <div class="mobile-label col-6">Section</div>
+                                            <div class="spancommon span_font_size col-6">{{document.SectionName}}</div>
+                                        </td>
+                                        <td class="row">
+                                            <div class="mobile-label col-6">
+                                                <ng-container *ngIf="productId=='5'">Chassis Number</ng-container>
+                                                <ng-container *ngIf="productId=='4'">Passpport No</ng-container>
+                                                <ng-container *ngIf="productId!='4' && productId!='5'">ID</ng-container>
+                                            </div>
+                                            <div class="spancommon span_font_size col-6">{{document.Id}}</div>
+                                        </td>
+                                        <td class="row">
+                                            <div class="mobile-label col-6">Document Type</div>
+                                            <div class="spancommon span_font_size col-6">{{document.DocumentTypeDesc}}</div>
+                                        </td>
+                                        <td class="row">
+                                            <div class="mobile-label col-6">View</div>
+                                                <div class="col-6">
+                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewListDocument(j,document)"><i
+                                                        class="fa fa-eye"></i></a>
+                                                </div>
+                                        </td>
+                                        <td class="row">
+                                            <div class="mobile-label col-6">
+                                                <span class="mobile-label">Download</span>
+                                            </div>
                                             <div class="col-6">
-                                                FileName
+                                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onListDocumentDownload(j,document)"><i
+                                                    class="fa fa-download"></i></a>
                                             </div>
-                                            <div class="col-12">
-                                 {{document.DocumentDescription}}
-                                            </div>
-                                            </div>
-                                    </td>
-                                 
-                                </tr>
-                            </tbody>
-                        </table>
-                       
+                                      
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </ng-container>
+                        <ng-container *ngIf="DocumentInfo.length==0">
+                            <div class="text-center">
+                                No Document Available
+                            </div>
+                        </ng-container>
+                    </div>
                 </div>
             </div>
            </mat-tab>

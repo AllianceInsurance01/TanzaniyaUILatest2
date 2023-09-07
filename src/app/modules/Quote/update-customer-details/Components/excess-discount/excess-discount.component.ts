@@ -3117,6 +3117,7 @@ getMotorUsageList(vehicleValue){
   onProceed(coverList:any){
     if(this.statusValue == 'RA' && !this.adminSection){
       if(this.productId!='4'){
+        console.log('Referral Approved',coverList);
         // if(this.productId=='5'){
         //       let accessoriesSI = this.vehicleData[0]?.RiskDetails?.AcccessoriesSumInsured;
         //       if(accessoriesSI!=null && accessoriesSI!=0 && accessoriesSI!=undefined){
@@ -3135,6 +3136,29 @@ getMotorUsageList(vehicleValue){
           }
 
         }
+        else if(this.productId == '5'){
+          let i=0;let coverlist:any=[];
+          for(let vehicle of coverList){
+            let vehEntry = vehicle.Covers;
+            console.log('VVVVVVVVV',vehEntry);
+            if(vehEntry.length!=0){
+              let entry = vehEntry.filter(ele=>ele.CoverId == '55');
+              if(entry.length!=0){
+                console.log('RRRRRRR',entry);
+                coverlist.push(entry)
+              }
+            }
+            i+=1;
+          }           
+         if(coverlist.length!=0){
+          console.log('if entry of cover id 55',coverlist);
+            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
+           }
+           else {
+            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+           }
+        }
+  
         else{
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
         }
@@ -3142,9 +3166,10 @@ getMotorUsageList(vehicleValue){
 
       }
       else if(this.productId == '4'){
+        console.log('Referral Approved');
         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']);
       }
-
+    
     }
     else{
       if(!this.statusValue && this.isMannualReferal=='Y'){
