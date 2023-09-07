@@ -98,7 +98,12 @@
     font-weight: 600;
     line-height: 16px;
 }
-
+.customFieldWidth{
+    max-width: 410px;min-width: 410px;
+}
+.customFieldWidth2{
+    max-width: 230px;min-width: 230px;
+}
 .layout {
     display: flex;
     padding: 5px;
@@ -147,7 +152,9 @@
     outline: 0.25px solid #eaecf1 !important;
     padding: 2px 2px !important;
 }
-
+::ng-deep .mat-mdc-icon-button.mat-mdc-button-base {
+    padding: 3px !important;
+}
 .backbtn {
     height: 45px;
     padding: 12px 40px 20px 40px;

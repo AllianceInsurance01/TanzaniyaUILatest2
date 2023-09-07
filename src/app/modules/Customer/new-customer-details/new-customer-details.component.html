@@ -79,14 +79,14 @@
         </div>
             </div>
             <div class="d-flex mt-3 justify-content-between">
-                <div style="max-width: 130px;min-width: 130px;"> 
+                <div style="max-width: 130px;min-width: 130px;" *ngIf="productItem.IdType == 2"> 
                     <div class="headinglbels">Gender <span class="star">*</span></div> 
                     <div class="mt-1">
                     <ng-select class="custom" appendTo="body"  [items]="genderList"  [(ngModel)]="productItem.Gender" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                     </div>
                 </div>
-                <div style="max-width: 230px;min-width: 230px;">
+                <div [ngClass]="productItem.IdType == 2 ? 'customFieldWidth2':'customFieldWidth'">
                     <div class="headinglbels">Identity Type<span class="star">*</span></div> 
                     <div class="mt-1">
                     <ng-select class="custom" appendTo="body" [items]="policyHolderTypeList"  [(ngModel)]="productItem.PolicyHolderTypeid" bindValue="Code" bindLabel="CodeDesc">
@@ -202,7 +202,7 @@
                         </ng-select>
                     </div>
                 </div>
-                <div class="col-12 mt-1"> 
+                <div class="col-12 mt-1" *ngIf="productItem.IdType == 2"> 
                     <div class="headinglbels">Gender <span class="star">*</span></div> 
                     <div class="mt-1">
                     <ng-select class="custom" appendTo="body"  [items]="genderList"  [(ngModel)]="productItem.Gender" bindValue="Code" bindLabel="CodeDesc">

@@ -104,6 +104,9 @@ export class NewCustomerDetailsComponent {
 	}
   setPolicyType(value){
     this.productItem.IdType = value;
+	if(value==2){
+		this.productItem.Gender = '';
+	}
   }
 	getTitleList() {
 		let ReqObj = {
