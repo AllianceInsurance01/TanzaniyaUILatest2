@@ -24,6 +24,7 @@ import { EmployeeLiablityss } from '../models/additionalDetails/Employeeliabilit
 import { Fedilitis } from '../models/additionalDetails/Fedilitiys';
 import { ElectronicEquip } from '../models/additionalDetails/Electronicequip';
 import { Accessories } from '../models/additionalDetails/Accsessories';
+import { Accessorieswh } from '../models/additionalDetails/Accsessorieswh';
 
 export class ForceLengthValidators {
   static maxLength(maxLength: number) {
@@ -295,6 +296,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   editPersonalIndSection: boolean;
   enableType: any;
   actualAssSI: any;
+  newacc: boolean;
 
 
   constructor(private router: Router,private datePipe:DatePipe,private modalService: NgbModal,
@@ -328,22 +330,6 @@ export class DomesticRiskDetailsComponent implements OnInit {
     }
     if(this.productId=='5'){
       this.buildingDetailsSection=false;
-      let fireData = new Accessories();
-      let entry = [];
-      this.Accfieldss = fireData?.fields;
-
-      console.log('TTTTTTTTTTTT',this.fieldsContent);
-
-      let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
-        field.formControl.valueChanges.subscribe(() => {
-          this.individualCommaFormatted('accessories')
-        });
-      } }
-      //this.fields[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].hooks = regionHooks;
-      this.Accfieldss[0].fieldGroup[0].fieldGroup[0].fieldGroup[3].hooks = regionHooks;
-      this.productItem = new ProductData();
-      this.formSection = true; this.viewSection = false;
-
       }
     else if(this.productId!='43'){
       this.buildingDetailsSection = true;
@@ -775,7 +761,44 @@ export class DomesticRiskDetailsComponent implements OnInit {
           this.customerDetails=data?.Result?.CustomerDetails;
           if(this.Riskdetails[0].AcccessoriesSumInsured!=null)
           this.actualAccessoriesSI = String(this.Riskdetails[0].AcccessoriesSumInsured);
+        
+          if(this.Riskdetails.length==1){
+            this.newacc=true;
+            let fireData = new Accessorieswh();
+            let entry = [];
+            this.Accfieldss = fireData?.fields;
       
+            console.log('TTTTTTTTTTTT',this.fieldsContent);
+      
+            let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
+              field.formControl.valueChanges.subscribe(() => {
+                this.individualCommaFormatted('accessories')
+              });
+            } }
+            //this.fields[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].hooks = regionHooks;
+            this.Accfieldss[0].fieldGroup[0].fieldGroup[0].fieldGroup[2].hooks = regionHooks;
+            this.productItem = new ProductData();
+            this.formSection = true; this.viewSection = false;
+            console.log('KKKKKKKKKKK',this.productItem.AccessoriesChassisNo);
+          }
+          else{
+            let fireData = new Accessories();
+            this.newacc=false;
+            let entry = [];
+            this.Accfieldss = fireData?.fields;
+      
+            console.log('TTTTTTTTTTTT',this.fieldsContent);
+      
+            let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
+              field.formControl.valueChanges.subscribe(() => {
+                this.individualCommaFormatted('accessories')
+              });
+            } }
+            //this.fields[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].hooks = regionHooks;
+            this.Accfieldss[0].fieldGroup[0].fieldGroup[0].fieldGroup[3].hooks = regionHooks;
+            this.productItem = new ProductData();
+            this.formSection = true; this.viewSection = false;
+          }
           for (let cover of this.Riskdetails) {
             let j = 0;
             for (let section of cover?.SectionDetails) {
@@ -1529,6 +1552,10 @@ onFidelitySave(){
     //   this.editContentSection = false;
     //   this.enableContentEditSection = false;
     // } 
+    if(this.Riskdetails.length==1){
+      this.productItem.AccessoriesChassisNo = 1;
+    }
+    console.log('yyyyyyyyyyyy',this.productItem.AccessoriesChassisNo);
     let i =0;
     if(this.productItem.AccessoriesChassisNo==null || this.productItem.AccessoriesChassisNo==''){
       i+=1;
@@ -1546,11 +1573,13 @@ onFidelitySave(){
       i+=1;
       this.form.markAllAsTouched();
     }
-    else if(this.totalAccessoriesSI>this.actualAccessoriesSI){
+    else if(this.totalAccessoriesSI > this.actualAssSI){
       i+=1;
       this.totalAccSIError = true;
+      this.onsubmitAccessories()
     }
     if(i==0){
+      console.log('JJJJJJJJJ',this.productItem.AccessoriesChassisNo);
       // this.Cotentrisk[this.currentContentIndex]['SumInsured'] = this.productItem.ContentSI//this.contentSI;
       // this.Cotentrisk[this.currentContentIndex]['RiskId'] = this.productItem.ContentLocation;
       // this.Cotentrisk[this.currentContentIndex]['SerialNoDesc'] = this.productItem.ContentSerialNo;//this.serialNoDesc
@@ -1901,7 +1930,7 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
           this.ChassisList[i].label = this.ChassisList[i]['CodeDesc'];
           this.ChassisList[i].value = this.ChassisList[i]['Code'];
           delete this.ChassisList[i].CodeDesc;
-          if (i == this.ChassisList.length - 1) {
+          if (i == this.ChassisList.length - 1 && !this.newacc) {
             this.Accfieldss[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].props.options = this.ChassisList;
           }
         }
@@ -1926,8 +1955,11 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
             this.AccLists[i].label = this.AccLists[i]['CodeDesc'];
             this.AccLists[i].value = this.AccLists[i]['Code'];
             delete this.AccLists[i].CodeDesc;
-            if (i == this.AccLists.length - 1) {
+            if (i == this.AccLists.length - 1 && !this.newacc) {
               this.Accfieldss[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].props.options = this.AccLists;
+            }
+            else if(i == this.AccLists.length - 1 && this.newacc){
+              this.Accfieldss[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].props.options = this.AccLists;
             }
           }
           console.log('Accessories List',this.AccLists);
@@ -3458,6 +3490,38 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       this.productItem=new ProductData();
     }
   }
+  onsubmitAccessories(){
+    if(this.totalAccessoriesSI > this.actualAssSI){
+      Swal.fire({
+        title: '<strong>Error</strong>',
+        icon: 'info',
+        html:
+          `<ul class="list-group errorlist">
+           <li>Entered SumInsured Amount Greater than Actual Total SumInsured</li>
+       </ul>`,
+        showCloseButton: false,
+        //focusConfirm: false,
+        // showCancelButton:true,
+
+       //confirmButtonColor: '#3085d6',
+       cancelButtonColor: '#d33',
+       cancelButtonText: 'Ok',
+      })
+      // }).then((result) => {
+      //   if (result.isConfirmed) {
+      //         this.onProceedUpload('Merge')
+      //   }
+      //   else{
+      //     this.onProceedUpload('Add')
+      //   }
+      // })
+    }
+    // else{
+    //   this.editEmployeeSection = false;this.enableEmployeeEditSection = false;this.currentEmployeeIndex=null;
+    //   this.productItem=new ProductData();
+    // }
+  }
+  
   onUploadEmployeeDetails(){
       if(this.uploadDocList.length!=0 && this.employeeList.length!=0 || this.fidelityList.length!=0){
         Swal.fire({

@@ -157,13 +157,6 @@ input:checked+.slider:before {
     border-radius: 50%;
 }
 
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    width: 90%;
-    margin-left: 5%;
-}
-
 .actualsuminsure{
     display: flex !important;
     justify-content: space-evenly !important;
@@ -205,6 +198,24 @@ input:checked+.slider:before {
     width: 41.66666667% !important;
 }
 
+
+@media screen and (min-width: 280px) and (max-width: 750px) {
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        width: 90%;
+        margin-left: 0px !important;
+    }
+    }
+  
+    @media screen and (min-width: 750px) and (max-width: 5464px) {
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            width: 90%;
+            margin-left: 5%;
+        }
+      }
 
 
 
