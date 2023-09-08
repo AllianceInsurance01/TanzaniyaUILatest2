@@ -267,7 +267,6 @@ export class ReferralRejectedComponent implements OnInit {
               }
             }
             else {
-              alert("Entered")
               this.quoteData = []; this.referralData = []
             }
           }
