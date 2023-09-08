@@ -743,17 +743,15 @@ export class VehicleDetailsComponent implements OnInit {
       this.claimsYN = this.vehicleDetails?.NcdYn;
       this.gpsYn = this.vehicleDetails?.Gpstrackinginstalled;
       this.vehicleSI = String(this.vehicleDetails?.SumInsured);
-      this.CommaFormatted();
+      this.vehicleSIChange();
       this.windShieldSI = String(this.vehicleDetails?.WindScreenSumInsured);
-      this.WindSICommaFormatted();
+      this.onWindSIValueChange();
       this.tppdSI = String(this.vehicleDetails?.TppdIncreaeLimit);
-      this.TppdCommaFormatted();
+      this.TppdSIChange();
       this.accessoriesSI = String(this.vehicleDetails?.AcccessoriesSumInsured);
-      this.accessoriesCommaFormatted();
+      this.accessoriesSIChange();
       this.getVehicleDetails(this.vehicleDetails?.Chassisnumber);
     }
-    
-
   }
   onSearchVehicle(){
     this.customerData2 = [];
@@ -793,7 +791,6 @@ export class VehicleDetailsComponent implements OnInit {
             //     entry.Message,
             //     config);
             // }
-            console.log("Error Iterate",data.ErrorMessage)
             //this.loginService.errorService(data.ErrorMessage);
           }
       }
@@ -1381,7 +1378,6 @@ export class VehicleDetailsComponent implements OnInit {
       // this.toastrService.show(
       //   'Chassis Number / Registration Number Already Available',
       //   'Duplicate Entry',
-        
       //   config);
     }
     this.searchBy = ""; this.searchValue = null;this.selectedVehicle=null;
@@ -1395,36 +1391,54 @@ export class VehicleDetailsComponent implements OnInit {
     }
   }
   CommaFormatted() {
-
     // format number
     if (this.vehicleSI) {
-      this.vehicleSI = this.vehicleSI.replace(/[^0-9.]|(?<=\..*)\./g, "")
-       .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }}
+      let value = this.vehicleSI.replace(/,/g, ''); // Remove existing commas
+      value = value.replace(/[^0-9.]/g, ''); // Remove non-numeric characters except for decimal point
+      value = isNaN(value) ? 0 : value; // Set to 0 if NaN
+      // Format the number with 2 decimal places and commas
+      this.vehicleSI = value;
+    }
+  }
+  vehicleSIChange(){
+    if(this.vehicleSI)  this.vehicleSI = parseFloat(this.vehicleSI).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+  }
     TppdCommaFormatted() {
-
       // format number
       if (this.tppdSI) {
-       this.tppdSI = this.tppdSI.replace(/[^0-9.]|(?<=\..*)\./g, "")
-       .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      }}
-    accessoriesCommaFormatted() {
-
-      // format number
-      if (this.accessoriesSI) {
-       this.accessoriesSI = this.accessoriesSI.replace(/[^0-9.]|(?<=\..*)/g, "")
-       .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        let value = this.tppdSI.replace(/,/g, ''); // Remove existing commas
+        value = value.replace(/[^0-9.]/g, ''); // Remove non-numeric characters except for decimal point
+        value = isNaN(value) ? 0 : value; // Set to 0 if NaN
+        // Format the number with 2 decimal places and commas
+        this.tppdSI = value;
       }
+    }
+    TppdSIChange(){
+      if(this.tppdSI)  this.tppdSI = parseFloat(this.tppdSI).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+    }
+    accessoriesCommaFormatted() {
+      if (this.accessoriesSI) {
+        let value = this.accessoriesSI.replace(/,/g, ''); // Remove existing commas
+        value = value.replace(/[^0-9.]/g, ''); // Remove non-numeric characters except for decimal point
+        value = isNaN(value) ? 0 : value; // Set to 0 if NaN
+        // Format the number with 2 decimal places and commas
+        this.accessoriesSI = value;
+      }
+    }
+    accessoriesSIChange(){
+      if(this.accessoriesSI)  this.accessoriesSI = parseFloat(this.accessoriesSI).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
     }
     WindSICommaFormatted() {
-      // format number
       if (this.windShieldSI) {
-       this.windShieldSI = this.windShieldSI.replace(/[^0-9.]|(?<=\..*)\./g, "")
-       .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        let value = this.windShieldSI.replace(/,/g, ''); // Remove existing comma
+        value = value.replace(/[^0-9.]/g, ''); // Remove non-numeric characters except for decimal point
+        value = isNaN(value) ? 0 : value; // Set to 0 if NaN
+        // Format the number with 2 decimal places and commas
+        this.windShieldSI = value;
       }
     }
-  onWindSIValueChange(event){
-    this.windShieldSI = event;
+  onWindSIValueChange(){
+    if(this.windShieldSI)  this.windShieldSI = parseFloat(this.windShieldSI).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
   }
   getCalculationDetails(vehicleDetails,type,index,returnType){
     let createdBy="";
@@ -1556,21 +1570,21 @@ export class VehicleDetailsComponent implements OnInit {
     return rowData['HiddenYN']=='Y';
   }
   showUWQUestion(rowData,optionList,type){
-        if(optionList.length!=0 && rowData!=undefined){
-          for(let option of optionList){
-            if(option.DependentYn!=null && option.DependentYn=='Y'){
-                if(option.DependentUnderwriterId==rowData.DependentUnderwriterId){
-                  let ques = this.uwQuestionList.find(ele=>ele.UwQuestionId==option.DependentUnderwriterId)
-                  ques['HiddenYN'] = 'N';
-                  if(type=='change') ques['Value']=null;
-                }
-                else{
-                  let ques = this.uwQuestionList.find(ele=>ele.UwQuestionId==option.DependentUnderwriterId)
-                  ques['HiddenYN'] = 'Y';
-                }
+    if(optionList.length!=0 && rowData!=undefined){
+      for(let option of optionList){
+        if(option.DependentYn!=null && option.DependentYn=='Y'){
+            if(option.DependentUnderwriterId==rowData.DependentUnderwriterId){
+              let ques = this.uwQuestionList.find(ele=>ele.UwQuestionId==option.DependentUnderwriterId)
+              ques['HiddenYN'] = 'N';
+              if(type=='change') ques['Value']=null;
             }
-          }
+            else{
+              let ques = this.uwQuestionList.find(ele=>ele.UwQuestionId==option.DependentUnderwriterId)
+              ques['HiddenYN'] = 'Y';
+            }
         }
+      }
+    }
   }
   getUWDetails() {
     // let branchCode = '';
