@@ -160,7 +160,6 @@ export class RejectedQuotesComponent implements OnInit {
               }
             }
             else {
-              alert("Entered")
               this.quoteData = []; 
             }
           }

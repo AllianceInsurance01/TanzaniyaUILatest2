@@ -180,7 +180,6 @@ export class LapsedQuotesComponent implements OnInit {
               }
             }
             else {
-              alert("Entered")
               this.quoteData = []; 
             }
           }
