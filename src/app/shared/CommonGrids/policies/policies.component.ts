@@ -27,6 +27,9 @@ export class PoliciesComponent implements OnInit {
   startIndex: number;
   endIndex: number;
   limit: any='0';
+  show: boolean = false;
+  OthersList:any[]=[];
+  searchValue:any[]=[];
   constructor(private router:Router,private sharedService: SharedService) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -332,4 +335,40 @@ export class PoliciesComponent implements OnInit {
   //    //sessionStorage.setItem('FromDetails',JSON.stringify(quoteObj));
   //   sessionStorage.setItem('FromDetails', JSON.stringify(quote));
   // }
+
+  onSelectCustomer(event){
+    console.log('Eventsss',event);
+    
+    if(event){
+    this.show= true;
+    }
+    else{
+      this.show=false;
+    }
+      }
+      eventothers(searchvalues){
+        console.log('MMMMMMMMM',searchvalues);
+        let searchvalue:any=searchvalues;
+        this.searchValue=searchvalues
+        sessionStorage.setItem('PolicyNos',searchvalue)
+        let ReqObj = {
+          "PolicyNo":searchvalues,//this.searchValue,
+       "BranchCode":this.branchCode,
+       "InsuraceId":this.insuranceId,
+       "ProductId":this.productId,
+       "Limit":"0",
+       "Offset":"10"
+        }
+        let urlLink = `${this.CommonApiUrl}api/searchbrokerpolicies`;
+        this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+          (data: any) => {
+            console.log(data);
+            if(data.Result.PortFolioList){
+               this.OthersList = data.Result?.PortFolioList;
+            }
+          },
+          (err) => { },
+        );
+      }
+    
 }
