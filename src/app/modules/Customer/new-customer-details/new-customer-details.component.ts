@@ -107,7 +107,7 @@ export class NewCustomerDetailsComponent {
 	if(value==2){
 		this.productItem.Gender = '';
 	}
-	this.getPolicyHolderList();
+	this.getPolicyIdTypeList('change');
   }
 	getTitleList() {
 		let ReqObj = {
