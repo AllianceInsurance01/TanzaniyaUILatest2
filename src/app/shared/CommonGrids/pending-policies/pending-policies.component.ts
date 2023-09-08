@@ -26,6 +26,7 @@ export class PendingPoliciesComponent implements OnInit {
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails?.Result?.UserType;
     this.insuranceId = this.userDetails.Result.InsuranceId;
+    sessionStorage.removeItem('loadingType');
    }
 
   ngOnInit(): void {

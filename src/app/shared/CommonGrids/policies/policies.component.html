@@ -1,11 +1,8 @@
 <div class="card">
     <div class="card-header">
         <div class="d-flex justify-content-between">
-            <div class="spancommon span_font_size" *ngIf="!show">
+            <div class="spancommon span_font_size">
                 Policies
-            </div>
-            <div class="spancommon span_font_size" *ngIf="show">
-                Other Policy Search
             </div>
 
         </div>
@@ -13,12 +10,8 @@
     <div class="card-body">
         <div class="row mt-1">
             <div class="col-12 col-md-12 col-lg-12">
-                <div style="text-align: end;" *ngIf="userType == 'Issuer'">
-                    <mat-checkbox class="example-margin" [checked]="onCheckEndorseSelect()" (change)="onSelectCustomer($event.checked)">Others</mat-checkbox>
-                </div>
-                <div *ngIf="!show">
                 <ng-container *ngIf="quoteData.length!=0">
-                    <app-commodity-table [cols]="quoteHeader" (onSchedule)="onGetSchedule($event)" (onCredit)="onCreditdownload($event)" (onDebit)="onDebitdownload($event)" [data]="quoteData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onGetEndorsements)="onGetEndorsements($event)" (onAdd)="onInnerData($event)"  (onView)="onViews($event)">
+                    <app-commodity-table [cols]="quoteHeader" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousData($event)" (onLoadNextData)="onNextData($event)" (onSchedule)="onGetSchedule($event)" (onCredit)="onCreditdownload($event)" (onDebit)="onDebitdownload($event)" [data]="quoteData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onGetEndorsements)="onGetEndorsements($event)" (onAdd)="onInnerData($event)"  (onView)="onViews($event)">
                     </app-commodity-table>
                 </ng-container>
                 <ng-container *ngIf="quoteData.length==0">
@@ -26,54 +19,6 @@
                         No Policy Available
                     </div>
                 </ng-container>
-            </div>
-
-                <div *ngIf="show && userType == 'Issuer'">
-                    <!-- <div class="card-header">
-                    <div class="d-flex justify-content-between">
-                        <div class="spancommon span_font_size">
-                           Other Policy Search
-                        </div>
-                    </div>
-                </div> -->
-                <div class="card-body">
-                    <div class="row">
-                    <div class="col-12 col-md-4 ml-5">
-                        <div class="input-control-container">
-                            <div class="input-form-box">
-                                <input type="text" class="input-form-control with-icon" [(ngModel)]="searchValue" placeholder="Search">
-                                <span class="input-form-icon">
-                                    <i class="fas fa-search"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-2" *ngIf="searchValue.length > 5 ? '...' : ''" style="margin-top:-6px;"><!--"searchValue.length > 2 ? '...' : ''"-->
-                        <button class="custom-btn btn-6" matRipple style="margin: 0.7rem 0;" (click)="eventothers(searchValue)"><i class="fas fa-search"></i>&nbsp;Search </button>
-                    </div>
-                </div>
-
-                    <div class="row" *ngIf="OthersList.length!=0 && searchValue.length > 5">
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <ng-container *ngIf="OthersList.length!=0 && searchValue.length > 5">
-                                <app-commodity-table [cols]="quoteHeader" (onSchedule)="onGetSchedule($event)" (onCredit)="onCreditdownload($event)" (onDebit)="onDebitdownload($event)"  [data]="OthersList" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onGetEndorsements)="onGetEndorsements($event)" (onAdd)="onInnerData($event)"  (onView)="onViews($event)">
-                                </app-commodity-table>
-                            </ng-container>
-                         
-                            </div>
-                    </div>
-                    <!-- <div class="row" *ngIf="OthersList.length==0 && searchValue.length > 5">
-                        <div class="col-12 col-md-12 col-lg-12">
-                            <ng-container>
-                                <div class="text-center spancommon span_font_size">
-                                    No Policy Available
-                                </div>
-                            </ng-container>
-                         
-                            </div>
-                    </div> -->
-                </div>
-                </div>
             </div>
         </div>
     </div>

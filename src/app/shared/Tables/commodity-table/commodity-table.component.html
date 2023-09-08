@@ -194,8 +194,29 @@
           
             <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
         </table>
-        <mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
-        </mat-paginator>
+        <div class="d-flex justify-content-end">
+            <div style="margin-top:10px;padding: 15px !important;" *ngIf="nextSection">
+                <span class="spancommon span_font_size mt-3">Items Per Page: </span>
+            </div>
+            <div style="margin-top:10px;padding-right: 25px !important;" *ngIf="nextSection">
+                <select [(ngModel)]="pageCount" (change)="onChangePageCount($event)" class="form-control">  
+                    <option value="5">5</option>  
+                    <option value="10">10</option>  
+                    <option value="15">15</option>  
+                </select> &nbsp;&nbsp;
+            </div>
+            <div style="padding-right: 15px !important;background-color: transparent !important;" *ngIf="nextSection"> 
+                <ul class="pagination" >
+                    <li style="cursor:pointer !important" *ngIf="startCount!=1" (click)="onPreviousPage()" ><a>&lt; Previous</a></li>
+                    <li style="cursor:not-allowed !important" *ngIf="startCount==1" ><a style="cursor:not-allowed !important">&lt; Previous</a></li>
+                    <li style="margin-top: 15px !important;">{{startCount}}&nbsp;-&nbsp;{{endCount}}&nbsp;of&nbsp;{{totalQuoteRecords}}</li>
+                    <li style="cursor:pointer !important" (click)="onNextPage()" *ngIf="nextSection && checkDataIndex()"><a >Next &gt; </a></li>
+                    <li style="cursor:not-allowed !important" *ngIf="!nextSection || !checkDataIndex()"><a style="cursor:not-allowed !important">Next &gt; </a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- <mat-paginator [pageSizeOptions]="[10, 15, 20]" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons aria-label="Select page of periodic elements">
+        </mat-paginator> -->
     </div>
     
     <table width="100%">
@@ -311,11 +332,9 @@
         
                     <ng-container *ngIf="col.config.isMoreVechView">
                         <button mat-icon-button (click)="onPassData(element);expandedvech = expandedvech === element ? null : element">
-              <mat-icon>keyboard_arrow_down</mat-icon> 
-               
+                            <mat-icon>keyboard_arrow_down</mat-icon> 
                         </button>
-                       
-            </ng-container>
+                    </ng-container>
         
                             <ng-container *ngIf="col.config.isMoView && element.SubCovers!=null">
                                 <button mat-icon-button (click)="onPassData(element);expandedElement = expandedElement === element ? null : element">
@@ -330,8 +349,8 @@
                                 </button>
                                 <mat-menu #menu="matMenu">
                                     <button mat-menu-item (click)="onSchedule.emit(element)"><i class="fas fa-file"></i>&nbsp;Schedule</button>
-                                    <button mat-menu-item><i class="fas fa-file"></i>&nbsp;Credit Note</button>
-                                    <button mat-menu-item><i class="fas fa-file"></i>&nbsp;Debit Note</button>
+                                    <button mat-menu-item (click)="onCredit.emit(element)" *ngIf="element.CreditNo!=null && element.CreditNo!=''"><i class="fas fa-file"></i>&nbsp;Credit Note</button>
+                                <button mat-menu-item (click)="onDebit.emit(element)" *ngIf="element.DebitNoteNo!=null && element.DebitNoteNo!=''"><i class="fas fa-file"></i>&nbsp;Debit Note</button>
                                     <button mat-menu-item (click)="onGetEndorsements.emit(element)"><i class="fas fa-address-card"></i>&nbsp;Endorsement</button>
                                     <button mat-menu-item (click)="onView.emit(element)"><i class="fas fa-eye"></i>&nbsp;View Quote Details</button>
                                     <button mat-menu-item><i class="fas fa-credit-card"></i>&nbsp;Pay EMI</button>
@@ -368,8 +387,8 @@
                                 <mat-menu #menus="matMenu">
                                     <ng-container *ngFor="let item of col.config.menuList">
                                         <button mat-menu-item>
-                        <span>{{item.name}}</span>
-                      </button>
+                                            <span>{{item.name}}</span>
+                                        </button>
                                     </ng-container>
                                 </mat-menu>
                             </ng-container>
@@ -401,8 +420,8 @@
     
        <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>
     </mat-table>
-    <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Select page of periodic elements">
-    </mat-paginator>
+    <!-- <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator> -->
    </div>
    
   </div>

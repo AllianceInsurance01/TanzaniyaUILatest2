@@ -19,8 +19,18 @@ export class ReferralApprovedComponent implements OnInit {
   public motorApiUrl:any = this.AppConfig.MotorApiUrl;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   referralData: any;
-  section: any=null;
+  section: any='quote';
   endorsementHeader: any;
+  totalEndtRecords: any;
+  startIndex: any;
+  endIndex: any;
+  totalRecords: any;
+  totalQuoteRecords: any;
+  quotePageNo: any;
+  endtpageNo: number;
+  limit: any='0';
+  offset: any='60';
+  pageCount: number;
 
   constructor(private router:Router,private sharedService: SharedService) { 
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -32,6 +42,7 @@ export class ReferralApprovedComponent implements OnInit {
     this.userType = this.userDetails?.Result?.UserType;
     this.insuranceId = this.userDetails.Result.InsuranceId;
     sessionStorage.removeItem('customerReferenceNo')
+    sessionStorage.removeItem('loadingType');
     if(this.productId=='5'){
       this.quoteHeader =  [
         { key: 'QuoteNo', display: 'Quote No' },
@@ -146,9 +157,9 @@ export class ReferralApprovedComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getExistingQuotes();
+    this.getExistingQuotes(null,'change');
   }
-  getExistingQuotes(){
+  getExistingQuotes(element,entryType){
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
       appId = "1"; loginId = this.loginId;
@@ -158,6 +169,9 @@ export class ReferralApprovedComponent implements OnInit {
       appId = this.loginId;
       brokerbranchCode = null;
     }
+    let type=null;
+    if(this.section=='quote'){type='Q'}
+    else type='E';
     let ReqObj = {
         "BrokerBranchCode": brokerbranchCode,
         "BranchCode":this.branchCode,
@@ -169,25 +183,98 @@ export class ReferralApprovedComponent implements OnInit {
           "SourceType":"",
           "BdmCode": this.agencyCode,
            "ProductId":this.productId,
-          "Limit":"0",
-          "Offset":"1000"
+           "Type":type,
+          "Limit":this.limit,
+          "Offset": this.offset
    }
     let urlLink = `${this.CommonApiUrl}api/referralapproved`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
+        sessionStorage.removeItem('loadingType');
         if(data.Result.length!=0){
-          this.referralData = data.Result.filter(ele=>ele.EndorsementDate!=null);
-          this.quoteData = data.Result.filter(ele=>ele.EndorsementDate==null);
-          this.section = 'quote';
-            //this.quoteData = data?.Result;
-           }
+          if (data.Result?.CustomerDetailsRes) {
+            if (data.Result?.CustomerDetailsRes.length != 0) {
+              this.totalRecords = data.Result?.TotalCount;
+              this.totalQuoteRecords = data.Result?.TotalCount;
+              this.pageCount = 10;
+              if (entryType == 'change') {
+                this.quotePageNo = 1;
+                this.endtpageNo = 1;
+                let startCount = 1, endCount = this.pageCount;
+                startCount = endCount + 1;
+                if (this.section == 'quote') {
+                  let quoteData = data.Result?.CustomerDetailsRes;
+                  this.quoteData = data.Result?.CustomerDetailsRes;
+                  if (quoteData.length <= this.pageCount) {
+                    endCount = quoteData.length
+                  }
+                  else endCount = this.pageCount;
+                }
+                else {
+                  this.referralData = data.Result?.CustomerDetailsRes;
+                  let referralData = data.Result?.CustomerDetailsRes;
+                  if (referralData.length <= this.pageCount) {
+                    endCount = referralData.length
+                  }
+                  else endCount = this.pageCount;
+                }
+                this.startIndex = startCount; this.endIndex = endCount;
+                console.log("Final Data", this.referralData, this.quoteData, this.section)
+              }
+              else {
+
+                let startCount = element.startCount, endCount = element.endCount;
+                this.pageCount = element.n;
+                startCount = endCount + 1;
+                if (this.section == 'quote') {
+                  let quoteData = data.Result?.CustomerDetailsRes;
+                  this.quoteData = this.quoteData.concat(data.Result?.CustomerDetailsRes);
+                }
+                else {
+                  this.referralData = this.referralData.concat(data.Result?.CustomerDetailsRes);
+                  let referralData = data.Result?.CustomerDetailsRes;
+                }
+                if (this.totalQuoteRecords <= endCount + (element.n)) {
+                  endCount = this.totalQuoteRecords
+                }
+                else endCount = endCount + (element.n);
+                this.startIndex = startCount; this.endIndex = endCount;
+                console.log("Final Received Data", this.quoteData, this.referralData, this.startIndex, this.endIndex)
+              }
+            }
+            else {
+              alert("Entered")
+              this.quoteData = []; this.referralData = []
+            }
+          }
+          //this.quoteData = data?.Result;
+          else this.section = 'quote';
+        }
         else this.section = 'quote';
       },
       (err) => { },
     );
   }
-  setSection(val){this.section = val;}
+  onNextData(element){
+    this.limit = String(Number(this.limit)+1);
+    this.quotePageNo = this.quotePageNo+1;
+    this.endtpageNo = this.endtpageNo+1;
+    this.startIndex = element.startCount;
+    this.endIndex = element.endCount
+    this.getExistingQuotes(element,'direct');
+  }
+  onPreviousData(element){
+    this.limit = String(Number(this.limit)-1);
+    if(this.section=='quote'){
+      this.quotePageNo = this.quotePageNo-1;
+    }
+    else{
+      this.endtpageNo = this.endtpageNo-1;
+    }
+    this.getExistingQuotes(element,'direct');
+  }
+  setSection(val){this.section = val;this.getExistingQuotes(null,'change')}
   onInnerData(rowData){
     let ReqObj = {
         "RequestReferenceNo": rowData.RequestReferenceNo

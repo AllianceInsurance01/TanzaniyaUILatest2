@@ -36,6 +36,13 @@ export class ExistingQuotesComponent implements OnInit {
   quote: any;
   Reference: any;
   quotes: boolean;
+  pageCount: number;
+  totalRecords: any;
+  quotePageNo: any;
+  startIndex: number;
+  endIndex: number;
+  totalQuoteRecords: any;
+  limit: any='0';
 
 
   constructor(private router:Router,private sharedService: SharedService, private modalService: NgbModal,) {
@@ -53,6 +60,7 @@ export class ExistingQuotesComponent implements OnInit {
     sessionStorage.removeItem('endorseTypeId');
     sessionStorage.removeItem('quoteNo');
     sessionStorage.removeItem('updatebar');
+    sessionStorage.removeItem('loadingType');
     if(this.productId=='5'){
 
 
@@ -281,9 +289,9 @@ export class ExistingQuotesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getExistingQuotes();
+    this.getExistingQuotes(null,'change');
   }
-  getExistingQuotes(){
+  getExistingQuotes(element,entryType){
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
       appId = "1"; loginId = this.loginId;
@@ -291,7 +299,7 @@ export class ExistingQuotesComponent implements OnInit {
     }
     else{
       appId = this.loginId;
-      brokerbranchCode = null;
+      brokerbranchCode = '';
     }
     let ReqObj = {
           "BrokerBranchCode": brokerbranchCode,
@@ -304,19 +312,67 @@ export class ExistingQuotesComponent implements OnInit {
           "SourceType":"",
           "BdmCode": this.agencyCode,
            "ProductId":this.productId,
-          "Limit":"0",
-          "Offset":"1000"
+          "Limit":this.limit,
+          "Offset":60
    }
-    let urlLink = `${this.CommonApiUrl}api/existingquotedetails`;
+    let urlLink = `http://192.168.1.8:8086/api/existingquotedetails`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
+        sessionStorage.removeItem('loadingType');
         if(data.Result){
-            this.quoteData = data?.Result;
+          if (data.Result?.Record) {
+            if (data.Result?.Record.length != 0) {
+              this.totalQuoteRecords = data.Result?.Count;
+              this.pageCount = 10;
+              if (entryType == 'change') {
+                this.quotePageNo = 1;
+                let startCount = 1, endCount = this.pageCount;
+                startCount = endCount + 1;
+                  let quoteData = data.Result?.Record;
+                  this.quoteData = data.Result?.Record;
+                  if (quoteData.length <= this.pageCount) {
+                    endCount = quoteData.length
+                  }
+                  else endCount = this.pageCount;
+                
+                this.startIndex = startCount; this.endIndex = endCount;
+              }
+              else {
+
+                let startCount = element.startCount, endCount = element.endCount;
+                this.pageCount = element.n;
+                startCount = endCount + 1;
+                  let quoteData = data.Result?.Record;
+                  this.quoteData = this.quoteData.concat(data.Result?.Record);
+                if (this.totalQuoteRecords <= endCount + (element.n)) {
+                  endCount = this.totalQuoteRecords
+                }
+                else endCount = endCount + (element.n);
+                this.startIndex = startCount; this.endIndex = endCount;
+              }
+            }
+            else {
+              alert("Entered")
+              this.quoteData = []; 
+            }
+          }
         }
       },
       (err) => { },
     );
+  }
+  onNextData(element){
+    this.limit = String(Number(this.limit)+1);
+    this.quotePageNo = this.quotePageNo+1;
+    this.startIndex = element.startCount;
+    this.endIndex = element.endCount
+    this.getExistingQuotes(element,'direct');
+  }
+  onPreviousData(element){
+    this.limit = String(Number(this.limit)-1);
+      this.quotePageNo = this.quotePageNo-1;
+    this.getExistingQuotes(element,'direct');
   }
   onInnerData(rowData){
       let ReqObj = {

@@ -12,17 +12,16 @@
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12">
                     <ng-container *ngIf="quoteData.length!=0">
-                        <app-commodity-table [cols]="quoteHeader" [data]="quoteData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onAdd)="onInnerData($event)" (onActive)="onActiveDetals($event)">
+                        <app-commodity-table [cols]="quoteHeader" [data]="quoteData" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousData($event)" (onLoadNextData)="onNextData($event)" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onAdd)="onInnerData($event)" (onActive)="onActiveDetals($event)">
                         </app-commodity-table>
                     </ng-container>
                     <ng-container *ngIf="quoteData.length==0">
-                        <div class="text-center spancommon span_font_size">
+                        <div class="text-center spancommon span_font_size mt-3">
                             No Quote Available
                         </div>
                     </ng-container>
                 </div>
             </div>
         </div>
-
     </div>
 </div>

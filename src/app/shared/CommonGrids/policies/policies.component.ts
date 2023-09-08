@@ -21,9 +21,12 @@ export class PoliciesComponent implements OnInit {
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   branchCode:any;productId:any;userType:any;insuranceId:any;quoteHeader:any[]=[];
   PolicyNo: any;
-  show: boolean = false;
-  OthersList:any[]=[];
-  searchValue:any[]=[];
+  pageCount: number;
+  totalQuoteRecords: any;
+  quotePageNo: any;
+  startIndex: number;
+  endIndex: number;
+  limit: any='0';
   constructor(private router:Router,private sharedService: SharedService) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -32,8 +35,8 @@ export class PoliciesComponent implements OnInit {
     this.branchCode = this.userDetails.Result.BranchCode;
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails?.Result?.UserType;
-    console.log('JJJJJJJJJJJJJJJJJJ',this.userType);
     this.insuranceId = this.userDetails.Result.InsuranceId;
+    sessionStorage.removeItem('loadingType');
    }
 
   ngOnInit(): void {
@@ -118,18 +121,7 @@ export class PoliciesComponent implements OnInit {
 
       ];
     }
-    this.getExistingQuotes();
-    // if(this.userType == 'Issuer'){
-    //   let s=sessionStorage.getItem('PolicyNos')
-    //   if(s){
-    //     this.show = true;
-    //     this.eventothers(s);
-    //   }
-    //   else{
-    //     this.show = false;
-    //     this.getExistingQuotes();
-    //   }
-    // }
+    this.getExistingQuotes(null,'change');
   }
   onCreditdownload(rowData){
     console.log('KKKKKKKKKKK',rowData.QuoteNo);
@@ -207,7 +199,7 @@ export class PoliciesComponent implements OnInit {
     link.click();
     link.remove();
   }
-  getExistingQuotes(){
+  getExistingQuotes(element,entryType){
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
       appId = "1"; loginId = this.loginId;
@@ -228,27 +220,67 @@ export class PoliciesComponent implements OnInit {
           "SourceType":"",
           "BdmCode": this.agencyCode,
            "ProductId":this.productId,
-          "Limit":"0",
-          "Offset":"1000"
+          "Limit":this.limit,
+          "Offset":60
    }
     let urlLink = `${this.CommonApiUrl}api/portfolio/active`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
+        sessionStorage.removeItem('loadingType');
         if(data.Result){
-          let i=0;
-            this.quoteData = data?.Result;
-            if(this.quoteData){
-              for (let v of this.quoteData){
-                this.PolicyNo= v.PolicyNo;
+          if (data.Result?.PortfolioList) {
+            if (data.Result?.PortfolioList.length != 0) {
+              this.totalQuoteRecords = data.Result?.Count;
+              this.pageCount = 10;
+              if (entryType == 'change') {
+                this.quotePageNo = 1;
+                let startCount = 1, endCount = this.pageCount;
+                startCount = endCount + 1;
+                  let quoteData = data.Result?.PortfolioList;
+                  this.quoteData = data.Result?.PortfolioList;
+                  if (quoteData.length <= this.pageCount) {
+                    endCount = quoteData.length
+                  }
+                  else endCount = this.pageCount;
+                
+                this.startIndex = startCount; this.endIndex = endCount;
               }
-              i++;
+              else {
+
+                let startCount = element.startCount, endCount = element.endCount;
+                this.pageCount = element.n;
+                startCount = endCount + 1;
+                  let quoteData = data.Result?.PortfolioList;
+                  this.quoteData = this.quoteData.concat(data.Result?.PortfolioList);
+                if (this.totalQuoteRecords <= endCount + (element.n)) {
+                  endCount = this.totalQuoteRecords
+                }
+                else endCount = endCount + (element.n);
+                this.startIndex = startCount; this.endIndex = endCount;
+              }
             }
-            sessionStorage.setItem('PolicyNo',this.PolicyNo);
+            else {
+              alert("Entered")
+              this.quoteData = []; 
+            }
+          }
         }
       },
       (err) => { },
     );
+  }
+  onNextData(element){
+    this.limit = String(Number(this.limit)+1);
+    this.quotePageNo = this.quotePageNo+1;
+    this.startIndex = element.startCount;
+    this.endIndex = element.endCount
+    this.getExistingQuotes(element,'direct');
+  }
+  onPreviousData(element){
+    this.limit = String(Number(this.limit)-1);
+      this.quotePageNo = this.quotePageNo-1;
+    this.getExistingQuotes(element,'direct');
   }
   onInnerData(rowData){
     let ReqObj = {
@@ -265,37 +297,11 @@ export class PoliciesComponent implements OnInit {
         (err) => { },
       );
   }
-
-  eventothers(searchvalues){
-    console.log('MMMMMMMMM',searchvalues);
-    let searchvalue:any=searchvalues;
-    this.searchValue=searchvalues
-    sessionStorage.setItem('PolicyNos',searchvalue)
-    let ReqObj = {
-      "PolicyNo":searchvalues,//this.searchValue,
-   "BranchCode":this.branchCode,
-   "InsuraceId":this.insuranceId,
-   "ProductId":this.productId,
-   "Limit":"0",
-   "Offset":"10"
-    }
-    let urlLink = `${this.CommonApiUrl}api/searchbrokerpolicies`;
-    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-      (data: any) => {
-        console.log(data);
-        if(data.Result.PortFolioList){
-           this.OthersList = data.Result?.PortFolioList;
-        }
-      },
-      (err) => { },
-    );
-  }
   onGetEndorsements(rowData){
     sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
     sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
     sessionStorage.setItem('quoteNo',rowData.QuoteNo);
     sessionStorage.setItem('endorsePolicyNo',rowData.OriginalPolicyNo);
-    sessionStorage.setItem('PolicyNo','NonSelectedEndorsement');
     this.router.navigate(['Home/policies/Endorsements']);
   }
 
@@ -326,34 +332,4 @@ export class PoliciesComponent implements OnInit {
   //    //sessionStorage.setItem('FromDetails',JSON.stringify(quoteObj));
   //   sessionStorage.setItem('FromDetails', JSON.stringify(quote));
   // }
-
-  onCheckEndorseSelect(){
-    // let s=sessionStorage.getItem('PolicyNos')
-    // if(s){
-    //   return this.show=true;
-    // }
-    // else{
-    //   return this.show=false;
-    // }
-      //return this.show=true;
-  }
-  onSelectCustomer(event){
-console.log('Eventsss',event);
-
-if(event){
-this.show= true;
-}
-else{
-  this.show=false;
-}
-  }
-
-  onendrosements(rowData){
-    sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
-    sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
-    sessionStorage.setItem('quoteNo',rowData.QuoteNo);
-    sessionStorage.setItem('endorsePolicyNo',rowData.OriginalPolicyNo);
-    sessionStorage.setItem('PolicyNo','Selectedendorese');
-    this.router.navigate(['Home/policies/Endorsements']);
-  }
 }

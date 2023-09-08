@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12 ml-5">
                 <ng-container *ngIf="quoteData.length!=0">
-                    <app-commodity-table [cols]="quoteHeader" [data]="quoteData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onAdd)="onInnerData($event)">
+                    <app-commodity-table [cols]="quoteHeader" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousData($event)" (onLoadNextData)="onNextData($event)" [data]="quoteData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onAdd)="onInnerData($event)">
                     </app-commodity-table>
                 </ng-container>
                 <ng-container *ngIf="quoteData.length==0">

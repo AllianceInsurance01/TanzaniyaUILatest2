@@ -29,9 +29,20 @@ export class UnderWriterComponent implements OnInit {
     NewList: any[]=[];
     p:any=1;
   requestref: any;
-  referralData: any;
-  section: any=null;
+  referralData: any[]=[];
+  section: any='quote';
   endorsementHeader: any;
+  totalRecords: any;
+  totalQuoteRecords: any;
+  pageCount: number;
+  quotePageNo: any;
+  endtpageNo: number;
+  quoteData: any[]=[];
+  startIndex: number;
+  endIndex: number;
+  limit: any='0';
+  innerColumnHeader: any[]=[];
+  quoteHeader: any[]=[];
   constructor(private router:Router,private sharedService:SharedService,private modalService: NgbModal) {
     // let userObj = JSON.parse(sessionStorage.getItem('userEditDetails'));
     // if(userObj){
@@ -43,13 +54,10 @@ export class UnderWriterComponent implements OnInit {
     //   if(userObj.userId) this.userId = userObj.userId;
     // }
     this.userId = this.userLoginId;
-   
-
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     const user = this.userDetails?.Result;
     this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
-    console.log('UUUUUUUUUUUUUUU',this.insuranceId);
-
+    sessionStorage.removeItem('loadingType');
     if(this.insuranceId){
       this.getProductList();
     }
@@ -72,38 +80,123 @@ export class UnderWriterComponent implements OnInit {
     //   { key: 'EntryDate', display: 'EntryDate' },
   
     // ];
-    this.columnHeader1 = [
-      { key: 'RequestReferenceNo', display: 'Request ReferenceNo' },
-      { key: 'ClientName', display: 'Client Name' },
-      { key :'BranchName',display:'Branch Name'},
-      { key: 'Status', display: 'Status' },
-      { key: 'PolicyStartDate', display: 'PolicyStartDate' },
-      { key: 'EntryDate', display: 'EntryDate' },
-      {
-        key: 'actions',
-        display: 'Action',
-        config: {
-          isEdit: true,
+    if(this.productId=='5'){
+      this.quoteHeader =  [
+        { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'ClientName', display: 'Customer Name' },
+        { key: 'PolicyStartDate', display: 'Policy Start Date' },
+        { key: 'PolicyEndDate', display: 'Policy End Date' },
+        
+        {
+          key: 'edit',
+          display: 'Vehicle Details',
+          sticky: false,
+          config: {
+            isCollapse: true,
+            isCollapseName:'Vehicles'
+          },
         },
-      }
-  
-    ];
-
-    this.endorsementHeader =  [
-      { key: 'RequestReferenceNo', display: 'Reference No' },
-      { key: 'ClientName', display: 'Customer Name' },
-      { key: 'EndorsementTypeDesc', display: 'Endt Type'},
-      { key: 'PolicyStartDate', display: 'Policy Start Date' },
-      { key: 'PolicyEndDate', display: 'Policy End Date' },
-      { key: 'ReferalRemarks', display: 'ReferralRemarks' },
-      {
-        key: 'actions',
-        display: 'Action',
-        config: {
-          isEdit: true,
+        {
+          key: 'actions',
+          display: 'Action',
+          config: {
+            isEdit: true,
+          },
         },
-      },
-    ];
+      ];
+      this.innerColumnHeader =  [
+        { key: 'Vehicleid', display: 'VehicleID' },
+        { key: 'Registrationnumber', display: 'Registration No' },
+        { key: 'Chassisnumber', display: 'Chassis No' },
+        { key: 'Vehiclemake', display: 'Make' },
+        { key: 'Vehcilemodel', display: 'Model' },
+        { key: 'PolicyTypeDesc', display: 'Policy Type' },
+        { key: 'ReferalRemarks', display: 'ReferralRemarks' },
+        { key: 'OverallPremiumFc', display: 'Premium' },
+        // {
+        //   key: 'actions',
+        //   display: 'Action',
+        //   config: {
+        //     isEdit: true,
+        //   },
+        // },
+        
+      ];
+      this.endorsementHeader =  [
+        { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'ClientName', display: 'Customer Name' },
+        { key: 'EndorsementTypeDesc', display: 'Endt Type'},
+        { key: 'PolicyStartDate', display: 'Policy Start Date' },
+        { key: 'PolicyEndDate', display: 'Policy End Date' },
+        
+        {
+          key: 'edit',
+          display: 'Vehicle Details',
+          sticky: false,
+          config: {
+            isCollapse: true,
+            isCollapseName:'Vehicles'
+          },
+        },
+        {
+          key: 'actions',
+          display: 'Action',
+          config: {
+            isEdit: true,
+          },
+        },
+      ];
+    }
+    else{
+      this.quoteHeader =  [
+        { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'ClientName', display: 'Customer Name' },
+        { key: 'PolicyStartDate', display: 'Policy Start Date' },
+        { key: 'PolicyEndDate', display: 'Policy End Date' },
+        { key: 'ReferalRemarks', display: 'ReferralRemarks' },
+        {
+          key: 'actions',
+          display: 'Action',
+          config: {
+            isEdit: true,
+          },
+        },
+      ];
+      this.innerColumnHeader =  [
+        { key: 'Vehicleid', display: 'VehicleID' },
+        { key: 'Registrationnumber', display: 'Registration No' },
+        { key: 'Chassisnumber', display: 'Chassis No' },
+        { key: 'Vehiclemake', display: 'Make' },
+        { key: 'Vehcilemodel', display: 'Model' },
+        { key: 'PolicyTypeDesc', display: 'Policy Type' },
+        { key: 'ReferalRemarks', display: 'ReferralRemarks' },
+        { key: 'OverallPremiumFc', display: 'Premium' }
+      ];
+      this.endorsementHeader =  [
+        { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'ClientName', display: 'Customer Name' },
+        { key: 'EndorsementTypeDesc', display: 'Endt Type'},
+        { key: 'PolicyStartDate', display: 'Policy Start Date' },
+        { key: 'PolicyEndDate', display: 'Policy End Date' },
+        
+        // {
+        //   key: 'edit',
+        //   display: 'Vehicle Details',
+        //   sticky: false,
+        //   config: {
+        //     isCollapse: true,
+        //     isCollapseName:'Vehicles'
+        //   },
+        // },
+        {
+          key: 'actions',
+          display: 'Action',
+          config: {
+            isEdit: true,
+          },
+        },
+      ];
+    }
   }
   getProductList(){
     console.log('KKKKKKKKKKKK',this.insuranceId);
@@ -115,6 +208,11 @@ export class UnderWriterComponent implements OnInit {
       (data: any) => {
         if(data.Result){
           this.productList = data.Result;
+          if(this.productList.length!=0){
+              this.productId = this.productList[0].Code;
+              this.quoteData =[];this.referralData=[];
+              this.getUserProductList(null,'change');
+          }
         }
       },
       (err) => { },
@@ -131,24 +229,80 @@ export class UnderWriterComponent implements OnInit {
     //   (err) => { },
     // );
   }
-  getUserProductList(){
-    this.productData = [];
-    console.log('KKKKKKKKKKKK',this.insuranceId);
+  getUserProductList(element,entryType){
+    if(entryType=='change'){this.quoteData =[];this.referralData=[];}
+    let type=null;
+    if(this.section=='quote'){type='Q'}
+    else type='E';
     let ReqObj = {
       "InsuranceId": this.insuranceId,
       "BranchCode": "",
       "ProductId":this.productId,
-      "Limit": "0",
-      "Offset": "100000"
+      "Type":type,
+      "Limit": this.limit,
+      "Offset": 60
     }
     let urlLink = `${this.CommonApiUrl}api/superadminreferralpending`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
+        sessionStorage.removeItem('loadingType');
         if(data.Result){
-          this.referralData = data.Result.PendingGrid.filter(ele=>ele.EndorsementDate!=null);
-          this.productData = data.Result.PendingGrid.filter(ele=>ele.EndorsementDate==null);
-          this.section = 'quote';
-          console.log('PPPPPPPPPPPPPPPPPP',this.productData);
+          if(data.Result?.PendingGrid){
+            if(data.Result?.PendingGrid.length!=0){
+              this.totalRecords = data.Result?.Count;
+              this.totalQuoteRecords = data.Result?.Count;
+              this.pageCount = 10;
+              if(entryType=='change'){
+                this.quotePageNo = 1;
+                this.endtpageNo = 1;
+                let startCount = 1, endCount = this.pageCount;
+                startCount = endCount+1;
+                if(this.section=='quote'){
+                  let quoteData = data.Result?.PendingGrid;
+                  this.quoteData = data.Result?.PendingGrid;
+                  if(quoteData.length<=this.pageCount){
+                    endCount = quoteData.length
+                  }
+                  else endCount = this.pageCount;
+                }
+                else{
+                  this.referralData = data.Result?.PendingGrid;
+                  let referralData = data.Result?.PendingGrid;
+                  if(referralData.length<=this.pageCount){
+                    endCount = referralData.length
+                  }
+                  else endCount =this.pageCount;
+                }
+                this.startIndex = startCount;this.endIndex=endCount;
+                console.log("Final Data",this.referralData,this.quoteData,this.section)
+              }
+              else{
+                
+                let startCount = element.startCount, endCount = element.endCount;
+                this.pageCount = element.n;
+                startCount = endCount+1;
+                if(this.section=='quote'){
+                  let quoteData = data.Result?.PendingGrid;
+                  this.quoteData = this.quoteData.concat(data.Result?.PendingGrid);
+                }
+                else{
+                  this.referralData = this.referralData.concat(data.Result?.PendingGrid);
+                  let referralData = data.Result?.PendingGrid;
+                }
+                  if(this.totalQuoteRecords<=endCount+(element.n)){
+                    endCount = this.totalQuoteRecords
+                  }
+                  else endCount = endCount+(element.n);
+                this.startIndex = startCount;this.endIndex=endCount;
+                console.log("Final Received Data",this.quoteData,this.referralData,this.startIndex,this.endIndex)
+              }
+              
+              let datas = data.Result?.PendingGrid;
+            }
+            else{
+              alert("Entered")
+              this.quoteData=[];this.referralData=[]}
+            }
             //this.quoteData = data?.Result;
            }
         else this.section = 'quote';
@@ -159,7 +313,25 @@ export class UnderWriterComponent implements OnInit {
     );
   }
 
-  setSection(val){this.section = val;}
+  onNextData(element){
+    this.limit = String(Number(this.limit)+1);
+    this.quotePageNo = this.quotePageNo+1;
+    this.endtpageNo = this.endtpageNo+1;
+    this.startIndex = element.startCount;
+    this.endIndex = element.endCount
+    this.getUserProductList(element,'direct');
+  }
+  onPreviousData(element){
+    this.limit = String(Number(this.limit)-1);
+    if(this.section=='quote'){
+      this.quotePageNo = this.quotePageNo-1;
+    }
+    else{
+      this.endtpageNo = this.endtpageNo-1;
+    }
+    this.getUserProductList(element,'direct');
+  }
+  setSection(val){this.section = val;this.getUserProductList(null,'change')}
 
 //   onConfigure(event:any){
 //     sessionStorage.setItem('productuser',this.insuranceId);
