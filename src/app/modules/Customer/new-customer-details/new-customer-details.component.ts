@@ -107,6 +107,7 @@ export class NewCustomerDetailsComponent {
 	if(value==2){
 		this.productItem.Gender = '';
 	}
+	this.getPolicyHolderList();
   }
 	getTitleList() {
 		let ReqObj = {
@@ -119,7 +120,7 @@ export class NewCustomerDetailsComponent {
 				if (data.Result) {
 					let obj = [{ "Code": '', "CodeDesc": "-Select-" }]
 					this.titleList = obj.concat(data.Result);
-					this.getPolicyHolderList();
+					this.getPolicyIdTypeList('change');
 				}
 			},
 			(err) => { },
@@ -301,7 +302,7 @@ export class NewCustomerDetailsComponent {
 							let defaultRow = [{ 'CodeDesc': '- Select - ', 'Code': '' }]
 							this.policyHolderTypeList = defaultRow.concat(this.policyHolderTypeList)
 							//this.fields[0].fieldGroup[0].fieldGroup[1].fieldGroup[0].props.options = defaultRow.concat(this.policyHolderTypeList);
-							if (type == 'change') this.dob = "";
+							if (type == 'change'){this.dob = "";this.productItem.IdNumber=null}
 
 				}
 			},
