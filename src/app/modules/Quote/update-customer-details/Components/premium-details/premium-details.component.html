@@ -361,7 +361,7 @@
                             <thead style="background-color: #333b85;">
                                 <tr class="table_row">
                                     <th class="tbl-header spancommon span_font_size">DriverName</th>
-                                    <th class="tbl-header spancommon span_font_size">Chassis Number</th>
+                                    <th class="tbl-header spancommon span_font_size">Registration Number</th>
                                     <th class="tbl-header spancommon span_font_size">LicenseNo</th>
                                     <th class="tbl-header spancommon span_font_size">Date of Birth</th>
                                     <th class="tbl-header spancommon span_font_size">DriverType</th>
@@ -427,7 +427,7 @@
                             <thead style="background-color: #333b85; display:none;">
                                 <tr class="table_row">
                                     <th class="tbl-header spancommon span_font_size">DriverName</th>
-                                    <th class="tbl-header spancommon span_font_size">Chassis Number</th>
+                                    <th class="tbl-header spancommon span_font_size">Registration Number</th>
                                     <th class="tbl-header spancommon span_font_size">LicenseNo</th>
                                     <th class="tbl-header spancommon span_font_size">Date of Birth</th>
                                     <th class="tbl-header spancommon span_font_size">DriverType</th>
@@ -456,7 +456,7 @@
                                     <td class="tbl-content">
                                         <div class="row">
                                             <div class="mt-3 col-4">
-                                                <span class="mobile-label">Chassis Number</span>
+                                                <span class="mobile-label">Registration Number</span>
                                             </div>
                                         <div class="input-form-box col-8">
                                         <!--<input type="text" digitOnly class="input-form-control without-icon" maxlength="3" [(ngModel)]="row.LicenseNo" [ngModelOptions]="{standalone: true}">-->
@@ -865,7 +865,7 @@
                     </div>
                 </div>
                 <div class="display1">
-                    <div class="maan-grid-item-body " style="padding-left: 70px !important;padding-right: 40px !important;">
+                    <div class="maan-grid-item-body " style="padding-left: 25px !important;padding-right: 40px !important;">
                         <div class="row customFlow">
                             <div class="col-md-6 col-lg-6 offset-3"  *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
                                 <input style="display: none;" type="file" (change)="onUploadListDocuments($event,null,'direct',j)" #doc>
@@ -880,54 +880,57 @@
                             </div>
                         </div>
                         <ng-container *ngIf="uploadListDoc.length !=0">
-                            <table class="table table-border-1ed" id="capture_table" style="position: relative;
-                            top: 2rem;">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
-                                        <th scope="col"><span class="spancommon">FileName</span></th>
-                                        <th scope="col" *ngIf="productId!='5' && productId!='4' && productId!='43'"><span class="spancommon">Location</span></th>
-                                        <th scope="col" *ngIf="productId!='43'"><span class="spancommon">Section</span></th>
-                                        <th scope="col">
-                                            <span class="spancommon">
-                                                <ng-container *ngIf="productId=='5'">Chassis Number</ng-container>
-                                                <ng-container *ngIf="productId=='4'">Passpport No</ng-container>
-                                                <ng-container *ngIf="productId=='42'">Serial No</ng-container>
-                                                <ng-container *ngIf="productId=='43'">Employer Name</ng-container>
-                                                <ng-container *ngIf="productId!='4' && productId!='5' && productId!='42' && productId!='43'">ID</ng-container>
-                                            </span>
-                                        </th>
-                                        <th scope="col"><span class="spancommon">Document Type</span></th>
-                                        <th scope="col"><span class="spancommon" >Delete</span></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let document of uploadListDoc;let i=index">
-                                        <th scope="row"><span class="spancommon span_font_size">{{i+1}}</span></th>
-                                        <td><span class="spancommon span_font_size">{{document.filename}}</span></td>
-                                        <td *ngIf="productId!='5' && productId!='4' && productId!='43'">
-                                            <ng-select class="input-form-select" [disabled]="document.locationList.length==1" appendTo="body" (change)="onChangeLocationType(document,i)" [(ngModel)]="document.locationId" [items]="document.locationList" bindValue="LocationId" bindLabel="LocationName">
-                                            </ng-select>
-                                        </td>
-                                        <td *ngIf="productId!='43'">
-                                            <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.sectionId" (change)="onChangeSectionType(document,i)" [items]="document.sectionList" bindValue="SectionId" bindLabel="SectionName">
-                                            </ng-select>
-                                        </td>
-                                        <td>
-                                            <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.Id" (change)="onChangeIdType(document)"  [items]="document.typeList" bindValue="Id" bindLabel="Id">
-                                            </ng-select>
-                                        </td>
-                                        <td>
-                                            <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.DocTypeId" [items]="document.docTypeList" bindValue="Code" bindLabel="CodeDesc">
-                                            </ng-select>
-                                        </td>
-                                        <td>
-                                            <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteSelectedListDocument(menu,i)"><i
-                                                    class="fa fa-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <table class="table table-border-1ed" id="capture_table" style="position: relative;width: 100%;
+                                top: 2rem;">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                            <th scope="col"><span class="spancommon">FileName</span></th>
+                                            <th scope="col" *ngIf="productId!='5' && productId!='4' && productId!='43'"><span class="spancommon">Location</span></th>
+                                            <th scope="col" *ngIf="productId!='43'"><span class="spancommon">Section</span></th>
+                                            <th scope="col">
+                                                <span class="spancommon">
+                                                    <ng-container *ngIf="productId=='5'">Registration Number</ng-container>
+                                                    <ng-container *ngIf="productId=='4'">Passpport No</ng-container>
+                                                    <ng-container *ngIf="productId=='42'">Serial No</ng-container>
+                                                    <ng-container *ngIf="productId=='43'">Employer Name</ng-container>
+                                                    <ng-container *ngIf="productId!='4' && productId!='5' && productId!='42' && productId!='43'">ID</ng-container>
+                                                </span>
+                                            </th>
+                                            <th scope="col"><span class="spancommon">Document Type</span></th>
+                                            <th scope="col"><span class="spancommon" >Delete</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let document of uploadListDoc;let i=index">
+                                            <th scope="row"><span class="spancommon span_font_size">{{i+1}}</span></th>
+                                            <td><span class="spancommon span_font_size">{{document.filename}}</span></td>
+                                            <td *ngIf="productId!='5' && productId!='4' && productId!='43'">
+                                                <ng-select class="input-form-select" [disabled]="document.locationList.length==1" appendTo="body" (change)="onChangeLocationType(document,i)" [(ngModel)]="document.locationId" [items]="document.locationList" bindValue="LocationId" bindLabel="LocationName">
+                                                </ng-select>
+                                            </td>
+                                            <td *ngIf="productId!='43'">
+                                                <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.sectionId" (change)="onChangeSectionType(document,i)" [items]="document.sectionList" bindValue="SectionId" bindLabel="SectionName">
+                                                </ng-select>
+                                            </td>
+                                            <td>
+                                                <ng-select class="input-form-select" style="min-width: 200px !important;" appendTo="body" [(ngModel)]="document.Id" (change)="onChangeIdType(document)"  [items]="document.typeList" bindValue="Id" bindLabel="Id">
+                                                </ng-select>
+                                            </td>
+                                            <td>
+                                                <ng-select class="input-form-select" style="min-width: 200px !important;" appendTo="body" [(ngModel)]="document.DocTypeId" [items]="document.docTypeList" bindValue="Code" bindLabel="CodeDesc">
+                                                </ng-select>
+                                            </td>
+                                            <td>
+                                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteSelectedListDocument(menu,i)"><i
+                                                        class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
                             <div class="text-center">
                                 <button class="btn btn-success maan-btn-success"  (click)="onFileUploadVehicleList(j)"><span style="position:relative;">Upload</span></button>
                             </div>
@@ -953,7 +956,7 @@
                                         <th scope="col" ><span class="spancommon">Section</span></th>
                                         <th scope="col">
                                             <span class="spancommon">
-                                                <ng-container *ngIf="productId=='5'">Chassis Number</ng-container>
+                                                <ng-container *ngIf="productId=='5'">Registration Number</ng-container>
                                                 <ng-container *ngIf="productId=='4'">Passpport No</ng-container>
                                                 <ng-container *ngIf="productId!='4' && productId!='5'">ID</ng-container>
                                             </span>

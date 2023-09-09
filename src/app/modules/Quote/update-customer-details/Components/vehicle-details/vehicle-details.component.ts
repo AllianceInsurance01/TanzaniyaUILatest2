@@ -996,11 +996,22 @@ export class VehicleDetailsComponent implements OnInit {
         }
       }
       if(this.userType!='Broker' && this.userType!='User'){
-        this.sourceType = this.updateComponent.sourceType;
-        this.bdmCode = this.updateComponent.brokerCode;
-        this.brokerCode = this.updateComponent.brokerCode;
-        brokerbranchCode =  this.updateComponent.brokerBranchCode;
-        this.customerCode = this.updateComponent.CustomerCode;
+        console.log("Vehicle Details",this.vehicleDetails,this.updateComponent.sourceType)
+        if(this.updateComponent.sourceType==null || this.updateComponent.sourceType==undefined){
+          
+          this.sourceType = this.vehicleDetails.SourceType;
+          this.bdmCode = this.vehicleDetails.BrokerCode;
+          this.brokerCode = this.vehicleDetails.BrokerCode;
+          brokerbranchCode =  this.vehicleDetails.BrokerBranchCode;
+          this.customerCode = this.vehicleDetails.CustomerCode;
+        }
+        else{
+          this.sourceType = this.updateComponent.sourceType;
+          this.bdmCode = this.updateComponent.brokerCode;
+          this.brokerCode = this.updateComponent.brokerCode;
+          brokerbranchCode =  this.updateComponent.brokerBranchCode;
+          this.customerCode = this.updateComponent.CustomerCode;
+        }
         }
         else {
           this.sourceType = this.subuserType;
@@ -1908,11 +1919,23 @@ export class VehicleDetailsComponent implements OnInit {
                 }
               }
               if(this.userType!='Broker' && this.userType!='User'){
-                this.sourceType = this.updateComponent.sourceType;
-                this.bdmCode = this.updateComponent.brokerCode;
-                this.brokerCode = this.updateComponent.brokerCode;
-                brokerbranchCode =  this.updateComponent.brokerBranchCode;
-                this.customerCode = this.updateComponent.CustomerCode;
+                console.log("Vehicle Details",this.vehicleDetails,this.updateComponent.sourceType)
+                if(this.updateComponent.sourceType==null || this.updateComponent.sourceType==undefined){
+                  
+                  this.sourceType = this.vehicleDetails.SourceType;
+                  this.bdmCode = this.vehicleDetails.BrokerCode;
+                  this.brokerCode = this.vehicleDetails.BrokerCode;
+                  brokerbranchCode =  this.vehicleDetails.BrokerBranchCode;
+                  this.customerCode = this.vehicleDetails.CustomerCode;
+                }
+                else{
+                  this.sourceType = this.updateComponent.sourceType;
+                  this.bdmCode = this.updateComponent.brokerCode;
+                  this.brokerCode = this.updateComponent.brokerCode;
+                  brokerbranchCode =  this.updateComponent.brokerBranchCode;
+                  this.customerCode = this.updateComponent.CustomerCode;
+                }
+                
               }
               else {
                 this.sourceType = this.subuserType;

@@ -225,6 +225,9 @@ emiyn="N";
   sumInsured: any;
   dependantTaxList: any;
   premiumBeforeTax: number;
+  discountEndtSection: boolean=false;
+  differencePremium: any;
+  differenceSI: any;
   constructor(public sharedService: SharedService,private router:Router,private modalService: NgbModal,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe,public dialog: MatDialog) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -2817,16 +2820,28 @@ getMotorUsageList(vehicleValue){
   setDiscountDetails(vehData,rowData,modal){
     this.selectedVehId = vehData.VehicleId;
     this.selectedCoverId = rowData.CoverId;
-    this.sumInsured = rowData.SumInsured;
-    this.calcType = rowData.CalcType;
-    this.selectedSectionId = vehData.SectionId;
     this.ratePercent = rowData.Rate;
-    this.excessPercent = rowData.ExcessPercent;
-    this.excessAmount = rowData.ExcessAmount;
-    this.beforeDiscount = rowData.PremiumBeforeDiscount;
-    this.afterDiscount = rowData.PremiumAfterDiscount;
+    this.CoverName = rowData.CoverName;
     if(rowData.Discounts) this.discountList = rowData.Discounts;
     if(rowData.Loadings) this.loadingList = rowData.Loadings;
+    if(rowData.Endorsements){
+        this.discountEndtSection = true;
+        this.sumInsured = rowData.SumInsured;
+        this.differenceSI = rowData.Endorsements[rowData.Endorsements.length-1].EndorsementSumInsured;
+        this.differencePremium = rowData.Endorsements[rowData.Endorsements.length-1].PremiumAfterDiscount
+        this.beforeDiscount = rowData.Endorsements[rowData.Endorsements.length-1].PremiumBeforeDiscount
+    }
+    else{
+      this.discountEndtSection = false;
+      this.sumInsured = rowData.SumInsured;
+      this.calcType = rowData.CalcType;
+      this.selectedSectionId = vehData.SectionId;
+      this.ratePercent = rowData.Rate;
+      this.excessPercent = rowData.ExcessPercent;
+      this.excessAmount = rowData.ExcessAmount;
+      this.beforeDiscount = rowData.PremiumBeforeDiscount;
+      this.afterDiscount = rowData.PremiumAfterDiscount;
+    }
     this.discountOpen(modal);
   }
   SaveLoadingDetails(modal){

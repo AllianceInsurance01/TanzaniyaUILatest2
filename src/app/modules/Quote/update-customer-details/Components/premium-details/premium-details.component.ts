@@ -478,7 +478,7 @@ export class PremiumDetailsComponent implements OnInit {
                 this.vehicleList.push(entry);
                 let obj={
                   "Code":entry.RiskId,
-                  "CodeDesc":entry.Chassisnumber,
+                  "CodeDesc":entry.Registrationnumber,
                   "RiskId": entry.RiskId
 
                 }
@@ -604,6 +604,7 @@ export class PremiumDetailsComponent implements OnInit {
       if(section){
         rowData.Id = "";
         rowData['typeList'] = section.IdList;
+        if(rowData.typeList.length==1){rowData.Id= rowData.typeList[0].Id;}
         if(section.docTypeList==undefined){
           let ReqObj = {
             "InsuranceId":this.insuranceId,
@@ -776,6 +777,7 @@ toggle(index: number) {
             // entry.sectionList = this.individualDocumentList[0].SectionList;
             this.uploadListDoc.push(entry)
             if(entry.sectionList.length==1){this.uploadListDoc[this.uploadListDoc.length-1].sectionId= entry.sectionList[0].SectionId; this.onChangeSectionType(this.uploadListDoc[this.uploadListDoc.length-1],this.uploadListDoc.length-1)}
+            
           }
           
             //this.vehicleList[i].docList.push({ 'url': element,'DocTypeId':'','filename':element.name, 'JsonString': {} });

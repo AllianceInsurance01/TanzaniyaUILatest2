@@ -338,15 +338,29 @@
                         </ng-container>
                     </ul>
                 </li>
-                <li class="dropdown" *ngIf="typeValue!='SuperAdmin'" style="padding-left: 40px !important;padding-right: 10px !important;">
+                <li class="dropdown" *ngIf="typeValue!='SuperAdmin'" style="padding-left: 40px !important;padding-right: 0px !important;">
                         <button class="btn btn-success text-light btn-header" (click)="home()" style="border:none;color:black;cursor:pointer">
                             <i style="font-size:12px;border:none" class="fa fa-home" aria-hidden="true" style="padding:1px;"></i><span
                                 class="spancommon span_font_size"> &nbsp;{{productname}}</span>
                         </button>
                 </li>
                 <li class="dropdown">
-                    <span class="ml-5 spancommon span_font_size"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;{{loginId}}&nbsp;|&nbsp;</span>
-                    <span class="ml-5 spancommon span_font_size" style="text-transform: capitalize;">{{userType}}</span>
+                    <a  style="cursor:pointer">
+                        <span class="ml-2 spancommon span_font_size"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;{{loginId}}&nbsp;|&nbsp;</span>
+                        <span class="ml-2 spancommon span_font_size" style="text-transform: capitalize;">{{userType}}</span>
+                        <i  class="bi bi-chevron-down"></i></a>
+                    <ul>
+                            
+                        <ng-container *ngIf="userType!='Issuer'">
+                            <li><a  style="cursor:not-allowed"><b>Code</b>&nbsp;&nbsp;{{customerCode}}</a></li>
+                            <li><a  style="cursor:not-allowed"><b>Name</b>&nbsp;&nbsp;{{customerName}}</a></li>
+                        </ng-container>
+                        <li>
+                            <div class="text-center">
+                                <a style="cursor:pointer"><span class="ml-5 spancommon span_font_size"><b>Profile</b></span></a>    
+                            </div>
+                        </li>
+                    </ul>
                 </li>
                 <li class="dropdown" [hidden]="(typeValue=='B2C' && loginId=='guest')" (click)="onLog('Log out')"><a style="cursor:pointer" ><i class="fa fa-power-off"></i>&nbsp;Logout</a></li>
             </ul>
