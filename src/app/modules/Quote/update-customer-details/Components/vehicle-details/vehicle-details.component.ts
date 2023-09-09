@@ -740,8 +740,10 @@ export class VehicleDetailsComponent implements OnInit {
     }
    
     if(type=='edit'){
-      this.claimsYN = this.vehicleDetails?.NcdYn;
-      this.gpsYn = this.vehicleDetails?.Gpstrackinginstalled;
+      if(this.vehicleDetails?.NcdYn) this.claimsYN = this.vehicleDetails?.NcdYn;
+      else this.claimsYN = 'N';
+      if(this.vehicleDetails?.Gpstrackinginstalled) this.gpsYn = this.vehicleDetails?.Gpstrackinginstalled;
+      else this.gpsYn = 'N';
       this.vehicleSI = String(this.vehicleDetails?.SumInsured);
       this.CommaFormatted();
       this.windShieldSI = String(this.vehicleDetails?.WindScreenSumInsured);
@@ -891,8 +893,6 @@ export class VehicleDetailsComponent implements OnInit {
             this.totalCount = this.vehicleDetailsList.length;
             console.log("Motor Details",this.motorDetails);
             this.setVehicleValues('direct');
-            //this.currencyValue = this.vehicleDetailsList[this.currentIndex-1].Currency;
-            //this.onCurrencyChange();
             $('#slider_0').removeClass('active w3-animate-left');
             $('#slider_0').removeClass('active w3-animate-right');
             $('#slider_0').addClass('active w3-animate-right');
@@ -901,14 +901,6 @@ export class VehicleDetailsComponent implements OnInit {
     }
     else{
       let createdBy="";
-    
-      // let quoteStatus = sessionStorage.getItem('QuoteStatus');
-      // if(quoteStatus=='AdminRP'){
-      //     createdBy = this.vehicleDetailsList[0].CreatedBy;
-      // }
-      // else{
-      //   createdBy = this.loginId;
-      // }
       let startDate = "",endDate = "",vehicleSI="",accSI="",windSI="",tppSI="";
       if(this.vehicleSI==undefined) vehicleSI = null;
       else if(this.vehicleSI.includes(',')){ vehicleSI = this.vehicleSI.replace(/,/g, '') }
@@ -961,18 +953,6 @@ export class VehicleDetailsComponent implements OnInit {
         else endDate = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
       }
       let quoteStatus = sessionStorage.getItem('QuoteStatus');
-      // if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
-      //     createdBy = this.vehicleDetailsList[0].CreatedBy;
-      // }
-      // else{
-      //   createdBy = this.loginId;
-      // }
-      // if(this.userType=='Broker'){
-      //   this.brokerCode = this.agencyCode;
-      //   createdBy = this.loginId;
-        
-      //   this.applicationId = "01";
-      // }
       this.subuserType = sessionStorage.getItem('typeValue');
       console.log("AcExecutive",this.acExecutiveId,this.vehicleDetails,this.sourceType,this.bdmCode,this.brokerCode,this.customerCode);
       
@@ -1150,24 +1130,10 @@ export class VehicleDetailsComponent implements OnInit {
           let res:any = data;
           if(data.ErrorMessage.length!=0){
             if(res.ErrorMessage){
-              // for(let entry of res.ErrorMessage){
-              //   let type: NbComponentStatus = 'danger';
-              //   const config = {
-              //     status: type,
-              //     destroyByClick: true,
-              //     duration: 4000,
-              //     hasIcon: true,
-              //     position: NbGlobalPhysicalPosition.TOP_RIGHT,
-              //     preventDuplicates: false,
-              //   };
-              //   this.toastrService.show(
-              //     entry.Field,
-              //     entry.Message,
-              //     config);
-              // }
             }
           }
           else{
+            sessionStorage.setItem('loadingType','load');
             this.requestReferenceNo = data?.Result?.RequestReferenceNo;
              sessionStorage.setItem('quoteReferenceNo',data?.Result?.RequestReferenceNo);
             let entry = this.vehicleDetailsList[this.currentIndex-1];
@@ -1226,44 +1192,18 @@ export class VehicleDetailsComponent implements OnInit {
                       "VehicleId": this.vehicleId
                     }
                     uwList.push(entry);
-                  // if(ques.QuestionType == '01'){
-                  //   ques['CreatedBy'] = createdBy;
-                  //   ques['RequestReferenceNo'] = this.requestReferenceNo;
-                  //   ques['UpdatedBy'] = this.loginId;
-                  //   ques["VehicleId"] = this.vehicleId
-                  //   let entry = new Object();
-                  //   entry = ques;
-                  //   delete entry['Options'];
-                  //   uwList.push(entry);
-                  // } 
-                  // else if(ques.Value!=""){
-                  //   ques['CreatedBy'] = createdBy;
-                  //   ques['RequestReferenceNo'] = this.requestReferenceNo;
-                  //   ques['UpdatedBy'] = this.loginId;
-                  //   ques["VehicleId"] = this.vehicleId
-                  //   let entry = new Object();
-                  //   entry = ques;
-                  //   delete entry['Options'];
-                  //   uwList.push(entry);
-                  // } 
                   j+=1;
                   if(j==this.uwQuestionList.length) this.onSaveUWQues(uwList,entry,type,this.currentIndex-1);
                 }
               }
               else{
                 
-                this.getCalculationDetails(entry,type,this.currentIndex-1,'direct');
+                this.getCalculationDetails(entry,type,this.currentIndex-1,'proceedSave');
               }
             }
-            else this.getCalculationDetails(entry,type,null,'direct');
+            else this.getCalculationDetails(entry,type,null,'proceedSave');
             
           }
-  
-            // sessionStorage.setItem('editVehicleId',this.vehicleId);
-            // sessionStorage.removeItem('vehicleDetails');
-            // sessionStorage.setItem('vehChassisNo',this.vehicleDetails?.Chassisnumber);
-  
-            // this.getCalculationDetails(data?.Result);
         },
         (err) => { },
       );

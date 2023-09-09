@@ -583,6 +583,7 @@ export class VehicleWishListComponent implements OnInit {
             this.quoteRefNo = data?.Result?.RequestReferenceNo;
               sessionStorage.setItem('quoteReferenceNo',data?.Result?.RequestReferenceNo);
               this.vehicleDetails = null;
+              this.searchSection = false;
               this.searchBy = ""; this.searchValue = "";
               this.customerData2 = [];
               this.getExistingVehiclesList();

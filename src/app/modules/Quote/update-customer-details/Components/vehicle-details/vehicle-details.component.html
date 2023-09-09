@@ -560,7 +560,7 @@
                         <button class="custom-btn btn-5 mx-2" *ngIf="currentIndex!=1 || finalSection" matRipple (click)="onPreviousVehicle()"><i class="fa fa-arrow-left"></i>&nbsp;Previous</button>
                         <ng-container *ngIf="currentIndex<totalCount || currentIndex==totalCount">&nbsp;<span> {{currentIndex}} &nbsp;/&nbsp; {{totalCount}} </span>&nbsp;</ng-container>
                         <button class="custom-btn btn-6  maan-button-data mx-2" *ngIf="currentIndex<totalCount" matRipple (click)="onFormSubmit('direct')">Next <i class="fa fa-arrow-right"></i></button>
-                        <button class="custom-btn btn-6  maan-button-data mx-2" *ngIf="currentIndex==totalCount && !finalSection" matRipple (click)="onFormSubmit('direct')">Submit</button>
+                        <button class="custom-btn btn-6  maan-button-data mx-2" *ngIf="currentIndex==totalCount && !finalSection" matRipple (click)="onFormSubmit('proceedSave')">Submit</button>
                     </div>
                 </div>
             </div>
