@@ -861,6 +861,7 @@ export class VehicleDetailsComponent implements OnInit {
     $('#slider_0').addClass('active w3-animate-left');
   }
   onFormSubmit(type){
+    sessionStorage.removeItem('loadingType');
     if(this.checkDisableField()){
       if(this.currentIndex<this.totalCount){
         this.currentIndex = this.currentIndex+1;
@@ -1133,7 +1134,50 @@ export class VehicleDetailsComponent implements OnInit {
             }
           }
           else{
-            sessionStorage.setItem('loadingType','load');
+            
+            if(this.currentIndex<this.totalCount){
+              sessionStorage.setItem('loadingType','load');
+              this.currentIndex = this.currentIndex+1;
+                this.finalSection = false;
+                if(this.vehicleDetailsList[this.currentIndex-1]?.Active==true){
+                  if(this.endorsementSection && this.enableAddVehicle){
+                    if(this.vehicleDetailsList[this.currentIndex-1]?.EndorsementYn){
+                      if(this.vehicleDetailsList[this.currentIndex-1].EndorsementYn=='Y'){ this.enableFieldsSection = true;}
+                      else{ this.enableFieldsSection = false; }
+                    }
+                    else this.enableFieldsSection = false;
+                  } 
+                  this.vehicleId = String(this.vehicleDetailsList[this.currentIndex-1].Vehicleid);
+                  this.getEditVehicleDetails(this.vehicleId,'direct');
+                  this.totalCount = this.vehicleDetailsList.length;
+                  $('#slider_0').removeClass('active w3-animate-left');
+                  $('#slider_0').removeClass('active w3-animate-right');
+                  $('#slider_0').addClass('active w3-animate-right');
+                }
+                else{
+                    
+                  this.vehicleDetails = this.vehicleDetailsList[this.currentIndex-1];
+                  if(this.endorsementSection && this.enableAddVehicle){
+                    if(this.vehicleDetails?.EndorsementYn){
+                      if(this.vehicleDetails.EndorsementYn=='Y') this.enableFieldsSection = true;
+                      else this.enableFieldsSection = false;
+                    }
+                  } 
+                  this.motorDetails = this.vehicleDetailsList[this.currentIndex-1];
+                  this.totalCount = this.vehicleDetailsList.length;
+                  console.log("Motor Details",this.motorDetails);
+                  this.setVehicleValues('direct');
+                  //this.currencyValue = this.vehicleDetailsList[this.currentIndex-1].Currency;
+                  //this.onCurrencyChange();
+                  $('#slider_0').removeClass('active w3-animate-left');
+                  $('#slider_0').removeClass('active w3-animate-right');
+                  $('#slider_0').addClass('active w3-animate-right');
+                }
+            }
+            else{
+                this.finalSection = true; 
+                if(this.currentIndex-1==this.vehicleDetailsList.length) this.onFinalProceed();
+            }
             this.requestReferenceNo = data?.Result?.RequestReferenceNo;
              sessionStorage.setItem('quoteReferenceNo',data?.Result?.RequestReferenceNo);
             let entry = this.vehicleDetailsList[this.currentIndex-1];
@@ -1448,48 +1492,8 @@ export class VehicleDetailsComponent implements OnInit {
                   this.finalSection = true; 
                   if(index==this.vehicleDetailsList.length) this.onFinalProceed();
                 }
-                else if(this.currentIndex<this.totalCount){
-                  this.currentIndex = this.currentIndex+1;
-                    this.finalSection = false;
-                    if(this.vehicleDetailsList[this.currentIndex-1]?.Active==true){
-                      if(this.endorsementSection && this.enableAddVehicle){
-                        if(this.vehicleDetailsList[this.currentIndex-1]?.EndorsementYn){
-                          if(this.vehicleDetailsList[this.currentIndex-1].EndorsementYn=='Y'){ this.enableFieldsSection = true;}
-                          else{ this.enableFieldsSection = false; }
-                        }
-                        else this.enableFieldsSection = false;
-                      } 
-                      this.vehicleId = String(this.vehicleDetailsList[this.currentIndex-1].Vehicleid);
-                      this.getEditVehicleDetails(this.vehicleId,'direct');
-                      this.totalCount = this.vehicleDetailsList.length;
-                      $('#slider_0').removeClass('active w3-animate-left');
-                      $('#slider_0').removeClass('active w3-animate-right');
-                      $('#slider_0').addClass('active w3-animate-right');
-                    }
-                    else{
-                        
-                      this.vehicleDetails = this.vehicleDetailsList[this.currentIndex-1];
-                      if(this.endorsementSection && this.enableAddVehicle){
-                        if(this.vehicleDetails?.EndorsementYn){
-                          if(this.vehicleDetails.EndorsementYn=='Y') this.enableFieldsSection = true;
-                          else this.enableFieldsSection = false;
-                        }
-                      } 
-                      this.motorDetails = this.vehicleDetailsList[this.currentIndex-1];
-                      this.totalCount = this.vehicleDetailsList.length;
-                      console.log("Motor Details",this.motorDetails);
-                      this.setVehicleValues('direct');
-                      //this.currencyValue = this.vehicleDetailsList[this.currentIndex-1].Currency;
-                      //this.onCurrencyChange();
-                      $('#slider_0').removeClass('active w3-animate-left');
-                      $('#slider_0').removeClass('active w3-animate-right');
-                      $('#slider_0').addClass('active w3-animate-right');
-                    }
-                }
-                else{
-                  this.finalSection = true; 
-                  if(index==this.vehicleDetailsList.length) this.onFinalProceed();
-                }
+                
+                
               }
               // sessionStorage.setItem('coverObject',JSON.stringify(data?.CoverList));
               // this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);

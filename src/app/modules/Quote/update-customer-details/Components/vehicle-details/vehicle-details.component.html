@@ -129,7 +129,7 @@
                         </div>
                         <div>
                             <ng-container>
-                                <span class="spancommon">Registration No- {{motorDetails?.Registrationnumber}}</span>
+                                <span class="spancommon">Registration No- {{motorDetails?.Registrationnumber}} | Chassis No - {{motorDetails?.Chassisnumber}}</span>
                             </ng-container>
                         </div>
                     </div>
@@ -192,14 +192,15 @@
                         </li>
                         <li class="customList">
                             <div class="row mt-1">
-                                <div class="col-12 col-md-3 ">
+                                <div class="col-12 col-md-3">
                                     <div class="input-control-container">
-                                        <label class="input-form-label">Chassis No</label>
+                                        <label class="input-form-label">Motor Category</label>
                                         <div class="input-form-radio-box">
-                                            <span class="spancommon span_font_size">{{motorDetails?.Chassisnumber}}</span>
+                                            <span class="spancommon span_font_size">{{motorDetails?.MotorCategory}}</span>
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div class="col-12 col-md-3">
                                     <div class="input-control-container">
                                         <label class="input-form-label">Engine No</label>
@@ -236,20 +237,21 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-3">
-                                    <div class="input-control-container">
-                                        <label class="input-form-label">Motor Category</label>
-                                        <div class="input-form-radio-box">
-                                            <span class="spancommon span_font_size">{{motorDetails?.ReqMotorCategory}}</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                 <div class="col-12 col-md-3">
                                     <div class="input-control-container">
                                         <label class="input-form-label">Seating Capacity</label>
                                         <div class="input-form-radio-box">
                                             <span class="spancommon span_font_size">{{motorDetails?.SeatingCapacity}}</span>
 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-3 ">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Gross Weight</label>
+                                        <div class="input-form-radio-box">
+                                            <span class="spancommon span_font_size">{{motorDetails?.Grossweight}}</span>
                                         </div>
                                     </div>
                                 </div>

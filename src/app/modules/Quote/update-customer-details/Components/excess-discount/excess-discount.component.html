@@ -40,7 +40,7 @@
         </div>
         <div class="maan-grid-item-body" style="background: white;">
             <div class="row mt-1">
-                <div class="col-12 col-md-2">
+                <div class="col-12 col-md-3">
                     <div class="input-control-container">
                         <label class="input-form-label">Client Name</label>
                         <div class="input-form-radio-box">
@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-12 col-md-2">
                     <div class="input-control-container" style="text-wrap: nowrap !important">
-                        <label class="input-form-label">Date Of Birth / RegDate</label>
+                        <label class="input-form-label">D.O.B / RegDate</label>
                         <div class="input-form-radio-box">
                             <span class="spancommon span_font_size">{{dateOfBirth}}</span>
                         </div>
@@ -102,6 +102,9 @@
                         <span class="mx-1">
                             <i class="fas fa-book mx-1"></i>
                         </span>  <span class="spancommon span_font_size" style="font-weight:600">Coverage Details</span>
+                    </div>
+                    <div>
+                        <span class="spancommon span_font_size" style="font-weight:600">Policy Period</span>&nbsp;({{policyStartDate}}&nbsp;-{{policyEndDate}})
                     </div>
                     <div class=" ml-3">
                         <ng-container *ngIf="ClausesData.length!=0">
