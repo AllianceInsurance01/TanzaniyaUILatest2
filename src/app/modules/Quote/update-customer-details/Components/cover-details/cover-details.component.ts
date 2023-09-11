@@ -10,9 +10,9 @@ export class CoverDetailsComponent implements OnInit {
   titles:any; @Input()benefitList:any[]=[];
   PolicyHeader:any[]=[];
   innerColumnHeader:any[]=[];innerTableData:any[]=[];
-  PolicyTypeDesc:any;
-  PlanTypeDesc:any;
-  Remarks:any;
+  PolicyTypeDesc:any;pageCount:any=10;
+  PlanTypeDesc:any;startIndex:any=1;
+  Remarks:any;endIndex:any=10;
   constructor(public dialogRef: MatDialogRef<CoverDetailsComponent>,public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any) {
     this.PolicyHeader =  [
       { key: 'CoverId', display: 'Cover Id' },
@@ -45,5 +45,12 @@ export class CoverDetailsComponent implements OnInit {
   }
   onClose(){
       this.dialogRef.close();
+  }
+  getTotalCount(benefit){
+    return benefit.CoverDetails.length;
+  }
+  onNextData(element){
+  }
+  onPreviousData(element){
   }
 }

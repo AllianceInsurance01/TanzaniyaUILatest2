@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col-11 col-lg-10 col-md-10 col-xl-10 offset-1">
                         <ng-container *ngIf="benefit.CoverDetails.length!=0">
-                            <app-commodity-table [cols]="PolicyHeader" [data]="benefit.CoverDetails" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onAdd)="onInnerData($event)">
+                            <app-commodity-table [cols]="PolicyHeader" [data]="benefit.CoverDetails" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="getTotalCount(benefit)" (onLoadPreviousData)="onPreviousData($event)" (onLoadNextData)="onNextData($event)" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onAdd)="onInnerData($event)">
                             </app-commodity-table>
                         </ng-container>
                         <ng-container *ngIf="benefit.CoverDetails.length==0">
