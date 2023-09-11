@@ -54,7 +54,8 @@ export class HttpInterceptorService implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler,
   ): Observable<HttpEvent<any>> {
-    this.loader.show();
+    if(!sessionStorage.getItem('loadingType')){console.log("Entered");this.loader.show();}
+    else this.loader.hide();
     this.totalRequests++;
     return next.handle(req).pipe(
       map((event: HttpEvent<any>) => {
