@@ -34,7 +34,7 @@ export class ExistingCustomersComponent implements OnInit {
       { key: 'ClientName', display: 'Customer Name' },
       { key: 'VrTinNo', display: 'VrTinNo' },
       { key: 'MobileNo1', display: 'Mobile No' },
-      { key: 'Email1', display: 'EmailID' },
+      { key: 'PolicyHolderTypeDesc', display: 'Customer Type' },
       { key: 'CreatedBy', display: 'Created By' },
       { key: 'Status', display: 'Status' },
       {
