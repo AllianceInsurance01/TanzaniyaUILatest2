@@ -300,7 +300,6 @@ export class UnderWriterComponent implements OnInit {
               let datas = data.Result?.PendingGrid;
             }
             else{
-              alert("Entered")
               this.quoteData=[];this.referralData=[]}
             }
             //this.quoteData = data?.Result;

@@ -245,7 +245,6 @@ export class ReferralPendingComponent implements OnInit {
               }
             }
             else {
-              alert("Entered")
               this.quoteData = []; this.referralData = []
             }
           }

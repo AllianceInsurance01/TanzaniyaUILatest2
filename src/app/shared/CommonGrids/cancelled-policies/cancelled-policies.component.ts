@@ -134,7 +134,6 @@ export class CancelledPoliciesComponent implements OnInit {
               }
             }
             else {
-              alert("Entered")
               this.quoteData = []; 
             }
           }

@@ -137,7 +137,7 @@
                                                 {{menu.RiskDetails.PolicyTypeDesc}}&nbsp;|&nbsp;{{
                                                 menu.RiskDetails.Vehiclemake }} &nbsp;|&nbsp; {{
                                                 menu.RiskDetails.Vehcilemodel
-                                                }} &nbsp;|&nbsp; {{ menu.RiskDetails.Chassisnumber }} &nbsp;</span>
+                                                }} &nbsp;|&nbsp; {{ menu.RiskDetails.Registrationnumber }} &nbsp;</span>
 
                                         </ng-container>
                                         <ng-container *ngIf="productId=='4'">
@@ -197,7 +197,7 @@
                                         {{menu.RiskDetails.PolicyTypeDesc}}&nbsp;|&nbsp;{{
                                         menu.RiskDetails.Vehiclemake }} &nbsp;|&nbsp; {{
                                         menu.RiskDetails.Vehcilemodel
-                                        }} &nbsp;|&nbsp; {{ menu.RiskDetails.Chassisnumber }} &nbsp;</span>
+                                        }} &nbsp;|&nbsp; {{ menu.RiskDetails.Registrationnumber }} &nbsp;</span>
     
                                 </ng-container>
                                 <ng-container *ngIf="productId=='4'">
@@ -288,7 +288,7 @@
                                             {{menu.RiskDetails.PolicyTypeDesc}}&nbsp;|&nbsp;{{
                                             menu.RiskDetails.Vehiclemake }} &nbsp;|&nbsp; {{
                                             menu.RiskDetails.Vehcilemodel
-                                            }} &nbsp;|&nbsp; {{ menu.RiskDetails.Chassisnumber }} | &nbsp;</span>
+                                            }} &nbsp;|&nbsp; {{ menu.RiskDetails.Registrationnumber }} | &nbsp;</span>
 
                                         <ng-container *ngIf="menu.Status!='D'">
                                             <button class="fa fa-eye"
@@ -428,29 +428,64 @@
                                                             <span *ngIf="element[col.key]!='Y'">DeActive</span>
                                                         </ng-container>
                                                         <ng-container *ngIf="col.key=='PremiumAfterDiscount'">
-
-                                                            <div class="d-flex justify-content-between">
-                                                                <div>
-                                                                    <ng-container *ngIf="element[col.key]!=0 && element[col.key]!='0' && element[col.key]!=null">
-
-                                                                        &nbsp;&nbsp;<button type="button"
-                                                                            class="btn maan-btn-blue btn-circle"
-                                                                            (click)="setDiscountDetails(menu,element,discountModal)">?
-                                                                        </button>
-                                                                    </ng-container>
+                                                            <ng-container *ngIf="(element.Endorsements!=null)">
+                                                                &nbsp;&nbsp;<button type="button"
+                                                                        class="btn maan-btn-blue btn-circle-alt"
+                                                                        title="After Discount" 
+                                                                        (click)="setDiscountDetails(menu,element,discountModal)"><i
+                                                                            class="fa fa-bookmark"
+                                                                            aria-hidden="true"></i></button>
+                                                                            <div class="d-flex justify-content-between">
+                                                                                <div></div>
+                                                                                <div>
+                                                                                    <ng-container
+                                                                                        *ngIf="(coverModificationYN=='Y' && !endorseSIModification )  && element.DifferenceYN=='Y'">
+                                                                                        0
+                                                                                    </ng-container>
+                                                                                    <ng-container
+                                                                                        *ngIf="(coverModificationYN=='Y' && !endorseSIModification) && element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax!=null && element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax!=0 && element.DifferenceYN=='N'">
+                                                                                        {{
+                                                                                        element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax
+                                                                                        |commaseparator }}
+                                                                                    </ng-container>
+                                                                                    <ng-container
+                                                                                        *ngIf="(coverModificationYN=='N' || endorseSIModification) && !element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax  && (element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax==null || element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax==0)">
+                                                                                        0
+                                                                                    </ng-container>
+                                                                                    <ng-container
+                                                                                        *ngIf="(coverModificationYN=='N' || endorseSIModification )  && element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax!=null && element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax!=0 ">
+                                                                                        {{
+                                                                                        element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax
+                                                                                        |commaseparator }}
+                                                                                    </ng-container>
+                                                                                </div>
+                                                                            </div>
+                                                            </ng-container>
+                                                            <ng-container *ngIf="(element.Endorsements==null)">
+                                                                <div class="d-flex justify-content-between">
+                                                                    <div>
+                                                                        <ng-container *ngIf="element[col.key]!=0 && element[col.key]!='0' && element[col.key]!=null">
+    
+                                                                            &nbsp;&nbsp;<button type="button"
+                                                                                class="btn maan-btn-blue btn-circle"
+                                                                                (click)="setDiscountDetails(menu,element,discountModal)">?
+                                                                            </button>
+                                                                        </ng-container>
+                                                                    </div>
+                                                                    <div>
+                                                                        <ng-container
+                                                                            *ngIf="element[col.key]==null || element[col.key]==0">
+                                                                            0
+                                                                        </ng-container>
+                                                                        <ng-container
+                                                                            *ngIf="element[col.key]!=null || element[col.key]!=0">
+                                                                            <span>{{ element[col.key]|commaseparator }}
+                                                                            </span>
+                                                                        </ng-container>
+                                                                    </div>
                                                                 </div>
-                                                                <div>
-                                                                    <ng-container
-                                                                        *ngIf="element[col.key]==null || element[col.key]==0">
-                                                                        0
-                                                                    </ng-container>
-                                                                    <ng-container
-                                                                        *ngIf="element[col.key]!=null || element[col.key]!=0">
-                                                                        <span>{{ element[col.key]|commaseparator }}
-                                                                        </span>
-                                                                    </ng-container>
-                                                                </div>
-                                                            </div>
+                                                            </ng-container>
+                                                            
                                                         </ng-container>
 
                                                         <ng-container *ngIf="col.key=='PremiumIncludedTax'">
@@ -482,7 +517,7 @@
                                                                                 </div>
                                                                                 <ul class="list-group">
 
-                                                                                    <li
+                                                                                    <!-- <li
                                                                                         class="list-group-item list-seperate">
                                                                                         <div>
                                                                                             <span
@@ -519,7 +554,7 @@
                                                                                                         commaseparator}}</b></ng-container>
                                                                                             </span>
                                                                                         </div>
-                                                                                    </li>
+                                                                                    </li> -->
                                                                                     <li
                                                                                         class="list-group-item list-seperate">
                                                                                         <div>
@@ -529,8 +564,8 @@
                                                                                                     *ngIf="coverModificationYN=='N'">Difference
                                                                                                     Premium</ng-container>
                                                                                                 <ng-container
-                                                                                                    *ngIf="coverModificationYN=='Y'">Removal
-                                                                                                    Premium</ng-container>
+                                                                                                    *ngIf="coverModificationYN=='Y'">
+                                                                                                    Premium Excluded Tax</ng-container>
                                                                                             </span>
                                                                                         </div>
                                                                                         <div>
@@ -2803,7 +2838,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">
-                                        <ng-container *ngIf="productId=='5'"><b>ChassisNo</b></ng-container>
+                                        <ng-container *ngIf="productId=='5'"><b>Registration No.</b></ng-container>
                                         <ng-container *ngIf="productId=='4'"><b>Passengers</b></ng-container>
                                         <ng-container *ngIf="productId!='3' && productId!='4' && productId!='5' && productId!='19' && productId!='14' && productId!='32'"><b>Product</b></ng-container>
                                         <ng-container *ngIf="productId=='3' || productId=='19' || productId=='14' || productId=='32'"><b>Section</b></ng-container>
@@ -2817,7 +2852,7 @@
                                     <td>
                                         <ng-container *ngIf="productId=='5'">
                                             <span class="spancommon" style="color:navy;font-size: 13px;cursor: pointer;" (click)="onSelectSectionIndex(menu)">
-                                            &nbsp;<u>{{ menu.RiskDetails.Chassisnumber }}</u></span>
+                                            &nbsp;<u>{{ menu.RiskDetails.Registrationnumber }}</u></span>
 
                                         </ng-container>
                                         <ng-container *ngIf="productId=='4'">
@@ -3418,9 +3453,15 @@
         </button>
     </div>
     <div class="modal-body">
+        <div class="d-flex justify-content-between">
+            <div></div>
+            <div>
+                Cover Name - <b>{{CoverName}}</b>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12">
-                <table class="table">
+                <table class="table" *ngIf="!discountEndtSection">
                     <thead>
                         <tr>
                             <th scope="col"><b>Description</b></th>
@@ -3560,6 +3601,141 @@
                             <td></td>
                             <td style="text-align: end;"><span class="spancommon span_font_size">
                                 <b>{{afterDiscount | commaseparator}}</b></span></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <table class="table" *ngIf="discountEndtSection">
+                    <thead>
+                        <tr>
+                            <th scope="col"><b>Description</b></th>
+                            <th scope="col" style="text-align: end;"><b>Rate (%)</b></th>
+                            <th scope="col" style="text-align: end;"><b>Amount ({{currencyCode}})</b></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Actual SumInsured</td>
+                            <td style="text-align: end;">
+                                   
+                            </td>
+                            <td style="text-align: end;">
+                                <span class="spancommon span_font_size">{{sumInsured | commaseparator}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Difference SumInsured</td>
+                            <td style="text-align: end;">
+                                   
+                            </td>
+                            <td style="text-align: end;">
+                                <span class="spancommon span_font_size">{{differenceSI | commaseparator}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Premium Before Discount</td>
+                            <td style="text-align: end;">
+                                    <ng-container *ngIf="!adminSection">
+                                        <span class="spancommon span_font_size">{{ratePercent}}</span>
+                                    </ng-container>
+                                    <ng-container *ngIf="(adminSection)">
+                                        <input type="text"  style="width: auto !important;max-width:80px;text-align:right !important"
+                                            [(ngModel)]="ratePercent">
+                                    </ng-container>
+                            </td>
+                            <td style="text-align: end;">
+                                <span class="spancommon span_font_size">{{beforeDiscount | commaseparator}}</span>
+                            </td>
+                        </tr>
+                        <ng-container *ngIf="discountList.length!=0">
+                            <tr>
+                                <th scope="col">Discounts</th>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr *ngFor="let discount of discountList">
+                                <td>{{discount.DiscountDesc}}</td>
+                                <td></td>
+                                <td style="text-align: end;">
+                                    <ng-container *ngIf="discount.DiscountAmount==null || discount.DiscountAmount=='0.0'">
+                                        0
+                                    </ng-container>
+                                    <ng-container *ngIf="discount.DiscountAmount!=0 && discount.DiscountAmount!=null || discount.DiscountAmount!='0.0'">
+                                            {{discount.DiscountAmount | commaseparator}}
+                                    </ng-container>
+                                </td>
+                            </tr>
+                        </ng-container>
+
+                        <ng-container *ngIf="loadingList.length!=0">
+                            <tr>
+                                <th scope="col" style="text-align: start;" colspan="3">Loadings</th>
+                            </tr>
+                            <tr *ngFor="let loading of loadingList;let i=index">
+                                <td>{{loading.LoadingDesc}}</td>
+                                <td style="text-align: end;">
+                                    <ng-container *ngIf="(adminSection) && loading.LoadingCalcType!='A'">
+                                        <ng-container *ngIf="loading.LoadingCalcType!='P'">
+                                            <ng-container *ngIf="loading.LoadingRate!=null">
+                                                <span class="spancommon span_font_size">0</span>
+                                            </ng-container>
+                                        </ng-container>
+                                        <ng-container *ngIf="loading.LoadingCalcType=='P'">
+                                            <input type="text" [id]="'Rate'+i" class="input-form-control without-icon"
+                                                style="width: auto !important;max-width:80px;text-align:right !important"
+                                                [(ngModel)]="loading['LoadingRate']" maxlength="5">
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container *ngIf="(!adminSection) && loading.LoadingCalcType!='A'">
+                                        <ng-container *ngIf="loading.LoadingRate==null">
+                                            0
+                                        </ng-container>
+                                        <ng-container *ngIf="loading.LoadingRate!=0 && loading.LoadingRate!=null">
+                                            <span class="spancommon span_font_size">{{loading.LoadingRate}}</span>
+                                        </ng-container>
+
+                                    </ng-container>
+                                </td>
+                                <td style="text-align: end;">
+                                    <ng-container *ngIf="(adminSection)">
+                                        <ng-container *ngIf="loading.LoadingCalcType!='A'">
+                                            <ng-container
+                                                *ngIf="loading.LoadingAmount==0 || loading.LoadingAmount==null">
+                                                0
+                                            </ng-container>
+                                            <ng-container
+                                                *ngIf="loading.LoadingAmount!=0 && loading.LoadingAmount!=null">
+                                                <span class="spancommon span_font_size">{{loading.LoadingAmount}}</span>
+                                            </ng-container>
+                                        </ng-container>
+                                        <ng-container *ngIf="loading.LoadingCalcType=='A'">
+                                            <input type="text" [id]="'Amount'+i" class="input-form-control without-icon"
+                                                (keyup)="premiumComma(i,loading.LoadingAmount)"
+                                                style="width: auto !important;max-width:300px;text-align:right !important"
+                                                [(ngModel)]="loading['LoadingAmount']">
+                                        </ng-container>
+
+                                    </ng-container>
+                                    <ng-container *ngIf="(!adminSection)">
+                                        <ng-container *ngIf="loading.LoadingAmount==0 || loading.LoadingAmount==null">
+                                            0
+                                        </ng-container>
+                                        <ng-container *ngIf="loading.LoadingAmount!=0 && loading.LoadingAmount!=null">
+                                            <span class="spancommon span_font_size">{{loading.LoadingAmount |
+                                                commaseparator}}</span>
+                                        </ng-container>
+
+                                    </ng-container>
+                                </td>
+                            </tr>
+
+                        </ng-container>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><b>Total</b></td>
+                            <td></td>
+                            <td style="text-align: end;"><span class="spancommon span_font_size">
+                                <b>{{beforeDiscount | commaseparator}}</b></span></td>
                         </tr>
                     </tfoot>
                 </table>

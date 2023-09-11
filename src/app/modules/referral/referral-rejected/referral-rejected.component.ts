@@ -216,64 +216,64 @@ export class ReferralRejectedComponent implements OnInit {
         console.log(data);
         sessionStorage.removeItem('loadingType');
         if(data.Result){
-          if (data.Result?.CustomerDetailsRes) {
-            if (data.Result?.CustomerDetailsRes.length != 0) {
+          if(data.Result?.CustomerDetailsRes){
+            if(data.Result?.CustomerDetailsRes.length!=0){
               this.totalRecords = data.Result?.TotalCount;
               this.totalQuoteRecords = data.Result?.TotalCount;
               this.pageCount = 10;
-              if (entryType == 'change') {
+              if(entryType=='change'){
                 this.quotePageNo = 1;
                 this.endtpageNo = 1;
                 let startCount = 1, endCount = this.pageCount;
-                startCount = endCount + 1;
-                if (this.section == 'quote') {
+                startCount = endCount+1;
+                if(this.section=='quote'){
                   let quoteData = data.Result?.CustomerDetailsRes;
                   this.quoteData = data.Result?.CustomerDetailsRes;
-                  if (quoteData.length <= this.pageCount) {
+                  if(quoteData.length<=this.pageCount){
                     endCount = quoteData.length
                   }
                   else endCount = this.pageCount;
                 }
-                else {
+                else{
                   this.referralData = data.Result?.CustomerDetailsRes;
                   let referralData = data.Result?.CustomerDetailsRes;
-                  if (referralData.length <= this.pageCount) {
+                  if(referralData.length<=this.pageCount){
                     endCount = referralData.length
                   }
-                  else endCount = this.pageCount;
+                  else endCount =this.pageCount;
                 }
-                this.startIndex = startCount; this.endIndex = endCount;
-                console.log("Final Data", this.referralData, this.quoteData, this.section)
+                this.startIndex = startCount;this.endIndex=endCount;
+                console.log("Final Data",this.referralData,this.quoteData,this.section)
               }
-              else {
-
+              else{
+                
                 let startCount = element.startCount, endCount = element.endCount;
                 this.pageCount = element.n;
-                startCount = endCount + 1;
-                if (this.section == 'quote') {
+                startCount = endCount+1;
+                if(this.section=='quote'){
                   let quoteData = data.Result?.CustomerDetailsRes;
                   this.quoteData = this.quoteData.concat(data.Result?.CustomerDetailsRes);
                 }
-                else {
+                else{
                   this.referralData = this.referralData.concat(data.Result?.CustomerDetailsRes);
                   let referralData = data.Result?.CustomerDetailsRes;
                 }
-                if (this.totalQuoteRecords <= endCount + (element.n)) {
-                  endCount = this.totalQuoteRecords
-                }
-                else endCount = endCount + (element.n);
-                this.startIndex = startCount; this.endIndex = endCount;
-                console.log("Final Received Data", this.quoteData, this.referralData, this.startIndex, this.endIndex)
+                  if(this.totalQuoteRecords<=endCount+(element.n)){
+                    endCount = this.totalQuoteRecords
+                  }
+                  else endCount = endCount+(element.n);
+                this.startIndex = startCount;this.endIndex=endCount;
+                console.log("Final Received Data",this.quoteData,this.referralData,this.startIndex,this.endIndex)
               }
+              
+              let datas = data.Result?.CustomerDetailsRes;
             }
-            else {
-              alert("Entered")
-              this.quoteData = []; this.referralData = []
+            else{
+              this.quoteData=[];this.referralData=[]}
             }
-          }
-          //this.quoteData = data?.Result;
-          else this.section = 'quote';
+            //this.quoteData = data?.Result;
         }
+        else this.section = 'quote';
       },
       (err) => { },
     );

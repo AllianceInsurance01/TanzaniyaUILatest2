@@ -254,32 +254,32 @@
               <ng-container *ngIf="tabSection=='quote'">
                 <div class="row">
                   <div class="col-12 col-md-12 col-lg-12">
-                      <ng-container *ngIf="quoteData.length!=0">
-                          <app-commodity-table [cols]="quoteHeader" [data]="quoteData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditExistingQuote($event)" (onAdd)="onInnerData($event)" (onView)="onViews($event)" (onReject)="onRejects($event,mymodal)" (onMail)="onMail($event,mymail)"
-                          (onSms)="onSms($event,mysms)" (onFollowup)="onFollowup($event)">
-                          </app-commodity-table>
-                      </ng-container>
-                      <ng-container *ngIf="quoteData.length==0">
-                          <div class="text-center">
-                              No Quote Available
-                          </div>
-                      </ng-container>
+                    <ng-container *ngIf="quoteData.length!=0">
+                      <app-commodity-table [cols]="quoteHeader" [data]="quoteData" [start]="startQuoteIndex" [pageCount]="quotePageCount" [end]="endQuoteIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousQuoteData($event)" (onLoadNextData)="onNextQuoteData($event)" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onAdd)="onInnerData($event)" (onView)="onViews($event)" (onReject)="onRejects($event,mymodal)" (onMail)="onMail($event,mymail)"
+                      (onSms)="onSms($event,mysms)" (onFollowup)="onFollowup($event)">
+                      </app-commodity-table>
+                    </ng-container>
+                    <ng-container *ngIf="quoteData.length==0">
+                        <div class="text-center">
+                            No Quote Available
+                        </div>
+                    </ng-container>
                   </div>
               </div>
               </ng-container>
               <ng-container *ngIf="tabSection=='policy'">
                 <div class="row mt-1">
                     <div class="col-12 col-md-12 col-lg-12">
-                        <ng-container *ngIf="policyData.length!=0">
-                            <app-commodity-table [cols]="policyHeader" (onSchedule)="onGetSchedule($event)" [data]="policyData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onGetEndorsements)="onGetEndorsements($event)" (onAdd)="onInnerData($event)"  (onView)="onViews($event)">
-                            </app-commodity-table>
-                        </ng-container>
-                        <ng-container *ngIf="policyData.length==0">
-                            <div class="text-center spancommon span_font_size">
-                                No Policy Available
-                            </div>
-                        </ng-container>
-                    </div>
+                      <ng-container *ngIf="policyData.length!=0">
+                        <app-commodity-table [cols]="policyHeader" [start]="startPolicyIndex" [pageCount]="policyPageCount" [end]="endPolicyIndex" [pageNo]="policyPageNo" [totalQuoteRecords]="totalPolicyRecords" (onLoadPreviousData)="onPreviousPolicyData($event)" (onLoadNextData)="onNextPolicyData($event)" (onSchedule)="onGetSchedule($event)" (onCredit)="onCreditdownload($event)" (onDebit)="onDebitdownload($event)" [data]="policyData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onGetEndorsements)="onGetEndorsements($event)" (onAdd)="onInnerData($event)"  (onView)="onViews($event)">
+                        </app-commodity-table>
+                    </ng-container>
+                    <ng-container *ngIf="policyData.length==0">
+                        <div class="text-center spancommon span_font_size">
+                            No Policy Available
+                        </div>
+                    </ng-container>
+                  </div>
                 </div>
               </ng-container>
               <ng-container *ngIf="tabSection=='lapsed'">
@@ -298,32 +298,74 @@
               </div>
               </ng-container>
               <ng-container *ngIf="tabSection=='referral'">
+                <div class="row">
+                  <div class="col-md-4 col-lg-4 col-xl-4 offset-4">
+                      <button class="button-tab" role="button" style="cursor: not-allowed;" *ngIf="rpSection=='quote'">Quotes</button>&nbsp;
+                      <button type="button" class="button-tab-alt" (click)="setRPSection('quote')"  *ngIf="rpSection!='quote'">Quotes</button>&nbsp;
+                      <button type="button" class="button-tab-alt" (click)="setRPSection('endt')" *ngIf="rpSection!='endt'">Endorsements</button>&nbsp;
+                      <button type="button" class="button-tab" role="button" style="cursor: not-allowed;" *ngIf="rpSection=='endt'">Endorsements</button>
+                  </div>
+              </div>
                 <div class="row mt-1">
                   <div class="col-12 col-md-12 col-lg-12">
-                      <ng-container *ngIf="referralPendingList.length!=0">
-                          <app-commodity-table [cols]="referralHeader" (onSchedule)="onGetSchedule($event)" [data]="referralPendingList" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onGetEndorsements)="onGetEndorsements($event)" (onAdd)="onInnerData($event)"  (onView)="onViews($event)">
+                    <ng-container *ngIf="rpSection=='quote'">
+                      <ng-container *ngIf="rpQuoteData.length!=0">
+                          <app-commodity-table [cols]="referralHeader" [start]="startRPIndex" [pageCount]="rpPageCount" [end]="endRPIndex" [pageNo]="rpQuotePageNo" [totalQuoteRecords]="totalRPRecords" [data]="rpQuoteData" (onLoadPreviousData)="onPreviousRPData($event)" (onLoadNextData)="onNextRPData($event)" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onAdd)="onInnerData($event)" (onEdit)="onEditQuotes($event)">
                           </app-commodity-table>
                       </ng-container>
-                      <ng-container *ngIf="referralPendingList.length==0">
-                          <div class="text-center spancommon span_font_size">
-                              No Records Available
+                      <ng-container *ngIf="rpQuoteData.length==0">
+                          <div class="text-center spancommon span_font_size mt-3">
+                              No Quote Available
                           </div>
                       </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="rpSection=='endt'">
+                        <ng-container *ngIf="referralPendingList.length!=0">
+                            <app-commodity-table [cols]="referralHeader" [pageCount]="rpPageCount" [data]="referralPendingList" [start]="startRPIndex" [end]="endRPIndex" [pageNo]="rpEndtpageNo"  [totalQuoteRecords]="totalRPRecords" (onLoadPreviousData)="onPreviousRPData($event)" (onLoadNextData)="onNextRPData($event)" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onAdd)="onInnerData($event)" (onEdit)="onEditQuotes($event)">
+                            </app-commodity-table>
+                        </ng-container>
+                        <ng-container *ngIf="referralPendingList.length==0">
+                            <div class="text-center spancommon span_font_size mt-3">
+                                No Endorsement Available
+                            </div>
+                        </ng-container>
+                    </ng-container>
                   </div>
               </div>
               </ng-container>
               <ng-container *ngIf="tabSection=='approved'">
+                <div class="row">
+                  <div class="col-md-4 col-lg-4 col-xl-4 offset-4">
+                      <button class="button-tab" role="button" style="cursor: not-allowed;" *ngIf="raSection=='quote'">Quotes</button>&nbsp;
+                      <button type="button" class="button-tab-alt" (click)="setRASection('quote')"  *ngIf="raSection!='quote'">Quotes</button>&nbsp;
+                      <button type="button" class="button-tab-alt" (click)="setRASection('endt')" *ngIf="raSection!='endt'">Endorsements</button>&nbsp;
+                      <button type="button" class="button-tab" role="button" style="cursor: not-allowed;" *ngIf="raSection=='endt'">Endorsements</button>
+                  </div>
+              </div>
                 <div class="row mt-1">
                   <div class="col-12 col-md-12 col-lg-12">
-                      <ng-container *ngIf="referralList.length!=0">
-                          <app-grid-table [cols]="referralHeaders" [data]="referralList" (onEdit)="onEditAproved(data)">
-                          </app-grid-table>
+                    <ng-container *ngIf="raSection=='quote'">
+                      <ng-container *ngIf="quoteRAData.length!=0">
+                          <app-commodity-table [cols]="referralHeaders"  [pageCount]="raPageCount" [data]="quoteRAData" [start]="startRAIndex" [end]="endRAIndex" [pageNo]="quoteRAPageNo" [totalQuoteRecords]="raTotalRecords" (onLoadPreviousData)="onPreviousRAData($event)" (onLoadNextData)="onNextRAData($event)" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onAdd)="onInnerData($event)" (onEdit)="onEditQuotes($event)">
+                          </app-commodity-table>
                       </ng-container>
-                      <ng-container *ngIf="referralList.length===0">
-                          <div class="text-center spancommon span_font_size">
-                              No Records Available
+                      <ng-container *ngIf="quoteRAData.length==0">
+                          <div class="text-center spancommon span_font_size mt-3">
+                              No Quote Available
                           </div>
                       </ng-container>
+                  </ng-container>
+                  <ng-container *ngIf="raSection=='endt'">
+                      <ng-container *ngIf="referralAppData.length!=0">
+                          <app-commodity-table [cols]="endorsementHeader" [pageCount]="raPageCount" [data]="referralAppData" [start]="startRAIndex" [end]="endRAIndex" [pageNo]="endtRApageNo"  [totalQuoteRecords]="raTotalRecords" (onLoadPreviousData)="onPreviousRAData($event)" (onLoadNextData)="onNextRAData($event)" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onAdd)="onInnerData($event)" (onEdit)="onEditQuotes($event)">
+                          </app-commodity-table>
+                      </ng-container>
+                      <ng-container *ngIf="referralAppData.length==0">
+                          <div class="text-center spancommon span_font_size mt-3">
+                              No Endorsement Available
+                          </div>
+                      </ng-container>
+                  </ng-container>
                   </div>
               </div>
               </ng-container>

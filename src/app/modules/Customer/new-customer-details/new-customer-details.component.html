@@ -12,10 +12,10 @@
             </div>
             <div class="col-3 col-md-3 col-lg-3 col-xl-3 d-flex">
             <div class="main-he5" (click)="setPolicyType(1)" *ngIf="productItem.IdType == 2">
-                <div class="commontext" style="color: #000;">Personal</div> 
+                <div class="commontext" style="color: #000;">Individual</div> 
             </div>
             <div class="main-he4" *ngIf="productItem.IdType == 1">
-                <div class="commontext" style="color: #fff;">Personal</div> 
+                <div class="commontext" style="color: #fff;">Individual</div> 
             </div>
             <div class="main-he5" (click)="setPolicyType(2)" *ngIf="productItem.IdType == 1">
                 <div class="commontext" style="color: #000">Corporate</div> 
@@ -37,10 +37,10 @@
             <div class="col-12 col-md-12 col-lg-12 col-xl-12 d-flex">
                 <div class="main-header2 mt-2">Account type :</div><br>
             <div class="main-he5" (click)="setPolicyType(1)" *ngIf="productItem.IdType == 2">
-                <div class="commontext" style="color: #fff;">Personal</div> 
+                <div class="commontext" style="color: #fff;">Individual</div> 
             </div>
             <div class="main-he4" *ngIf="productItem.IdType == 1">
-                <div class="commontext" style="color: #000;" >Personal</div> 
+                <div class="commontext" style="color: #000;" >Individual</div> 
             </div>
             <div class="main-he5" (click)="setPolicyType(2)" *ngIf="productItem.IdType == 1">
                 <div class="commontext" style="color: #fff">Corporate</div> 
@@ -82,8 +82,8 @@
                 <div style="max-width: 130px;min-width: 130px;" *ngIf="productItem.IdType != 2"> 
                     <div class="headinglbels">Gender <span class="star">*</span></div> 
                     <div class="mt-1">
-                    <ng-select class="custom" appendTo="body"  [items]="genderList"  [(ngModel)]="productItem.Gender" bindValue="Code" bindLabel="CodeDesc">
-                    </ng-select>
+                        <ng-select class="custom" appendTo="body"  [items]="genderList"  [(ngModel)]="productItem.Gender" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
                     </div>
                 </div>
                 <div [ngClass]="productItem.IdType != 2 ? 'customFieldWidth2':'customFieldWidth'">
@@ -115,7 +115,7 @@
                     </div>
                 </div>
                 <div style="max-width: 200px;min-width: 200px;">
-                    <div class="headinglbels">Email ID<span class="star">*</span></div> 
+                    <div class="headinglbels">Email ID</div> 
                     <div class="mt-1">
                         <input type="text" class="layout" email [(ngModel)]="productItem.EmailId" #prmEmail="ngModel">
                     </div>
@@ -132,12 +132,20 @@
          <div class="col-6" >
            <div class="headinglbels" *ngIf="productItem.IdType == 2">Registration Date <span class="star">*</span></div> 
            <div class="headinglbels" *ngIf="productItem.IdType != 2">Date Of Birth <span class="star">*</span></div> 
-           <ng-container >
+           <ng-container *ngIf="productItem.IdType != 2">
                 <mat-form-field appearance="fill">
                     <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
-                    <input matInput [matDatepicker]="picker1" [max]="maxDate" [(ngModel)]="productItem.dobOrRegDate">
+                    <input matInput [matDatepicker]="picker1" [max]="maxDobDate" [(ngModel)]="productItem.dobOrRegDate">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </ng-container>
+            <ng-container *ngIf="productItem.IdType == 2">
+                <mat-form-field appearance="fill">
+                    <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
+                    <input matInput [matDatepicker]="picker3" [max]="maxDate" [(ngModel)]="productItem.dobOrRegDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
                 </mat-form-field>
             </ng-container>
          </div>
@@ -252,14 +260,22 @@
               <div class="col-12" >
                 <div class="headinglbels" *ngIf="productItem.IdType == 2">Registration Date <span class="star">*</span></div> 
                 <div class="headinglbels" *ngIf="productItem.IdType != 2">Date Of Birth <span class="star">*</span></div> 
-                <ng-container >
-                     <mat-form-field appearance="fill">
-                         <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
-                         <input matInput [matDatepicker]="picker2" [max]="maxDate" [(ngModel)]="productItem.dobOrRegDate">
-                         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                         <mat-datepicker #picker2></mat-datepicker>
-                     </mat-form-field>
-                 </ng-container>
+                <ng-container *ngIf="productItem.IdType != 2">
+                    <mat-form-field appearance="fill">
+                        <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
+                        <input matInput [matDatepicker]="picker2" [max]="maxDobDate" [(ngModel)]="productItem.dobOrRegDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </ng-container>
+                <ng-container *ngIf="productItem.IdType == 2">
+                    <mat-form-field appearance="fill">
+                        <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
+                        <input matInput [matDatepicker]="picker4" [max]="maxDate" [(ngModel)]="productItem.dobOrRegDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                        <mat-datepicker #picker4></mat-datepicker>
+                    </mat-form-field>
+                </ng-container>
               </div>
               <div class="col-12 mt-1" *ngIf="productItem.IdType!='1'">
                 <div class="headinglbels">VRN/GST Number<span class="star">*</span></div> 

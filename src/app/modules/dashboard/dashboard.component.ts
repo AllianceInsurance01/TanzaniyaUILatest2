@@ -58,6 +58,38 @@ export class DashboardComponent implements OnInit {
   chartSection: boolean=false;
   customerheader: any[]=[];
   referralHeaders: any[]=[];
+  raTotalRecords: any;
+  raSection: any='quote';
+  referralAppData: any[]=[];
+  startRAIndex: any=0;
+  endRAIndex: any=0;
+  quoteRAData: any[]=[];
+  raPageCount: any=10;
+  quoteRAPageNo: number;
+  endtRApageNo: number;
+  offset: any=60;
+  raLimit: any='0';
+  totalQuoteRecords: any;
+  quotePageCount: number;
+  quotePageNo: number;
+  startQuoteIndex: number;
+  endQuoteIndex: number;
+  quoteLimit: any='0';
+  totalPolicyRecords: any;
+  policyPageCount: any=10;
+  startPolicyIndex: number;
+  endPolicyIndex: number;
+  policyLimit: any='0';
+  policyPageNo: number;
+  rpLimit: any;
+  rpSection: any='quote';
+  totalRPRecords: any;
+  rpPageCount: number;
+  rpQuotePageNo: number;
+  rpEndtpageNo: number;
+  rpQuoteData: any;
+  startRPIndex: number;
+  endRPIndex: number;
   constructor(private router:Router,private sharedService: SharedService){
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -70,12 +102,12 @@ export class DashboardComponent implements OnInit {
     sessionStorage.removeItem('customerReferenceNo');
     sessionStorage.removeItem('endorsePolicyNo');
     sessionStorage.removeItem('endorseTypeId');
-    this.getReferralApprovedList();
+    this.getReferralApprovedList(null,'change');
     this.getCustomerList();
-    this.getQuotesList();
-    this.getPolicyList();
+    this.getQuotesList(null,'change');
+    this.getPolicyList(null,'change');
     this.getLapsedList();
-    this.getReferralPendingList();
+    this.getReferralPendingList(null,'change');
   }
   ngOnInit() {
     
@@ -157,7 +189,7 @@ export class DashboardComponent implements OnInit {
 		// 	data: chartExample1.data
 		// });
   }
-  getReferralApprovedList(){
+  getReferralApprovedList(element,entryType){
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
       appId = "1"; loginId = this.loginId;
@@ -167,6 +199,9 @@ export class DashboardComponent implements OnInit {
       appId = this.loginId;
       brokerbranchCode = null;
     }
+    let type=null;
+    if(this.raSection=='quote'){type='Q'}
+    else type='E';
     let ReqObj = {
         "BrokerBranchCode": brokerbranchCode,
         "BranchCode":this.branchCode,
@@ -176,10 +211,11 @@ export class DashboardComponent implements OnInit {
           "UserType":this.userType,
           "SubUserType":sessionStorage.getItem('typeValue'),
           "SourceType":"",
+          "Type":type,
           "BdmCode": this.agencyCode,
            "ProductId":this.productId,
-          "Limit":"0",
-          "Offset":"1000"
+           "Limit":this.raLimit,
+           "Offset": this.offset
    }
     let urlLink = `${this.CommonApiUrl}api/referralapproved`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -198,7 +234,63 @@ export class DashboardComponent implements OnInit {
               },
             },
           ];
-            this.referralList = data?.Result;
+          sessionStorage.removeItem('loadingType');
+          if(data.Result?.CustomerDetailsRes){
+            if(data.Result?.CustomerDetailsRes.length!=0){
+              this.raTotalRecords = data.Result?.TotalCount;
+              this.raTotalRecords = data.Result?.TotalCount;
+              this.raPageCount = 10;
+              if(entryType=='change'){
+                this.quoteRAPageNo = 1;
+                this.endtRApageNo = 1;
+                let startCount = 1, endCount = this.raPageCount;
+                startCount = endCount+1;
+                if(this.raSection=='quote'){
+                  let quoteRAData = data.Result?.CustomerDetailsRes;
+                  this.quoteRAData = data.Result?.CustomerDetailsRes;
+                  if(quoteRAData.length<=this.raPageCount){
+                    endCount = quoteRAData.length
+                  }
+                  else endCount = this.raPageCount;
+                }
+                else{
+                  this.referralAppData = data.Result?.CustomerDetailsRes;
+                  let referralData = data.Result?.CustomerDetailsRes;
+                  if(referralData.length<=this.raPageCount){
+                    endCount = referralData.length
+                  }
+                  else endCount =this.raPageCount;
+                }
+                this.startRAIndex = startCount;this.endRAIndex=endCount;
+                console.log("Final Data",this.referralAppData,this.quoteData,this.raSection)
+              }
+              else{
+                
+                let startCount = element.startCount, endCount = element.endCount;
+                this.raPageCount = element.n;
+                startCount = endCount+1;
+                if(this.raSection=='quote'){
+                  let quoteData = data.Result?.CustomerDetailsRes;
+                  this.quoteRAData = this.quoteRAData.concat(data.Result?.CustomerDetailsRes);
+                }
+                else{
+                  this.referralAppData = this.referralAppData.concat(data.Result?.CustomerDetailsRes);
+                  let referralData = data.Result?.CustomerDetailsRes;
+                }
+                  if(this.raTotalRecords<=endCount+(element.n)){
+                    endCount = this.raTotalRecords
+                  }
+                  else endCount = endCount+(element.n);
+                this.startRAIndex = startCount;this.endRAIndex=endCount;
+                console.log("Final Received Data",this.quoteData,this.referralAppData,this.startRAIndex,this.endRAIndex)
+              }
+              
+              let datas = data.Result?.CustomerDetailsRes;
+            }
+            else{
+              this.quoteRAData=[];this.referralAppData=[]}
+          }
+            //this.quoteData = data?.Result;
             this.referralApprovedSection = true;
             if(this.referralApprovedSection && this.quoteSection && this.policySection) this.setChartValue();
         }
@@ -206,6 +298,25 @@ export class DashboardComponent implements OnInit {
       (err) => { },
     );
   }
+  onNextRAData(element){
+    this.raLimit = String(Number(this.raLimit)+1);
+    this.quoteRAPageNo = this.quoteRAPageNo+1;
+    this.endtRApageNo = this.endtRApageNo+1;
+    this.startRAIndex = element.startCount;
+    this.endRAIndex = element.endCount
+    this.getReferralApprovedList(element,'direct');
+  }
+  onPreviousRAData(element){
+    this.raLimit = String(Number(this.raLimit)-1);
+    if(this.raSection=='quote'){
+      this.quoteRAPageNo = this.quoteRAPageNo-1;
+    }
+    else{
+      this.endtRApageNo = this.endtRApageNo-1;
+    }
+    this.getReferralApprovedList(element,'direct');
+  }
+  setRASection(val){this.raSection = val;this.getReferralApprovedList(null,'change')}
   getCustomerList(){
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
@@ -243,7 +354,7 @@ export class DashboardComponent implements OnInit {
     (err) => { },
   );
   }
-  getQuotesList(){
+  getQuotesList(element,entryType){
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
       appId = "1"; loginId = this.loginId;
@@ -264,8 +375,8 @@ export class DashboardComponent implements OnInit {
           "SourceType":"",
           "BdmCode": this.agencyCode,
            "ProductId":this.productId,
-          "Limit":"0",
-          "Offset":"1000"
+           "Limit":this.quoteLimit,
+           "Offset":60
    }
     let urlLink = `${this.CommonApiUrl}api/existingquotedetails`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -496,7 +607,41 @@ export class DashboardComponent implements OnInit {
     
           ];
         }
-            this.quoteData = data?.Result;
+        if (data.Result?.CustomerDetails) {
+          if (data.Result?.CustomerDetails.length != 0) {
+            this.totalQuoteRecords = data.Result?.TotalCount;
+            this.quotePageCount = 10;
+            if (entryType == 'change') {
+              this.quotePageNo = 1;
+              let startCount = 1, endCount = this.quotePageCount;
+              startCount = endCount + 1;
+                let quoteData = data.Result?.CustomerDetails;
+                this.quoteData = data.Result?.CustomerDetails;
+                if (quoteData.length <= this.quotePageCount) {
+                  endCount = quoteData.length
+                }
+                else endCount = this.quotePageCount;
+              
+              this.startQuoteIndex = startCount; this.endQuoteIndex = endCount;
+            }
+            else {
+
+              let startCount = element.startCount, endCount = element.endCount;
+              this.quotePageCount = element.n;
+              startCount = endCount + 1;
+                let quoteData = data.Result?.CustomerDetails;
+                this.quoteData = this.quoteData.concat(data.Result?.CustomerDetails);
+              if (this.totalQuoteRecords <= endCount + (element.n)) {
+                endCount = this.totalQuoteRecords
+              }
+              else endCount = endCount + (element.n);
+              this.startQuoteIndex = startCount; this.endQuoteIndex = endCount;
+            }
+          }
+          else {
+            this.quoteData = []; 
+          }
+        }
             this.quoteSection = true;
             if(this.referralApprovedSection && this.quoteSection && this.policySection) this.setChartValue();
         }
@@ -504,7 +649,19 @@ export class DashboardComponent implements OnInit {
       (err) => { },
     );
   }
-  getPolicyList(){
+  onNextQuoteData(element){
+    this.quoteLimit = String(Number(this.quoteLimit)+1);
+    this.quotePageNo = this.quotePageNo+1;
+    this.startQuoteIndex = element.startCount;
+    this.endQuoteIndex = element.endCount
+    this.getQuotesList(element,'direct');
+  }
+  onPreviousQuoteData(element){
+    this.quoteLimit = String(Number(this.quoteLimit)-1);
+      this.quotePageNo = this.quotePageNo-1;
+    this.getQuotesList(element,'direct');
+  }
+  getPolicyList(element,entryType){
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
       appId = "1"; loginId = this.loginId;
@@ -525,13 +682,14 @@ export class DashboardComponent implements OnInit {
           "SourceType":"",
           "BdmCode": this.agencyCode,
            "ProductId":this.productId,
-          "Limit":"0",
-          "Offset":"1000"
+          "Limit":this.policyLimit,
+          "Offset":this.offset
    }
     let urlLink = `${this.CommonApiUrl}api/portfolio/active`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
+        sessionStorage.removeItem('loadingType');
         if(data.Result){
           if(this.productId=='5'){
             this.policyHeader =  [
@@ -614,7 +772,41 @@ export class DashboardComponent implements OnInit {
       
             ];
           }
-            this.policyData = data?.Result;
+          if (data.Result?.PortfolioList) {
+            if (data.Result?.PortfolioList.length != 0) {
+              this.totalPolicyRecords = data.Result?.Count;
+              this.policyPageCount = 10;
+              if (entryType == 'change') {
+                this.policyPageNo = 1;
+                let startCount = 1, endCount = this.policyPageCount;
+                startCount = endCount + 1;
+                  let quoteData = data.Result?.PortfolioList;
+                  this.policyData = data.Result?.PortfolioList;
+                  if (quoteData.length <= this.policyPageCount) {
+                    endCount = quoteData.length
+                  }
+                  else endCount = this.policyPageCount;
+                
+                this.startPolicyIndex = startCount; this.endPolicyIndex = endCount;
+              }
+              else {
+
+                let startCount = element.startCount, endCount = element.endCount;
+                this.policyPageCount = element.n;
+                startCount = endCount + 1;
+                  let quoteData = data.Result?.PortfolioList;
+                  this.policyData = this.policyData.concat(data.Result?.PortfolioList);
+                if (this.totalPolicyRecords <= endCount + (element.n)) {
+                  endCount = this.totalPolicyRecords
+                }
+                else endCount = endCount + (element.n);
+                this.startPolicyIndex = startCount; this.endPolicyIndex = endCount;
+              }
+            }
+            else {
+              this.policyData = []; 
+            }
+          }
             this.policySection = true;
             if(this.referralApprovedSection && this.quoteSection && this.policySection) this.setChartValue();
         }
@@ -622,7 +814,19 @@ export class DashboardComponent implements OnInit {
       (err) => { },
     );
   }
-  getReferralPendingList(){
+  onNextPolicyData(element){
+    this.policyLimit = String(Number(this.policyLimit)+1);
+    this.policyPageNo = this.policyPageNo+1;
+    this.startPolicyIndex = element.startCount;
+    this.endPolicyIndex = element.endCount
+    this.getPolicyList(element,'direct');
+  }
+  onPreviousPolicyData(element){
+    this.policyLimit = String(Number(this.policyLimit)-1);
+      this.policyPageNo = this.policyPageNo-1;
+    this.getPolicyList(element,'direct');
+  }
+  getReferralPendingList(element,entryType){
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
       appId = "1"; loginId = this.loginId;
@@ -632,6 +836,9 @@ export class DashboardComponent implements OnInit {
       appId = this.loginId;
       brokerbranchCode = null;
     }
+    let type=null;
+      if(this.rpSection=='quote'){type='Q'}
+      else type='E';
     let ReqObj = {
       "BrokerBranchCode": brokerbranchCode,
       "BranchCode":this.branchCode,
@@ -643,8 +850,9 @@ export class DashboardComponent implements OnInit {
       "SourceType":"",
       "BdmCode": this.agencyCode,
        "ProductId":this.productId,
-      "Limit":"0",
-      "Offset":"1000"
+       "Type":type,
+       "Limit":this.rpLimit,
+       "Offset":this.offset
     }
     let urlLink = `${this.CommonApiUrl}api/referralpending`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -720,12 +928,85 @@ export class DashboardComponent implements OnInit {
               { key: 'OverallPremiumFc', display: 'Premium' }
             ];
           }
-            this.referralPendingList = data?.Result;
+          sessionStorage.removeItem('loadingType');
+          if(data.Result?.CustomerDetailsRes){
+            if(data.Result?.CustomerDetailsRes.length!=0){
+              this.totalRPRecords = data.Result?.TotalCount;
+              this.rpPageCount = 10;
+              if(entryType=='change'){
+                this.rpQuotePageNo = 1;
+                this.rpEndtpageNo = 1;
+                let startCount = 1, endCount = this.rpPageCount;
+                startCount = endCount+1;
+                if(this.rpSection=='quote'){
+                  let quoteData = data.Result?.CustomerDetailsRes;
+                  this.rpQuoteData = data.Result?.CustomerDetailsRes;
+                  if(quoteData.length<=this.rpPageCount){
+                    endCount = quoteData.length
+                  }
+                  else endCount = this.rpPageCount;
+                }
+                else{
+                  this.referralPendingList = data.Result?.CustomerDetailsRes;
+                  let referralData = data.Result?.CustomerDetailsRes;
+                  if(referralData.length<=this.rpPageCount){
+                    endCount = referralData.length
+                  }
+                  else endCount =this.rpPageCount;
+                }
+                this.startRPIndex = startCount;this.endRPIndex=endCount;
+                console.log("Final Data",this.referralPendingList,this.quoteData,this.rpSection)
+              }
+              else{
+                
+                let startCount = element.startCount, endCount = element.endCount;
+                this.rpPageCount = element.n;
+                startCount = endCount+1;
+                if(this.rpSection=='quote'){
+                  let quoteData = data.Result?.CustomerDetailsRes;
+                  this.rpQuoteData = this.rpQuoteData.concat(data.Result?.CustomerDetailsRes);
+                }
+                else{
+                  this.referralPendingList = this.referralPendingList.concat(data.Result?.CustomerDetailsRes);
+                  let referralData = data.Result?.CustomerDetailsRes;
+                }
+                  if(this.totalRPRecords<=endCount+(element.n)){
+                    endCount = this.totalRPRecords
+                  }
+                  else endCount = endCount+(element.n);
+                this.startRPIndex = startCount;this.endRPIndex=endCount;
+              }
+              
+              let datas = data.Result?.CustomerDetailsRes;
+            }
+            else{
+              this.rpQuoteData=[];this.referralPendingList=[]}
+          }
+              //this.quoteData = data?.Result;
         }
       },
       (err) => { },
     );
   }
+  onNextRPData(element){
+    this.rpLimit = String(Number(this.rpLimit)+1);
+    this.rpQuotePageNo = this.rpQuotePageNo+1;
+    this.rpEndtpageNo = this.rpEndtpageNo+1;
+    this.startRPIndex = element.startCount;
+    this.endRPIndex = element.endCount
+    this.getReferralPendingList(element,'direct');
+  }
+  onPreviousRPData(element){
+    this.rpLimit = String(Number(this.rpLimit)-1);
+    if(this.rpSection=='quote'){
+      this.rpQuotePageNo = this.rpQuotePageNo-1;
+    }
+    else{
+      this.rpEndtpageNo = this.rpEndtpageNo-1;
+    }
+    this.getReferralPendingList(element,'direct');
+  }
+  setRPSection(val){this.rpSection = val;this.getReferralPendingList(null,'change')}
   getLapsedList(){
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){

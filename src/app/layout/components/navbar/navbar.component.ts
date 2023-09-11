@@ -50,8 +50,8 @@ export class NavbarComponent implements OnInit {
   insuranceid: any;
   innerWidth: number;
   showToggle: string;
-  mode: string;
-  openSidenav:boolean;
+  mode: string;customerCode:any=null;
+  openSidenav:boolean;customerName:any=null;
   private screenWidth$ = new BehaviorSubject<number>
     (window.innerWidth);
   constructor(
@@ -68,6 +68,10 @@ export class NavbarComponent implements OnInit {
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails.Result.UserType;
     this.productname = this.userDetails.Result.ProductName;
+    if(this.userType!='Issuer'){
+      this.customerCode = this.userDetails.Result.CustomerCode;
+      this.customerName = this.userDetails.Result.UserName;
+    }
     //this.setMenuSection();
   }
 

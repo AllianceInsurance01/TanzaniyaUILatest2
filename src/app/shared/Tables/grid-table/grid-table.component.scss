@@ -119,7 +119,9 @@
     border: 6px solid transparent !important;
 }
 
-
+.mdc-data-table__row .mdc-data-table__cell{
+    word-break: break-word !important;
+}
 .mdc-data-table__row:last-child .mdc-data-table__cell{
     // border-bottom-width: 1px !important;
     // border-bottom-style: solid;

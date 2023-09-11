@@ -235,7 +235,6 @@ export class ReferralRequoteComponent {
               }
             }
             else {
-              alert("Entered")
               this.quoteData = []; this.referralData = []
             }
           }

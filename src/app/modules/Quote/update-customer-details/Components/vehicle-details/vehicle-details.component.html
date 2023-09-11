@@ -129,7 +129,7 @@
                         </div>
                         <div>
                             <ng-container>
-                                <span class="spancommon">Chassis No - {{motorDetails?.Chassisnumber}}</span>
+                                <span class="spancommon">Registration No- {{motorDetails?.Registrationnumber}}</span>
                             </ng-container>
                         </div>
                     </div>
@@ -147,7 +147,7 @@
                  </div>
                  <div class="mt-2 ml-4">
                     <ng-container>
-                        <span class="spancommon">Chassis No - {{motorDetails?.Chassisnumber}}</span>
+                        <span class="spancommon">Registration No- {{motorDetails?.Registrationnumber}}</span>
                     </ng-container>
                  </div>
                </div>
@@ -194,9 +194,9 @@
                             <div class="row mt-1">
                                 <div class="col-12 col-md-3 ">
                                     <div class="input-control-container">
-                                        <label class="input-form-label">Registration No</label>
+                                        <label class="input-form-label">Chassis No</label>
                                         <div class="input-form-radio-box">
-                                            <span class="spancommon span_font_size">{{motorDetails?.Registrationnumber}}</span>
+                                            <span class="spancommon span_font_size">{{motorDetails?.Chassisnumber}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -350,8 +350,7 @@
                                         <!--style="padding-left: 40px !important;padding-right: 20px !important;"-->
                                         <label class="input-form-label">Vehicle Sum Insured ({{currencyValue}}) &nbsp;<span class="text-danger">*</span></label>
                                         <div class="input-form-box">
-                                            <input type="text" [disabled]="((endorsementSection && !enableVehicleSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="vehicleSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="CommaFormatted()"
-                                            (change)="vehicleSIChange()" class="input-form-control without-icon">
+                                            <input type="text" digitOnly [disabled]="((endorsementSection && !enableVehicleSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="vehicleSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="CommaFormatted()" class="input-form-control without-icon">
                                         </div>
                                     </div>
                                 </div>
@@ -360,8 +359,7 @@
                                         <!--style="padding-left: 20px !important;padding-right: 20px !important;"-->
                                         <label class="input-form-label">Accessories Sum Insured ({{currencyValue}})</label>
                                         <div class="input-form-box">
-                                            <input type="text" digitOnly [disabled]="((endorsementSection && !enableAccessoriesSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="accessoriesSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="accessoriesCommaFormatted()"
-                                            (change)="accessoriesSIChange()" class="input-form-control without-icon">
+                                            <input type="text" digitOnly [disabled]="((endorsementSection && !enableAccessoriesSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="accessoriesSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="accessoriesCommaFormatted()" class="input-form-control without-icon">
                                         </div>
                                     </div>
                                 </div>
@@ -370,8 +368,7 @@
                                         <!--style="padding-left: 40px !important;padding-right: 40px !important;"!-->
                                         <label class="input-form-label">WindShield Sum Insured ({{currencyValue}})</label>
                                         <div class="input-form-box">
-                                            <input type="text" digitOnly [disabled]="((endorsementSection && !enableWindshieldSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="windShieldSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="WindSICommaFormatted()"
-                                            (change)="onWindSIValueChange()" class="input-form-control without-icon">
+                                            <input type="text" digitOnly [disabled]="((endorsementSection && !enableWindshieldSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="windShieldSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="WindSICommaFormatted()" class="input-form-control without-icon">
                                         </div>
                                     </div>
                                 </div>
@@ -382,8 +379,7 @@
                                         <!--style="padding-left: 40px !important;padding-right: 20px !important;"-->
                                         <label class="input-form-label">Extended TPPD Sum Insured ({{currencyValue}})</label>
                                         <div class="input-form-box">
-                                            <input type="text" digitOnly [disabled]="((endorsementSection && !enableTppdSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="tppdSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="TppdCommaFormatted()"
-                                            (change)="TppdSIChange()" class="input-form-control without-icon">
+                                            <input type="text" digitOnly [disabled]="((endorsementSection && !enableTppdSI) && (endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="tppdSI" autocomplete="off" (keydown)="onVehicleValueChange($event)" (keyup)="TppdCommaFormatted()" class="input-form-control without-icon">
                                         </div>
                                     </div>
                                 </div>
@@ -564,7 +560,7 @@
                         <button class="custom-btn btn-5 mx-2" *ngIf="currentIndex!=1 || finalSection" matRipple (click)="onPreviousVehicle()"><i class="fa fa-arrow-left"></i>&nbsp;Previous</button>
                         <ng-container *ngIf="currentIndex<totalCount || currentIndex==totalCount">&nbsp;<span> {{currentIndex}} &nbsp;/&nbsp; {{totalCount}} </span>&nbsp;</ng-container>
                         <button class="custom-btn btn-6  maan-button-data mx-2" *ngIf="currentIndex<totalCount" matRipple (click)="onFormSubmit('direct')">Next <i class="fa fa-arrow-right"></i></button>
-                        <button class="custom-btn btn-6  maan-button-data mx-2" *ngIf="currentIndex==totalCount && !finalSection" matRipple (click)="onFormSubmit('direct')">Submit</button>
+                        <button class="custom-btn btn-6  maan-button-data mx-2" *ngIf="currentIndex==totalCount && !finalSection" matRipple (click)="onFormSubmit('proceedSave')">Submit</button>
                     </div>
                 </div>
             </div>

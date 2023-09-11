@@ -264,7 +264,6 @@ export class PoliciesComponent implements OnInit {
               }
             }
             else {
-              alert("Entered")
               this.quoteData = []; 
             }
           }

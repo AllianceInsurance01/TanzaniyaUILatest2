@@ -740,18 +740,22 @@ export class VehicleDetailsComponent implements OnInit {
     }
    
     if(type=='edit'){
-      this.claimsYN = this.vehicleDetails?.NcdYn;
-      this.gpsYn = this.vehicleDetails?.Gpstrackinginstalled;
+      if(this.vehicleDetails?.NcdYn) this.claimsYN = this.vehicleDetails?.NcdYn;
+      else this.claimsYN = 'N';
+      if(this.vehicleDetails?.Gpstrackinginstalled) this.gpsYn = this.vehicleDetails?.Gpstrackinginstalled;
+      else this.gpsYn = 'N';
       this.vehicleSI = String(this.vehicleDetails?.SumInsured);
-      this.vehicleSIChange();
+      this.CommaFormatted();
       this.windShieldSI = String(this.vehicleDetails?.WindScreenSumInsured);
-      this.onWindSIValueChange();
+      this.WindSICommaFormatted();
       this.tppdSI = String(this.vehicleDetails?.TppdIncreaeLimit);
-      this.TppdSIChange();
+      this.TppdCommaFormatted();
       this.accessoriesSI = String(this.vehicleDetails?.AcccessoriesSumInsured);
-      this.accessoriesSIChange();
+      this.accessoriesCommaFormatted();
       this.getVehicleDetails(this.vehicleDetails?.Chassisnumber);
     }
+    
+
   }
   onSearchVehicle(){
     this.customerData2 = [];
@@ -791,6 +795,7 @@ export class VehicleDetailsComponent implements OnInit {
             //     entry.Message,
             //     config);
             // }
+            console.log("Error Iterate",data.ErrorMessage)
             //this.loginService.errorService(data.ErrorMessage);
           }
       }
@@ -888,8 +893,6 @@ export class VehicleDetailsComponent implements OnInit {
             this.totalCount = this.vehicleDetailsList.length;
             console.log("Motor Details",this.motorDetails);
             this.setVehicleValues('direct');
-            //this.currencyValue = this.vehicleDetailsList[this.currentIndex-1].Currency;
-            //this.onCurrencyChange();
             $('#slider_0').removeClass('active w3-animate-left');
             $('#slider_0').removeClass('active w3-animate-right');
             $('#slider_0').addClass('active w3-animate-right');
@@ -898,14 +901,6 @@ export class VehicleDetailsComponent implements OnInit {
     }
     else{
       let createdBy="";
-    
-      // let quoteStatus = sessionStorage.getItem('QuoteStatus');
-      // if(quoteStatus=='AdminRP'){
-      //     createdBy = this.vehicleDetailsList[0].CreatedBy;
-      // }
-      // else{
-      //   createdBy = this.loginId;
-      // }
       let startDate = "",endDate = "",vehicleSI="",accSI="",windSI="",tppSI="";
       if(this.vehicleSI==undefined) vehicleSI = null;
       else if(this.vehicleSI.includes(',')){ vehicleSI = this.vehicleSI.replace(/,/g, '') }
@@ -958,18 +953,6 @@ export class VehicleDetailsComponent implements OnInit {
         else endDate = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
       }
       let quoteStatus = sessionStorage.getItem('QuoteStatus');
-      // if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
-      //     createdBy = this.vehicleDetailsList[0].CreatedBy;
-      // }
-      // else{
-      //   createdBy = this.loginId;
-      // }
-      // if(this.userType=='Broker'){
-      //   this.brokerCode = this.agencyCode;
-      //   createdBy = this.loginId;
-        
-      //   this.applicationId = "01";
-      // }
       this.subuserType = sessionStorage.getItem('typeValue');
       console.log("AcExecutive",this.acExecutiveId,this.vehicleDetails,this.sourceType,this.bdmCode,this.brokerCode,this.customerCode);
       
@@ -993,11 +976,22 @@ export class VehicleDetailsComponent implements OnInit {
         }
       }
       if(this.userType!='Broker' && this.userType!='User'){
-        this.sourceType = this.updateComponent.sourceType;
-        this.bdmCode = this.updateComponent.brokerCode;
-        this.brokerCode = this.updateComponent.brokerCode;
-        brokerbranchCode =  this.updateComponent.brokerBranchCode;
-        this.customerCode = this.updateComponent.CustomerCode;
+        console.log("Vehicle Details",this.vehicleDetails,this.updateComponent.sourceType)
+        if(this.updateComponent.sourceType==null || this.updateComponent.sourceType==undefined){
+          
+          this.sourceType = this.vehicleDetails.SourceType;
+          this.bdmCode = this.vehicleDetails.BrokerCode;
+          this.brokerCode = this.vehicleDetails.BrokerCode;
+          brokerbranchCode =  this.vehicleDetails.BrokerBranchCode;
+          this.customerCode = this.vehicleDetails.CustomerCode;
+        }
+        else{
+          this.sourceType = this.updateComponent.sourceType;
+          this.bdmCode = this.updateComponent.brokerCode;
+          this.brokerCode = this.updateComponent.brokerCode;
+          brokerbranchCode =  this.updateComponent.brokerBranchCode;
+          this.customerCode = this.updateComponent.CustomerCode;
+        }
         }
         else {
           this.sourceType = this.subuserType;
@@ -1136,24 +1130,10 @@ export class VehicleDetailsComponent implements OnInit {
           let res:any = data;
           if(data.ErrorMessage.length!=0){
             if(res.ErrorMessage){
-              // for(let entry of res.ErrorMessage){
-              //   let type: NbComponentStatus = 'danger';
-              //   const config = {
-              //     status: type,
-              //     destroyByClick: true,
-              //     duration: 4000,
-              //     hasIcon: true,
-              //     position: NbGlobalPhysicalPosition.TOP_RIGHT,
-              //     preventDuplicates: false,
-              //   };
-              //   this.toastrService.show(
-              //     entry.Field,
-              //     entry.Message,
-              //     config);
-              // }
             }
           }
           else{
+            sessionStorage.setItem('loadingType','load');
             this.requestReferenceNo = data?.Result?.RequestReferenceNo;
              sessionStorage.setItem('quoteReferenceNo',data?.Result?.RequestReferenceNo);
             let entry = this.vehicleDetailsList[this.currentIndex-1];
@@ -1212,44 +1192,18 @@ export class VehicleDetailsComponent implements OnInit {
                       "VehicleId": this.vehicleId
                     }
                     uwList.push(entry);
-                  // if(ques.QuestionType == '01'){
-                  //   ques['CreatedBy'] = createdBy;
-                  //   ques['RequestReferenceNo'] = this.requestReferenceNo;
-                  //   ques['UpdatedBy'] = this.loginId;
-                  //   ques["VehicleId"] = this.vehicleId
-                  //   let entry = new Object();
-                  //   entry = ques;
-                  //   delete entry['Options'];
-                  //   uwList.push(entry);
-                  // } 
-                  // else if(ques.Value!=""){
-                  //   ques['CreatedBy'] = createdBy;
-                  //   ques['RequestReferenceNo'] = this.requestReferenceNo;
-                  //   ques['UpdatedBy'] = this.loginId;
-                  //   ques["VehicleId"] = this.vehicleId
-                  //   let entry = new Object();
-                  //   entry = ques;
-                  //   delete entry['Options'];
-                  //   uwList.push(entry);
-                  // } 
                   j+=1;
                   if(j==this.uwQuestionList.length) this.onSaveUWQues(uwList,entry,type,this.currentIndex-1);
                 }
               }
               else{
                 
-                this.getCalculationDetails(entry,type,this.currentIndex-1,'direct');
+                this.getCalculationDetails(entry,type,this.currentIndex-1,'proceedSave');
               }
             }
-            else this.getCalculationDetails(entry,type,null,'direct');
+            else this.getCalculationDetails(entry,type,null,'proceedSave');
             
           }
-  
-            // sessionStorage.setItem('editVehicleId',this.vehicleId);
-            // sessionStorage.removeItem('vehicleDetails');
-            // sessionStorage.setItem('vehChassisNo',this.vehicleDetails?.Chassisnumber);
-  
-            // this.getCalculationDetails(data?.Result);
         },
         (err) => { },
       );
@@ -1378,6 +1332,7 @@ export class VehicleDetailsComponent implements OnInit {
       // this.toastrService.show(
       //   'Chassis Number / Registration Number Already Available',
       //   'Duplicate Entry',
+        
       //   config);
     }
     this.searchBy = ""; this.searchValue = null;this.selectedVehicle=null;
@@ -1391,54 +1346,36 @@ export class VehicleDetailsComponent implements OnInit {
     }
   }
   CommaFormatted() {
+
     // format number
     if (this.vehicleSI) {
-      let value = this.vehicleSI.replace(/,/g, ''); // Remove existing commas
-      value = value.replace(/[^0-9.]/g, ''); // Remove non-numeric characters except for decimal point
-      value = isNaN(value) ? 0 : value; // Set to 0 if NaN
-      // Format the number with 2 decimal places and commas
-      this.vehicleSI = value;
-    }
-  }
-  vehicleSIChange(){
-    if(this.vehicleSI)  this.vehicleSI = parseFloat(this.vehicleSI).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
-  }
+      this.vehicleSI = this.vehicleSI.replace(/[^0-9.]|(?<=\..*)\./g, "")
+       .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }}
     TppdCommaFormatted() {
+
       // format number
       if (this.tppdSI) {
-        let value = this.tppdSI.replace(/,/g, ''); // Remove existing commas
-        value = value.replace(/[^0-9.]/g, ''); // Remove non-numeric characters except for decimal point
-        value = isNaN(value) ? 0 : value; // Set to 0 if NaN
-        // Format the number with 2 decimal places and commas
-        this.tppdSI = value;
-      }
-    }
-    TppdSIChange(){
-      if(this.tppdSI)  this.tppdSI = parseFloat(this.tppdSI).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
-    }
+       this.tppdSI = this.tppdSI.replace(/[^0-9.]|(?<=\..*)\./g, "")
+       .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }}
     accessoriesCommaFormatted() {
+
+      // format number
       if (this.accessoriesSI) {
-        let value = this.accessoriesSI.replace(/,/g, ''); // Remove existing commas
-        value = value.replace(/[^0-9.]/g, ''); // Remove non-numeric characters except for decimal point
-        value = isNaN(value) ? 0 : value; // Set to 0 if NaN
-        // Format the number with 2 decimal places and commas
-        this.accessoriesSI = value;
+       this.accessoriesSI = this.accessoriesSI.replace(/[^0-9.]|(?<=\..*)/g, "")
+       .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
-    }
-    accessoriesSIChange(){
-      if(this.accessoriesSI)  this.accessoriesSI = parseFloat(this.accessoriesSI).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
     }
     WindSICommaFormatted() {
+      // format number
       if (this.windShieldSI) {
-        let value = this.windShieldSI.replace(/,/g, ''); // Remove existing comma
-        value = value.replace(/[^0-9.]/g, ''); // Remove non-numeric characters except for decimal point
-        value = isNaN(value) ? 0 : value; // Set to 0 if NaN
-        // Format the number with 2 decimal places and commas
-        this.windShieldSI = value;
+       this.windShieldSI = this.windShieldSI.replace(/[^0-9.]|(?<=\..*)\./g, "")
+       .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
     }
-  onWindSIValueChange(){
-    if(this.windShieldSI)  this.windShieldSI = parseFloat(this.windShieldSI).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+  onWindSIValueChange(event){
+    this.windShieldSI = event;
   }
   getCalculationDetails(vehicleDetails,type,index,returnType){
     let createdBy="";
@@ -1570,21 +1507,21 @@ export class VehicleDetailsComponent implements OnInit {
     return rowData['HiddenYN']=='Y';
   }
   showUWQUestion(rowData,optionList,type){
-    if(optionList.length!=0 && rowData!=undefined){
-      for(let option of optionList){
-        if(option.DependentYn!=null && option.DependentYn=='Y'){
-            if(option.DependentUnderwriterId==rowData.DependentUnderwriterId){
-              let ques = this.uwQuestionList.find(ele=>ele.UwQuestionId==option.DependentUnderwriterId)
-              ques['HiddenYN'] = 'N';
-              if(type=='change') ques['Value']=null;
+        if(optionList.length!=0 && rowData!=undefined){
+          for(let option of optionList){
+            if(option.DependentYn!=null && option.DependentYn=='Y'){
+                if(option.DependentUnderwriterId==rowData.DependentUnderwriterId){
+                  let ques = this.uwQuestionList.find(ele=>ele.UwQuestionId==option.DependentUnderwriterId)
+                  ques['HiddenYN'] = 'N';
+                  if(type=='change') ques['Value']=null;
+                }
+                else{
+                  let ques = this.uwQuestionList.find(ele=>ele.UwQuestionId==option.DependentUnderwriterId)
+                  ques['HiddenYN'] = 'Y';
+                }
             }
-            else{
-              let ques = this.uwQuestionList.find(ele=>ele.UwQuestionId==option.DependentUnderwriterId)
-              ques['HiddenYN'] = 'Y';
-            }
+          }
         }
-      }
-    }
   }
   getUWDetails() {
     // let branchCode = '';
@@ -1922,11 +1859,23 @@ export class VehicleDetailsComponent implements OnInit {
                 }
               }
               if(this.userType!='Broker' && this.userType!='User'){
-                this.sourceType = this.updateComponent.sourceType;
-                this.bdmCode = this.updateComponent.brokerCode;
-                this.brokerCode = this.updateComponent.brokerCode;
-                brokerbranchCode =  this.updateComponent.brokerBranchCode;
-                this.customerCode = this.updateComponent.CustomerCode;
+                console.log("Vehicle Details",this.vehicleDetails,this.updateComponent.sourceType)
+                if(this.updateComponent.sourceType==null || this.updateComponent.sourceType==undefined){
+                  
+                  this.sourceType = this.vehicleDetails.SourceType;
+                  this.bdmCode = this.vehicleDetails.BrokerCode;
+                  this.brokerCode = this.vehicleDetails.BrokerCode;
+                  brokerbranchCode =  this.vehicleDetails.BrokerBranchCode;
+                  this.customerCode = this.vehicleDetails.CustomerCode;
+                }
+                else{
+                  this.sourceType = this.updateComponent.sourceType;
+                  this.bdmCode = this.updateComponent.brokerCode;
+                  this.brokerCode = this.updateComponent.brokerCode;
+                  brokerbranchCode =  this.updateComponent.brokerBranchCode;
+                  this.customerCode = this.updateComponent.CustomerCode;
+                }
+                
               }
               else {
                 this.sourceType = this.subuserType;

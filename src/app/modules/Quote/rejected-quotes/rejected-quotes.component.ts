@@ -122,22 +122,22 @@ export class RejectedQuotesComponent implements OnInit {
           "Limit":this.limit,
           "Offset":60
    }
-    let urlLink = `http://192.168.1.8:8086/api/rejectedquotedetailsgrid`;
+    let urlLink = `${this.CommonApiUrl}api/rejectedquotedetails`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         sessionStorage.removeItem('loadingType');
         console.log(data);
         if(data.Result){
-          if (data.Result?.Record) {
-            if (data.Result?.Record.length != 0) {
-              this.totalQuoteRecords = data.Result?.Count;
+          if (data.Result?.CustomerDetails) {
+            if (data.Result?.CustomerDetails.length != 0) {
+              this.totalQuoteRecords = data.Result?.TotalCount;
               this.pageCount = 10;
               if (entryType == 'change') {
                 this.quotePageNo = 1;
                 let startCount = 1, endCount = this.pageCount;
                 startCount = endCount + 1;
-                  let quoteData = data.Result?.Record;
-                  this.quoteData = data.Result?.Record;
+                  let quoteData = data.Result?.CustomerDetails;
+                  this.quoteData = data.Result?.CustomerDetails;
                   if (quoteData.length <= this.pageCount) {
                     endCount = quoteData.length
                   }
@@ -150,8 +150,8 @@ export class RejectedQuotesComponent implements OnInit {
                 let startCount = element.startCount, endCount = element.endCount;
                 this.pageCount = element.n;
                 startCount = endCount + 1;
-                  let quoteData = data.Result?.Record;
-                  this.quoteData = this.quoteData.concat(data.Result?.Record);
+                  let quoteData = data.Result?.CustomerDetails;
+                  this.quoteData = this.quoteData.concat(data.Result?.CustomerDetails);
                 if (this.totalQuoteRecords <= endCount + (element.n)) {
                   endCount = this.totalQuoteRecords
                 }
@@ -160,7 +160,6 @@ export class RejectedQuotesComponent implements OnInit {
               }
             }
             else {
-              alert("Entered")
               this.quoteData = []; 
             }
           }
