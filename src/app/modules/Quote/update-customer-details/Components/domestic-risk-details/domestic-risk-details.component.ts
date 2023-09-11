@@ -25,6 +25,7 @@ import { Fedilitis } from '../models/additionalDetails/Fedilitiys';
 import { ElectronicEquip } from '../models/additionalDetails/Electronicequip';
 import { Accessories } from '../models/additionalDetails/Accsessories';
 import { Accessorieswh } from '../models/additionalDetails/Accsessorieswh';
+import { ConstantPool } from '@angular/compiler';
 
 export class ForceLengthValidators {
   static maxLength(maxLength: number) {
@@ -276,6 +277,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   CyberSNo:any;
   fields: any[] = [];
   field:any[]=[];
+  fireData:any;
   fieldsContent:any []= [];
   PAFields:any[]=[];
   fieldss:any[]=[];
@@ -332,49 +334,11 @@ export class DomesticRiskDetailsComponent implements OnInit {
       this.buildingDetailsSection=false;
       }
     else if(this.productId!='43'){
-      this.buildingDetailsSection = true;
-      let fireData = new LocationDetails();
-      let entry = [];
-      this.field = [
-        {
-              fieldGroupClassName: 'row buildingsuminsureds',
-              fieldGroup: [
-                    {
-                      type: 'commaSeparator',
-                      key: 'BuildingSumInsureds',
-                      className: 'col-sm-5 offset-1',
-                      props: {
-                        label: `Sum Insured`,
-                      },
-                      validators: {
-                        validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                      },
-                      hooks: {
-                        onInit: (field: FormlyFieldConfig) => {
-                          field.formControl.valueChanges.subscribe(() => {
-                            this.individualCommaFormatted('building');
-                          });
-                        },
-                      },
-                      expressions: {
-                      },
-                    },
-                 
-              ]
-        }
-      ];
-      let items = this.item?.find((Code) => Code == '1' || Code=='40');
-
-      if(items){
-        this.fieldss = fireData?.fields.concat(this.field);
-      }
-      else{
-        this.fieldss = fireData?.fields
-      }
-     
-      this.productItem = new ProductData();
-      this.formSection = true; this.viewSection = false;
-
+      this.buildingDetailsSection=true;
+    
+      console.log('BBBBBBBBBBBBBBBBBBBB',this.buildingDetailsSection);
+      // let items = this.item?.find((Code) => Code == '1' || Code=='40');
+      // console.log('JJJJJJJJJJJJJJJJJJ',items);
     }
     if(this.productId=='43'){
       this.newten = true;
@@ -496,13 +460,54 @@ export class DomesticRiskDetailsComponent implements OnInit {
     }
     
     if(this.item){
+    console.log('KKKKKKKKKKKKKKKKKKKKKK',this.buildingDetailsSection,this.item);
       let items = this.item.find((Code) => Code == '1' || Code=='40');
       if (items) {
         this.sumInsured=true;
+        let fireData = new LocationDetails();
+        let entry = [];
+        this.field = [
+          {
+                fieldGroupClassName: 'row buildingsuminsureds',
+                fieldGroup: [
+                      {
+                        type: 'commaSeparator',
+                        key: 'BuildingSumInsureds',
+                        className: 'col-sm-5 offset-lg-1 offset-md-1',
+                        props: {
+                          label: `Sum Insured`,
+                        },
+                        validators: {
+                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                        },
+                        hooks: {
+                          onInit: (field: FormlyFieldConfig) => {
+                            field.formControl.valueChanges.subscribe(() => {
+                              this.individualCommaFormatted('building');
+                            });
+                          },
+                        },
+                        expressions: {
+                        },
+                      },
+                   
+                ]
+          }
+        ];
+        this.fieldss = fireData?.fields.concat(this.field);  
+        this.productItem = new ProductData();
+        this.formSection = true; this.viewSection = false;
+        console.log('GGGGGGGGGGGGGGGG')    
       }
       else {
         this.sumInsured =false;
+        let fireData = new LocationDetails();
+        this.fieldss = fireData?.fields;  
+        console.log('dddddddddddddddddd')
+        this.productItem = new ProductData();
+        this.formSection = true; this.viewSection = false;      
       }
+    
       if(this.productId!='19'){
         let first = this.item.find((Code) => Code == '47' || Code=='40');
         if (first && this.productId!='6') {
@@ -718,7 +723,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
        } 
        else this.eight = false;
        const nine = this.item.find((Code) => Code == '41');
-        if (nine && this.productId!='19' && this.productId!='16') {
+       console.log('HHHHHHHHHHHH',nine);
+        if (nine && this.productId!='16') {
           this.nine = true;
           let fireData = new Machineryss();
           let entry = [];
@@ -920,6 +926,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
           let homeObj = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
           if(this.item==undefined || this.item == null){
               this.item = this.sumInsuredDetails?.ProductSuminsuredDetails?.SectionId;
+              console.log('GGGGGGGGGGGGGGGG',this.item);
               this.setTabSections();
               
           }
@@ -934,7 +941,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
           else if(this.productId=='26'){
             this.getallriskListsplant();
           }
-          else if(this.productId=='39'){
+          else if(this.productId=='39' || this.productId=='19'){
             this.getallriskMachinery();
           }
           else if(this.productId=='42'){
@@ -961,6 +968,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
             let buildingSI = this.sumInsuredDetails.ProductSuminsuredDetails.BuildingSuminsured;
             if(buildingSI!='' && buildingSI!=null && buildingSI!=undefined){
               this.actualBuildingSI = buildingSI;
+              console.log('LLLLLLLLLL',this.actualBuildingSI);
             }
             else this.actualBuildingSI = 0;
             let contentSI = this.sumInsuredDetails.ProductSuminsuredDetails.ContentSuminsured;
@@ -971,6 +979,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
             let allRiskSI = this.sumInsuredDetails.ProductSuminsuredDetails.AllriskSumInsured;
             if(allRiskSI!='' && allRiskSI!=null && allRiskSI!=undefined){
               this.actualAllRiskSI = allRiskSI;
+              console.log('KKKKKKKKKKK',this.actualAllRiskSI);
             }
             else this.actualAllRiskSI = 0;
 
@@ -1804,7 +1813,7 @@ onFidelitySave(){
               if (i == this.fidelityOccupationList.length - 1) {
                 this.fieldFEFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].props.options = this.fidelityOccupationList;
               }
-              console.log('JJJJJJJJJJJJJJJJJJJ',this.fieldFEFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].props.options)
+              // console.log('JJJJJJJJJJJJJJJJJJJ',this.fieldFEFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].props.options)
             }
           }
           else 
@@ -1821,7 +1830,7 @@ onFidelitySave(){
                 if(this.seven){
                   this.fieldsEmpFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].props.options = this.occupationList;
                 }
-                console.log('JJJJJJJJJJJJJJJJJJJ',this.fieldFEFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[7].props.options);
+                // console.log('JJJJJJJJJJJJJJJJJJJ',this.fieldFEFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[7].props.options);
                 //this.fieldsEmpFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[7].props.options = this.employeeOccupationList;
               }
             }
@@ -1871,6 +1880,14 @@ onFidelitySave(){
         console.log(data);
         if(data.Result){
             this.allriskList = data.Result;
+            for (let i = 0; i < this.allriskList.length; i++) {
+              this.allriskList[i].label = this.allriskList[i]['CodeDesc'];
+              this.allriskList[i].value = this.allriskList[i]['Code'];
+              delete this.allriskList[i].CodeDesc;
+              if (i == this.allriskList.length - 1) {
+                this.fieldsRisk[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].props.options = this.allriskList;
+              }
+            }
             //this.getOccupationList();
 
         }
@@ -2040,9 +2057,7 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
                 this.fieldsMachinery[0].fieldGroup[0].fieldGroup[0].fieldGroup[3].props.options = this.allriskList;
               }
             }
-
-            //this.getOccupationList();
-
+            //this.getOccupationList()
         }
       },
       (err) => { },
