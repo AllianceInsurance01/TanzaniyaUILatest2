@@ -517,6 +517,7 @@ export class NewBrokerDetailsComponent implements OnInit {
       (data: any) => {
         console.log(data);
         if (data.Result) {
+          console.log('HHHHHHHHHHHHHHH',data.Result);
           // let type: NbComponentStatus = 'success';
           // const config = {
           //   status: type,
@@ -530,6 +531,7 @@ export class NewBrokerDetailsComponent implements OnInit {
           //   'Broker Details Inserted/Updated Successfully',
           //   'Broker Details',
           //   config);
+          sessionStorage.setItem('editBroker',this.brokerLoginId);
           sessionStorage.setItem('editBrokerAgencyCode', data.Result.AgencyCode);
           let entry = {
             "loginId": this.brokerLoginId,

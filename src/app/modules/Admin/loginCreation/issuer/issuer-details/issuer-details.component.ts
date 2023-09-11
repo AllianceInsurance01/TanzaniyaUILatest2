@@ -423,6 +423,7 @@ export class IssuerDetailsComponent implements OnInit {
         (data: any) => {
           console.log(data);
           if(data.Result){
+            console.log('FFFFFFFFFFFF',data.Result);
             // let type: NbComponentStatus = 'success';
             // const config = {
             //   status: type,
@@ -436,6 +437,7 @@ export class IssuerDetailsComponent implements OnInit {
             //   'Insurance Employee Details Inserted/Updated Successfully',
             //   'Insurance Employee Details',
             //   config);
+            sessionStorage.setItem('editIssuerLoginId',this.issuerLoginId);
               let entry = {
                 "issuerType":this.issuerType,
                 "loginId":this.issuerLoginId,

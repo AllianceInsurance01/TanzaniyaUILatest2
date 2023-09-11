@@ -77,7 +77,14 @@ export class IssuerListComponent implements OnInit {
                 config: {
                   isEdit: true,
                 },
-              }
+              },
+            {
+              key: 'configure',
+              display: 'Configure',
+              config: {
+                isConfigure: true,
+              },
+            },
             ];
             this.issuerData = data.Result;
           }
@@ -136,4 +143,26 @@ export class IssuerListComponent implements OnInit {
     );
     //console.log("Status Changed",event)
 }
+onConfigure(rowData:any){
+  console.log('OOOOOOOOOOOO',rowData);
+  sessionStorage.setItem('issuerInsuranceId',rowData.InsuranceId);
+  sessionStorage.setItem('editIssuerLoginId',rowData.LoginId);
+  sessionStorage.setItem('ReferralId',rowData.ReferralIds);
+  let entry = {
+    "issuerType":rowData.SubUserType,
+    "loginId":rowData.LoginId,
+    "InsuranceId": rowData.InsuranceId,
+    "IssuerType":rowData.SubUserType
+  }
+  sessionStorage.setItem('issuerTypeDetails',JSON.stringify(entry));
+  if(rowData.SubUserType=='high' || rowData.SubUserType == 'both'){
+    this.router.navigate(['/Admin/issuerList/productReferralConfguration']);
+  }
+  else{
+    this.router.navigate(['/Admin/issuerList/issuerMenuCongifuration']);
+  }
+  
+  //this.router.navigate(['/Admin/issuerList/issuerMenuCongifuration']);
+}
+
 }
