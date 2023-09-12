@@ -1108,6 +1108,9 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     else{
       this.coverDetails.DiscountCoverId = null;
     }
+    if(this.coverageTypeValue=='B'){
+      this.coverDetails.IsSelectedYn = 'D';
+    }
     if(this.coverageTypeValue=='A'){this.excessDesc="None"}
     let ReqObj = {
             "CoverId": this.coverDetails.CoverId,
