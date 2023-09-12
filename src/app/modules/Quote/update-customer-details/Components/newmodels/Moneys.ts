@@ -67,9 +67,9 @@ export class Moneys{
                               },
                               {
                                 type: 'commaSeparator',
-                                key: 'MoneyInSafeBusiness',
+                                key: 'MoneySafeLimit',
                                 templateOptions: {
-                                  disabled: this.checkDisable('MoneyInSafeBusiness')
+                                  disabled: this.checkDisable('MoneySafeLimit')
                                 },
                                 validators: {
                                   validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -110,9 +110,9 @@ export class Moneys{
                               },
                               {
                                 type: 'commaSeparator',
-                                key: 'MoneyOutSafeBusiness',
+                                key: 'MoneyOutofSafe',
                                 templateOptions: {
-                                  disabled: this.checkDisable('MoneyOutSafeBusiness')
+                                  disabled: this.checkDisable('MoneyOutofSafe')
                                 },
                                 validators: {
                                   validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -153,9 +153,9 @@ export class Moneys{
                               },
                               {
                                 type: 'commaSeparator',
-                                key: 'MoneyInPremises',
+                                key: 'MoneyDirectorResidence',
                                 templateOptions: {
-                                  disabled: this.checkDisable('MoneyInPremises')
+                                  disabled: this.checkDisable('MoneyDirectorResidence')
                                 },
                                 validators: {
                                   validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -196,9 +196,9 @@ export class Moneys{
                               },
                               {
                                 type: 'commaSeparator',
-                                key: 'CashInTransit',
+                                key: 'MoneyMajorLoss',
                                 templateOptions: {
-                                  disabled: this.checkDisable('CashInTransit')
+                                  disabled: this.checkDisable('MoneyMajorLoss')
                                 },
                                 validators: {
                                   validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -239,9 +239,9 @@ export class Moneys{
                               },
                               {
                                 type: 'commaSeparator',
-                                key: 'CashInHandEmployees',
+                                key: 'MoneyCollector',
                                 templateOptions: {
-                                  disabled: this.checkDisable('CashInHandEmployees')
+                                  disabled: this.checkDisable('MoneyCollector')
                                 },
                                 validators: {
                                   validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -325,9 +325,9 @@ export class Moneys{
                               },
                               {
                                 type: 'commaSeparator',
-                                key: 'MoneyAnnualcarrySuminsured',
+                                key: 'MoneyAnnualEstimate',
                                 templateOptions: {
-                                  disabled: this.checkDisable('MoneyAnnualcarrySuminsured')
+                                  disabled: this.checkDisable('MoneyAnnualEstimate')
                                 },
                                 validators: {
                                   validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]

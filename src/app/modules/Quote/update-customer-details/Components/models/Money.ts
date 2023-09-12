@@ -40,49 +40,49 @@ export class Money{
                     },
                     {
                       fieldGroup:[
-                            {
-                              fieldGroup:[
-                                {
-                                  className:'customCheckbox',
-                                  key: 'MoneyInSafeBusinessSIYN',
-                                  type: 'checkbox',
-                                  templateOptions: {
-                                    type: 'checkbox',
-                                    label: '',
-                                    required: false,
-                                    disabled: this.checkDisable('SumInsured'),
-                                    name: 'MoneyInSafeBusinessSIYN',
-                                    options: [],
-                                  }
-                                },
-                                {
-                                  className: "mt-1",
-                                  type: 'display',
+                            // {
+                            //   fieldGroup:[
+                            //     {
+                            //       className:'customCheckbox',
+                            //       key: 'MoneyInSafeBusinessSIYN',
+                            //       type: 'checkbox',
+                            //       templateOptions: {
+                            //         type: 'checkbox',
+                            //         label: '',
+                            //         required: false,
+                            //         disabled: this.checkDisable('SumInsured'),
+                            //         name: 'MoneyInSafeBusinessSIYN',
+                            //         options: [],
+                            //       }
+                            //     },
+                            //     {
+                            //       className: "mt-1",
+                            //       type: 'display',
                 
-                                  templateOptions: {
-                                    label: `Safe During Working Hours`,
-                                    required: false,
+                            //       templateOptions: {
+                            //         label: `Safe During Working Hours`,
+                            //         required: false,
                 
-                                  },
-                                },
-                                {
-                                  type: 'commaSeparator',
-                                  key: 'MoneyInSafeBusiness',
-                                  templateOptions: {
-                                    disabled: this.checkDisable('SumInsured')
-                                  },
-                                  validators: {
-                                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                                  },
-                                  hooks: {
-                                  },
+                            //       },
+                            //     },
+                            //     {
+                            //       type: 'commaSeparator',
+                            //       key: 'MoneyInSafeBusiness',
+                            //       templateOptions: {
+                            //         disabled: this.checkDisable('SumInsured')
+                            //       },
+                            //       validators: {
+                            //         validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                            //       },
+                            //       hooks: {
+                            //       },
                   
-                                  expressions: {
-                                    disabled: '!model.MoneyInSafeBusinessSIYN'
-                                  },
-                                }
-                              ]
-                            },
+                            //       expressions: {
+                            //         disabled: '!model.MoneyInSafeBusinessSIYN'
+                            //       },
+                            //     }
+                            //   ]
+                            // },
                             {
                               fieldGroup:[
                                 {
@@ -110,7 +110,7 @@ export class Money{
                                 },
                                 {
                                   type: 'commaSeparator',
-                                  key: 'MoneyOutSafeBusiness',
+                                  key: 'MoneyOutofSafe',
                                   templateOptions: {
                                     disabled: this.checkDisable('SumInsured')
                                   },
@@ -153,7 +153,7 @@ export class Money{
                                 },
                                 {
                                   type: 'commaSeparator',
-                                  key: 'MoneyInPremises',
+                                  key: 'MoneyDirectorResidence',
                                   templateOptions: {
                                     disabled: this.checkDisable('SumInsured')
                                   },
@@ -196,7 +196,7 @@ export class Money{
                                 },
                                 {
                                   type: 'commaSeparator',
-                                  key: 'CashInTransit',
+                                  key: 'MoneyMajorLoss',
                                   templateOptions: {
                                     disabled: this.checkDisable('SumInsured')
                                   },
@@ -239,7 +239,7 @@ export class Money{
                                 },
                                 {
                                   type: 'commaSeparator',
-                                  key: 'CashInHandEmployees',
+                                  key: 'MoneyCollector',
                                   templateOptions: {
                                     disabled: this.checkDisable('SumInsured')
                                   },
@@ -259,14 +259,14 @@ export class Money{
                               fieldGroup:[
                                 {
                                   className:'customCheckbox',
-                                  key: 'CashInSafeSIYN',
+                                  key: 'MoneyInSafeBusinessSIYN',
                                   type: 'checkbox',
                                   templateOptions: {
                                     type: 'checkbox',
                                     label: '',
                                     required: false,
                                     disabled: this.checkDisable('SumInsured'),
-                                    name: 'CashInSafeSIYN',
+                                    name: 'MoneyInSafeBusinessSIYN',
                                     options: [],
                                   }
                                 },
@@ -282,7 +282,7 @@ export class Money{
                                 },
                                 {
                                   type: 'commaSeparator',
-                                  key: 'CashInSafe',
+                                  key: 'MoneySafeLimit',
                                   templateOptions: {
                                     disabled: this.checkDisable('SumInsured')
                                   },
@@ -293,7 +293,7 @@ export class Money{
                                   },
                   
                                   expressions: {
-                                    disabled: '!model.CashInSafeSIYN'
+                                    disabled: '!model.MoneyInSafeBusinessSIYN'
                                   },
                                 }
                               ]
@@ -325,7 +325,7 @@ export class Money{
                                 },
                                 {
                                   type: 'commaSeparator',
-                                  key: 'MoneyAnnualcarrySuminsured',
+                                  key: 'MoneyAnnualEstimate',
                                   templateOptions: {
                                     disabled: this.checkDisable('SumInsured')
                                   },

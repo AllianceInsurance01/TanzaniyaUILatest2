@@ -1686,21 +1686,26 @@ checkMoneyYNChanges(){
   else if(this.productId == '16' && this.insuranceId != '100004'){
     console.log("Moneyyyyyyyyyy",this.fields[0].fieldGroup)
     let tableData = this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
-    
-    tableData[0].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyInSafeBusinessSIYN;
-    tableData[1].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyOutSafeBusinessSIYN;
-    tableData[2].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyInPremisesSIYN;
-    tableData[3].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInTransitSIYN;
-    tableData[4].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInHandEmployeesSIYN;
-    tableData[5].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInSafeSIYN;
-    tableData[6].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyAnnualcarrySuminsuredSIYN;
-    if(!this.productItem.MoneyInSafeBusinessSIYN){this.productItem.MoneyInSafeBusiness = '0'; this.form?.controls['MoneyInSafeBusiness']?.setValue('0')}
-    if(!this.productItem.MoneyOutSafeBusinessSIYN) {this.productItem.MoneyOutSafeBusiness = '0'; this.form?.controls['MoneyOutSafeBusiness']?.setValue('0')}
-    if(!this.productItem.MoneyInPremisesSIYN) { this.productItem.MoneyInPremises = '0'; this.form?.controls['MoneyInPremises']?.setValue('0')}
-    if(!this.productItem.CashInTransitSIYN) { this.productItem.CashInTransit = '0'; this.form?.controls['CashInTransit']?.setValue('0')}
-    if(!this.productItem.CashInHandEmployeesSIYN) { this.productItem.CashInHandEmployees = '0'; this.form?.controls['CashInHandEmployees']?.setValue('0')}
-    if(!this.productItem.CashInSafeSIYN) { this.productItem.CashInSafe = '0'; this.form?.controls['CashInSafe']?.setValue('0')}
-    if(!this.productItem.MoneyAnnualcarrySuminsuredSIYN) { this.productItem.MoneyAnnualcarrySuminsured = '0'; this.form?.controls['MoneyAnnualcarrySuminsured']?.setValue('0')}
+    tableData[0].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyOutSafeBusinessSIYN;
+    tableData[1].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyInPremisesSIYN;
+    tableData[2].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInTransitSIYN;
+    tableData[3].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInHandEmployeesSIYN;
+    tableData[4].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyInSafeBusinessSIYN;
+    tableData[5].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyAnnualcarrySuminsuredSIYN;
+    //tableData[6].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyAnnualcarrySuminsuredSIYN;
+    if(!this.productItem.MoneyInSafeBusinessSIYN){this.productItem.MoneySafeLimit = '0'; this.form?.controls['MoneySafeLimit']?.setValue('0')}
+    if(!this.productItem.MoneyOutSafeBusinessSIYN) {this.productItem.MoneyOutofSafe = '0'; this.form?.controls['MoneyOutofSafe']?.setValue('0')}
+    if(!this.productItem.MoneyInPremisesSIYN) { this.productItem.MoneyDirectorResidence = '0'; this.form?.controls['MoneyDirectorResidence']?.setValue('0')}
+    if(!this.productItem.CashInTransitSIYN) { this.productItem.MoneyMajorLoss = '0'; this.form?.controls['MoneyMajorLoss']?.setValue('0')}
+    if(!this.productItem.CashInHandEmployeesSIYN) { this.productItem.MoneyCollector = '0'; this.form?.controls['MoneyCollector']?.setValue('0')}
+    if(!this.productItem.MoneyAnnualcarrySuminsuredSIYN) { this.productItem.MoneyAnnualEstimate = '0'; this.form?.controls['MoneyAnnualEstimate']?.setValue('0')}
+    // if(!this.productItem.MoneyInSafeBusinessSIYN){this.productItem.MoneyInSafeBusiness = '0'; this.form?.controls['MoneyInSafeBusiness']?.setValue('0')}
+    // if(!this.productItem.MoneyOutSafeBusinessSIYN) {this.productItem.MoneyOutSafeBusiness = '0'; this.form?.controls['MoneyOutSafeBusiness']?.setValue('0')}
+    // if(!this.productItem.MoneyInPremisesSIYN) { this.productItem.MoneyInPremises = '0'; this.form?.controls['MoneyInPremises']?.setValue('0')}
+    // if(!this.productItem.CashInTransitSIYN) { this.productItem.CashInTransit = '0'; this.form?.controls['CashInTransit']?.setValue('0')}
+    // if(!this.productItem.CashInHandEmployeesSIYN) { this.productItem.CashInHandEmployees = '0'; this.form?.controls['CashInHandEmployees']?.setValue('0')}
+    // if(!this.productItem.CashInSafeSIYN) { this.productItem.CashInSafe = '0'; this.form?.controls['CashInSafe']?.setValue('0')}
+    // if(!this.productItem.MoneyAnnualcarrySuminsuredSIYN) { this.productItem.MoneyAnnualcarrySuminsured = '0'; this.form?.controls['MoneyAnnualcarrySuminsured']?.setValue('0')}
     console.log("Tablessssss",tableData)
   }
   else if(this.productId == '16' && this.insuranceId == '100004'){
@@ -1793,7 +1798,7 @@ getBurglaryDetails(sections){
 }
 getElectronicEquipment(sections){
   let sectionId = null;
-  if(this.productId=='25') sectionId='3';
+  if(this.productId=='25') sectionId='39';
   let ReqObj = {
     "RequestReferenceNo": this.requestReferenceNo,
     "RiskId": "1",
@@ -4215,6 +4220,7 @@ onCyperSave(type,formType){
 );
 }
 anothercyberSave(type,formType){
+  console.log('NNNNNNNNNNNNN',this.ProductCode);
   let createdBy = "";
   let quoteStatus = sessionStorage.getItem('QuoteStatus');
   let appId = "1", loginId = "", brokerbranchCode = "";
@@ -4306,10 +4312,10 @@ onSaveFireAlliedDetails(type,formType){
     "SectionId":  "40",
     "BuildingSuminsured": this.productItem?.BuildingSuminsured,
     "IndemityPeriod": this.productItem?.IndemityPeriod,
-    "FireBuildingSi": this.productItem?.FireBuildingSi,
+    //"FireBuildingSi": this.productItem?.FireBuildingSi,
     "FirePlantSi": this.productItem?.FirePlantSi,
     "FireEquipSi": this.productItem?.FireEquipSi,
-    "FireStockSi": this.productItem?.FireStockSi,
+    "StockInTradeSi": this.productItem?.FireStockSi,
     "MakutiYn": this.productItem?.MakutiYn,
     "EndorsementDate": this.endorsementDate,
     "EndorsementEffectiveDate": this.endorsementEffectiveDate,
@@ -4532,13 +4538,14 @@ onSaveBurglaryDetails(type,formType){
 }
 onSaveElectronicEquipment(type,formType){
   console.log('RRRRRRRRRRRR',sessionStorage.getItem('quoteReferenceNo'));
+  console.log('KKKKKKKKKKK',this.ProductCode);
   let ReqObj={
     "CreatedBy": this.loginId,
     "InsuranceId": this.insuranceId,
     "ProductId": this.productId,
     "RequestReferenceNo":sessionStorage.getItem('quoteReferenceNo'),
     "RiskId": "1",
-    "SectionId":  "3",
+    "SectionId": this.ProductCode,
     "ElecEquipSuminsured":this.productItem.ElectronicEquipSuminsured
   }
   let urlLink = `${this.motorApiUrl}api/slide6/saveelectronicequip`;
@@ -4549,7 +4556,13 @@ onSaveElectronicEquipment(type,formType){
         this.updateComponent.quoteRefNo = data?.Result[0]?.RequestReferenceNo;
         sessionStorage.setItem('quoteReferenceNo', this.requestReferenceNo);
         if(type=='proceed'){
-        this.commonDetails[0]['SectionId'] = ['3'];
+          if(this.productId!='25'){
+            this.commonDetails[0]['SectionId'] = ['3'];
+          }
+          else if(this.productId=='25'){
+            this.commonDetails[0]['SectionId'] = ['39'];
+          }
+        
         sessionStorage.setItem('homeCommonDetails', JSON.stringify(this.commonDetails))
         }
         console.log('RRRRRRRRRRR',data.Result);
@@ -4635,13 +4648,19 @@ onSaveMoneyDetails(type,formType){
     "RequestReferenceNo": this.requestReferenceNo,
     "RiskId": "1",
     "SectionId":  "42",
-    "CashInHandEmployees": this.productItem?.CashInHandEmployees,
-    "CashInSafe": this.productItem?.CashInSafe,
-    "CashInTransit": this.productItem?.CashInTransit,
-    "MoneyAnnualcarrySuminsured": this.productItem?.MoneyAnnualcarrySuminsured,
-    "MoneyInPremises": this.productItem?.MoneyInPremises,
-    "MoneyInSafeBusiness": this.productItem?.MoneyInSafeBusiness,
-    "MoneyOutSafeBusiness": this.productItem?.MoneyOutSafeBusiness,
+    "MoneySafeLimit": this.productItem?.MoneySafeLimit,
+    "MoneyOutofSafe": this.productItem?.MoneyOutofSafe,
+    "MoneyDirectorResidence": this.productItem?.MoneyDirectorResidence,
+    "MoneyCollector": this.productItem?.MoneyCollector,
+     "MoneyAnnualEstimate":this.productItem?.MoneyAnnualEstimate,
+     "MoneyMajorLoss":this.productItem?.MoneyMajorLoss,
+    // "CashInHandEmployees": this.productItem?.CashInHandEmployees,
+    // "CashInSafe": this.productItem?.CashInSafe,
+    // "CashInTransit": this.productItem?.CashInTransit,
+    // "MoneyAnnualcarrySuminsured": this.productItem?.MoneyAnnualcarrySuminsured,
+    // "MoneyInPremises": this.productItem?.MoneyInPremises,
+    // "MoneyInSafeBusiness": this.productItem?.MoneyInSafeBusiness,
+    // "MoneyOutSafeBusiness": this.productItem?.MoneyOutSafeBusiness,
     "EndorsementDate": this.endorsementDate,
     "EndorsementEffectiveDate": this.endorsementEffectiveDate,
     "EndorsementRemarks": this.endorsementRemarks,
@@ -5238,7 +5257,7 @@ setCommonFormValues(){
   else if(this.productId=='1'){ReqObj.SectionId='52';urlLink=`${this.motorApiUrl}api/slide3/getburglaryandhouse`;}
   else if(this.productId=='21'){ReqObj.SectionId='3';urlLink=`${this.motorApiUrl}api/slide2/getallriskdetails`;}
   else if(this.productId=='26'){ReqObj.SectionId='3';urlLink=`${this.motorApiUrl}api/slide2/getallriskdetails`;}
-  else if(this.productId=='25'){ReqObj.SectionId='3';urlLink=`${this.motorApiUrl}api/slide6/getelectronicequip`;}
+  else if(this.productId=='25'){ReqObj.SectionId='39';urlLink=`${this.motorApiUrl}api/slide6/getelectronicequip`;}
   else if(this.productId=='42'){urlLink=`${this.motorApiUrl}api/slide6/getelectronicequip`;}
   else if(this.productId=='43'){ReqObj.SectionId='70';urlLink=`${this.motorApiUrl}api/slide12/getpublicliability`;}
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -5313,20 +5332,34 @@ setCommonFormValues(){
               this.isFinanceEndt = details?.IsFinanceEndt;
               this.orginalPolicyNo = details?.OrginalPolicyNo;
             }
-            this.productItem.CashInHandEmployees = details?.CashInHandEmployees;
-            this.productItem.CashInSafe = details?.CashInSafe;
-            this.productItem.CashInTransit = details?.CashInTransit;
-            this.productItem.MoneyAnnualcarrySuminsured = details?.MoneyAnnualcarrySuminsured;
-            this.productItem.MoneyInPremises = details?.MoneyInPremises;
-            this.productItem.MoneyInSafeBusiness = details?.MoneyInSafeBusiness;
-            this.productItem.MoneyOutSafeBusiness = details?.MoneyOutSafeBusiness;
-            if(this.productItem.CashInHandEmployees!=null && this.productItem.CashInHandEmployees!='0' && this.productItem.CashInHandEmployees!='' && this.productItem.CashInHandEmployees!='0.0') this.productItem.CashInHandEmployeesSIYN = true;
-            if(this.productItem.CashInSafe!=null && this.productItem.CashInSafe!='0' && this.productItem.CashInSafe!='' && this.productItem.CashInSafe!='0.0') this.productItem.CashInSafeSIYN = true;
-            if(this.productItem.CashInTransit!=null && this.productItem.CashInTransit!='0' && this.productItem.CashInTransit!='' && this.productItem.CashInTransit!='0.0') this.productItem.CashInTransitSIYN = true;
-            if(this.productItem.MoneyAnnualcarrySuminsured!=null && this.productItem.MoneyAnnualcarrySuminsured!='0' && this.productItem.MoneyAnnualcarrySuminsured!='' && this.productItem.MoneyAnnualcarrySuminsured!='0.0') this.productItem.MoneyAnnualcarrySuminsuredSIYN = true;
-            if(this.productItem.MoneyInPremises!=null && this.productItem.MoneyInPremises!='0' && this.productItem.MoneyInPremises!='' && this.productItem.MoneyInPremises!='0.0') this.productItem.MoneyInPremisesSIYN = true;
-            if(this.productItem.MoneyInSafeBusiness!=null && this.productItem.MoneyInSafeBusiness!='0' && this.productItem.MoneyInSafeBusiness!='' && this.productItem.MoneyInSafeBusiness!='0.0') this.productItem.MoneyInSafeBusinessSIYN = true;
-            if(this.productItem.MoneyOutSafeBusiness!=null && this.productItem.MoneyOutSafeBusiness!='0' && this.productItem.MoneyOutSafeBusiness!='' && this.productItem.MoneyOutSafeBusiness!='0.0') this.productItem.MoneyOutSafeBusinessSIYN = true;
+
+            this.productItem.MoneySafeLimit=details?.MoneySafeLimit;
+            this.productItem.MoneyOutofSafe=details?.MoneyOutofSafe;
+            this.productItem.MoneyDirectorResidence=details?.MoneyDirectorResidence;
+            this.productItem.MoneyCollector=details?.MoneyCollector;
+            this.productItem.MoneyAnnualEstimate=details?.MoneyAnnualEstimate;
+            this.productItem.MoneyMajorLoss=details?.MoneyMajorLoss;
+            if(this.productItem.MoneySafeLimit!=null && this.productItem.MoneySafeLimit!='0' && this.productItem.MoneySafeLimit!='' && this.productItem.MoneySafeLimit!='0.0') this.productItem.MoneyInSafeBusinessSIYN = true;
+            if(this.productItem.MoneyOutofSafe!=null && this.productItem.MoneyOutofSafe!='0' && this.productItem.MoneyOutofSafe!='' && this.productItem.MoneyOutofSafe!='0.0') this.productItem.MoneyOutSafeBusinessSIYN = true;
+            if(this.productItem.MoneyDirectorResidence!=null && this.productItem.MoneyDirectorResidence!='0' && this.productItem.MoneyDirectorResidence!='' && this.productItem.MoneyDirectorResidence!='0.0') this.productItem.MoneyInPremisesSIYN = true;
+            if(this.productItem.MoneyCollector!=null && this.productItem.MoneyCollector!='0' && this.productItem.MoneyCollector!='' && this.productItem.MoneyCollector!='0.0') this.productItem.CashInHandEmployeesSIYN = true;
+            if(this.productItem.MoneyAnnualEstimate!=null && this.productItem.MoneyAnnualEstimate!='0' && this.productItem.MoneyAnnualEstimate!='' && this.productItem.MoneyAnnualEstimate!='0.0') this.productItem.MoneyAnnualcarrySuminsuredSIYN = true;
+            if(this.productItem.MoneyMajorLoss!=null && this.productItem.MoneyMajorLoss!='0' && this.productItem.MoneyMajorLoss!='' && this.productItem.MoneyMajorLoss!='0.0') this.productItem.CashInTransitSIYN = true;
+          
+            // this.productItem.CashInHandEmployees = details?.CashInHandEmployees;
+            // this.productItem.CashInSafe = details?.CashInSafe;
+            // this.productItem.CashInTransit = details?.CashInTransit;
+            // this.productItem.MoneyAnnualcarrySuminsured = details?.MoneyAnnualcarrySuminsured;
+            // this.productItem.MoneyInPremises = details?.MoneyInPremises;
+            // this.productItem.MoneyInSafeBusiness = details?.MoneyInSafeBusiness;
+            // this.productItem.MoneyOutSafeBusiness = details?.MoneyOutSafeBusiness;
+            // if(this.productItem.CashInHandEmployees!=null && this.productItem.CashInHandEmployees!='0' && this.productItem.CashInHandEmployees!='' && this.productItem.CashInHandEmployees!='0.0') this.productItem.CashInHandEmployeesSIYN = true;
+            // if(this.productItem.CashInSafe!=null && this.productItem.CashInSafe!='0' && this.productItem.CashInSafe!='' && this.productItem.CashInSafe!='0.0') this.productItem.CashInSafeSIYN = true;
+            // if(this.productItem.CashInTransit!=null && this.productItem.CashInTransit!='0' && this.productItem.CashInTransit!='' && this.productItem.CashInTransit!='0.0') this.productItem.CashInTransitSIYN = true;
+            // if(this.productItem.MoneyAnnualcarrySuminsured!=null && this.productItem.MoneyAnnualcarrySuminsured!='0' && this.productItem.MoneyAnnualcarrySuminsured!='' && this.productItem.MoneyAnnualcarrySuminsured!='0.0') this.productItem.MoneyAnnualcarrySuminsuredSIYN = true;
+            // if(this.productItem.MoneyInPremises!=null && this.productItem.MoneyInPremises!='0' && this.productItem.MoneyInPremises!='' && this.productItem.MoneyInPremises!='0.0') this.productItem.MoneyInPremisesSIYN = true;
+            // if(this.productItem.MoneyInSafeBusiness!=null && this.productItem.MoneyInSafeBusiness!='0' && this.productItem.MoneyInSafeBusiness!='' && this.productItem.MoneyInSafeBusiness!='0.0') this.productItem.MoneyInSafeBusinessSIYN = true;
+            // if(this.productItem.MoneyOutSafeBusiness!=null && this.productItem.MoneyOutSafeBusiness!='0' && this.productItem.MoneyOutSafeBusiness!='' && this.productItem.MoneyOutSafeBusiness!='0.0') this.productItem.MoneyOutSafeBusinessSIYN = true;
             this.checkMoneyYNChanges();
           }
           else if(this.productId=='39'){
@@ -5366,9 +5399,12 @@ setCommonFormValues(){
             this.productItem.GensetsSi = details?.GensetsSi;
           }
           else if(this.productId =='26'){
+            this.ProductCode = details?.SectionId;
             this.productItem.EquipmentSi  = details?.EquipmentSi;
           }
           else if(this.productId =='25'){
+            this.ProductCode = details?.SectionId;
+            console.log('HHHHHHHHHHHHHHHHH',this.ProductCode);
             this.productItem.ElectronicEquipSuminsured  = details?.ElecEquipSuminsured;
           }
           else if(this.productId=='1'){
@@ -5459,10 +5495,11 @@ setCommonFormValues(){
           }
           else{
             if(this.productId=='6' && this.insuranceId == '100004'){
-              this.productItem.FireBuildingSi=details?.FireBuildingSi;
+              //this.productItem.FireBuildingSi=details?.FireBuildingSi;
+              this.productItem.BuildingSuminsured = details?.BuildingSuminsured;
               this.productItem.FireEquipSi=details?.FireEquipSi;
               this.productItem.FirePlantSi=details?.FirePlantSi;
-              this.productItem.FireStockSi=details?.FireStockSi;
+              this.productItem.FireStockSi=details?.StockInTradeSi;
             }
             this.productItem.IndemityPeriod = details?.IndemityPeriod;
             if(details.MakutiYn==null || details.MakutiYn=="" || details.MakutiYn==undefined) this.productItem.MakutiYn='N';
