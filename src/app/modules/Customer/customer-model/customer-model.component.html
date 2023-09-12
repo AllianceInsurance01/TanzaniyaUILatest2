@@ -17,6 +17,21 @@
             </div>
             <div class="card-body">
                     <div class="row">
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Title</label><span class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="titleList" (change)="onTitleChange()" [(ngModel)]="productItem.Title" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>  
+                        <div class="col-md-9 col-lg-9 col-xl-9">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Customer Name</label><span class="text-danger">*</span>
+                                <div class="input-form-box">
+                                    <input type="text" maxlength="150" (keypress)="omit_special_char($event)" class="input-form-control without-icon"  [(ngModel)]="productItem.ClientName">
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-6 col-lg-6 col-xl-6">
                             <div class="input-control-container">
                                 <label class="input-form-label">Identity Type</label><span class="text-danger">*</span>
@@ -47,21 +62,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-lg-3 col-xl-3">
-                            <div class="input-control-container">
-                                <label class="input-form-label">Title</label><span class="text-danger">*</span>
-                                <ng-select class="input-form-select" appendTo="body" [items]="titleList" (change)="onTitleChange()" [(ngModel)]="productItem.Title" bindValue="Code" bindLabel="CodeDesc">
-                                </ng-select>
-                            </div>
-                        </div>  
-                        <div class="col-md-9 col-lg-9 col-xl-9">
-                            <div class="input-control-container">
-                                <label class="input-form-label">Customer Name</label><span class="text-danger">*</span>
-                                <div class="input-form-box">
-                                    <input type="text" maxlength="150" (keypress)="omit_special_char($event)" class="input-form-control without-icon"  [(ngModel)]="productItem.ClientName">
-                                </div>
-                            </div>
-                        </div>
+                        
                         <!-- <div class="col-md-3 col-lg-3 col-xl-3">
                             <div class="input-control-container">
                                 <label class="input-form-label">Gender</label><span class="text-danger">*</span>
