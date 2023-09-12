@@ -95,6 +95,7 @@ export class VehicleDetailsComponent implements OnInit {
   OldTppdIncreaeLimit: any;
   OldWindScreenSumInsured: any;
   changeUwSection: boolean;
+  enableCollateralDetails: boolean=false;
   constructor(private router:Router,private sharedService: SharedService,
     private updateComponent:UpdateCustomerDetailsComponent,
    private datePipe:DatePipe) {
@@ -146,7 +147,7 @@ export class VehicleDetailsComponent implements OnInit {
             this.enableInsuranceClass = this.enableFieldsList.some(ele=>ele=='InsuranceClass');
             this.enableBodyType = this.enableFieldsList.some(ele=>ele=='BodyType');
             this.enableMotorUsage = this.enableFieldsList.some(ele=>ele=='MotorUsage');
-            this.endorseSIModification = this.enableFieldsList.some(ele=>ele=='Covers' && this.endorsementId==850);
+            this.endorseSIModification = this.enableFieldsList.some(ele=>ele=='Covers' && (this.endorsementId==850));
             this.enableClaimsYN = this.enableFieldsList.some(ele=>ele=='ClaimsYN');
             this.enableGpsYN = this.enableFieldsList.some(ele=>ele=='GpsYN');
             this.enableVehicleSI = this.enableFieldsList.some(ele=>ele=='VehicleSI');
@@ -154,6 +155,7 @@ export class VehicleDetailsComponent implements OnInit {
             this.enableWindshieldSI = this.enableFieldsList.some(ele=>ele=='WindshieldSI');
             this.enableTppdSI = this.enableFieldsList.some(ele=>ele=='TppdSI');
             this.enableAddVehicle = this.enableFieldsList.some(ele=>ele=='addVehicle');
+            this.enableCollateralDetails = this.enableFieldsList.some(ele=>ele=='CollateralDetails');
             console.log("Final Endorse",this.enableVehicleSI,this.enableAccessoriesSI)
         }
         else{
@@ -162,6 +164,7 @@ export class VehicleDetailsComponent implements OnInit {
           this.enableAccessoriesSI = false;
           this.enableWindshieldSI = false;
           this.enableTppdSI = false;
+          this.enableCollateralDetails = false;
         } 
       }
     }
@@ -864,6 +867,7 @@ export class VehicleDetailsComponent implements OnInit {
     sessionStorage.removeItem('loadingType');
     if(this.checkDisableField()){
       if(this.currentIndex<this.totalCount){
+        this.collateralYN = "N";
         this.currentIndex = this.currentIndex+1;
           this.finalSection = false;
           if(this.vehicleDetailsList[this.currentIndex-1]?.Active==true){
@@ -1136,6 +1140,7 @@ export class VehicleDetailsComponent implements OnInit {
           else{
             
             if(this.currentIndex<this.totalCount){
+              this.collateralYN = "N";
               sessionStorage.setItem('loadingType','load');
               this.currentIndex = this.currentIndex+1;
                 this.finalSection = false;

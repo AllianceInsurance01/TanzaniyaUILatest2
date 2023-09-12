@@ -520,7 +520,7 @@
                             <label class="input-form-label d-flex">
                                 <span class="mx-2" style="font-family: var(--our-font-family-new) !important;font-size: 1rem;">Collateral</span>
                                  <div class="custom-control custom-switch" style="position: relative;bottom: 0.3rem;">
-                                   <input type="checkbox" class="custom-control-input" id="switch1" [disabled]="((endorsementSection && !enableFieldsSection)) || checkDisableField()" (change)="onCollateralChange()" [(ngModel)]="collateralValue">
+                                   <input type="checkbox" class="custom-control-input" id="switch1" [disabled]="((endorsementSection && !enableCollateralDetails)) || checkDisableField()" [checked]="collateralYN =='Y'" (change)="onCollateralChange()" [(ngModel)]="collateralValue">
                                    <label class="custom-control-label" for="switch1"></label>
                                 </div>
                             </label>
@@ -530,7 +530,7 @@
                         <div class="col-12 col-md-4">
                             <div class="input-control-container">
                                 <label class="input-form-label">Borrower Type</label><span class="text-danger">*</span>
-                                <ng-select class="input-form-select" appendTo="body" [items]="borrowerList" [disabled]="((endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="borrowerValue" bindValue="Code" bindLabel="CodeDesc">
+                                <ng-select class="input-form-select" appendTo="body" [items]="borrowerList" [disabled]="((endorsementSection && !enableCollateralDetails)) || checkDisableField()" [(ngModel)]="borrowerValue" bindValue="Code" bindLabel="CodeDesc">
                                 </ng-select>
                             </div>
                         </div>
@@ -538,14 +538,14 @@
                             <div class="input-control-container">
                                 <label class="input-form-label">Collateral Name</label><span class="text-danger">*</span>
                                 <div class="input-form-box">
-                                    <input type="text" maxlength="50" class="input-form-control without-icon" [disabled]="((endorsementSection && !enableFieldsSection)) || checkDisableField()" [(ngModel)]="collateralName">
+                                    <input type="text" maxlength="50" class="input-form-control without-icon" [disabled]="((endorsementSection && !enableCollateralDetails)) || checkDisableField()" [(ngModel)]="collateralName">
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-md-4" *ngIf="borrowerValue=='1'">
                             <div class="input-control-container">
                                 <label class="input-form-label">Collateral Bank Name</label><span class="text-danger">*</span>
-                                <ng-select class="input-form-select" appendTo="body" [items]="bankList" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [(ngModel)]="collateralName" bindValue="Code" bindLabel="CodeDesc">
+                                <ng-select class="input-form-select" appendTo="body" [items]="bankList" [disabled]="(endorsementSection && !enableCollateralDetails) || checkDisableField()" [(ngModel)]="collateralName" bindValue="Code" bindLabel="CodeDesc">
                                 </ng-select>
                             </div>
                         </div>
@@ -553,7 +553,7 @@
                             <div class="input-control-container">
                                 <label class="input-form-label">First Loss Payee</label><span class="text-danger">*</span>
                                 <div class="input-form-box">
-                                    <input type="text" [(ngModel)]="firstLossPayee" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" class="input-form-control without-icon">
+                                    <input type="text" [(ngModel)]="firstLossPayee" [disabled]="(endorsementSection && !enableCollateralDetails) || checkDisableField()" class="input-form-control without-icon">
                                 </div>
                             </div>
                         </div>
