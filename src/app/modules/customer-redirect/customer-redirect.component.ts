@@ -150,6 +150,7 @@ export class CustomerRedirectComponent {
                   data.Result['CurrencyId'] = data?.Result?.LoginBranchDetails[0].CurrencyId;
                 }
               }
+              console.log("Final Setted Data",data)
               sessionStorage.setItem('Userdetails',JSON.stringify(data));
               if(details?.PageType){
                 if(details.PageType=='RP') sessionStorage.setItem('QuoteStatus','AdminRP');
