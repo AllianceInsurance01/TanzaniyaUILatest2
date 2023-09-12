@@ -101,6 +101,13 @@ AccessoriesType:any=null;
 AccessoriesChassisNo:any=null;
 FireBuildingSi:any='0';FirePlantSi:any='0';
 FireEquipSi:any='0';FireStockSi:any='0';
+ElqSI:any='0';ElqLocation:any;ElqList:any;ElqJoin:any;ElqPeriod:any;Elqmake:any;
+MoneySafeLimit:any='0';
+MoneyOutofSafe:any='0';
+MoneyDirectorResidence:any='0';
+MoneyCollector:any='0';
+MoneyAnnualEstimate:any='0';
+MoneyMajorLoss:any='0';
               
 	constructor(data?) {
 		this.id = data?.id ?? ''
@@ -245,6 +252,12 @@ FireEquipSi:any='0';FireStockSi:any='0';
 		this.IndSI = data?.Salary ?? null;
 		this.EmpsLocation = data?.RiskId ?? null;
 		this.EmpsDob = data?.DateOfBirth  ?? null;
+		this.MoneySafeLimit = data?.MoneySafeLimit ?? '0';
+         this.MoneyOutofSafe = data?.MoneyOutofSafe ?? '0';
+        this.MoneyDirectorResidence = data?.MoneyDirectorResidence ?? '0';
+          this.MoneyCollector = data?.MoneyCollector ?? '0';
+        this.MoneyAnnualEstimate = data?.MoneyAnnualEstimate ?? '0';
+      this.MoneyMajorLoss = data?.MoneyMajorLoss ?? '0';
 	
 		// this.EquipmentSi = data?.EquipmentSi ?? '0';
 		// this.ElectronicEquipSuminsured = data.ElectronicEquipSuminsured ?? '0';
