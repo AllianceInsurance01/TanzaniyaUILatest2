@@ -28,6 +28,7 @@ import { Burglarys } from '../newmodels/Buglarys';
 import { PublicLiabilitys } from '../newmodels/PublicLiablityCover';
 import { CyberInsurance } from '../models/CyberInsurance';
 import { MedicalInsurance } from '../models/MedicalInsurance';
+import { FireAndMaterialDamage } from '../newmodels/Fire&MaterialDamage';
 export class ForceLengthValidators {
   static maxLength(maxLength: number) {
     return (control: FormControl): ValidationErrors => {
@@ -1147,11 +1148,16 @@ export class PersonalQuoteDetailsComponent implements OnInit {
           this.formSection = true; this.viewSection = false;
       }
     }
-    else if(this.productId=='6'){
+    else if(this.productId=='6' && this.insuranceId=='100002'){
       let fireData = new FireAlliedPerils();
       let entry = [];
       this.fields[0] = fireData?.fields;
       this.getIndemityPeriodList();
+    }
+    else if(this.productId=='6' && this.insuranceId=='100004'){
+      let fireData = new FireAndMaterialDamage();
+      let entry = [];
+      this.fields[0] = fireData?.fields;
     }
     else if(this.productId=='39'){
       let fireData = new MachineryBreakDown();
@@ -1268,6 +1274,23 @@ export class PersonalQuoteDetailsComponent implements OnInit {
           this.formSection = true; this.viewSection = false;
       }
     }
+     
+    // else if(this.productId=='20'){
+    //   let referenceNo = sessionStorage.getItem('quoteReferenceNo');
+    //   let fireData = new FireAndMaterialDamage();
+    //   let entry = [];
+    //   this.fields[0] = fireData?.fields;
+    //   if (referenceNo) {
+    //     this.requestReferenceNo = referenceNo;
+    //     this.productItem = new ProductData();
+    //     this.setCommonFormValues();
+       
+    //   }
+    //   else {
+    //       this.productItem = new ProductData();
+    //       this.formSection = true; this.viewSection = false;
+    //   }
+    // }
     else if(this.productId=='26'){
      
       let fireData = new BussinessAllRisk();
@@ -3651,7 +3674,6 @@ getIndemityPeriodList(){
                 let referenceNo = sessionStorage.getItem('quoteReferenceNo');
                 if (referenceNo) {
                   this.requestReferenceNo = referenceNo;
-                
                 }
                 else {
                     this.productItem = new ProductData();
@@ -4284,6 +4306,10 @@ onSaveFireAlliedDetails(type,formType){
     "SectionId":  "40",
     "BuildingSuminsured": this.productItem?.BuildingSuminsured,
     "IndemityPeriod": this.productItem?.IndemityPeriod,
+    "FireBuildingSi": this.productItem?.FireBuildingSi,
+    "FirePlantSi": this.productItem?.FirePlantSi,
+    "FireEquipSi": this.productItem?.FireEquipSi,
+    "FireStockSi": this.productItem?.FireStockSi,
     "MakutiYn": this.productItem?.MakutiYn,
     "EndorsementDate": this.endorsementDate,
     "EndorsementEffectiveDate": this.endorsementEffectiveDate,
@@ -5432,6 +5458,12 @@ setCommonFormValues(){
               
           }
           else{
+            if(this.productId=='6' && this.insuranceId == '100004'){
+              this.productItem.FireBuildingSi=details?.FireBuildingSi;
+              this.productItem.FireEquipSi=details?.FireEquipSi;
+              this.productItem.FirePlantSi=details?.FirePlantSi;
+              this.productItem.FireStockSi=details?.FireStockSi;
+            }
             this.productItem.IndemityPeriod = details?.IndemityPeriod;
             if(details.MakutiYn==null || details.MakutiYn=="" || details.MakutiYn==undefined) this.productItem.MakutiYn='N';
             else this.productItem.MakutiYn=details?.MakutiYn;

@@ -99,8 +99,9 @@ export class ProductData {
 AccessoriesSerialNo:any=null;
 AccessoriesType:any=null;
 AccessoriesChassisNo:any=null;
-	
-
+FireBuildingSi:any='0';FirePlantSi:any='0';
+FireEquipSi:any='0';FireStockSi:any='0';
+              
 	constructor(data?) {
 		this.id = data?.id ?? ''
 		this.CustomerName = data?.CustomerName ?? '';
@@ -214,6 +215,10 @@ AccessoriesChassisNo:any=null;
 		this.NonminingPlantSi = data?.NonminingPlantSi ?? '0';
 		this.GensetsSi = data?.GensetsSi ?? '0';
 		this.ElectronicEquipSuminsured = data?.ElecEquipSuminsured ?? '0';
+		this.FireBuildingSi=data?.FireBuildingSi ?? '0';
+	     this.FirePlantSi=data?.FirePlantSi ?? '0';
+         this.FireEquipSi=data?.FireEquipSi ?? '0';
+		 this.FireStockSi=data?.FireStockSi ?? '0';
 		this.UsageType = data?.UsageType ?? 'S';
 		this.PlanType = data?.PlanType ?? 'S';
 		this.AooSumInsured = data?.AooSumInsured ?? null;
