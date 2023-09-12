@@ -80,7 +80,7 @@ export class CustomerRedirectComponent {
                 let userDetails = JSON.parse(sessionStorage.getItem('Userdetails') as any);
                 userDetails.Result['ProductId'] = data.Result.BrokerCompanyProducts[0].ProductId;
                 userDetails.Result['ProductName'] = data.Result.BrokerCompanyProducts[0].ProductName;
-                userDetails.Result['BrokerBranchCode'] = branchData.BrokerBranchCode;
+                userDetails.Result['BrokerBranchCode'] = this.branchValue;
                 userDetails.Result['BranchCode'] = branchData.BranchCode;
                 userDetails.Result['CurrencyId'] = branchData?.CurrencyId;
                 userDetails.Result['InsuranceId'] = branchData?.InsuranceId;
@@ -143,6 +143,14 @@ export class CustomerRedirectComponent {
               this.authService.login(data);
               this.authService.UserToken(Token);
               sessionStorage.setItem('UserToken',Token);
+              if(data?.Result?.LoginBranchDetails){
+                if(data?.Result?.LoginBranchDetails.length!=0){
+                  data.Result['BranchCode'] = data?.Result?.LoginBranchDetails[0].BranchCode;
+                  data.Result['BrokerBranchCode'] = data?.Result?.LoginBranchDetails[0].BrokerBranchCode;
+                  data.Result['CurrencyId'] = data?.Result?.LoginBranchDetails[0].CurrencyId;
+                }
+              }
+              console.log("Final Setted Data",data)
               sessionStorage.setItem('Userdetails',JSON.stringify(data));
               if(details?.PageType){
                 if(details.PageType=='RP') sessionStorage.setItem('QuoteStatus','AdminRP');

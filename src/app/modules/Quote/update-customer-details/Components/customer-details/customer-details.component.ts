@@ -1168,7 +1168,15 @@ export class CustomerDetailsComponent implements OnInit {
         console.log(data);
         if(data.Result){
             this.currencyList = data.Result;
-            if(this.currencyCode) this.onCurrencyChange('direct');
+            if(this.currencyCode){
+              if(this.currencyList.some(ele=>ele.Code==this.currencyCode)){
+                this.onCurrencyChange('direct');
+              }
+              else this.currencyCode=this.currencyList[0].Code
+            }
+            else if(this.currencyList.length==1){this.currencyCode=this.currencyList[0].Code}
+            
+            
             this.getSourceList();
         }
 

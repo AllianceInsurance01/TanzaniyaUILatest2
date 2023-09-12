@@ -1108,6 +1108,9 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     else{
       this.coverDetails.DiscountCoverId = null;
     }
+    if(this.coverageTypeValue=='B'){
+      this.coverDetails.IsSelectedYn = 'D';
+    }
     if(this.coverageTypeValue=='A'){this.excessDesc="None"}
     let ReqObj = {
             "CoverId": this.coverDetails.CoverId,
@@ -1127,7 +1130,7 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
             "FactorTypeId": this.factorValue,
             "BaseRate": this.baseRate,
             "MinimumPremium": this.minPremium,
-            "SumInsuredStart": this.minPremium,
+            "SumInsuredStart": '1',
             "SumInsuredEnd": this.maxSumInsured,
             "Remarks": this.coverDetails.Remarks,
             "Status": this.coverDetails.Status,
