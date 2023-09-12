@@ -156,7 +156,6 @@ export class CustomerRedirectComponent {
                 if(details.PageType=='RP') sessionStorage.setItem('QuoteStatus','AdminRP');
                 this.router.navigate([details?.RouterLink]);
               }
-              
             }
           }
           else if(data.ErrorMessage){
