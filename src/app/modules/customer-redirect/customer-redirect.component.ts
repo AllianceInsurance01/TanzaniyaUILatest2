@@ -80,7 +80,7 @@ export class CustomerRedirectComponent {
                 let userDetails = JSON.parse(sessionStorage.getItem('Userdetails') as any);
                 userDetails.Result['ProductId'] = data.Result.BrokerCompanyProducts[0].ProductId;
                 userDetails.Result['ProductName'] = data.Result.BrokerCompanyProducts[0].ProductName;
-                userDetails.Result['BrokerBranchCode'] = branchData.BrokerBranchCode;
+                userDetails.Result['BrokerBranchCode'] = this.branchValue;
                 userDetails.Result['BranchCode'] = branchData.BranchCode;
                 userDetails.Result['CurrencyId'] = branchData?.CurrencyId;
                 userDetails.Result['InsuranceId'] = branchData?.InsuranceId;

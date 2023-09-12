@@ -998,7 +998,7 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
             "FactorTypeId": this.factorValue,
             "BaseRate": this.baseRate,
             "MinimumPremium": this.minPremium,
-            "SumInsuredStart": this.minPremium,
+            "SumInsuredStart": '1',
             "SumInsuredEnd": this.maxSumInsured,
             "Remarks": this.coverDetails.Remarks,
             "Status": this.coverDetails.Status,
