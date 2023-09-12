@@ -143,6 +143,13 @@ export class CustomerRedirectComponent {
               this.authService.login(data);
               this.authService.UserToken(Token);
               sessionStorage.setItem('UserToken',Token);
+              if(data?.Result?.LoginBranchDetails){
+                if(data?.Result?.LoginBranchDetails.length!=0){
+                  data.Result['BranchCode'] = data?.Result?.LoginBranchDetails[0].BranchCode;
+                  data.Result['BrokerBranchCode'] = data?.Result?.LoginBranchDetails[0].BrokerBranchCode;
+                  data.Result['CurrencyId'] = data?.Result?.LoginBranchDetails[0].CurrencyId;
+                }
+              }
               sessionStorage.setItem('Userdetails',JSON.stringify(data));
               if(details?.PageType){
                 if(details.PageType=='RP') sessionStorage.setItem('QuoteStatus','AdminRP');
