@@ -91,6 +91,7 @@ count: Number = 20;
   uploadStatus: any;
   uploadRecordsList: any[]=[];
   uploadTranId: any=null;
+  minSumInsured: any;
   //factorTypeLists:any[]=[];
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,private _changeDetectorRef: ChangeDetectorRef) {
@@ -265,6 +266,7 @@ count: Number = 20;
               this.baseRate = this.coverDetails.BaseRate;
               this.minPremium = this.coverDetails.MinimumPremium;
               this.CoverId = this.coverDetails.CoverId;
+              this.minSumInsured = this.coverDetails.SumInsuredStart;
               this.maxSumInsured = this.coverDetails.SumInsuredEnd;
               this.onSubCoverChange();
               this.factorValue = this.coverDetails.FactorTypeId;
@@ -479,7 +481,7 @@ count: Number = 20;
       "FactorTypeId": this.subCoverData.FactorTypeId,
       "BaseRate": this.subCoverData.BaseRate,
       "MinimumPremium":this.subCoverData.MinimumPremium,
-      "SumInsuredStart": this.subCoverData.MinimumPremium,
+      "SumInsuredStart": this.subCoverData.SumInsuredStart,
       "SumInsuredEnd": this.subCoverData.SumInsuredEnd,
       "Remarks":this.subCoverData.Remarks,
       "Status": this.subCoverData.Status,
@@ -1130,7 +1132,7 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
             "FactorTypeId": this.factorValue,
             "BaseRate": this.baseRate,
             "MinimumPremium": this.minPremium,
-            "SumInsuredStart": '1',
+            "SumInsuredStart": this.minSumInsured,
             "SumInsuredEnd": this.maxSumInsured,
             "Remarks": this.coverDetails.Remarks,
             "Status": this.coverDetails.Status,

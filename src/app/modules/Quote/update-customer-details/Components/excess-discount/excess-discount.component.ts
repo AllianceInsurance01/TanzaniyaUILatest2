@@ -3464,7 +3464,7 @@ getMotorUsageList(vehicleValue){
     });
   }
   onFinalProceed(){
-    if(this.subuserType=='B2C'){
+    if(this.subuserType=='B2C' && this.loginId=='guest'){
         this.viewQuoteDetails();
     }
     else if(this.emiYN=='Y' && this.emiPeriod!='N'){
