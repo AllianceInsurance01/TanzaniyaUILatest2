@@ -162,6 +162,12 @@ public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
 public motorApiUrl:any = this.AppConfig.MotorApiUrl;
 currencyValue:any;
  dob:any;
+  totalQuoteRecords: any;
+  pageCount: any;
+  quotePageNo: number;
+  startIndex: number;
+  endIndex: any;
+  limit: string;
   constructor(public router:Router,private sharedService: SharedService,private datePipe:DatePipe){
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -251,8 +257,7 @@ currencyValue:any;
       (data: any) => {
         console.log(data);
         if(data.Result){
-           this.SearchList = data?.Result;
-
+          this.SearchList = data?.Result;
            //this.search=sessionStorage.getItem('search');
                
            //let sr=sessionStorage.getItem('searchvaue');
@@ -280,7 +285,18 @@ currencyValue:any;
     );
 }
 
-
+onNextData(element){
+  this.limit = String(Number(this.limit)+1);
+  this.quotePageNo = this.quotePageNo+1;
+  this.startIndex = element.startCount;
+  this.endIndex = element.endCount
+  this.onCustomerSearch();
+}
+onPreviousData(element){
+  this.limit = String(Number(this.limit)-1);
+    this.quotePageNo = this.quotePageNo-1;
+  this.onCustomerSearch();
+}
 onCustomerSearch(){
 let app
   if(this.userType == 'Issuer'){
@@ -313,8 +329,23 @@ let app
       (data: any) => {
         console.log(data);
         if(data.Result){
+          if (data.Result?.length != 0) {
+            this.totalQuoteRecords = data.Result.length;
+            this.quotePageNo = 1;
+            let startCount = 1, endCount = this.pageCount;
+            startCount = endCount + 1;
+            this.pageCount = 10;
+           let quoteData = data.Result;
+           if (quoteData.length <= this.pageCount) {
+             endCount = quoteData.length
+           }
+           else endCount = this.pageCount;
+         
+            this.startIndex = startCount; this.endIndex = endCount;
             this.customerData=data?.Result;
-            this.Currency=data?.Result.Currency;
+            this.Currency=data?.Result[0].Currency;
+          }
+            
 
             if(this.searchValue!=undefined && this.searchValue!=null){
               let docObj = {"SearchValue":this.searchValue,"Search":this.search}
