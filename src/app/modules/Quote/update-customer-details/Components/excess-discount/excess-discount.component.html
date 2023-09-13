@@ -1508,7 +1508,7 @@
 
                                                                     <div class="d-flex justify-content-between">
                                                                         <div>
-                                                                            <ng-container
+                                                                            <ng-container *ngIf="(element.Discounts!=null && element.Discounts.length!=0) || (element.Loadings!=null && element.Loadings.length!=0) || adminSection"
                                                                                 >
                                                                                 &nbsp;&nbsp;<button type="button"
                                                                                     class="btn maan-btn-blue btn-circle"
