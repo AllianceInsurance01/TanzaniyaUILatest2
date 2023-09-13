@@ -29,6 +29,7 @@ import { PublicLiabilitys } from '../newmodels/PublicLiablityCover';
 import { CyberInsurance } from '../models/CyberInsurance';
 import { MedicalInsurance } from '../models/MedicalInsurance';
 import { FireAndMaterialDamage } from '../newmodels/Fire&MaterialDamage';
+import Swal from 'sweetalert2';
 export class ForceLengthValidators {
   static maxLength(maxLength: number) {
     return (control: FormControl): ValidationErrors => {
@@ -98,6 +99,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
   categoryList: any[] = [];
   endorsementSection: boolean = false;
   orgPolicyNo: string;
+  Hidevalidation: boolean =false;
   endorsementId: any;
   enableFieldsList: any;
   endorsePolicyNo: any;
@@ -136,6 +138,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
   ProductCode:any="68";
   aooSIList: any[]=[];
   aggSIList: any[]=[];
+  MoneyDirectorError:any;
   constructor(private formlyJsonschema: FormlyJsonschema, private sharedService: SharedService, private datePipe: DatePipe,
     private router: Router, private http: HttpClient, private updateComponent: UpdateCustomerDetailsComponent) {
     this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -1664,27 +1667,41 @@ checkMoneyYNChanges(){
     let fields = this.fields[0].fieldGroup;
     for(let field of fields){
       if(field.props.label=='Money'){
-          let tableData = field.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
-          tableData[0].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyInSafeBusinessSIYN;
-          tableData[1].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyOutSafeBusinessSIYN;
-          tableData[2].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyInPremisesSIYN;
-          tableData[3].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInTransitSIYN;
-          tableData[4].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInHandEmployeesSIYN;
-          tableData[5].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInSafeSIYN;
-          tableData[6].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyAnnualcarrySuminsuredSIYN;
-          if(!this.productItem.MoneyInSafeBusinessSIYN){this.productItem.MoneyInSafeBusiness = '0'; this.form?.controls['MoneyInSafeBusiness']?.setValue('0')}
-          if(!this.productItem.MoneyOutSafeBusinessSIYN) {this.productItem.MoneyOutSafeBusiness = '0'; this.form?.controls['MoneyOutSafeBusiness']?.setValue('0')}
-          if(!this.productItem.MoneyInPremisesSIYN) { this.productItem.MoneyInPremises = '0'; this.form?.controls['MoneyInPremises']?.setValue('0')}
-          if(!this.productItem.CashInTransitSIYN) { this.productItem.CashInTransit = '0'; this.form?.controls['CashInTransit']?.setValue('0')}
-          if(!this.productItem.CashInHandEmployeesSIYN) { this.productItem.CashInHandEmployees = '0'; this.form?.controls['CashInHandEmployees']?.setValue('0')}
-          if(!this.productItem.CashInSafeSIYN) { this.productItem.CashInSafe = '0'; this.form?.controls['CashInSafe']?.setValue('0')}
-          if(!this.productItem.MoneyAnnualcarrySuminsuredSIYN) { this.productItem.MoneyAnnualcarrySuminsured = '0'; this.form?.controls['MoneyAnnualcarrySuminsured']?.setValue('0')}
+        console.log("Moneyyyyyyyyyy product 19",this.fields[0].fieldGroup)
+        let tableData = this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
+        tableData[0].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyOutSafeBusinessSIYN;
+        tableData[1].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyInPremisesSIYN;
+        tableData[2].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInTransitSIYN;
+        tableData[3].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInHandEmployeesSIYN;
+        tableData[4].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyInSafeBusinessSIYN;
+        tableData[5].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyAnnualcarrySuminsuredSIYN;
+        if(!this.productItem.MoneyInSafeBusinessSIYN){this.productItem.MoneySafeLimit = '0'; this.form?.controls['MoneySafeLimit']?.setValue('0')}
+        if(!this.productItem.MoneyOutSafeBusinessSIYN) {this.productItem.MoneyOutofSafe = '0'; this.form?.controls['MoneyOutofSafe']?.setValue('0')}
+        if(!this.productItem.MoneyInPremisesSIYN) { this.productItem.MoneyDirectorResidence = '0'; this.form?.controls['MoneyDirectorResidence']?.setValue('0')}
+        if(!this.productItem.CashInTransitSIYN) { this.productItem.MoneyMajorLoss = '0'; this.form?.controls['MoneyMajorLoss']?.setValue('0')}
+        if(!this.productItem.CashInHandEmployeesSIYN) { this.productItem.MoneyCollector = '0'; this.form?.controls['MoneyCollector']?.setValue('0')}
+        if(!this.productItem.MoneyAnnualcarrySuminsuredSIYN) { this.productItem.MoneyAnnualEstimate = '0'; this.form?.controls['MoneyAnnualEstimate']?.setValue('0')}
+          // let tableData = field.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
+          // tableData[0].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyInSafeBusinessSIYN;
+          // tableData[1].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyOutSafeBusinessSIYN;
+          // tableData[2].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyInPremisesSIYN;
+          // tableData[3].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInTransitSIYN;
+          // tableData[4].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInHandEmployeesSIYN;
+          // tableData[5].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInSafeSIYN;
+          // tableData[6].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyAnnualcarrySuminsuredSIYN;
+          // if(!this.productItem.MoneyInSafeBusinessSIYN){this.productItem.MoneyInSafeBusiness = '0'; this.form?.controls['MoneyInSafeBusiness']?.setValue('0')}
+          // if(!this.productItem.MoneyOutSafeBusinessSIYN) {this.productItem.MoneyOutSafeBusiness = '0'; this.form?.controls['MoneyOutSafeBusiness']?.setValue('0')}
+          // if(!this.productItem.MoneyInPremisesSIYN) { this.productItem.MoneyInPremises = '0'; this.form?.controls['MoneyInPremises']?.setValue('0')}
+          // if(!this.productItem.CashInTransitSIYN) { this.productItem.CashInTransit = '0'; this.form?.controls['CashInTransit']?.setValue('0')}
+          // if(!this.productItem.CashInHandEmployeesSIYN) { this.productItem.CashInHandEmployees = '0'; this.form?.controls['CashInHandEmployees']?.setValue('0')}
+          // if(!this.productItem.CashInSafeSIYN) { this.productItem.CashInSafe = '0'; this.form?.controls['CashInSafe']?.setValue('0')}
+          // if(!this.productItem.MoneyAnnualcarrySuminsuredSIYN) { this.productItem.MoneyAnnualcarrySuminsured = '0'; this.form?.controls['MoneyAnnualcarrySuminsured']?.setValue('0')}
          
       }
     }
   }
   else if(this.productId == '16' && this.insuranceId != '100004'){
-    console.log("Moneyyyyyyyyyy",this.fields[0].fieldGroup)
+    console.log("Moneyyyyyyyyyy 10002",this.fields[0].fieldGroup)
     let tableData = this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
     tableData[0].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyOutSafeBusinessSIYN;
     tableData[1].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyInPremisesSIYN;
@@ -1709,7 +1726,7 @@ checkMoneyYNChanges(){
     console.log("Tablessssss",tableData)
   }
   else if(this.productId == '16' && this.insuranceId == '100004'){
-    console.log("Moneyyyyyyyyyy",this.fields[0].fieldGroup)
+    console.log("Moneyyyyyyyyyy 100004",this.fields[0].fieldGroup)
     let tableData = this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
     
     tableData[0].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyInSafeBusinessSIYN;
@@ -2553,7 +2570,7 @@ console.log('INSURANCE IDDDDDDD',this.insuranceId);
                 props: {
                   label: 'Used Contruction Materials (Wall)',
                   disabled: this.checkDisable('WallType'),
-                  required: false,
+                  required: true,
                   options: [
                   ],
                 },
@@ -2568,7 +2585,7 @@ console.log('INSURANCE IDDDDDDD',this.insuranceId);
                 props: {
                   label: 'Used Contruction Materials (Roof)',
                   disabled: this.checkDisable('RoofType'),
-                  required: false,
+                  required: true,
                   options: [
                   ],
                 },
@@ -4640,6 +4657,64 @@ onSaveplantaLLrisk(type,formType){
 );
 
 }
+checkvalidations(){
+  // let fireData = new Money();
+  // let entry = [];
+  // let checkYnHooks ={ onInit: (field: FormlyFieldConfig) => {
+  //   field.formControl.valueChanges.subscribe(() => {
+  //       this.checkMoneyYNChanges()
+  //   });
+  // }};
+  // let groupList:any = fireData?.fields.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
+  // let i=0;
+  //   for(let group of groupList){
+  //      group.fieldGroup[0].hooks = checkYnHooks;
+  //      i+=1;
+  //      if(i==groupList.length){
+  //       this.fields[0] = fireData?.fields;
+  //     }
+  //   }
+  this.MoneyDirectorError = false;
+  let i=0;
+  if(this.productItem.MoneyInSafeBusinessSIYN && this.productItem?.MoneySafeLimit=='0'){i+=1;
+   this.stlvalidation();
+  }
+  if(this.productItem.MoneyInPremisesSIYN && this.productItem?.MoneyDirectorResidence=='0'){i+=1;
+    console.log('UUUUUUUUUUUU');
+    this.stlvalidation();
+  }
+  if(this.productItem.CashInTransitSIYN && this.productItem?.MoneyMajorLoss=='0'){i+=1;
+    this.stlvalidation();
+  }
+  if(this.productItem.CashInHandEmployeesSIYN && this.productItem?.MoneyCollector=='0'){i+=1;
+    this.stlvalidation();
+  }
+  if(this.productItem.MoneyOutSafeBusinessSIYN && this.productItem?.MoneyOutofSafe=='0'){i+=1;
+    this.stlvalidation();
+  }
+  if(this.productItem.MoneyAnnualcarrySuminsuredSIYN && this.productItem?.MoneyAnnualEstimate=='0'){i+=1;
+    this.stlvalidation();
+  }
+ 
+
+  if(i==0){
+    this.onSaveMoneyDetails('proceed','individual');
+  }
+}
+
+stlvalidation(){
+  Swal.fire({
+    title: '<strong>Error</strong>',
+    icon: 'info',
+    html:
+      `<ul class="list-group errorlist">
+       <li>Please Enter Amount For Selected Items</li>
+   </ul>`,
+    showCloseButton: false,
+   cancelButtonColor: '#d33',
+   cancelButtonText: 'Ok',
+  })
+}
 onSaveMoneyDetails(type,formType){
   let ReqObj = {
     "CreatedBy": this.loginId,
@@ -5783,7 +5858,10 @@ onFormSubmit() {
   }
   else if(this.productId=='42'){this.onCyperSave('proceed','individual')}
   else if(this.productId=='39'){this.onSaveMachineryDetails('proceed','individual')}
-  else if(this.productId=='16'){this.onSaveMoneyDetails('proceed','individual')}
+  else if(this.productId=='16'){
+    this.checkvalidations();
+    //this.onSaveMoneyDetails('proceed','individual')
+  }
   else if(this.productId=='14'){this.onSaveEmployeeDetails('proceed','individual')}
   else if(this.productId=='32'){this.onSaveFidelityDetails('proceed','individual')}
   else if(this.productId=='1'){this.onSaveBurglaryDetails('proceed','individual')}
