@@ -2173,9 +2173,21 @@
       7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
     outline: none;
   }
+  .custom-btn:focus{
+
+    background: #fff !important;
+    color: rgb(0, 172, 238) !important;
+    border: 1px solid rgb(0, 172, 238) !important;
+    
+  }
+  ::ng-deep .btn-3:focus{
+    background: #fff !important;
+    color: rgb(0, 172, 238) !important;
+    border: 1px solid rgb(0, 172, 238) !important;
+  }
   .btn-3 {
-    background: rgb(0, 172, 238);
     background: linear-gradient(0deg,rgb(55 81 126) 0%,rgb(71 178 228) 100%);
+    //background: linear-gradient(0deg,rgb(55 81 126) 0%,rgb(71 178 228) 100%);
     width: 71px;
     height: 30px;
     line-height: 32px;
@@ -2348,13 +2360,21 @@
       7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
     outline: none;
   }
+  .custom-btn-cancel:focus{
+    background-color: #fff !important;
+  }
+  ::ng-deep .btn-1:focus{
+    background-color: #fff !important;
+    color: #df3f3f !important;
+    border: 1px solid #df3f3f !important;
+  }
   .btn-1 {
     background: #df3f3f;
-    background: linear-gradient(
-      0deg,
-      rgb(236, 82, 77) 0%,
-      rgb(228, 114, 114) 100%
-    );
+    // background: linear-gradient(
+    //   0deg,
+    //   rgb(236, 82, 77) 0%,
+    //   rgb(228, 114, 114) 100%
+    // );
     width: 71px;
     height: 30px;
     line-height: 32px;

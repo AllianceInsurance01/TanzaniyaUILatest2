@@ -467,7 +467,7 @@
                                                             <ng-container *ngIf="(element.Endorsements==null)">
                                                                 <div class="d-flex justify-content-between">
                                                                     <div>
-                                                                        <ng-container *ngIf="element[col.key]!=0 && element[col.key]!='0' && element[col.key]!=null">
+                                                                        <ng-container *ngIf="(element.Discounts!=null && element.Discounts.length!=0) || (element.Loadings!=null && element.Loadings.length!=0) || adminSection">
     
                                                                             &nbsp;&nbsp;<button type="button"
                                                                                 class="btn maan-btn-blue btn-circle"
@@ -1508,7 +1508,7 @@
 
                                                                     <div class="d-flex justify-content-between">
                                                                         <div>
-                                                                            <ng-container
+                                                                            <ng-container *ngIf="(element.Discounts!=null && element.Discounts.length!=0) || (element.Loadings!=null && element.Loadings.length!=0) || adminSection"
                                                                                 >
                                                                                 &nbsp;&nbsp;<button type="button"
                                                                                     class="btn maan-btn-blue btn-circle"
