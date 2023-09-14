@@ -284,11 +284,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-4 col-lg-4" *ngIf="calcType!='G' && calcType!='F'">
+                                        <div class="col-12 col-md-4 col-lg-4" >
                                             <div class="input-control-container">
-                                                <label class="input-form-label">Maximum SumInsured<span class="text-required">*</span></label>
+                                                <label class="input-form-label">Minimum SumInsured<span class="text-required">*</span></label>
                                                 <div class="input-form-box">
-                                                    <input type="text" [(ngModel)]="maxSumInsured" class="input-form-control without-icon" maxlength="100">
+                                                    <input type="text" [(ngModel)]="minSumInsured" class="input-form-control without-icon" maxlength="100">
                                                 </div>
                                             </div>
                                         </div>
@@ -464,17 +464,15 @@
                                 </div>
                                 <div>
                                   <!--nbButton hero status="danger" nbButton hero status="primary"-->
-                                    <div class="d-flex justify-content-end">
-                                        <div>
+                                    <div class="text-end">
                                             <button class="btn btn-danger" *ngIf="!ratingSection" (click)="getBackPage()">Cancel</button>
-                                            <button class="btn btn-danger"  *ngIf="ratingSection" (click)="ratingSection=!ratingSection;title='Cover Details'">Back</button>
-                                        </div>
-                                        <div>
+                                            <button class="btn btn-danger"  *ngIf="ratingSection" (click)="ratingSection=!ratingSection;title='Cover Details'">Back</button>&nbsp;
+                                        
                                             <button class="btn btn-primary ml-2" *ngIf="!ratingSection && coverDetails.SubCoverYn=='Y'" (click)="onSaveCoverForm('subCover')">Proceed To SubCover Details</button>
                                             <button class="btn btn-success ml-2" *ngIf="(coverDetails.SubCoverYn=='Y' && !ratingSection)" (click)="onSaveCoverForm('saveCover')">SAVE</button>
                                             <button class="btn btn-success ml-2" *ngIf="(coverDetails.SubCoverYn!='Y' && ratingSection)" (click)="onSaveCoverForm('direct')">Submit</button>
-                                            <button class="btn btn-primary ml-2" *ngIf="!ratingSection && coverDetails.SubCoverYn!='Y'" (click)="ratingSection=!ratingSection;title='Rating Details'">Proceed To Rating Details</button>
-                                        </div>
+                                            <button class="btn btn-primary ml-2" *ngIf="!ratingSection && coverDetails.SubCoverYn!='Y'" (click)="ratingSection=!ratingSection;title='Rating Details'">Proceed To Rating Details</button>&nbsp;
+                                      
                                     </div>
                                 </div>
                             </div>
@@ -712,11 +710,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-4 col-lg-4" *ngIf="subCoverData.CalcType!='G' && subCoverData.CalcType!='F'">
+                                            <div class="col-12 col-md-4 col-lg-4" >
                                                 <div class="input-control-container">
-                                                    <label class="input-form-label">Maximum SumInsured<span class="text-required">*</span></label>
+                                                    <label class="input-form-label">Minimum SumInsured<span class="text-required">*</span></label>
                                                     <div class="input-form-box">
-                                                        <input type="text" [(ngModel)]="subCoverData.SumInsuredEnd" class="input-form-control without-icon" maxlength="100">
+                                                        <input type="text" [(ngModel)]="subCoverData.SumInsuredStart" class="input-form-control without-icon" maxlength="100">
                                                     </div>
                                                 </div>
                                             </div>

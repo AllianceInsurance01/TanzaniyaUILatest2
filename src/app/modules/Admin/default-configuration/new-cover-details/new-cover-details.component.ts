@@ -47,6 +47,7 @@ export class NewCoverDetailsComponent implements OnInit {
   excessamount: any;
   excessDesc: any;
   subRatingSection: boolean;
+  minSumInsured: any;
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,) {
       this.minDate = new Date();
@@ -296,6 +297,7 @@ export class NewCoverDetailsComponent implements OnInit {
               this.calcType = this.coverDetails.CalcType;
               this.baseRate = this.coverDetails.BaseRate;
               this.minPremium = this.coverDetails.MinimumPremium;
+              this.minSumInsured = this.coverDetails.SumInsuredStart;
               this.maxSumInsured = this.coverDetails.SumInsuredEnd;
               this.onSubCoverChange();
               let SubCover = sessionStorage.getItem('SubCoverEdit');
@@ -611,7 +613,7 @@ export class NewCoverDetailsComponent implements OnInit {
             "FactorTypeId": null,
             "BaseRate": this.baseRate,
             "MinimumPremium": this.minPremium,
-            "SumInsuredStart": this.minPremium,
+            "SumInsuredStart": this.minSumInsured,
             "SumInsuredEnd": this.maxSumInsured,
             "Remarks": this.coverDetails.Remarks,
             "Status": this.coverDetails.Status,
@@ -717,7 +719,7 @@ export class NewCoverDetailsComponent implements OnInit {
       "FactorTypeId": this.subCoverData.FactorTypeId,
       "BaseRate": this.subCoverData.BaseRate,
       "MinimumPremium":this.subCoverData.MinimumPremium,
-      "SumInsuredStart": this.subCoverData.MinimumPremium,
+      "SumInsuredStart": this.subCoverData.SumInsuredStart,
       "SumInsuredEnd": this.subCoverData.SumInsuredEnd,
       "Remarks":this.subCoverData.Remarks,
       "Status": this.subCoverData.Status,

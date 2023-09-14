@@ -84,6 +84,7 @@ export class CustomerRedirectComponent {
                 userDetails.Result['BranchCode'] = branchData.BranchCode;
                 userDetails.Result['CurrencyId'] = branchData?.CurrencyId;
                 userDetails.Result['InsuranceId'] = branchData?.InsuranceId;
+                userDetails.Result['LoginType'] = 'B2CFlow';
                 sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
                 sessionStorage.removeItem('customerReferenceNo');
                 //this.router.navigate(['/Home/customer/Client/client-details']);

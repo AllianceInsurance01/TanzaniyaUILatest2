@@ -3466,7 +3466,7 @@ getMotorUsageList(vehicleValue){
     });
   }
   onFinalProceed(){
-    if(this.subuserType=='B2C'){
+    if(this.subuserType=='B2C' && this.loginId=='guest'){
         this.viewQuoteDetails();
     }
     else if(this.emiYN=='Y' && this.emiPeriod!='N'){
@@ -3543,7 +3543,32 @@ getMotorUsageList(vehicleValue){
 				if(data?.Result){
 				  let quoteDetails = data?.Result?.QuoteDetails;
 				  this.localPremiumCost = quoteDetails?.OverallPremiumLc;
-				  this.insertPayementDetails();
+          if(this.productId=='5'){
+            let i=0;
+            for(let vehicle of this.newcoverlist){
+              let vehEntry = vehicle.Covers;
+              console.log('VVVVVVVVV',vehEntry);
+              if(vehEntry.length!=0){
+                let entry = vehEntry.filter(ele=>ele.CoverId == '55');
+                if(entry.length!=0){
+                  console.log('RRRRRRR',entry);
+                  this.coverlist.push(entry)
+                }
+              }
+              i+=1;
+            }           
+            console.log('if entry of cover id 55',this.coverlist);
+           if(this.coverlist.length!=0){
+            sessionStorage.setItem('proceedType','AdditionalInfo');
+            this.insertPayementDetails();
+           }
+           else{
+            sessionStorage.removeItem('proceedType');
+            this.insertPayementDetails();
+           }
+          }
+          else this.insertPayementDetails();
+				  
 				}
 			},
 			(err) => {

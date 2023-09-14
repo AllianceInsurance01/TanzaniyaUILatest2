@@ -247,11 +247,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-4 col-lg-4" *ngIf="calcType!='G' && calcType!='F'">
+                                            <div class="col-12 col-md-4 col-lg-4" >
                                                 <div class="input-control-container">
-                                                    <label class="input-form-label">Maximum SumInsured<span class="text-required">*</span></label>
+                                                    <label class="input-form-label">Minimum SumInsured<span class="text-required">*</span></label>
                                                     <div class="input-form-box">
-                                                        <input type="text" [(ngModel)]="maxSumInsured" class="input-form-control without-icon" maxlength="100">
+                                                        <input type="text" [(ngModel)]="minSumInsured" class="input-form-control without-icon" maxlength="100">
                                                     </div>
                                                 </div>
                                             </div>
@@ -766,11 +766,11 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-12 col-md-4 col-lg-4" *ngIf="subCoverData.CalcType!='G' && subCoverData.CalcType!='F'">
+                                                <div class="col-12 col-md-4 col-lg-4">
                                                     <div class="input-control-container">
-                                                        <label class="input-form-label">Maximum SumInsured<span class="text-required">*</span></label>
+                                                        <label class="input-form-label">Minimum SumInsured<span class="text-required">*</span></label>
                                                         <div class="input-form-box">
-                                                            <input type="text" [(ngModel)]="subCoverData.SumInsuredEnd" class="input-form-control without-icon" maxlength="100">
+                                                            <input type="text" [(ngModel)]="subCoverData.SumInsuredStart" class="input-form-control without-icon" maxlength="100">
                                                         </div>
                                                     </div>
                                                 </div>

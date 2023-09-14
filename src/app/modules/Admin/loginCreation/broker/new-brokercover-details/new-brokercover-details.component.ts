@@ -74,6 +74,7 @@ export class NewBrokercoverDetailsComponent implements OnInit {
   uploadStatus: any=null;
   uploadRecordsList: any[]=[];
   CoverList: any;
+  minSumInsured: any;
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,) {
       this.minDate = new Date();
@@ -262,6 +263,7 @@ export class NewBrokercoverDetailsComponent implements OnInit {
               this.baseRate = this.coverDetails.BaseRate;
               this.minPremium = this.coverDetails.MinimumPremium;
               this.maxSumInsured = this.coverDetails.SumInsuredEnd;
+              this.minSumInsured = this.coverDetails.SumInsuredStart;
               this.onSubCoverChange();
               this.factorValue = this.coverDetails.FactorTypeId;
               if(this.factorValue!=null && this.factorValue!=undefined && this.factorValue!=''){
@@ -428,7 +430,7 @@ export class NewBrokercoverDetailsComponent implements OnInit {
       "FactorTypeId": this.subCoverData.FactorTypeId,
       "BaseRate": this.subCoverData.BaseRate,
       "MinimumPremium":this.subCoverData.MinimumPremium,
-      "SumInsuredStart": this.subCoverData.MinimumPremium,
+      "SumInsuredStart": this.subCoverData.SumInsuredStart,
       "SumInsuredEnd": this.subCoverData.SumInsuredEnd,
       "Remarks":this.subCoverData.Remarks,
       "Status": this.subCoverData.Status,
@@ -1001,7 +1003,7 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
             "FactorTypeId": this.factorValue,
             "BaseRate": this.baseRate,
             "MinimumPremium": this.minPremium,
-            "SumInsuredStart": '1',
+            "SumInsuredStart": this.minSumInsured,
             "SumInsuredEnd": this.maxSumInsured,
             "Remarks": this.coverDetails.Remarks,
             "Status": this.coverDetails.Status,
