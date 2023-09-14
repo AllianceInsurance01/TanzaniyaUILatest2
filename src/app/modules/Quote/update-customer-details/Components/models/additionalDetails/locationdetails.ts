@@ -33,7 +33,7 @@ export class LocationDetails{
                           type: 'input',
                           key: 'LocationNameBuilding',
                           defaultValue: '',
-                          className: 'col-sm-5 offset-1',
+                          className: 'col-sm-5 offset-lg-1 offset-md-1',
                           props: {
                             label: `Location Name`,
                             required: true,

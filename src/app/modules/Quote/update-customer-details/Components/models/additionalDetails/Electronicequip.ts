@@ -28,7 +28,12 @@ export class ElectronicEquip{
         }
         this.fields = [
           {
-           
+            // <th class="tbl-header spancommon span_font_size">Location</th>
+            // <th class="tbl-header spancommon span_font_size">Electronic Item</th>
+            // <th class="tbl-header spancommon span_font_size">PurchaseMonth</th>
+            // <th class="tbl-header spancommon span_font_size">PurchaseYear</th>
+            // <th class="tbl-header spancommon span_font_size">MakeAndModel</th>
+            // <th class="tbl-header spancommon span_font_size">SumInsured &nbsp;({{currencyValue}})</th>
             fieldGroup: [
               {
                 fieldGroupClassName: 'row',
@@ -63,7 +68,7 @@ export class ElectronicEquip{
                         defaultValue: '',
                         className: 'col-sm-4',
                         props: {
-                          label: `Location`,
+                          label: `Electronic Equipment`,
                           required: true,
                           options: [
           
@@ -78,19 +83,23 @@ export class ElectronicEquip{
                         expressions: {
                         },
                       },
-                      {
-                        className: 'col-sm-4',
-                        type: 'input',
-                        key: 'IndOccupation',
-                        templateOptions: {
-                          label: 'Occupation',
-                          required: true,
-                        },
-                        validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
-                        },
-                      
-                      },
+                      // {
+                      //   type: 'input',
+                      //   key: 'ElqJoin',
+                      //   defaultValue: '',
+                      //   className: 'col-sm-4',
+                      //   props: {
+                      //     label: `Purchase Month`,
+                      //     required: true,
+                      //   },
+                      //   validators: {
+                      //     validation: [ForceLengthValidators.maxLength(4), ForceLengthValidators.min(1)]
+                      //   },
+                      //   hooks: {
+                      //   },
+                      //   expressions: {
+                      //   },
+                      // },
                       {
                         type: 'select',
                         key: 'ElqJoin',
@@ -105,7 +114,7 @@ export class ElectronicEquip{
           
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(50), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -130,11 +139,11 @@ export class ElectronicEquip{
                         type: 'input',
                         key: 'Elqmake',
                         templateOptions: {
-                          label: 'Join Year',
+                          label: 'Make And Model',
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(4), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
                         },
                       
                       },
@@ -143,7 +152,7 @@ export class ElectronicEquip{
                         type: 'commaSeparator',
                         key: 'ElqSI',
                         templateOptions: {
-                          label: 'Salary',
+                          label: 'Sum Insured',
                           required: true,
                         },
                         validators: {
@@ -155,8 +164,6 @@ export class ElectronicEquip{
                         },
                       
                       },
-                     
-                    
                     ]
                   }
                 ]

@@ -206,6 +206,9 @@ input:checked+.slider:before {
         width: 90%;
         margin-left: 0px !important;
     }
+    .display1{
+        display: none !important;
+    }
     }
   
     @media screen and (min-width: 750px) and (max-width: 5464px) {
@@ -214,6 +217,9 @@ input:checked+.slider:before {
             flex-wrap: wrap;
             width: 90%;
             margin-left: 5%;
+        }
+        .display2{
+            display: none !important;
         }
       }
 
