@@ -54,6 +54,7 @@ export class NavbarComponent implements OnInit {
   openSidenav:boolean;customerName:any=null;
   private screenWidth$ = new BehaviorSubject<number>
     (window.innerWidth);
+  loginType: any=null;
   constructor(
     private authService: AuthService,
     private service: HttpService,
@@ -68,6 +69,7 @@ export class NavbarComponent implements OnInit {
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails.Result.UserType;
     this.productname = this.userDetails.Result.ProductName;
+    if(this.userDetails.Result.LoginType) this.loginType = this.userDetails.Result.LoginType;
     if(this.userType!='Issuer'){
       this.customerCode = this.userDetails.Result.CustomerCode;
       this.customerName = this.userDetails.Result.UserName;

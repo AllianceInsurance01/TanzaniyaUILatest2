@@ -379,7 +379,7 @@
                     </a>
                 </li> -->
                 
-                    <ng-container *ngIf="menuSection && parentSection && typeValue!='B2C'">
+                    <ng-container *ngIf="menuSection && parentSection && (loginType!='B2CFlow')">
                         <ng-container *ngFor="let Menu of menu;let i=index">
                     
                             <li (click)="navexpand(i);clearOldRecords()">

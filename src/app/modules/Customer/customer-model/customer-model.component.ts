@@ -646,6 +646,7 @@ export class CustomerModelComponent {
             const Token = data?.Result?.Token;
             this.authService.login(data);
             this.authService.UserToken(Token);
+			data.Result['LoginType'] = 'Normal';
             sessionStorage.setItem('Userdetails', JSON.stringify(data));
             sessionStorage.setItem('UserToken', Token);
             sessionStorage.setItem('menuSection', 'navMenu');
