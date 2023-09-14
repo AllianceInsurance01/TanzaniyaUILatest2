@@ -80,9 +80,18 @@ export class CustomerModelComponent {
       		this.productItem.IdType = '1'
 			this.showEmailSection = true;
 		}
-		this.getTitleList();
 		if(this.loginId=='guest') this.getTitleList();
-		else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
+		else{
+			if(this.productId=='5'){
+			  if(sessionStorage.getItem('proceedType')){
+				let type = sessionStorage.getItem('proceedType');
+				if(type=='AdditionalInfo') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
+				else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
+			  }
+			  else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
+			}
+			else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
+		}
   }
   omit_special_char(event){   
 		var k;  
