@@ -155,8 +155,11 @@
 .tracking-first-width {
     width: 15%;
 }
-.tracking-b2c-width {
+.tracking-b2c-width-alt {
     width: 16.2%;
+}
+.tracking-b2c-width{
+    width: 20%;
 }
 .tracking-second-width {
     width: 20%;

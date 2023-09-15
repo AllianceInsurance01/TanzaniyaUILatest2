@@ -532,10 +532,7 @@ export class MakePayementComponent implements OnInit {
     }
   }
   ongetBack(){
-    if(this.subuserType=='B2C'){
-      this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
-    }
-    else if(this.endorsementSection && this.cancelEndorse){
+    if(this.endorsementSection && this.cancelEndorse){
       this.router.navigate(['Home/policies/Endorsements/endorsementTypes'])
     }
     else{

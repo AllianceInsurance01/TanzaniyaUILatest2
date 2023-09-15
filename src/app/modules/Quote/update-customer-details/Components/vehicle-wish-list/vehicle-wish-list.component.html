@@ -210,7 +210,7 @@
             </div>
         </div>
         <div class="text-center mb-2">
-            <button class="custom-btn btn-5 mr-2" *ngIf="!searchSection && vehicleWishList.length==0" (click)="ongetBack()" matRipple><<&nbsp;Back</button>&nbsp;
+            <button class="custom-btn btn-5 mr-2" *ngIf="!searchSection && vehicleWishList.length==0 && loginType!='B2CFlow'" (click)="ongetBack()" matRipple><<&nbsp;Back</button>&nbsp;
             <button class="custom-btn btn-6 maan-button-data mr-2" *ngIf="!vehicleDetails && !searchSection && this.customerData.length!=0" (click)="WishListProceed()" matRipple>&nbsp;Proceed</button>
         </div>
     </div>
@@ -271,7 +271,7 @@
             
             <div class="col-12 col-md-4 mt-4" *ngIf="searchSection">
                 <button class="custom-btn btn-6 maan-button-data" (click)="onSearchVehicle()" matRipple><i class="fas fa-search" style="position: relative;right: 0.2rem;top: 0.05rem;"></i>&nbsp;Search</button>
-                <button class="custom-btn btn-5  mr-2" *ngIf="vehicleWishList.length==0" (click)="ongetBack()" matRipple style="position: relative;left: 0.5rem;"><<&nbsp;Back</button>&nbsp;
+                <button class="custom-btn btn-5  mr-2" *ngIf="vehicleWishList.length==0 && loginType!='B2CFlow'" (click)="ongetBack()" matRipple style="position: relative;left: 0.5rem;"><<&nbsp;Back</button>&nbsp;
             </div>
             <div class="text-center" *ngIf="wishDuplicateError">
                 <h4 class="text-danger w3-animate-left">Chassis Number / Registration Number Already Available</h4>
@@ -312,7 +312,7 @@
             </div>
         </div>
         <div class="text-center mb-2">
-            <button class="custom-btn btn-5 mr-2 custom-btn btn-5" (click)="ongetBack()" matRipple><<&nbsp;Back</button>&nbsp;
+            <button class="custom-btn btn-5 mr-2 custom-btn btn-5" (click)="ongetBack()" *ngIf="(loginType!='B2CFlow')" matRipple><<&nbsp;Back</button>&nbsp;
             <button class="custom-btn btn-6  maan-button-data" matRipple (click)="WishListProceed()"><i class="fas fa-check"></i>&nbsp;Proceed</button>
         </div>
     </div>

@@ -93,7 +93,6 @@ export class NavbarComponent implements OnInit {
     //   $('.subusermenu').hide();
     //  });
       $("#dropdownMenuLink1").on('click', function (evt) {  
-        console.log("evt***",evt);
         $('.branchsubName').toggle();
       });
       this.getScreenWidth().subscribe(width => {
@@ -112,11 +111,10 @@ export class NavbarComponent implements OnInit {
      });
       // let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       this.insuranceid = this.userDetails.Result.LoginBranchDetails[0].InsuranceId;
-      console.log('INSURNACRRR',this.insuranceid)
-      console.log('IIIIIIIIII',this.insuranceid);
+      if(this.loginType=='B2CFlow') {this.openSideNav = false;this.showToggle = 'hide';$('#sidenav').toggle();}
   }
   ngAfterViewInit() {
-    this.observer
+      this.observer
       .observe(['(max-width: 800px)'])
       .pipe(delay(1), untilDestroyed(this))
       .subscribe((res:any) => {
@@ -141,6 +139,7 @@ export class NavbarComponent implements OnInit {
           this.sidenav.close();
         }
       });
+    if(this.loginType=='B2CFlow') {this.openSideNav = false;this.showToggle = 'hide';$('#sidenav').toggle();}
   }
   home() {
     if(this.typeValue=='B2C' && this.loginId=='guest'){

@@ -1603,7 +1603,10 @@ export class CustomerDetailsComponent implements OnInit {
     // if(this.productId=='15'){
     //   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/workmens-Compensation'])
     // }
-    if(!this.endorsementSection){
+    if(this.productId=='45'){
+      this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+    }
+    else if(!this.endorsementSection){
       let validDetais = this.checkMandatories();
       if(validDetais){
         if(rowData.length==0){

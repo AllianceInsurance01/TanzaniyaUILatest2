@@ -40,8 +40,9 @@ export class UpdateCustomerDetailsComponent implements OnInit {
   brokerBranchCode: any=null;
   CustomerCode: any=null;subUserType:any=null;
   showStepperSection: boolean = true;
-  b2cSection: boolean=false;
+  b2cSection: boolean=false;customerSection:boolean=false;
   modifiedYN: any='N';
+  additionalSection: boolean=false;
   //public orderStatus="customerDetails"
 
   constructor(
@@ -52,7 +53,14 @@ export class UpdateCustomerDetailsComponent implements OnInit {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.productId = this.userDetails.Result.ProductId;
     this.subUserType = sessionStorage.getItem('typeValue');
-    if(this.subUserType=='B2C') this.b2cSection  = true;
+    if(this.subUserType=='B2C'){
+      this.b2cSection  = true;
+      let sectionType = sessionStorage.getItem('riskSection');
+      if(sectionType=='additional') this.additionalSection = true;
+      else this.additionalSection = false;
+      let type = sessionStorage.getItem('b2cType');
+      if(type) this.customerSection = true;
+    }
     this.navStart = router
       .events
       .pipe(filter(event => event instanceof NavigationEnd))

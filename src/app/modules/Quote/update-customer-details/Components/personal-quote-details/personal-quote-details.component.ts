@@ -138,7 +138,8 @@ export class PersonalQuoteDetailsComponent implements OnInit {
   ProductCode:any="68";
   aooSIList: any[]=[];
   aggSIList: any[]=[];
-  MoneyDirectorError:any;
+  MoneyDirectorError:any;paymentMode='01';
+  paymentModeList: any[]=[];
   constructor(private formlyJsonschema: FormlyJsonschema, private sharedService: SharedService, private datePipe: DatePipe,
     private router: Router, private http: HttpClient, private updateComponent: UpdateCustomerDetailsComponent) {
     this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -163,6 +164,15 @@ export class PersonalQuoteDetailsComponent implements OnInit {
      this.updateComponent.showStepperSection = false;
     if (this.productId != '3' && this.productId != '19' && this.productId != '42' && this.productId != '43' && this.productId!='39' && this.productId!='16' && this.productId!='1' && this.productId!='25' && this.productId!='21' && this.productId!='26' && this.productId!='27') {
       this.getOccupationList(null);
+    }
+    if(this.productId=='45'){
+      this.currencyCode = 'TZS';
+      this.paymentModeList = [
+          {"Code":"01","CodeDesc":"Monthly"},
+          {"Code":"02","CodeDesc":"Quarterly"},
+          {"Code":"03","CodeDesc":"Half-Yearly"},
+          {"Code":"04","CodeDesc":"Yearly"},
+      ]
     }
     this.productItem = new ProductData();
     this.productItem.BuildingOwnerYn = 'Y';
@@ -5853,6 +5863,9 @@ setFormValues() {
   );
 }
 onFormSubmit() {
+  if(this.productId=='45'){
+    this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/life-cover-details']);
+  }
   if(this.productId=='6'){
     this.onSaveFireAlliedDetails('proceed','individual');
   }

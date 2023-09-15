@@ -3169,14 +3169,17 @@ getMotorUsageList(vehicleValue){
           }           
          if(coverlist.length!=0){
           console.log('if entry of cover id 55',coverlist);
+            sessionStorage.setItem('riskSection','additional');
             this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
            }
            else {
+            sessionStorage.setItem('riskSection','normal');
             this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
            }
         }
   
         else{
+          sessionStorage.setItem('riskSection','normal');
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
         }
         //this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);

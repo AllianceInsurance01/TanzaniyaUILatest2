@@ -71,10 +71,12 @@ export class VehicleWishListComponent implements OnInit {
   showEmpRecordsSection: boolean;
   bdmCode: any;
   subuserType: string;
+  loginType: any=null;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     console.log("UserDetails",this.userDetails);
+    if(this.userDetails.Result.LoginType) this.loginType = this.userDetails.Result.LoginType;
     this.loginId = this.userDetails.Result.LoginId;
     this.userType = this.userDetails?.Result?.UserType;
     this.agencyCode = this.userDetails.Result.OaCode;
