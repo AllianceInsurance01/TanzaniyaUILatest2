@@ -436,8 +436,9 @@ emiyn="N";
               vehicleList.push(veh);
               if(i==vehicles.length){
                   this.vehicleDetailsList = vehicleList;
-                  if(this.vehicleDetailsList.some(ele=>ele.ManualReferalYn=='Y') && !this.adminSection){
+                  if(this.vehicleDetailsList.some(ele=>ele.ManualReferalYn=='Y') && !this.adminSection){  
                     this.isMannualReferal = "Y";
+                    console.log('MannnnnnnnReferral', this.isMannualReferal);
                   }
                   this.selectedRowData = this.vehicleDetailsList[0];
                   this.onSelectSection();
@@ -2231,7 +2232,8 @@ getMotorUsageList(vehicleValue){
         if(i==this.vehicleDetailsList.length){
           this.showSection = true;
           if(this.vehicleDetailsList.some(ele=>ele.ManualReferalYn=='Y') && !this.adminSection && this.statusValue){
-            this.isMannualReferal = "Y";
+            this.isMannualReferal = "N";
+            console.log('PPPPPPPMNNNNNNNNNNNNNNNMMMMMMMMMMMMM',this.isMannualReferal )
           }
           this.selectedRowData = this.vehicleDetailsList[0];
           this.onSelectSection();
@@ -3142,7 +3144,7 @@ getMotorUsageList(vehicleValue){
         //       }
         //       else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
         // }
-         if(this.productId=='3' || this.productId=='19' || this.productId=='39' || this.productId=='32' || this.productId=='14' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId=='42' || this.productId=='43'){
+         if(this.productId=='3' || this.productId=='19' || this.productId=='39' || this.productId=='32' || this.productId=='14' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId=='42' || this.productId=='43' || this.productId=='25'){
           let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
           if(homeSession){
             this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
@@ -3495,7 +3497,7 @@ getMotorUsageList(vehicleValue){
       //   }
       //   else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
       // }
-      else if(this.productId=='32' || this.productId=='39' || this.productId=='14' || this.productId=='15' || this.productId=='19' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId =='21' || this.productId =='26' || this.productId=='42' || this.productId=='43'){
+      else if(this.productId=='32' || this.productId=='39' || this.productId=='14' || this.productId=='15' || this.productId=='19' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId =='21' || this.productId =='26' || this.productId =='25'|| this.productId=='42' || this.productId=='43'){
         // let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
         // if(homeSession){
            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])

@@ -2100,7 +2100,7 @@ export class CustomerDetailsComponent implements OnInit {
     if(this.productId=='1'){section.push('52');};
     if(this.productId=='21'){section.push('3');};
     if(this.productId=='26'){section.push('3');};
-    if(this.productId=='25'){section.push('3');};
+    if(this.productId=='25'){section.push('39');};
     if(this.productId=='43'){section.push('70');this.IndustryId='44'};
     let ReqObj = { 
         "AcexecutiveId": "",

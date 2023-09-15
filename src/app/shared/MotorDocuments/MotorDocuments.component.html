@@ -1207,6 +1207,427 @@
                 </div>
             </div>
            </mat-tab>
+
+
+
+           <mat-tab label="Additional Info">
+            <div class="card">
+            <div class="container">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" *ngIf="productId=='5'">
+                      <a class="nav-link active" data-bs-toggle="tab" href="#msg">Driver Details</a>
+                    </li>
+                    <li class="nav-item" *ngIf="productId=='5'">
+                      <a class="nav-link" data-bs-toggle="tab" href="#set">Additional Information</a>
+                    </li>
+                    <li class="nav-item" *ngIf="productId!='5'">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#set">Additional Information</a>
+                      </li>
+                    <li class="nav-item" *ngIf="productId=='5'">
+                        <a class="nav-link" data-bs-toggle="tab" href="#collatral">Collateral Details</a>
+                      </li>
+                  </ul>
+                     
+                  <div class="tab-content mt-2 ml-4" *ngIf="productId=='5'">
+                    <div class="tab-pane container active" id="msg">
+                        <div class="row p-5 ml-4 mr-4">
+                            <div class="col-12">
+                                <div>
+                                    <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">Driver Details</h1></div>
+                                    <div class="Personal Details mt-2 pl-5 pr-5" *ngFor="let driver of DriverInfo;let i=index;">
+                                        <div class="row mt-2">
+                                            <div class="col-3 mt-2">
+                                                <div class="heading1">Driver Name</div>
+                                                <div class="heading2">{{driver.DriverName}}&nbsp;</div>
+                                            </div>
+                                            <div class="col-3 mt-2">
+                                                <div class="heading1">Driver Dob</div>
+                                                <div class="heading2">{{driver.DriverDob}}&nbsp;</div>
+                                            </div>
+                                            <div class="col-3 mt-2">
+                                                <div class="heading1">Driver Type</div>
+                                                <div class="heading2">{{getDriverName(driver.DriverType)}}</div>
+                                            </div>
+                                            <div class="col-3 mt-2">
+                                                <div class="heading1">License No</div>
+                                                <div class="heading2">{{driver.LicenseNo}}</div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane container fade" id="set">
+                        <div class="row p-5 ml-4 mr-4">
+                            <div class="col-12">
+                                <div>
+                                    <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">Additional Details</h1></div>
+                                    <div class="Personal Details mt-2 pl-5 pr-5" *ngFor="let acc of accessoriesList;let i=index;">
+                                        <div class="row mt-2">
+                                            <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                <div class="heading1">Accessories</div>
+                                                <div class="heading2">{{acc.ContentRiskDesc}}&nbsp;</div>
+                                            </div>
+                                            <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                <div class="heading1">Serial No</div>
+                                                <div class="heading2">{{acc.SerialNoDesc}}&nbsp;</div>
+                                            </div>
+                                            <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                <div class="heading1">Sum Insured</div>
+                                                <div class="heading2">{{acc.SumInsured}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                <div class="heading1">Chassis No</div>
+                                                <div class="heading2">{{getLocationName(acc.RiskId)}}</div>
+                                            </div>
+                                          
+                                        </div>
+                                        <hr>
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane container fade" id="collatral">
+                        <div class="row p-5 ml-4 mr-4">
+                            <div class="col-12">
+                                <div>
+                                    <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">Collateral Details</h1></div>
+                                    <div class="Personal Details mt-2 pl-5 pr-5" *ngFor="let acc of PremiumInfo;let i=index;">
+                                        <div class="row mt-2">
+                                            <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                <div class="heading1">Collateral Name</div>
+                                                <div class="heading2">{{acc.RiskDetails.CollateralName}}&nbsp;</div>
+                                            </div>
+                                            <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                <div class="heading1">CollateralYn</div>
+                                                <div class="heading2">{{acc.RiskDetails.CollateralYn}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                <div class="heading1">First LossPayee</div>
+                                                <div class="heading2">{{acc.RiskDetails.FirstLossPayee}}&nbsp;</div>
+                                            </div>
+                                            <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                <div class="heading1">BrowerType</div>
+                                                <div class="heading2"></div>
+                                            </div>
+                                          
+                                        </div>
+                                        <hr>
+                                   
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="tab-content mt-2 ml-4" *ngIf="productId!='5'">
+                    <div class="tab-pane container active" id="set">
+                        <div class="row p-2 ml-4 mr-4">
+                                <div>
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item">
+                                          <a class="nav-link active" data-bs-toggle="tab" href="#Building">Building</a>
+                                        </li>
+                                        <li class="nav-item" *ngIf="productId=='3'">
+                                          <a class="nav-link" data-bs-toggle="tab" href="#Content">Content Risk</a>
+                                        </li>
+                                        <li class="nav-item" *ngIf="productId=='3'">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#PersonalAccident">Personal Accident</a>
+                                          </li>
+                                        <li class="nav-item" *ngIf="productId=='3'">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#PersonalIndemenity">Personal Indemenity</a>
+                                          </li>
+                                          <li class="nav-item" *ngIf="productId=='14'">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#EmployersLiability">Employers Liability</a>
+                                          </li>
+                                          <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#AllRisk">All Risk</a>
+                                          </li>
+                                          <li class="nav-item" *ngIf="productId=='42'">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#Cyber">Device Details</a>
+                                          </li>
+                                      </ul>
+                                      <div class="tab-content mt-2 ml-4">
+                                        <div class="tab-pane container active" id="Building">
+                                            <ng-container *ngIf="buildingDetails.length!=0">
+                                                <div class="Personal Details mt-2 pl-2 pr-5" *ngFor="let acc of buildingDetails;let i=index;">
+                                                    <div class="row mt-2">
+                                                        <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                            <div class="heading1">Location Name</div>
+                                                            <div class="heading2">{{acc.LocationName}}&nbsp;</div>
+                                                        </div>
+                                                        <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                            <div class="heading1">Address</div>
+                                                            <div class="heading2">{{acc.BuildingAddress}}&nbsp;</div>
+                                                        </div>
+                                                        <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                            <div class="heading1">Sum Insured</div>
+                                                            <div class="heading2">{{acc.BuildingSuminsured}}</div>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="buildingDetails.length==0">
+                                                    No Data Available
+                                            </ng-container>
+                                        </div>
+                                        <div class="tab-pane container fade" id="Content" *ngIf="productId=='3'">
+                                            <div class="Personal Details mt-2 pl-2 pr-5" *ngFor="let acc of Cotentrisk;let i=index;">
+                                                <div class="row mt-2">
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Location Name</div>
+                                                        <div class="heading2">{{acc.LocationName}}&nbsp;</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Content Type</div>
+                                                        <div class="heading2">{{acc.ItemDesc}}&nbsp;</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Serial No</div>
+                                                        <div class="heading2">{{acc.SerialNoDesc}}</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Description</div>
+                                                        <div class="heading2">{{acc.ContentRiskDesc}}</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Sum Insured</div>
+                                                        <div class="heading2">{{acc.SumInsured}}</div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane container fade" id="PersonalAccident" *ngIf="productId=='3'">
+                                            <div class="Personal Details mt-2 pl-2 pr-5" *ngFor="let acc of PersonalAccident;let i=index;">
+                                                <div class="row mt-2">
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Location Name</div>
+                                                        <div class="heading2">{{acc.LocationName}}&nbsp;</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Occupation</div>
+                                                        <div class="heading2">{{acc.OccupationDesc}}&nbsp;</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Name</div>
+                                                        <div class="heading2">{{acc.PersonName}}</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Salary</div>
+                                                        <div class="heading2">{{acc.Salary}}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Nationality Id</div>
+                                                        <div class="heading2">{{acc.NationalityId}}</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Date of Birth</div>
+                                                        <div class="heading2">{{acc.Dob}}</div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane container fade" id="PersonalIndemenity" *ngIf="productId=='3'">
+                                            <div class="Personal Details mt-2 pl-2 pr-5" *ngFor="let acc of PersonalIntermediary;let i=index;">
+                                                <div class="row mt-2">
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Location Name</div>
+                                                        <div class="heading2">{{acc.LocationName}}&nbsp;</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Occupation</div>
+                                                        <div class="heading2">{{acc.OccupationDesc}}&nbsp;</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Name</div>
+                                                        <div class="heading2">{{acc.PersonName}}</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Salary</div>
+                                                        <div class="heading2">{{acc.Salary}}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Nationality Id</div>
+                                                        <div class="heading2">{{acc.NationalityId}}</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Date of Birth</div>
+                                                        <div class="heading2">{{acc.Dob}}</div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane container fade" id="EmployersLiability" *ngIf="productId=='14'">
+                                            <div class="Personal Details mt-2 pl-2 pr-5" *ngFor="let acc of employeeList|paginate:{itemsPerPage: 5, currentPage:pa, id:'pa'};let i=index;">
+                                                <div class="row mt-2">
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Name</div>
+                                                        <div class="heading2">{{acc.EmployeeName}}&nbsp;</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Occupation</div>
+                                                        <div class="heading2">{{acc.OccupationDesc}}&nbsp;</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Address</div>
+                                                        <div class="heading2">{{acc.Address}}</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Nationality Id</div>
+                                                        <div class="heading2">{{acc.NationalityId}}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">DateOfBirth</div>
+                                                        <div class="heading2">{{acc.DateOfBirth}}</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Join Year</div>
+                                                        <div class="heading2">{{acc.DateOfJoiningYear}}</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Salary</div>
+                                                        <div class="heading2">{{acc.Salary}}</div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                            <div class="d-flex justify-content-end">
+                                                <pagination-controls (pageChange)="pa=$event" id="pa"></pagination-controls>
+                                              </div>
+
+                                        </div>
+                                        <div class="tab-pane container fade" id="Fidelity" *ngIf="productId=='32'">
+                                            <div class="Personal Details mt-2 pl-2 pr-5" *ngFor="let acc of fidelityList|paginate:{itemsPerPage: 5, currentPage:fa, id:'fa'};let i=index;">
+                                                <div class="row mt-2">
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Name</div>
+                                                        <div class="heading2">{{acc.EmployeeName}}&nbsp;</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Occupation</div>
+                                                        <div class="heading2">{{acc.OccupationDesc}}&nbsp;</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Address</div>
+                                                        <div class="heading2">{{acc.Address}}</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Nationality Id</div>
+                                                        <div class="heading2">{{acc.NationalityId}}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">DateOfBirth</div>
+                                                        <div class="heading2">{{acc.DateOfBirth}}</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Join Year</div>
+                                                        <div class="heading2">{{acc.DateOfJoiningYear}}</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Salary</div>
+                                                        <div class="heading2">{{acc.Salary}}</div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                            <div class="d-flex justify-content-end">
+                                                <pagination-controls (pageChange)="fa=$event" id="fa"></pagination-controls>
+                                              </div>
+
+                                        </div>
+                                        <div class="tab-pane container fade" id="AllRisk">
+                                            <div class="Personal Details mt-2 pl-2 pr-5" *ngFor="let acc of Allrisk|paginate:{itemsPerPage: 5, currentPage:all, id:'all'};let i=index;">
+                                                <div class="row mt-2">
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Location</div>
+                                                        <div class="heading2">{{acc.Location}}&nbsp;</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Content Type</div>
+                                                        <div class="heading2">{{acc.ItemType}}&nbsp;</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">SerialNo</div>
+                                                        <div class="heading2">{{acc.SerialNoDesc}}</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Description</div>
+                                                        <div class="heading2">{{acc.ContentRiskDesc}}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Sum Insured</div>
+                                                        <div class="heading2">{{acc.SumInsured}}</div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                            <div class="d-flex justify-content-end">
+                                                <pagination-controls (pageChange)="all=$event" id="all"></pagination-controls>
+                                              </div>
+
+                                        </div>
+                                        <div class="tab-pane container fade" id="Cyber" *ngIf="productId=='42'">
+                                            <div class="Personal Details mt-2 pl-2 pr-5" *ngFor="let acc of CyberItem|paginate:{itemsPerPage: 5, currentPage:cy, id:'cy'};let i=index;">
+                                                <div class="row mt-2">
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Device Name</div>
+                                                        <div class="heading2">{{acc.ItemType}}&nbsp;</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Make And Model</div>
+                                                        <div class="heading2">{{acc.MakeAndModel}}&nbsp;</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Manufacture Year</div>
+                                                        <div class="heading2">{{acc.ManufactureYear}}</div>
+                                                    </div>
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Serail No</div>
+                                                        <div class="heading2">{{acc.SerialNoDesc}}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                                        <div class="heading1">Sum Insured</div>
+                                                        <div class="heading2">{{acc.SumInsured}}</div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                            <div class="d-flex justify-content-end">
+                                                <pagination-controls (pageChange)="cy=$event" id="cy"></pagination-controls>
+                                              </div>
+
+                                        </div>
+                                      </div>
+                                      
+                                  
+                                 </div>
+                           
+                        </div>
+                    </div>
+                   
+                  </div>
+            </div>
+        </div>
+        </mat-tab>
         
           </mat-tab-group>
        </div>

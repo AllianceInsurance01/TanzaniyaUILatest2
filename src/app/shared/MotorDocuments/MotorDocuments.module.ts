@@ -18,6 +18,8 @@ import { TablesModule } from '../Tables/tables.module';
 import { MaterialModule } from '../material/material.module';
 import { PipesModule } from '../pipes/pipes.module';
 import { PolicyIntegration } from './PolicyIntegration/Policyintegration.component';
+import { MatIconModule } from '@angular/material/icon';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 // tslint:disable-next-line: max-line-length
 //import { NbAccordionModule, NbButtonModule, NbCardModule, NbDatepickerModule, NbInputModule, NbListModule, NbPopoverModule, NbRouteTabsetModule, NbSearchModule, NbSelectModule, NbStepperModule, NbTabsetModule, NbUserModule, NbSidebarModule, NbMenuModule, NbDialogModule, NbWindowModule, NbToastrModule, NbChatModule, NbActionsModule, NbCheckboxModule, NbRadioModule, NbIconModule } from '@nebular/theme';
@@ -65,6 +67,8 @@ import { PolicyIntegration } from './PolicyIntegration/Policyintegration.compone
     //DirectivesModule,
     NgSelectModule,
     MatTabsModule,
+    MatIconModule,
+    NgxPaginationModule,
     //NbDialogService,
     //ThemeModule,
     //NbTabsetModule,

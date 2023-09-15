@@ -29,9 +29,9 @@ export class FireAndMaterialDamage{
                 {
                   className: 'col-4 col-lg-4 col-md-4 offset-2',
                   type: 'commaSeparator',
-                  key: 'FireBuildingSi',
+                  key: 'BuildingSuminsured',
                   props: {
-                    label: 'BuildingSuminsured',
+                    label: 'Building Suminsured',
                     disabled: this.checkDisable('Building'),
                     required: true,
                     options: [
@@ -50,7 +50,7 @@ export class FireAndMaterialDamage{
                   type: 'commaSeparator',
                   key: 'FirePlantSi',
                   props: {
-                    label: `PlantSI`,
+                    label: `Plant SI`,
                     // disabled: this.checkDisable('BuildingSuminsured'),
                     required: true,
                     options: [
@@ -71,7 +71,7 @@ export class FireAndMaterialDamage{
                   type: 'commaSeparator',
                   key: 'FireEquipSi',
                   props: {
-                    label: `EquipmentMachinerySI`,
+                    label: `Equipment Machinery SI`,
                     disabled: this.checkDisable('EquipmentMachinery'),
                     required: true,
                     options: [
@@ -93,7 +93,7 @@ export class FireAndMaterialDamage{
                   type: 'commaSeparator',
                   key: 'FireStockSi',
                   templateOptions: {
-                    label: 'Stock / ManufacturingSI',
+                    label: 'Stock / Manufacturing SI',
                     required: true,
                   },
                  
