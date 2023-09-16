@@ -77,6 +77,7 @@ export class MotorDocumentsComponent implements OnInit {
   all:Number=1;
   Allrisk:any[]=[];
   machineries:any[]=[];
+  LocationList:any[]=[];
 
   constructor(public router:Router,private sharedService: SharedService,public dialogService: MatDialog){
 
@@ -410,9 +411,19 @@ export class MotorDocumentsComponent implements OnInit {
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
           console.log(data);
-          let res: any = data;
+          let res: any = data;let i=0;
           if (res.Result.length!= 0) {
-          this.buildingDetails= res.Result;
+          this.buildingDetails= res.Result;      
+          if(this.buildingDetails.length!=0){
+            for(let entry of this.buildingDetails){
+              this.LocationList.push({ "Code": String(i + 1), "CodeDesc": entry.LocationName });
+              console.log('NNNNNNNNNNNN',this.LocationList);
+              i+=1;
+            }
+            
+          }
+
+        
           }
         })
     }
@@ -675,7 +686,7 @@ this.passengerName=type;
            
                 this.PremiumInfo=data?.Result;
                 this.sectionnameopted=this.PremiumInfo[0]?.SectionName;
-                this.Currency=data.Result?.CoverId?.Currency;
+                this.Currency=this.PremiumInfo[0].Currency;
                 console.log('PREEEEEEEEEEEEEEE',this.PremiumInfo);
                 if(data.Result.length!=0){
                   let i=0;
@@ -717,6 +728,12 @@ this.passengerName=type;
        }
        getLocationName(Id){
         let entry = this.chassislist.find(ele=>ele.Code==Id);
+        if(entry){
+          return entry.CodeDesc;
+        }
+      }
+      getLocationNames(Id){
+        let entry = this.LocationList.find(ele=>ele.Code==Id);
         if(entry){
           return entry.CodeDesc;
         }
