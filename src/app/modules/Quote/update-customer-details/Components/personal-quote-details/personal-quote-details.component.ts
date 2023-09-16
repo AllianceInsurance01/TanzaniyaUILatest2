@@ -140,6 +140,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
   aggSIList: any[]=[];
   MoneyDirectorError:any;paymentMode='01';
   paymentModeList: any[]=[];
+  endorseCoverModification: any=null;
   constructor(private formlyJsonschema: FormlyJsonschema, private sharedService: SharedService, private datePipe: DatePipe,
     private router: Router, private http: HttpClient, private updateComponent: UpdateCustomerDetailsComponent) {
     this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -188,6 +189,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         this.endorsePolicyNo = endorseObj?.PolicyNo;
         this.endorseCategory = endorseObj.Category;
         this.endorsementName = endorseObj?.EndtName;
+        this.endorseCoverModification = endorseObj?.CoverModificationYn
         console.log("Enable Obj in Vehicle", this.enableFieldsList, this.endorsementId)
         // if(this.endorsementId!=42 && this.endorsementId!=842){
         //     this.enableFieldName = this.enableFieldsList.some(ele=>ele=='InsuranceType');
@@ -5026,9 +5028,10 @@ onCalculate(buildDetails,type,formType) {
       let effectiveDate = null, coverModificationYN = 'N';
       if (this.endorsementSection) {
         effectiveDate = this.endorseEffectiveDate;
-        let entry = this.enableFieldsList.some(ele => ele == 'Covers' && this.endorsementId!=850);
-        if (entry || this.endorsementId == 846) coverModificationYN = 'Y';
-        else coverModificationYN = 'N';
+        // let entry = this.enableFieldsList.some(ele => ele == 'Covers' && this.endorsementId!=850);
+        // if (entry || this.endorsementId == 846) coverModificationYN = 'Y';
+        // else coverModificationYN = 'N';
+        if(this.endorseCoverModification) coverModificationYN = this.endorseCoverModification
       }
       else {
         effectiveDate = this.commonDetails[0].PolicyStartDate
@@ -6147,9 +6150,10 @@ getCalculationDetails(vehicleDetails) {
       let effectiveDate = null; let coverModificationYN = 'N';
       if (this.endorsementSection) {
         effectiveDate = this.endorseEffectiveDate;
-        let entry = this.enableFieldsList.some(ele => ele == 'Covers' && this.endorsementId!=850);
-        if (entry || (this.endorsementId == 846 && veh.Status =='D')) coverModificationYN = 'Y';
-        else coverModificationYN = 'N';
+        // let entry = this.enableFieldsList.some(ele => ele == 'Covers' && this.endorsementId!=850);
+        // if (entry || (this.endorsementId == 846 && veh.Status =='D')) coverModificationYN = 'Y';
+        // else coverModificationYN = 'N';
+        if(this.endorseCoverModification) coverModificationYN = this.endorseCoverModification
       }
       else {
         effectiveDate = this.commonDetails[0].PolicyStartDate

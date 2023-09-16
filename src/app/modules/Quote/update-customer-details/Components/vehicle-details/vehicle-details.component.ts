@@ -96,6 +96,7 @@ export class VehicleDetailsComponent implements OnInit {
   OldWindScreenSumInsured: any;
   changeUwSection: boolean;
   enableCollateralDetails: boolean=false;
+  endorseCoverModification: any=null;
   constructor(private router:Router,private sharedService: SharedService,
     private updateComponent:UpdateCustomerDetailsComponent,
    private datePipe:DatePipe) {
@@ -141,6 +142,7 @@ export class VehicleDetailsComponent implements OnInit {
         this.endorsePolicyNo = endorseObj?.PolicyNo;
         this.endorseCategory = endorseObj.Category;
         this.endorsementName = endorseObj?.EndtName;
+        this.endorseCoverModification = endorseObj?.CoverModificationYn
         console.log("Enable Obj in Vehicle",this.enableFieldsList,this.endorsementId)
         if(this.endorsementId!=42 && this.endorsementId!=842){
             this.enableInsuranceType = this.enableFieldsList.some(ele=>ele=='InsuranceType');
@@ -1430,9 +1432,10 @@ export class VehicleDetailsComponent implements OnInit {
     let createdBy="";
           let coverModificationYN = 'N';
           if(this.endorsementSection){
-            let entry = this.enableFieldsList.some(ele=>ele=='Covers');
-            if(entry && !this.endorseSIModification) coverModificationYN = 'Y';
-            else coverModificationYN = 'N';
+            // let entry = this.enableFieldsList.some(ele=>ele=='Covers');
+            // if(entry && !this.endorseSIModification) coverModificationYN = 'Y';
+            // else coverModificationYN = 'N';
+            if(this.endorseCoverModification) coverModificationYN = this.endorseCoverModification
           }
           let quoteStatus = sessionStorage.getItem('QuoteStatus');
           if(quoteStatus=='AdminRP'){

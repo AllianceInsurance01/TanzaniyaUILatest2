@@ -423,9 +423,9 @@ export class EndorsementTypeDetailsComponent {
             "Remarks":this.remarks,
             "Category": category,
             "EndtName": this.selectedEndorsement.EndorsementDesc,
+            "CoverModificationYn": this.selectedEndorsement.isCoverEndt,
             "PolicyNo": res?.policyNo
           }
-          
           sessionStorage.setItem('endorseTypeId',JSON.stringify(obj));
          
           if(this.productId=='5'){
@@ -453,6 +453,7 @@ export class EndorsementTypeDetailsComponent {
             "EffectiveDate":effDate,
             "Remarks":this.remarks,
             "Category": category,
+            "CoverModificationYn": this.selectedEndorsement.isCoverEndt,
             "EndtName": this.selectedEndorsement.EndorsementDesc,
             "PolicyNo": res?.policyNo
           }

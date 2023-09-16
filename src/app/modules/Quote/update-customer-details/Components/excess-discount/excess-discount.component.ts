@@ -2153,7 +2153,7 @@ getMotorUsageList(vehicleValue){
           }
       }
       else{
-        if(this.endorsementSection && this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='RemoveSection')){
+        if(this.endorsementSection && this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='RemoveSection') && !this.endorseSIModification){
           this.router.navigate(['/Home/policies/Endorsements/endorsementTypes']);
         }
         else{
