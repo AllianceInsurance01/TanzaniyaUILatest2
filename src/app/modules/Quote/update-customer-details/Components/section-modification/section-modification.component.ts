@@ -70,6 +70,7 @@ export class SectionModificationComponent implements OnInit {
   orginalPolicyNo: any=null;
   isFinanceEndt: any=null;
   endorsementDetails: any;
+  customerName: any;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -294,7 +295,12 @@ getIndustryList() {
       promocode = this.commonDetails[0].Promocode;
     }
     else if (this.commonDetails[0].PromoCode) promocode = this.commonDetails[0].PromoCode;
-    if (this.commonDetails[0].CustomerCode != null && this.commonDetails[0].CustomerCode != undefined) this.customerCode = this.commonDetails[0].CustomerCode;
+    if (this.commonDetails[0].CustomerCode != null && this.commonDetails[0].CustomerCode != undefined){this.customerCode = this.commonDetails[0].CustomerCode;
+    this.customerName = this.commonDetails[0].CustomerName
+    }
+    else{
+      this.customerCode = null;this.customerName=null;
+    }
     if (this.issuerSection) {
       this.sourceType = this.commonDetails[0].SourceType;
       this.bdmCode = this.commonDetails[0].BrokerCode;
@@ -326,7 +332,7 @@ getIndustryList() {
         "RequestReferenceNo": this.requestReferenceNo,
         "AgencyCode": this.agencyCode,
         "ApplicationId": this.applicationId,
-        "BdmCode": this.bdmCode,
+        "BdmCode": this.customerCode,
         "BranchCode": this.branchCode,
         "BrokerBranchCode": brokerbranchCode,
         "BrokerCode": this.brokerCode,
@@ -336,6 +342,7 @@ getIndustryList() {
         "Currency": this.commonDetails[0].Currency,
         "CustomerReferenceNo": this.customerDetails?.CustomerReferenceNo,
         "CustomerCode": this.customerCode,
+        "CustomerName": this.customerName,
         "ExchangeRate": this.commonDetails[0].ExchangeRate,
         "Havepromocode": this.commonDetails[0].HavePromoCode,
         "Promocode": promocode,

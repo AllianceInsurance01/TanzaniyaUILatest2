@@ -1422,6 +1422,7 @@ export class CustomerDetailsComponent implements OnInit {
     else if(event=='branchValue') this.branchValueError = true;
     else if(event=='sourceType') this.sourceCodeError = true;
     else if(event=='brokerCode') this.brokerCodeError = true;
+    else if(event=='brokerBranchCode') this.brokerBranchCodeError = true;
     else if(event=='travelStartDate') this.travelStartError = true;
     else if(event=='travelEndDate') this.travelEndError = true;
     else if(event=='currencyCode') this.currencyError = true;
@@ -1431,7 +1432,7 @@ export class CustomerDetailsComponent implements OnInit {
       this.customerCodeError = false;this.branchValueError=false;
       this.sourceCodeError = false; this.brokerCodeError = false;
       this.travelStartError = false;this.travelEndError = false;
-      this.currencyError = false;this.promoYNError = false;
+      this.currencyError = false;this.promoYNError = false;this.brokerBranchCodeError = false;
       this.promoError = false;
     }
   }
@@ -1857,6 +1858,7 @@ export class CustomerDetailsComponent implements OnInit {
   onHomeInsuranceSave(){
     if(!this.endorsementSection){
       let mandatory:boolean = this.checkMandatories();
+      alert(mandatory)
       if(mandatory){
         let policyStartDate="";
         
@@ -1900,11 +1902,14 @@ export class CustomerDetailsComponent implements OnInit {
                       this.onProceedValidation(Details);
                     }
                     else{
+                      
                       this.policyPassDate = true;
                       //this.toastrService.show('Policy Start Date','Policy Start Date Should Not be Pass Days', config);
                     }
                   }
-                  
+                  else{
+                    this.onProceedValidation(Details);
+                  }
     
                   }
                   else{
@@ -1993,6 +1998,7 @@ export class CustomerDetailsComponent implements OnInit {
                       Details[0]['BranchCode'] = this.branchValue;
                       Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
                       Details[0]['CustomerCode'] = this.customerCode;
+                      Details[0]['CustomerName'] = this.customerName;
                       Details[0]['LoginId'] = this.brokerLoginId;
                       if(this.IndustryId && this.industryList!=null)
                       Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
@@ -2003,6 +2009,7 @@ export class CustomerDetailsComponent implements OnInit {
                       Details[0]['BranchCode'] = this.branchValue;
                       Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
                       Details[0]['CustomerCode'] = this.customerCode;
+                      Details[0]['CustomerName'] = this.customerName;
                       Details[0]['LoginId'] = this.loginId;
                       if(this.IndustryId && this.industryList!=null)
                       Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
@@ -2026,6 +2033,7 @@ export class CustomerDetailsComponent implements OnInit {
                     Details[0]['BranchCode'] = this.branchValue;
                     Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
                     Details[0]['CustomerCode'] = this.customerCode;
+                    Details[0]['CustomerName'] = this.customerName;
                     Details[0]['LoginId'] = this.brokerLoginId;
                     if(this.IndustryId && this.industryList!=null)
                       Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
@@ -2036,6 +2044,7 @@ export class CustomerDetailsComponent implements OnInit {
                     Details[0]['BranchCode'] = this.branchValue;
                     Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
                     Details[0]['CustomerCode'] = this.customerCode;
+                    Details[0]['CustomerName'] = this.customerName;
                     Details[0]['LoginId'] = this.loginId;
                     if(this.IndustryId && this.industryList!=null)
                       Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
@@ -2154,7 +2163,7 @@ export class CustomerDetailsComponent implements OnInit {
         "RequestReferenceNo": this.quoteRefNo,
         "AgencyCode": this.agencyCode,
         "ApplicationId": this.applicationId,
-        "BdmCode": this.brokerCode,
+        "BdmCode": this.customerCode,
         "BranchCode": this.branchCode,
         "BrokerBranchCode": brokerbranchCode,
         "BrokerCode": this.brokerCode,
@@ -2164,6 +2173,7 @@ export class CustomerDetailsComponent implements OnInit {
         "Currency": this.currencyCode,
         "CustomerReferenceNo": this.customerDetails?.CustomerReferenceNo,
         "CustomerCode": this.customerCode,
+        "CustomerName": this.customerName,
         "ExchangeRate": this.exchangeRate,
         "Havepromocode": this.HavePromoCode,
         "Promocode": this.PromoCode,

@@ -141,6 +141,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
   MoneyDirectorError:any;paymentMode='01';
   paymentModeList: any[]=[];
   endorseCoverModification: any=null;
+  customerName: any;
   constructor(private formlyJsonschema: FormlyJsonschema, private sharedService: SharedService, private datePipe: DatePipe,
     private router: Router, private http: HttpClient, private updateComponent: UpdateCustomerDetailsComponent) {
     this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -3968,12 +3969,15 @@ onSubmit(productData) {
       promocode = this.commonDetails[0].Promocode;
     }
     else if (this.commonDetails[0].PromoCode) promocode = this.commonDetails[0].PromoCode;
-    if (this.commonDetails[0].CustomerCode != null && this.commonDetails[0].CustomerCode != undefined) this.customerCode = this.commonDetails[0].CustomerCode;
+    if (this.commonDetails[0].CustomerCode != null && this.commonDetails[0].CustomerCode != undefined){ this.customerCode = this.commonDetails[0].CustomerCode; this.customerName= this.commonDetails[0].CustomerName;}
+    else{
+      this.customerCode = null; this.customerName= null;
+    }
     let ReqObj = {
       "AcexecutiveId": this.commonDetails[0].AcexecutiveId,
       "AgencyCode": this.agencyCode,
       "ApplicationId": appId,
-      "BdmCode": this.bdmCode,
+      "BdmCode": this.customerCode,
       "BranchCode": this.branchCode,
       "BrokerBranchCode": this.brokerbranchCode,
       "BrokerCode": this.brokerCode,
@@ -3995,6 +3999,7 @@ onSubmit(productData) {
       "Currency": this.commonDetails[0].Currency,
       "CustomerReferenceNo": this.customerDetails?.CustomerReferenceNo,
       "CustomerCode": this.customerCode,
+      "CustomerName": this.customerName,
       "ContentSuminsured": this.productItem.ContentSuminsured,
       "PersonalAccSuminsured": this.productItem.PersonalAccidentSuminsured,
       "PersonalIntermediarySuminsured": this.productItem.PersonalIntermediarySuminsured,
