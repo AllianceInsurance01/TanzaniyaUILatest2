@@ -43,6 +43,7 @@ export class UpdateCustomerDetailsComponent implements OnInit {
   b2cSection: boolean=false;customerSection:boolean=false;
   modifiedYN: any='N';
   additionalSection: boolean=false;
+  CustomerName: any;
   //public orderStatus="customerDetails"
 
   constructor(

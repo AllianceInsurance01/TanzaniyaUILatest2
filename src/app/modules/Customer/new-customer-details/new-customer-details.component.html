@@ -102,7 +102,7 @@
             </div>
             <div class="d-flex mt-3 justify-content-between">
                 <div style="max-width: 130px;min-width: 130px;">
-                    <div class="headinglbels">Code <span class="star">*</span></div> 
+                    <div class="headinglbels">Country Code <span class="star">*</span></div> 
                     <div class="mt-1">
                     <ng-select class="custom" appendTo="body"  [items]="mobileCodeList"  [(ngModel)]="productItem.MobileCode" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
@@ -130,8 +130,8 @@
        <div><h1 class="headings">Additional Information</h1></div>
        <div class="row mt-3">
          <div class="col-6" >
-           <div class="headinglbels" *ngIf="productItem.IdType == 2">Registration Date <span class="star">*</span></div> 
-           <div class="headinglbels" *ngIf="productItem.IdType != 2">Date Of Birth <span class="star">*</span></div> 
+           <div class="headinglbels" *ngIf="productItem.IdType == 2">Registration Date </div> 
+           <div class="headinglbels" *ngIf="productItem.IdType != 2">Date Of Birth</div> 
            <ng-container *ngIf="productItem.IdType != 2">
                 <mat-form-field appearance="fill">
                     <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
@@ -231,7 +231,7 @@
                     </div>
                 </div>
                 <div class="col-12 mt-1">
-                    <div class="headinglbels">Code <span class="star">*</span></div> 
+                    <div class="headinglbels">Country Code <span class="star">*</span></div> 
                     <div class="mt-1">
                     <ng-select class="custom" appendTo="body"  [items]="mobileCodeList"  [(ngModel)]="productItem.MobileCode" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
@@ -258,8 +258,8 @@
             <div><h1 class="headings">Additional Information</h1></div>
             <div class="row mt-3">
               <div class="col-12" >
-                <div class="headinglbels" *ngIf="productItem.IdType == 2">Registration Date <span class="star">*</span></div> 
-                <div class="headinglbels" *ngIf="productItem.IdType != 2">Date Of Birth <span class="star">*</span></div> 
+                <div class="headinglbels" *ngIf="productItem.IdType == 2">Registration Date</div> 
+                <div class="headinglbels" *ngIf="productItem.IdType != 2">Date Of Birth</div> 
                 <ng-container *ngIf="productItem.IdType != 2">
                     <mat-form-field appearance="fill">
                         <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
@@ -351,7 +351,7 @@
                 </div>
              </div>
              <div class="col-4  mt-2">
-                <div class="headinglbels">Zip Code<span class="star">*</span></div> 
+                <div class="headinglbels">P.O Box</div> 
                 <div class="mt-1">
                     <input type="text" maxlength="15" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.PinCode">
                 </div>
@@ -403,7 +403,7 @@
                  </div>
               </div>
               <div class="col-12  mt-2">
-                 <div class="headinglbels">Zip Code<span class="star">*</span></div> 
+                 <div class="headinglbels">P.O Box</div> 
                  <div class="mt-1">
                      <input type="text" maxlength="15" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.PinCode">
                  </div>

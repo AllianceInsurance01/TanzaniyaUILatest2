@@ -760,7 +760,8 @@ export class CustomerDetailsComponent implements OnInit {
       "InsuranceId":this.insuranceId,
       "BranchCode": this.branchCode
     }
-    let urlLink = `${this.CommonApiUrl}dropdown/sourcetype`;
+    //let urlLink = `${this.CommonApiUrl}dropdown/sourcetype`;
+    let urlLink = `${this.CommonApiUrl}dropdown/premiasourcetypes`; 
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         console.log(data);
@@ -853,8 +854,15 @@ export class CustomerDetailsComponent implements OnInit {
           //if(this.Code=='Agent') this.executiveSection = true;
           if(type=='change'){
             if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
+            this.updateComponent.CustomerCode = null;
+            this.updateComponent.brokerCode = null;
+            this.updateComponent.brokerBranchCode = null;
+            this.updateComponent.brokerLoginId = null;
+            this.customerCode = null;
+            this.customerName=null;
             this.brokerCode = null;
             this.brokerBranchCode = null;
+            this.brokerLoginId = null;
           }
           else{
             //if(this.Code=='Broker' || this.Code=='Agent'){
@@ -896,7 +904,7 @@ export class CustomerDetailsComponent implements OnInit {
       if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
       let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
       if(entry){
-        this.brokerLoginId = entry.Name; 
+        this.brokerLoginId = entry.LoginId; 
         this.updateComponent.brokerLoginId = this.brokerLoginId;
         this.updateComponent.brokerCode = this.brokerCode;
       }
@@ -969,15 +977,37 @@ export class CustomerDetailsComponent implements OnInit {
   }
   onGetCustomerList(type,code){
     if(this.userType=='Issuer'){
-      if(this.brokerCode!='' && this.brokerCode!=null && this.brokerCode!=undefined){
-        if(this.brokerList.length!=0){
-          let entry = this.brokerList.find(ele=>ele.Code==this.brokerCode);
-          if(entry){
-            this.customerCode = entry.CustomerCode;
-            this.customerName = entry.CustomerName;
-            this.updateComponent.CustomerCode = entry.CustomerCode;
-          }
+      if(code!='' && code!=null && code!=undefined){
+        let branch = null;
+        if(this.userType=='issuer'){branch = this.brokerBranchCode;}
+        else branch = this.branchValue
+        let ReqObj = {
+          "SourceType": this.Code,
+          "BranchCode":  branch,
+          "InsuranceId": this.insuranceId,
+          "SearchValue":code
         }
+        let urlLink = `${this.ApiUrl1}api/search/premiabrokercustomercode`;
+        this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+          (data: any) => {
+                this.customerList = data.Result;
+                if(type=='change'){
+                  this.showCustomerList = true;
+                  this.customerName = null;
+                }
+                else{
+                  this.showCustomerList = false;
+                  let entry = this.customerList.find(ele=>ele.Code==this.customerCode);
+                  this.customerName = entry.Name;
+                  this.setCustomerValue(this.customerCode,this.customerName,'direct')
+                }
+                
+          },
+          (err) => { },
+        );
+      }
+      else{
+        this.customerList = [];
       }
     }
     else{
@@ -985,43 +1015,24 @@ export class CustomerDetailsComponent implements OnInit {
         this.customerName = this.userDetails.Result.UserName;
         this.updateComponent.CustomerCode = this.userDetails.Result.CustomerCode;
     }
-    // if(code!='' && code!=null && code!=undefined){
-    //   let branch = null;
-    //   if(this.userType=='issuer'){branch = this.brokerBranchCode;}
-    //   else branch = this.branchValue
-    //   let ReqObj = {
-    //     "BranchCode":  branch,
-    //     "InsuranceId": this.insuranceId,
-    //     "SearchValue":code
-    //   }
-    //   let urlLink = `${this.ApiUrl1}api/search/premiacustomercode`;
-    //   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-    //     (data: any) => {
-    //           this.customerList = data.Result;
-    //           if(type=='change'){
-    //             this.showCustomerList = true;
-    //             this.customerName = null;
-    //           }
-    //           else{
-    //             this.showCustomerList = false;
-    //             let entry = this.customerList.find(ele=>ele.Code==this.customerCode);
-    //             this.customerName = entry.Name;
-    //             this.setCustomerValue(this.customerCode,this.customerName,'direct')
-    //           }
-              
-    //     },
-    //     (err) => { },
-    //   );
-    // }
-    // else{
-    //   this.customerList = [];
-    // }
+    
   }
   setCustomerValue(code,name,type){
     this.showCustomerList = false;
       this.customerCode = code;
       this.customerName = name;
+      this.updateComponent.CustomerName = name;
+      if(this.issuerSection){
+        this.brokerCode = null;
+          this.brokerBranchCode = null;
+          this.brokerLoginId = null;
+          this.updateComponent.brokerCode = null;
+          this.updateComponent.brokerBranchCode =null;
+          this.updateComponent.brokerLoginId = null;
+      }
+      
       this.updateComponent.CustomerCode = code;
+    
       if(this.productId=='5' && type=='change'){this.updateComponent.modifiedYN = 'Y'}
   }
   setCommonValues(entry){
@@ -1431,43 +1442,74 @@ export class CustomerDetailsComponent implements OnInit {
         this.branchValueError = false;
           if(this.Code!='' && this.Code!=undefined && this.Code!=null){
             this.sourceCodeError = false;
-            if(this.brokerCode!='' && this.brokerCode!=undefined && this.brokerCode!=null){
-              this.brokerCodeError = false;
-              if(this.brokerBranchCode!='' && this.brokerBranchCode!=undefined && this.brokerBranchCode!=null){
-                this.brokerBranchCodeError = false;
-                  if(this.customerName!='' && this.customerName!=undefined && this.customerName!=null){
-                    this.customerCodeError = false;
-                      if(this.executiveSection){
-                        if(this.executiveValue!='' && this.executiveValue!=undefined && this.executiveValue!=null){
-                            this.executiveError=false;
-                            if(this.commissionValue!='' && this.commissionValue!=undefined && this.commissionValue!=null){
-                              this.commissionError=false;
-                              return true;
-                            }
-                            else{
-                              this.commissionError=true;
-                            }
+            if(this.Code=='Premia Agent' || this.Code=='Premia Broker' || this.Code=='Premia Direct'){
+              if(this.customerName!='' && this.customerName!=undefined && this.customerName!=null){
+                this.brokerCode = null;
+              this.brokerBranchCode = null;
+              this.brokerLoginId = null;
+              this.updateComponent.brokerCode = null;
+              this.updateComponent.brokerBranchCode = null;
+              this.updateComponent.brokerLoginId = null;
+                this.customerCodeError = false;
+                  if(this.executiveSection){
+                    if(this.executiveValue!='' && this.executiveValue!=undefined && this.executiveValue!=null){
+                        this.executiveError=false;
+                        if(this.commissionValue!='' && this.commissionValue!=undefined && this.commissionValue!=null){
+                          this.commissionError=false;
+                          return true;
                         }
                         else{
-                          this.executiveError=true;
+                          this.commissionError=true;
                         }
-                      }
-                      else{
-                        this.executiveValue = null;
-                        this.commissionValue = null;
-                        return true;
-                      }
+                    }
+                    else{
+                      this.executiveError=true;
+                    }
                   }
                   else{
-                      this.customerCodeError = true;
+                    this.executiveValue = null;
+                    this.commissionValue = null;
+                    return true;
                   }
               }
-              else this.brokerBranchCodeError = true;
-            
+              else{
+                  this.customerCodeError = true;
+              }
             }
             else{
-              this.brokerCodeError = true;
+              if(this.brokerCode!='' && this.brokerCode!=undefined && this.brokerCode!=null){
+                this.brokerCodeError = false;
+                if(this.brokerBranchCode!='' && this.brokerBranchCode!=undefined && this.brokerBranchCode!=null){
+                  this.brokerBranchCodeError = false;
+                  if(this.executiveSection){
+                    if(this.executiveValue!='' && this.executiveValue!=undefined && this.executiveValue!=null){
+                        this.executiveError=false;
+                        if(this.commissionValue!='' && this.commissionValue!=undefined && this.commissionValue!=null){
+                          this.commissionError=false;
+                          return true;
+                        }
+                        else{
+                          this.commissionError=true;
+                        }
+                    }
+                    else{
+                      this.executiveError=true;
+                    }
+                  }
+                  else{
+                    this.executiveValue = null;
+                    this.commissionValue = null;
+                    return true;
+                  }
+                }
+                else this.brokerBranchCodeError = true;
+              }
+              else{
+                this.brokerCodeError = true;
+              }
             }
+            
+            
             // else if(this.Code=='Broker'){
             //   this.brokerCodeError = true;
             // }
@@ -1482,6 +1524,7 @@ export class CustomerDetailsComponent implements OnInit {
             this.sourceCodeError = true;
             return false;
           }
+          
         }
         else{
           this.branchValueError = true;

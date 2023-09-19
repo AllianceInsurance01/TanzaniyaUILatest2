@@ -72,6 +72,7 @@ export class VehicleWishListComponent implements OnInit {
   bdmCode: any;
   subuserType: string;
   loginType: any=null;
+  customerName: any;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -442,6 +443,7 @@ export class VehicleWishListComponent implements OnInit {
         this.brokerCode = this.updateComponent.brokerCode;
         brokerbranchCode =  this.updateComponent.brokerBranchCode;
         this.customerCode = this.updateComponent.CustomerCode;
+        this.customerName = this.updateComponent.CustomerName;
         }
         else {
           this.sourceType = this.subuserType;
@@ -457,7 +459,8 @@ export class VehicleWishListComponent implements OnInit {
       "AcExecutiveId": null,
       "CommissionType": null,
       "CustomerCode": this.customerCode,
-      "BdmCode": this.bdmCode,
+      "CustomerName": this.customerName,
+      "BdmCode": this.customerCode,
       "BrokerCode": this.brokerCode,
       "LoginId": loginId,
       "SubUserType": this.subuserType,
