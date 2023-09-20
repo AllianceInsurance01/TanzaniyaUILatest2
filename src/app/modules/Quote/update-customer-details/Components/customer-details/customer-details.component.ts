@@ -182,7 +182,6 @@ export class CustomerDetailsComponent implements OnInit {
           this.quoteRefNo=null;
           this.branchValue = this.userDetails.Result.BranchCode;
           this.updateComponent.branchValue = this.branchValue;
-          this.onGetCustomerList('direct',this.customerCode);
           this.currencyCode = this.userDetails.Result.CurrencyId;
           this.onCurrencyChange('direct');
           this.searchSection = true;
@@ -246,7 +245,6 @@ export class CustomerDetailsComponent implements OnInit {
             this.updateComponent.branchValue = this.branchValue;
             this.currencyCode = this.userDetails.Result.CurrencyId;
             this.onCurrencyChange('direct');
-            this.onGetCustomerList('direct',this.customerCode);
               var d= new Date();
               var year = d.getFullYear();
               var month = d.getMonth();
@@ -277,7 +275,6 @@ export class CustomerDetailsComponent implements OnInit {
           this.updateComponent.PromoCode = this.PromoCode;
           this.currencyCode = this.userDetails.Result.CurrencyId;
           this.onCurrencyChange('direct');
-          this.onGetCustomerList('direct',this.customerCode);
           this.searchSection = true;
           this.commonSection = true;
           let quoteStatus = sessionStorage.getItem('QuoteStatus');
@@ -492,7 +489,6 @@ export class CustomerDetailsComponent implements OnInit {
         this.quoteRefNo=null;
         this.branchValue = this.userDetails.Result.BranchCode;
         this.updateComponent.branchValue = this.branchValue;
-        this.onGetCustomerList('direct',this.customerCode);
         this.currencyCode = this.userDetails.Result.CurrencyId;
         this.onCurrencyChange('direct');
         this.searchSection = true;
@@ -554,7 +550,6 @@ export class CustomerDetailsComponent implements OnInit {
           this.updateComponent.branchValue = this.branchValue;
           this.currencyCode = this.userDetails.Result.CurrencyId;
           this.onCurrencyChange('direct');
-          this.onGetCustomerList('direct',this.customerCode);
             var d= new Date();
             var year = d.getFullYear();
             var month = d.getMonth();
@@ -585,7 +580,6 @@ export class CustomerDetailsComponent implements OnInit {
         this.updateComponent.PromoCode = this.PromoCode;
         this.currencyCode = this.userDetails.Result.CurrencyId;
         this.onCurrencyChange('direct');
-        this.onGetCustomerList('direct',this.customerCode);
         this.searchSection = true;
         this.commonSection = true;
         let quoteStatus = sessionStorage.getItem('QuoteStatus');
@@ -932,7 +926,6 @@ export class CustomerDetailsComponent implements OnInit {
   onBrokerBranchChange(){
     this.updateComponent.brokerBranchCode = this.brokerBranchCode;
     console.log("Final Branches",this.brokerBranchList.find(ele=>ele.Code==this.brokerBranchCode))
-    this.onGetCustomerList('direct',this.customerCode);
     if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
   }
   getBrokerBranchList(type){
@@ -1135,7 +1128,6 @@ export class CustomerDetailsComponent implements OnInit {
            this.onCurrencyChange('direct');
            //this.exchangeRate = customerDatas.ExchangeRate;
            this.commonSection = true;
-           this.onGetCustomerList('direct',this.customerCode);
       },
       (err) => { },
     );
