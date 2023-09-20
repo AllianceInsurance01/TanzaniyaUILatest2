@@ -678,7 +678,8 @@ export class CustomerDetailsComponent implements OnInit {
             console.log(
               "Code",this.Code,this.branchValue,this.brokerBranchCode,this.customerCode,this.brokerCode
             )
-            this.onGetCustomerList('direct',this.customerCode);
+            //this.onGetCustomerList('direct',this.customerCode);
+          
       },
       (err) => { },
     );
@@ -869,11 +870,16 @@ export class CustomerDetailsComponent implements OnInit {
               if(this.productId=='3' && this.userType=='Issuer') this.getBackDaysDetails();
               let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
               if(entry){
+                console.log("Found Entries",this.brokerCode,entry)
                 this.brokerLoginId = entry.Name; 
                 this.updateComponent.brokerLoginId = this.brokerLoginId;
                 this.updateComponent.brokerCode = this.brokerCode;
               }
-              this.getBrokerBranchList('direct');
+              if(this.Code=='broker' || this.Code=='direct' || this.Code=='agent' || this.Code == 'bank'){
+                this.getBrokerBranchList('direct');
+                
+              }
+              else this.onGetCustomerList('direct',this.customerCode);
             // }
             // else if(this.brokerCode){
             //   let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
@@ -947,9 +953,7 @@ export class CustomerDetailsComponent implements OnInit {
               this.brokerBranchCode = this.brokerBranchList[0].Code;
               this.updateComponent.brokerBranchCode = this.brokerBranchCode;
             }
-            if(this.brokerBranchCode!=null){
-              this.onGetCustomerList('direct',this.customerCode);
-            }
+            
           }
         },
         (err) => { },
@@ -1858,7 +1862,6 @@ export class CustomerDetailsComponent implements OnInit {
   onHomeInsuranceSave(){
     if(!this.endorsementSection){
       let mandatory:boolean = this.checkMandatories();
-      alert(mandatory)
       if(mandatory){
         let policyStartDate="";
         
