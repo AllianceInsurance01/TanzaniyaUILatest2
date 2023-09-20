@@ -864,7 +864,7 @@ export class CustomerDetailsComponent implements OnInit {
               if(this.productId=='3' && this.userType=='Issuer') this.getBackDaysDetails();
               let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
               if(entry){
-                console.log("Found Entries",this.brokerCode,entry)
+                console.log("Found Entries",this.brokerCode,entry,this.Code)
                 this.brokerLoginId = entry.Name; 
                 this.updateComponent.brokerLoginId = this.brokerLoginId;
                 this.updateComponent.brokerCode = this.brokerCode;
@@ -1060,7 +1060,7 @@ export class CustomerDetailsComponent implements OnInit {
     this.updateComponent.brokerCode = this.brokerCode;
     this.updateComponent.brokerBranchCode = this.brokerBranchCode;
     
-    this.onSourceTypeChange('direct');
+    
     this.executiveValue = entry?.AcExecutiveId;
     this.currencyCode = entry?.Currency;
     this.onCurrencyChange('direct');
@@ -1068,6 +1068,7 @@ export class CustomerDetailsComponent implements OnInit {
     this.updateComponent.HavePromoCode = entry?.HavePromoCode;
     this.updateComponent.PromoCode = entry?.PromoCode;
     console.log("Final Values",this.brokerList,this.brokerCode)
+    this.onSourceTypeChange('direct');
     //this.onGetCustomerList('direct',this.customerCode);
   }
   onExchangeRateChange(){
