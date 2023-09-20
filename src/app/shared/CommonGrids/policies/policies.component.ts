@@ -284,6 +284,18 @@ export class PoliciesComponent implements OnInit {
       this.quotePageNo = this.quotePageNo-1;
     this.getExistingQuotes(element,'direct');
   }
+  onNextInnerData(element,seachvalue){
+    this.limit = String(Number(this.limit)+1);
+    this.quotePageNo = this.quotePageNo+1;
+    this.startIndex = element.startCount;
+    this.endIndex = element.endCount
+    this.eventothers(seachvalue,element,'direct');
+  }
+  onPreviousDataInnergrid(element,searchvalue){
+    this.limit = String(Number(this.limit)-1);
+    this.quotePageNo = this.quotePageNo-1;
+  this.eventothers(searchvalue,element,'direct');
+  }
   onInnerData(rowData){
     let ReqObj = {
         "RequestReferenceNo": rowData.RequestReferenceNo
@@ -345,9 +357,10 @@ export class PoliciesComponent implements OnInit {
       this.show=false;
     }
       }
-      eventothers(searchvalues){
-        console.log('MMMMMMMMM',searchvalues);
+      eventothers(searchvalues,element,entryType){
+        console.log('MMMMMMMMM',searchvalues,element,entryType);
         let searchvalue:any=searchvalues;
+        this.OthersList=[];
         this.searchValue=searchvalues
         sessionStorage.setItem('PolicyNos',searchvalue)
         let ReqObj = {
@@ -362,8 +375,39 @@ export class PoliciesComponent implements OnInit {
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
           (data: any) => {
             console.log(data);
-            if(data.Result.PortFolioList){
-               this.OthersList = data.Result?.PortFolioList;
+            if(data.Result.PortFolioList.length!=0){
+              this.totalQuoteRecords = data.Result?.TotalCount;
+              element=data.Result.PortFolioList;
+              //this.OthersList=data.Result.PortFolioList;
+              this.pageCount = 10;
+              if (entryType == 'change') {
+                this.quotePageNo = 1;
+                let startCount = 1, endCount = this.pageCount;
+                startCount = endCount + 1;
+                  let quoteData = data.Result?.PortFolioList;
+                  this.OthersList = data.Result?.PortFolioList;
+                  console.log('YYYYYYYYY',this.OthersList);
+                  if (quoteData.length <= this.pageCount) {
+                    endCount = quoteData.length
+                  }
+                  else endCount = this.pageCount;
+                
+                this.startIndex = startCount; this.endIndex = endCount;
+              }
+              else {
+
+                let startCount = element.startCount, endCount = element.endCount;
+                this.pageCount = element.n;
+                startCount = endCount + 1;
+                  let quoteData = data.Result?.PortfolioList;
+                  this.OthersList = this.quoteData.concat(data.Result?.PortfolioList);
+                if (this.totalQuoteRecords <= endCount + (element.n)) {
+                  endCount = this.totalQuoteRecords
+                }
+                else endCount = endCount + (element.n);
+                this.startIndex = startCount; this.endIndex = endCount;
+              }
+               //this.OthersList = data.Result?.PortFolioList;
             }
           },
           (err) => { },
