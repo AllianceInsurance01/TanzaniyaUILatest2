@@ -653,7 +653,8 @@ export class CustomerDetailsComponent implements OnInit {
               this.HavePromoCode=entry?.Havepromocode;
               if(entry.BuildingOwnerYn!=null && entry?.BuildingOwnerYn!='') this.buildingOwnerYN = entry?.BuildingOwnerYn;
               this.PromoCode=entry?.Promocode;
-              this.Code = entry?.SourceType;
+              if(entry.SourceType!=null) this.Code = entry?.SourceType.toLowerCase();
+              
               this.updateComponent.sourceType = this.Code;
               this.branchValue = entry?.BranchCode;
               this.updateComponent.branchValue = this.branchValue;
@@ -702,7 +703,7 @@ export class CustomerDetailsComponent implements OnInit {
             }
             this.commissionValue = entry?.CommissionType;
             this.executiveValue = entry?.AcExecutive;
-            this.Code = entry?.SourceType;
+            if(entry.SourceType!=null) this.Code = entry?.SourceType.toLowerCase();
             this.updateComponent.sourceType = this.Code;
             this.brokerCode = entry.BrokerCode;
             this.branchValue = entry?.BranchCode;
@@ -1052,7 +1053,7 @@ export class CustomerDetailsComponent implements OnInit {
     }
     this.HavePromoCode = entry?.HavePromoCode;
     this.PromoCode = entry?.PromoCode;
-    this.Code = entry?.SourceType;
+    if(entry.SourceType!=null) this.Code = entry?.SourceType.toLowerCase();
     this.customerCode = entry?.CustomerCode;
     this.branchValue = entry.BranchCode;
     this.brokerCode = entry.BrokerCode;
