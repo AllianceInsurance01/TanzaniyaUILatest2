@@ -1067,6 +1067,7 @@ export class CustomerDetailsComponent implements OnInit {
     this.updateComponent.exchangeRate = entry?.ExchangeRate;
     this.updateComponent.HavePromoCode = entry?.HavePromoCode;
     this.updateComponent.PromoCode = entry?.PromoCode;
+    console.log("Final Values",this.brokerList,this.brokerCode)
     //this.onGetCustomerList('direct',this.customerCode);
   }
   onExchangeRateChange(){
