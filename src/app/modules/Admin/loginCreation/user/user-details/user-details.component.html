@@ -131,14 +131,14 @@
             </div>-->
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
-                    <label class="input-form-label">State</label>
+                    <label class="input-form-label">Region</label>
                     <ng-select class="input-form-select" appendTo="body" [items]="stateList" bindValue="Code" bindLabel="CodeDesc" (change)="onStateChange('change')" [(ngModel)]="stateCode">
                     </ng-select>
                 </div>
             </div>
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
-                    <label class="input-form-label">City <span class="text-required">*</span></label>
+                    <label class="input-form-label">District <span class="text-required">*</span></label>
                     <div class="input-form-box">
                         <input type="text" [(ngModel)]="cityCode" class="input-form-control without-icon" maxlength="100">
                     </div>
@@ -233,7 +233,7 @@
             </div>
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
-                    <label class="input-form-label">PO Box<span class="text-required">*</span></label>
+                    <label class="input-form-label">PO Box</label>
                     <div class="input-form-box">
                         <input type="text" class="input-form-control without-icon" [(ngModel)]="pobox" maxlength="10">
                     </div>
