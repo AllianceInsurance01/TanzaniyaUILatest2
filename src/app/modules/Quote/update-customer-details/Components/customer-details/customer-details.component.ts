@@ -729,7 +729,7 @@ export class CustomerDetailsComponent implements OnInit {
             }
             else if(entry.PromoCode){ this.updateComponent.PromoCode = entry.PromoCode; this.PromoCode = entry.PromoCode; }
             this.InsuranceType=entry?.SectionId;
-            this.onGetCustomerList('direct',this.customerCode);
+            //this.onGetCustomerList('direct',this.customerCode);
             console.log("Currency",this.currencyCode,this.exchangeRate,this.HavePromoCode,entry,this.PromoCode)
           }
           if(this.currencyCode=="TZS"){ this.editSection=false; }
