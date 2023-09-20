@@ -109,6 +109,7 @@ export class CustomerDetailsComponent implements OnInit {
          this.getExecutiveList(bankCode,this.agencyCode);
        }
     }
+    this.getSourceList();
     this.getCurrencyList();
     if(this.searchValue='' && this.searchValue==undefined && this.searchValue==null){
         
@@ -1186,7 +1187,7 @@ export class CustomerDetailsComponent implements OnInit {
             else if(this.currencyList.length==1){this.currencyCode=this.currencyList[0].Code}
             
             
-            this.getSourceList();
+            
         }
 
       },
