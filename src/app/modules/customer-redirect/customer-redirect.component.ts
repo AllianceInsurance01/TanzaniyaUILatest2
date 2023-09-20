@@ -154,7 +154,36 @@ export class CustomerRedirectComponent {
               console.log("Final Setted Data",data)
               sessionStorage.setItem('Userdetails',JSON.stringify(data));
               if(details?.PageType){
-                if(details.PageType=='RP') sessionStorage.setItem('QuoteStatus','AdminRP');
+                if(details.PageType=='RP'){
+                  sessionStorage.setItem('QuoteStatus','AdminRP');
+
+                }
+                else if(details.PageType=='B2C'){
+                    let branchList: any[] = data?.Result?.LoginBranchDetails;
+                    if (branchList.length != 0 && branchList.length > 1) {
+                      console.log("Entered Branch", branchList)
+                      // this.router.navigate(['/branch']);
+                      this.branchselection=true;
+                      this.branchList = branchList;
+                    }
+                    else if (branchList.length != 0){
+                      this.branchList = branchList;
+                      this.branchValue = branchList[0].BrokerBranchCode;
+                      let branchData: any = this.branchList.find(ele => ele.BrokerBranchCode == this.branchValue);
+                      let userDetails = JSON.parse(sessionStorage.getItem('Userdetails') as any);
+                      userDetails.Result['ProductId'] = data.Result.BrokerCompanyProducts[0].ProductId;
+                      userDetails.Result['ProductName'] = data.Result.BrokerCompanyProducts[0].ProductName;
+                      userDetails.Result['BrokerBranchCode'] = this.branchValue;
+                      userDetails.Result['BranchCode'] = branchData.BranchCode;
+                      userDetails.Result['CurrencyId'] = branchData?.CurrencyId;
+                      userDetails.Result['InsuranceId'] = branchData?.InsuranceId;
+                      userDetails.Result['LoginType'] = 'B2CFlow';
+                      sessionStorage.setItem('b2cType','guest')
+                      sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
+                      sessionStorage.removeItem('customerReferenceNo');
+                      //this.router.navigate(['/Home/customer/Client/client-details']);
+                    }
+                }
                 this.router.navigate([details?.RouterLink]);
               }
             }

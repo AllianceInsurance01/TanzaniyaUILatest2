@@ -71,10 +71,13 @@ export class VehicleWishListComponent implements OnInit {
   showEmpRecordsSection: boolean;
   bdmCode: any;
   subuserType: string;
+  loginType: any=null;
+  customerName: any;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     console.log("UserDetails",this.userDetails);
+    if(this.userDetails.Result.LoginType) this.loginType = this.userDetails.Result.LoginType;
     this.loginId = this.userDetails.Result.LoginId;
     this.userType = this.userDetails?.Result?.UserType;
     this.agencyCode = this.userDetails.Result.OaCode;
@@ -440,6 +443,7 @@ export class VehicleWishListComponent implements OnInit {
         this.brokerCode = this.updateComponent.brokerCode;
         brokerbranchCode =  this.updateComponent.brokerBranchCode;
         this.customerCode = this.updateComponent.CustomerCode;
+        this.customerName = this.updateComponent.CustomerName;
         }
         else {
           this.sourceType = this.subuserType;
@@ -455,7 +459,8 @@ export class VehicleWishListComponent implements OnInit {
       "AcExecutiveId": null,
       "CommissionType": null,
       "CustomerCode": this.customerCode,
-      "BdmCode": this.bdmCode,
+      "CustomerName": this.customerName,
+      "BdmCode": this.customerCode,
       "BrokerCode": this.brokerCode,
       "LoginId": loginId,
       "SubUserType": this.subuserType,

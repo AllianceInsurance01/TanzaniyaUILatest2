@@ -190,8 +190,9 @@
                                     </app-admin-table>
                                 </ng-container>
                                 <ng-container *ngIf="s.BrokerList.length==0">
-                                    <app-admin-table [cols]="quoteHeader" [data]="s.BrokerList" (onTotal)="onTotal($event,s.ProductName)">
-                                    </app-admin-table>
+                                   <div class="text-center mt-2">
+                                            No Data Available
+                                   </div>
                                 </ng-container>
                                 
                     <!-- <ng-contanier *ngIf="s.ProductId =='5'">

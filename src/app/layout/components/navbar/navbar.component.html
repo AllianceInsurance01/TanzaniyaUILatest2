@@ -321,13 +321,13 @@
                 <!-- <li class="dropdown">
                     <button class="btn btn-primary" style="cursor: not-allowed;">Live Environment</button>
                 </li> -->
-                <li class="dropdown"><a  style="cursor:pointer" [hidden]="(typeValue=='B2C' && loginId=='guest')">
+                <li class="dropdown"><a  style="cursor:pointer" [hidden]="(loginType=='B2CFlow')">
                     <span>SubUserType - {{typeName}}</span> <i  class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li *ngFor="let type of typeList" (click)="finaliseTypeValue(type,'change')" [value]="type.CodeDesc"><a  style="cursor:pointer">{{type.DisplayName}}</a></li>
                     </ul>
                 </li>
-                <li class="dropdown" style="padding-left: 10px !important;padding-right: 20px !important;" [hidden]="typeValue=='SuperAdmin' || (typeValue=='B2C' && loginId=='guest')"><a style="cursor:pointer"><span>Branch - {{branchName}}</span> <i
+                <li class="dropdown" style="padding-left: 10px !important;padding-right: 20px !important;" [hidden]="typeValue=='SuperAdmin' || (loginType=='B2CFlow')"><a style="cursor:pointer"><span>Branch - {{branchName}}</span> <i
                             class="bi bi-chevron-down"></i></a>
                     <ul>
                         <ng-container *ngIf="userType=='Issuer'">
@@ -370,8 +370,8 @@
    
 </div>
   <mat-sidenav-container style="margin-top:70px !important;" class="customSideNave">
-    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8" [mode]="mode">
-        <div class="navigation">
+    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8" [mode]="mode" >
+        <div class="navigation" [hidden]="(loginType=='B2CFlow')">
             <ul id="dropdown2" class="scrollbar">
                 <!-- <li class="bg_Logo">
                     <a class="logo" (click)="onRoute()" style="pointer-events: none;">
@@ -418,15 +418,16 @@
                                 </a>
                             </li>
                     </ng-container>
-                    
-                
             </ul>
         </div>
     </mat-sidenav>
     <mat-sidenav-content [ngClass]="openSideNav == true ? 'customContent2' : 'customContent'">
         <div class="content">
-            <div class="bread_crumb main">
-                <app-breadcrumb [ngStyle]="{'font-family':' var(--our-font-family-new) !important'}"></app-breadcrumb>
+            <div class="bread_crumb main" >
+                <ng-container *ngIf="(loginType!='B2CFlow')" >
+                    <app-breadcrumb [ngStyle]="{'font-family':' var(--our-font-family-new) !important'}"></app-breadcrumb>
+                </ng-container>
+                
                 <div class="customBody">
                     <router-outlet></router-outlet>
                 </div>

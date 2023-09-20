@@ -169,14 +169,45 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection">
+                            <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection && (Code=='Premia Agent' || Code=='Premia Broker' || Code=='Premia Direct')">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Source Code</label><span class="text-danger">*</span>
-                                    <ng-container *ngIf="Code!='Broker'">
+                                    <div class="input-form-box">
+                                        <input id="CustomerInput" class="input-form-control without-icon"  [disabled]="(endorsementSection) || checkDisableField()" [(ngModel)]="customerCode" type="text" (keyup)="onGetCustomerList('change',$event.target.value)" autocomplete="off" placeholder="Search here" data-toggle="dropdown" /><br>
+                                        <ul class="dropdown-menu dropdown-list-style CustomerInput" appendTo="body"   [ngClass]="{dropdownDisplay: showCustomerList, dropdownNotDisplay: !showCustomerList}">
+                                            <li *ngFor="let item of customerList" (click)="setCustomerValue(item.Code, item.Name,'change')">
+                                                {{item.Code}} - {{ item.Name }}
+                                            </li>
+                                            <div class="text-center" *ngIf="customerList.length == 0">
+                                                <p>Enter any code to Search...</p>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                    <div class="input-form-error" *ngIf="customerCodeError">
+                                        <div class="error-text text-danger">
+                                            Please Select Valid Customer Code
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection && (Code=='Premia Agent' || Code=='Premia Broker' || Code=='Premia Direct')">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Source Name</label><span class="text-danger">*</span>
+                                    <div class="input-form-box">
+                                        <input id="CustomerInput" disabled class="input-form-control without-icon"  [(ngModel)]="customerName" type="text" /><br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection && (Code=='agent' || Code=='broker' || Code=='direct' || Code=='bank')">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Source Code</label><span class="text-danger">*</span>
+                                    <ng-container *ngIf="Code!='broker'">
                                         <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerCode"  [disabled]="endorsementSection" [items]="brokerList" (change)="onBrokerChange()" bindValue="Code" bindLabel="Name">
                                         </ng-select>
                                     </ng-container>
-                                    <ng-container *ngIf="Code=='Broker'">
+                                    <ng-container *ngIf="Code=='broker'">
                                         <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerCode"  [disabled]="endorsementSection" (change)="onBrokerChange()">
                                             <ng-option *ngFor="let item of brokerList" [value]="item.Code">{{item.Name}}</ng-option>
                                         </ng-select>
@@ -188,11 +219,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection && brokerCode">
+                            <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection && brokerCode && (Code=='agent' || Code=='broker' || Code=='direct' || Code=='bank')">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Broker Branch</label><span class="text-danger">*</span>
-                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerBranchCode"  [disabled]="endorsementSection" [items]="brokerBranchList" (change)="onBrokerBranchChange()" bindValue="Code" bindLabel="CodeDesc">
-                                        </ng-select>
+                                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerBranchCode"  [disabled]="endorsementSection" [items]="brokerBranchList" (change)="onBrokerBranchChange()" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
                                 </div>
                                 <div class="input-form-error" *ngIf="brokerBranchCodeError">
                                     <div class="error-text text-danger">
@@ -227,7 +258,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="maan-grid-item" style="z-index: 100 !important;">
+                <div class="maan-grid-item" style="z-index: 100 !important;overflow: visible !important;">
                     <div class="maan-grid-item-title p-0" style="margin: 0px !important;top:0rem;bottom: 0rem !important;padding-top: 9px !important;">
                         <span class="mx-1">
                             <i class="fas fa-book mx-1"></i>
@@ -367,37 +398,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Customer Code</label><span class="text-danger">*</span>
-                                    <div class="input-form-box">
-                                        <input id="CustomerInput" class="input-form-control without-icon"  disabled [(ngModel)]="customerCode" type="text" (keyup)="onGetCustomerList('change',$event.target.value)" autocomplete="off" placeholder="Search here" data-toggle="dropdown" /><br>
-                                        <!-- <ul class="dropdown-menu dropdown-list-style CustomerInput" appendTo="body"   [ngClass]="{dropdownDisplay: showCustomerList, dropdownNotDisplay: !showCustomerList}">
-                                            <li *ngFor="let item of customerList" (click)="setCustomerValue(item.Code, item.Name,'change')">
-                                                {{item.Code}} - {{ item.Name }}
-                                            </li>
-                                            <div class="text-center" *ngIf="customerList.length == 0">
-                                                <p>Enter any code to Search...</p>
-                                            </div>
-                                        </ul> -->
-                                    </div>
-                                    <div class="input-form-error" *ngIf="customerCodeError">
-                                        <div class="error-text text-danger">
-                                            Please Select Valid Customer Code
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Customer Name</label><span class="text-danger">*</span>
-                                    <div class="input-form-box">
-                                        <input id="CustomerInput" disabled class="input-form-control without-icon"  [(ngModel)]="customerName" type="text" /><br>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <!-- <div class="col-12 col-md-4 col-lg-4 col-xl-4" *ngIf="PackageYn=='N' && productId=='3'">
                                 <div class="input-control-container" style="position: relative;bottom: 0.2rem;">
                                     <label class="input-form-label spancommon span_font_size">Insurance Type</label><span class="text-danger">*</span>

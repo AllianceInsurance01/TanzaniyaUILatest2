@@ -40,6 +40,7 @@ export class CustomerModelComponent {
 	quoteNo: any;
 	localPremiumCost: any=null;
 	Riskdetails: any;
+	loginType: any=null;
   constructor(
     private product: SharedService,private authService: AuthService, private datePipe: DatePipe,private router:Router){
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -55,6 +56,7 @@ export class CustomerModelComponent {
 		this.productId = this.userDetails.Result.ProductId;
 		this.insuranceId = this.userDetails.Result.InsuranceId;
 		this.userType = this.userDetails.Result.UserType;
+		this.loginType = this.userDetails.Result.LoginType;
 		this.brokerbranchCode = this.userDetails.Result.BrokerBranchCode;
 		this.typeValue = sessionStorage.getItem('typeValue')
 		this.notificationList = [
@@ -655,10 +657,11 @@ export class CustomerModelComponent {
             const Token = data?.Result?.Token;
             this.authService.login(data);
             this.authService.UserToken(Token);
-			data.Result['LoginType'] = 'Normal';
+			if(this.loginType!=null && this.loginType!=undefined){data.Result['LoginType'] = this.loginType;}
             sessionStorage.setItem('Userdetails', JSON.stringify(data));
             sessionStorage.setItem('UserToken', Token);
             sessionStorage.setItem('menuSection', 'navMenu');
+			sessionStorage.removeItem('b2cType')
             let userDetails = JSON.parse(sessionStorage.getItem('Userdetails') as any);
 			userDetails.Result['ProductId'] = this.productId;
 			userDetails.Result['ProductName'] = this.userDetails.Result.ProductName;
@@ -666,6 +669,7 @@ export class CustomerModelComponent {
 			userDetails.Result['BranchCode'] = this.branchCode;
 			userDetails.Result['CurrencyId'] = this.userDetails.Result.CurrencyId;
 			userDetails.Result['InsuranceId'] = this.insuranceId;
+			
 			sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
 			this.buyPolicyDetails()
           }

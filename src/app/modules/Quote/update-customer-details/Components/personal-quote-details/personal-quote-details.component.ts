@@ -138,7 +138,10 @@ export class PersonalQuoteDetailsComponent implements OnInit {
   ProductCode:any="68";
   aooSIList: any[]=[];
   aggSIList: any[]=[];
-  MoneyDirectorError:any;
+  MoneyDirectorError:any;paymentMode='01';
+  paymentModeList: any[]=[];
+  endorseCoverModification: any=null;
+  customerName: any;
   constructor(private formlyJsonschema: FormlyJsonschema, private sharedService: SharedService, private datePipe: DatePipe,
     private router: Router, private http: HttpClient, private updateComponent: UpdateCustomerDetailsComponent) {
     this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -164,6 +167,15 @@ export class PersonalQuoteDetailsComponent implements OnInit {
     if (this.productId != '3' && this.productId != '19' && this.productId != '42' && this.productId != '43' && this.productId!='39' && this.productId!='16' && this.productId!='1' && this.productId!='25' && this.productId!='21' && this.productId!='26' && this.productId!='27') {
       this.getOccupationList(null);
     }
+    if(this.productId=='45'){
+      this.currencyCode = 'TZS';
+      this.paymentModeList = [
+          {"Code":"01","CodeDesc":"Monthly"},
+          {"Code":"02","CodeDesc":"Quarterly"},
+          {"Code":"03","CodeDesc":"Half-Yearly"},
+          {"Code":"04","CodeDesc":"Yearly"},
+      ]
+    }
     this.productItem = new ProductData();
     this.productItem.BuildingOwnerYn = 'Y';
     this.dobminDate = new Date();
@@ -178,6 +190,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         this.endorsePolicyNo = endorseObj?.PolicyNo;
         this.endorseCategory = endorseObj.Category;
         this.endorsementName = endorseObj?.EndtName;
+        this.endorseCoverModification = endorseObj?.CoverModificationYn
         console.log("Enable Obj in Vehicle", this.enableFieldsList, this.endorsementId)
         // if(this.endorsementId!=42 && this.endorsementId!=842){
         //     this.enableFieldName = this.enableFieldsList.some(ele=>ele=='InsuranceType');
@@ -3956,12 +3969,15 @@ onSubmit(productData) {
       promocode = this.commonDetails[0].Promocode;
     }
     else if (this.commonDetails[0].PromoCode) promocode = this.commonDetails[0].PromoCode;
-    if (this.commonDetails[0].CustomerCode != null && this.commonDetails[0].CustomerCode != undefined) this.customerCode = this.commonDetails[0].CustomerCode;
+    if (this.commonDetails[0].CustomerCode != null && this.commonDetails[0].CustomerCode != undefined){ this.customerCode = this.commonDetails[0].CustomerCode; this.customerName= this.commonDetails[0].CustomerName;}
+    else{
+      this.customerCode = null; this.customerName= null;
+    }
     let ReqObj = {
       "AcexecutiveId": this.commonDetails[0].AcexecutiveId,
       "AgencyCode": this.agencyCode,
       "ApplicationId": appId,
-      "BdmCode": this.bdmCode,
+      "BdmCode": this.customerCode,
       "BranchCode": this.branchCode,
       "BrokerBranchCode": this.brokerbranchCode,
       "BrokerCode": this.brokerCode,
@@ -3983,6 +3999,7 @@ onSubmit(productData) {
       "Currency": this.commonDetails[0].Currency,
       "CustomerReferenceNo": this.customerDetails?.CustomerReferenceNo,
       "CustomerCode": this.customerCode,
+      "CustomerName": this.customerName,
       "ContentSuminsured": this.productItem.ContentSuminsured,
       "PersonalAccSuminsured": this.productItem.PersonalAccidentSuminsured,
       "PersonalIntermediarySuminsured": this.productItem.PersonalIntermediarySuminsured,
@@ -5016,9 +5033,10 @@ onCalculate(buildDetails,type,formType) {
       let effectiveDate = null, coverModificationYN = 'N';
       if (this.endorsementSection) {
         effectiveDate = this.endorseEffectiveDate;
-        let entry = this.enableFieldsList.some(ele => ele == 'Covers' && this.endorsementId!=850);
-        if (entry || this.endorsementId == 846) coverModificationYN = 'Y';
-        else coverModificationYN = 'N';
+        // let entry = this.enableFieldsList.some(ele => ele == 'Covers' && this.endorsementId!=850);
+        // if (entry || this.endorsementId == 846) coverModificationYN = 'Y';
+        // else coverModificationYN = 'N';
+        if(this.endorseCoverModification) coverModificationYN = this.endorseCoverModification
       }
       else {
         effectiveDate = this.commonDetails[0].PolicyStartDate
@@ -5853,6 +5871,9 @@ setFormValues() {
   );
 }
 onFormSubmit() {
+  if(this.productId=='45'){
+    this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/life-cover-details']);
+  }
   if(this.productId=='6'){
     this.onSaveFireAlliedDetails('proceed','individual');
   }
@@ -6134,9 +6155,10 @@ getCalculationDetails(vehicleDetails) {
       let effectiveDate = null; let coverModificationYN = 'N';
       if (this.endorsementSection) {
         effectiveDate = this.endorseEffectiveDate;
-        let entry = this.enableFieldsList.some(ele => ele == 'Covers' && this.endorsementId!=850);
-        if (entry || (this.endorsementId == 846 && veh.Status =='D')) coverModificationYN = 'Y';
-        else coverModificationYN = 'N';
+        // let entry = this.enableFieldsList.some(ele => ele == 'Covers' && this.endorsementId!=850);
+        // if (entry || (this.endorsementId == 846 && veh.Status =='D')) coverModificationYN = 'Y';
+        // else coverModificationYN = 'N';
+        if(this.endorseCoverModification) coverModificationYN = this.endorseCoverModification
       }
       else {
         effectiveDate = this.commonDetails[0].PolicyStartDate

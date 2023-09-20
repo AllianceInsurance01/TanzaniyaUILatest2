@@ -110,7 +110,7 @@
                     </div>
                     <div class="col-12 col-md-2" >
                         <div class="input-control-container">
-                            <label class="input-form-label">MobileCode</label><span class="text-danger">*</span>
+                            <label class="input-form-label">Country Code</label><span class="text-danger">*</span>
                             <ng-select class="input-form-select" appendTo="body" [items]="mobileCodeList" [disabled]="endorsementSection && !enableCustomerDetails" [(ngModel)]="mobileCode" bindValue="Code" bindLabel="CodeDesc">
                             </ng-select>
                         </div>
@@ -123,7 +123,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-4" >
+                    <div class="col-12 col-md-2" >
                         <div class="input-control-container">
                             <label class="input-form-label">Gender</label><span class="text-danger">*</span>
                             <ng-select class="input-form-select" appendTo="body" [items]="genderList" [disabled]="endorsementSection && !enableCustomerDetails" [(ngModel)]="gender" bindValue="Code" bindLabel="CodeDesc">
@@ -138,14 +138,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-4" >
+                    <!-- <div class="col-12 col-md-4" >
                         <div class="input-control-container">
                             <label class="input-form-label">Address2</label>
                             <div class="input-form-box">
                                 <input type="text" maxlength="50" class="input-form-control without-icon" [disabled]="endorsementSection && !enableCustomerDetails" [(ngModel)]="address2">
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- <div class="col-12 col-md-4" >
                         <div class="input-control-container">
                             <label class="input-form-label">Occupation</label><span class="text-danger">*</span>
@@ -161,15 +161,15 @@
                             <mat-datepicker #picker1></mat-datepicker>
                         </mat-form-field>
                     </div> -->
-                    <div class="col-12 col-md-4" >
+                    <!-- <div class="col-12 col-md-4" >
                         <div class="input-control-container">
                             <label class="input-form-label">Email Id</label>
                             <div class="input-form-box">
                                 <input type="text" maxlength="50" class="input-form-control without-icon" [disabled]="endorsementSection && !enableCustomerDetails" [(ngModel)]="emailId">
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-md-4" >
+                    </div> -->
+                    <div class="col-12 col-md-2" >
                         <div class="input-control-container">
                             <label class="input-form-label">Prefered Notification</label><span class="text-danger">*</span>
                             <ng-select class="input-form-select" appendTo="body" [items]="notificationList" [disabled]="endorsementSection && !enableCustomerDetails" [(ngModel)]="preferredNotification" bindValue="Code" bindLabel="CodeDesc">
@@ -178,7 +178,7 @@
                     </div>
                     <div class="col-12 col-md-4" >
                         <div class="input-control-container">
-                            <label class="input-form-label">ZipCode</label><span class="text-danger">*</span>
+                            <label class="input-form-label">P.O Box No</label>
                             <div class="input-form-box">
                                 <input type="text" maxlength="15" [disabled]="endorsementSection && !enableCustomerDetails" (keypress)="omit_special_char($event)" class="input-form-control without-icon"  [(ngModel)]="PinCode">
                             </div>

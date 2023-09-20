@@ -17,7 +17,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="maan-grid-item-body" *ngIf="formSection && productId!='3' ">
+                <div class="maan-grid-item-body" *ngIf="formSection && productId!='3' && productId!='45'">
                 
                     <div class="row p-2" *ngIf="!viewSection && (productId=='15')">
                         <div class="col-12 col-md-6 col-lg-6 input-control-container" style="padding-left: 10px !important;">
@@ -120,6 +120,52 @@
                                </div>
                             </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="maan-grid-item-body" *ngIf="productId=='45'">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-xl-6 offset-3">
+                                <div class="row">
+                                    
+                                    <div class="col-10 col-md-10 col-lg-10 mt-1">
+                                        <label class="input-form-label"><b>Life Cover</b></label><span class="text-danger">*</span>&nbsp;<ng-container *ngIf="categoryDesc"><label class="input-form-label">(Category - {{categoryDesc}})</label></ng-container>
+                                        <div class="input-form-box" style="position: relative;">
+                                            <ng-select class="custom" style="position: relative;bottom: 0.35rem;" [items]="industryList" (change)="onIndustryChange()"  [(ngModel)]="productItem.NatureOfBusinessId" placeholder="Select Industry" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-10 col-md-10 col-lg-10 mt-1">
+                                        <label class="input-form-label"><b>Pay For (Years)</b></label><span class="text-danger">*</span>&nbsp;<ng-container *ngIf="categoryDesc"><label class="input-form-label">(Category - {{categoryDesc}})</label></ng-container>
+                                        <div class="input-form-box input-group" style="position: relative;top:.2rem">
+                                            <input type="text" style="position: relative;bottom: 0.35rem;" class="input-form-control without-icon" maxlength="100" [(ngModel)]="productItem.IndustryName" [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-12 col-lg-12 col-xl-12">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label"><b>Payment Mode</b></label><span class="text-danger">*</span>
+                                            <div style="width:450px;">
+                                                <div class="d-flex justify-content-between">  
+                                                    <div *ngFor="let products of paymentModeList;let j=index">
+                                                    <div class="input-form-radio-box">
+                                                        <div class="radio-toolbar">
+                                                            <input [id]="'Silver'+j" type="radio" name="PlanType" [(ngModel)]="paymentMode" [value]='products.Code'>
+                                                            <label [for]="'Silver'+j" class="no">{{products.CodeDesc}}</label>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-10 col-md-10 col-lg-10 mt-1">
+                                        <label class="input-form-label"><b>Sum Insured </b></label><span class="text-danger">*</span>&nbsp;<ng-container *ngIf="categoryDesc"><label class="input-form-label">(Category - {{categoryDesc}})</label></ng-container>
+                                        <div class="input-form-box input-group" style="position: relative;top:.2rem">
+                                            <input type="text" style="position: relative;bottom: 0.35rem;" class="input-form-control without-icon" maxlength="100" [(ngModel)]="productItem.IndustryName" [ngModelOptions]="{standalone: true}">
+                                        </div>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>

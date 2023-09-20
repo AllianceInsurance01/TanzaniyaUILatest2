@@ -336,101 +336,124 @@ export class TravelQuoteDetailsComponent implements OnInit {
   checkMandatories() {
 
     if (this.issuerSection) {
-      if (this.updateComponent.branchValue != '' && this.updateComponent.branchValue != undefined && this.updateComponent.branchValue != null) {
-        //this.branchValueError = false;
-        this.redirectValidations.emit('reset');
-        if (this.updateComponent.sourceType != '' && this.updateComponent.sourceType != undefined && this.updateComponent.sourceType != null) {
-          //this.sourceCodeError = false;
-          this.redirectValidations.emit('reset');
-          if (this.updateComponent.brokerCode != '' && this.updateComponent.brokerCode != undefined && this.updateComponent.brokerCode != null) {
-            //this.brokerCodeError = false;
-            this.redirectValidations.emit('reset');
-            if (this.updateComponent.CustomerCode != '' && this.updateComponent.CustomerCode != undefined && this.updateComponent.CustomerCode != null) {
-              //this.customerCodeError = false;
-              this.redirectValidations.emit('reset');
-              if (this.updateComponent.travelStartDate != '' && this.updateComponent.travelStartDate != undefined && this.updateComponent.travelStartDate != null) {
-                this.redirectValidations.emit('reset');
-                if (this.updateComponent.travelEndDate != '' && this.updateComponent.travelEndDate != undefined && this.updateComponent.travelEndDate != null) {
+      if(this.updateComponent.branchValue != '' && this.updateComponent.branchValue != undefined && this.updateComponent.branchValue != null){
+          this.redirectValidations.emit('reset'); 
+          if(this.updateComponent.sourceType != '' && this.updateComponent.sourceType != undefined && this.updateComponent.sourceType != null){
+            this.redirectValidations.emit('reset'); 
+            if(this.updateComponent.sourceType=='Premia Agent' || this.updateComponent.sourceType=='Premia Broker' || this.updateComponent.sourceType=='Premia Direct'){
+              if(this.updateComponent.CustomerName!='' && this.updateComponent.CustomerName!=undefined && this.updateComponent.CustomerName!=null){
+                this.brokerCode = null;
+                this.brokerLoginId = null;
+                this.updateComponent.brokerCode = null;
+                this.updateComponent.brokerBranchCode = null;
+                this.updateComponent.brokerLoginId = null;
+                this.redirectValidations.emit('reset'); 
+                if (this.updateComponent.travelStartDate != '' && this.updateComponent.travelStartDate != undefined && this.updateComponent.travelStartDate != null) {
                   this.redirectValidations.emit('reset');
-                  if (this.updateComponent.CurrencyCode != '' && this.updateComponent.CurrencyCode != undefined && this.updateComponent.CurrencyCode != null) {
+                  if (this.updateComponent.travelEndDate != '' && this.updateComponent.travelEndDate != undefined && this.updateComponent.travelEndDate != null) {
                     this.redirectValidations.emit('reset');
-                    if (this.updateComponent.HavePromoCode != '' && this.updateComponent.HavePromoCode != undefined && this.updateComponent.HavePromoCode != null) {
+                    if (this.updateComponent.CurrencyCode != '' && this.updateComponent.CurrencyCode != undefined && this.updateComponent.CurrencyCode != null) {
                       this.redirectValidations.emit('reset');
-                      if(this.updateComponent.HavePromoCode!='N'){
-                        if (this.updateComponent.PromoCode != '' && this.updateComponent.PromoCode != undefined && this.updateComponent.PromoCode != null) {
-                          this.redirectValidations.emit('reset');
-                          return true;
+                      if (this.updateComponent.HavePromoCode != '' && this.updateComponent.HavePromoCode != undefined && this.updateComponent.HavePromoCode != null) {
+                        this.redirectValidations.emit('reset');
+                        if(this.updateComponent.HavePromoCode!='N'){
+                          if (this.updateComponent.PromoCode != '' && this.updateComponent.PromoCode != undefined && this.updateComponent.PromoCode != null) {
+                            this.redirectValidations.emit('reset');
+                            return true;
+                          }
+                          else {
+                            this.redirectValidations.emit('promoCode');
+                          }
                         }
-                        else {
-                          this.redirectValidations.emit('promoCode');
-                        }
+                        else return true;
                       }
-                      else return true;
+                      else {
+                        this.redirectValidations.emit('havePromoCode');
+                      }
                     }
                     else {
-                      this.redirectValidations.emit('havePromoCode');
+                      this.redirectValidations.emit('currencyCode');
                     }
                   }
                   else {
-                    this.redirectValidations.emit('currencyCode');
+                    this.redirectValidations.emit('travelEndDate');
                   }
                 }
                 else {
-                  this.redirectValidations.emit('travelEndDate');
+                  this.redirectValidations.emit('travelStartDate');
                 }
               }
-              else {
-                this.redirectValidations.emit('travelStartDate');
+              else{
+                this.redirectValidations.emit('customerCode');
               }
-              // if(this.executiveSection){
-              //   if(this.executiveValue!='' && this.executiveValue!=undefined && this.executiveValue!=null){
-              //       this.executiveError=false;
-              //       if(this.commissionValue!='' && this.commissionValue!=undefined && this.commissionValue!=null){
-              //         this.commissionError=false;
-              //         return true;
-              //       }
-              //       else{
-              //         this.commissionError=true;
-              //       }
-              //   }
-              //   else{
-              //     this.executiveError=true;
-              //   }
-              // }
-              // else{
-              //   this.executiveValue = null;
-              //   this.commissionValue = null;
-              //   return true;
-              // }
             }
-            else {
-              this.redirectValidations.emit('customerCode');
-              //this.customerCodeError = true;
+            else{
+              if(this.updateComponent.brokerCode!='' && this.updateComponent.brokerCode!=undefined && this.updateComponent.brokerCode!=null){
+                this.redirectValidations.emit('reset'); 
+                if(this.updateComponent.brokerBranchCode!='' && this.updateComponent.brokerBranchCode!=undefined && this.updateComponent.brokerBranchCode!=null){
+                  this.redirectValidations.emit('reset'); 
+                  if (this.updateComponent.travelStartDate != '' && this.updateComponent.travelStartDate != undefined && this.updateComponent.travelStartDate != null) {
+                    this.redirectValidations.emit('reset');
+                    if (this.updateComponent.travelEndDate != '' && this.updateComponent.travelEndDate != undefined && this.updateComponent.travelEndDate != null) {
+                      this.redirectValidations.emit('reset');
+                      if (this.updateComponent.CurrencyCode != '' && this.updateComponent.CurrencyCode != undefined && this.updateComponent.CurrencyCode != null) {
+                        this.redirectValidations.emit('reset');
+                        if (this.updateComponent.HavePromoCode != '' && this.updateComponent.HavePromoCode != undefined && this.updateComponent.HavePromoCode != null) {
+                          this.redirectValidations.emit('reset');
+                          if(this.updateComponent.HavePromoCode!='N'){
+                            if (this.updateComponent.PromoCode != '' && this.updateComponent.PromoCode != undefined && this.updateComponent.PromoCode != null) {
+                              this.redirectValidations.emit('reset');
+                              return true;
+                            }
+                            else {
+                              this.redirectValidations.emit('promoCode');
+                            }
+                          }
+                          else return true;
+                        }
+                        else {
+                          this.redirectValidations.emit('havePromoCode');
+                        }
+                      }
+                      else {
+                        this.redirectValidations.emit('currencyCode');
+                      }
+                    }
+                    else {
+                      this.redirectValidations.emit('travelEndDate');
+                    }
+                  }
+                  else {
+                    this.redirectValidations.emit('travelStartDate');
+                  }
+                }
+                else this.redirectValidations.emit('brokerCode');
+              }
+              else{
+                this.redirectValidations.emit('brokerCode');
+              }
             }
-
+            
+            
+            // else if(this.Code=='Broker'){
+            //   this.brokerCodeError = true;
+            // }
+            // else if(this.Code=='Agent' || this.Code == 'Direct'){
+            //   this.brokerCode=null;
+            //   this.branchValue = null;
+            //   this.brokerCodeError = false;
+            //   return true;
+            // }
           }
-          else if (this.updateComponent.sourceType == 'Broker') {
-            this.redirectValidations.emit('brokerCode');
-            //this.brokerCodeError = true;
+          else{
+            this.redirectValidations.emit('sourceType');
+            return false;
           }
-          else if (this.updateComponent.sourceType == 'Agent' || this.updateComponent.sourceType == 'Direct') {
-            this.updateComponent.brokerCode = null;
-            this.updateComponent.branchValue = null;
-            this.redirectValidations.emit('reset');
-            //this.brokerCodeError = false;
-            return true;
-          }
+          
         }
-        else {
-          this.redirectValidations.emit('sourceType');
-          //this.sourceCodeError = true;
-          return false;
+        else{
+          this.redirectValidations.emit('branchValue');
         }
-      }
-      else {
-        this.redirectValidations.emit('branchValue');
-        //this.branchValueError = true;
-      }
     }
     else {
         if (this.updateComponent.travelStartDate != '' && this.updateComponent.travelStartDate != undefined && this.updateComponent.travelStartDate != null) {
@@ -504,7 +527,7 @@ export class TravelQuoteDetailsComponent implements OnInit {
     this.subuserType = sessionStorage.getItem('typeValue');
     this.applicationId = "01";
     let appId = "1", loginId = "", brokerbranchCode = "";
-    let acExecutiveId = "", commissionType = "";
+    let acExecutiveId = "", commissionType = "",customerName;
     let quoteStatus = sessionStorage.getItem('QuoteStatus');
     if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
         createdBy = this.travelDetails.CreatedBy;
@@ -548,9 +571,11 @@ export class TravelQuoteDetailsComponent implements OnInit {
       brokerCode = this.updateComponent.brokerCode;
       brokerbranchCode =  this.updateComponent.brokerBranchCode;
       customerCode = this.updateComponent.CustomerCode;
+      customerName = this.updateComponent.CustomerName;
     }
     else{
       customerCode = this.updateComponent.CustomerCode;
+      customerName = this.updateComponent.CustomerName;
       sourceType = this.subuserType;
       branchValue = this.branchCode;
       brokerCode = this.brokerCode;
@@ -570,9 +595,10 @@ export class TravelQuoteDetailsComponent implements OnInit {
       "ProductId": this.productId,
       "UserType": this.userType,
       "BrokerBranchCode": brokerbranchCode,
-      "BdmCode": bdmCode,
+      "BdmCode": customerCode,
       "CreatedBy": createdBy,
       "CustomerCode": customerCode,
+      "CustomerName": customerName,
       "InsuranceId": this.insuranceId,
       "SourceType":sourceType,//this.subuserType,
       "SectionId": this.TravelForm.controls['SectionId'].value,

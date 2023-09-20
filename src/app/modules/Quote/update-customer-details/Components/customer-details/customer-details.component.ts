@@ -678,7 +678,8 @@ export class CustomerDetailsComponent implements OnInit {
             console.log(
               "Code",this.Code,this.branchValue,this.brokerBranchCode,this.customerCode,this.brokerCode
             )
-            this.onGetCustomerList('direct',this.customerCode);
+            //this.onGetCustomerList('direct',this.customerCode);
+          
       },
       (err) => { },
     );
@@ -760,7 +761,8 @@ export class CustomerDetailsComponent implements OnInit {
       "InsuranceId":this.insuranceId,
       "BranchCode": this.branchCode
     }
-    let urlLink = `${this.CommonApiUrl}dropdown/sourcetype`;
+    //let urlLink = `${this.CommonApiUrl}dropdown/sourcetype`;
+    let urlLink = `${this.CommonApiUrl}dropdown/premiasourcetypes`; 
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         console.log(data);
@@ -853,19 +855,31 @@ export class CustomerDetailsComponent implements OnInit {
           //if(this.Code=='Agent') this.executiveSection = true;
           if(type=='change'){
             if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
+            this.updateComponent.CustomerCode = null;
+            this.updateComponent.brokerCode = null;
+            this.updateComponent.brokerBranchCode = null;
+            this.updateComponent.brokerLoginId = null;
+            this.customerCode = null;
+            this.customerName=null;
             this.brokerCode = null;
             this.brokerBranchCode = null;
+            this.brokerLoginId = null;
           }
           else{
             //if(this.Code=='Broker' || this.Code=='Agent'){
               if(this.productId=='3' && this.userType=='Issuer') this.getBackDaysDetails();
               let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
               if(entry){
+                console.log("Found Entries",this.brokerCode,entry)
                 this.brokerLoginId = entry.Name; 
                 this.updateComponent.brokerLoginId = this.brokerLoginId;
                 this.updateComponent.brokerCode = this.brokerCode;
               }
-              this.getBrokerBranchList('direct');
+              if(this.Code=='broker' || this.Code=='direct' || this.Code=='agent' || this.Code == 'bank'){
+                this.getBrokerBranchList('direct');
+                
+              }
+              else this.onGetCustomerList('direct',this.customerCode);
             // }
             // else if(this.brokerCode){
             //   let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
@@ -896,7 +910,7 @@ export class CustomerDetailsComponent implements OnInit {
       if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
       let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
       if(entry){
-        this.brokerLoginId = entry.Name; 
+        this.brokerLoginId = entry.LoginId; 
         this.updateComponent.brokerLoginId = this.brokerLoginId;
         this.updateComponent.brokerCode = this.brokerCode;
       }
@@ -939,9 +953,7 @@ export class CustomerDetailsComponent implements OnInit {
               this.brokerBranchCode = this.brokerBranchList[0].Code;
               this.updateComponent.brokerBranchCode = this.brokerBranchCode;
             }
-            if(this.brokerBranchCode!=null){
-              this.onGetCustomerList('direct',this.customerCode);
-            }
+            
           }
         },
         (err) => { },
@@ -969,15 +981,37 @@ export class CustomerDetailsComponent implements OnInit {
   }
   onGetCustomerList(type,code){
     if(this.userType=='Issuer'){
-      if(this.brokerCode!='' && this.brokerCode!=null && this.brokerCode!=undefined){
-        if(this.brokerList.length!=0){
-          let entry = this.brokerList.find(ele=>ele.Code==this.brokerCode);
-          if(entry){
-            this.customerCode = entry.CustomerCode;
-            this.customerName = entry.CustomerName;
-            this.updateComponent.CustomerCode = entry.CustomerCode;
-          }
+      if(code!='' && code!=null && code!=undefined){
+        let branch = null;
+        if(this.userType=='issuer'){branch = this.brokerBranchCode;}
+        else branch = this.branchValue
+        let ReqObj = {
+          "SourceType": this.Code,
+          "BranchCode":  branch,
+          "InsuranceId": this.insuranceId,
+          "SearchValue":code
         }
+        let urlLink = `${this.ApiUrl1}api/search/premiabrokercustomercode`;
+        this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+          (data: any) => {
+                this.customerList = data.Result;
+                if(type=='change'){
+                  this.showCustomerList = true;
+                  this.customerName = null;
+                }
+                else{
+                  this.showCustomerList = false;
+                  let entry = this.customerList.find(ele=>ele.Code==this.customerCode);
+                  this.customerName = entry.Name;
+                  this.setCustomerValue(this.customerCode,this.customerName,'direct')
+                }
+                
+          },
+          (err) => { },
+        );
+      }
+      else{
+        this.customerList = [];
       }
     }
     else{
@@ -985,43 +1019,24 @@ export class CustomerDetailsComponent implements OnInit {
         this.customerName = this.userDetails.Result.UserName;
         this.updateComponent.CustomerCode = this.userDetails.Result.CustomerCode;
     }
-    // if(code!='' && code!=null && code!=undefined){
-    //   let branch = null;
-    //   if(this.userType=='issuer'){branch = this.brokerBranchCode;}
-    //   else branch = this.branchValue
-    //   let ReqObj = {
-    //     "BranchCode":  branch,
-    //     "InsuranceId": this.insuranceId,
-    //     "SearchValue":code
-    //   }
-    //   let urlLink = `${this.ApiUrl1}api/search/premiacustomercode`;
-    //   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-    //     (data: any) => {
-    //           this.customerList = data.Result;
-    //           if(type=='change'){
-    //             this.showCustomerList = true;
-    //             this.customerName = null;
-    //           }
-    //           else{
-    //             this.showCustomerList = false;
-    //             let entry = this.customerList.find(ele=>ele.Code==this.customerCode);
-    //             this.customerName = entry.Name;
-    //             this.setCustomerValue(this.customerCode,this.customerName,'direct')
-    //           }
-              
-    //     },
-    //     (err) => { },
-    //   );
-    // }
-    // else{
-    //   this.customerList = [];
-    // }
+    
   }
   setCustomerValue(code,name,type){
     this.showCustomerList = false;
       this.customerCode = code;
       this.customerName = name;
+      this.updateComponent.CustomerName = name;
+      if(this.issuerSection){
+        this.brokerCode = null;
+          this.brokerBranchCode = null;
+          this.brokerLoginId = null;
+          this.updateComponent.brokerCode = null;
+          this.updateComponent.brokerBranchCode =null;
+          this.updateComponent.brokerLoginId = null;
+      }
+      
       this.updateComponent.CustomerCode = code;
+    
       if(this.productId=='5' && type=='change'){this.updateComponent.modifiedYN = 'Y'}
   }
   setCommonValues(entry){
@@ -1411,6 +1426,7 @@ export class CustomerDetailsComponent implements OnInit {
     else if(event=='branchValue') this.branchValueError = true;
     else if(event=='sourceType') this.sourceCodeError = true;
     else if(event=='brokerCode') this.brokerCodeError = true;
+    else if(event=='brokerBranchCode') this.brokerBranchCodeError = true;
     else if(event=='travelStartDate') this.travelStartError = true;
     else if(event=='travelEndDate') this.travelEndError = true;
     else if(event=='currencyCode') this.currencyError = true;
@@ -1420,7 +1436,7 @@ export class CustomerDetailsComponent implements OnInit {
       this.customerCodeError = false;this.branchValueError=false;
       this.sourceCodeError = false; this.brokerCodeError = false;
       this.travelStartError = false;this.travelEndError = false;
-      this.currencyError = false;this.promoYNError = false;
+      this.currencyError = false;this.promoYNError = false;this.brokerBranchCodeError = false;
       this.promoError = false;
     }
   }
@@ -1431,43 +1447,74 @@ export class CustomerDetailsComponent implements OnInit {
         this.branchValueError = false;
           if(this.Code!='' && this.Code!=undefined && this.Code!=null){
             this.sourceCodeError = false;
-            if(this.brokerCode!='' && this.brokerCode!=undefined && this.brokerCode!=null){
-              this.brokerCodeError = false;
-              if(this.brokerBranchCode!='' && this.brokerBranchCode!=undefined && this.brokerBranchCode!=null){
-                this.brokerBranchCodeError = false;
-                  if(this.customerName!='' && this.customerName!=undefined && this.customerName!=null){
-                    this.customerCodeError = false;
-                      if(this.executiveSection){
-                        if(this.executiveValue!='' && this.executiveValue!=undefined && this.executiveValue!=null){
-                            this.executiveError=false;
-                            if(this.commissionValue!='' && this.commissionValue!=undefined && this.commissionValue!=null){
-                              this.commissionError=false;
-                              return true;
-                            }
-                            else{
-                              this.commissionError=true;
-                            }
+            if(this.Code=='Premia Agent' || this.Code=='Premia Broker' || this.Code=='Premia Direct'){
+              if(this.customerName!='' && this.customerName!=undefined && this.customerName!=null){
+                this.brokerCode = null;
+              this.brokerBranchCode = null;
+              this.brokerLoginId = null;
+              this.updateComponent.brokerCode = null;
+              this.updateComponent.brokerBranchCode = null;
+              this.updateComponent.brokerLoginId = null;
+                this.customerCodeError = false;
+                  if(this.executiveSection){
+                    if(this.executiveValue!='' && this.executiveValue!=undefined && this.executiveValue!=null){
+                        this.executiveError=false;
+                        if(this.commissionValue!='' && this.commissionValue!=undefined && this.commissionValue!=null){
+                          this.commissionError=false;
+                          return true;
                         }
                         else{
-                          this.executiveError=true;
+                          this.commissionError=true;
                         }
-                      }
-                      else{
-                        this.executiveValue = null;
-                        this.commissionValue = null;
-                        return true;
-                      }
+                    }
+                    else{
+                      this.executiveError=true;
+                    }
                   }
                   else{
-                      this.customerCodeError = true;
+                    this.executiveValue = null;
+                    this.commissionValue = null;
+                    return true;
                   }
               }
-              else this.brokerBranchCodeError = true;
-            
+              else{
+                  this.customerCodeError = true;
+              }
             }
             else{
-              this.brokerCodeError = true;
+              if(this.brokerCode!='' && this.brokerCode!=undefined && this.brokerCode!=null){
+                this.brokerCodeError = false;
+                if(this.brokerBranchCode!='' && this.brokerBranchCode!=undefined && this.brokerBranchCode!=null){
+                  this.brokerBranchCodeError = false;
+                  if(this.executiveSection){
+                    if(this.executiveValue!='' && this.executiveValue!=undefined && this.executiveValue!=null){
+                        this.executiveError=false;
+                        if(this.commissionValue!='' && this.commissionValue!=undefined && this.commissionValue!=null){
+                          this.commissionError=false;
+                          return true;
+                        }
+                        else{
+                          this.commissionError=true;
+                        }
+                    }
+                    else{
+                      this.executiveError=true;
+                    }
+                  }
+                  else{
+                    this.executiveValue = null;
+                    this.commissionValue = null;
+                    return true;
+                  }
+                }
+                else this.brokerBranchCodeError = true;
+              }
+              else{
+                this.brokerCodeError = true;
+              }
             }
+            
+            
             // else if(this.Code=='Broker'){
             //   this.brokerCodeError = true;
             // }
@@ -1482,6 +1529,7 @@ export class CustomerDetailsComponent implements OnInit {
             this.sourceCodeError = true;
             return false;
           }
+          
         }
         else{
           this.branchValueError = true;
@@ -1603,7 +1651,10 @@ export class CustomerDetailsComponent implements OnInit {
     // if(this.productId=='15'){
     //   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/workmens-Compensation'])
     // }
-    if(!this.endorsementSection){
+    if(this.productId=='45'){
+      this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+    }
+    else if(!this.endorsementSection){
       let validDetais = this.checkMandatories();
       if(validDetais){
         if(rowData.length==0){
@@ -1854,11 +1905,14 @@ export class CustomerDetailsComponent implements OnInit {
                       this.onProceedValidation(Details);
                     }
                     else{
+                      
                       this.policyPassDate = true;
                       //this.toastrService.show('Policy Start Date','Policy Start Date Should Not be Pass Days', config);
                     }
                   }
-                  
+                  else{
+                    this.onProceedValidation(Details);
+                  }
     
                   }
                   else{
@@ -1947,6 +2001,7 @@ export class CustomerDetailsComponent implements OnInit {
                       Details[0]['BranchCode'] = this.branchValue;
                       Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
                       Details[0]['CustomerCode'] = this.customerCode;
+                      Details[0]['CustomerName'] = this.customerName;
                       Details[0]['LoginId'] = this.brokerLoginId;
                       if(this.IndustryId && this.industryList!=null)
                       Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
@@ -1957,6 +2012,7 @@ export class CustomerDetailsComponent implements OnInit {
                       Details[0]['BranchCode'] = this.branchValue;
                       Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
                       Details[0]['CustomerCode'] = this.customerCode;
+                      Details[0]['CustomerName'] = this.customerName;
                       Details[0]['LoginId'] = this.loginId;
                       if(this.IndustryId && this.industryList!=null)
                       Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
@@ -1980,6 +2036,7 @@ export class CustomerDetailsComponent implements OnInit {
                     Details[0]['BranchCode'] = this.branchValue;
                     Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
                     Details[0]['CustomerCode'] = this.customerCode;
+                    Details[0]['CustomerName'] = this.customerName;
                     Details[0]['LoginId'] = this.brokerLoginId;
                     if(this.IndustryId && this.industryList!=null)
                       Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
@@ -1990,6 +2047,7 @@ export class CustomerDetailsComponent implements OnInit {
                     Details[0]['BranchCode'] = this.branchValue;
                     Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
                     Details[0]['CustomerCode'] = this.customerCode;
+                    Details[0]['CustomerName'] = this.customerName;
                     Details[0]['LoginId'] = this.loginId;
                     if(this.IndustryId && this.industryList!=null)
                       Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
@@ -2108,7 +2166,7 @@ export class CustomerDetailsComponent implements OnInit {
         "RequestReferenceNo": this.quoteRefNo,
         "AgencyCode": this.agencyCode,
         "ApplicationId": this.applicationId,
-        "BdmCode": this.brokerCode,
+        "BdmCode": this.customerCode,
         "BranchCode": this.branchCode,
         "BrokerBranchCode": brokerbranchCode,
         "BrokerCode": this.brokerCode,
@@ -2118,6 +2176,7 @@ export class CustomerDetailsComponent implements OnInit {
         "Currency": this.currencyCode,
         "CustomerReferenceNo": this.customerDetails?.CustomerReferenceNo,
         "CustomerCode": this.customerCode,
+        "CustomerName": this.customerName,
         "ExchangeRate": this.exchangeRate,
         "Havepromocode": this.HavePromoCode,
         "Promocode": this.PromoCode,

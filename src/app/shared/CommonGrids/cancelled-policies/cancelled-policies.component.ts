@@ -37,39 +37,75 @@ export class CancelledPoliciesComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.quoteHeader =  [
-      { key: 'OriginalPolicyNo', display: 'Policy No' },
-      { key: 'QuoteNo', display: 'Quote No' },
-      { key: 'RequestReferenceNo', display: 'Reference No' },
-      { key: 'ClientName', display: 'Customer Name' },
-      { key: 'OverallPremiumLc',display: 'Premium'},
-      // { key: 'CreditNo', display: 'Credit Note No' },
-      // { key: 'DebitNoteNo', display: 'Debit Note No' },
-      {
-        key: 'edit',
-        display: 'Vehicle Details',
-        sticky: false,
-        config: {
-          isCollapse: true,
-          isCollapseName:'Vehicles'
+    if(this.productId=='5'){
+      this.quoteHeader =  [
+        { key: 'OriginalPolicyNo', display: 'Policy No' },
+        { key: 'QuoteNo', display: 'Quote No' },
+        { key: 'ClientName', display: 'Customer Name' },
+        // { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'Currency', display: 'Currency' },
+        { key: 'OverallPremiumLc', display: 'Premium' },
+        { key: 'PolicyStartDate', display: 'Start Date' },
+        { key: 'PolicyEndDate', display: 'End Date' },
+        
+        //{ key: 'ClientName', display: 'Customer Name' },
+        // { key: 'CreditNo', display: 'Credit Note No' },
+        // { key: 'DebitNoteNo', display: 'Debit Note No' },
+        
+        {
+          key: 'edit',
+          display: 'Vehicle Details',
+          sticky: false,
+          config: {
+            isCollapse: true,
+            isCollapseName:'Vehicles'
+          },
         },
-      }
-    ];
-    this.innerColumnHeader =  [
-      { key: 'Vehicleid', display: 'VehicleID' },
-      { key: 'Registrationnumber', display: 'Registration No' },
-      { key: 'Chassisnumber', display: 'Chassis No' },
-      { key: 'Vehiclemake', display: 'Make' },
-      { key: 'Vehcilemodel', display: 'Model' },
-      // {
-      //   key: 'actions',
-      //   display: 'Action',
-      //   config: {
-      //     isEdit: true,
-      //   },
-      // },
 
-    ];
+      ];
+      this.innerColumnHeader =  [
+        { key: 'Vehicleid', display: 'VehicleID' },
+        { key: 'Registrationnumber', display: 'Registration No' },
+        { key: 'Chassisnumber', display: 'Chassis No' },
+        { key: 'Vehiclemake', display: 'Make' },
+        { key: 'Vehcilemodel', display: 'Model' },
+        { key: 'PolicyTypeDesc', display: 'Policy Type' },
+        { key: 'OverallPremiumFc', display: 'Premium' },
+
+        // {
+        //   key: 'actions',
+        //   display: 'Schedule',
+        //   config: {
+        //     isSchedule: true,
+        //   },
+        // },
+
+      ];
+    }
+    else{
+      this.quoteHeader =  [
+        { key: 'OriginalPolicyNo', display: 'Policy No' },
+        { key: 'QuoteNo', display: 'Quote No' },
+        { key: 'RequestReferenceNo', display: 'Reference No' },
+        { key: 'ClientName', display: 'Insured Name' },
+        { key: 'PolicyStartDate', display: 'Policy Start Date' },
+        { key: 'PolicyEndDate', display: 'Policy End Date' },
+
+        // { key: 'CreditNo', display: 'Credit Note No' },
+        // { key: 'DebitNoteNo', display: 'Debit Note No' },
+        
+        // {
+        //   key: 'edit',
+        //   display: 'Vehicle Details',
+        //   sticky: false,
+        //   config: {
+        //     isCollapse: true,
+        //     isCollapseName:'Vehicles'
+        //   },
+        // },
+
+      ];
+    }
     this.getExistingQuotes(null,'change');
   }
   getExistingQuotes(element,entryType){

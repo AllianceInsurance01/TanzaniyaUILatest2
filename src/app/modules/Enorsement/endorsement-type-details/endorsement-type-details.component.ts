@@ -423,9 +423,9 @@ export class EndorsementTypeDetailsComponent {
             "Remarks":this.remarks,
             "Category": category,
             "EndtName": this.selectedEndorsement.EndorsementDesc,
+            "CoverModificationYn": this.selectedEndorsement.isCoverEndt,
             "PolicyNo": res?.policyNo
           }
-          
           sessionStorage.setItem('endorseTypeId',JSON.stringify(obj));
          
           if(this.productId=='5'){
@@ -453,6 +453,7 @@ export class EndorsementTypeDetailsComponent {
             "EffectiveDate":effDate,
             "Remarks":this.remarks,
             "Category": category,
+            "CoverModificationYn": this.selectedEndorsement.isCoverEndt,
             "EndtName": this.selectedEndorsement.EndorsementDesc,
             "PolicyNo": res?.policyNo
           }
@@ -709,13 +710,19 @@ export class EndorsementTypeDetailsComponent {
       "RequestReferenceNo": this.requestReferenceNo,
       "RiskId": "1",
       "SectionId":  "42",
-      "CashInHandEmployees": customerDatas.CashInHandEmployees,
-      "CashInSafe": customerDatas.CashInSafe,
-      "CashInTransit": customerDatas.CashInTransit,
-      "MoneyAnnualcarrySuminsured": customerDatas.MoneyAnnualcarrySuminsured,
-      "MoneyInPremises": customerDatas.MoneyInPremises,
-      "MoneyInSafeBusiness": customerDatas.MoneyInSafeBusiness,
-      "MoneyOutSafeBusiness": customerDatas.MoneyOutSafeBusiness,
+      "MoneySafeLimit": customerDatas.MoneySafeLimit,
+      "MoneyOutofSafe": customerDatas.MoneyOutofSafe,
+      "MoneyDirectorResidence": customerDatas.MoneyDirectorResidence,
+      "MoneyCollector": customerDatas.MoneyCollector,
+      "MoneyAnnualEstimate":customerDatas.MoneyAnnualEstimate,
+      "MoneyMajorLoss":customerDatas.MoneyMajorLoss,
+    // "CashInHandEmployees": this.productItem?.CashInHandEmployees,
+    // "CashInSafe": this.productItem?.CashInSafe,
+    // "CashInTransit": this.productItem?.CashInTransit,
+    // "MoneyAnnualcarrySuminsured": this.productItem?.MoneyAnnualcarrySuminsured,
+    // "MoneyInPremises": this.productItem?.MoneyInPremises,
+    // "MoneyInSafeBusiness": this.productItem?.MoneyInSafeBusiness,
+    // "MoneyOutSafeBusiness": this.productItem?.MoneyOutSafeBusiness,
       "EndorsementDate": customerDatas.EndorsementDate,
       "EndorsementEffectiveDate": customerDatas.EndorsementEffectiveDate,
       "EndorsementRemarks": customerDatas.EndorsementRemarks,
@@ -825,6 +832,7 @@ export class EndorsementTypeDetailsComponent {
       "BdmCode": customerDatas?.BdmCode,
       "CreatedBy": customerDatas?.CreatedBy,
       "CustomerCode": customerDatas?.CustomerCode,
+      "CustomerName": customerDatas?.CustomerName,
       "InsuranceId": this.insuranceId,
       "SourceType": customerDatas?.SourceType,
       "SectionId": customerDatas?.SectionId,
@@ -1053,6 +1061,7 @@ export class EndorsementTypeDetailsComponent {
       "Currency": customerData?.Currency,
       "CustomerReferenceNo": customerData?.CustomerReferenceNo,
       "CustomerCode": customerData?.CustomerCode,
+      "CustomerName": customerData?.CustomerName,
       "ContentSuminsured": this.productItem.ContentSuminsured,
       "PersonalAccSuminsured": this.productItem.PersonalAccidentSuminsured,
       "PersonalIntermediarySuminsured": this.productItem.PersonalIntermediarySuminsured,
@@ -1418,6 +1427,7 @@ export class EndorsementTypeDetailsComponent {
                 "AcExecutiveId": this.acExecutiveId,
                 "CommissionType": vehicleDetails?.CommissionType,
                 "CustomerCode": vehicleDetails?.CustomerCode,
+                "CustomerName": vehicleDetails?.CustomerName,
                 "BdmCode": vehicleDetails?.BdmCode,
                 "BrokerCode": vehicleDetails?.BrokerCode,
                 "LoginId": vehicleDetails?.LoginId,
