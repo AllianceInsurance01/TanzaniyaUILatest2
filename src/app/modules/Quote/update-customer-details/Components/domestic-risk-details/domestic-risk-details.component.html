@@ -21,7 +21,7 @@
                                         <div *ngIf="sumInsured">
                                             Currency({{currencyValue}})
                                         </div>
-                                        <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('building') && building.length!=0 && !checkEndorseDisable('building')"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNew()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
+                                        <div class="headcommon mr-3" *ngIf="enableAddNewBtn('building') && building.length!=0 && checkEndorseDisable('building')"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNew()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
                                     </div>
                                     <div class="d-flex maan-grid-item display2" style="flex-direction: column;">
                                         <div class="headcommon maan-grid-item-title">
@@ -32,7 +32,7 @@
                                             <div *ngIf="sumInsured">
                                                 Currency({{currencyValue}})
                                             </div>
-                                            <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('building') && building.length!=0 && !checkEndorseDisable('building')"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNew()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
+                                            <div class="headcommon mr-3" *ngIf="enableAddNewBtn('building') && building.length!=0 && checkEndorseDisable('building')"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNew()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
                                         </div>
                                       
                                     </div>
@@ -42,7 +42,7 @@
                                             <div class="groupBtnMembers__desc groupBtnMembers__desc_top">
                                                 Enter All Location Details that you want to insure
                                             </div>
-                                                <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNew()" *ngIf="!checkEndorseDisable('building')"><i class="fa fa-plus-circle"></i>&nbsp; Add New</button>
+                                                <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNew()" *ngIf="checkEndorseDisable('building')"><i class="fa fa-plus-circle"></i>&nbsp; Add New</button>
                                         </div>
                                     </div>
                                     <div  class="addMembers" *ngIf="building.length!=0">
@@ -50,10 +50,9 @@
                                             <div class="addMembers__header">
                                                 <div class="addMembers__name">{{entry.LocationName}}</div>
                                                 <div class="addMembers__edit">
-                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="delete(entry)" *ngIf="!checkEndorseDisable('building')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
-                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditBuilding(i)" *ngIf="!checkEndorseDisable('building')"> <i class="fa fa-pencil"></i></button>&nbsp;
-                                                   
-                                                    
+                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="delete(entry)" *ngIf="checkEndorseDisable('building')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditBuilding(i)" *ngIf="checkEndorseDisable('building')"> <i class="fa fa-pencil"></i></button>&nbsp;
+
                                                 </div>
                                                 <div class="addMembers__edit" *ngIf="sumInsured">
                                                     <span>{{entry.BuildingSuminsured| commaseparator }}</span>&nbsp;&nbsp;&nbsp;
@@ -305,7 +304,7 @@
                                         <div>
                                             Currency&nbsp;({{currencyValue}})
                                         </div>
-                                        <div class="headcommon mr-3"  *ngIf="!enableAddNewBtn('content')  && Cotentrisk.length!=0 && !checkEndorseDisable('content')"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="ContentAdd()">Add New </button></div>
+                                        <div class="headcommon mr-3"  *ngIf="enableAddNewBtn('content')  && Cotentrisk.length!=0 && checkEndorseDisable('content')"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="ContentAdd()">Add New </button></div>
                                     </div>
                                     <div class="d-flex maan-grid-item display2" style="flex-direction: column;">
                                         <div class="headcommon maan-grid-item-title">
@@ -316,7 +315,7 @@
                                             <div>
                                                 Currency&nbsp;({{currencyValue}})
                                             </div>
-                                            <div class="headcommon mr-3"  *ngIf="!enableAddNewBtn('content')  && Cotentrisk.length!=0 && !checkEndorseDisable('content')"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="ContentAdd()">Add New </button></div>
+                                            <div class="headcommon mr-3"  *ngIf="enableAddNewBtn('content')  && Cotentrisk.length!=0 && checkEndorseDisable('content')"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="ContentAdd()">Add New </button></div>
                                        
                                       
                                     </div>
@@ -325,7 +324,7 @@
                                             <div class="groupBtnMembers__desc groupBtnMembers__desc_top">
                                                 Enter All Content Details that you want to insure
                                             </div>
-                                                <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2"  *ngIf="!checkEndorseDisable('content')" (click)="ContentAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>
+                                                <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2"  *ngIf="checkEndorseDisable('content')" (click)="ContentAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>
                                         </div>
                                     </div>
                                     <div  class="addMembers" *ngIf="Cotentrisk.length!=0">
@@ -333,8 +332,8 @@
                                             <div class="addMembers__header">
                                                 <div class="addMembers__name">{{getLocationName(entry.RiskId)}}</div>
                                                 <div class="addMembers__edit">
-                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="ContentDelete(entry)" *ngIf="!checkEndorseDisable('content')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
-                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditContent(i)" *ngIf="!checkEndorseDisable('content')"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="ContentDelete(entry)" *ngIf="checkEndorseDisable('content')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditContent(i)" *ngIf="checkEndorseDisable('content')"> <i class="fa fa-pencil"></i></button>&nbsp;
                                                     
                                                     
                                                 </div>
@@ -564,14 +563,14 @@
                                         <div>
                                             Currency&nbsp;({{currencyValue}})
                                         </div>
-                                        <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('personalAccident') && PersonalAssistantList.length!=0"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="PersonalAdd()">Add New </button></div>
+                                        <div class="headcommon mr-3" *ngIf="enableAddNewBtn('personalAccident') && PersonalAssistantList.length!=0"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="PersonalAdd()">Add New </button></div>
                                     </div>
                                     <div  *ngIf="PersonalAssistantList.length==0">
                                         <div class="groupBtnMembers text-center">
                                             <div class="groupBtnMembers__desc groupBtnMembers__desc_top">
                                                 Enter All Personal Accident Details that you want to insure
                                             </div>
-                                                <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2"  *ngIf="!checkEndorseDisable('personalAccident')" (click)="PersonalAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>
+                                                <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2"  *ngIf="checkEndorseDisable('personalAccident')" (click)="PersonalAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>
                                         </div>
                                     </div>
                                     <div  class="addMembers" *ngIf="PersonalAssistantList.length!=0">
@@ -579,8 +578,8 @@
                                             <div class="addMembers__header">
                                                 <div class="addMembers__name">{{getLocationName(entry.RiskId)}}</div>
                                                 <div class="addMembers__edit">
-                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="PersonalAccidentDelete(entry)" *ngIf="!checkEndorseDisable('personalAccident')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
-                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditPersonalAccident(i,entry)" *ngIf="!checkEndorseDisable('personalAccident')"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="PersonalAccidentDelete(entry)" *ngIf="checkEndorseDisable('personalAccident')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditPersonalAccident(i,entry)" *ngIf="checkEndorseDisable('personalAccident')"> <i class="fa fa-pencil"></i></button>&nbsp;
                                                     
                                                     
                                                 </div>
@@ -687,14 +686,14 @@
                                         <div>
                                             Currency&nbsp;({{currencyValue}})
                                         </div>
-                                        <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('allRisk') && risk.length!=0"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="AllAdd()">Add New </button></div>
+                                        <div class="headcommon mr-3" *ngIf="enableAddNewBtn('allRisk') && risk.length!=0"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="AllAdd()">Add New </button></div>
                                     </div>
                                     <div  *ngIf="risk.length==0">
                                         <div class="groupBtnMembers text-center">
                                             <div class="groupBtnMembers__desc groupBtnMembers__desc_top">
                                                 Enter All All Risk Details that you want to insure
                                             </div>
-                                                <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2"  *ngIf="!checkEndorseDisable('allRisk')" (click)="AllAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>
+                                                <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2"  *ngIf="checkEndorseDisable('allRisk')" (click)="AllAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>
                                         </div>
                                     </div>
                                     <div  class="addMembers" *ngIf="risk.length!=0">
@@ -702,8 +701,8 @@
                                             <div class="addMembers__header">
                                                 <div class="addMembers__name">{{getLocationName(entry.RiskId)}}</div>
                                                 <div class="addMembers__edit">
-                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="AllRiskDelete(entry)" *ngIf="!checkEndorseDisable('personalAccident')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
-                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditAllRisk(i)" *ngIf="!checkEndorseDisable('personalAccident')"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="AllRiskDelete(entry)" *ngIf="checkEndorseDisable('allRisk')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditAllRisk(i)" *ngIf="checkEndorseDisable('allRisk')"> <i class="fa fa-pencil"></i></button>&nbsp;
                                                 </div>
                                                 <div class="addMembers__edit">
                                                     <span> {{entry.SumInsured}}</span>&nbsp;&nbsp;
@@ -809,23 +808,23 @@
                                         <div>
                                             Currency&nbsp;({{currencyValue}})
                                         </div>
-                                        <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('personalIndeminity')  && Intermedity.length!=0"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="IntermedityAdd()">Add New </button></div>
+                                        <div class="headcommon mr-3" *ngIf="enableAddNewBtn('personalIndeminity')  && Intermedity.length!=0"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="IntermedityAdd()">Add New </button></div>
                                     </div>
                                     <div  *ngIf="Intermedity.length==0">
                                         <div class="groupBtnMembers text-center">
                                             <div class="groupBtnMembers__desc groupBtnMembers__desc_top">
                                                 Enter All Personal Indemenity Details that you want to insure
                                             </div>
-                                                <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2"  *ngIf="!checkEndorseDisable('personalIndeminity')" (click)="IntermedityAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>
+                                                <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2"  *ngIf="checkEndorseDisable('personalIndeminity')" (click)="IntermedityAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>
                                         </div>
                                     </div>
                                     <div  class="addMembers" *ngIf="Intermedity.length!=0">
-                                        <div class="addMembers__item" *ngFor="let entry of Intermedity|paginate:{itemsPerPage: 5, currentPage:pi, id:'pi'};let i=index">
+                                        <div class="addMembers__item" *ngFor="let entry of Intermedity|paginate:{itemsPerPage: 5,currentPage:pi,id:'pi'};let i=index">
                                             <div class="addMembers__header">
                                                 <div class="addMembers__name">{{getLocationName(entry.RiskId)}}</div>
                                                 <div class="addMembers__edit">
-                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="PersonalIndDelete(entry)" *ngIf="!checkEndorseDisable('personalIndeminity')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
-                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditPersonalInd(i,entry)" *ngIf="!checkEndorseDisable('personalIndeminity')"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="PersonalIndDelete(entry)" *ngIf="checkEndorseDisable('personalIndeminity')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditPersonalInd(i,entry)" *ngIf="checkEndorseDisable('personalIndeminity')"> <i class="fa fa-pencil"></i></button>&nbsp;
                                                     
                                                     
                                                 </div>
@@ -856,7 +855,7 @@
                                         </div>  
                                     </div>
                                     <div class="d-flex justify-content-end">
-                                        <pagination-controls (pageChange)="pi=$event" id="pi"></pagination-controls>
+                                        <pagination-controls (pageChange)="pi=$event" id="pi" *ngIf="Intermedity.length!=0"></pagination-controls>
                                       </div>
                                 </div>
                                     
@@ -923,7 +922,7 @@
                                     <div>
                                         Currency&nbsp;({{currencyValue}})
                                     </div>          
-                        <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('electronic') && ElectronicItem.length!=0"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="AllAdds()">Add New </button></div>
+                        <div class="headcommon mr-3" *ngIf="enableAddNewBtn('electronic') && ElectronicItem.length!=0"> <button class="maan-btn btn-primary maan-button-data mt-2" (click)="AllAdds()">Add New </button></div>
                                 </div>
                                 <div  *ngIf="ElectronicItem.length==0">
                                     <div class="groupBtnMembers text-center">
@@ -938,8 +937,8 @@
                                         <div class="addMembers__header">
                                             <div class="addMembers__name">{{getLocationName(entry.RiskId)}}</div>
                                             <div class="addMembers__edit">
-                                                <button class="circle btn btn-danger btn-sm mr-2" (click)="ElectronicDelete(entry)" *ngIf="!checkEndorseDisable('personalIndeminity')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
-                                                <button class="circle btn btn-primary btn-sm" (click)="onElectroncequipment(i,entry)" *ngIf="!checkEndorseDisable('personalIndeminity')"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                <button class="circle btn btn-danger btn-sm mr-2" (click)="ElectronicDelete(entry)" *ngIf="checkEndorseDisable('personalIndeminity')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                                <button class="circle btn btn-primary btn-sm" (click)="onElectroncequipment(i,entry)" *ngIf="checkEndorseDisable('personalIndeminity')"> <i class="fa fa-pencil"></i></button>&nbsp;
                                                 
                                                 
                                             </div>
@@ -1126,7 +1125,7 @@
                                     </div>
                                     
                                     
-                                    <div class="headcommon mr-3"  *ngIf="!enableAddNewBtn('employee') && !enableEmployeeUploadSection && employeeList.length!=0">
+                                    <div class="headcommon mr-3"  *ngIf="enableAddNewBtn('employee') && !enableEmployeeUploadSection && employeeList.length!=0">
                                         <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2"  (click)="EmployeeAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>&nbsp;
                                             <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2"  (click)="onUploadEmployeeSection()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
                                     </div>
@@ -1502,7 +1501,7 @@
                                     </div>
                                     
                                     
-                                    <div class="headcommon mr-3"  *ngIf="!enableAddNewBtn('employee') && !enableFidelityUploadSection && fidelityList.length!=0">
+                                    <div class="headcommon mr-3"  *ngIf="enableAddNewBtn('employee') && !enableFidelityUploadSection && fidelityList.length!=0">
                                         <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2"  (click)="FidelityAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>&nbsp;
                                             <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2"  (click)="onUploadFidelitySection()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
                                     </div>
@@ -1879,7 +1878,7 @@
                                     <div *ngIf="sumInsured">
                                         Currency({{currencyValue}})
                                     </div>
-                                    <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('machinery') && machineries.length!=0"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNewMachinery()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
+                                    <div class="headcommon mr-3" *ngIf="enableAddNewBtn('machinery') && machineries.length!=0"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNewMachinery()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
                                 </div>
                                 <div  *ngIf="machineries.length==0">
                                     <div class="groupBtnMembers text-center">
@@ -1894,8 +1893,8 @@
                                         <div class="addMembers__header">
                                             <div class="addMembers__name">{{getLocationName(entry.RiskId)}}</div>
                                             <div class="addMembers__edit">
-                                                <button class="circle btn btn-danger btn-sm mr-2" (click)="MachineryDelete(entry)" *ngIf="!checkEndorseDisable('machinery')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
-                                                <button class="circle btn btn-primary btn-sm" (click)="onEditMachinery(i,entry)" *ngIf="!checkEndorseDisable('machinery')"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                <button class="circle btn btn-danger btn-sm mr-2" (click)="MachineryDelete(entry)" *ngIf="checkEndorseDisable('machinery')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                                <button class="circle btn btn-primary btn-sm" (click)="onEditMachinery(i,entry)" *ngIf="checkEndorseDisable('machinery')"> <i class="fa fa-pencil"></i></button>&nbsp;
                                             </div>
                                             <div class="addMembers__edit">
                                                 <span>{{entry.SumInsured| commaseparator }} </span>&nbsp;&nbsp;
@@ -2038,7 +2037,7 @@
                                         <div >
                                             Currency({{currencyValue}})
                                         </div>
-                                        <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('accessories') && accessoriesList.length!=0"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNewAccessories()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
+                                        <div class="headcommon mr-3" *ngIf="enableAddNewBtn('accessories') && accessoriesList.length!=0"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNewAccessories()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
                                     </div>
                                     <div class="d-flex maan-grid-item display2" style="flex-direction: column;">
                                         <div class="headcommon maan-grid-item-title">
@@ -2049,7 +2048,7 @@
                                             <div>
                                                 Currency({{currencyValue}})
                                             </div>
-                                            <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('accessories') && accessoriesList.length!=0"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNewAccessories()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
+                                            <div class="headcommon mr-3" *ngIf="enableAddNewBtn('accessories') && accessoriesList.length!=0"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AddNewAccessories()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
                                         </div>
 
                                     </div>
@@ -2067,8 +2066,8 @@
                                             <div class="addMembers__header">
                                                 <div class="addMembers__name">{{getAssName(entry.RiskId)}}</div>
                                                 <div class="addMembers__edit">
-                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="AccessoriesDelete(entry)" *ngIf="!checkEndorseDisable('machinery')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
-                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditAccessories(i,entry)" *ngIf="!checkEndorseDisable('machinery')"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="AccessoriesDelete(entry)" *ngIf="checkEndorseDisable('machinery')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditAccessories(i,entry)" *ngIf="checkEndorseDisable('machinery')"> <i class="fa fa-pencil"></i></button>&nbsp;
                                                 </div>
                                                 <div class="addMembers__edit">
                                                     <span>{{entry.SumInsured| commaseparator }} </span>&nbsp;&nbsp;
@@ -2231,7 +2230,7 @@
                                         <div *ngIf="sumInsured">
                                             Currency({{currencyValue}})
                                         </div>
-                                        <div class="headcommon mr-3" *ngIf="!enableAddNewBtn('Cyber') && CyberItem.length!=0 && !checkEndorseDisable('Cyber')"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AllCyber()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
+                                        <div class="headcommon mr-3" *ngIf="enableAddNewBtn('Cyber') && CyberItem.length!=0 && checkEndorseDisable('Cyber')"> <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AllCyber()"><i class="fa fa-plus-circle"></i>&nbsp;Add New </button></div>
                                     </div>
                                     <!-- <span><u> Building Risk Details </u></span> -->
                                     <div  *ngIf="CyberItem.length==0">

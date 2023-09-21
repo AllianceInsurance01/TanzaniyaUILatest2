@@ -381,7 +381,9 @@ export class DomesticRiskDetailsComponent implements OnInit {
         this.orgPolicyNo = sessionStorage.getItem('endorsePolicyNo')
         this.endorsementId = endorseObj.EndtTypeId;
         this.enableFieldsList = endorseObj.FieldsAllowed;
+        console.log('Enables fields Section',this.enableFieldsList);
         let enableAllSection = this.enableFieldsList.some(ele=>ele=='domesticRiskDetails' || ele=='AddCovers');
+        console.log('Enables Add Section',enableAllSection);
         if(enableAllSection) this.enableAllSection=true;
         else this.enableAllSection = false;
         this.endorsePolicyNo = endorseObj?.PolicyNo;
@@ -437,14 +439,15 @@ export class DomesticRiskDetailsComponent implements OnInit {
   }*/
   checkEndorseDisable(type){
       if(this.endorsementSection){
-            if(type=='building') return (!this.buildingSection && !this.enableAllSection);
+        console.log('Enbales Endorsement Sections',type,this.buildingSection,this.enableAllSection);
+            if(type =='building') return (!this.buildingSection && !this.enableAllSection);           
             else if(type=='content') return (!this.contentRiskSection && !this.enableAllSection);
             else if(type=='personalAccident') return (!this.personalAccidentSection && !this.enableAllSection);
             else if(type == 'personalIndeminity') return (!this.personalIntermeditySection && !this.enableAllSection);
             else if(type=='allRisk') return (!this.allRiskSection && !this.enableAllSection);
             else if(type == 'electronic') return (!this.electronicEquipSection && !this.enableAllSection);
       }
-      else return false;
+      else return true;
   }
   setTabSections(){
     
@@ -464,6 +467,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
     if(this.item){
     console.log('KKKKKKKKKKKKKKKKKKKKKK',this.buildingDetailsSection,this.item);
       let items = this.item.find((Code) => Code == '1' || Code=='40');
+      console.log('Items',this.item)
       if (items) {
         this.sumInsured=true;
         let fireData = new LocationDetails();
@@ -927,7 +931,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
       else if(type == 'electronic') return (!this.electronicEquipSection && !this.enableAllSection);
       else if(type == 'Cyber') return (!this.enableCyberSection && !this.enableAllSection);
     }
-    else return false;
+    else return true;
   }
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
@@ -2878,9 +2882,12 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
         let res: any = data;
         if (res.Result.length != 0) {
           if(this.endorsementSection){
+            console.log('Enable Building Suminsureds',this.enableFieldsList);
+            //this.buildingSection = !this.enableFieldsList.some(ele=>ele=='BuildingSuminsured');
             this.buildingSection = !this.enableFieldsList.some(ele=>ele=='BuildingSuminsured');
           }
           else this.buildingSection = true;
+          //else this.buildingSection = false;
           this.building = res.Result;
           let i=0;
           for(let entry of this.building){
