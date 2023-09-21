@@ -19,7 +19,6 @@ import { SMERiskDetailsComponent } from './Components/sme-risk-details/sme-risk-
 import { VieQuoteDetailsComponent } from '../viewquote-details/viewquote-details.component';
 import { SectionModificationComponent } from './Components/section-modification/section-modification.component';
 import { CustomerModelComponent } from '../../Customer/customer-model/customer-model.component';
-import { LifeCoverDetailsComponent } from './life-cover-details/life-cover-details.component';
 
 const routes: Routes = [
   {
@@ -105,13 +104,7 @@ const routes: Routes = [
           title: "Excess-stepper",
         }
       },
-      {
-        path: 'life-cover-details',
-        component: LifeCoverDetailsComponent,
-        data: {
-          title: "Life-Excess-stepper",
-        }
-      },
+      
       {
         path: 'premium-details',
         component: PremiumDetailsComponent,

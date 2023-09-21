@@ -33,12 +33,24 @@ export class ProductSelectionComponent implements OnInit {
   typeList:any;
   branchName: any;
   insuranceid: any;
-
+  lifeInsuraceSubSection:boolean=false;
   constructor(private router: Router,
     private authService: AuthService,
     private loginService:LoginService,
     private service: HttpService,private SharedService:SharedService) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+    sessionStorage.removeItem('vehicleDetailsList');
+    sessionStorage.removeItem('customerReferenceNo')
+    sessionStorage.removeItem('quoteReferenceNo');
+    sessionStorage.removeItem('homeCommonDetails');
+    sessionStorage.removeItem('HomeInsQuoteRefNo')
+    sessionStorage.removeItem('TravelQuoteRefNo')
+    sessionStorage.removeItem('QuoteStatus');
+    sessionStorage.removeItem('endorsePolicyNo');
+    sessionStorage.removeItem('endorseTypeId');
+    sessionStorage.removeItem('quoteNo');
+    sessionStorage.removeItem('updatebar');
+    sessionStorage.removeItem('endorseTypeId')
     console.log('UUUUUUUUUUU',this.userDetails);
     this.userResponse = this.userDetails?.Result;
     this.loginId = this.userDetails.Result.LoginId;
@@ -130,13 +142,29 @@ export class ProductSelectionComponent implements OnInit {
     console.log('PPPPPNNNNNNN',item.ProductName)
 
     userDetails.Result['PackageYn'] = item.PackageYn;
-    sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
+      sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
     console.log("Products",item,userDetails.Result)
-     this.router.navigate(['/Home']);
+    this.router.navigate(['/Home']);
 
     // else if(item.ProductId =='4') this.router.navigate(['/Travel']);
     // //else if(item.ProductId=='7') this.router.navigate(['/HomeIns']);
     // else if(item.ProductId=='3') this.router.navigate(['/HomeIns']);
+  }
+  onLicRedirect(value,item){
+    let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+    userDetails.Result['ProductId'] = item.ProductId;
+    console.log('ppppppp',item.ProductId)
+    userDetails.Result['ProductName'] = item.ProductName;
+    console.log('PPPPPNNNNNNN',item.ProductName)
+
+    userDetails.Result['PackageYn'] = item.PackageYn;
+    console.log("Products",item,userDetails.Result)
+    userDetails.Result['PageType'] = value;
+    sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
+    if(value=='Illustrate'){
+          this.router.navigate(['/Home/life-risk-details']);
+    }
+    else this.router.navigate(['/Home']);
   }
   onLog(title)
   {

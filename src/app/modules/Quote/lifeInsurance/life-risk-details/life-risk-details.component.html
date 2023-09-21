@@ -1,0 +1,151 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div class="mt-1">
+                <span class="spancommon span_font_size" style="font-size: 19px;"><b>We need a few details to calculate your premium. Shouldn't take more than few minutes!</b></span>
+            </div>
+            <div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+            <div class="row display1">
+                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="headinglbels">What is Your Name?</div> 
+                            <div class="mt-1">
+                                <input type="text" maxlength="150" class="layout" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-7 col-lg-7 col-xl-7">
+                            <div class="headinglbels">Date Of Birth&nbsp;<span class="star">*</span></div> 
+                            <mat-form-field appearance="fill">
+                                <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
+                                <input matInput [matDatepicker]="picker1" [max]="maxDobDate">
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-5 col-lg-5 col-xl-5">
+                            <div class="headinglbels">Gender&nbsp;<span class="star">*</span></div> 
+                            <div class="input-form-radio-box mt-3">
+                                <div class="radio-toolbar">
+                                    <input id="claims_Yes" type="radio" name="HavePromoCode"  [(ngModel)]="gender" value="M">
+                                    <label for="claims_Yes" class="yes">Male</label>
+                                    <input id="claims_No" type="radio" name="HavePromoCode" [(ngModel)]="gender" value="F">
+                                    <label for="claims_No" class="no">Female</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="headinglbels">Policy Term &nbsp;<span class="star">*</span></div> 
+                            <ng-select class="custom" appendTo="body"  [items]="termList" [(ngModel)]="termValue" bindValue="Code" bindLabel="CodeDesc">
+                            </ng-select>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <div class="headinglbels">Premium Paying Term</div> 
+                            <div class="mt-1">
+                                <input type="text" maxlength="150" class="layout" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-md-12 col-lg-12 col-xl-12">
+                            <div class="headinglbels">Sum Insured&nbsp;<span class="star">*</span></div> 
+                            <div class="mt-1">
+                                <input type="text" maxlength="150" class="layout" >
+                            </div>
+                        </div>
+                        <div class="col-md-10 col-lg-10 col-xl-10 mt-2">
+                            <div class="headinglbels">Payment Mode</div> 
+                            <div class="input-form-radio-box mt-2">
+                                <div class="radio-toolbar">
+                                    <input id="mode_Monthly" type="radio" name="PaymentMode"  [(ngModel)]="paymentMode" value="M">
+                                    <label for="mode_Monthly" class="yes">Monthly</label>
+                                    <input id="mode_Quarterly" type="radio" name="PaymentMode" [(ngModel)]="paymentMode" value="Q">
+                                    <label for="mode_Quarterly" class="no">Quarterly</label>
+                                    
+                                    <input id="mode_HalfYearly" type="radio" name="PaymentMode" [(ngModel)]="paymentMode" value="HY">
+                                    <label for="mode_HalfYearly" class="no">Half-Yearly</label>
+                                    <input id="mode_Yearly" type="radio" name="PaymentMode" [(ngModel)]="paymentMode" value="Y">
+                                    <label for="mode_Yearly" class="no">Yearly</label>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+
+                    </div>
+                    <div class="text-center mt-3">
+                        <button class="custom-btn btn-6 maan-button-data mx-2" style="min-width: 150px !important;">Get Premium</button>
+                    </div>
+                    <!-- <div class="form__wrapper">
+                        <form [formGroup]="form" (ngSubmit)="onSubmit(productItem)">
+                            <formly-form [form]="form" [fields]="fields" [model]="productItem"></formly-form>
+                        </form>
+                    </div> -->
+                </div>
+                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                    <!-- <div class="customCard" *ngIf="premiumSection">
+
+                    </div> -->
+                    <div class="customCard" *ngIf="!premiumSection">
+                            <div class="row">
+                                <div class="text-center" style="color: #040405!important;">
+                                    <b><u>Key Product Features</u></b>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="text-center" style="color: #555050;">
+                                    <b>Death Benefit</b>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <div class="col-md-10 col-lg-10 col-xl-10 offset-1 text-center">
+                                        <span>Your nominee gets lumpsum amount incase of your unfortunate demise</span>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="text-center" style="color: #555050;">
+                                    <b>Monthly Income</b>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <div class="col-md-10 col-lg-10 col-xl-10 offset-1 text-center">
+                                        <span>Get regular monthly income starting from the policy anniversary following your 60th birthday, till policy matures</span>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="text-center" style="color: #555050;">
+                                    <b>Return of premiums paid</b>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <div class="col-md-10 col-lg-10 col-xl-10 offset-1 text-center">
+                                        <span>You will get back all the premiums paid, incase of survival till the end of policy</span>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="text-center" style="color: #555050;">
+                                    <b>All Round Protection</b>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <div class="col-md-10 col-lg-10 col-xl-10 offset-1 text-center">
+                                        <span>Get additional accidental death benefit cover, protection against 36 critical illnesses5 and cover for whole of life as per availability under 3 plan options</span>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

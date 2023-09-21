@@ -141,6 +141,10 @@ export class NavbarComponent implements OnInit {
       });
     if(this.loginType=='B2CFlow') {this.openSideNav = false;this.showToggle = 'hide';$('#sidenav').toggle();}
   }
+  onRedirect(){
+    if(this.typeValue=='SuperAdmin'){this.router.navigate(['/Admin'])}
+    else{this.router.navigate(['/Home'])}
+  }
   home() {
     if(this.typeValue=='B2C' && this.loginId=='guest'){
       this.router.navigate(['/customerProducts']);
@@ -300,6 +304,23 @@ export class NavbarComponent implements OnInit {
       (data: any) => {
         console.log(data);
         if (data.Result) {
+          if(this.productId=='45'){
+            if(this.typeValue=='low'){
+              let obj:any[]=[
+                {
+                  "link": "/Home/life-risk-details",
+                  "title": "Illustrate",
+                  "icon": "fas fa-clipboard-list",
+                  "id": "331",
+                  "parent": "99999",
+                  "orderby": 2,
+                  "IsDesti": false,
+                  "children": null
+                }
+              ];
+              data.Result= obj.concat(data.Result);
+            }
+          }
           this.loginService.menuList = data?.Result;
           let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
           if (userDetails) {
@@ -445,6 +466,9 @@ export class NavbarComponent implements OnInit {
     console.log("Setted Type Value", this.typeValue);
     $("#subUserTypes").hide();
     this.onTypeChange(changeType);
+  }
+  onRouting(rowData){
+    this.router.navigate([rowData?.link])
   }
   selectedItem(rowData) {
     this.openSideNav = false;

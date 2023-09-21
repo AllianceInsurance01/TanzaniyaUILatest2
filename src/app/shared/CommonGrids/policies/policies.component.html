@@ -38,14 +38,14 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-2" *ngIf="searchValue.length > 5 ? '...' : ''" style="margin-top:-6px;"><!--"searchValue.length > 2 ? '...' : ''"-->
-                        <button class="custom-btn btn-6" matRipple style="margin: 0.7rem 0;" (click)="eventothers(searchValue)"><i class="fas fa-search"></i>&nbsp;Search </button>
+                        <button class="custom-btn btn-6" matRipple style="margin: 0.7rem 0;" (click)="eventothers(searchValue,OthersList,'change')"><i class="fas fa-search"></i>&nbsp;Search </button>
                     </div>
                 </div>
 
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12">
                             <ng-container *ngIf="OthersList.length!=0 && searchValue.length > 5">
-                                <app-commodity-table [cols]="quoteHeader" (onSchedule)="onGetSchedule($event)" (onCredit)="onCreditdownload($event)" (onDebit)="onDebitdownload($event)"  [data]="OthersList" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onGetEndorsements)="onGetEndorsements($event)" (onAdd)="onInnerData($event)"  (onView)="onViews($event)">
+                                <app-commodity-table [cols]="quoteHeader" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo"  [totalQuoteRecords]="totalQuoteRecords" (onSchedule)="onGetSchedule($event)" (onCredit)="onCreditdownload($event)" (onLoadPreviousData)="onPreviousDataInnergrid($event,searchValue)" (onLoadNextData)="onNextInnerData($event,searchValue)" (onDebit)="onDebitdownload($event)"  [data]="OthersList" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onGetEndorsements)="onGetEndorsements($event)" (onAdd)="onInnerData($event)"  (onView)="onViews($event)">
                                 </app-commodity-table>
                             </ng-container>
                             <ng-container *ngIf="OthersList.length==0">
