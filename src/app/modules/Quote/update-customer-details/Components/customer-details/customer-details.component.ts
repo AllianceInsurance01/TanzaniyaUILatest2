@@ -947,6 +947,7 @@ export class CustomerDetailsComponent implements OnInit {
             if(this.brokerBranchList.length==1){
               this.brokerBranchCode = this.brokerBranchList[0].Code;
               this.updateComponent.brokerBranchCode = this.brokerBranchCode;
+              this.updateComponent.brokerCode = this.brokerCode;
             }
             
           }

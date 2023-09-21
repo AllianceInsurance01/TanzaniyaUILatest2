@@ -344,6 +344,9 @@ export class VehicleWishListComponent implements OnInit {
                 veh['Active'] = true;
               }
             }
+            else{
+              this.searchSection = true;
+            }
         }
       },
       (err) => { },
@@ -610,6 +613,7 @@ export class VehicleWishListComponent implements OnInit {
     this.PromoCode = this.updateComponent?.PromoCode;
     this.sourceType = this.updateComponent?.sourceType;
     this.brokerCode = this.updateComponent?.brokerCode;
+    this.brokerBranchCode = this.updateComponent?.brokerBranchCode;
     if(this.policyStartDate!=null && this.policyStartDate!='' && this.policyStartDate!=undefined){
       this.policyStartError = false;
       if(this.policyEndDate!=null && this.policyEndDate!='' && this.policyEndDate!=undefined){

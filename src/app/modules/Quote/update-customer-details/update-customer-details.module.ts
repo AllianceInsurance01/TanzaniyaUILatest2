@@ -60,7 +60,6 @@ import { TableTypeComponent } from './tableType';
 import { DisplayLabel } from './displayText';
 import { CustomerModelComponent } from '../../Customer/customer-model/customer-model.component';
 import { RadioList } from './radioList';
-import { LifeCoverDetailsComponent } from './life-cover-details/life-cover-details.component';
 
 export function maxlengthValidationMessage(err, field) {
   return `This value should be less than ${field.templateOptions.maxLength} characters`;
@@ -102,8 +101,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     RepeatTypeComponent,
     TableTypeComponent,
     CustomerModelComponent,
-    RadioList,
-    LifeCoverDetailsComponent
+    RadioList
     //NewViewDetailsComponent
 
     ],

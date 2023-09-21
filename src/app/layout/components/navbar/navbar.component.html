@@ -297,16 +297,16 @@
         <div class="container-fluid">
             <ng-container *ngIf="insuranceid == '100002'">
                
-                <a class="bg_Logo p-2">
-                    <img src="./assets/images/logo-2.png" width="170" />
+                <a class="bg_Logo p-2" >
+                    <img src="./assets/images/logo-2.png" width="170" style="cursor: pointer !important;" (click)="onRedirect()" />
                     <button mat-icon-button style="background-color: #fff;color:black;padding: 7px!important;" class="display3" (click)="sidenav.toggle();openSideNav=!openSideNav" [ngClass]="showToggle"> <i class="fa-solid fa-bars" style="font-size: 1.4rem;"></i></button>
                     <button mat-icon-button style="background-color: #fff;color:black;padding: 7px!important;" class="display4" (click)="sidenav.toggle()" [ngClass]="showToggle"> <i class="fa-solid fa-bars" style="font-size: 1.4rem;"></i></button>
                   </a>
                   
             </ng-container>
             <ng-container *ngIf="insuranceid == '100004'">
-                <a class="bg_Logo p-2">
-                    <img src="./assets/images/mgen-logo.png" width="170" />
+                <a class="bg_Logo p-2" >
+                    <img src="./assets/images/mgen-logo.png" width="170" style="cursor: pointer !important;" (click)="onRedirect()" />
                     <button mat-icon-button style="background-color: #fff;color:black;padding: 7px!important;"  (click)="sidenav.toggle();openSideNav=!openSideNav"> <i class="fa-solid fa-bars" style="font-size: 1.1rem;"></i></button>
                     <button mat-icon-button style="background-color: #fff;color:black;padding: 7px!important;" class="display4" (click)="sidenav.toggle()" [ngClass]="showToggle"> <i class="fa-solid fa-bars" style="font-size: 1.4rem;"></i></button>
                   </a>
@@ -384,9 +384,9 @@
                     
                             <li (click)="navexpand(i);clearOldRecords()">
                                 <a>
-                                    <span class="icon"><i [ngClass]="Menu?.faIcon"  [routerLink]="Menu?.link" style="cursor:pointer;color: white;"></i></span>
+                                    <span class="icon"><i [ngClass]="Menu?.faIcon"  (click)="onRouting(Menu)" style="cursor:pointer;color: white;"></i></span>
                                     <ng-container *ngIf="Menu?.items?.length==null || Menu?.items?.length==0">
-                                        <span class="title" [routerLink]="Menu?.link" style="cursor:pointer !important;color: white;">{{Menu?.label}}&nbsp;
+                                        <span class="title" (click)="onRouting(Menu)" style="cursor:pointer !important;color: white;">{{Menu?.label}}&nbsp;
                                            
                                         </span>
                                     </ng-container>
@@ -412,8 +412,8 @@
                             </li>
                             <li *ngFor="let Label of submenuList" class="dropdownlinklabel" style="cursor:pointer">
                                 <a>
-                                    <span class="icon"><i class="fa fa-address-book"  [routerLink]="Label?.link" style="cursor:pointer;color: white;"></i></span>
-                                    <span class="title" [routerLink]="Label.link"
+                                    <span class="icon"><i class="fa fa-address-book"  (click)="onRouting(Label)" style="cursor:pointer;color: white;"></i></span>
+                                    <span class="title" (click)="onRouting(Label)"
                                     style="position: relative;cursor: pointer;color: white;">{{Label.label}}</span>
                                 </a>
                             </li>
