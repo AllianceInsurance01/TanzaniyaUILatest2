@@ -29,13 +29,14 @@ export class PoliciesComponent implements OnInit {
   limit: any='0';
   show: boolean = false;
   OthersList:any[]=[];
-  searchValue:any[]=[];
+  searchValue:any[]=[];brokerCode:any='';brokerList:any[]=[];
   constructor(private router:Router,private sharedService: SharedService) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
     this.agencyCode = this.userDetails.Result.OaCode;
     this.brokerbranchCode = this.userDetails.Result.BrokerBranchCode;
     this.branchCode = this.userDetails.Result.BranchCode;
+    this.brokerCode = this.loginId;
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails?.Result?.UserType;
     this.insuranceId = this.userDetails.Result.InsuranceId;
@@ -124,7 +125,49 @@ export class PoliciesComponent implements OnInit {
 
       ];
     }
-    this.getExistingQuotes(null,'change');
+    //if(this.userType=='Issuer'){
+      this.getBrokerList();
+    // }
+    // else{
+    //   this.getExistingQuotes(null,'change');
+    // }
+  }
+  getBrokerList(){
+    let appId = "1",loginId="",brokerbranchCode="";
+    if(this.userType!='Issuer'){
+      appId = "1"; loginId = this.brokerCode;
+      brokerbranchCode = this.brokerbranchCode;
+    }
+    else{
+      appId = this.loginId;
+      loginId=this.brokerCode;
+      brokerbranchCode = '';
+    }
+    let ReqObj = {
+      "ApplicationId":appId,
+      "UserType":this.userType,
+      "ProductId": this.productId,
+      "InsuranceId": this.insuranceId,
+      "LoginId": loginId,
+      "Status": "Y",
+      "BranchCode": this.branchCode
+    }
+    let urlLink = `${this.CommonApiUrl}api/portfoliobrokerdropdown`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+          let defaultObj = [{Code:'',CodeDesc:'ALL'}]
+          this.brokerList = defaultObj.concat(data.Result);
+          if(this.brokerCode!=null){
+            if(!this.brokerList.some(ele=>ele.CodeDesc==this.brokerCode)) this.brokerCode = this.brokerList[0].CodeDesc;
+            this.getExistingQuotes(null,'change')
+          }
+        }
+        
+      },
+      (err) => { },
+    );
+
   }
   onCreditdownload(rowData){
     console.log('KKKKKKKKKKK',rowData.QuoteNo);
@@ -203,6 +246,7 @@ export class PoliciesComponent implements OnInit {
     link.remove();
   }
   getExistingQuotes(element,entryType){
+    if(element==null) this.quoteData = [];
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
       appId = "1"; loginId = this.loginId;
@@ -210,6 +254,7 @@ export class PoliciesComponent implements OnInit {
     }
     else{
       appId = this.loginId;
+      loginId=this.brokerCode;
       brokerbranchCode = null;
     }
     let ReqObj = {
@@ -284,18 +329,6 @@ export class PoliciesComponent implements OnInit {
       this.quotePageNo = this.quotePageNo-1;
     this.getExistingQuotes(element,'direct');
   }
-  onNextInnerData(element,seachvalue){
-    this.limit = String(Number(this.limit)+1);
-    this.quotePageNo = this.quotePageNo+1;
-    this.startIndex = element.startCount;
-    this.endIndex = element.endCount
-    this.eventothers(seachvalue,element,'direct');
-  }
-  onPreviousDataInnergrid(element,searchvalue){
-    this.limit = String(Number(this.limit)-1);
-    this.quotePageNo = this.quotePageNo-1;
-  this.eventothers(searchvalue,element,'direct');
-  }
   onInnerData(rowData){
     let ReqObj = {
         "RequestReferenceNo": rowData.RequestReferenceNo
@@ -357,10 +390,9 @@ export class PoliciesComponent implements OnInit {
       this.show=false;
     }
       }
-      eventothers(searchvalues,element,entryType){
-        console.log('MMMMMMMMM',searchvalues,element,entryType);
+      eventothers(searchvalues){
+        console.log('MMMMMMMMM',searchvalues);
         let searchvalue:any=searchvalues;
-        this.OthersList=[];
         this.searchValue=searchvalues
         sessionStorage.setItem('PolicyNos',searchvalue)
         let ReqObj = {
@@ -375,39 +407,8 @@ export class PoliciesComponent implements OnInit {
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
           (data: any) => {
             console.log(data);
-            if(data.Result.PortFolioList.length!=0){
-              this.totalQuoteRecords = data.Result?.TotalCount;
-              element=data.Result.PortFolioList;
-              //this.OthersList=data.Result.PortFolioList;
-              this.pageCount = 10;
-              if (entryType == 'change') {
-                this.quotePageNo = 1;
-                let startCount = 1, endCount = this.pageCount;
-                startCount = endCount + 1;
-                  let quoteData = data.Result?.PortFolioList;
-                  this.OthersList = data.Result?.PortFolioList;
-                  console.log('YYYYYYYYY',this.OthersList);
-                  if (quoteData.length <= this.pageCount) {
-                    endCount = quoteData.length
-                  }
-                  else endCount = this.pageCount;
-                
-                this.startIndex = startCount; this.endIndex = endCount;
-              }
-              else {
-
-                let startCount = element.startCount, endCount = element.endCount;
-                this.pageCount = element.n;
-                startCount = endCount + 1;
-                  let quoteData = data.Result?.PortfolioList;
-                  this.OthersList = this.quoteData.concat(data.Result?.PortfolioList);
-                if (this.totalQuoteRecords <= endCount + (element.n)) {
-                  endCount = this.totalQuoteRecords
-                }
-                else endCount = endCount + (element.n);
-                this.startIndex = startCount; this.endIndex = endCount;
-              }
-               //this.OthersList = data.Result?.PortFolioList;
+            if(data.Result.PortFolioList){
+               this.OthersList = data.Result?.PortFolioList;
             }
           },
           (err) => { },
