@@ -818,6 +818,7 @@ export class VehicleWishListComponent implements OnInit {
         this.bdmCode = this.updateComponent.brokerCode;
         this.brokerCode = this.updateComponent.brokerCode;
         this.customerCode = this.updateComponent.CustomerCode;
+        this.customerName = this.updateComponent.CustomerName;
       }
   
     console.log("AcExecutive",this.acExecutiveId,this.vehicleDetails,this.sourceType,this.bdmCode,this.brokerCode,this.customerCode);
@@ -828,7 +829,9 @@ export class VehicleWishListComponent implements OnInit {
       "RequestReferenceNo": this.quoteRefNo,
       "TypeId":"101",
       "BrokerBranchCode":brokerbranchCode,
+      "BdmCode": this.customerCode,
       "CustomerCode": this.customerCode,
+      "CustomerName": this.customerName,
       "SourceType": this.sourceType,
       "CustomerRefNo": sessionStorage.getItem('customerReferenceNo'),
       "AcExecutiveId":null,
