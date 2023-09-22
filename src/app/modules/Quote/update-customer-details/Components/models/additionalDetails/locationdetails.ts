@@ -9,6 +9,8 @@ export class LocationDetails{
     commonDetails: any[]=[];
     endorsementSection: boolean=false;
     enableFieldsList: any[]=[];
+    enableAllSection: boolean = false;
+    buildingSection: boolean = false;
     constructor() {
         this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
         let commonDetails = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
@@ -37,7 +39,9 @@ export class LocationDetails{
                           props: {
                             label: `Location Name`,
                             required: true,
+                            disabled:this.checkEndorseDisable('building'),
                           },
+                         
                           validators: {
                             validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
                           },
@@ -53,6 +57,7 @@ export class LocationDetails{
                           templateOptions: {
                             label: 'Address',
                             required: true,
+                            disabled:this.checkEndorseDisable('building'),
                           },
                           validators: {
                             validation: [ForceLengthValidators.maxLength(250), ForceLengthValidators.min(1)]
@@ -71,18 +76,29 @@ export class LocationDetails{
     fields:FormlyFieldConfig[]=[];
     checkDisable(fieldName) {
         console.log("Disable Check", fieldName);
-        if (this.endorsementSection) {
-          // let occupationEntry = this.enableFieldsList.some(ele => ele == 'OccupationType');
-          // if (occupationEntry) {
-          //     return false;
-          // }
-          // else{
-            let entry = this.enableFieldsList.some(ele => ele == fieldName);
-            return !entry;
-          //}
+        // if (this.endorsementSection) {
+        //   // let occupationEntry = this.enableFieldsList.some(ele => ele == 'OccupationType');
+        //   // if (occupationEntry) {
+        //   //     return false;
+        //   // }
+        //   // else{
+        //     let entry = this.enableFieldsList.some(ele => ele == fieldName);
+        //     return !entry;
+        //   //}
           
+        // }
+        // else return false;
+
+        let enableAllSection = this.enableFieldsList.some(ele=>ele=='domesticRiskDetails' || ele=='AddCovers');
+        console.log('Enables Add Section',enableAllSection);
+        if(enableAllSection) this.enableAllSection=true;
+      }
+      checkEndorseDisable(type){
+        if(this.endorsementSection){
+          console.log('Enbales Endorsement Sections',type);
+              if(type =='building') return (!this.buildingSection && !this.enableAllSection);
         }
         else return false;
-      
-      }
+    }
+    
 }
