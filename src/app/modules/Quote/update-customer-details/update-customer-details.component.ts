@@ -51,6 +51,8 @@ export class UpdateCustomerDetailsComponent implements OnInit {
   PolicyHolderTypeid: any;
   IdNumber: any;
   EmailId: any;
+  MobileCodeDesc: any;
+  ModifiedCustomer: boolean=false;
   //public orderStatus="customerDetails"
 
   constructor(
