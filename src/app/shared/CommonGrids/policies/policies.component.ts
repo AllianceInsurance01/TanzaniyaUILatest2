@@ -156,7 +156,7 @@ export class PoliciesComponent implements OnInit {
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         if(data.Result){
-          let defaultObj = [{Code:'',CodeDesc:'ALL'}]
+          let defaultObj = []
           this.brokerList = defaultObj.concat(data.Result);
           if(this.brokerCode!=null){
             if(!this.brokerList.some(ele=>ele.CodeDesc==this.brokerCode)) this.brokerCode = this.brokerList[0].CodeDesc;
