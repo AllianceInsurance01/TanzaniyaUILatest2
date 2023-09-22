@@ -12,6 +12,7 @@ import { QuotesearchComponent } from 'src/app/shared/Quotesearch/Quotesearch.com
 import { CustomerModelComponent } from '../Customer/customer-model/customer-model.component';
 import { ApproverPortfolioComponent } from '../approverportfolio/approverportfolio.component';
 import { NewComponent } from '../newpage/newpage.component';
+import { LifeRiskDetailsComponent } from '../Quote/lifeInsurance/life-risk-details/life-risk-details.component';
 
 const routes: Routes = [
   {
@@ -305,8 +306,17 @@ const routes: Routes = [
       title: "PortFolio",
       breadcrumb: 'PortFolio',
     }
-  }
-
+  },
+  {
+    path:'life-risk-details',
+    component:LifeRiskDetailsComponent,
+    loadChildren: () => import('../Quote/lifeInsurance/life-risk-details/life-risk-details.module').then(m => m.LifeRiskDetailsModule),
+    data: {
+      preload: true,
+      title: "Risk Information",
+      breadcrumb: 'Risk Information',
+    }
+  },
   
 
  

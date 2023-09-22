@@ -34,7 +34,6 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     ReferralRejectedComponent,
     ReferralRequoteComponent,
     DialogComponent,
-    
     //MotorDocumentsComponent
 
   ],
