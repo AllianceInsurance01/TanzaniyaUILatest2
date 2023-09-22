@@ -137,6 +137,82 @@
                         </div>
                     </div>
                 </div>
+                <div class="maan-grid-item" style="z-index: 100 !important;overflow: visible !important;" *ngIf="b2cSection">
+                    <div class="display1" style="margin: 0px;padding: 0px !important;background-color: transparent !important;">
+                        <div class="maan-grid-item-title p-0" style="margin: 0px !important;top:0rem;bottom: 0rem !important;padding-top: 9px !important;">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <span class="mx-1">
+                                        <i class="fas fa-user mx-1"></i>
+                                    </span> <span class="spancommon">Customer Details</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="maan-grid-item-body" style="z-index: 100 !important;">
+                        <div class="row mt-1">
+                            <div class="col-md-2 col-lg-2 col-xl-2">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Title</label><span class="text-danger">*</span>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="titleList" (change)="onTitleChange()" [(ngModel)]="productItem.Title" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div>  
+                            <div class="col-md-4 col-lg-4 col-xl-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Customer Name</label><span class="text-danger">*</span>
+                                    <div class="input-form-box">
+                                        <input type="text" maxlength="150" (keypress)="omit_special_char($event)" class="input-form-control without-icon" (change)="onCustomerFieldChange('name')"   [(ngModel)]="productItem.ClientName">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-lg-2 col-xl-2">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Code</label><span class="text-danger">*</span>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="mobileCodeList"  [(ngModel)]="productItem.MobileCode" (change)="onCustomerFieldChange('code')" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-lg-4 col-xl-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Mobile No</label><span class="text-danger">*</span>
+                                    <div class="input-form-box">
+                                        <input type="text" maxlength="10" (keypress)="omit_special_char($event)" class="input-form-control without-icon"  (change)="onCustomerFieldChange('mobileNo')" [(ngModel)]="productItem.MobileNo">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-lg-4 col-xl-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Identity Type</label><span class="text-danger">*</span>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="policyHolderTypeList"  [(ngModel)]="productItem.PolicyHolderTypeid" (change)="onCustomerFieldChange('PolicyTypeId')" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-lg-4 col-xl-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">ID Number</label><span class="text-danger">*</span>
+                                    <div class="input-form-box">
+                                        <input type="text" (keypress)="omit_special_char($event)" class="input-form-control without-icon" (change)="onCustomerFieldChange('IdNo')"  [(ngModel)]="productItem.IdNumber" maxlength="20">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="showEmailSection">
+                                <mat-checkbox class="example-margin" [checked]="onCheckEmailNotification()" (change)="onSelectEmail($event.checked)"><span>Required Email Notification</span></mat-checkbox>
+                            </div>
+                            <div class="col-md-4 col-lg-4 col-xl-4" [hidden]="checkEmailYN!='Y'">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">EmailId</label><span class="text-danger">*</span>
+                                    <div class="input-form-box">
+                                        <input type="text"  class="input-form-control without-icon" email [(ngModel)]="productItem.EmailId" (change)="onCustomerFieldChange('emailId')" #prmEmail="ngModel">
+                                    </div>
+                                    <div *ngIf="prmEmail.errors?.email || emailError" class="text-danger"> 
+                                        Please Enter Valid Email Id
+                                   </div> 
+                                </div>
+                            </div>
+                    </div>
+                    </div>
+                </div>
                 <div class="maan-grid-item" *ngIf="issuerSection" style="z-index: 100 !important;overflow: visible !important;">
                     <div class="maan-grid-item-title p-0" style="margin: 0px !important;top:0rem;bottom: 0rem !important;padding-top: 9px !important;">
                         <span class="mx-1">
