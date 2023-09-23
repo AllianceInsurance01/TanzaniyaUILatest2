@@ -5,6 +5,7 @@ import { UpdateCustomerDetailsComponent } from '../../update-customer-details.co
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 import { SharedService } from '../../../../../shared/shared.service';
+import { ProductData } from 'src/app/modules/Customer/models/product';
 declare var $:any;
 //import { ClientComponent } from '../../../../client/client.component';
 @Component({
@@ -36,7 +37,7 @@ export class CustomerDetailsComponent implements OnInit {
   code:any;travelEndDate:any;clientType:any;
   travelDetails: any;InsuranceType:any[]=[];
   PackageYn: any;IndustryId:any='';
-  premiumList: any[]=[];
+  premiumList: any[]=[];titleList:any[]=[];
   policyStartError: boolean=false;policyPassDate: boolean=false;
   policyEndError: boolean=false;currencyError: boolean=false;
   exchangeMaxError: boolean=false; exchangeMinError: boolean=false;
@@ -79,6 +80,16 @@ export class CustomerDetailsComponent implements OnInit {
   cyrrencylogin: string;
   currentStatus: any;
   backDays: any=null;
+  b2cSection: boolean=false;
+  productItem: any;
+  maxDobDate: Date;
+  notificationList: any[]=[];
+  taxExcemptedList: any[]=[];
+  policyHolderTypeList: any[]=[];
+  dob: string;showEmailSection: boolean=false;
+  genderList: any[]=[];
+  mobileCodeList: any[]=[];
+  checkEmailYN: any=null;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       
@@ -99,6 +110,15 @@ export class CustomerDetailsComponent implements OnInit {
     this.insuranceId = this.userDetails.Result.InsuranceId;
     this.branchList = this.userDetails.Result.LoginBranchDetails;
     this.updateComponent.showStepperSection = true;
+    let loginType = this.userDetails.Result.LoginType;
+    if(loginType){
+      if(loginType=='B2CFlow'){
+        this.b2cSection = true;
+        this.productItem = new ProductData();
+        this.productItem.IdType = '1';
+        this.getTitleList();
+      }
+    }
     this.subUsertype = sessionStorage.getItem('typeValue');
     let quoteNo = sessionStorage.getItem('quoteNo');
     if(quoteNo!=undefined && quoteNo!='undefined') this.quoteNo = quoteNo;
@@ -111,6 +131,24 @@ export class CustomerDetailsComponent implements OnInit {
     }
     this.getSourceList();
     this.getCurrencyList();
+    if(this.b2cSection){
+      var d= new Date();
+      var year = d.getFullYear();
+      var month = d.getMonth();
+      var day = d.getDate();
+        this.maxDobDate = new Date(year - 18,month, day );
+      this.notificationList = [
+        { CodeDesc: '-Select-', Code: '' },
+        { CodeDesc: 'SMS', Code: 'Sms' },
+        { CodeDesc: 'Mail', Code: 'Mail' },
+        { CodeDesc: 'Whatsapp', Code: 'Whatsapp' }
+      ];
+      this.taxExcemptedList = [
+        { CodeDesc: '-Select-', Code: '' },
+        { CodeDesc: 'Yes', Code: 'Y' },
+        { CodeDesc: 'No', Code: 'N' }
+      ];
+    }
     if(this.searchValue='' && this.searchValue==undefined && this.searchValue==null){
         
     }
@@ -373,6 +411,11 @@ export class CustomerDetailsComponent implements OnInit {
     
     
   }
+  omit_special_char(event){   
+		var k;  
+		k = event.charCode;  //         k = event.keyCode;  (Both can be used)
+		return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || (k >= 48 && k <= 57)); 
+		}
   getBackDaysDetails(){
     let loginId = null;
     if(this.userType!='Issuer') loginId = this.loginId;
@@ -404,6 +447,166 @@ export class CustomerDetailsComponent implements OnInit {
       },
       (err) => { },
     );
+  }
+  getTitleList() {
+		let ReqObj = {
+			"InsuranceId": this.insuranceId,
+			"BranchCode": this.branchCode
+		}
+		let urlLink = `${this.CommonApiUrl}dropdown/title`;
+		this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+			(data: any) => {
+				if (data.Result) {
+					let obj = [{ "Code": '', "CodeDesc": "-Select-" }]
+					this.titleList = obj.concat(data.Result);
+          			this.getPolicyIdTypeList(null);
+					// for (let i = 0; i < this.titleList.length; i++) {
+					// 	this.titleList[i].label = this.titleList[i]['CodeDesc'];
+					// 	this.titleList[i].value = this.titleList[i]['Code'];
+					// 	if (i == this.titleList.length - 1) {
+					// 		this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].props.options = this.titleList;
+					// 		this.getPolicyHolderList();
+					// 	}
+					// }
+				}
+			},
+			(err) => { },
+		);
+	}
+  getPolicyIdTypeList(type) {
+		let ReqObj = {
+			"InsuranceId": this.insuranceId,
+			"BranchCode": this.branchCode,
+			"PolicyTypeId": this.productItem.IdType
+		}
+		let urlLink = `${this.CommonApiUrl}dropdown/policyholderidtype`;
+		this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+			(data: any) => {
+				console.log(data);
+				if (data.Result) {
+					//this.holderTypeValue = null;
+					this.policyHolderTypeList = data.Result;
+							let defaultRow = [{ 'CodeDesc': '- Select - ', 'Code': '' }]
+							this.policyHolderTypeList = defaultRow.concat(this.policyHolderTypeList)
+							//this.fields[0].fieldGroup[0].fieldGroup[1].fieldGroup[0].props.options = defaultRow.concat(this.policyHolderTypeList);
+							if (type == 'change') this.dob = "";
+              this.getGenderList();
+				}
+			},
+			(err) => { },
+		);
+  }
+  getGenderList() {
+		let ReqObj = {
+			"InsuranceId": this.insuranceId,
+			"BranchCode": this.branchCode,
+		}
+		let urlLink = `${this.CommonApiUrl}dropdown/policyholdergender`;
+		this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+			(data: any) => {
+				console.log(data);
+				if (data.Result) {
+					this.genderList = data.Result;
+					let defaultRow = [{ 'CodeDesc': '- Select - ', 'Code': '' }]
+					this.genderList = defaultRow.concat(this.genderList)
+					//this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[2].props.options = defaultRow.concat(this.genderList);
+					this.getMobileCodeList()
+				}
+			},
+			(err) => { },
+		);
+	}
+  getMobileCodeList() {
+		let ReqObj = { "InsuranceId": this.insuranceId }
+		let urlLink = `${this.CommonApiUrl}dropdown/mobilecodes`;
+		this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+			(data: any) => {
+				console.log(data);
+				if (data.Result) {
+
+					let obj = [{ "Code": '', "CodeDesc": "-Select-" }]
+					this.mobileCodeList = obj.concat(data.Result);
+          let customerObj = JSON.parse(sessionStorage.getItem('b2cCustomerObj'));
+          if(customerObj){
+              this.productItem.Title = customerObj?.Title;
+              this.productItem.ClientName = customerObj?.ClientName;
+              this.productItem.MobileCode = customerObj?.MobileCode;
+              this.productItem.MobileNo = customerObj?.MobileNo;
+              this.productItem.IdNumber = customerObj?.IdNumber;
+              this.productItem.MobileCodeDesc = customerObj?.MobileCodeDesc;
+              this.productItem.PolicyHolderTypeid = customerObj?.PolicyHolderTypeid;
+              if(customerObj.EmailId){ this.checkEmailYN = 'Y';this.productItem.EnailId = customerObj?.EmailId;}
+              this.updateComponent.Title = this.productItem.Title;
+              this.updateComponent.UserName = this.productItem.ClientName;
+              this.productItem.MobileCodeDesc = this.mobileCodeList.find(ele=>ele.Code==this.productItem.MobileCode)?.CodeDesc
+              this.updateComponent.MobileCode = this.productItem.MobileCode;
+              this.updateComponent.MobileCodeDesc = this.productItem.MobileCodeDesc;
+              this.updateComponent.MobileNo = this.productItem.MobileNo;
+              this.updateComponent.IdNumber = this.productItem.IdNumber;
+              this.updateComponent.PolicyHolderTypeid = this.productItem.PolicyHolderTypeid;
+              this.updateComponent.EmailId = this.productItem.EmailId;
+              this.showEmailSection = true;
+          }
+          else{
+            this.showEmailSection = true;
+            this.productItem = new ProductData();
+            this.productItem.Clientstatus = 'P';
+            this.productItem.Gender = '';
+            this.productItem.PolicyHolderTypeid = '';
+            this.productItem.IdType = '';
+            this.productItem.PreferredNotification = '';
+            this.productItem.MobileCode = '';
+            this.productItem.Country = '';
+            this.productItem.state = '';
+            this.productItem.CityName = '';
+            this.productItem.Occupation = '';
+            this.productItem.BusinessType='';
+            this.productItem.Title='';
+          }
+                
+				}
+			},
+			(err) => { },
+		);
+	}
+  onSelectEmail(event){
+		if(event) this.checkEmailYN = 'Y';
+		else this.checkEmailYN = 'N';
+		this.productItem.EmailId = null;
+	}
+  onCheckEmailNotification(){
+		return (this.productItem.EmailId!='' && this.productItem.EmailId!=null && this.productItem.EmailId!=undefined)
+	}
+  onTitleChange(){
+		let title = this.productItem.Title;
+		if(title!='' && title!=null && title!=undefined){
+        this.updateComponent.Title = this.productItem.Title;
+				// if(title=='2') this.productItem.IdType = '2';
+				// else this.productItem.IdType = '1';
+				
+		}
+		else{
+			
+		}
+	}
+  onCustomerFieldChange(type){
+    this.updateComponent.ModifiedCustomer = true;
+   if(type=='name') this.updateComponent.UserName  = this.productItem.ClientName;
+   if(type=='code') this.updateComponent.MobileCode  = this.productItem.MobileCode;
+   if(type=='mobileNo'){
+    this.updateComponent.MobileNo  = this.productItem.MobileNo;
+    if (this.productItem.MobileCode != undefined && this.productItem.MobileCode != null && this.productItem.MobileCode != '') {
+      //let code = this.productItem
+      let code = this.mobileCodeList.find(ele => ele.Code == this.productItem.MobileNo)
+      console.log('codes', code)
+      this.productItem.MobileCodeDesc = code.CodeDesc
+      this.updateComponent.MobileCodeDesc = code.CodeDesc;
+      //this.mobileCodeList.label = this.productItem.MobileCod['CodeDesc'];
+    }
+   }
+   if(type=='PolicyTypeId') this.updateComponent.PolicyHolderTypeid  = this.productItem.PolicyHolderTypeid;
+   if(type=='IdNo') this.updateComponent.IdNumber  = this.productItem.IdNumber;
+   if(type=='emailId') this.updateComponent.EmailId  = this.productItem.EmailId;
   }
   getIndustryList(){
     this.industryList = [];
@@ -653,7 +856,7 @@ export class CustomerDetailsComponent implements OnInit {
               this.HavePromoCode=entry?.Havepromocode;
               if(entry.BuildingOwnerYn!=null && entry?.BuildingOwnerYn!='') this.buildingOwnerYN = entry?.BuildingOwnerYn;
               this.PromoCode=entry?.Promocode;
-              if(entry.SourceType!=null) this.Code = entry?.SourceType.toLowerCase();
+              if(entry.SourceType!=null) this.Code = entry?.SourceType;
               
               this.updateComponent.sourceType = this.Code;
               this.branchValue = entry?.BranchCode;
@@ -703,7 +906,7 @@ export class CustomerDetailsComponent implements OnInit {
             }
             this.commissionValue = entry?.CommissionType;
             this.executiveValue = entry?.AcExecutive;
-            if(entry.SourceType!=null) this.Code = entry?.SourceType.toLowerCase();
+            this.Code = entry?.SourceType;
             this.updateComponent.sourceType = this.Code;
             this.brokerCode = entry.BrokerCode;
             this.branchValue = entry?.BranchCode;
@@ -906,7 +1109,7 @@ export class CustomerDetailsComponent implements OnInit {
       if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
       let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
       if(entry){
-        this.brokerLoginId = entry.LoginId; 
+        this.brokerLoginId = entry.Name; 
         this.updateComponent.brokerLoginId = this.brokerLoginId;
         this.updateComponent.brokerCode = this.brokerCode;
       }
@@ -1054,7 +1257,7 @@ export class CustomerDetailsComponent implements OnInit {
     }
     this.HavePromoCode = entry?.HavePromoCode;
     this.PromoCode = entry?.PromoCode;
-    if(entry.SourceType!=null) this.Code = entry?.SourceType.toLowerCase();
+    if(entry.SourceType!=null) this.Code = entry?.SourceType;
     this.customerCode = entry?.CustomerCode;
     this.branchValue = entry.BranchCode;
     this.brokerCode = entry.BrokerCode;
@@ -1888,7 +2091,7 @@ export class CustomerDetailsComponent implements OnInit {
                   if(this.policyStartDate!='' && this.policyStartDate!=null && this.policyStartDate!=undefined){
                   policyStartDate = this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy");
                   console.log('PolicyDate',this.policyStartDate);
-                  if(this.backDays){
+                  if(this.backDays!=undefined && this.backDays!=0){
                    let backDate = new Date();
                     var d = backDate;
                     var year = d.getFullYear();
@@ -1902,12 +2105,13 @@ export class CustomerDetailsComponent implements OnInit {
                       this.onProceedValidation(Details);
                     }
                     else{
-                      
+                      Details[0].PolicyStartDate = policyStartDate;
                       this.policyPassDate = true;
                       //this.toastrService.show('Policy Start Date','Policy Start Date Should Not be Pass Days', config);
                     }
                   }
                   else{
+                    Details[0].PolicyStartDate = policyStartDate;
                     this.onProceedValidation(Details);
                   }
     

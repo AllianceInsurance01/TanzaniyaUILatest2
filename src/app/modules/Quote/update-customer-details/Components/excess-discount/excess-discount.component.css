@@ -413,7 +413,19 @@ th.mat-header-cell {
   .mobile-label {
     display: none;
   }
-
+  .customAuthPanel{
+    padding: 15px;
+    background-color: #fff;
+    min-height: 50vh !important;
+    border-radius: 25px;
+  }
+  .customImage{
+    min-height:60vh !important;
+    background: url('../../../../../../assets/images/authenticate.webp') no-repeat !important;
+      background-position: center center !important;
+      background-size: 100% 75% !important;
+  
+  }
 
 @media screen and (min-width: 280px) and (max-width: 700px) {
     .display1{

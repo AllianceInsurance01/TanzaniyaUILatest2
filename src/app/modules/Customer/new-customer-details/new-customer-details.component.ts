@@ -47,6 +47,7 @@ export class NewCustomerDetailsComponent {
   policyHolderTypeList: any;
   dob: string;
   mobileCodeList: any[]=[];
+	loginType: any;
   constructor(private product: SharedService, private datePipe: DatePipe, private route: ActivatedRoute,
 		private router: Router) {
 		this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -61,6 +62,7 @@ export class NewCustomerDetailsComponent {
 		this.branchCode = this.userDetails.Result.BranchCode;
 		this.productId = this.userDetails.Result.ProductId;
 		this.insuranceId = this.userDetails.Result.InsuranceId;
+		this.loginType = this.userDetails.Result.LoginType;
 		this.userType = this.userDetails.Result.UserType;
 		this.brokerbranchCode = this.userDetails.Result.BrokerBranchCode;
 		this.typeValue = sessionStorage.getItem('typeValue')
@@ -532,10 +534,8 @@ export class NewCustomerDetailsComponent {
 						}
 				}
 				else {
-					sessionStorage.removeItem('customerReferenceNo');
-					if(sessionStorage.getItem('typeValue')=='B2C'){
-						sessionStorage.setItem('customerReferenceNo',data?.Result?.SuccessId)
-						this.router.navigate(['./Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+					if(this.loginType=='B2CFlow'){
+						this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
 					}
 					else this.router.navigate(['/Home/customer/'])
 				}
@@ -545,7 +545,13 @@ export class NewCustomerDetailsComponent {
 		);
 	}
 	getBack(){
-		sessionStorage.removeItem('customerReferenceNo');
-		this.router.navigate(['/Home/customer/'])
+		if(this.loginType=='B2CFlow'){
+			this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
+		}
+		else{
+			sessionStorage.removeItem('customerReferenceNo');
+			this.router.navigate(['/Home/customer/'])
+		}
+		
 	}
 }

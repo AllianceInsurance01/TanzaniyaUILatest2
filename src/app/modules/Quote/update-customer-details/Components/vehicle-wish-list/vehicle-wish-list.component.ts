@@ -73,6 +73,12 @@ export class VehicleWishListComponent implements OnInit {
   subuserType: string;
   loginType: any=null;
   customerName: any;
+  customerTitleError: boolean;
+  customerNameError: boolean;
+  customerMobileCodeError: boolean;
+  customerMobileNoError: boolean;
+  customerIdNumberError: boolean;
+  customerPolicyTypeError: boolean;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -601,140 +607,167 @@ export class VehicleWishListComponent implements OnInit {
       );
   }
   onEnableUploadSection(){
-    this.uploadStatus = null;
-    this.errorSection = false;
-    this.policyStartDate = this.updateComponent?.policyStartDate;
-    this.policyEndDate = this.updateComponent?.policyEndDate;
-    this.currencyCode = this.updateComponent?.CurrencyCode;
-    this.customerCode = this.updateComponent?.CustomerCode;
-    this.customerName = this.updateComponent?.CustomerName
-    this.exchangeRate = this.updateComponent?.exchangeRate;
-    this.HavePromoCode = this.updateComponent?.HavePromoCode;
-    this.PromoCode = this.updateComponent?.PromoCode;
-    this.sourceType = this.updateComponent?.sourceType;
-    this.brokerCode = this.updateComponent?.brokerCode;
-    this.brokerBranchCode = this.updateComponent?.brokerBranchCode;
-    if(this.policyStartDate!=null && this.policyStartDate!='' && this.policyStartDate!=undefined){
-      this.policyStartError = false;
-      if(this.policyEndDate!=null && this.policyEndDate!='' && this.policyEndDate!=undefined){
-        this.policyEndError = false;
-        if(this.currencyCode!=null && this.currencyCode!='' && this.currencyCode!=undefined){
-          this.currencyCodeError = false;
-          if(this.userType!='Broker' && this.userType!='User'){
-                if(this.sourceType!='' && this.sourceType!=undefined && this.sourceType!=null){
-                  this.sourceTypeError = false;
-                  if(this.sourceType=='Premia Agent' || this.sourceType=='Premia Broker' || this.sourceType=='Premia Direct'){
-                      if(this.customerName!='' && this.customerName!=undefined && this.customerName!=null){
-                        this.brokerCode = null;
-                      this.brokerBranchCode = null;
-                      this.updateComponent.brokerCode = null;
-                      this.updateComponent.brokerBranchCode = null;
-                      this.updateComponent.brokerLoginId = null;
-                        this.customerCodeError = false;
-                        if(this.HavePromoCode=='Y'){
-                          if(this.PromoCode!=null && this.PromoCode!='' && this.PromoCode!=undefined){
-                            this.promoCodeError = false;
-                            this.searchSection = false;
-                            this.uploadSection = true;
-                            this.vehicleWishList = [];
-                            this.showEmpRecordsSection = false;
-                            this.uploadDocList = [];
-                            this.employeeUploadRecords = [];
+    let loginType = this.userDetails.Result.LoginType;
+    let i=0;
+    if(loginType){
+      if(loginType=='B2CFlow'){
+        this.customerTitleError = false;this.customerNameError=false;this.customerMobileCodeError = false;
+        this.customerMobileNoError = false;this.customerIdNumberError = false;this.customerPolicyTypeError = false;
+          if(this.updateComponent.Title==null || this.updateComponent.Title==undefined || this.updateComponent.Title ==''){this.customerTitleError = true;i+=1;}
+          if(this.updateComponent.UserName==null || this.updateComponent.UserName==undefined || this.updateComponent.UserName ==''){this.customerNameError = true;i+=1;}
+          if(this.updateComponent.MobileCode==null || this.updateComponent.MobileCode==undefined || this.updateComponent.MobileCode ==''){this.customerMobileCodeError = true;i+=1;}
+          if(this.updateComponent.MobileNo==null || this.updateComponent.MobileNo==undefined || this.updateComponent.MobileNo =='') {this.customerMobileNoError = true;i+=1;}
+          if(this.updateComponent.IdNumber==null || this.updateComponent.IdNumber==undefined || this.updateComponent.IdNumber =='') {this.customerIdNumberError = true;i+=1;}
+          if(this.updateComponent.PolicyHolderTypeid==null || this.updateComponent.PolicyHolderTypeid==undefined || this.updateComponent.PolicyHolderTypeid =='') {this.customerPolicyTypeError = true;i+=1;}
+          if(i>0) this.errorSection = true;
+        }
+    }
+        if(i==0){
+          let customerObj = {
+            "Title":this.updateComponent.Title,
+            "ClientName":this.updateComponent.UserName,
+            "MobileCode":this.updateComponent.MobileCode,
+            "MobileNo":this.updateComponent.MobileNo,
+            "IdNumber":this.updateComponent.IdNumber,
+            "PolicyHolderTypeid":this.updateComponent.PolicyHolderTypeid,
+            "EmailId":this.updateComponent.EmailId,
+          }
+          sessionStorage.setItem('b2cCustomerObj',JSON.stringify(customerObj))
+            this.uploadStatus = null;
+            this.errorSection = false;
+            this.policyStartDate = this.updateComponent?.policyStartDate;
+            this.policyEndDate = this.updateComponent?.policyEndDate;
+            this.currencyCode = this.updateComponent?.CurrencyCode;
+            this.customerCode = this.updateComponent?.CustomerCode;
+            this.customerName = this.updateComponent?.CustomerName
+            this.exchangeRate = this.updateComponent?.exchangeRate;
+            this.HavePromoCode = this.updateComponent?.HavePromoCode;
+            this.PromoCode = this.updateComponent?.PromoCode;
+            this.sourceType = this.updateComponent?.sourceType;
+            this.brokerCode = this.updateComponent?.brokerCode;
+            this.brokerBranchCode = this.updateComponent?.brokerBranchCode;
+            if(this.policyStartDate!=null && this.policyStartDate!='' && this.policyStartDate!=undefined){
+              this.policyStartError = false;
+              if(this.policyEndDate!=null && this.policyEndDate!='' && this.policyEndDate!=undefined){
+                this.policyEndError = false;
+                if(this.currencyCode!=null && this.currencyCode!='' && this.currencyCode!=undefined){
+                  this.currencyCodeError = false;
+                  if(this.userType!='Broker' && this.userType!='User'){
+                        if(this.sourceType!='' && this.sourceType!=undefined && this.sourceType!=null){
+                          this.sourceTypeError = false;
+                          if(this.sourceType=='Premia Agent' || this.sourceType=='Premia Broker' || this.sourceType=='Premia Direct'){
+                              if(this.customerName!='' && this.customerName!=undefined && this.customerName!=null){
+                                this.brokerCode = null;
+                              this.brokerBranchCode = null;
+                              this.updateComponent.brokerCode = null;
+                              this.updateComponent.brokerBranchCode = null;
+                              this.updateComponent.brokerLoginId = null;
+                                this.customerCodeError = false;
+                                if(this.HavePromoCode=='Y'){
+                                  if(this.PromoCode!=null && this.PromoCode!='' && this.PromoCode!=undefined){
+                                    this.promoCodeError = false;
+                                    this.searchSection = false;
+                                    this.uploadSection = true;
+                                    this.vehicleWishList = [];
+                                    this.showEmpRecordsSection = false;
+                                    this.uploadDocList = [];
+                                    this.employeeUploadRecords = [];
+                                  }
+                                  else{ this.errorSection=true;this.promoCodeError = true;}
+                                }
+                                else{
+                                  this.searchSection = false;
+                                  this.uploadSection = true;
+                                  this.vehicleWishList = [];
+                                  this.showEmpRecordsSection = false;
+                                  this.uploadDocList = [];
+                                  this.employeeUploadRecords = [];
+                                }
+                              }
+                              else{
+                                  this.customerCodeError = true;
+                              }
                           }
-                          else{ this.errorSection=true;this.promoCodeError = true;}
+                          else{
+                            if(this.brokerCode!='' && this.brokerCode!=undefined && this.brokerCode!=null){
+                              this.brokerCodeError = false;
+                              if(this.brokerBranchCode!='' && this.brokerBranchCode!=undefined && this.brokerBranchCode!=null){
+                                this.brokerBranchCodeError = false;
+                                if(this.HavePromoCode=='Y'){
+                                  if(this.PromoCode!=null && this.PromoCode!='' && this.PromoCode!=undefined){
+                                    this.promoCodeError = false;
+                                    this.searchSection = false;
+                                    this.uploadSection = true;
+                                    this.vehicleWishList = [];
+                                    this.showEmpRecordsSection = false;
+                                    this.uploadDocList = [];
+                                    this.employeeUploadRecords = [];
+                                  }
+                                  else{ this.errorSection=true;this.promoCodeError = true;}
+                                }
+                                else{
+                                  this.searchSection = false;
+                                  this.uploadSection = true;
+                                  this.vehicleWishList = [];
+                                  this.showEmpRecordsSection = false;
+                                  this.uploadDocList = [];
+                                  this.employeeUploadRecords = [];
+                                }
+                              }
+                              else this.brokerBranchCodeError = true;
+                            }
+                            else{
+                              this.brokerCodeError = true;
+                            }
+                          }
+                          
+                          
+                          // else if(this.Code=='Broker'){
+                          //   this.brokerCodeError = true;
+                          // }
+                          // else if(this.Code=='Agent' || this.Code == 'Direct'){
+                          //   this.brokerCode=null;
+                          //   this.branchValue = null;
+                          //   this.brokerCodeError = false;
+                          //   return true;
+                          // }
                         }
                         else{
-                          this.searchSection = false;
-                          this.uploadSection = true;
-                          this.vehicleWishList = [];
-                          this.showEmpRecordsSection = false;
-                          this.uploadDocList = [];
-                          this.employeeUploadRecords = [];
+                          this.sourceTypeError = true;
+                          return false;
                         }
-                      }
-                      else{
-                          this.customerCodeError = true;
-                      }
                   }
                   else{
-                    if(this.brokerCode!='' && this.brokerCode!=undefined && this.brokerCode!=null){
-                      this.brokerCodeError = false;
-                      if(this.brokerBranchCode!='' && this.brokerBranchCode!=undefined && this.brokerBranchCode!=null){
-                        this.brokerBranchCodeError = false;
-                        if(this.HavePromoCode=='Y'){
-                          if(this.PromoCode!=null && this.PromoCode!='' && this.PromoCode!=undefined){
-                            this.promoCodeError = false;
-                            this.searchSection = false;
-                            this.uploadSection = true;
-                            this.vehicleWishList = [];
-                            this.showEmpRecordsSection = false;
-                            this.uploadDocList = [];
-                            this.employeeUploadRecords = [];
-                          }
-                          else{ this.errorSection=true;this.promoCodeError = true;}
-                        }
-                        else{
-                          this.searchSection = false;
-                          this.uploadSection = true;
-                          this.vehicleWishList = [];
-                          this.showEmpRecordsSection = false;
-                          this.uploadDocList = [];
-                          this.employeeUploadRecords = [];
-                        }
+                    if(this.HavePromoCode=='Y'){
+                      if(this.PromoCode!=null && this.PromoCode!='' && this.PromoCode!=undefined){
+                        this.promoCodeError = false;
+                        this.searchSection = false;
+                        this.uploadSection = true;
+                        this.vehicleWishList = [];
+                        this.showEmpRecordsSection = false;
+                        this.uploadDocList = [];
+                        this.employeeUploadRecords = [];
                       }
-                      else this.brokerBranchCodeError = true;
+                      else{ this.errorSection=true;this.promoCodeError = true;}
                     }
                     else{
-                      this.brokerCodeError = true;
+                      this.searchSection = false;
+                      this.uploadSection = true;
+                      this.vehicleWishList = [];
+                      this.showEmpRecordsSection = false;
+                      this.uploadDocList = [];
+                      this.employeeUploadRecords = [];
                     }
                   }
-                  
-                  
-                  // else if(this.Code=='Broker'){
-                  //   this.brokerCodeError = true;
-                  // }
-                  // else if(this.Code=='Agent' || this.Code == 'Direct'){
-                  //   this.brokerCode=null;
-                  //   this.branchValue = null;
-                  //   this.brokerCodeError = false;
-                  //   return true;
-                  // }
                 }
                 else{
-                  this.sourceTypeError = true;
-                  return false;
-                }
-          }
-          else{
-            if(this.HavePromoCode=='Y'){
-              if(this.PromoCode!=null && this.PromoCode!='' && this.PromoCode!=undefined){
-                this.promoCodeError = false;
-                this.searchSection = false;
-                this.uploadSection = true;
-                this.vehicleWishList = [];
-                this.showEmpRecordsSection = false;
-                this.uploadDocList = [];
-                this.employeeUploadRecords = [];
+                  this.currencyCodeError = true;this.errorSection = true;}
               }
-              else{ this.errorSection=true;this.promoCodeError = true;}
+              else{
+                this.policyEndError = true;this.errorSection = true;}
             }
-            else{
-              this.searchSection = false;
-              this.uploadSection = true;
-              this.vehicleWishList = [];
-              this.showEmpRecordsSection = false;
-              this.uploadDocList = [];
-              this.employeeUploadRecords = [];
-            }
+            else{this.policyStartError = true;this.errorSection = true;}
           }
-        }
-        else{
-          this.currencyCodeError = true;this.errorSection = true;}
-      }
-      else{
-        this.policyEndError = true;this.errorSection = true;}
-    }
-    else{this.policyStartError = true;this.errorSection = true;}
     
   }
   onUploadDocuments(target:any,fileType:any,type:any){
@@ -818,6 +851,7 @@ export class VehicleWishListComponent implements OnInit {
         this.bdmCode = this.updateComponent.brokerCode;
         this.brokerCode = this.updateComponent.brokerCode;
         this.customerCode = this.updateComponent.CustomerCode;
+        this.customerName = this.updateComponent.CustomerName;
       }
   
     console.log("AcExecutive",this.acExecutiveId,this.vehicleDetails,this.sourceType,this.bdmCode,this.brokerCode,this.customerCode);
@@ -828,7 +862,9 @@ export class VehicleWishListComponent implements OnInit {
       "RequestReferenceNo": this.quoteRefNo,
       "TypeId":"101",
       "BrokerBranchCode":brokerbranchCode,
+      "BdmCode": this.customerCode,
       "CustomerCode": this.customerCode,
+      "CustomerName": this.customerName,
       "SourceType": this.sourceType,
       "CustomerRefNo": sessionStorage.getItem('customerReferenceNo'),
       "AcExecutiveId":null,
@@ -1066,17 +1102,47 @@ export class VehicleWishListComponent implements OnInit {
     //   const config = {status: type,destroyByClick: true,duration: 4000,
     //     hasIcon: true,position: NbGlobalPhysicalPosition.TOP_RIGHT,
     //     preventDuplicates: false,};
-        this.policyStartDate = this.updateComponent.policyStartDate;
-        this.policyEndDate = this.updateComponent.policyEndDate;
-        this.currencyCode = this.updateComponent.CurrencyCode;
-        this.exchangeRate = this.updateComponent.exchangeRate;
-        this.HavePromoCode = this.updateComponent.HavePromoCode;
-        this.PromoCode = this.updateComponent.PromoCode;
-          let vehicleData = {
-            "vehicleWishList":this.vehicleWishList,
-            "customerData": this.customerData
+    let loginType = this.userDetails.Result.LoginType;
+    let i=0;
+    if(loginType){
+      if(loginType=='B2CFlow'){
+        this.customerTitleError = false;this.customerNameError=false;this.customerMobileCodeError = false;
+        this.customerMobileNoError = false;this.customerIdNumberError = false;this.customerPolicyTypeError = false;
+          if(this.updateComponent.Title==null || this.updateComponent.Title==undefined || this.updateComponent.Title ==''){this.customerTitleError = true;i+=1;}
+          if(this.updateComponent.UserName==null || this.updateComponent.UserName==undefined || this.updateComponent.UserName ==''){this.customerNameError = true;i+=1;}
+          if(this.updateComponent.MobileCode==null || this.updateComponent.MobileCode==undefined || this.updateComponent.MobileCode ==''){this.customerMobileCodeError = true;i+=1;}
+          if(this.updateComponent.MobileNo==null || this.updateComponent.MobileNo==undefined || this.updateComponent.MobileNo =='') {this.customerMobileNoError = true;i+=1;}
+          if(this.updateComponent.IdNumber==null || this.updateComponent.IdNumber==undefined || this.updateComponent.IdNumber =='') {this.customerIdNumberError = true;i+=1;}
+          if(this.updateComponent.PolicyHolderTypeid==null || this.updateComponent.PolicyHolderTypeid==undefined || this.updateComponent.PolicyHolderTypeid =='') {this.customerPolicyTypeError = true;i+=1;}
+          if(i>0) this.errorSection = true;
+        }
+      
+    }
+    
+        if(i==0){
+          let customerObj = {
+            "Title":this.updateComponent.Title,
+            "ClientName":this.updateComponent.UserName,
+            "MobileCode":this.updateComponent.MobileCode,
+            "MobileNo":this.updateComponent.MobileNo,
+            "IdNumber":this.updateComponent.IdNumber,
+            "PolicyHolderTypeid":this.updateComponent.PolicyHolderTypeid,
+            "EmailId":this.updateComponent.EmailId,
           }
-          this.redirectCreateVehicle.emit(vehicleData);
+          sessionStorage.setItem('b2cCustomerObj',JSON.stringify(customerObj))
+          this.policyStartDate = this.updateComponent.policyStartDate;
+          this.policyEndDate = this.updateComponent.policyEndDate;
+          this.currencyCode = this.updateComponent.CurrencyCode;
+          this.exchangeRate = this.updateComponent.exchangeRate;
+          this.HavePromoCode = this.updateComponent.HavePromoCode;
+          this.PromoCode = this.updateComponent.PromoCode;
+            let vehicleData = {
+              "vehicleWishList":this.vehicleWishList,
+              "customerData": this.customerData
+            }
+            this.redirectCreateVehicle.emit(vehicleData);
+        } 
+        
   }
   createVehicleProceed(){
     let i=0,vehicleList:any[]=[],k=0;
@@ -1249,56 +1315,83 @@ export class VehicleWishListComponent implements OnInit {
     }
   }
   onSearchVehicle(){
-    this.customerData2 = [];
-    // let type: NbComponentStatus = 'danger';
-    // const config = {status: type,destroyByClick: true,duration: 4000,
-    //   hasIcon: true,position: NbGlobalPhysicalPosition.TOP_RIGHT,
-    //   preventDuplicates: false,};
-    if(this.searchBy!='' && this.searchBy!=null && this.searchBy!=undefined){
-      let chassisNo = "",regNo = "";
-      if(this.searchBy=='01'){
-        chassisNo = this.searchValue
-      }
-      else{
-        regNo = this.searchValue;
-      }
-
-      if(this.searchValue=='' || this.searchValue==undefined || this.searchValue==null){
-        if(this.searchBy=='01'){
-        //this.toastrService.show('SearchValue','Please Enter ChassisNumber',config);
+    let loginType = this.userDetails.Result.LoginType;
+    let i=0;
+    if(loginType){
+      if(loginType=='B2CFlow'){
+        this.customerTitleError = false;this.customerNameError=false;this.customerMobileCodeError = false;
+        this.customerMobileNoError = false;this.customerIdNumberError = false;this.customerPolicyTypeError = false;
+          if(this.updateComponent.Title==null || this.updateComponent.Title==undefined || this.updateComponent.Title ==''){this.customerTitleError = true;i+=1;}
+          if(this.updateComponent.UserName==null || this.updateComponent.UserName==undefined || this.updateComponent.UserName ==''){this.customerNameError = true;i+=1;}
+          if(this.updateComponent.MobileCode==null || this.updateComponent.MobileCode==undefined || this.updateComponent.MobileCode ==''){this.customerMobileCodeError = true;i+=1;}
+          if(this.updateComponent.MobileNo==null || this.updateComponent.MobileNo==undefined || this.updateComponent.MobileNo =='') {this.customerMobileNoError = true;i+=1;}
+          if(this.updateComponent.IdNumber==null || this.updateComponent.IdNumber==undefined || this.updateComponent.IdNumber =='') {this.customerIdNumberError = true;i+=1;}
+          if(this.updateComponent.PolicyHolderTypeid==null || this.updateComponent.PolicyHolderTypeid==undefined || this.updateComponent.PolicyHolderTypeid =='') {this.customerPolicyTypeError = true;i+=1;}
+          if(i>0) this.errorSection = true;
         }
-        else if(this.searchBy=='02'){
-          //this.toastrService.show('SearchValue','Please Enter RegistrationNumber',config);
+    }
+        if(i==0){
+          let customerObj = {
+            "Title":this.updateComponent.Title,
+            "ClientName":this.updateComponent.UserName,
+            "MobileCode":this.updateComponent.MobileCode,
+            "MobileNo":this.updateComponent.MobileNo,
+            "IdNumber":this.updateComponent.IdNumber,
+            "PolicyHolderTypeid":this.updateComponent.PolicyHolderTypeid,
+            "EmailId":this.updateComponent.EmailId,
           }
-      }
-      else{
-        let ReqObj = {
-          "ReqChassisNumber": chassisNo,
-          "ReqRegNumber": regNo
-        }
-        let urlLink = `${this.motorApiUrl}regulatory/showvehicleinfo`;
-        this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-          (data: any) => {
-            console.log(data);
-            if(data.Result){
-                this.customerData2 = [data?.Result];
-                this.emptySection = false;
-            }
-            else if(data.ErrorMessage){
-              if(data.ErrorMessage){
-                this.emptySection = true;
-                console.log("Error Iterate",data.ErrorMessage)
+          sessionStorage.setItem('b2cCustomerObj',JSON.stringify(customerObj))
+            this.customerData2 = [];
+            // let type: NbComponentStatus = 'danger';
+            // const config = {status: type,destroyByClick: true,duration: 4000,
+            //   hasIcon: true,position: NbGlobalPhysicalPosition.TOP_RIGHT,
+            //   preventDuplicates: false,};
+            if(this.searchBy!='' && this.searchBy!=null && this.searchBy!=undefined){
+              let chassisNo = "",regNo = "";
+              if(this.searchBy=='01'){
+                chassisNo = this.searchValue
               }
-          }
-          },
-          (err) => { },
-        );
-      }
+              else{
+                regNo = this.searchValue;
+              }
 
-    }
-    else{
-      //this.toastrService.show('SearchType','Please Select Search Type',config);
-    }
+              if(this.searchValue=='' || this.searchValue==undefined || this.searchValue==null){
+                if(this.searchBy=='01'){
+                //this.toastrService.show('SearchValue','Please Enter ChassisNumber',config);
+                }
+                else if(this.searchBy=='02'){
+                  //this.toastrService.show('SearchValue','Please Enter RegistrationNumber',config);
+                  }
+              }
+              else{
+                let ReqObj = {
+                  "ReqChassisNumber": chassisNo,
+                  "ReqRegNumber": regNo
+                }
+                let urlLink = `${this.motorApiUrl}regulatory/showvehicleinfo`;
+                this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+                  (data: any) => {
+                    console.log(data);
+                    if(data.Result){
+                        this.customerData2 = [data?.Result];
+                        this.emptySection = false;
+                    }
+                    else if(data.ErrorMessage){
+                      if(data.ErrorMessage){
+                        this.emptySection = true;
+                        console.log("Error Iterate",data.ErrorMessage)
+                      }
+                  }
+                  },
+                  (err) => { },
+                );
+              }
+
+            }
+            else{
+              //this.toastrService.show('SearchType','Please Select Search Type',config);
+            }
+      }
   }
   onSelectVehicle(rowData){
     this.vehicleDetails = rowData;

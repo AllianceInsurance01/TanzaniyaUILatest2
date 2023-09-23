@@ -70,6 +70,7 @@ export class PremiumDetailsComponent implements OnInit {
   PinCode: any;
   endorsementType: any;
   coverlist:any[]=[];
+  loginType: any;
   constructor(private sharedService: SharedService,
     private router:Router,public dialogService: MatDialog,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe) {
@@ -85,6 +86,7 @@ export class PremiumDetailsComponent implements OnInit {
     this.branchList = this.userDetails.Result.LoginBranchDetails;
     this.productId = this.userDetails.Result.ProductId;
     this.insuranceId = this.userDetails.Result.InsuranceId;
+    this.loginType = this.userDetails.Result.LoginType;
     this.notificationList = [
       { CodeDesc: 'SMS', Code: 'Sms' },
       { CodeDesc: 'Mail', Code: 'Mail' },
@@ -1121,7 +1123,10 @@ toggle(index: number) {
                   this.saveCustomerDetails();
             }
             else{
-              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
+              if(this.loginType=='B2CFlow'){
+                this.router.navigate(['/Home/customer/ClientDetails']);
+              }
+              else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
             }
             
           }
@@ -1144,7 +1149,10 @@ toggle(index: number) {
           }
           else {
             
-            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
+            if(this.loginId=='guest'){
+              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/userDetails']);
+            }
+            else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
           }
         }
     }
@@ -1247,7 +1255,10 @@ toggle(index: number) {
           // this.toastr.success(
           // 	  'Customer Details',
           // 	  'Customer Details Inserted/Updated Successfully',);
-          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
+          if(this.loginId=='guest'){
+            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/userDetails']);
+          }
+          else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
         }
       },
   
@@ -1255,6 +1266,7 @@ toggle(index: number) {
     );
   }
   onMakePayment(){
+    if(this.subuserType==null) this.subuserType = this.userDetails.Result.SubUserType;
     let amount = null;
     if(this.EmiYn=='Y'){
       amount = this.dueAmount;
@@ -1285,7 +1297,10 @@ toggle(index: number) {
           }
           else if(data.Result.PaymentId){
             sessionStorage.setItem('quotePaymentId',data.Result.PaymentId);
-            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
+            if(this.loginId=='guest'){
+              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/userDetails']);
+            }
+            else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
           }
         }
       },

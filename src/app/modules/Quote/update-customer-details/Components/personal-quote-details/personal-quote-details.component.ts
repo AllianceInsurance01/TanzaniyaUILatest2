@@ -1681,7 +1681,7 @@ checkMoneyYNChanges(){
     for(let field of fields){
       if(field.props.label=='Money'){
         console.log("Moneyyyyyyyyyy product 19",this.fields[0].fieldGroup)
-        let tableData = this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
+        let tableData = field.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
         tableData[0].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyOutSafeBusinessSIYN;
         tableData[1].fieldGroup[2].templateOptions['disabled'] = !this.productItem.MoneyInPremisesSIYN;
         tableData[2].fieldGroup[2].templateOptions['disabled'] = !this.productItem.CashInTransitSIYN;

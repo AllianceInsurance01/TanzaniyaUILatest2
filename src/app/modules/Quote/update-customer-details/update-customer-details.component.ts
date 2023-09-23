@@ -44,6 +44,15 @@ export class UpdateCustomerDetailsComponent implements OnInit {
   modifiedYN: any='N';
   additionalSection: boolean=false;
   CustomerName: any;
+  Title: any;
+  UserName: any;
+  MobileCode: any;
+  MobileNo: any;
+  PolicyHolderTypeid: any;
+  IdNumber: any;
+  EmailId: any;
+  MobileCodeDesc: any;
+  ModifiedCustomer: boolean=false;
   //public orderStatus="customerDetails"
 
   constructor(

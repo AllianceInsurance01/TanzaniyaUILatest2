@@ -92,7 +92,7 @@
         </div>
     </div>
 </div>
-<div class="row p-0 mt-2">
+<div class="row p-0 mt-2" *ngIf="!otpSection">
     <div [ngClass]="vehicleDetailsList.length==1 ?'col-12 col-md-12 col-lg-12 col-12 col-sm-12  p-0':'col-12 col-md-9 col-lg-9 col-9 col-sm-12  p-0'" >
 
         <div class="maan-grid-item customPadding" *ngIf="coverSection">
@@ -2953,14 +2953,59 @@
         </div>
     </div>
 </div>
+<div class="row" *ngIf="otpSection">
+    <div class="col-md-4 col-lg-4 col-xl-4">
+        <div class="customImage"></div>
+    </div>
+    <div class="col-md-7 col-lg-7 col-xl-7 offset-1 customAuthPanel" >
+        <div class="card-header">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <span class="mx-1">
+                        Otp Verification 
+                    </span>
+                </div>
+                <div>
+                    UserName - {{productItem?.ClientName}}
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="text-end">
+                <h5>Generated OTP ~ &nbsp;&nbsp; {{otpGenerated}}</h5>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-lg-10 col-10 offset-1">
+                    <div class="input-control-container">
+                        <label class="input-form-label">OTP Number</label><span class="text-danger">*</span>
+                        <div class="input-form-box">
+                            <input type="text"  class="input-form-control without-icon" maxlength="10" [(ngModel)]="otpValue" name="otpValue" required appNumbersOnly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                Not Received OTP?
+                <button class="btn btn-primary" (click)="generateOtp()" [disabled]="OtpBtnEnable">
+                    Resend OTP
+                    <span *ngIf="OtpBtnEnable">in ( {{ OtpBtnTime }} seconds)</span>
+                </button>
+            </div>
+            <div class="text-center mt-4">
+                
+                <button class="custom-btn btn-6 maan-button-data mx-2" [disabled]="otpValue == ''" (click)="onOtpValidate()" style="width: 11rem" matRipple>Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row botomdisplay">
     <div class="text-center my-3">
         <button class="custom-btn btn-5 mx-2" matRipple (click)="ongetBack()">
             <<&nbsp;Back</button>
                 <button class="custom-btn btn-6 maan-button-data mx-2" matRipple
-                    *ngIf="!adminSection && statusValue == 'RA'" (click)="onFormSubmit()">Proceed</button>
+                    *ngIf="!adminSection && statusValue == 'RA' && !otpSection" (click)="onFormSubmit()">Proceed</button>
                 <button class="custom-btn btn-6 maan-button-data mx-2" matRipple
-                    *ngIf="!adminSection && statusValue != 'RA'" (click)="onFormSubmit()">Buy Policy</button>
+                    *ngIf="!adminSection && statusValue != 'RA' && !otpSection" (click)="onFormSubmit()">Buy Policy</button>
                 <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="adminSection"
                     (click)="onUpdateFactor('')">Proceed</button>
     </div>

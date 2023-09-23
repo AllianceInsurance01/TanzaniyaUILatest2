@@ -23,7 +23,7 @@ export class CancelledPoliciesComponent implements OnInit {
   quotePageNo: any;
   startIndex: number;
   endIndex: number;
-  limit: any='0';
+  limit: any='0';brokerCode:any='';brokerList:any[]=[];
   constructor(private router:Router,private sharedService: SharedService) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -33,6 +33,8 @@ export class CancelledPoliciesComponent implements OnInit {
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails?.Result?.UserType;
     this.insuranceId = this.userDetails.Result.InsuranceId;
+    this.brokerList = [{Code:'',CodeDesc:'ALL'}]
+    this.brokerCode = this.loginId;
     sessionStorage.removeItem('loadingType');
    }
 
@@ -106,9 +108,52 @@ export class CancelledPoliciesComponent implements OnInit {
 
       ];
     }
-    this.getExistingQuotes(null,'change');
+    //if(this.userType=='Issuer'){
+      this.getBrokerList();
+    // }
+    // else{
+    //   this.getExistingQuotes(null,'change');
+    // }
+  }
+  getBrokerList(){
+    let appId = "1",loginId="",brokerbranchCode="";
+    if(this.userType!='Issuer'){
+      appId = "1"; loginId = this.brokerCode;
+      brokerbranchCode = this.brokerbranchCode;
+    }
+    else{
+      appId = this.loginId;
+      loginId=this.brokerCode;
+      brokerbranchCode = '';
+    }
+    let ReqObj = {
+      "ApplicationId":appId,
+      "UserType":this.userType,
+      "ProductId": this.productId,
+      "InsuranceId": this.insuranceId,
+      "LoginId": loginId,
+      "Status": "Y",
+      "BranchCode": this.branchCode
+    }
+    let urlLink = `${this.CommonApiUrl}api/cancelpolicyportfoliodropdown`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+          let defaultObj = [{Code:'',CodeDesc:'ALL'}]
+          this.brokerList = defaultObj.concat(data.Result);
+          if(this.brokerCode!=null){
+            if(!this.brokerList.some(ele=>ele.CodeDesc==this.brokerCode)) this.brokerCode = this.brokerList[0].CodeDesc;
+            this.getExistingQuotes(null,'change')
+          }
+        }
+        
+      },
+      (err) => { },
+    );
+
   }
   getExistingQuotes(element,entryType){
+    if(element==null) this.quoteData = [];
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
       appId = "1"; loginId = this.loginId;
@@ -116,6 +161,7 @@ export class CancelledPoliciesComponent implements OnInit {
     }
     else{
       appId = this.loginId;
+      loginId=this.brokerCode;
       brokerbranchCode = null;
     }
     let ReqObj = {
