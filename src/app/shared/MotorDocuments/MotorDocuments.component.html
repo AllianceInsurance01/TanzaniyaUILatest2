@@ -2,8 +2,8 @@
 <div>
     <div>
        <div style="box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);">
-        <div class="row mt-3">
-        <div style="font-family: 'Inter', sans-serif !important;text-align:center;width:50% !important;">
+        <div>
+        <div style="font-family: 'Inter', sans-serif !important;text-align:center;"><!--width:50% !important;-->
             <!-- <div class="col-4">
               <div>
                 <b style="font-weight: 300;color:black;"> Customer Name</b>:<span class="heading2">Suganya</span>
@@ -17,11 +17,46 @@
                     <b style="font-weight: 300;color:black;"> PolicyNo</b>:<span class="heading2">P-112345-9876</span>
                   </div>
             </div> -->
-            <div class="mt-2" style="float:left !important;">
-                <h3 style="font-weight:200px;color: gray;font-size:16px;margin-left:20px !important;">{{PolicyNo}}</h3>
-                <h1 style="font-weight:bold;color:black;font-size:18px;margin-left:-130px !important;">{{CustomerName}}</h1>
-                <h3 style="font-weight:200px;color: gray;font-size:16px;margin-left:-130px !important;">{{ProductName}}</h3>
-                <h3 style="font-weight:200px;color: gray;font-size:16px;margin-left:-130px !important;">{{quoteNo}}</h3>
+            <div class="mt-2">
+                <div class="row">
+                    <div class="col-6 col-md-3 mt-2">
+                        <div>
+                            <h3 style="font-weight:200px;color: gray;font-size:16px;font-family: 'Inter', sans-serif !important;"><span>PolicyNo</span></h3>
+                        </div>
+                        <div>
+                            <h3 style="font-weight:200px;color: gray;font-size:16px;font-family: 'Inter', sans-serif !important;">{{PolicyNo}}</h3>
+                           
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 mt-2">
+                        <div>
+                            <h3 style="font-weight:bold;color: gray;font-size:18px;font-family: 'Inter', sans-serif !important;"><span>Customer Name</span></h3>
+                        </div>
+                        <div>
+                            <h3 style="font-weight:bold;color: gray;font-size:18px;font-family: 'Inter', sans-serif !important;">
+                            <span>{{CustomerName}}</span>
+                            </h3>
+                        </div>
+                       
+                    </div>
+                    <div class="col-6 col-md-3 mt-2">
+                        <div>
+                            <h3 style="font-weight:200px;color: gray;font-size:16px;font-family: 'Inter', sans-serif !important;"><span>Product Name</span></h3>
+                        </div>
+                        <div>
+                            <h3 style="font-weight:200px;color: gray;font-size:16px;font-family: 'Inter', sans-serif !important;"><span>{{ProductName}}</span></h3>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 mt-2">
+                        <div>
+                            <h3 style="font-weight:200px;color: gray;font-size:16px;font-family: 'Inter', sans-serif !important;"><span>Quote No</span></h3>
+                        </div>
+                        <!--margin-left:-130px !important;-->
+                        <div>
+                            <h3 style="font-weight:200px;color: gray;font-size:16px;font-family: 'Inter', sans-serif !important;"><span>{{quoteNo}}</span></h3>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
            </div>
@@ -315,6 +350,10 @@
                                                         <div class="heading3">First LossPayee</div>
                                                         <div class="heading2"> {{vech.FirstLossPayee}}</div>
                                                      </div>
+                                                     <div class="col-6 col-md-4 mt-2" *ngIf="vech.CollateralYn == 'Y'">
+                                                        <div class="heading3">Borrower Type</div>
+                                                        <div class="heading2"> {{vech.BorrowerTypeDesc}}</div>
+                                                     </div>
                                                    
                                                 </div>
                                                 <div class="mt-3"><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;">Hypothecation</h1>
@@ -325,11 +364,15 @@
                                                         <div class="heading3">Collateral Yn</div>
                                                         <div class="heading2"> {{vech.CollateralYn}}</div>
                                                     </div>
-                                                    <div class="col-6 col-md-4 mt-2">
+                                                    <!-- <div class="col-6 col-md-4 mt-2">
                                                         <div class="heading3">Bank Name</div>
                                                         <div class="heading2"></div>
-                                                    </div>
-                                                    <div class="col-6 col-md-4 mt-2" *ngIf="vech.CollateralYn == 'Y'">
+                                                    </div> -->
+                                                    <div class="col-6 col-md-6 mt-2" *ngIf="vech.CollateralYn == 'Y' && vech.BorrowerType=='1'">
+                                                        <div class="heading3">Bank Name</div>
+                                                        <div class="heading2"> {{vech.CollateralName}}</div>
+                                                     </div>
+                                                     <div class="col-6 col-md-6 mt-2" *ngIf="vech.CollateralYn == 'Y' && vech.BorrowerType=='2'">
                                                         <div class="heading3">Collateral Name</div>
                                                         <div class="heading2"> {{vech.CollateralName}}</div>
                                                      </div>
@@ -634,6 +677,51 @@
                                     </div>
                                 </div>
                             
+                           
+                    </div>
+                   </ng-container>
+                   <ng-container *ngIf="productId == '26'">
+                    <div class="row p-3 ml-4 mr-4" *ngFor="let vech of PremiumInfo;let i=index;"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
+                        <div class="col-12 col-md-6">
+                            <div>
+                                <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;" class="mt-2">Business All Risk Details</h1></div>
+                                <div class="mt-2 pl-5 pr-5">
+    
+                                    <div class="row mt-2">
+                                        <div class="col-6 col-md-4 mt-2">
+                                            <div class="heading1">Reference No</div>
+                                            <div class="heading2">{{vech?.RequestReferenceNo}}</div>
+                                        </div>
+                                        <div class="col-6 col-md-4 mt-2">
+                                            <div class="heading1">QuoteNo</div>
+                                            <div class="heading2">{{quoteNo}}</div>
+                                        </div>
+                                        <div class="col-6 col-md-4 mt-2">
+                                            <div class="heading1">Currency</div>
+                                            <div class="heading2" >{{vech.Currency}}</div>
+                                        </div>
+                                    </div>
+                                        <div class="row mt-2">
+                                    </div>
+                                   
+                                </div>
+                             </div>
+                        </div>
+                            
+                        <div class="line-in-middle"></div>
+                        <div class="col-12 col-md-5">
+                                    <div>
+                                        <div class="Personal Details">
+                                            <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral" class="mt-2">Additional Information</h1></div>
+                                           </div>
+                                           <div class="row mt-2">
+                                            <div class="col-6 col-md-4 mt-2">
+                                                <div class="heading1">Equipment SI</div>
+                                                <div class="heading2">{{vech.RiskDetails.EquipmentSi}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                            
                     </div>
                    </ng-container>
@@ -1297,8 +1385,12 @@
                                     <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">Collateral Details</h1></div>
                                     <div class="Personal Details mt-2 pl-5 pr-5" *ngFor="let acc of PremiumInfo;let i=index;">
                                         <div class="row mt-2">
-                                            <div class="col-6 col-md-3 col-lg-3 mt-2">
+                                            <div class="col-6 col-md-3 col-lg-3 mt-2" *ngIf="acc.RiskDetails.BorrowerType=='2'">
                                                 <div class="heading1">Collateral Name</div>
+                                                <div class="heading2">{{acc.RiskDetails.CollateralName}}&nbsp;</div>
+                                            </div>
+                                            <div class="col-6 col-md-3 col-lg-3 mt-2" *ngIf="acc.RiskDetails.BorrowerType=='1'">
+                                                <div class="heading1">Bank Name</div>
                                                 <div class="heading2">{{acc.RiskDetails.CollateralName}}&nbsp;</div>
                                             </div>
                                             <div class="col-6 col-md-3 col-lg-3 mt-2">
@@ -1311,7 +1403,7 @@
                                             </div>
                                             <div class="col-6 col-md-3 col-lg-3 mt-2">
                                                 <div class="heading1">BrowerType</div>
-                                                <div class="heading2"></div>
+                                                <div class="heading2">{{acc.RiskDetails.BorrowerTypeDesc}}</div>
                                             </div>
                                           
                                         </div>

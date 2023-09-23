@@ -78,6 +78,7 @@ export class MotorDocumentsComponent implements OnInit {
   Allrisk:any[]=[];
   machineries:any[]=[];
   LocationList:any[]=[];
+  borrowerList:any[]=[];
 
   constructor(public router:Router,private sharedService: SharedService,public dialogService: MatDialog){
 
@@ -291,6 +292,7 @@ export class MotorDocumentsComponent implements OnInit {
             this.onRisk();
             this.getDriverDetails();
             this.getAccessories();
+            // this.getBorrowerList();
            }
            if(this.productId =='4' && this.ReferenceNo){
             this.onTravelRisk();
@@ -566,12 +568,9 @@ this.passengerName=type;
           console.log(data);
           if(data?.Result?.RiskDetails){
               this.ViewRisk=data?.Result.RiskDetails;
-              this.ChasNo(this.ViewRisk,this.ViewRisk[0].Chassisnumber,'1')
-
+              this.ChasNo(this.ViewRisk,this.ViewRisk[0].Chassisnumber,'1');
               console.log('mmmmmmmmmm',this.ViewRisk)
               //this.quoteno=data.Result.QuoteNo
-
-
           }
 
         },
@@ -967,7 +966,6 @@ this.passengerName=type;
                 }
             })
       }
-    
 
        getEmployeeDetails(){
         let SectionId = null;
@@ -994,6 +992,23 @@ this.passengerName=type;
             }
           });
       }
+
+      // getBorrowerList(){
+      //   let ReqObj = {
+      //     "InsuranceId": this.insuranceId,
+      //     "BranchCode": this.branchCode
+      //   }
+      //   let urlLink = `${this.CommonApiUrl}dropdown/borrowertype`;
+      //   this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      //     (data: any) => {
+      //       console.log(data);
+      //       if(data.Result){
+      //           this.borrowerList = data.Result;              
+      //       }
+      //     },
+      //     (err) => { },
+      //   );
+      // }
 
 payment(){
 

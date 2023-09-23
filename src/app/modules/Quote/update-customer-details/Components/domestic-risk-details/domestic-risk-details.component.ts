@@ -168,6 +168,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   endorseCategory: any;
   endorsementName: any;
   contentRiskSection: boolean=false;
+  accessoriesSection:boolean =false;
   electronicEquipSection: boolean=false;
   currencyValue: any;
   accidentOccupation: any;
@@ -446,6 +447,12 @@ export class DomesticRiskDetailsComponent implements OnInit {
             else if(type == 'personalIndeminity') return (!this.personalIntermeditySection && !this.enableAllSection);
             else if(type=='allRisk') return (!this.allRiskSection && !this.enableAllSection);
             else if(type == 'electronic') return (!this.electronicEquipSection && !this.enableAllSection);
+            else if(type == 'accessories' && this.enableAllSection || this.accessoriesSection) {
+              return true;
+            }
+            else if(type == 'accessories' && !this.enableAllSection || !this.accessoriesSection) {
+                return (!this.accessoriesSection && !this.enableAllSection);}
+            //else if(type == 'accessories') return (!this.accessoriesSection && !this.enableAllSection);
       }
       else return true;
   }
@@ -922,6 +929,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
       });
   }
   enableAddNewBtn(type){
+    console.log('YYYYYYYYYY',this.buildingSection,this.enableAllSection);
     if(this.endorsementSection){
       if(type=='building') return (!this.buildingSection && !this.enableAllSection) ;
       else if(type=='content') return (!this.contentRiskSection && !this.enableAllSection);
@@ -930,6 +938,11 @@ export class DomesticRiskDetailsComponent implements OnInit {
       else if(type=='allRisk') return (!this.allRiskSection && !this.enableAllSection);
       else if(type == 'electronic') return (!this.electronicEquipSection && !this.enableAllSection);
       else if(type == 'Cyber') return (!this.enableCyberSection && !this.enableAllSection);
+      else if(type == 'accessories' && this.enableAllSection || this.accessoriesSection) {
+        return true;
+      }
+      else if(type == 'accessories' && !this.enableAllSection || !this.accessoriesSection) {
+          return (!this.accessoriesSection && !this.enableAllSection);}
     }
     else return true;
   }
@@ -2420,7 +2433,7 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       }
       urlLink = `${this.motorApiUrl}api/savecontentrisk`;
     }
-    if(type=='E' && this.productId!='42')
+    if(type=='E' && this.productId!='42' && this.productId!='25')
     {
       ReqObj = {
         "CreatedBy": this.loginId,
@@ -2439,6 +2452,18 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       "QuoteNo":sessionStorage.getItem('quoteNo'),
       "RequestReferenceNo":this.quoteRefNo,
       "SectionId":this.cyberSectionId,
+       "Type":type,
+       "ContentRiskDetails":reqList
+      }
+      urlLink = `${this.motorApiUrl}api/savecontentrisk`;
+    }
+    if(type=='E' && this.productId=='25')
+    {
+      ReqObj = {
+        "CreatedBy": this.loginId,
+      "QuoteNo":sessionStorage.getItem('quoteNo'),
+      "RequestReferenceNo":this.quoteRefNo,
+      "SectionId":'39',
        "Type":type,
        "ContentRiskDetails":reqList
       }
@@ -3433,10 +3458,12 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
         if(res.Result){
           if (res.Result.ContentRiskDetails) {
            if(res.Result.ContentRiskDetails.length!=0){
-            // if(this.endorsementSection){
-            //   this.contentRiskSection = !this.enableFieldsList.some(ele=>ele=='ContentSuminsured');
-            // }
-            // else this.contentRiskSection = true;
+            if(this.endorsementSection){
+              console.log('Acessories Section',this.enableFieldsList)
+              this.accessoriesSection = !this.enableFieldsList.some(ele=>ele=='AccessoriesSuminsured');
+            }
+            //else this.contentRiskSection = true;
+            else this.accessoriesSection = true;
              this.accessoriesList= res.Result.ContentRiskDetails;
              console.log('Get details of Accessories', this.accessoriesList);
              this.getTotalSICost('Accessories');
@@ -3963,9 +3990,16 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
   }
   getElectronicEquipment(){
     let urlLink = `${this.motorApiUrl}api/getallcontentrisk`;
+    let sectionid:any;
+    if(this.productId=='25'){
+    sectionid ='39'
+    }
+    else{
+      sectionid = '41'
+    }
     let ReqObj = {
       "QuoteNo": sessionStorage.getItem('quoteNo'),
-      "SectionId":"41"
+      "SectionId":sectionid
     }
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
