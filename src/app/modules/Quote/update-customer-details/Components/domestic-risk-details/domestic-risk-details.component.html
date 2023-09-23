@@ -933,7 +933,7 @@
                                     </div>
                                 </div>
                                 <div  class="addMembers" *ngIf="ElectronicItem.length!=0">
-                                    <div class="addMembers__item" *ngFor="let entry of ElectronicItem|paginate:{itemsPerPage: 5, currentPage:E , id:'E'};let i=index">
+                                    <div class="addMembers__item" *ngFor="let entry of ElectronicItem|paginate:{itemsPerPage: 5,currentPage:E,id:'E'};let i=index">
                                         <div class="addMembers__header">
                                             <div class="addMembers__name">{{getLocationName(entry.RiskId)}}</div>
                                             <div class="addMembers__edit">
@@ -969,7 +969,7 @@
                                     </div>  
                                 </div>
                                 <div class="d-flex justify-content-end">
-                                    <pagination-controls (pageChange)="E=$event" id="E"></pagination-controls>
+                                    <pagination-controls (pageChange)="E=$event" id="E" *ngIf="ElectronicItem.length!=0"></pagination-controls>
                                   </div>
                             </div>
                                 
@@ -2066,8 +2066,8 @@
                                             <div class="addMembers__header">
                                                 <div class="addMembers__name">{{getAssName(entry.RiskId)}}</div>
                                                 <div class="addMembers__edit">
-                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="AccessoriesDelete(entry)" *ngIf="checkEndorseDisable('machinery')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
-                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditAccessories(i,entry)" *ngIf="checkEndorseDisable('machinery')"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="AccessoriesDelete(entry)" *ngIf="checkEndorseDisable('accessories')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditAccessories(i,entry)" *ngIf="checkEndorseDisable('accessories')"> <i class="fa fa-pencil"></i></button>&nbsp;
                                                 </div>
                                                 <div class="addMembers__edit">
                                                     <span>{{entry.SumInsured| commaseparator }} </span>&nbsp;&nbsp;
