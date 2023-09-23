@@ -689,7 +689,7 @@ export class CustomerDetailsComponent implements OnInit {
             this.productItem.MobileCode = customerDetails?.MobileCode1;
             this.productItem.MobileNo = customerDetails?.MobileNo1;
             this.productItem.IdNumber = customerDetails?.IdNumber;
-            this.productItem.IdType = customerDetails?.IdType;
+            this.productItem.IdType = customerDetails?.PolicyHolderType;
             this.updateComponent.CustomerType = this.productItem.IdType;
             this.productItem.MobileCodeDesc = customerDetails?.MobileCodeDesc1;
             this.productItem.PolicyHolderTypeid = customerDetails?.PolicyHolderTypeid;

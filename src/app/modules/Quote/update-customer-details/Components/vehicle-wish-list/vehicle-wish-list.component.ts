@@ -1452,7 +1452,7 @@ export class VehicleWishListComponent implements OnInit {
       }
   }
   saveCustomerDetails(data,type){
-    let appointmentDate = "",street=null, dobOrRegDate = "",vrngst=null, taxExemptedId = null,cityName=null, stateName=null,businessType = null,
+    let appointmentDate = "",street=null, dobOrRegDate = "",vrngst='0', taxExemptedId = null,cityName=null, stateName=null,businessType = '1',
     add1=null,StateCode=null,status='P',IsTaxExempted='N',Gender=null,cityCode=null,countryCode=null,pinCode=null;
     //  if(data.AppointmentDate!= undefined && data.AppointmentDate!=null && data.AppointmentDate!=''){
     // 	appointmentDate = this.datePipe.transform(data.AppointmentDate, "dd/MM/yyyy");
@@ -1463,7 +1463,6 @@ export class VehicleWishListComponent implements OnInit {
     if(refNo) this.customerReferenceNo = refNo;
     else this.customerReferenceNo = null;
       if(this.customerReferenceNo==null){
-        data.vrngst = '0';
         businessType = '1';
         status = 'P';
       }

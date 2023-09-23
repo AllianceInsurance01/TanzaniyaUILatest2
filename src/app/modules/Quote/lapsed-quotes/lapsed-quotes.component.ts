@@ -163,10 +163,10 @@ export class LapsedQuotesComponent implements OnInit {
 
   }
   getLapsedQuotes(element,entryType){
-    if(element==null) this.quoteData = [];
+    if(element==null) this.quoteData=[];
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
-      appId = "1"; loginId = this.loginId;
+      appId = "1"; loginId = this.brokerCode;
       brokerbranchCode = this.brokerbranchCode;
     }
     else{

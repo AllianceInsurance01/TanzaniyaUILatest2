@@ -536,7 +536,8 @@ export class NewCustomerDetailsComponent {
 						}
 				}
 				else {
-					if(this.loginType=='B2CFlow'){
+					let quoteNo = sessionStorage.getItem('quoteNo');
+					if(this.loginType=='B2CFlow' || (this.loginType=='B2cFlow2' && quoteNo!=undefined && quoteNo!=null)){
 						this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
 					}
 					else this.router.navigate(['/Home/customer/'])
@@ -547,7 +548,8 @@ export class NewCustomerDetailsComponent {
 		);
 	}
 	getBack(){
-		if(this.loginType=='B2CFlow'){
+		let quoteNo = sessionStorage.getItem('quoteNo');
+		if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2' && quoteNo!=undefined && quoteNo!=null)){
 			this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
 		}
 		else{

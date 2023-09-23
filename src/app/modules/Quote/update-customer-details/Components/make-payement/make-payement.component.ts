@@ -476,15 +476,10 @@ export class MakePayementComponent implements OnInit {
             window.location.href =  atob(this.redirectUrl)
           }
           else {
-            
-            if(this.subuserType=='B2C'){
-              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
-            }
-            else{
+           
               this.paymentDetails = data.Result;
               this.policyNo = data?.Result?.PolicyNo;
               this.policySection = true;
-            }
             this.updateTiraDetails();
             
           }

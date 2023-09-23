@@ -143,16 +143,16 @@ export class RejectedQuotesComponent implements OnInit {
 
   }
   getRejectedQuotes(element,entryType){
-    if(element==null) this.quoteData = [];
+    if(element==null) this.quoteData=[];
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
-      appId = "1"; loginId = this.loginId;
+      appId = "1"; loginId = this.brokerCode;
       brokerbranchCode = this.brokerbranchCode;
     }
     else{
       appId = this.loginId;
       loginId=this.brokerCode;
-      brokerbranchCode = null;
+      brokerbranchCode = '';
     }
     let ReqObj = {
           "BrokerBranchCode": brokerbranchCode,
