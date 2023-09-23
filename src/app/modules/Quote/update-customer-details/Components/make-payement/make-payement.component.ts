@@ -141,6 +141,10 @@ export class MakePayementComponent implements OnInit {
   decodeUrl(){
     console.log(atob(this.redirectUrl))
   }
+  onB2CRedirect(){
+    sessionStorage.clear();
+    this.router.navigate(['/b2clogin'])
+  }
   getEditQuoteDetails(){
     let ReqObj = {
       "QuoteNo":this.quoteNo

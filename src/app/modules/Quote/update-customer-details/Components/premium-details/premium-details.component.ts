@@ -1266,7 +1266,10 @@ toggle(index: number) {
     );
   }
   onMakePayment(){
-    if(this.subuserType==null) this.subuserType = this.userDetails.Result.SubUserType;
+    if(this.subuserType==null){
+      this.subuserType = this.userDetails.Result.SubUserType;
+      sessionStorage.setItem('typeValue',this.subuserType)
+    }
     let amount = null;
     if(this.EmiYn=='Y'){
       amount = this.dueAmount;

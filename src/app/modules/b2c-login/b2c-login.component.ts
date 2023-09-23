@@ -1,20 +1,19 @@
-
 import { SharedService } from './../../shared/Services/shared.service';
 import { Component, OnInit, OnChanges, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import * as Mydatas from '../../app-config.json';
-import { LoginService } from './login.service';
 import { AuthService } from '../../Auth/auth.service';
 import Swal from 'sweetalert2';
 import { HttpService } from 'src/app/shared/Services/http.service';
+import { LoginService } from './login.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-b2c-login',
+  templateUrl: './b2c-login.component.html',
+  styleUrls: ['./b2c-login.component.scss']
 })
-export class LoginComponent {
+export class B2cLoginComponent {
 
   @HostListener('window:scroll', ['$event'])
   public menuActive: any = 'login';
@@ -49,16 +48,99 @@ export class LoginComponent {
   pa:any;
   changePasswordSection: boolean;
   passExpiredError: boolean;
+  mobileCodeList: { Code: string; CodeDesc: string; }[];
+  insuranceId: any;
+  OtpBtnTime: any=null;
+  OtpBtnEnable: boolean;
+  otpSection: boolean;
+  otpGenerated: null;
+  otpId: any;
+  otpValue: any=null;
+  agencyCode: any;
+  mobileCodeDesc: any=null;
   constructor(private _formBuilder: FormBuilder, private service: HttpService,
     private loginService: LoginService, private SharedService: SharedService, private authService: AuthService,
     private router: Router,) {
-    this.onLoginTap();
+   // this.onLoginTap();
     sessionStorage.clear();
     this.service.ocQuoteMenu = false;
     this.service.navMenu = false;
     this.service.openCoverMenu = false;
+    this.getGuestLogin();
     //this.getRegionList();
   }
+  getGuestLogin(){
+    const urlLink = `${this.CommonApiUrl}authentication/login`;
+    const reqData = {
+      "LoginId": 'Guest',
+      "Password": 'Admin@01',
+      "ReLoginKey": 'Y'
+    };
+
+    this.loginService.onPostMethodSync(urlLink, reqData).subscribe(
+      (data: any) => {
+        let res: any = data;
+        console.log(data);
+          if (data.Result) {
+            const Token = data?.Result?.Token;
+            this.authService.login(data);
+            this.authService.UserToken(Token);
+            sessionStorage.setItem('Userdetails', JSON.stringify(data));
+            sessionStorage.setItem('UserToken', Token);
+            sessionStorage.setItem('menuSection', 'navMenu');
+            if ((data.Result.UserType == 'Issuer' || data.Result.UserType == 'Broker' || data.Result.UserType == 'User') && data.Result.SubUserType!='SuperAdmin') {
+              let branchList: any[] = data?.Result?.LoginBranchDetails;
+              if (branchList.length != 0 && branchList.length > 1) {
+                console.log("Entered Branch", branchList)
+                // this.router.navigate(['/branch']);
+                this.branchselection=true;
+                this.branchList = branchList;
+              }
+              else if (branchList.length != 0){
+                this.branchList = branchList;
+                this.branchValue = branchList[0].BrokerBranchCode;
+                let branchData: any = this.branchList.find(ele => ele.BrokerBranchCode == this.branchValue);
+                let userDetails = JSON.parse(sessionStorage.getItem('Userdetails') as any);
+                userDetails.Result['ProductId'] = data.Result.BrokerCompanyProducts[0].ProductId;
+                userDetails.Result['ProductName'] = data.Result.BrokerCompanyProducts[0].ProductName;
+                userDetails.Result['BrokerBranchCode'] = this.branchValue;
+                this.agencyCode = data.Result.OaCode
+                userDetails.Result['BranchCode'] = branchData.BranchCode;
+                userDetails.Result['CurrencyId'] = branchData?.CurrencyId;
+                userDetails.Result['InsuranceId'] = branchData?.InsuranceId;
+                this.insuranceId = branchData?.InsuranceId
+                sessionStorage.setItem('typeValue','B2C');
+                sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
+                sessionStorage.removeItem('customerReferenceNo');
+                //this.router.navigate(['/Home/customer/Client/client-details']);
+                this.getMobileCodeList();
+              }
+            }
+          }
+        },
+        (err: any) => {
+          alert("Error")
+          // console.log(err);
+        },
+      );
+  }
+  getMobileCodeList() {
+		let ReqObj = { "InsuranceId": this.insuranceId }
+		let urlLink = `${this.CommonApiUrl}dropdown/mobilecodes`;
+		this.SharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+			(data: any) => {
+				console.log(data);
+				if (data.Result) {
+
+					let obj = [{ "Code": '', "CodeDesc": "-Select-" }]
+					this.mobileCodeList = obj.concat(data.Result);
+					
+
+				}
+			},
+			(err) => { },
+		);
+	}
   change(value) {
     this.value = value;
     if (value === "Change Password") {
@@ -69,10 +151,14 @@ export class LoginComponent {
       this.forget = false;
     }
   }
+  cancelOtp(value_cancel) {
+      this.loginfirst = false;
+  }
   cancel(value_cancel) {
     this.value_cancel = value_cancel;
     if (value_cancel === 'Cancel') {
       this.resetForm();
+      this.otpSection = false;
       this.loginSection = false;
       this.loginfirst = false;
       this.changePasswordSection = false;
@@ -103,10 +189,8 @@ export class LoginComponent {
   }
   onCreateFormControl() {
     this.loginForm = this._formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      region: ['', Validators.required],
-      branch: ['', Validators.required],
+      mobileCode: ['-Select-', Validators.required],
+      MobileNo: ['', Validators.required]
     });
     this.changeForm = this._formBuilder.group({
       LoginId: ['', Validators.required],
@@ -367,242 +451,201 @@ export class LoginComponent {
   }
 
 
-  onLogin(req:any,key) {
+  onLogin() {
 
     this.submitted = true;
-    const urlLink = `${this.CommonApiUrl}authentication/login`;
+    let searchValue = "";
+		let mobileCode = ""; let mobileNumber = "";
+		let token = sessionStorage.getItem('UserToken');
     const formData = this.loginForm.value;
-
-    const reqData = {
-      "LoginId": formData.username,
-      "Password": formData.password,
-      "ReLoginKey": key
-    };
-
-    this.loginService.onPostMethodSync(urlLink, reqData).subscribe(
-      (data: any) => {
-        let res: any = data;
-        console.log(data);
-        if (data.Result) {
-          const Token = data?.Result?.Token;
-          this.authService.login(data);
-          this.authService.UserToken(Token);
-          sessionStorage.setItem('Userdetails', JSON.stringify(data));
-          sessionStorage.setItem('UserToken', Token);
-          sessionStorage.setItem('menuSection', 'navMenu');
-          this.userType = data.Result.UserType;
-          if ((data.Result.UserType == 'Issuer' || data.Result.UserType == 'Broker' || data.Result.UserType == 'User') && data.Result.SubUserType!='SuperAdmin') {
-
-            let currencyId=data?.Result?.CurrencyId;
-            console.log('IIIIIIIIIIIIIIII',currencyId);
-            sessionStorage.setItem('CurrencyidLogin',currencyId);
-
-            let branchList: any[] = data?.Result?.LoginBranchDetails;
-            if (branchList.length != 0 && branchList.length > 1) {
-              console.log("Entered Branch", branchList)
-              // this.router.navigate(['/branch']);
-              this.loginSection=false;
-              this.branchselection=true;
-              this.branchList = branchList;
-            }
-            else {
-              this.branchList = branchList;
-              if (this.userType == 'Issuer') {
-                this.branchValue = branchList[0].BranchCode;
-                this.onBranchProceed();
-              }
-              else {
-                this.branchValue = branchList[0].BrokerBranchCode;
-                this.onBranchProceed();
-              }
-
-            }
-          }
-          else{
-            this.router.navigate(['/Admin']);
-          }
-        }
-        else  if (res?.ErrorMessage && res?.ErrorMessage.length > 0 || res?.Result?.ErrorMessage && res?.Result?.ErrorMessage.length > 0) {
-          const errorList: any[] = res.ErrorMessage || res?.Result?.ErrorMessage;
-          let ulList:any='';
-           let entry:any[] =  errorList.filter(ele=>ele.Field=='SessionError')
-           console.log("checked entry",entry);
-            if(res.ChangePasswordYn=='Y'){
-              console.log('UUUUU',res.ChangePasswordYn);
-              //this.Forget('change','ChangePassword');
-              this.loginfirst=true;
-              this.changePasswordSection = true;
-              this.forget = false;
-              //this.loginSection=false;
-              this.pass = true;
-              this.pa='ChangePassword';
-              this.passExpiredError = true;
-              setTimeout(() => 
-              {
-                this.passExpiredError = false;
-            }, (2*1000));
-            this.changeForm.controls['LoginId'].setValue(formData.username);
-            }
-            else{
-              for (let index = 0; index < errorList.length; index++) {
-
-                const element = errorList[index];
-                 ulList +=`<li class="list-group-login-field">
-                   <div style="color: darkgreen;">Field<span class="mx-2">:</span>${element?.Field}</div>
-                   <div style="color: red;">Message<span class="mx-2">:</span>${element?.Message}</div>
-                 </li>`
-              }
-             if(entry.length==0){
-                Swal.fire({
-                 title: '<strong>Form Validation</strong>',
-                 icon: 'info',
-                 html:
-                   `<ul class="list-group errorlist">
-                    ${ulList}
-                 </ul>`,
-                 showCloseButton: true,
-                 focusConfirm: false,
-                 confirmButtonText:
-                   '<i class="fa fa-thumbs-down"></i> Errors!',
-                 confirmButtonAriaLabel: 'Thumbs down, Errors!',
-               })
-             }
-             else {
-               console.log("entered multiiiiiiiiiiiiiiiiiiii");
-               Swal.fire({
-                  title: '<strong>Session Error</strong>',
-                  icon: 'info',
-                  html:
-                    `<ul class="list-group errorlist">
-                     ${ulList}
-                 </ul>`,
-                  showCloseButton: true,
-                  focusConfirm: false,
-                  showCancelButton:true,
-   
-                 confirmButtonColor: '#3085d6',
-                 cancelButtonColor: '#d33',
-                 confirmButtonText: 'Proceed Login!',
-                 cancelButtonText: 'Cancel',
-               })
-               .then((result) => {
-                 if (result.isConfirmed) {
-                 // this.loginSection=false;
-                 this.onLogin(reqData,'Y')
-               }
-   
-               });
-   
-             }
-            }
-          
-         }
-      },
-      (err: any) => {
-        alert("Error")
-        // console.log(err);
-      },
-    );
+    // if(formData.mobileCode !=null){
+    //   this.mobileCodeDesc = this.mobileCodeList.find(ele=>ele.Code==formData?.mobileCode).CodeDesc;
+    // }
+		let reqObj = {
+			"CompanyId":this.insuranceId,
+			"ProductId": '5',
+			"LoginId": 'guest',
+			"TemplateName":null,
+			"OtpUser": {
+				"UserMailId": null,
+				"UserMobileNo":formData.MobileNo,
+				"UserMobileCode": formData.mobileCode,
+				"UserWhatsappNo": formData.MobileNo,
+				"UserWhatsappCode": formData.mobileCode,
+				"CustomerName": null
+			}
+		}
+		let url = `${this.CommonApiUrl}otp/generate`;
+		try {
+	
+		  this.SharedService.onPostMethodSync(url, reqObj).subscribe((data: any) => {
+			console.log("Otp Generate Res", data);
+			if (data.Errors) {
+			  this.otpSection = false;
+			  this.otpGenerated = null;
+			  let element = '';
+			  for (let i = 0; i < data.Errors.length; i++) {
+				  element += '<div class="my-1"><i class="far fa-dot-circle text-danger p-1"></i>' + data.Errors[i].Message + "</div>";
+			  }
+	
+			  Swal.fire(
+				'Please Fill Valid Value',
+				`${element}`,
+				'error',
+			  )
+			}
+			else {
+        
+			   this.otpId = data.OtpToken;
+			   this.otpGenerated = data.OTP;
+         this.loginfirst = true;
+			  this.otpSection = true;
+			  this.OtpBtnEnable = true;
+			  this.setTimeInterval();
+			}
+		  }, (err) => {
+			console.log(err);
+		  })
+		 } catch (error) {
+		}
   }
-  async onB2CNavigate(){
-      let urlLink = `${this.CommonApiUrl}authentication/doauth`
-      let ReqObj = {
-          "e":'kjIeGIM/2PWZlQUsLQBGq0uOWULX0QWRTSfk2dEbvBik/KTyszKentir1ZMEPiDD4ccgJA4xIW5Km9gKJ+DaeNJt0wornRee8Y+ohOoE2DiMJhNEV2QiwB8W7LxFFzGnt5+3eZt7jIeQM9ZbpCm6/U5emAvchppFSl+fHhFsY2ApKhnOdQyrL+jhC1QFOIhbJguJM8WzWFk80avvZEGedQZZM+ZzlwqZTm+/+1SnaGM4VBkPH7pBHbx+EoI7Rh7fejj+W/dEb0euc7wvAswDFjhUGQ8fukEdvH4SgjtGHt+ZE8Zk+f2/2Q=='
+  setTimeInterval() {
+
+    var count = 15,
+      timer = setInterval(() => {
+        var seconds = (count--) - 1;
+        var percent_complete = (seconds / 60) * 100;
+        percent_complete = Math.floor(percent_complete);
+
+        this.OtpBtnTime = count;
+        if (seconds == 0) {
+          clearInterval(timer);
+          this.OtpBtnEnable = false;
+          this.OtpBtnTime = '';
+        }
+      }, 1000);
+  	}
+    onOtpValidate() {
+
+      if (this.otpValue == "" || this.otpValue == undefined || this.otpValue == null) {
+        let element = '<div class="my-1"><i class="far fa-dot-circle text-danger p-1"></i>Please Enter OTP</div>';
+        Swal.fire(
+        'Please Fill Valid Value',
+        `${element}`,
+        'error',
+        )
+      }
+      else {
+        this.otpValue = this.otpValue.replace(/\D/g, '');
+        let reqObj = {
+        "CompanyId": this.insuranceId,
+        "ProductId": '5',
+        "AgencyCode": this.agencyCode,
+        "OtpToken": this.otpId,
+        "UserOTP": this.otpValue,
+        "CreateUser": false,
+        "CustomerId": null,
+        "ReferenceNo": sessionStorage.getItem('quoteReferenceNo') 
+        }
+        let url = `${this.CommonApiUrl}otp/validate`;
+        try {
+        this.SharedService.onPostMethodSync(url, reqObj).subscribe((data: any) => {
+          console.log("Otp Generate", data);
+          if (data) {
+          if (data.Errors.length!=0) {
+            let element = '';
+            for (let i = 0; i < data.Errors.length; i++) {
+            element += '<div class="my-1"><i class="far fa-dot-circle text-danger p-1"></i>' + data.Errors[i].Message + "</div>";
+            }
+    
+            Swal.fire(
+            'Please Fill Valid Value',
+            `${element}`,
+            'error',
+            )
+          }
+          else {
+    
+    
+            this.otpId = "";
+            this.otpValue = "";
+            this.onGuestLogin()
+           
+          }
+          }
+        }, (err) => {
+        })
+        } catch (error) {
+        }
+      }
+    }
+    onGuestLogin(){
+      const urlLink = `${this.CommonApiUrl}authentication/login`;
+      const formData = this.loginForm.value;
+      let loginId=formData.mobileCode+formData.MobileNo
+      const reqData = {
+      "LoginId": loginId,
+      "Password": 'Admin@01',
+      "ReLoginKey": 'Y'
       };
-      (await this.SharedService.onPostMethodUnAuthAsync(urlLink, ReqObj)).subscribe(
-        (data: any) => {
-          let res: any = data;
-          console.log(data);
-          if (data.Result) {
-            if(data.AdditionalInfo){
-              let details = data.AdditionalInfo;
-              if(details.QuoteNo!='null' && details.QuoteNo!=null){
-                  sessionStorage.setItem('quoteNo',details?.QuoteNo)
-              }
-              let custRefNo = details?.CustomerRefNo;
-              if(custRefNo!='' && custRefNo!='null' && custRefNo!=null && custRefNo!=undefined){
-                sessionStorage.setItem('customerReferenceNo',custRefNo);
-              }
-              let refNo = details?.RefNo;
-              if(refNo!='' && refNo!='null' && refNo!=null && refNo!=undefined){
-                sessionStorage.setItem('quoteReferenceNo',refNo);
-              }
-              
-              let result = data.Result;
-              let insuranceId = details?.InsuranceId;
-              if(insuranceId!='' && insuranceId!='null' && insuranceId!=null && insuranceId!=undefined){
-                result['InsuranceId'] = insuranceId;
-              }
-              let productId = details?.ProductId;
-              if(productId!='' && productId!='null' && productId!=null && productId!=undefined){
-                result['ProductId'] = productId;
-              }
-              let branchCode = details?.BranchCode;
-              if(branchCode!='' && branchCode!='null' && branchCode!=null && branchCode!=undefined){
-                result['BranchCode'] = branchCode;
-              }
-             const Token = data?.Result?.Token;
+    
+        this.SharedService.onPostMethodSync(urlLink, reqData).subscribe(
+          (data: any) => {
+            let res: any = data;
+            console.log(data);
+              if (data.Result) {
+                // Swal.fire(
+                //   'Success',
+                //   `Otp Validated Successfully`,
+                //   'success',
+                //   )
+                const Token = data?.Result?.Token;
               this.authService.login(data);
               this.authService.UserToken(Token);
-              sessionStorage.setItem('UserToken',Token);
-              if(data?.Result?.LoginBranchDetails){
-                if(data?.Result?.LoginBranchDetails.length!=0){
-                  data.Result['BranchCode'] = data?.Result?.LoginBranchDetails[0].BranchCode;
-                  data.Result['BrokerBranchCode'] = data?.Result?.LoginBranchDetails[0].BrokerBranchCode;
-                  data.Result['CurrencyId'] = data?.Result?.LoginBranchDetails[0].CurrencyId;
+              sessionStorage.setItem('Userdetails', JSON.stringify(data));
+              sessionStorage.setItem('UserToken', Token);
+              sessionStorage.setItem('menuSection', 'navMenu');
+              this.userType = data.Result.UserType;
+              if ((data.Result.UserType == 'Issuer' || data.Result.UserType == 'Broker' || data.Result.UserType == 'User') && data.Result.SubUserType!='SuperAdmin') {
+
+                let currencyId=data?.Result?.CurrencyId;
+                console.log('IIIIIIIIIIIIIIII',currencyId);
+                sessionStorage.setItem('CurrencyidLogin',currencyId);
+
+                let branchList: any[] = data?.Result?.LoginBranchDetails;
+                if (branchList.length != 0 && branchList.length > 1) {
+                  console.log("Entered Branch", branchList)
+                  // this.router.navigate(['/branch']);
+                  this.loginSection=false;
+                  this.branchselection=true;
+                  this.branchList = branchList;
                 }
-              }
-              console.log("Final Setted Data",data)
-              sessionStorage.setItem('Userdetails',JSON.stringify(data));
-              if(details?.PageType){
-                if(details.PageType=='RP'){
-                  sessionStorage.setItem('QuoteStatus','AdminRP');
+                else {
+                  this.branchList = branchList;
+                  if (this.userType == 'Issuer') {
+                    this.branchValue = branchList[0].BranchCode;
+                    this.onBranchProceed();
+                  }
+                  else {
+                    this.branchValue = branchList[0].BrokerBranchCode;
+                    this.onBranchProceed();
+                  }
 
                 }
-                else if(details.PageType=='B2C'){
-                    let branchList: any[] = data?.Result?.LoginBranchDetails;
-                    if (branchList.length != 0 && branchList.length > 1) {
-                      console.log("Entered Branch", branchList)
-                      // this.router.navigate(['/branch']);
-                      this.branchselection=true;
-                      this.branchList = branchList;
-                    }
-                    else if (branchList.length != 0){
-                      this.branchList = branchList;
-                      this.branchValue = branchList[0].BrokerBranchCode;
-                      let branchData: any = this.branchList.find(ele => ele.BrokerBranchCode == this.branchValue);
-                      let userDetails = JSON.parse(sessionStorage.getItem('Userdetails') as any);
-                      userDetails.Result['ProductId'] = data.Result.BrokerCompanyProducts[0].ProductId;
-                      userDetails.Result['ProductName'] = data.Result.BrokerCompanyProducts[0].ProductName;
-                      userDetails.Result['BrokerBranchCode'] = this.branchValue;
-                      userDetails.Result['BranchCode'] = branchData.BranchCode;
-                      userDetails.Result['CurrencyId'] = branchData?.CurrencyId;
-                      userDetails.Result['InsuranceId'] = branchData?.InsuranceId;
-                      userDetails.Result['LoginType'] = 'B2CFlow';
-                      sessionStorage.setItem('b2cType','guest')
-                      sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
-                      sessionStorage.removeItem('customerReferenceNo');
-                      //this.router.navigate(['/Home/customer/Client/client-details']);
-                    }
-                }
-                this.router.navigate([details?.RouterLink]);
               }
+              else{
+                this.router.navigate(['/Admin']);
+              }
+           
+            
             }
-          }
-          else if(data.ErrorMessage){
-              // if(data.ErrorMessage.length!=0){
-              //   this.errorSection = true;
-              //   this.errorList = data.ErrorMessage;
-              // }
-          }
-        },
-        (err: any) => {
-          alert("Error")
-          // console.log(err);
-        },
-      );
-  }
-
+            },
+            (err: any) => {
+              alert("Error")
+              // console.log(err);
+            },
+          );
+    }
   onCancel() {
     sessionStorage.clear();
     location.reload();
@@ -620,9 +663,9 @@ export class LoginComponent {
         userDetails.Result['BranchCode'] = branchData.BranchCode;
         userDetails.Result['CurrencyId'] = branchData?.CurrencyId;
         userDetails.Result['InsuranceId'] = branchData?.InsuranceId;
-        
+        userDetails.Result['LoginType'] = 'B2CFlow2';
         sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
-        this.router.navigate(['/product']);
+        this.router.navigate(['/customerProducts']);
       }
       else {
 
@@ -632,8 +675,9 @@ export class LoginComponent {
         userDetails.Result['BranchCode'] = branchData.BranchCode;
         userDetails.Result['CurrencyId'] = branchData?.CurrencyId;
         userDetails.Result['InsuranceId'] = branchData?.InsuranceId;
+        userDetails.Result['LoginType'] = 'B2CFlow2';
         sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
-        this.router.navigate(['/product']);
+        this.router.navigate(['/customerProducts']);
       }
 
     }

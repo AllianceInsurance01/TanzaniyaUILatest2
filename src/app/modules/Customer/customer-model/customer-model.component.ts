@@ -88,11 +88,11 @@ export class CustomerModelComponent {
 			  if(sessionStorage.getItem('proceedType')){
 				let type = sessionStorage.getItem('proceedType');
 				if(type=='AdditionalInfo') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
-				else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
+				else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/makepayment'])
 			  }
-			  else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
+			  else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/makepayment'])
 			}
-			else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
+			else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/makepayment'])
 		}
   }
   omit_special_char(event){   
@@ -322,7 +322,7 @@ export class CustomerModelComponent {
 			},
 			(err) => { },
 		);
-	}
+  }
   onClose(){
     this.otpSection = !this.otpSection
   }
@@ -618,11 +618,7 @@ export class CustomerModelComponent {
 				  this.otpId = "";
 				  this.otpValue = "";
 				  this.onGuestLogin()
-				  Swal.fire(
-					'Success',
-					`Otp Validated Successfully`,
-					'success',
-				  )
+				 
 				}
 			  }
 			}, (err) => {
@@ -671,7 +667,12 @@ export class CustomerModelComponent {
 			userDetails.Result['InsuranceId'] = this.insuranceId;
 			
 			sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
-			this.buyPolicyDetails()
+			Swal.fire(
+				'Success',
+				`Otp Validated Successfully`,
+				'success',
+			  )
+			window.location.reload();
           }
         },
         (err: any) => {
@@ -700,6 +701,7 @@ export class CustomerModelComponent {
 					let vechileId: any;
 					let sectionId: any;
 					let i = 0;
+					this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/makepayment'])
 					}
 				}
 			},

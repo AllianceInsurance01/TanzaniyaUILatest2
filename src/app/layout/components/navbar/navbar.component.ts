@@ -264,7 +264,8 @@ export class NavbarComponent implements OnInit {
               this.typeValue = this.typeList[0].CodeDesc;
               //this.getMenuList();
             }
-            let types = this.typeList.filter(ele => ele.CodeDesc == this.typeValue);
+            let types = this.typeList.filter(ele => ele.CodeDesc == this.typeValue || ele.DisplayName == this.typeValue);
+            console.log("Filtered Types",types,this.typeList,this.typeValue)
             if (types) this.finaliseTypeValue(types[0], 'direct');
           }
         },
@@ -439,7 +440,10 @@ export class NavbarComponent implements OnInit {
           if (data.Result) {
             sessionStorage.clear();
              this.authService.logout();
-            this.router.navigate(['/login']);
+            if(this.typeValue=='b2c' || this.typeValue=='B2C' || this.loginType=='B2CFlow'){
+              this.router.navigate(['/b2clogin']);
+            }
+            else this.router.navigate(['/login']);
 
           }
           //
@@ -460,9 +464,9 @@ export class NavbarComponent implements OnInit {
     }
   }
   finaliseTypeValue(types, changeType) {
-
-    this.typeValue = types.CodeDesc;
+    if(types.CodeDesc!='B2C Broker') this.typeValue = types.CodeDesc;
     this.typeName = types.DisplayName;
+    
     console.log("Setted Type Value", this.typeValue);
     $("#subUserTypes").hide();
     this.onTypeChange(changeType);

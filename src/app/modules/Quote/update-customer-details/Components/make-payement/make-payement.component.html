@@ -860,7 +860,8 @@
                         </ul>
             </div>
             <div class="text-center my-2 mt-3">
-                <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="!endorsementSection" matRipple [routerLink]="['/Home/policies']">Proceed</button>
+                <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="!endorsementSection && loginType!='B2CFlow'" matRipple [routerLink]="['/Home/policies']">Proceed</button>
+                <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="!endorsementSection && loginType=='B2CFlow'" matRipple (click)="onB2CRedirect()">Okay!</button>
                 <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="endorsementSection" matRipple [routerLink]="['/Home/policies/Endorsements']" routerLinkActive="router-link-active">Proceed</button>
             </div>
         </div>
