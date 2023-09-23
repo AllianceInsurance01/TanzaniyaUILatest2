@@ -85,7 +85,7 @@ export class RejectedQuotesComponent implements OnInit {
         { key: 'RejectReason', display: 'Rejected Reason' },
       ];
     }
-    else if(this.productId=='3'){
+    else {
       this.quoteHeader =  [
         { key: 'QuoteNo', display: 'Quote No' },
         { key: 'RequestReferenceNo', display: 'Reference No' },

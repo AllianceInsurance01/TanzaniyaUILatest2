@@ -182,7 +182,7 @@ export class ExistingQuotesComponent implements OnInit {
 
       ];
     }
-    else if(this.productId=='3'){
+    else if(this.productId!='5' && this.productId!='4'){
       this.quoteHeader =  [
         { key: 'RequestReferenceNo', display: 'Reference No' },
         { key: 'QuoteNo', display: 'Quote No' },
