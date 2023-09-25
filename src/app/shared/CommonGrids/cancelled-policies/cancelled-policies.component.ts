@@ -139,7 +139,7 @@ export class CancelledPoliciesComponent implements OnInit {
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         if(data.Result){
-          let defaultObj = [{Code:'',CodeDesc:'ALL'}]
+          let defaultObj = []
           this.brokerList = defaultObj.concat(data.Result);
           if(this.brokerList.length==0){this.brokerCode = ''; this.brokerList = [{Code:'',CodeDesc:'--Select--'}]}
           if(this.brokerCode!=null && this.brokerCode!=''){

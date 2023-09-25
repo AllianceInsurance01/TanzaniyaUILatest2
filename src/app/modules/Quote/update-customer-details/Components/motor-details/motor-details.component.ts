@@ -48,6 +48,7 @@ export class MotorDetailsComponent implements OnInit {
   PromoCode: any;
   acExecutiveId: any;
   commissionType: any;
+  referenceNo: string;
   constructor(private sharedService: SharedService,private datePipe:DatePipe,
     private router:Router, private updateComponent:UpdateCustomerDetailsComponent,) {
       this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -63,20 +64,13 @@ export class MotorDetailsComponent implements OnInit {
     this.getOwnerCategoryList();
    }
 
-  ngOnInit(): void {    
-    if(this.customerDetails){
-      console.log("customer details",this.customerDetails)
-      this.title = this.customerDetails?.TitleDesc;
-      this.clientName = this.customerDetails?.ClientName;
-      this.ownerName = this.customerDetails?.ClientName;
-      this.dateOfBirth = this.customerDetails?.DobOrRegDate;
-      if(this.customerDetails?.PolicyHolderType == '1') this.clientType = "Individual";
-      if(this.customerDetails?.PolicyHolderType == '2') this.clientType = "Corporate";
-      //this.ownerCategory = this.customerDetails?.PolicyHolderType;
-      this.emailId = this.customerDetails?.Email1;
-      this.mobileNo = this.customerDetails?.MobileNo1;
-      this.idNumber = this.customerDetails?.IdNumber;
-    }
+  ngOnInit(): void {  
+    let referenceNo =  sessionStorage.getItem('customerReferenceNo');
+    if(referenceNo){
+      this.getCustomerDetails(referenceNo);
+      this.referenceNo = referenceNo;
+    }  
+    
     // const max = new Date().getUTCFullYear();
     // const min = max - 60;
     // const yearRange = _.range(min, max + 1);
@@ -88,6 +82,35 @@ export class MotorDetailsComponent implements OnInit {
   console.log("Year Drop down", this.years);
  
 
+  }
+  getCustomerDetails(refNo){
+    let ReqObj = {
+      "CustomerReferenceNo": refNo
+    }
+    let urlLink = `${this.commonApiUrl}api/getcustomerdetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          let customerDetails:any = data.Result;
+          this.customerDetails = customerDetails;
+          if(this.customerDetails){
+            console.log("customer details",this.customerDetails)
+            this.title = this.customerDetails?.TitleDesc;
+            this.clientName = this.customerDetails?.ClientName;
+            this.ownerName = this.customerDetails?.ClientName;
+            this.dateOfBirth = this.customerDetails?.DobOrRegDate;
+            if(this.customerDetails?.PolicyHolderType == '1') this.clientType = "Individual";
+            if(this.customerDetails?.PolicyHolderType == '2') this.clientType = "Corporate";
+            //this.ownerCategory = this.customerDetails?.PolicyHolderType;
+            this.emailId = this.customerDetails?.Email1;
+            this.mobileNo = this.customerDetails?.MobileNo1;
+            this.idNumber = this.customerDetails?.IdNumber;
+          }
+        }
+      },
+      (err) => { },
+    );
   }
 getYearList(){
     var d = new Date();
