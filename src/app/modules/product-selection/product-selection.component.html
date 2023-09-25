@@ -81,56 +81,109 @@
     </div>
 </main> -->
 
-
-<div class="product-menubar">
-    <ng-container  *ngIf="insuranceid == '100002'">
-        <div class="logo-img" style="background-color: #fff;">
-            <img src="./assets/images/logo-2.png">
-        </div>
-    </ng-container>
-   
-    <ng-container *ngIf="insuranceid == '100004'">
-        <div class="logo-img" style="background-color: #fff;">
-            <img src="./assets/images/mgen-logo.png">
-        </div>
-    </ng-container>
+<div class="container-fluid" style="overflow-y: scroll !important;max-height:100vh !important;">
+    <div class="product-menubar">
+        <ng-container  *ngIf="insuranceid == '100002'">
+            <div class="logo-img" style="background-color: #fff;">
+                <img src="./assets/images/logo-2.png">
+            </div>
+        </ng-container>
+       
+        <ng-container *ngIf="insuranceid == '100004'">
+            <div class="logo-img" style="background-color: #fff;">
+                <img src="./assets/images/mgen-logo.png">
+            </div>
+        </ng-container>
+        
     
-
-
-    <div class="user-container">
-
-        <div style="margin-right:50px;">
-            <!--<a (click)="onLog(title)" style="color:blue;font-size:16px;font-weight:600;cursor:pointer;display:flex;text-decoration: underline;"> LogIn </a>-->
-            <a class="productsidesection">{{loginId}} <span style="padding-left:10px;"> |</span></a>
+    
+        <div class="user-container">
+    
+            <div style="margin-right:50px;">
+                <!--<a (click)="onLog(title)" style="color:blue;font-size:16px;font-weight:600;cursor:pointer;display:flex;text-decoration: underline;"> LogIn </a>-->
+                <a class="productsidesection">{{loginId}} <span style="padding-left:10px;"> |</span></a>
+            </div>
+    
+            <!--<img src="assets/images/nick.png">-->
+            <div style="margin-left:-40px;">
+                <a (click)="onLog(title)" class="productlogout"> LogOut </a>
+            </div>
         </div>
-
-        <!--<img src="assets/images/nick.png">-->
-        <div style="margin-left:-40px;">
-            <a (click)="onLog(title)" class="productlogout"> LogOut </a>
+        <!--<div class="d-flex flex-row-reverse">
+            <div class="p-2">
+                <button class="btn btn-circle"><i class="fa fa-sign-out" style="font-size:24px"></i></button>
+            </div>
+        </div>-->
+        <!--<div class="login-details">
+            <nb-actions size="small">
+                <nb-action class="user-action" *nbIsGranted="['view', 'user']">
+                    <nb-user [nbContextMenu]="userMenu" [onlyPicture]="userPictureOnly" [name]="loginId" [picture]="user?.picture" nbContextMenuTag="my-context-menu">
+                    </nb-user>
+                </nb-action>
+            </nb-actions>
+        </div>-->
+        <!-- <div>
+            <nb-actions size="small">
+    
+                <nb-action class="control-item" icon="home"></nb-action>
+                <nb-action class="control-item" icon="home"></nb-action>
+            </nb-actions>
+        </div> -->
+    
+    </div>
+    <div class="prductBg">
+        <div class="AllinProductBox ml-5 mr-5">
+            <div class="Choose-Product-Box col-sm-10 col-xs-10 col-12 col-md-6 col-lg-6 offset-md-4 offset-lg-4 padd0 bwT">
+                <span class="heading">SELECT THE PRODUCT YOU WISH TO BUY</span>
+            </div>
+            <div class="row p-3" >
+                <div class="group  box-1padd0 InsuranceType AllTabShow col-12 col-md-12 col-lg-2 col-xl-2 col-sm-12 col-xs-12" *ngFor="let item of productList">
+                    <div (click)="onSelectProduct(item)">
+                        <div class="topIco">
+                            <div class="InsuranceIcon InsuranceIcon1 domesticIcon" *ngIf="item.ProductId=='3'"></div>
+                            <div class="InsuranceIcon InsuranceIcon1 motorIcon" *ngIf="item.ProductId=='5'"></div>
+                            <div class="InsuranceIcon InsuranceIcon1 fireAlliedIcon" *ngIf="item.ProductId=='6'"></div>
+                            <div class="InsuranceIcon InsuranceIcon1 travelIcon" *ngIf="item.ProductId=='4'"></div>
+                            <div class="InsuranceIcon InsuranceIcon1 burglaryIcon" *ngIf="item.ProductId=='1'"></div>
+                            <div class="InsuranceIcon InsuranceIcon1 employersIcon" *ngIf="item.ProductId=='14'"></div>
+                            <div class="InsuranceIcon InsuranceIcon1 personalIcon" *ngIf="item.ProductId=='13'"></div>
+                            <div class="InsuranceIcon InsuranceIcon1 workmenIcon" *ngIf="item.ProductId=='15'"></div>
+                            <div class="InsuranceIcon InsuranceIcon1 allRiskIcon" *ngIf="item.ProductId=='2'"></div>
+                            <div class="InsuranceIcon InsuranceIcon1 smeIcon" *ngIf="item.ProductId=='19'"></div>
+                            <div class="InsuranceIcon InsuranceIcon1 fidelityIcon" *ngIf="item.ProductId=='32'"></div>
+                            <div class="InsuranceIcon InsuranceIcon1 machineryIcon" *ngIf="item.ProductId=='39'"></div>
+                            <div class="InsuranceIcon InsuranceIcon1 cyberIcon" *ngIf="item.ProductId=='42'"></div>
+                            <div class="InsuranceIcon InsuranceIcon1 medicalIcon" *ngIf="item.ProductId=='43'"></div>
+                            <div class="InsuranceIcon InsuranceIcon1 moneyInsuranceIcon" *ngIf="item.ProductId=='16'"></div>
+                            <div class="InsuranceIcon InsuranceIcon1 BusinessAllRisk" *ngIf="item.ProductId=='26'"></div>
+                            <div class="InsuranceIcon InsuranceIcon1 plantallrisk" *ngIf="item.ProductId=='21'"></div>
+                            <div class="InsuranceIcon InsuranceIcon1 electronicequipment" *ngIf="item.ProductId=='25'"></div>
+                            <div class="InsuranceIcon InsuranceIcon1 publicliability" *ngIf="item.ProductId=='27'"></div>
+                            <div class="InsuranceIcon InsuranceIcon1 lifeInsurance" *ngIf="item.ProductId=='45'"></div>
+                            
+                        </div>
+                        <div class="InsuranceName">{{item?.ProductName}}</div>
+                    </div>
+                    <!-- <div *ngIf="item.ProductId=='45'">
+                        <div class="topIco lifeBox">
+                            <div class="InsuranceIcon InsuranceIcon1 lifeInsurance" *ngIf="item.ProductId=='45'"></div>
+                            <div class="InsuranceName" style="line-height: 5px ; padding-bottom: 0px;margin-bottom: 0px;min-height: 10px;">{{item?.ProductName}}</div>
+                            <div class="text-center customBtn mb-1 mt-1">
+                                <button class="btn btn-info p-1" (click)="onLicRedirect('Illustrate',item)">
+                                    Illustrate
+                                </button>&nbsp;
+                                <button class="btn btn-success p-1" (click)="onLicRedirect('BuyPolicy',item)">
+                                    Buy Now
+                                </button>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div> 
         </div>
     </div>
-    <!--<div class="d-flex flex-row-reverse">
-        <div class="p-2">
-            <button class="btn btn-circle"><i class="fa fa-sign-out" style="font-size:24px"></i></button>
-        </div>
-    </div>-->
-    <!--<div class="login-details">
-        <nb-actions size="small">
-            <nb-action class="user-action" *nbIsGranted="['view', 'user']">
-                <nb-user [nbContextMenu]="userMenu" [onlyPicture]="userPictureOnly" [name]="loginId" [picture]="user?.picture" nbContextMenuTag="my-context-menu">
-                </nb-user>
-            </nb-action>
-        </nb-actions>
-    </div>-->
-    <!-- <div>
-        <nb-actions size="small">
-
-            <nb-action class="control-item" icon="home"></nb-action>
-            <nb-action class="control-item" icon="home"></nb-action>
-        </nb-actions>
-    </div> -->
-
 </div>
+
 <!--<div class="product-grid">
     <div class="product-grid-item">
         <div class="product-grid-item-body">
@@ -208,57 +261,7 @@
     Select Product
   </div>
 </div>-->
-<div class="prductBg">
-    <div class="AllinProductBox ml-5 mr-5">
-        <div class="Choose-Product-Box col-sm-10 col-xs-10 col-12 col-md-10 col-lg-10 padd0 bwT">
-            <span class="heading">SELECT THE PRODUCT YOU WISH TO BUY</span>
-        </div>
-        <div class="row p-3" >
-            <div class="group  box-1padd0 InsuranceType AllTabShow col-12 col-md-12 col-lg-2 col-xl-2 col-sm-12 col-xs-12" *ngFor="let item of productList">
-                <div (click)="onSelectProduct(item)">
-                    <div class="topIco">
-                        <div class="InsuranceIcon InsuranceIcon1 domesticIcon" *ngIf="item.ProductId=='3'"></div>
-                        <div class="InsuranceIcon InsuranceIcon1 motorIcon" *ngIf="item.ProductId=='5'"></div>
-                        <div class="InsuranceIcon InsuranceIcon1 fireAlliedIcon" *ngIf="item.ProductId=='6'"></div>
-                        <div class="InsuranceIcon InsuranceIcon1 travelIcon" *ngIf="item.ProductId=='4'"></div>
-                        <div class="InsuranceIcon InsuranceIcon1 burglaryIcon" *ngIf="item.ProductId=='1'"></div>
-                        <div class="InsuranceIcon InsuranceIcon1 employersIcon" *ngIf="item.ProductId=='14'"></div>
-                        <div class="InsuranceIcon InsuranceIcon1 personalIcon" *ngIf="item.ProductId=='13'"></div>
-                        <div class="InsuranceIcon InsuranceIcon1 workmenIcon" *ngIf="item.ProductId=='15'"></div>
-                        <div class="InsuranceIcon InsuranceIcon1 allRiskIcon" *ngIf="item.ProductId=='2'"></div>
-                        <div class="InsuranceIcon InsuranceIcon1 smeIcon" *ngIf="item.ProductId=='19'"></div>
-                        <div class="InsuranceIcon InsuranceIcon1 fidelityIcon" *ngIf="item.ProductId=='32'"></div>
-                        <div class="InsuranceIcon InsuranceIcon1 machineryIcon" *ngIf="item.ProductId=='39'"></div>
-                        <div class="InsuranceIcon InsuranceIcon1 cyberIcon" *ngIf="item.ProductId=='42'"></div>
-                        <div class="InsuranceIcon InsuranceIcon1 medicalIcon" *ngIf="item.ProductId=='43'"></div>
-                        <div class="InsuranceIcon InsuranceIcon1 moneyInsuranceIcon" *ngIf="item.ProductId=='16'"></div>
-                        <div class="InsuranceIcon InsuranceIcon1 BusinessAllRisk" *ngIf="item.ProductId=='26'"></div>
-                        <div class="InsuranceIcon InsuranceIcon1 plantallrisk" *ngIf="item.ProductId=='21'"></div>
-                        <div class="InsuranceIcon InsuranceIcon1 electronicequipment" *ngIf="item.ProductId=='25'"></div>
-                        <div class="InsuranceIcon InsuranceIcon1 publicliability" *ngIf="item.ProductId=='27'"></div>
-                        <div class="InsuranceIcon InsuranceIcon1 lifeInsurance" *ngIf="item.ProductId=='45'"></div>
-                        
-                    </div>
-                    <div class="InsuranceName">{{item?.ProductName}}</div>
-                </div>
-                <!-- <div *ngIf="item.ProductId=='45'">
-                    <div class="topIco lifeBox">
-                        <div class="InsuranceIcon InsuranceIcon1 lifeInsurance" *ngIf="item.ProductId=='45'"></div>
-                        <div class="InsuranceName" style="line-height: 5px ; padding-bottom: 0px;margin-bottom: 0px;min-height: 10px;">{{item?.ProductName}}</div>
-                        <div class="text-center customBtn mb-1 mt-1">
-                            <button class="btn btn-info p-1" (click)="onLicRedirect('Illustrate',item)">
-                                Illustrate
-                            </button>&nbsp;
-                            <button class="btn btn-success p-1" (click)="onLicRedirect('BuyPolicy',item)">
-                                Buy Now
-                            </button>
-                        </div>
-                    </div>
-                </div> -->
-            </div>
-        </div> 
-    </div>
-</div>
+
 <!-- <div class="AllinProductBox">
     <div class="Choose-Product-Box col-sm-12 col-xs-12 padd0 bwT"><span class="heading">SELECT THE PRODUCT YOU WISH TO BUY
         </span>

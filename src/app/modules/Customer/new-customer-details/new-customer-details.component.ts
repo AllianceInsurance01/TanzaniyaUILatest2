@@ -503,6 +503,12 @@ export class NewCustomerDetailsComponent {
 			"VrTinNo": data.vrngst,
 			"SaveOrSubmit": 'Submit'
 		}
+		let quoteNo = sessionStorage.getItem('quoteNo'),refNo = null;
+		if(this.loginType=='B2CFlow' || (this.loginType=='B2cFlow2' && quoteNo!=undefined && quoteNo!=null)){
+				if(quoteNo!=undefined) ReqObj['QuoteNo'] = quoteNo;
+				else ReqObj['QuoteNo'] = null;
+				ReqObj['RequestReferenceNo'] = sessionStorage.getItem('quoteReferenceNo')
+		}
 		let urlLink = `${this.CommonApiUrl}api/savecustomerdetails`;
 		this.product.onPostMethodSync(urlLink, ReqObj).subscribe(
 			(data: any) => {
