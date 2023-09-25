@@ -20,6 +20,7 @@ export class PoliciesComponent implements OnInit {
   public motorApiUrl:any = this.AppConfig.MotorApiUrl;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   branchCode:any;productId:any;userType:any;insuranceId:any;quoteHeader:any[]=[];
+  quoteHeaders:any[]=[];
   PolicyNo: any;
   pageCount: number;
   totalQuoteRecords: any;
@@ -46,7 +47,7 @@ export class PoliciesComponent implements OnInit {
   ngOnInit(): void {
     if(this.productId=='5'){
       this.quoteHeader =  [
-        { key: 'OriginalPolicyNo', display: 'Policy No' },
+        { key: 'PolicyNo', display: 'Policy No' },
         { key: 'QuoteNo', display: 'Quote No' },
         { key: 'ClientName', display: 'Customer Name' },
         // { key: 'RequestReferenceNo', display: 'Reference No' },
@@ -94,10 +95,12 @@ export class PoliciesComponent implements OnInit {
         // },
 
       ];
+
+     
     }
     else{
       this.quoteHeader =  [
-        { key: 'OriginalPolicyNo', display: 'Policy No' },
+        { key: 'PolicyNo', display: 'Policy No' },
         { key: 'QuoteNo', display: 'Quote No' },
         { key: 'RequestReferenceNo', display: 'Reference No' },
         { key: 'ClientName', display: 'Insured Name' },
@@ -124,6 +127,7 @@ export class PoliciesComponent implements OnInit {
         // },
 
       ];
+     
     }
     //if(this.userType=='Issuer'){
       this.getBrokerList();
@@ -324,10 +328,23 @@ export class PoliciesComponent implements OnInit {
     this.endIndex = element.endCount
     this.getExistingQuotes(element,'direct');
   }
+  onNextInnerData(element,searchvalue){
+    this.limit = String(Number(this.limit)+1);
+    this.quotePageNo = this.quotePageNo+1;
+    this.startIndex = element.startCount;
+    this.endIndex = element.endCount;
+    this.eventothers(element,searchvalue,'direct');
+  }
   onPreviousData(element){
     this.limit = String(Number(this.limit)-1);
       this.quotePageNo = this.quotePageNo-1;
     this.getExistingQuotes(element,'direct');
+  }
+  onPreviousDataInnergrid(element,searchvalue){
+    this.limit = String(Number(this.limit)-1);
+      this.quotePageNo = this.quotePageNo-1;
+      this.eventothers(element,searchvalue,'direct');
+    //this.getExistingQuotes(element,'direct');
   }
   onInnerData(rowData){
     let ReqObj = {
@@ -390,10 +407,10 @@ export class PoliciesComponent implements OnInit {
       this.show=false;
     }
       }
-      eventothers(searchvalues){
+      eventothers(element,searchvalues,entryType){
         console.log('MMMMMMMMM',searchvalues);
         let searchvalue:any=searchvalues;
-        this.searchValue=searchvalues
+        this.searchValue=searchvalues;
         sessionStorage.setItem('PolicyNos',searchvalue)
         let ReqObj = {
           "PolicyNo":searchvalues,//this.searchValue,
@@ -408,7 +425,41 @@ export class PoliciesComponent implements OnInit {
           (data: any) => {
             console.log(data);
             if(data.Result.PortFolioList){
-               this.OthersList = data.Result?.PortFolioList;
+              element=data.Result.PortFolioList;
+               //this.OthersList = data.Result?.PortFolioList;
+               if (data.Result?.PortFolioList.length != 0) {
+                this.totalQuoteRecords = data.Result?.Count;
+                this.pageCount = 10;
+                if (entryType == 'change') {
+                  this.quotePageNo = 1;
+                  let startCount = 1, endCount = this.pageCount;
+                  startCount = endCount + 1;
+                    let quoteData = data.Result?.PortFolioList;
+                    this.OthersList = data.Result?.PortFolioList;
+                    if (quoteData.length <= this.pageCount) {
+                      endCount = quoteData.length
+                    }
+                    else endCount = this.pageCount;
+                  
+                  this.startIndex = startCount; this.endIndex = endCount;
+                }
+                else {
+  
+                  let startCount = element.startCount, endCount = element.endCount;
+                  this.pageCount = element.n;
+                  startCount = endCount + 1;
+                    let quoteData = data.Result?.PortfolioList;
+                    this.OthersList = this.quoteData.concat(data.Result?.PortfolioList);
+                  if (this.totalQuoteRecords <= endCount + (element.n)) {
+                    endCount = this.totalQuoteRecords
+                  }
+                  else endCount = endCount + (element.n);
+                  this.startIndex = startCount; this.endIndex = endCount;
+                }
+              }
+              else {
+                this.quoteData = []; 
+              }
             }
           },
           (err) => { },
