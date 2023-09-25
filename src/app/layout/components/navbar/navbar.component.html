@@ -348,8 +348,8 @@
                     <a  style="cursor:pointer">
                         <span class="ml-2 spancommon span_font_size"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;{{loginId}}&nbsp;|&nbsp;</span>
                         <span class="ml-2 spancommon span_font_size" style="text-transform: capitalize;">{{userType}}</span>
-                        <i  class="bi bi-chevron-down"></i></a>
-                    <ul>
+                        <i  class="bi bi-chevron-down" *ngIf="loginType==null"></i></a>
+                    <ul *ngIf="loginType==null">
                             
                         <ng-container *ngIf="userType!='Issuer'">
                             <li><a  style="cursor:not-allowed"><b>Code</b>&nbsp;&nbsp;{{customerCode}}</a></li>
@@ -362,7 +362,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="dropdown" [hidden]="(typeValue=='B2C' && loginId=='guest')" (click)="onLog('Log out')"><a style="cursor:pointer" ><i class="fa fa-power-off"></i>&nbsp;Logout</a></li>
+                <li class="dropdown" (click)="onLog('Log out')"><a style="cursor:pointer" ><i class="fa fa-power-off"></i>&nbsp;Logout</a></li>
             </ul>
           </div>
         </div>
@@ -424,7 +424,7 @@
     <mat-sidenav-content [ngClass]="openSideNav == true ? 'customContent2' : 'customContent'">
         <div class="content">
             <div class="bread_crumb main" >
-                <ng-container *ngIf="(loginType!='B2CFlow')" >
+                <ng-container *ngIf="(loginType==null)" >
                     <app-breadcrumb [ngStyle]="{'font-family':' var(--our-font-family-new) !important'}"></app-breadcrumb>
                 </ng-container>
                 

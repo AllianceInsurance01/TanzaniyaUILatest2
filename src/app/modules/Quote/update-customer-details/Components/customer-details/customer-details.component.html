@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="maan-grid-item" style="z-index: 100 !important;overflow: visible !important;" *ngIf="customerDetails">
+                <div class="maan-grid-item" style="z-index: 100 !important;overflow: visible !important;" *ngIf="customerDetails && loginType!='B2CFlow' && loginType!='B2CFlow2'">
                     <div class="display1" style="margin: 0px;padding: 0px !important;background-color: transparent !important;">
                         <div class="maan-grid-item-title p-0" style="margin: 0px !important;top:0rem;bottom: 0rem !important;padding-top: 9px !important;">
                             <div class="d-flex justify-content-between">
@@ -110,14 +110,14 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-1"></div>
-                            <div class="col-12 col-md-2">
+                            <!-- <div class="col-12 col-md-2">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Email Id</label>
                                     <div class="input-form-radio-box">
                                         <span class="spancommon span_font_size">{{emailId}}</span>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-12 col-md-2">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Mobile No</label>
@@ -158,7 +158,7 @@
                                     </ng-select>
                                 </div>
                             </div>  
-                            <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="col-md-3 col-lg-3 col-xl-3">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Customer Name</label><span class="text-danger">*</span>
                                     <div class="input-form-box">
@@ -173,7 +173,7 @@
                                     </ng-select>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="col-md-2 col-lg-2 col-xl-2">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Mobile No</label><span class="text-danger">*</span>
                                     <div class="input-form-box">
@@ -181,10 +181,17 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-3 col-lg-3 col-xl-3">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Customer Type</label><span class="text-danger">*</span>
+                                    <ng-select class="input-form-select" appendTo="body" [items]="policyHolderList" (change)="getPolicyIdTypeList('change')"  [(ngModel)]="productItem.IdType" bindValue="Code" bindLabel="CodeDesc">
+                                    </ng-select>
+                                </div>
+                            </div> 
                             <div class="col-md-4 col-lg-4 col-xl-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Identity Type</label><span class="text-danger">*</span>
-                                    <ng-select class="input-form-select" appendTo="body" [items]="policyHolderTypeList"  [(ngModel)]="productItem.PolicyHolderTypeid" (change)="onCustomerFieldChange('PolicyTypeId')" bindValue="Code" bindLabel="CodeDesc">
+                                    <ng-select class="input-form-select" appendTo="body" [items]="policyHolderTypeList"  [(ngModel)]="productItem.PolicyHolderTypeid" (change)="onCustomerFieldChange('PolicyTypeId');onChangePolicyHolderType()" bindValue="Code" bindLabel="CodeDesc">
                                     </ng-select>
                                 </div>
                             </div>
@@ -201,7 +208,7 @@
                             </div>
                             <div class="col-md-4 col-lg-4 col-xl-4" [hidden]="checkEmailYN!='Y'">
                                 <div class="input-control-container">
-                                    <label class="input-form-label">EmailId</label><span class="text-danger">*</span>
+                                    <label class="input-form-label">EmailId</label>
                                     <div class="input-form-box">
                                         <input type="text"  class="input-form-control without-icon" email [(ngModel)]="productItem.EmailId" (change)="onCustomerFieldChange('emailId')" #prmEmail="ngModel">
                                     </div>
@@ -538,7 +545,7 @@
                     </div>
                 </div>
                 <ng-container *ngIf="commonSection && productId=='5'">
-                    <app-vehicle-wish-list (getBack)="ongetBack()" (onWishListProceed)="onWishListProceed($event)" (redirectCreateVehicle)="redirectCreateVehicle($event)"></app-vehicle-wish-list>
+                    <app-vehicle-wish-list (getBack)="ongetBack()" (onWishListProceed)="onWishListProceed($event)" [customerDetails]="customerDetails" (redirectCreateVehicle)="redirectCreateVehicle($event)"></app-vehicle-wish-list>
                 </ng-container>
                 <ng-container *ngIf="commonSection && productId=='4'">
                     <app-travel-quote-details [quoteRefNo]="quoteRefNo" [travelDetails]="travelDetails" (redirectValidations)="redirectValidations($event)" (getBack)="ongetBack()" (onWishListProceed)="onWishListProceed($event)"></app-travel-quote-details>

@@ -53,6 +53,7 @@ export class UpdateCustomerDetailsComponent implements OnInit {
   EmailId: any;
   MobileCodeDesc: any;
   ModifiedCustomer: boolean=false;
+  CustomerType: any;
   //public orderStatus="customerDetails"
 
   constructor(

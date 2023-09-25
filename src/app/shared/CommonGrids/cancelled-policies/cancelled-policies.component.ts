@@ -141,7 +141,8 @@ export class CancelledPoliciesComponent implements OnInit {
         if(data.Result){
           let defaultObj = [{Code:'',CodeDesc:'ALL'}]
           this.brokerList = defaultObj.concat(data.Result);
-          if(this.brokerCode!=null){
+          if(this.brokerList.length==0){this.brokerCode = ''; this.brokerList = [{Code:'',CodeDesc:'--Select--'}]}
+          if(this.brokerCode!=null && this.brokerCode!=''){
             if(!this.brokerList.some(ele=>ele.CodeDesc==this.brokerCode)) this.brokerCode = this.brokerList[0].CodeDesc;
             this.getExistingQuotes(null,'change')
           }

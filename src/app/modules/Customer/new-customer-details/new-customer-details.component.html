@@ -356,7 +356,7 @@
                     <input type="text" maxlength="15" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.PinCode">
                 </div>
              </div>
-             <div class="col-4 mt-2">
+             <div class="col-4 mt-2" *ngIf="loginType!='B2CFlow'">
                 <div class="headinglbels">Status<span class="star">*</span></div> 
                 <div class="mt-1">
                     <ng-select class="auto-grow" appendTo="body" [items]="statusList" [(ngModel)]="productItem.Clientstatus" bindValue="Code" bindLabel="CodeDesc">
@@ -408,7 +408,7 @@
                      <input type="text" maxlength="15" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.PinCode">
                  </div>
               </div>
-              <div class="col-12 mt-2">
+              <div class="col-12 mt-2" *ngIf="loginType!='B2CFlow'">
                  <div class="headinglbels">Status<span class="star">*</span></div> 
                  <div class="mt-1">
                      <ng-select class="auto-grow" appendTo="body" [items]="statusList" [(ngModel)]="productItem.Clientstatus" bindValue="Code" bindLabel="CodeDesc">

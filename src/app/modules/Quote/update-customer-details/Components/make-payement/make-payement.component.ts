@@ -141,6 +141,10 @@ export class MakePayementComponent implements OnInit {
   decodeUrl(){
     console.log(atob(this.redirectUrl))
   }
+  onB2CRedirect(){
+    sessionStorage.clear();
+    this.router.navigate(['/b2clogin'])
+  }
   getEditQuoteDetails(){
     let ReqObj = {
       "QuoteNo":this.quoteNo
@@ -472,15 +476,10 @@ export class MakePayementComponent implements OnInit {
             window.location.href =  atob(this.redirectUrl)
           }
           else {
-            
-            if(this.subuserType=='B2C'){
-              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
-            }
-            else{
+           
               this.paymentDetails = data.Result;
               this.policyNo = data?.Result?.PolicyNo;
               this.policySection = true;
-            }
             this.updateTiraDetails();
             
           }

@@ -182,7 +182,7 @@ export class ExistingQuotesComponent implements OnInit {
 
       ];
     }
-    else if(this.productId=='3'){
+    else if(this.productId!='5' && this.productId!='4'){
       this.quoteHeader =  [
         { key: 'RequestReferenceNo', display: 'Reference No' },
         { key: 'QuoteNo', display: 'Quote No' },
@@ -323,7 +323,8 @@ export class ExistingQuotesComponent implements OnInit {
         if(data.Result){
           let defaultObj = []
           this.brokerList = defaultObj.concat(data.Result);
-          if(this.brokerCode!=null){
+          if(this.brokerList.length==0){this.brokerCode = ''; this.brokerList = [{Code:'',CodeDesc:'--Select--'}]}
+          if(this.brokerCode!=null && this.brokerCode!=''){
             if(!this.brokerList.some(ele=>ele.CodeDesc==this.brokerCode)) this.brokerCode = this.brokerList[0].CodeDesc;
             this.getExistingQuotes(null,'change')
           }

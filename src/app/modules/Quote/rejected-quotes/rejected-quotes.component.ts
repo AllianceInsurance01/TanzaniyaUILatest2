@@ -23,7 +23,8 @@ export class RejectedQuotesComponent implements OnInit {
   quotePageNo: number;
   startIndex: number;
   endIndex: number;
-  limit: any='0';
+  limit: any='0';brokerCode:any='';
+  brokerList:any[]=[];
   constructor(private router:Router,private sharedService: SharedService) { 
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -33,6 +34,8 @@ export class RejectedQuotesComponent implements OnInit {
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails?.Result?.UserType;
     this.insuranceId = this.userDetails.Result.InsuranceId;
+    this.brokerCode = this.loginId;
+    this.brokerList = [{Code:'',CodeDesc:'ALL'}]
     sessionStorage.removeItem('customerReferenceNo');
     sessionStorage.removeItem('vehicleDetailsList');
     sessionStorage.removeItem('loadingType');
@@ -82,7 +85,7 @@ export class RejectedQuotesComponent implements OnInit {
         { key: 'RejectReason', display: 'Rejected Reason' },
       ];
     }
-    else if(this.productId=='3'){
+    else {
       this.quoteHeader =  [
         { key: 'QuoteNo', display: 'Quote No' },
         { key: 'RequestReferenceNo', display: 'Reference No' },
@@ -96,17 +99,61 @@ export class RejectedQuotesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getRejectedQuotes(null,'change');
+    //if(this.userType=='Issuer'){
+      this.getBrokerList();
+    // }
+    // else{
+    //   this.getRejectedQuotes(null,'change');
+    // }
   }
-  getRejectedQuotes(element,entryType){
+  getBrokerList(){
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
-      appId = "1"; loginId = this.loginId;
+      appId = "1"; loginId = this.brokerCode;
       brokerbranchCode = this.brokerbranchCode;
     }
     else{
       appId = this.loginId;
-      brokerbranchCode = null;
+      loginId=this.brokerCode;
+      brokerbranchCode = '';
+    }
+    let ReqObj = {
+      "ProductId": this.productId,
+      "InsuranceId": this.insuranceId,
+      "LoginId": loginId,
+      "ApplicationId":appId,
+      "UserType":this.userType,
+      "BranchCode": this.branchCode
+    }
+    let urlLink = `${this.CommonApiUrl}api/brokeruserdropdownrejected`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+          let defaultObj = []
+          this.brokerList = defaultObj.concat(data.Result);
+          if(this.brokerList.length==0){this.brokerCode = ''; this.brokerList = [{Code:'',CodeDesc:'--Select--'}]}
+          if(this.brokerCode!=null && this.brokerCode!=''){
+            if(!this.brokerList.some(ele=>ele.CodeDesc==this.brokerCode)) this.brokerCode = this.brokerList[0].CodeDesc;
+            this.getRejectedQuotes(null,'change')
+          }
+        }
+        
+      },
+      (err) => { },
+    );
+
+  }
+  getRejectedQuotes(element,entryType){
+    if(element==null) this.quoteData=[];
+    let appId = "1",loginId="",brokerbranchCode="";
+    if(this.userType!='Issuer'){
+      appId = "1"; loginId = this.brokerCode;
+      brokerbranchCode = this.brokerbranchCode;
+    }
+    else{
+      appId = this.loginId;
+      loginId=this.brokerCode;
+      brokerbranchCode = '';
     }
     let ReqObj = {
           "BrokerBranchCode": brokerbranchCode,

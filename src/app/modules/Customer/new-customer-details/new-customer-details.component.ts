@@ -401,8 +401,10 @@ export class NewCustomerDetailsComponent {
 					this.productItem.state = customerDetails.StateCode;
 					this.getStateList(null);
 					if (customerDetails.DobOrRegDate != null && customerDetails.DobOrRegDate != undefined) {
-						var dateParts = customerDetails.DobOrRegDate.split("/");
-						this.productItem.dobOrRegDate = dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
+						if(new Date(this.maxDobDate).setHours(0,0,0,0) >= (new Date(customerDetails.DobOrRegDate)).setHours(0,0,0,0) ){
+							var dateParts = customerDetails.DobOrRegDate.split("/");
+							this.productItem.dobOrRegDate = dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
+						}
 					}
 					this.productItem.Street = customerDetails.Street;
 					this.productItem.TelephoneNo = customerDetails.TelephoneNo1;
@@ -447,7 +449,7 @@ export class NewCustomerDetailsComponent {
 			//this.mobileCodeList.label = this.productItem.MobileCod['CodeDesc'];
 		}
 		if(data.vrngst=='' || data.vrngst== undefined || data.vrngst==null){data.vrngst=null};
-		if(this.typeValue=='B2C' && this.loginId=='guest') data.Clientstatus = 'Y';
+		if(this.loginType=='B2CFlow') data.Clientstatus = 'Y';
 		let ReqObj = {
 			"BrokerBranchCode": this.brokerbranchCode,
 			"CustomerReferenceNo": this.customerReferenceNo,
@@ -534,7 +536,8 @@ export class NewCustomerDetailsComponent {
 						}
 				}
 				else {
-					if(this.loginType=='B2CFlow'){
+					let quoteNo = sessionStorage.getItem('quoteNo');
+					if(this.loginType=='B2CFlow' || (this.loginType=='B2cFlow2' && quoteNo!=undefined && quoteNo!=null)){
 						this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
 					}
 					else this.router.navigate(['/Home/customer/'])
@@ -545,7 +548,8 @@ export class NewCustomerDetailsComponent {
 		);
 	}
 	getBack(){
-		if(this.loginType=='B2CFlow'){
+		let quoteNo = sessionStorage.getItem('quoteNo');
+		if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2' && quoteNo!=undefined && quoteNo!=null)){
 			this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
 		}
 		else{

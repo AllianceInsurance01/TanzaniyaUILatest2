@@ -38,7 +38,8 @@ export class CustomerProductsComponent {
     console.log("Products",item,userDetails.Result)
     sessionStorage.removeItem('customerReferenceNo');
     sessionStorage.removeItem('quoteReferenceNo');
-    this.router.navigate(['./Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+    if(userDetails.Result.LoginType=='B2CFlow') this.router.navigate(['./Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+    else this.router.navigate(['./Home']);
     // else if(item.ProductId =='4') this.router.navigate(['/Travel']);
     // //else if(item.ProductId=='7') this.router.navigate(['/HomeIns']);
     // else if(item.ProductId=='3') this.router.navigate(['/HomeIns']);

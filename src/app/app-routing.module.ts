@@ -33,6 +33,11 @@ const routes: Routes = [
 		loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule),
 	},
 	{
+		path: 'b2clogin',
+		loadChildren: () => import('./modules/b2c-login/b2c-login.module').then(m => m.B2cLoginModule),
+		
+	},
+	{
 		path: 'customerRedirect',
 		component: CustomerRedirectComponent,
 	},

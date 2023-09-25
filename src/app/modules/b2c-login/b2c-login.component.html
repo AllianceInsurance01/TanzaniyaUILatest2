@@ -14,21 +14,42 @@
                 <div class="row">
                     <div class="col-12">
                         <form [formGroup]="loginForm">
-                            <div class="input-control-container">
-                                <label class="input-form-label" style="color:black;float: left;">Username *</label>
-                                <div class="input-form-box" style="position: relative;top: 0.5rem;">
-                                    <input type="text" class="input-form-control without-icon"
-                                        formControlName="username">
+                            <div class="row">
+                                <div class="col-12 col-md-12 col-lg-12">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label" style="color:black;float: left;">Code *</label>
+                                        <div class="input-form-box" style="position: relative;top: 0.5rem;">
+                                            <ng-select class="custom" appendTo="body"  [items]="mobileCodeList"  formControlName="mobileCode" bindValue="CodeDesc" bindLabel="CodeDesc">
+                                            </ng-select>
+                                        </div>
+                                        <div class="input-form-error"
+                                            *ngIf="(f.mobileCode.errors && submitted) || (!f.mobileCode.valid && f.mobileCode.touched)">
+                                            <div *ngIf="f.mobileCode.errors?.required" class="error-text"
+                                                style="position: relative; top: 0.9rem;">
+                                                This field is required
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="input-form-error"
-                                    *ngIf="(f.username.errors && submitted) || (!f.username.valid && f.username.touched)">
-                                    <div *ngIf="f.username.errors?.required" class="error-text"
-                                        style="position: relative; top: 0.9rem;">
-                                        This field is required
+                                <div class="col-12 col-md-12 col-lg-12 mt-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label" style="color:black;float: left;">Mobile Number *</label>
+                                        <div class="input-form-box" style="position: relative;top: 0.5rem;">
+                                            <input type="text" class="input-form-control without-icon"
+                                                formControlName="MobileNo">
+                                        </div>
+                                        <div class="input-form-error"
+                                            *ngIf="(f.MobileNo.errors && submitted) || (!f.MobileNo.valid && f.MobileNo.touched)">
+                                            <div *ngIf="f.MobileNo.errors?.required" class="error-text"
+                                                style="position: relative; top: 0.9rem;">
+                                                This field is required
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="input-control-container" style="position: relative;
+                           
+                            <!-- <div class="input-control-container" style="position: relative;
                             top: 0.9rem;">
                                 <label class="input-form-label" style="color:black;float: left;">Password *</label>
                                 <div class="input-form-box" style="position: relative;top: 0.5rem;">
@@ -42,24 +63,21 @@
                                         This field is required
                                     </div>
                                 </div>
-                            </div>
-                            <div class="text-center_new" style="position: relative;
-                            top: 4rem;">
-                                <label for="chk" aria-hidden="true" (click)="Forget('change','ChangePassword');changepass('ChangePassword')" >Change
-                                    Password ?</label>
+                            </div> -->
+                            <div class="text-center_new" style="position: relative;">
+                                <!-- <label for="chk" aria-hidden="true" (click)="Forget('change','ChangePassword');changepass('ChangePassword')" >Change
+                                    Password ?</label> -->
                                     <button type="button" class="custom-btn-cancel btn-1" style="left: 1rem;"
-                                    (click)="cancel(value_cancel)"><span>Cancel</span></button>
+                                    (click)="cancel('Cancel')"><span>Cancel</span></button>
                                     <button type="button" class="custom-btn btn-3" style="left: 6rem;"
-                                    (click)="onLogin(req,'N')"><span>Login</span></button>
+                                    (click)="onLogin()"><span>Get Otp</span></button>
                                 
                             </div>
 
                             <!--<label for="chek" aria-hidden="true">Forget Password ?</label>-->
 
-                            <div style="margin-top:100px;">
-                              <label for="chk" aria-hidden="true" (click)="Forget('foget','ForgotPassword');changepass('ForgotPassword')">Forgot
-                                Password ?</label>
-                        </div>
+                              <!-- <label for="chk" aria-hidden="true" (click)="Forget('foget','ForgotPassword');changepass('ForgotPassword')">Forgot
+                                Password ?</label> -->
                         </form>
 
                     </div>
@@ -67,79 +85,47 @@
             </div>
         </div>
         <!--Reset Password Section-->
-        <div class="back_login" *ngIf="changePasswordSection">
+        <div class="back_login" *ngIf="loginfirst">
             <div class="login-component inner_login">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="middle-line">
-                            <span>Reset Password</span>
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <span class="mx-1">
+                                Otp Verification 
+                            </span>
                         </div>
                     </div>
                 </div>
-                <div class="row" *ngIf="passExpiredError">
-                    <div class="col-12">
-                        <div class="input-control-container">
-                            <span class="text-danger"><b>Password Expired, Please Reset</b></span>
-                        </div>
+                <div class="card-body">
+                    <div class="text-end">
+                        <h5>Generated OTP ~ &nbsp;&nbsp; {{otpGenerated}}</h5>
                     </div>
-                </div>
-                <form [formGroup]="changeForm">
                     <div class="row">
-                        <div class="col-12">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">UserName</label>
-                                    <div class="input-form-box">
-                                        <input type="text" formControlName="LoginId" class="input-form-control without-icon"
-                                            maxlength="20">
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
-                    <div class="row mt-4" *ngIf="pass">
-                        <div class="col-12">
-                                <div class="input-control-container"  >
-                                    <label class="input-form-label" >Old
-                                        Password</label>
-                                    <div class="input-form-box">
-                                        <input type="password" formControlName="OldPassword"
-                                            class="input-form-control without-icon" maxlength="20">
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
-                    <div class="row mt-4" *ngIf="!pass">
-                        <div class="col-12">
-                            <div class="input-control-container" >
-                                <label class="input-form-label">Temporary Password</label>
-                                <div class="input-form-box">
-                                    <input type="password" formControlName="OldPassword"
-                                        class="input-form-control without-icon" maxlength="20">
+                        <div class="col-md-10 col-lg-10 col-10 ">
+                            <div class="input-control-container">
+                                <label class="input-form-label" style="color:black;float: left;">OTP Number *</label>
+                                <div class="input-form-box p-0">
+                                    <input type="text"  class="input-form-control without-icon" maxlength="10" [(ngModel)]="otpValue" name="otpValue" required appNumbersOnly>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-4">
-                        <div class="col-12">
-                            <div class="input-control-container" >
-                                <label class="input-form-label">New Password</label>
-                                <div class="input-form-box">
-                                    <input type="password" formControlName="NewPassword"
-                                        class="input-form-control without-icon" maxlength="20">
-                                </div>
-                            </div>      
-                        </div>
+                    <div class="text-center mt-3">
+                        Not Received OTP?
+                        <button class="btn btn-primary mt-2" (click)="onLogin()" [disabled]="OtpBtnEnable">
+                            Resend OTP
+                            <span *ngIf="OtpBtnEnable">in ( {{ OtpBtnTime }} seconds)</span>
+                        </button>
                     </div>
-                    <div class="row mt-4">
-                        <div class="col-12">
-                            <button type="button" class="custom-btn-reset btn-2"
-                                (click)="resetForm()"><span>Reset</span></button>
-                            <button type="button" class="custom-btn-cancel btn-1" style="left: 2rem;"
-                                (click)="cancel(value_cancel)"><span>Cancel</span></button>
-                            <button type="button" class="custom-btn-submit btn-0" style="left: 4rem;"
-                                (click)="submit()"><span>Submit</span></button>
-                        </div>
+                    <div class="text-center_new" style="position: relative;">
+                        <!-- <label for="chk" aria-hidden="true" (click)="Forget('change','ChangePassword');changepass('ChangePassword')" >Change
+                            Password ?</label> -->
+                            <button type="button" class="custom-btn-cancel btn-1"
+                            (click)="cancelOtp(value_cancel)"><span>Cancel</span></button>&nbsp;
+                            <button type="button" class="custom-btn btn-3"
+                            [disabled]="otpValue == ''" (click)="onOtpValidate()"><span>Submit</span></button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
 
@@ -281,8 +267,7 @@
                             </ul>
                         </li>
                         <li><a style="cursor:pointer" (click)="tocontact()">Contact</a></li>&nbsp;&nbsp;
-                        <li><button class="custom-btn btn-3 ml-4" (click)="onB2CNavigate()"><span>B2C</span></button></li>&nbsp;
-                        <li><button class="custom-btn btn-3 ml-4" (click)="onPress()"><span>Login</span></button></li>
+                        <li><button class="custom-btn btn-3 ml-4" (click)="onPress()"><span>B2C Login</span></button></li>
                     </ul>
                 </div>
                 </div>

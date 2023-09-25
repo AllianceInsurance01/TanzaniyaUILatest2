@@ -3316,7 +3316,7 @@ getMotorUsageList(vehicleValue){
 		  } catch (error) {
 		  }
 		}
-	  }
+	}
     onGuestLogin(){
 		
       const urlLink = `${this.CommonApiUrl}authentication/login`;
@@ -3768,10 +3768,8 @@ getMotorUsageList(vehicleValue){
     });
   }
   onFinalProceed(){
-    if(sessionStorage.getItem('resetLoginDetails')){
-        window.location.reload();
-    }
-    else if(this.emiYN=='Y' && this.emiPeriod!='N'){
+    
+    if(this.emiYN=='Y' && this.emiPeriod!='N'){
       this.insertEMIDetails();
     }
     else{
@@ -3822,7 +3820,15 @@ getMotorUsageList(vehicleValue){
           i+=1;
         }           
         console.log('if entry of cover id 55',this.coverlist);
-       if(this.coverlist.length!=0){
+        if(sessionStorage.getItem('resetLoginDetails')){
+          if(this.coverlist.length!=0){
+              sessionStorage.setItem('riskSection','additional')
+          }
+          else sessionStorage.setItem('riskSection','normal')
+              window.location.reload();
+        }
+        else if(this.coverlist.length!=0){
+        
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
          }
          else {

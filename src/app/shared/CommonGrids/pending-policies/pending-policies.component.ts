@@ -17,6 +17,7 @@ export class PendingPoliciesComponent implements OnInit {
   public motorApiUrl:any = this.AppConfig.MotorApiUrl;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   branchCode:any;productId:any;userType:any;insuranceId:any;quoteHeader:any[]=[];
+  brokerCode:any='';brokerList:any[]=[];
   constructor(private router:Router,private sharedService: SharedService) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -26,6 +27,8 @@ export class PendingPoliciesComponent implements OnInit {
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails?.Result?.UserType;
     this.insuranceId = this.userDetails.Result.InsuranceId;
+    this.brokerCode = this.loginId;
+    this.brokerList = [{Code:'',CodeDesc:'ALL'}]
     sessionStorage.removeItem('loadingType');
    }
 
@@ -81,16 +84,61 @@ export class PendingPoliciesComponent implements OnInit {
       ];
     }
   
-    this.getExistingQuotes();
+    //if(this.userType=='Issuer'){
+      this.getBrokerList();
+    // }
+    // else{
+    //   this.getExistingQuotes();
+    // }
   }
-  getExistingQuotes(){
+  getBrokerList(){
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
-      appId = "1"; loginId = this.loginId;
+      appId = "1"; loginId = this.brokerCode;
       brokerbranchCode = this.brokerbranchCode;
     }
     else{
       appId = this.loginId;
+      loginId=this.brokerCode;
+      brokerbranchCode = '';
+    }
+    let ReqObj = {
+      "ApplicationId":appId,
+      "UserType":this.userType,
+      "ProductId": this.productId,
+      "InsuranceId": this.insuranceId,
+      "LoginId": loginId,
+      "Status": "Y",
+      "BranchCode": this.branchCode
+    }
+    let urlLink = `${this.CommonApiUrl}api/portfoliopendingdropdown`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+          let defaultObj = [{Code:'',CodeDesc:'ALL'}]
+          this.brokerList = defaultObj.concat(data.Result);
+          if(this.brokerList.length==0){this.brokerCode = ''; this.brokerList = [{Code:'',CodeDesc:'--Select--'}]}
+          if(this.brokerCode!=null && this.brokerCode!=''){
+            if(!this.brokerList.some(ele=>ele.CodeDesc==this.brokerCode)) this.brokerCode = this.brokerList[0].CodeDesc;
+            this.getExistingQuotes()
+          }
+        }
+        
+      },
+      (err) => { },
+    );
+
+  }
+  getExistingQuotes(){
+    this.quoteData = [];
+    let appId = "1",loginId="",brokerbranchCode="";
+    if(this.userType!='Issuer'){
+      appId = "1"; loginId = this.brokerCode;
+      brokerbranchCode = this.brokerbranchCode;
+    }
+    else{
+      appId = this.loginId;
+      loginId=this.brokerCode;
       brokerbranchCode = null;
     }
     let ReqObj = {

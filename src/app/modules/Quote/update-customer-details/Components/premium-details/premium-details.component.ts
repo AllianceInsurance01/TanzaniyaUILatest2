@@ -1123,7 +1123,7 @@ toggle(index: number) {
                   this.saveCustomerDetails();
             }
             else{
-              if(this.loginType=='B2CFlow'){
+              if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2' && this.customerDetails.Address1==null)){
                 this.router.navigate(['/Home/customer/ClientDetails']);
               }
               else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
@@ -1266,7 +1266,10 @@ toggle(index: number) {
     );
   }
   onMakePayment(){
-    if(this.subuserType==null) this.subuserType = this.userDetails.Result.SubUserType;
+    if(this.subuserType==null){
+      this.subuserType = this.userDetails.Result.SubUserType;
+      sessionStorage.setItem('typeValue',this.subuserType)
+    }
     let amount = null;
     if(this.EmiYn=='Y'){
       amount = this.dueAmount;

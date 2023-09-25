@@ -90,6 +90,8 @@ export class CustomerDetailsComponent implements OnInit {
   genderList: any[]=[];
   mobileCodeList: any[]=[];
   checkEmailYN: any=null;
+  loginType: any=null;
+  policyHolderList: any[]=[];
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       
@@ -110,13 +112,17 @@ export class CustomerDetailsComponent implements OnInit {
     this.insuranceId = this.userDetails.Result.InsuranceId;
     this.branchList = this.userDetails.Result.LoginBranchDetails;
     this.updateComponent.showStepperSection = true;
+    this.loginType = this.userDetails.Result.LoginType;
     let loginType = this.userDetails.Result.LoginType;
     if(loginType){
-      if(loginType=='B2CFlow'){
+      if(loginType=='B2CFlow' || loginType=='B2CFlow2'){
         this.b2cSection = true;
         this.productItem = new ProductData();
         this.productItem.IdType = '1';
+        this.updateComponent.CustomerType = this.productItem.IdType;
         this.getTitleList();
+        this.getPolicyHolderList();
+        this.getMobileCodeList()
       }
     }
     this.subUsertype = sessionStorage.getItem('typeValue');
@@ -326,12 +332,28 @@ export class CustomerDetailsComponent implements OnInit {
       }
      
     }
-    else {
-      let referenceNo =  sessionStorage.getItem('customerReferenceNo');
-      if(referenceNo){
-        this.getCustomerDetails(referenceNo);
-        this.referenceNo = referenceNo;
-      }
+    let referenceNo =  sessionStorage.getItem('customerReferenceNo');
+    if(referenceNo){
+      this.getCustomerDetails(referenceNo);
+      this.referenceNo = referenceNo;
+    }
+    else{
+      this.showEmailSection = true;
+        this.productItem = new ProductData();
+        this.productItem.Clientstatus = 'P';
+        this.productItem.Gender = '';
+        this.productItem.PolicyHolderTypeid = '';
+        this.productItem.IdType = '1';
+        this.updateComponent.CustomerType = this.productItem.IdType;
+        this.productItem.PreferredNotification = '';
+        this.productItem.MobileCode = '';
+        this.productItem.Country = '';
+        this.productItem.state = '';
+        this.productItem.CityName = '';
+        this.productItem.Occupation = '';
+        this.productItem.BusinessType='';
+        this.productItem.Title='';
+        this.getPolicyIdTypeList(null);
     }
     
     let quoteStatus = sessionStorage.getItem('QuoteStatus');
@@ -411,6 +433,29 @@ export class CustomerDetailsComponent implements OnInit {
     
     
   }
+  getPolicyHolderList() {
+		let ReqObj = {
+			"InsuranceId": this.insuranceId,
+			"BranchCode": this.branchCode
+		}
+
+		let urlLink = `${this.CommonApiUrl}dropdown/policyholdertype`;
+		this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+			(data: any) => {
+				console.log(data);
+				if (data.Result) {
+					this.policyHolderList = data.Result;
+							let defaultRow = [{ "Code": '', "CodeDesc": "-Select-" }]
+							this.policyHolderList = defaultRow.concat(this.policyHolderList);
+							//this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[3].props.options = defaultRow.concat(this.policyHolderList);
+							
+
+					//this.getPolicyIdTypeList();
+				}
+			},
+			(err) => { },
+		);
+	}
   omit_special_char(event){   
 		var k;  
 		k = event.charCode;  //         k = event.keyCode;  (Both can be used)
@@ -459,7 +504,7 @@ export class CustomerDetailsComponent implements OnInit {
 				if (data.Result) {
 					let obj = [{ "Code": '', "CodeDesc": "-Select-" }]
 					this.titleList = obj.concat(data.Result);
-          			this.getPolicyIdTypeList(null);
+          		
 					// for (let i = 0; i < this.titleList.length; i++) {
 					// 	this.titleList[i].label = this.titleList[i]['CodeDesc'];
 					// 	this.titleList[i].value = this.titleList[i]['Code'];
@@ -489,8 +534,8 @@ export class CustomerDetailsComponent implements OnInit {
 							let defaultRow = [{ 'CodeDesc': '- Select - ', 'Code': '' }]
 							this.policyHolderTypeList = defaultRow.concat(this.policyHolderTypeList)
 							//this.fields[0].fieldGroup[0].fieldGroup[1].fieldGroup[0].props.options = defaultRow.concat(this.policyHolderTypeList);
-							if (type == 'change') this.dob = "";
-              this.getGenderList();
+							if (type == 'change'){this.productItem.PolicyHolderTypeid = '';this.productItem.IdNumber = null;this.onCustomerFieldChange('IdType')}
+              
 				}
 			},
 			(err) => { },
@@ -510,7 +555,7 @@ export class CustomerDetailsComponent implements OnInit {
 					let defaultRow = [{ 'CodeDesc': '- Select - ', 'Code': '' }]
 					this.genderList = defaultRow.concat(this.genderList)
 					//this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[2].props.options = defaultRow.concat(this.genderList);
-					this.getMobileCodeList()
+					
 				}
 			},
 			(err) => { },
@@ -526,49 +571,16 @@ export class CustomerDetailsComponent implements OnInit {
 
 					let obj = [{ "Code": '', "CodeDesc": "-Select-" }]
 					this.mobileCodeList = obj.concat(data.Result);
-          let customerObj = JSON.parse(sessionStorage.getItem('b2cCustomerObj'));
-          if(customerObj){
-              this.productItem.Title = customerObj?.Title;
-              this.productItem.ClientName = customerObj?.ClientName;
-              this.productItem.MobileCode = customerObj?.MobileCode;
-              this.productItem.MobileNo = customerObj?.MobileNo;
-              this.productItem.IdNumber = customerObj?.IdNumber;
-              this.productItem.MobileCodeDesc = customerObj?.MobileCodeDesc;
-              this.productItem.PolicyHolderTypeid = customerObj?.PolicyHolderTypeid;
-              if(customerObj.EmailId){ this.checkEmailYN = 'Y';this.productItem.EnailId = customerObj?.EmailId;}
-              this.updateComponent.Title = this.productItem.Title;
-              this.updateComponent.UserName = this.productItem.ClientName;
-              this.productItem.MobileCodeDesc = this.mobileCodeList.find(ele=>ele.Code==this.productItem.MobileCode)?.CodeDesc
-              this.updateComponent.MobileCode = this.productItem.MobileCode;
-              this.updateComponent.MobileCodeDesc = this.productItem.MobileCodeDesc;
-              this.updateComponent.MobileNo = this.productItem.MobileNo;
-              this.updateComponent.IdNumber = this.productItem.IdNumber;
-              this.updateComponent.PolicyHolderTypeid = this.productItem.PolicyHolderTypeid;
-              this.updateComponent.EmailId = this.productItem.EmailId;
-              this.showEmailSection = true;
-          }
-          else{
-            this.showEmailSection = true;
-            this.productItem = new ProductData();
-            this.productItem.Clientstatus = 'P';
-            this.productItem.Gender = '';
-            this.productItem.PolicyHolderTypeid = '';
-            this.productItem.IdType = '';
-            this.productItem.PreferredNotification = '';
-            this.productItem.MobileCode = '';
-            this.productItem.Country = '';
-            this.productItem.state = '';
-            this.productItem.CityName = '';
-            this.productItem.Occupation = '';
-            this.productItem.BusinessType='';
-            this.productItem.Title='';
-          }
+          
                 
 				}
 			},
 			(err) => { },
 		);
 	}
+  onChangePolicyHolderType(){
+    this.productItem.IdNumber = null;
+  }
   onSelectEmail(event){
 		if(event) this.checkEmailYN = 'Y';
 		else this.checkEmailYN = 'N';
@@ -597,13 +609,14 @@ export class CustomerDetailsComponent implements OnInit {
     this.updateComponent.MobileNo  = this.productItem.MobileNo;
     if (this.productItem.MobileCode != undefined && this.productItem.MobileCode != null && this.productItem.MobileCode != '') {
       //let code = this.productItem
-      let code = this.mobileCodeList.find(ele => ele.Code == this.productItem.MobileNo)
-      console.log('codes', code)
+      let code = this.mobileCodeList.find(ele => ele.Code == this.productItem.MobileCode)
+      console.log('codes', code,this.mobileCodeList,this.productItem)
       this.productItem.MobileCodeDesc = code.CodeDesc
       this.updateComponent.MobileCodeDesc = code.CodeDesc;
       //this.mobileCodeList.label = this.productItem.MobileCod['CodeDesc'];
     }
    }
+   if(type=='IdType') this.updateComponent.CustomerType = this.productItem.IdType;
    if(type=='PolicyTypeId') this.updateComponent.PolicyHolderTypeid  = this.productItem.PolicyHolderTypeid;
    if(type=='IdNo') this.updateComponent.IdNumber  = this.productItem.IdNumber;
    if(type=='emailId') this.updateComponent.EmailId  = this.productItem.EmailId;
@@ -670,6 +683,29 @@ export class CustomerDetailsComponent implements OnInit {
           this.setCustomerValues(customerDetails);
           this.clientName = customerDetails?.ClientName
           this.idNumber = customerDetails?.IdNumber;
+          if(customerDetails){
+            this.productItem.Title = customerDetails?.Title;
+            this.productItem.ClientName = customerDetails?.ClientName;
+            this.productItem.MobileCode = customerDetails?.MobileCode1;
+            this.productItem.MobileNo = customerDetails?.MobileNo1;
+            this.productItem.IdNumber = customerDetails?.IdNumber;
+            this.productItem.IdType = customerDetails?.PolicyHolderType;
+            this.updateComponent.CustomerType = this.productItem.IdType;
+            this.productItem.MobileCodeDesc = customerDetails?.MobileCodeDesc1;
+            this.productItem.PolicyHolderTypeid = customerDetails?.PolicyHolderTypeid;
+            if(customerDetails.EmailId){ this.checkEmailYN = 'Y';this.productItem.EnailId = customerDetails?.EmailId;}
+            this.updateComponent.Title = this.productItem.Title;
+            this.updateComponent.UserName = this.productItem.ClientName;
+            this.productItem.MobileCodeDesc = this.mobileCodeList.find(ele=>ele.Code==this.productItem.MobileCode)?.CodeDesc
+            this.updateComponent.MobileCode = this.productItem.MobileCode;
+            this.updateComponent.MobileCodeDesc = this.productItem.MobileCodeDesc;
+            this.updateComponent.MobileNo = this.productItem.MobileNo;
+            this.updateComponent.IdNumber = this.productItem.IdNumber;
+            this.updateComponent.PolicyHolderTypeid = this.productItem.PolicyHolderTypeid;
+            this.updateComponent.EmailId = this.productItem.EmailId;
+            this.showEmailSection = true;
+            this.getPolicyIdTypeList(null);
+          }
         }
       },
       (err) => { },

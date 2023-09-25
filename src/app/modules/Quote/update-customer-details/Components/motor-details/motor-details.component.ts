@@ -370,6 +370,7 @@ getYears(from) {
             vehicleDetails['BranchCode'] = this.updateComponent.branchValue;
             vehicleDetails['BrokerBranchCode'] = this.updateComponent.brokerBranchCode;
             vehicleDetails['CustomerCode'] = this.updateComponent.CustomerCode;
+            vehicleDetails['CustomerName'] = this.updateComponent.CustomerName;
             vehicleDetails['HavePromoCode'] = this.updateComponent.HavePromoCode;
             vehicleDetails['PromoCode'] = this.updateComponent.PromoCode;
 

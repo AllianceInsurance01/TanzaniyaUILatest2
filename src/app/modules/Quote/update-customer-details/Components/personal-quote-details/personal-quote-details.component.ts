@@ -1888,13 +1888,19 @@ getMoneyDetails(sections){
       console.log(data);
       if (data.Result) {
         let details = data?.Result;
-        this.productItem.CashInHandEmployees = details?.CashInHandEmployees;
-        this.productItem.CashInSafe = details?.CashInSafe;
-        this.productItem.CashInTransit = details?.CashInTransit;
-        this.productItem.MoneyAnnualcarrySuminsured = details?.MoneyAnnualcarrySuminsured;
-        this.productItem.MoneyInPremises = details?.MoneyInPremises;
-        this.productItem.MoneyInSafeBusiness = details?.MoneyInSafeBusiness;
-        this.productItem.MoneyOutSafeBusiness = details?.MoneyOutSafeBusiness;
+        this.productItem.MoneySafeLimit=details?.MoneySafeLimit;
+        this.productItem.MoneyOutofSafe=details?.MoneyOutofSafe;
+        this.productItem.MoneyDirectorResidence=details?.MoneyDirectorResidence;
+        this.productItem.MoneyCollector=details?.MoneyCollector;
+        this.productItem.MoneyAnnualEstimate=details?.MoneyAnnualEstimate;
+        this.productItem.MoneyMajorLoss=details?.MoneyMajorLoss;
+        // this.productItem.CashInHandEmployees = details?.CashInHandEmployees;
+        // this.productItem.CashInSafe = details?.CashInSafe;
+        // this.productItem.CashInTransit = details?.CashInTransit;
+        // this.productItem.MoneyAnnualcarrySuminsured = details?.MoneyAnnualcarrySuminsured;
+        // this.productItem.MoneyInPremises = details?.MoneyInPremises;
+        // this.productItem.MoneyInSafeBusiness = details?.MoneyInSafeBusiness;
+        // this.productItem.MoneyOutSafeBusiness = details?.MoneyOutSafeBusiness;
         if(details?.EndorsementDate){
           this.endorsementDate = details?.EndorsementDate;
           this.endorsementEffectiveDate = details?.EndorsementEffectiveDate;
@@ -1909,13 +1915,19 @@ getMoneyDetails(sections){
           this.isFinanceEndt = details?.IsFinanceEndt;
           this.orginalPolicyNo = details?.OrginalPolicyNo;
         }
-        if(this.productItem.CashInHandEmployees!=null && this.productItem.CashInHandEmployees!='0' && this.productItem.CashInHandEmployees!='' && this.productItem.CashInHandEmployees!='0.0') this.productItem.CashInHandEmployeesSIYN = true;
-        if(this.productItem.CashInSafe!=null && this.productItem.CashInSafe!='0' && this.productItem.CashInSafe!='' && this.productItem.CashInSafe!='0.0') this.productItem.CashInSafeSIYN = true;
-        if(this.productItem.CashInTransit!=null && this.productItem.CashInTransit!='0' && this.productItem.CashInTransit!='' && this.productItem.CashInTransit!='0.0') this.productItem.CashInTransitSIYN = true;
-        if(this.insuranceId!== '100004' && this.productItem.MoneyAnnualcarrySuminsured!=null && this.productItem.MoneyAnnualcarrySuminsured!='0' && this.productItem.MoneyAnnualcarrySuminsured!='' && this.productItem.MoneyAnnualcarrySuminsured!='0.0') this.productItem.MoneyAnnualcarrySuminsuredSIYN = true;
-        if(this.productItem.MoneyInPremises!=null && this.productItem.MoneyInPremises!='0' && this.productItem.MoneyInPremises!='' && this.productItem.MoneyInPremises!='0.0') this.productItem.MoneyInPremisesSIYN = true;
-        if(this.productItem.MoneyInSafeBusiness!=null && this.productItem.MoneyInSafeBusiness!='0' && this.productItem.MoneyInSafeBusiness!='' && this.productItem.MoneyInSafeBusiness!='0.0') this.productItem.MoneyInSafeBusinessSIYN = true;
-        if(this.productItem.MoneyOutSafeBusiness!=null && this.productItem.MoneyOutSafeBusiness!='0'&& this.productItem.MoneyOutSafeBusiness!='' && this.productItem.MoneyOutSafeBusiness!='0.0') this.productItem.MoneyOutSafeBusinessSIYN = true;
+        // if(this.productItem.CashInHandEmployees!=null && this.productItem.CashInHandEmployees!='0' && this.productItem.CashInHandEmployees!='' && this.productItem.CashInHandEmployees!='0.0') this.productItem.CashInHandEmployeesSIYN = true;
+        // if(this.productItem.CashInSafe!=null && this.productItem.CashInSafe!='0' && this.productItem.CashInSafe!='' && this.productItem.CashInSafe!='0.0') this.productItem.CashInSafeSIYN = true;
+        // if(this.productItem.CashInTransit!=null && this.productItem.CashInTransit!='0' && this.productItem.CashInTransit!='' && this.productItem.CashInTransit!='0.0') this.productItem.CashInTransitSIYN = true;
+        // if(this.insuranceId!== '100004' && this.productItem.MoneyAnnualcarrySuminsured!=null && this.productItem.MoneyAnnualcarrySuminsured!='0' && this.productItem.MoneyAnnualcarrySuminsured!='' && this.productItem.MoneyAnnualcarrySuminsured!='0.0') this.productItem.MoneyAnnualcarrySuminsuredSIYN = true;
+        // if(this.productItem.MoneyInPremises!=null && this.productItem.MoneyInPremises!='0' && this.productItem.MoneyInPremises!='' && this.productItem.MoneyInPremises!='0.0') this.productItem.MoneyInPremisesSIYN = true;
+        // if(this.productItem.MoneyInSafeBusiness!=null && this.productItem.MoneyInSafeBusiness!='0' && this.productItem.MoneyInSafeBusiness!='' && this.productItem.MoneyInSafeBusiness!='0.0') this.productItem.MoneyInSafeBusinessSIYN = true;
+        // if(this.productItem.MoneyOutSafeBusiness!=null && this.productItem.MoneyOutSafeBusiness!='0'&& this.productItem.MoneyOutSafeBusiness!='' && this.productItem.MoneyOutSafeBusiness!='0.0') this.productItem.MoneyOutSafeBusinessSIYN = true;
+        if(this.productItem.MoneySafeLimit!=null && this.productItem.MoneySafeLimit!='0' && this.productItem.MoneySafeLimit!='' && this.productItem.MoneySafeLimit!='0.0') this.productItem.MoneyInSafeBusinessSIYN = true;
+        if(this.productItem.MoneyOutofSafe!=null && this.productItem.MoneyOutofSafe!='0' && this.productItem.MoneyOutofSafe!='' && this.productItem.MoneyOutofSafe!='0.0') this.productItem.MoneyOutSafeBusinessSIYN = true;
+        if(this.productItem.MoneyDirectorResidence!=null && this.productItem.MoneyDirectorResidence!='0' && this.productItem.MoneyDirectorResidence!='' && this.productItem.MoneyDirectorResidence!='0.0') this.productItem.MoneyInPremisesSIYN = true;
+        if(this.productItem.MoneyCollector!=null && this.productItem.MoneyCollector!='0' && this.productItem.MoneyCollector!='' && this.productItem.MoneyCollector!='0.0') this.productItem.CashInHandEmployeesSIYN = true;
+        if(this.productItem.MoneyAnnualEstimate!=null && this.productItem.MoneyAnnualEstimate!='0' && this.productItem.MoneyAnnualEstimate!='' && this.productItem.MoneyAnnualEstimate!='0.0') this.productItem.MoneyAnnualcarrySuminsuredSIYN = true;
+        if(this.productItem.MoneyMajorLoss!=null && this.productItem.MoneyMajorLoss!='0' && this.productItem.MoneyMajorLoss!='' && this.productItem.MoneyMajorLoss!='0.0') this.productItem.CashInTransitSIYN = true;
         this.checkMoneyYNChanges();
         this.sectionCount +=1;
         if(sections.length==this.sectionCount){

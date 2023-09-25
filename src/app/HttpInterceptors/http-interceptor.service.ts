@@ -109,10 +109,9 @@ export class HttpInterceptorService implements HttpInterceptor {
           if (result.isConfirmed) {
             //this.login(req?.body);
             sessionStorage.clear();
-            this.router.navigate(['/login']);
+            if(this.router.url!='/b2clogin') this.router.navigate(['/login']);
         }
-
-        });
+      });
 
       }
 
