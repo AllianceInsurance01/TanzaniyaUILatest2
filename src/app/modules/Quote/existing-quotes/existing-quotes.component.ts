@@ -54,6 +54,7 @@ export class ExistingQuotesComponent implements OnInit {
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails?.Result?.UserType;
     this.insuranceId = this.userDetails.Result.InsuranceId;
+    this.brokerCode = this.loginId;
     sessionStorage.removeItem('customerReferenceNo');
     sessionStorage.removeItem('vehicleDetailsList');
     sessionStorage.removeItem('endorsePolicyNo');
@@ -322,7 +323,7 @@ export class ExistingQuotesComponent implements OnInit {
         if(data.Result){
           let defaultObj = []
           this.brokerList = defaultObj.concat(data.Result);
-          if(this.brokerList.length==0){this.brokerCode = ''; this.brokerList = [{Code:'',CodeDesc:'--Select--'}]}
+          if(this.brokerList.length==0){this.brokerCode = ''; this.brokerList = []}
           else this.brokerCode = this.loginId;
           if(this.brokerCode!=null && this.brokerCode!=''){
             if(!this.brokerList.some(ele=>ele.CodeDesc==this.brokerCode)) this.brokerCode = this.brokerList[0].CodeDesc;
