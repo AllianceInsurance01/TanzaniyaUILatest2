@@ -163,7 +163,7 @@ export class MakePayementComponent implements OnInit {
             this.orgPolicyNo = quoteDetails?.OriginalPolicyNo;
             this.endorsePolicyNo = quoteDetails?.policyNo;
             this.quoteLoginId = quoteDetails?.LoginId;
-            this.quoteSubUsertype = quoteDetails?.SourceType;
+            this.quoteSubUsertype = quoteDetails?.SubUserType;
             this.quoteUsertype = quoteDetails?.UserType;
             this.quoteBranchCode = quoteDetails?.BrokerBranchCode;
             this.currencyCode = quoteDetails?.Currency;
