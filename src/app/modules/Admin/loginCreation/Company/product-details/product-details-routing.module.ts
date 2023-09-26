@@ -157,6 +157,15 @@ const routes: Routes = [
       breadcrumb:  'TinyUrl List',
     }
   },
+  {
+    path: 'excelllist',
+    loadChildren: () => import('../ExcellMaster/Excell-list/excell-list.module').then(m => m.ExcellModule),
+    data: {
+      preload: true,
+      title: 'Excell List',
+      breadcrumb:  'Excell List',
+    }
+  },
   /*{
     path: 'IndustryList',
     loadChildren: () => import('../industry/industry-list/industry-list.module').then(m => m.IndustryListModule),

@@ -1,0 +1,165 @@
+<div class="card">
+     <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div style="font-family: var(--our-font-family-new)!important;font-weight: 500;">
+                                 Product Tax Details
+                            </div>
+                            <div>
+                                <!-- <button class="btn btn-warning" (click)="onAddSection()">Add New</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                  
+                    <div class="d-flex justify-content-end">
+                        <div></div>
+                        <div style="position: relative;bottom: 1rem;right: 1rem;font-family: var(--our-font-family-new)!important;font-weight: 500;">
+                            <button class="btn btn-primary" (click)="onAddNewEntry()">Add New</button>
+                        </div>
+                    </div>
+                    <div style="padding-left:3px !important;padding-right: 16px !important;">
+                    <div class="row table-responsive">
+                        <div class="col-md-10 col-lg-10 col-xl-10 ml-1">
+                            <table class="table table-headerRow">
+                                <tr>
+                                    <th class="tbl-header" style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Field Id</th>
+                                    <th class="tbl-header" style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Excel HeaderName</th>
+                                    <th class="tbl-header" style="font-family: var(--our-font-family-new)!important;font-weight: 500;">RawColumnName</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">MandatoryYn</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">DataType</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">FieldLength</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">DataRange</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">IsArrayYn</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Array JsonKey</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Array TableColumn</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Array DefaultVal</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Is ObjectYn</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Object JsonKey</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Object TableColumn</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Object DefaultCol</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Remove</th>
+                                </tr>
+                               
+                                <tr *ngFor="let row of NewList;let i = index;">
+                                    <td class="tbl-content">
+                                        <div class="input-control-container">
+                                            <input type="text" [(ngModel)]="row.FieldId" maxlength="10" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px !important;">
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-control-container">
+                                            <input type="text" [(ngModel)]="row.ExcelHeaderName" maxlength="30" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px !important;">
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <ng-select class="custom" name="TaxType" [(ngModel)]="row.FieldNameRaw" placeholder="Select Tax Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                            <ng-option *ngFor="let opt of taxType" [value]="opt.ColumnName" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:auto;">{{opt.CodeDesc}}</ng-option>
+                                        </ng-select>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar" style="white-space: nowrap;">
+                                                <input [id]="'orginwarehouse_Yes'+i" type="radio" [(ngModel)]="row.MandatoryYn" [name]="'originatingWarehouse'+i" value="Y">
+                                                <label class="customRadioLabel" [for]="'orginwarehouse_Yes'+i">Yes</label>
+                                                <input type="radio" [id]="'orginwarehouse_No'+i" [(ngModel)]="row.MandatoryYn" [name]="'originatingWarehouse'+i" value="N">
+                                                <label class="customRadioLabel" [for]="'orginwarehouse_No'+i">No</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <ng-select class="custom" name="dataType" [(ngModel)]="row.DataType" placeholder="Select Data Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                            <ng-option *ngFor="let opt of dataType" [value]="opt.ItemCode" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:auto;">{{opt.ItemValue}}</ng-option>
+                                        </ng-select>
+                                    </td>
+                                 
+                                    <td class="tbl-content">
+                                        <div class="input-control-container">
+                                            <input type="text" maxlength="20" [(ngModel)]="row.FieldLength" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px;">
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-control-container">
+                                            <input type="text" maxlength="20" [(ngModel)]="row.DataRange" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px;">
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar" style="white-space: nowrap;">
+                                                <input [id]="'orginwarehouse_IsArrayY'+i" type="radio" [(ngModel)]="row.IsArray" [name]="'originatingIsArrayYn'+i" value="Y">
+                                                <label class="customRadioLabel" [for]="'orginwarehouse_IsArrayY'+i">Yes</label>
+                                                <input type="radio" [id]="'orginwarehouse_IsArrayn'+i" [(ngModel)]="row.IsArray" [name]="'originatingIsArrayYn'+i" value="N">
+                                                <label class="customRadioLabel" [for]="'orginwarehouse_IsArrayn'+i">No</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-control-container">
+                                            <input type="text" maxlength="20" [(ngModel)]="row.ApiJsonKey" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px;">
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <ng-select class="custom" name="TaxType" [(ngModel)]="row.SelColName" placeholder="Select Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                            <ng-option *ngFor="let opt of taxType" [value]="opt.ColumnName" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:auto;">{{opt.CodeDesc}}</ng-option>
+                                        </ng-select>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar" style="white-space: nowrap;">
+                                                <input [id]="'orginwarehouse_ArrayDefaultValY'+i" type="radio" [(ngModel)]="row.IsMainDefauVal" [name]="'originatingArrayDefaultVal'+i" value="Y">
+                                                <label class="customRadioLabel" [for]="'orginwarehouse_ArrayDefaultValY'+i">Yes</label>
+                                                <input type="radio" [id]="'orginwarehouse_ArrayDefaultValn'+i" [(ngModel)]="row.IsMainDefauVal" [name]="'originatingArrayDefaultVal'+i" value="N">
+                                                <label class="customRadioLabel" [for]="'orginwarehouse_ArrayDefaultValn'+i">No</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar" style="white-space: nowrap;">
+                                                <input [id]="'orginwarehouse_IsObjectY'+i" type="radio" [(ngModel)]="row.IsObject" [name]="'originatingIsObjectYn'+i" value="Y">
+                                                <label class="customRadioLabel" [for]="'orginwarehouse_IsObjectY'+i">Yes</label>
+                                                <input type="radio" [id]="'orginwarehouse_IsObjectn'+i" [(ngModel)]="row.IsObject" [name]="'originatingIsObjectYn'+i" value="N">
+                                                <label class="customRadioLabel" [for]="'orginwarehouse_IsObjectn'+i">No</label>
+                                                <input type="radio" [id]="'orginwarehouse_IsObjectL'+i" [(ngModel)]="row.IsObject" [name]="'originatingIsObjectYn'+i" value="L">
+                                                <label class="customRadioLabel" [for]="'orginwarehouse_IsObjectL'+i">Link</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-control-container">
+                                            <input type="text" maxlength="20" [(ngModel)]="row.ObjApijsonKey" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px;">
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <ng-select class="custom" name="TaxType" [(ngModel)]="row.ObjSelcolKey" placeholder="Select Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                            <ng-option *ngFor="let opt of taxType" [value]="opt.ColumnName" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:auto;">{{opt.CodeDesc}}</ng-option>
+                                        </ng-select>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar" style="white-space: nowrap;">
+                                                <input [id]="'orginwarehouse_ObjectDefaultColY'+i" type="radio" [(ngModel)]="row.ObjDefaulVal" [name]="'originatingObjectDefaultCol'+i" value="Y">
+                                                <label class="customRadioLabel" [for]="'orginwarehouse_ObjectDefaultColY'+i">Yes</label>
+                                                <input type="radio" [id]="'orginwarehouse_ObjectDefaultColN'+i" [(ngModel)]="row.ObjDefaulVal" [name]="'originatingObjectDefaultCol'+i" value="N">
+                                                <label class="customRadioLabel" [for]="'orginwarehouse_ObjectDefaultColN'+i">No</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    
+                                    <td class="tbl-content">
+                                        <a mat-raised-button class="mx-1" data-toggle="tooltip" id="remove" data-placement="top" title="Delete" (click)="deleteRow(row.FieldId,row.ObjDefaulVal,i)"><i
+                                            class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                           
+                            </table>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="text-center mt-2" >
+                        <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>
+                        <button class="ml-2 btn btn-success" (click)="onSaveNotification()">Save</button>
+                    </div>
+                </div>
+                </div>
+         
+ 
