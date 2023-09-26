@@ -47,7 +47,7 @@ export class PoliciesComponent implements OnInit {
   ngOnInit(): void {
     if(this.productId=='5'){
       this.quoteHeader =  [
-        { key: 'PolicyNo', display: 'Policy No' },
+        { key: 'OriginalPolicyNo', display: 'Policy No' },
         { key: 'QuoteNo', display: 'Quote No' },
         { key: 'ClientName', display: 'Customer Name' },
         // { key: 'RequestReferenceNo', display: 'Reference No' },
@@ -100,7 +100,7 @@ export class PoliciesComponent implements OnInit {
     }
     else{
       this.quoteHeader =  [
-        { key: 'PolicyNo', display: 'Policy No' },
+        { key: 'OriginalPolicyNo', display: 'Policy No' },
         { key: 'QuoteNo', display: 'Quote No' },
         { key: 'RequestReferenceNo', display: 'Reference No' },
         { key: 'ClientName', display: 'Insured Name' },
