@@ -18,6 +18,12 @@ export class PendingPoliciesComponent implements OnInit {
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   branchCode:any;productId:any;userType:any;insuranceId:any;quoteHeader:any[]=[];
   brokerCode:any='';brokerList:any[]=[];
+  totalQuoteRecords: any;
+  pageCount: number;
+  quotePageNo: any;
+  startIndex: number;
+  endIndex: number;
+  limit: any='0';
   constructor(private router:Router,private sharedService: SharedService) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -120,7 +126,7 @@ export class PendingPoliciesComponent implements OnInit {
           if(this.brokerList.length==0){this.brokerCode = ''; this.brokerList = [{Code:'',CodeDesc:'--Select--'}]}
           if(this.brokerCode!=null && this.brokerCode!=''){
             if(!this.brokerList.some(ele=>ele.CodeDesc==this.brokerCode)) this.brokerCode = this.brokerList[0].CodeDesc;
-            this.getExistingQuotes()
+            this.getExistingQuotes(null,'change')
           }
         }
         
@@ -129,11 +135,11 @@ export class PendingPoliciesComponent implements OnInit {
     );
 
   }
-  getExistingQuotes(){
-    this.quoteData = [];
+  getExistingQuotes(element,entryType){
+    if(element==null) this.quoteData = [];
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
-      appId = "1"; loginId = this.brokerCode;
+      appId = "1"; loginId = this.loginId;
       brokerbranchCode = this.brokerbranchCode;
     }
     else{
@@ -152,15 +158,50 @@ export class PendingPoliciesComponent implements OnInit {
           "SourceType":"",
           "BdmCode": this.agencyCode,
            "ProductId":this.productId,
-          "Limit":"0",
-          "Offset":"1000"
+          "Limit": this.limit,
+          "Offset":60
    }
     let urlLink = `${this.CommonApiUrl}api/portfolio/pending`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
+        sessionStorage.removeItem('loadingType');
         if(data.Result){
-            this.quoteData = data?.Result;
+          if (data.Result?.PortfolioList) {
+            if (data.Result?.PortfolioList.length != 0) {
+              this.totalQuoteRecords = data.Result?.Count;
+              this.pageCount = 10;
+              if (entryType == 'change') {
+                this.quotePageNo = 1;
+                let startCount = 1, endCount = this.pageCount;
+                startCount = endCount + 1;
+                  let quoteData = data.Result?.PortfolioList;
+                  this.quoteData = data.Result?.PortfolioList;
+                  if (quoteData.length <= this.pageCount) {
+                    endCount = quoteData.length
+                  }
+                  else endCount = this.pageCount;
+                
+                this.startIndex = startCount; this.endIndex = endCount;
+              }
+              else {
+
+                let startCount = element.startCount, endCount = element.endCount;
+                this.pageCount = element.n;
+                startCount = endCount + 1;
+                  let quoteData = data.Result?.PortfolioList;
+                  this.quoteData = this.quoteData.concat(data.Result?.PortfolioList);
+                if (this.totalQuoteRecords <= endCount + (element.n)) {
+                  endCount = this.totalQuoteRecords
+                }
+                else endCount = endCount + (element.n);
+                this.startIndex = startCount; this.endIndex = endCount;
+              }
+            }
+            else {
+              this.quoteData = []; 
+            }
+          }
         }
       },
       (err) => { },
@@ -181,7 +222,18 @@ export class PendingPoliciesComponent implements OnInit {
         (err) => { },
       );
   }  
-  
+  onNextData(element){
+    this.limit = String(Number(this.limit)+1);
+    this.quotePageNo = this.quotePageNo+1;
+    this.startIndex = element.startCount;
+    this.endIndex = element.endCount
+    this.getExistingQuotes(element,'direct');
+  }
+  onPreviousData(element){
+    this.limit = String(Number(this.limit)-1);
+      this.quotePageNo = this.quotePageNo-1;
+    this.getExistingQuotes(element,'direct');
+  }
   
 
 }

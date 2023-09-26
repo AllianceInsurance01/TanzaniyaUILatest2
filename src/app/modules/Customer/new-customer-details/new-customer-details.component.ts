@@ -450,6 +450,8 @@ export class NewCustomerDetailsComponent {
 		}
 		if(data.vrngst=='' || data.vrngst== undefined || data.vrngst==null){data.vrngst=null};
 		if(this.loginType=='B2CFlow') data.Clientstatus = 'Y';
+		let type = null;
+		
 		let ReqObj = {
 			"BrokerBranchCode": this.brokerbranchCode,
 			"CustomerReferenceNo": this.customerReferenceNo,
@@ -494,6 +496,7 @@ export class NewCustomerDetailsComponent {
 			"StateName": stateName,
 			"Status": data?.Clientstatus,
 			"Street": data?.Street,
+			"Type":type,
 			"TaxExemptedId": taxExemptedId,
 			"TelephoneNo1": data?.TelephoneNo,
 			"PinCode": data?.PinCode,
@@ -505,6 +508,7 @@ export class NewCustomerDetailsComponent {
 		}
 		let quoteNo = sessionStorage.getItem('quoteNo'),refNo = null;
 		if(this.loginType=='B2CFlow' || (this.loginType=='B2cFlow2' && quoteNo!=undefined && quoteNo!=null)){
+				ReqObj['Type'] = 'b2c';
 				if(quoteNo!=undefined) ReqObj['QuoteNo'] = quoteNo;
 				else ReqObj['QuoteNo'] = null;
 				ReqObj['RequestReferenceNo'] = sessionStorage.getItem('quoteReferenceNo')

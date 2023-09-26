@@ -24,6 +24,7 @@ import { ObjectTypeComponent } from '../formlyTypes/FormlyComponents/objectType'
 import { ArrayTypeComponent } from '../formlyTypes/FormlyComponents/arrayType';
 import { NullTypeComponent } from '../formlyTypes/FormlyComponents/nullType';
 import { MultiSchemaTypeComponent } from '../formlyTypes/FormlyComponents/multiSchemaType';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 // tslint:disable-next-line: max-line-length
 
 
@@ -59,6 +60,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     MaterialModule,
     PipesModule,
     DigitOnlyModule,
+    NgbModule,
     FormlyModule.forRoot({
       validationMessages: [{ name: 'required', message: 'This field is required' },
       { name: 'maxlength', message: maxlengthValidationMessage },],
