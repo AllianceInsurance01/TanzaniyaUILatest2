@@ -10,29 +10,34 @@
         </div>
     </div>
     <div class="card-body">
-            <div class="row display1">
+            <div class="row">
                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="headinglbels">What is Your Name?</div> 
+                            <div class="headinglbels">What is Your Name?&nbsp;<span class="star">*</span></div> 
                             <div class="mt-1">
-                                <input type="text" maxlength="150" class="layout" >
+                                <input type="text" [(ngModel)]="customerName" maxlength="150" class="layout" >
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-2">
-                        <div class="col-md-7 col-lg-7 col-xl-7">
-                            <div class="headinglbels">Date Of Birth&nbsp;<span class="star">*</span></div> 
-                            <mat-form-field appearance="fill">
-                                <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
-                                <input matInput [matDatepicker]="picker1" [max]="maxDobDate">
-                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                <mat-datepicker #picker1></mat-datepicker>
-                            </mat-form-field>
+                    <div class="row mt-3">
+                        <div class="col-md-3 col-lg-3 col-xl-3">
+                            <div class="headinglbels">Code <span class="star">*</span></div> 
+                            <div class="mt-1">
+                                <ng-select class="custom" appendTo="body"  [items]="mobileCodeList"  [(ngModel)]="mobileCode" bindValue="Code" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
                         </div>
+                        <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="headinglbels">Mobile No&nbsp;<span class="star">*</span></div> 
+                            <div class="mt-1">
+                                <input type="text" [(ngModel)]="mobileno" maxlength="10" class="layout" >
+                            </div>
+                        </div>
+                        
                         <div class="col-md-5 col-lg-5 col-xl-5">
                             <div class="headinglbels">Gender&nbsp;<span class="star">*</span></div> 
-                            <div class="input-form-radio-box mt-3">
+                            <div class="input-form-radio-box mt-2">
                                 <div class="radio-toolbar">
                                     <input id="claims_Yes" type="radio" name="HavePromoCode"  [(ngModel)]="gender" value="M">
                                     <label for="claims_Yes" class="yes">Male</label>
@@ -40,6 +45,27 @@
                                     <label for="claims_No" class="no">Female</label>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        
+                        <div class="col-md-7 col-lg-7 col-xl-7">
+                            <div class="headinglbels">Email Id&nbsp;<span class="star">*</span></div> 
+                            <div class="mt-2">
+                                <input type="text" email [(ngModel)]="emailId" maxlength="50" class="layout" #prmEmail="ngModel">
+                                <div *ngIf="prmEmail.errors?.email" class="text-danger"> 
+                                    Please Enter Valid Email Id
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-lg-5 col-xl-5">
+                            <div class="headinglbels">Date Of Birth&nbsp;<span class="star">*</span></div> 
+                            <mat-form-field appearance="fill">
+                                <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
+                                <input matInput [matDatepicker]="picker1" [max]="maxDobDate" [(ngModel)]="dateOfBirth">
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                            </mat-form-field>
                         </div>
                     </div>
                     <hr>
@@ -50,24 +76,28 @@
                             </ng-select>
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-6">
-                            <div class="headinglbels">Premium Paying Term</div> 
+                            <div class="headinglbels">Premium Paying Term (Year's)</div> 
                             <div class="mt-1">
-                                <input type="text" maxlength="150" class="layout" >
+                                <input type="text" digitOnly maxlength="2" class="layout" [(ngModel)]="payingTermValue">
                             </div>
                         </div>
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-12 col-lg-12 col-xl-12">
-                            <div class="headinglbels">Sum Insured&nbsp;<span class="star">*</span></div> 
+                            <div class="headinglbels">Sum Insured&nbsp;({{currencyCode}})<span class="star">*</span></div> 
                             <div class="mt-1">
-                                <input type="text" maxlength="150" class="layout" >
+                                <input type="text" digitOnly autocomplete="off" (keydown)="onSIChange($event)" (keyup)="CommaFormatted()" maxlength="150" class="layout" [(ngModel)]="sumInsured">
                             </div>
                         </div>
                         <div class="col-md-10 col-lg-10 col-xl-10 mt-2">
                             <div class="headinglbels">Payment Mode</div> 
                             <div class="input-form-radio-box mt-2">
                                 <div class="radio-toolbar">
-                                    <input id="mode_Monthly" type="radio" name="PaymentMode"  [(ngModel)]="paymentMode" value="M">
+                                    <ng-container *ngFor="let type of paymentModeList;let i=index">
+                                        <input [id]="'mode_Monthly'+i" type="radio" name="PaymentMode"  [(ngModel)]="paymentMode" [value]="type.Code">
+                                        <label [for]="'mode_Monthly'+i" class="yes">{{type.CodeDesc}}</label>&nbsp;&nbsp;
+                                    </ng-container>
+                                    <!-- <input id="mode_Monthly" type="radio" name="PaymentMode"  [(ngModel)]="paymentMode" value="M">
                                     <label for="mode_Monthly" class="yes">Monthly</label>
                                     <input id="mode_Quarterly" type="radio" name="PaymentMode" [(ngModel)]="paymentMode" value="Q">
                                     <label for="mode_Quarterly" class="no">Quarterly</label>
@@ -75,7 +105,7 @@
                                     <input id="mode_HalfYearly" type="radio" name="PaymentMode" [(ngModel)]="paymentMode" value="HY">
                                     <label for="mode_HalfYearly" class="no">Half-Yearly</label>
                                     <input id="mode_Yearly" type="radio" name="PaymentMode" [(ngModel)]="paymentMode" value="Y">
-                                    <label for="mode_Yearly" class="no">Yearly</label>
+                                    <label for="mode_Yearly" class="no">Yearly</label> -->
                                   
                                 </div>
                             </div>
@@ -97,8 +127,8 @@
                 <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                     <div class="customCard2" *ngIf="premiumSection">
                         <div class="d-flex justify-content-between">
-                            <div class="mt-1">
-                                <span class="spancommon span_font_size" style="font-size: 19px;color: #fff;"><b>Premium Details</b></span>
+                            <div class="mt-1" style="margin-left: 10px;">
+                                <span class="spancommon span_font_size" style="font-size: 19px;color: darkblue;"><b><u>Premium Details</u></b></span>
                             </div>
                             <div>
                                 
@@ -106,682 +136,1143 @@
                         </div>
                              <div class="col-md-12 col-lg-12 p-1 mt-2"
                                         style="overflow-x: scroll !important;">
-                                <table mat-table [dataSource]="premiumList" class="outerTable"
-                                    multiTemplateDataRows matSort>
-                                        <!-- <ng-container matColumnDef="header-row-first-group">
-                                            <th mat-header-cell *matHeaderCellDef
-                                                class="outerHead mat-header-cell" [style.text-align]="center"
-                                                [attr.colspan]="3">
+                                <ng-container *ngFor="let menu of premiumList">
+                                    <table mat-table [dataSource]="menu.CoverList" class="outerTable"
+                                        multiTemplateDataRows matSort>
+                                            <!-- <ng-container matColumnDef="header-row-first-group">
+                                                <th mat-header-cell *matHeaderCellDef
+                                                    class="outerHead mat-header-cell" [style.text-align]="center"
+                                                    [attr.colspan]="3">
 
-                                            </th>
-                                        </ng-container>
-                                        <ng-container matColumnDef="header-row-second-group">
-                                            <th mat-header-cell *matHeaderCellDef [attr.colspan]="6"
-                                                class="text-center outerHead mat-header-cell">Premium </th>
-                                        </ng-container> -->
-                                    <ng-container *ngFor="let col of columnHeader; let i = index;"
-                                        [matColumnDef]="col.key" [sticky]="i===0" [stickyEnd]="i === 10">
+                                                </th>
+                                            </ng-container>
+                                            <ng-container matColumnDef="header-row-second-group">
+                                                <th mat-header-cell *matHeaderCellDef [attr.colspan]="6"
+                                                    class="text-center outerHead mat-header-cell">Premium </th>
+                                            </ng-container> -->
+                                        <ng-container *ngFor="let col of columnHeader; let i = index;"
+                                            [matColumnDef]="col.key" [sticky]="i===0" [stickyEnd]="i === 10">
 
-                                        <th mat-header-cell *matHeaderCellDef mat-sort-header
-                                            class="text-center outerHead mat-header-cell"
-                                            style="white-space: normal !important;">&nbsp;
-                                            <ng-container
-                                                *ngIf="columnHeader[i]['display']=='Sum Insured' || columnHeader[i]['display']=='Minimum' || columnHeader[i]['display']=='After Discount' || columnHeader[i]['display']=='Premium'">
-                                                <ng-container *ngIf="columnHeader[i]['display']=='Sum Insured'">
-                                                    <ng-container *ngIf="productId!='42'">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header
+                                                class="text-center outerHead mat-header-cell"
+                                                style="white-space: normal !important;">&nbsp;
+                                                <ng-container
+                                                    *ngIf="columnHeader[i]['display']=='Sum Insured' || columnHeader[i]['display']=='Minimum' || columnHeader[i]['display']=='After Discount' || columnHeader[i]['display']=='Premium'">
+                                                    <ng-container *ngIf="columnHeader[i]['display']=='Sum Insured'">
+                                                        <ng-container *ngIf="productId!='42'">
+                                                            {{ columnHeader[i]["display"] }}&nbsp;({{currencyCode}})
+                                                        </ng-container>
+                                                        <ng-container *ngIf="productId=='42'">
+                                                            Coverage Limit&nbsp;({{currencyCode}})
+                                                        </ng-container>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="columnHeader[i]['display']!='Sum Insured'">
                                                         {{ columnHeader[i]["display"] }}&nbsp;({{currencyCode}})
                                                     </ng-container>
+                                                </ng-container>
+                                                <ng-container *ngIf="columnHeader[i]['display']=='Rate'">
                                                     <ng-container *ngIf="productId=='42'">
-                                                        Coverage Limit&nbsp;({{currencyCode}})
+                                                        {{ columnHeader[i]["display"] }}&nbsp;({{currencyCode}})
+                                                    </ng-container>
+                                                    <ng-container *ngIf="productId!='42'">
+                                                        {{ columnHeader[i]["display"] }}&nbsp;(%)
                                                     </ng-container>
                                                 </ng-container>
-                                                <ng-container *ngIf="columnHeader[i]['display']!='Sum Insured'">
-                                                    {{ columnHeader[i]["display"] }}&nbsp;({{currencyCode}})
+                                                <ng-container *ngIf="columnHeader[i]['display']=='Excess Percent'">
+                                                    Excess&nbsp;(%)
                                                 </ng-container>
-                                            </ng-container>
-                                            <ng-container *ngIf="columnHeader[i]['display']=='Rate'">
-                                                <ng-container *ngIf="productId=='42'">
-                                                    {{ columnHeader[i]["display"] }}&nbsp;({{currencyCode}})
+                                                <ng-container *ngIf="columnHeader[i]['display']=='Excess Amount'">
+                                                    Excess<br>({{currencyCode}})
                                                 </ng-container>
-                                                <ng-container *ngIf="productId!='42'">
-                                                    {{ columnHeader[i]["display"] }}&nbsp;(%)
+                                                <ng-container
+                                                    *ngIf="columnHeader[i]['display']!='Sum Insured' && columnHeader[i]['display']!='Referral' && columnHeader[i]['display']!='Excess Amount' && columnHeader[i]['display']!='Excess Percent' && columnHeader[i]['display']!='Rate' && columnHeader[i]['display']!='Minimum' && columnHeader[i]['display']!='After Discount' && columnHeader[i]['display']!='Premium'">
+                                                    {{ columnHeader[i]["display"] }}
                                                 </ng-container>
-                                            </ng-container>
-                                            <ng-container *ngIf="columnHeader[i]['display']=='Excess Percent'">
-                                                Excess&nbsp;(%)
-                                            </ng-container>
-                                            <ng-container *ngIf="columnHeader[i]['display']=='Excess Amount'">
-                                                Excess<br>({{currencyCode}})
-                                            </ng-container>
-                                            <ng-container
-                                                *ngIf="columnHeader[i]['display']!='Sum Insured' && columnHeader[i]['display']!='Referral' && columnHeader[i]['display']!='Excess Amount' && columnHeader[i]['display']!='Excess Percent' && columnHeader[i]['display']!='Rate' && columnHeader[i]['display']!='Minimum' && columnHeader[i]['display']!='After Discount' && columnHeader[i]['display']!='Premium'">
-                                                {{ columnHeader[i]["display"] }}
-                                            </ng-container>
-                                        </th>
-                                        <td mat-cell *matCellDef="let element" class="customCell"
-                                            [ngClass]="{'customRowBg': col.key=='CoverName' && element?.isReferal === 'Y'}">
-                                            <ng-container *ngIf="!col.config; else hasConfig">
-                                                <ng-container *ngIf="col.key=='Status'">
-                                                    <span *ngIf="element[col.key]=='Y'">Active</span>
-                                                    <span *ngIf="element[col.key]!='Y'">DeActive</span>
-                                                </ng-container>
-                                                <ng-container *ngIf="col.key=='PremiumAfterDiscount'">
-                                                    <ng-container *ngIf="(element.Endorsements!=null)">
-                                                        &nbsp;&nbsp;<button type="button"
-                                                                class="btn maan-btn-blue btn-circle-alt"
-                                                                title="After Discount" 
-                                                                (click)="setDiscountDetails(menu,element,discountModal)"><i
-                                                                    class="fa fa-bookmark"
-                                                                    aria-hidden="true"></i></button>
-                                                                    <div class="d-flex justify-content-between">
+                                            </th>
+                                            <td mat-cell *matCellDef="let element" class="customCell">
+                                                <ng-container *ngIf="!col.config; else hasConfig">
+                                                    <ng-container *ngIf="col.key=='Status'">
+                                                        <span *ngIf="element[col.key]=='Y'">Active</span>
+                                                        <span *ngIf="element[col.key]!='Y'">DeActive</span>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="col.key=='PremiumAfterDiscount'">
+                                                        <ng-container *ngIf="(element.Endorsements!=null)">
+                                                            &nbsp;&nbsp;<button type="button"
+                                                                    class="btn maan-btn-blue btn-circle-alt"
+                                                                    title="After Discount" 
+                                                                    (click)="setDiscountDetails(menu,element,discountModal)"><i
+                                                                        class="fa fa-bookmark"
+                                                                        aria-hidden="true"></i></button>
+                                                                        <div class="d-flex justify-content-between">
+                                                                            <div></div>
+                                                                            <div>
+                                                                                <ng-container
+                                                                                    *ngIf="(coverModificationYN=='Y' && !endorseSIModification )  && element.DifferenceYN=='Y'">
+                                                                                    0
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="(coverModificationYN=='Y' && !endorseSIModification) && element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax!=null && element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax!=0 && element.DifferenceYN=='N'">
+                                                                                    {{
+                                                                                    element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax
+                                                                                    |commaseparator }}
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="(coverModificationYN=='N' || endorseSIModification) && !element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax  && (element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax==null || element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax==0)">
+                                                                                    0
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="(coverModificationYN=='N' || endorseSIModification )  && element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax!=null && element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax!=0 ">
+                                                                                    {{
+                                                                                    element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax
+                                                                                    |commaseparator }}
+                                                                                </ng-container>
+                                                                            </div>
+                                                                        </div>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="(element.Endorsements==null)">
+                                                            <div class="d-flex justify-content-between">
+                                                                <div>
+                                                                    <ng-container *ngIf="(element.Discounts!=null && element.Discounts.length!=0) || (element.Loadings!=null && element.Loadings.length!=0) || adminSection">
+
+                                                                        &nbsp;&nbsp;<button type="button"
+                                                                            class="btn maan-btn-blue btn-circle"
+                                                                            (click)="setDiscountDetails(menu,element,discountModal)">?
+                                                                        </button>
+                                                                    </ng-container>
+                                                                </div>
+                                                                <div>
+                                                                    <ng-container
+                                                                        *ngIf="element[col.key]==null || element[col.key]==0">
+                                                                        0
+                                                                    </ng-container>
+                                                                    <ng-container
+                                                                        *ngIf="element[col.key]!=null || element[col.key]!=0">
+                                                                        <span>{{ element[col.key]|commaseparator }}
+                                                                        </span>
+                                                                    </ng-container>
+                                                                </div>
+                                                            </div>
+                                                        </ng-container>
+                                                        
+                                                    </ng-container>
+
+                                                    <ng-container *ngIf="col.key=='PremiumIncludedTax'">
+                                                        <ng-container *ngIf="(element.Endorsements!=null)">
+                                                            <ng-container
+                                                                *ngIf="(element.Endorsements.length!=0)">
+                                                                <ng-template #endorseCard>
+                                                                    <div
+                                                                        class="popover-card customTemplate shawdowcustom ">
+                                                                        <div class="card-header"
+                                                                            status="warning">
+                                                                            <div
+                                                                                class="d-flex justify-content-between">
+                                                                                <div>
+                                                                                    Endorsement Details!
+                                                                                </div>
+                                                                                <div>
+                                                                                    No.Of.Endorsement ~
+                                                                                    {{endorsementDetails?.EndtCount}}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="card-body p-0">
+
+                                                                            <div class="mt-1"
+                                                                                style="background-color: #acbf8e;border:1px solid grey;padding: 4px;border-radius: 5px;">
+
+
+                                                                                <span
+                                                                                    class="spancommon span_font_size">{{endorsementDetails?.EndorsementDesc}}</span>
+                                                                            </div>
+                                                                            <ul class="list-group">
+
+                                                                                <li
+                                                                                    class="list-group-item list-seperate">
+                                                                                    <div>
+                                                                                        <span
+                                                                                            class="spancommon span_font_size">Current
+                                                                                            Premium</span>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                        <span
+                                                                                            class="spancommon span_font_size">
+                                                                                            <ng-container
+                                                                                                *ngIf="element.PremiumExcluedTax==null || element.PremiumExcluedTax==0"><b>0</b></ng-container>
+                                                                                            <ng-container
+                                                                                                *ngIf="element.PremiumExcluedTax!=null && element.PremiumExcluedTax!=0"><b>{{element.PremiumExcluedTax
+                                                                                                    |
+                                                                                                    commaseparator}}</b></ng-container>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </li>
+                                                                                <li
+                                                                                    class="list-group-item list-seperate">
+                                                                                    <div>
+                                                                                        <span
+                                                                                            class="spancommon span_font_size">Previous
+                                                                                            Premium</span>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                        <span
+                                                                                            class="spancommon span_font_size">
+                                                                                            <ng-container
+                                                                                                *ngIf="endorsementDetails?.PremiumAfterDiscount==null || endorsementDetails?.PremiumAfterDiscount==0"><b>0</b></ng-container>
+                                                                                            <ng-container
+                                                                                                *ngIf="endorsementDetails?.PremiumAfterDiscount!=null && endorsementDetails?.PremiumAfterDiscount!=0"><b>{{endorsementDetails?.PremiumAfterDiscount
+                                                                                                    |
+                                                                                                    commaseparator}}</b></ng-container>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </li>
+                                                                                <li
+                                                                                    class="list-group-item list-seperate">
+                                                                                    <div>
+                                                                                        <span
+                                                                                            class="spancommon span_font_size">
+                                                                                            <ng-container
+                                                                                                *ngIf="coverModificationYN=='N'">Difference
+                                                                                                Premium</ng-container>
+                                                                                            <ng-container
+                                                                                                *ngIf="coverModificationYN=='Y'">Removal
+                                                                                                Premium</ng-container>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                        <span
+                                                                                            class="spancommon span_font_size">
+                                                                                            ProRata({{endorsementDetails?.ProRata}}%)
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                        <span
+                                                                                            class="spancommon span_font_size">
+                                                                                            <ng-container
+                                                                                                *ngIf="endorsementDetails?.PremiumExcludedTax==null || endorsementDetails?.PremiumExcludedTax==0"><b>0</b></ng-container>
+                                                                                            <ng-container
+                                                                                                *ngIf="endorsementDetails?.PremiumExcludedTax!=null && endorsementDetails?.PremiumExcludedTax!=0"><b>{{endorsementDetails?.PremiumExcludedTax
+                                                                                                    |
+                                                                                                    commaseparator}}</b></ng-container>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </li>
+                                                                                <ng-container
+                                                                                    *ngIf="endorsementDetails?.EndorsementFees!=null">
+                                                                                    <li class="list-group-item list-seperate"
+                                                                                        *ngFor="let tax of endorsementDetails?.EndorsementFees">
+                                                                                        <div>
+                                                                                            <span
+                                                                                                class="spancommon span_font_size">{{tax.TaxDesc}}</span>
+                                                                                        </div>
+                                                                                        <div>
+                                                                                            <span
+                                                                                                class="spancommon span_font_size">({{tax.TaxRate}}&nbsp;%)</span>
+                                                                                        </div>
+                                                                                        <div>
+                                                                                            <span
+                                                                                                class="spancommon span_font_size">
+                                                                                                <ng-container
+                                                                                                    *ngIf="tax?.TaxAmount==null || tax?.TaxAmount==0"><b>0</b></ng-container>
+                                                                                                <ng-container
+                                                                                                    *ngIf="tax?.TaxAmount!=null && tax?.TaxAmount!=0"><b>{{tax?.TaxAmount
+                                                                                                        |
+                                                                                                        commaseparator}}</b></ng-container>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="endorsementDetails?.Taxes!=null && endorsementDetails?.Taxes.length!=0">
+                                                                                    <li
+                                                                                        class="list-group-item list-seperate">
+                                                                                        <div>
+                                                                                            <span
+                                                                                                class="spancommon span_font_size"><u>Taxes</u></span>
+                                                                                        </div>
+                                                                                        <div>
+
+                                                                                        </div>
+                                                                                    </li>
+                                                                                    <li class="list-group-item list-seperate"
+                                                                                        *ngFor="let tax of endorsementDetails?.Taxes">
+                                                                                        <div>
+                                                                                            <span
+                                                                                                class="spancommon span_font_size">{{tax.TaxDesc}}</span>
+                                                                                        </div>
+                                                                                        <div>
+                                                                                            <span
+                                                                                                class="spancommon span_font_size">({{tax.TaxRate}}&nbsp;%)</span>
+                                                                                        </div>
+                                                                                        <div>
+                                                                                            <span
+                                                                                                class="spancommon span_font_size">
+                                                                                                <ng-container
+                                                                                                    *ngIf="tax?.TaxAmount==null || tax?.TaxAmount==0"><b>0</b></ng-container>
+                                                                                                <ng-container
+                                                                                                    *ngIf="tax?.TaxAmount!=null && tax?.TaxAmount!=0"><b>{{tax?.TaxAmount
+                                                                                                        |
+                                                                                                        commaseparator}}</b></ng-container>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                </ng-container>
+                                                                                <li
+                                                                                    class="list-group-item list-seperate">
+                                                                                    <div>
+                                                                                        <span
+                                                                                            class="spancommon span_font_size">Total
+                                                                                            Premium</span>
+                                                                                    </div>
+                                                                                    <div>
+                                                                                        <span
+                                                                                            class="spancommon span_font_size">
+                                                                                            <ng-container
+                                                                                                *ngIf="(element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax==null || element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax==0) "><b>0</b></ng-container>
+                                                                                            <ng-container
+                                                                                                *ngIf="(element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax!=0)"><b>{{element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax
+                                                                                                    |
+                                                                                                    commaseparator}}</b></ng-container>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-template>
+                                                                &nbsp;&nbsp;<button type="button"
+                                                                    class="btn maan-btn-blue btn-circle-alt"
+                                                                    data-toggle="tooltip"
+                                                                    data-placement="top" title="Endorsement"
+                                                                    [ngbPopover]="endorseCard"
+                                                                    placement="left"
+                                                                    (click)="onGetEndorsement(element)"><i
+                                                                        class="fa fa-bookmark"
+                                                                        aria-hidden="true"></i></button>
+                                                                <ng-container
+                                                                    *ngIf="checkEndorseValue(element,'empty',menu)">
+                                                                    <div
+                                                                        class="d-flex justify-content-between">
                                                                         <div></div>
                                                                         <div>
                                                                             <ng-container
-                                                                                *ngIf="(coverModificationYN=='Y' && !endorseSIModification )  && element.DifferenceYN=='Y'">
-                                                                                0
+                                                                            *ngIf="coverModificationYN=='Y'  && element.DifferenceYN=='Y'">
+                                                                           Displayed
                                                                             </ng-container>
                                                                             <ng-container
-                                                                                *ngIf="(coverModificationYN=='Y' && !endorseSIModification) && element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax!=null && element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax!=0 && element.DifferenceYN=='N'">
+                                                                                *ngIf="coverModificationYN=='Y' && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax!=0 && element.DifferenceYN=='N'">
                                                                                 {{
-                                                                                element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax
+                                                                                element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax
                                                                                 |commaseparator }}
                                                                             </ng-container>
                                                                             <ng-container
-                                                                                *ngIf="(coverModificationYN=='N' || endorseSIModification) && !element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax  && (element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax==null || element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax==0)">
-                                                                                0
+                                                                                *ngIf="coverModificationYN=='N' && !element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax  && (element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax==null || element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax==0)">
+                                                                                Displayes
                                                                             </ng-container>
                                                                             <ng-container
-                                                                                *ngIf="(coverModificationYN=='N' || endorseSIModification )  && element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax!=null && element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax!=0 ">
+                                                                                *ngIf="coverModificationYN=='N' && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax!=0">
                                                                                 {{
-                                                                                element.Endorsements[element.Endorsements.length-1].PremiumExcludedTax
+                                                                                element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax
                                                                                 |commaseparator }}
                                                                             </ng-container>
                                                                         </div>
                                                                     </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="(element.Endorsements==null)">
-                                                        <div class="d-flex justify-content-between">
-                                                            <div>
-                                                                <ng-container *ngIf="(element.Discounts!=null && element.Discounts.length!=0) || (element.Loadings!=null && element.Loadings.length!=0) || adminSection">
-
-                                                                    &nbsp;&nbsp;<button type="button"
-                                                                        class="btn maan-btn-blue btn-circle"
-                                                                        (click)="setDiscountDetails(menu,element,discountModal)">?
-                                                                    </button>
                                                                 </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="!checkEndorseValue(element,'empty',menu)">
+                                                                    <div
+                                                                        class="d-flex justify-content-between">
+                                                                        <div></div>
+                                                                        <div>
+                                                                            <ng-container
+                                                                                *ngIf="coverModificationYN=='Y'  && element.DifferenceYN=='Y'">
+                                                                              Displayes
+                                                                            </ng-container>
+                                                                            <ng-container
+                                                                                *ngIf="coverModificationYN=='Y' && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax!=0 && element.DifferenceYN=='N'">
+                                                                                {{
+                                                                                element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax
+                                                                                |commaseparator }}
+                                                                            </ng-container>
+                                                                            <ng-container
+                                                                                *ngIf="coverModificationYN=='N' && !element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax  && (element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax==null || element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax==0)">
+                                                                                Displayes
+                                                                            </ng-container>
+                                                                            <ng-container
+                                                                                *ngIf="coverModificationYN=='N' && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax!=null && element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax!=0">
+                                                                                {{
+                                                                                element.Endorsements[element.Endorsements.length-1].PremiumIncludedTax
+                                                                                |commaseparator }}
+                                                                            </ng-container>
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-container>
+                                                            </ng-container>
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf="(element.Endorsements==null)">
+                                                            <ng-container
+                                                                *ngIf="element[col.key]==null || element[col.key]==0">
+                                                                <div class="d-flex justify-content-between">
+                                                                    <div></div>
+                                                                    <div>0</div>
+                                                                </div>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="element[col.key]!=null || element[col.key]!=0">
+                                                                <ng-container
+                                                                    *ngIf="endorsementSection && element.DiffPremiumIncludedTaxFC!=null && element.DiffPremiumIncludedTaxFC!=0">
+                                                                    <div
+                                                                        class="d-flex justify-content-between">
+                                                                        <div>
+                                                                            <ng-container
+                                                                                *ngIf="(element.Taxes!=null && element.Taxes.length!=0)">
+                                                                                <ng-template #taxCard>
+                                                                                    <div
+                                                                                        class="popover-card customTemplate shawdowcustom">
+                                                                                        <div class="card-header"
+                                                                                            status="warning">
+                                                                                            Premium Details!
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="card-body p-0">
+                                                                                            <ul
+                                                                                                class="list-group">
+                                                                                                <li
+                                                                                                    class="list-group-item list-seperate">
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size">Minimum
+                                                                                                            Premium</span>
+                                                                                                    </div>
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size">{{MinimumPremium
+                                                                                                            |
+                                                                                                            number
+                                                                                                            :
+                                                                                                            '1.0'
+                                                                                                            }}</span>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                <li
+                                                                                                    class="list-group-item list-seperate">
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size">Excluded
+                                                                                                            Tax</span>
+                                                                                                    </div>
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size">{{premiumExcluedTax}}</span>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                <li
+                                                                                                    class="list-group-item list-seperate">
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size">ProRata</span>
+                                                                                                    </div>
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size">{{element.ProRata}}&nbsp;(%)</span>
+                                                                                                    </div>
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size">{{premiumExcluedTax}}</span>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                <li
+                                                                                                    class="list-group-item list-seperate">
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size">Excluded
+                                                                                                            Tax</span>
+                                                                                                    </div>
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size">{{premiumExcluedTax}}</span>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                 <ng-container
+                                                                                                    *ngIf="dependantTaxList.length!=0">
+                                                                                                    <li class="list-group-item list-seperate"
+                                                                                                        *ngFor="let tax of dependantTaxList">
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">{{tax.TaxDesc}}</span>
+                                                                                                        </div>
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">({{tax.TaxRate}}&nbsp;%)</span>
+                                                                                                        </div>
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">{{tax.TaxAmount}}</span>
+                                                                                                        </div>
+                                                                                                    </li>
+                                                                                                    <li class="list-group-item list-seperate" *ngIf="taxList.length!=0">
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">Premium Before
+                                                                                                                Tax</span>
+                                                                                                        </div>
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">{{premiumBeforeTax}}</span>
+                                                                                                        </div>
+                                                                                                    </li>
+                                                                                                </ng-container>
+                                                                                                 <ng-container
+                                                                                                    *ngIf="dependantTaxList.length!=0">
+                                                                                                    <li class="list-group-item list-seperate"
+                                                                                                        *ngFor="let tax of dependantTaxList">
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">{{tax.TaxDesc}}</span>
+                                                                                                        </div>
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">({{tax.TaxRate}}&nbsp;%)</span>
+                                                                                                        </div>
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">{{tax.TaxAmount}}</span>
+                                                                                                        </div>
+                                                                                                    </li>
+                                                                                                    <li class="list-group-item list-seperate" *ngIf="taxList.length!=0">
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">Premium Before
+                                                                                                                Tax</span>
+                                                                                                        </div>
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">{{premiumBeforeTax}}</span>
+                                                                                                        </div>
+                                                                                                    </li>
+                                                                                                </ng-container>
+                                                                                                <ng-container
+                                                                                                    *ngIf="taxList.length!=0">
+                                                                                                    <li
+                                                                                                        class="list-group-item list-seperate">
+                                                                                                        <div>
+                                                                                                            <b>Taxes</b>
+                                                                                                        </div>
+                                                                                                        <div>
+
+                                                                                                        </div>
+                                                                                                    </li>
+                                                                                                    <li class="list-group-item list-seperate"
+                                                                                                        *ngFor="let tax of taxList">
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">{{tax.TaxDesc}}</span>
+                                                                                                        </div>
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">({{tax.TaxRate}}&nbsp;%)</span>
+                                                                                                        </div>
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">{{tax.TaxAmount}}</span>
+                                                                                                        </div>
+                                                                                                    </li>
+                                                                                                </ng-container>
+                                                                                                <li
+                                                                                                    class="list-group-item list-seperate">
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size"><b>Total
+                                                                                                                Premium</b></span>
+                                                                                                    </div>
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size"><b>{{premiumIncluedTax}}</b></span>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </ng-template>
+                                                                                &nbsp;&nbsp;<button
+                                                                                    type="button"
+                                                                                    class="btn maan-btn-blue btn-circle"
+                                                                                    [ngbPopover]="taxCard"
+                                                                                    placement="left"
+                                                                                    (click)="ongetTaxDetails(element)"
+                                                                                    style="margin-right:3px !important;">?</button>
+                                                                            </ng-container>
+                                                                        </div>
+                                                                        <div>{{
+                                                                            element.DiffPremiumIncludedTax |
+                                                                            commaseparator }}</div>
+                                                                    </div>
+                                                                </ng-container>
+                                                                <ng-container
+                                                                    *ngIf="element.DiffPremiumIncludedTax==null || element.DiffPremiumIncludedTax==0 || !endorsementSection">
+                                                                    <div
+                                                                        class="d-flex justify-content-between">
+                                                                        <div>
+                                                                            <ng-container
+                                                                                *ngIf="(element.Taxes!=null && element.Taxes.length!=0)">
+                                                                                <ng-template #taxCard>
+
+                                                                                    <div
+                                                                                        class="popover-card customTemplate shawdowcustom">
+                                                                                        <div class="card-header"
+                                                                                            status="warning">
+                                                                                            Premium Details!
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="card-body p-0">
+                                                                                            <ul
+                                                                                                class="list-group">
+                                                                                                <li
+                                                                                                    class="list-group-item list-seperate">
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size">
+                                                                                                            <ng-container>Premium
+                                                                                                                After
+                                                                                                                Discount</ng-container>
+
+                                                                                                        </span>
+                                                                                                    </div>
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size">
+                                                                                                            ProRata({{element?.ProRata}}%)
+                                                                                                        </span>
+                                                                                                    </div>
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size">
+                                                                                                            <ng-container
+                                                                                                                *ngIf="element?.PremiumAfterDiscount==null || element?.PremiumAfterDiscount==0"><b>0</b></ng-container>
+                                                                                                            <ng-container
+                                                                                                                *ngIf="element?.PremiumAfterDiscount!=null && element?.PremiumAfterDiscount!=0"><b>{{element?.PremiumAfterDiscount
+                                                                                                                    |
+                                                                                                                    commaseparator}}</b></ng-container>
+                                                                                                        </span>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                <li
+                                                                                                    class="list-group-item list-seperate">
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size">Minimum
+                                                                                                            Premium</span>
+                                                                                                    </div>
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size">{{MinimumPremium
+                                                                                                            |
+                                                                                                            number
+                                                                                                            :
+                                                                                                            '1.0'
+                                                                                                            }}</span>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                <li
+                                                                                                    class="list-group-item list-seperate">
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size">Excluded
+                                                                                                            Tax</span>
+                                                                                                    </div>
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size">{{premiumExcluedTax}}</span>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                                <ng-container
+                                                                                                    *ngIf="dependantTaxList.length!=0">
+                                                                                                    <li class="list-group-item list-seperate"
+                                                                                                        *ngFor="let tax of dependantTaxList">
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">{{tax.TaxDesc}}</span>
+                                                                                                        </div>
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size" *ngIf="tax.TaxCalcType!='A'">({{tax.TaxRate}}&nbsp;%)</span>
+                                                                                                        </div>
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">{{tax.TaxAmount}}</span>
+                                                                                                        </div>
+                                                                                                    </li>
+                                                                                                    <li class="list-group-item list-seperate" *ngIf="taxList.length!=0">
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">Premium Before
+                                                                                                                Tax</span>
+                                                                                                        </div>
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">{{premiumBeforeTax}}</span>
+                                                                                                        </div>
+                                                                                                    </li>
+                                                                                                </ng-container>
+                                                                                                <ng-container
+                                                                                                    *ngIf="taxList.length!=0">
+                                                                                                    <li
+                                                                                                        class="list-group-item list-seperate">
+                                                                                                        <div>
+                                                                                                            <b>Taxes</b>
+                                                                                                        </div>
+                                                                                                        <div>
+
+                                                                                                        </div>
+                                                                                                    </li>
+                                                                                                    <li class="list-group-item list-seperate"
+                                                                                                        *ngFor="let tax of taxList">
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">{{tax.TaxDesc}}</span>
+                                                                                                        </div>
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">({{tax.TaxRate}}&nbsp;%)</span>
+                                                                                                        </div>
+                                                                                                        <div>
+                                                                                                            <span
+                                                                                                                class="spancommon span_font_size">{{tax.TaxAmount}}</span>
+                                                                                                        </div>
+                                                                                                    </li>
+                                                                                                </ng-container>
+                                                                                                <li
+                                                                                                    class="list-group-item list-seperate">
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size"><b>Total
+                                                                                                                Premium</b></span>
+                                                                                                    </div>
+                                                                                                    <div>
+                                                                                                        <span
+                                                                                                            class="spancommon span_font_size"><b>{{premiumIncluedTax}}</b></span>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    </div>
+
+
+                                                                                </ng-template>
+                                                                                &nbsp;&nbsp;<button
+                                                                                    type="button"
+                                                                                    class="btn maan-btn-blue btn-circle"
+                                                                                    [ngbPopover]="taxCard"
+                                                                                    placement="top"
+                                                                                    (click)="ongetTaxDetails(element)"
+                                                                                    style="margin-right:7px !important;">?</button>
+                                                                            </ng-container>
+                                                                        </div>
+                                                                        <div>
+                                                                            {{
+                                                                            element[col.key]|commaseparator
+                                                                            }}
+                                                                        </div>
+                                                                    </div>
+                                                                </ng-container>
+
+                                                            </ng-container>
+                                                        </ng-container>
+
+
+                                                    </ng-container>
+                                                    <ng-container *ngIf="col.key=='Rate'">
+                                                        &nbsp;
+                                                        <ng-container *ngIf="!adminSection">
+                                                            {{ element[col.key]}}
+                                                        </ng-container>
+                                                        <ng-container *ngIf="(adminSection)">
+                                                            <input type="text" [id]="'Rate'+i" style="width: 70px;"
+                                                                [(ngModel)]="element[col.key]">
+                                                        </ng-container>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="col.key=='ExcessPercent'">
+                                                        &nbsp;
+                                                        <ng-container *ngIf="!adminSection">
+                                                            {{ element[col.key]}}
+                                                        </ng-container>
+                                                        <ng-container *ngIf="adminSection">
+                                                            <input type="text" [id]="'ExcessPercent'+i"
+                                                                style="width: 100px;"
+                                                                [(ngModel)]="element[col.key]">
+                                                        </ng-container>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="col.key=='ExcessAmount'">
+                                                        &nbsp;
+                                                        <ng-container *ngIf="!adminSection">
+                                                            <div style="max-width: 100px !important;"> {{
+                                                                element[col.key]}}
+                                                            </div>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="(adminSection)">
+                                                            <input type="text" [id]="'ExcessAmount'+i"
+                                                                style="width: 100px;"
+                                                                [(ngModel)]="element[col.key]">
+                                                        </ng-container>
+                                                    </ng-container>
+                                                    <ng-container
+                                                        *ngIf="col.key!='ExcessPercent' && col.key!='ExcessAmount' && col.key!='Rate' && columnHeader[i]['display']!='Sum Insured' && col.key!='PremiumIncludedTax' && col.key!='PremiumAfterDiscount'">
+                                                        <ng-container *ngIf="col.key!='CoverName'">
+                                                            &nbsp;{{ element[col.key]}}
+                                                        </ng-container>
+                                                        <ng-container *ngIf="col.key =='CoverName'">
+                                                            <div
+                                                                style="min-width: 150px !important;white-space: normal !important;padding: 3px !important">
+                                                                {{ element[col.key]}}&nbsp;<button
+                                                                    class="fa fa-question-circle"
+                                                                    style="border: none;" placement="bottom"
+                                                                    (click)="covernameinfo(myView,element)">
+
+                                                                </button>
+                                                            </div>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="columnHeader[i]['display']=='Sum Insured'">
+                                                        <div class="d-flex justify-content-between"
+                                                            *ngIf="productId!='42'">
+                                                            <div>
+                                                                &nbsp;&nbsp;<button type="button"
+                                                                        class="btn maan-btn-blue btn-circle"
+                                                                        (click)="setDiscountDetails(menu,element,excessModal)">?
+                                                                    </button>
                                                             </div>
                                                             <div>
-                                                                <ng-container
-                                                                    *ngIf="element[col.key]==null || element[col.key]==0">
+                                                                <ng-container *ngIf="element[col.key]==null || element[col.key]==0">
                                                                     0
                                                                 </ng-container>
                                                                 <ng-container
                                                                     *ngIf="element[col.key]!=null || element[col.key]!=0">
-                                                                    <span>{{ element[col.key]|commaseparator }}
-                                                                    </span>
+                                                                    <div style="max-width: 100px !important;"><span>{{
+                                                                            element[col.key]|commaseparator }}
+                                                                        </span></div>
                                                                 </ng-container>
                                                             </div>
                                                         </div>
-                                                    </ng-container>
-                                                    
-                                                </ng-container>
-
-                                                <ng-container *ngIf="col.key=='PremiumIncludedTax'">
-                                                    <ng-container
-                                                                *ngIf="element.DiffPremiumIncludedTax==null || element.DiffPremiumIncludedTax==0 || !endorsementSection">
-                                                                <div class="d-flex justify-content-between">
-                                                                    <div>
-                                                                        <ng-container
-                                                                            *ngIf="(element.Taxes!=null && element.Taxes.length!=0)">
-                                                                            <ng-template #taxCard>
-                                                                                <div
-                                                                                    class="popover-card customTemplate shawdowcustom ">
-                                                                                    <div class="card-header"
-                                                                                        status="warning">
-                                                                                        Premium Details!
-                                                                                    </div>
-                                                                                    <div class="card-body p-0">
-                                                                                        <ul class="list-group">
-                                                                                            <li
-                                                                                                class="list-group-item list-seperate">
-                                                                                                <div>
-                                                                                                    <span
-                                                                                                        class="spancommon span_font_size">
-                                                                                                        <ng-container>Premium
-                                                                                                            After
-                                                                                                            Discount</ng-container>
-
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    <span
-                                                                                                        class="spancommon span_font_size">
-                                                                                                        ProRata({{element?.ProRata}}%)
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    <span
-                                                                                                        class="spancommon span_font_size">
-                                                                                                        <ng-container
-                                                                                                            *ngIf="element?.PremiumAfterDiscount==null || element?.PremiumAfterDiscount==0"><b>0</b></ng-container>
-                                                                                                        <ng-container
-                                                                                                            *ngIf="element?.PremiumAfterDiscount!=null && element?.PremiumAfterDiscount!=0"><b>{{element?.PremiumAfterDiscount
-                                                                                                                |
-                                                                                                                commaseparator}}</b></ng-container>
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </li>
-                                                                                            <li
-                                                                                                class="list-group-item list-seperate">
-                                                                                                <!-- <div class="d-flex justify-content-between"> -->
-                                                                                                <div>
-                                                                                                    <span
-                                                                                                        class="spancommon span_font_size">Minimum
-                                                                                                        Premium</span>
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    <span
-                                                                                                        class="spancommon span_font_size">{{MinimumPremium
-                                                                                                        | number
-                                                                                                        : '1.0'
-                                                                                                        }}</span>
-                                                                                                </div>
-                                                                                                <!-- </div> -->
-                                                                                            </li>
-                                                                                            <li
-                                                                                                class="list-group-item list-seperate">
-                                                                                                <!-- <div class="d-flex justify-content-between"> -->
-                                                                                                <div>
-                                                                                                    <span
-                                                                                                        class="spancommon span_font_size">Excluded
-                                                                                                        Tax</span>
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    <span
-                                                                                                        class="spancommon span_font_size">{{premiumExcluedTax}}</span>
-                                                                                                </div>
-                                                                                                <!-- </div> -->
-                                                                                            </li>
-                                                                                                <ng-container
-                                                                                                *ngIf="dependantTaxList.length!=0">
-                                                                                                <li class="list-group-item list-seperate"
-                                                                                                    *ngFor="let tax of dependantTaxList">
-                                                                                                    <div>
-                                                                                                        <span
-                                                                                                            class="spancommon span_font_size">{{tax.TaxDesc}}</span>
-                                                                                                    </div>
-                                                                                                    <div>
-                                                                                                        <span
-                                                                                                            class="spancommon span_font_size" *ngIf="tax.TaxCalcType!='A'">({{tax.TaxRate}}&nbsp;%)</span>
-                                                                                                    </div>
-                                                                                                    <div>
-                                                                                                        <span
-                                                                                                            class="spancommon span_font_size">{{tax.TaxAmount}}</span>
-                                                                                                    </div>
-                                                                                                </li>
-                                                                                                <li class="list-group-item list-seperate" *ngIf="taxList.length!=0">
-                                                                                                    <div>
-                                                                                                        <span
-                                                                                                            class="spancommon span_font_size"><b>Premium Before
-                                                                                                            Tax</b></span>
-                                                                                                    </div>
-                                                                                                    <div>
-                                                                                                        <span
-                                                                                                            class="spancommon span_font_size"><b>{{premiumBeforeTax}}</b></span>
-                                                                                                    </div>
-                                                                                                </li>
-                                                                                            </ng-container>
-                                                                                            <ng-container
-                                                                                                *ngIf="taxList.length!=0">
-                                                                                                <li
-                                                                                                    class="list-group-item list-seperate">
-                                                                                                    <!-- <div class="d-flex justify-content-between"> -->
-                                                                                                    <div>
-                                                                                                        <b>Taxes</b>
-                                                                                                    </div>
-                                                                                                    <div>
-
-                                                                                                    </div>
-                                                                                                    <!-- </div> -->
-                                                                                                </li>
-                                                                                                <li class="list-group-item list-seperate"
-                                                                                                    *ngFor="let tax of taxList">
-                                                                                                    <!-- <div class="d-flex justify-content-between"> -->
-                                                                                                    <div>
-                                                                                                        <span
-                                                                                                            class="spancommon span_font_size">{{tax.TaxDesc}}</span>
-                                                                                                    </div>
-                                                                                                    <div>
-                                                                                                        <span
-                                                                                                            class="spancommon span_font_size">({{tax.TaxRate}}&nbsp;%)</span>
-                                                                                                    </div>
-                                                                                                    <div>
-                                                                                                        <span
-                                                                                                            class="spancommon span_font_size">{{tax.TaxAmount}}</span>
-                                                                                                    </div>
-                                                                                                    <!-- </div> -->
-                                                                                                </li>
-                                                                                            </ng-container>
-                                                                                            <li
-                                                                                                class="list-group-item list-seperate">
-                                                                                                <!-- <div class="d-flex justify-content-between"> -->
-                                                                                                <div>
-                                                                                                    <span
-                                                                                                        class="spancommon span_font_size"><b>Total
-                                                                                                            Premium</b></span>
-                                                                                                </div>
-                                                                                                <div>
-                                                                                                    <span
-                                                                                                        class="spancommon span_font_size"><b>{{premiumIncluedTax}}</b></span>
-                                                                                                </div>
-                                                                                                <!-- </div> -->
-                                                                                            </li>
-                                                                                        </ul>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </ng-template>
-                                                                            <!-- &nbsp;&nbsp;<button type="button"
-                                                                                class="btn maan-btn-blue btn-circle"
-                                                                                [ngbPopover]="taxCard"
-                                                                                placement="left"
-                                                                                (click)="ongetTaxDetails(element)">?</button> -->
-                                                                        </ng-container>
-                                                                    </div>
-                                                                    <div>
-                                                                        {{ element[col.key]|commaseparator }}
-                                                                    </div>
-                                                                </div>
-                                                            </ng-container>
-
-
-                                                </ng-container>
-                                                <ng-container *ngIf="col.key=='Rate'">
-                                                    &nbsp;
-                                                    <ng-container *ngIf="!adminSection">
-                                                        {{ element[col.key]}}
-                                                    </ng-container>
-                                                    <ng-container *ngIf="(adminSection)">
-                                                        <input type="text" [id]="'Rate'+i" style="width: 70px;"
-                                                            [(ngModel)]="element[col.key]">
-                                                    </ng-container>
-                                                </ng-container>
-                                                <ng-container *ngIf="col.key=='ExcessPercent'">
-                                                    &nbsp;
-                                                    <ng-container *ngIf="!adminSection">
-                                                        {{ element[col.key]}}
-                                                    </ng-container>
-                                                    <ng-container *ngIf="adminSection">
-                                                        <input type="text" [id]="'ExcessPercent'+i"
-                                                            style="width: 100px;"
-                                                            [(ngModel)]="element[col.key]">
-                                                    </ng-container>
-                                                </ng-container>
-                                                <ng-container *ngIf="col.key=='ExcessAmount'">
-                                                    &nbsp;
-                                                    <ng-container *ngIf="!adminSection">
-                                                        <div style="max-width: 100px !important;"> {{
-                                                            element[col.key]}}
-                                                        </div>
-                                                    </ng-container>
-                                                    <ng-container *ngIf="(adminSection)">
-                                                        <input type="text" [id]="'ExcessAmount'+i"
-                                                            style="width: 100px;"
-                                                            [(ngModel)]="element[col.key]">
-                                                    </ng-container>
-                                                </ng-container>
-                                                <ng-container
-                                                    *ngIf="col.key!='ExcessPercent' && col.key!='ExcessAmount' && col.key!='Rate' && columnHeader[i]['display']!='Sum Insured' && col.key!='PremiumIncludedTax' && col.key!='PremiumAfterDiscount'">
-                                                    <ng-container *ngIf="col.key!='CoverName'">
-                                                        &nbsp;{{ element[col.key]}}
-                                                    </ng-container>
-                                                    <ng-container *ngIf="col.key =='CoverName'">
-                                                        <div
-                                                            style="min-width: 150px !important;white-space: normal !important;padding: 3px !important">
-                                                            {{ element[col.key]}}&nbsp;<button
-                                                                class="fa fa-question-circle"
-                                                                style="border: none;" placement="bottom"
-                                                                (click)="covernameinfo(myView,element)">
-
-                                                            </button>
-                                                        </div>
-                                                    </ng-container>
-                                                </ng-container>
-                                                <ng-container *ngIf="columnHeader[i]['display']=='Sum Insured'">
-                                                    <div class="d-flex justify-content-between"
-                                                        *ngIf="productId!='42'">
-                                                        <div>
-                                                            &nbsp;&nbsp;<button type="button"
-                                                                    class="btn maan-btn-blue btn-circle"
-                                                                    (click)="setDiscountDetails(menu,element,excessModal)">?
-                                                                </button>
-                                                        </div>
-                                                        <div>
-                                                            <ng-container *ngIf="element[col.key]==null || element[col.key]==0">
+                                                        <div class="d-flex justify-content-end"
+                                                            *ngIf="productId=='42'">
+                                                            <ng-container
+                                                                *ngIf="element['CoverageLimit']==null || element['CoverageLimit']==0">
                                                                 0
                                                             </ng-container>
                                                             <ng-container
-                                                                *ngIf="element[col.key]!=null || element[col.key]!=0">
+                                                                *ngIf="element['CoverageLimit']!=null || element['CoverageLimit']!=0">
                                                                 <div style="max-width: 100px !important;"><span>{{
-                                                                        element[col.key]|commaseparator }}
+                                                                        element['CoverageLimit']|commaseparator }}
                                                                     </span></div>
                                                             </ng-container>
                                                         </div>
-                                                    </div>
-                                                    <div class="d-flex justify-content-end"
-                                                        *ngIf="productId=='42'">
+                                                    </ng-container>
+                                                    </ng-container>
+
+                                                <ng-template #hasConfig>
+                                                    <ng-container *ngIf="col.config.isChecked">
+                                                        &nbsp;&nbsp;
+                                                        <mat-checkbox class="example-margin text-center"
+                                                            [checked]="canbeChecked(element)"
+                                                            [disabled]="(element.isSelected=='D')"
+                                                            [name]="element[col.config.model]"
+                                                            (change)="onSelectCover(element,$event.checked,menu.VehicleId,menu,'coverList','change')">
+                                                        </mat-checkbox>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="col.config.isExpand">
                                                         <ng-container
-                                                            *ngIf="element['CoverageLimit']==null || element['CoverageLimit']==0">
-                                                            0
+                                                            *ngIf="!element?.expanded && element.SubCovers">
+                                                            &nbsp;&nbsp;<button type="button"
+                                                                class="btn maan-btn-blue btn-circle"
+                                                                (click)="element.expanded = !element?.expanded">
+                                                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                                            </button>
                                                         </ng-container>
                                                         <ng-container
-                                                            *ngIf="element['CoverageLimit']!=null || element['CoverageLimit']!=0">
-                                                            <div style="max-width: 100px !important;"><span>{{
-                                                                    element['CoverageLimit']|commaseparator }}
-                                                                </span></div>
+                                                            *ngIf="element?.expanded  && element.SubCovers">
+                                                            &nbsp;&nbsp;<button type="button"
+                                                                class="btn maan-btn-blue btn-circle"
+                                                                (click)="element.expanded = !element?.expanded">
+                                                                <i class="fa fa-minus" aria-hidden="true"></i>
+                                                            </button>
                                                         </ng-container>
-                                                    </div>
-                                                </ng-container>
-                                                </ng-container>
-
-                                            <ng-template #hasConfig>
-                                                <ng-container *ngIf="col.config.isChecked">
-                                                    &nbsp;&nbsp;
-                                                    <mat-checkbox class="example-margin text-center"
-                                                        [checked]="canbeChecked(element)"
-                                                        [disabled]="(element.isSelected=='D' && !endorseCovers) ||  checkCoverSelection(menu,element)"
-                                                        [name]="element[col.config.model]"
-                                                        >
-                                                    </mat-checkbox>
-                                                </ng-container>
-                                                <ng-container *ngIf="col.config.isExpand">
-                                                    <ng-container
-                                                        *ngIf="!element?.expanded && element.SubCovers">
-                                                        &nbsp;&nbsp;<button type="button"
-                                                            class="btn maan-btn-blue btn-circle"
-                                                            (click)="element.expanded = !element?.expanded">
-                                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="col.config.select">
+                                                        <div
+                                                            class="custom-control custom-radio custom-control-inline">
+                                                            <input type="radio" class="custom-control-input"
+                                                                id="customRadio{{element[col.key]}}" name="example"
+                                                                [value]="element[col.key]"
+                                                                (change)="onSelectCustomer.emit(element)">
+                                                            <label class="custom-control-label"
+                                                                for="customRadio{{element[col.key]}}">{{
+                                                                element[col.key] }}</label>
+                                                        </div>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="col.config.isEdit">
+                                                        <button class="btn btn-primary btn-sm"
+                                                            (click)="onEdit.emit(element)">
+                                                            <i class="fas fa-marker"></i>
                                                         </button>
                                                     </ng-container>
-                                                    <ng-container
-                                                        *ngIf="element?.expanded  && element.SubCovers">
-                                                        &nbsp;&nbsp;<button type="button"
-                                                            class="btn maan-btn-blue btn-circle"
-                                                            (click)="element.expanded = !element?.expanded">
-                                                            <i class="fa fa-minus" aria-hidden="true"></i>
+                                                    <ng-container *ngIf="col.config.isConfigure">
+                                                        <button class="btn btn-primary btn-sm"
+                                                            (click)="onConfigure.emit(element)">
+                                                            <i class="fas fa-cog"></i>
                                                         </button>
                                                     </ng-container>
+                                                    <ng-container *ngIf="col.config.isRemove">
+                                                        <button class="btn btn-danger btn-sm">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="col.config.isOpenGridAction">
+                                                        <button mat-icon-button [matMenuTriggerFor]="menu"
+                                                            aria-label="Example icon-button with a menu">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button mat-menu-item>
+                                                                <span>Lc Details</span>
+                                                            </button>
+                                                            <button mat-menu-item
+                                                                (click)="onOpenCoverAction.emit({data:element,name:'Certificate'})">
+                                                                <span>Certificate</span>
+                                                            </button>
+                                                            <button mat-menu-item
+                                                                (click)="onOpenCoverAction.emit({data:element,name:'Schedule'})">
+                                                                <span>Schedule</span>
+                                                            </button>
+                                                            <button mat-menu-item>
+                                                                <span>Policy Wording</span>
+                                                            </button>
+                                                        </mat-menu>
+                                                    </ng-container>
+                                                </ng-template>
+
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef="let event">
+                                                <ng-container *ngIf="col.key=='CoverName'">
+                                                    <b>Total</b>
                                                 </ng-container>
-                                                <ng-container *ngIf="col.config.select">
-                                                    <div
-                                                        class="custom-control custom-radio custom-control-inline">
-                                                        <input type="radio" class="custom-control-input"
-                                                            id="customRadio{{element[col.key]}}" name="example"
-                                                            [value]="element[col.key]"
-                                                            (change)="onSelectCustomer.emit(element)">
-                                                        <label class="custom-control-label"
-                                                            for="customRadio{{element[col.key]}}">{{
-                                                            element[col.key] }}</label>
+                                                <ng-container *ngIf="col.key=='PremiumIncludedTax'">
+                                                    <div class="d-flex justify-content-between">
+                                                        <div></div>
+                                                        <div><b>{{getTotalCost(menu)|commaseparator}}</b></div>
                                                     </div>
                                                 </ng-container>
-                                                <ng-container *ngIf="col.config.isEdit">
-                                                    <button class="btn btn-primary btn-sm"
-                                                        (click)="onEdit.emit(element)">
-                                                        <i class="fas fa-marker"></i>
-                                                    </button>
-                                                </ng-container>
-                                                <ng-container *ngIf="col.config.isConfigure">
-                                                    <button class="btn btn-primary btn-sm"
-                                                        (click)="onConfigure.emit(element)">
-                                                        <i class="fas fa-cog"></i>
-                                                    </button>
-                                                </ng-container>
-                                                <ng-container *ngIf="col.config.isRemove">
-                                                    <button class="btn btn-danger btn-sm">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </ng-container>
-                                                <ng-container *ngIf="col.config.isOpenGridAction">
-                                                    <button mat-icon-button [matMenuTriggerFor]="menu"
-                                                        aria-label="Example icon-button with a menu">
-                                                        <i class="fas fa-ellipsis-v"></i>
-                                                    </button>
-                                                    <mat-menu #menu="matMenu">
-                                                        <button mat-menu-item>
-                                                            <span>Lc Details</span>
-                                                        </button>
-                                                        <button mat-menu-item
-                                                            (click)="onOpenCoverAction.emit({data:element,name:'Certificate'})">
-                                                            <span>Certificate</span>
-                                                        </button>
-                                                        <button mat-menu-item
-                                                            (click)="onOpenCoverAction.emit({data:element,name:'Schedule'})">
-                                                            <span>Schedule</span>
-                                                        </button>
-                                                        <button mat-menu-item>
-                                                            <span>Policy Wording</span>
-                                                        </button>
-                                                    </mat-menu>
-                                                </ng-container>
-                                            </ng-template>
+                                            </td>
+                                        </ng-container>
 
-                                        </td>
-                                        <td mat-footer-cell *matFooterCellDef="let event">
-                                            <ng-container *ngIf="col.key=='CoverName'">
-                                                <b>Total</b>
-                                            </ng-container>
-                                            <ng-container *ngIf="col.key=='PremiumIncludedTax'">
-                                                <div class="d-flex justify-content-between">
-                                                    <div></div>
-                                                    <div><b>{{getTotalCost(menu)|commaseparator}}</b></div>
-                                                </div>
-                                            </ng-container>
-                                        </td>
-                                    </ng-container>
+                                        <ng-container matColumnDef="expandedDetail">
+                                            <td mat-cell *matCellDef="let element"
+                                                [attr.colspan]="columnsToDisplay.length">
+                                                <ng-container *ngIf="element.SubCovers">
+                                                    <div class="example-element-detail"
+                                                        [@detailExpand]="element?.expanded"
+                                                        *ngIf="element?.expanded">
+                                                        <div class="row p-0">
+                                                            <div class="col-md-11 col-lg-11 offset-1 p-0">
+                                                                <table mat-table [dataSource]="element.SubCovers"
+                                                                    multiTemplateDataRows matSort>
+                                                                    <ng-container
+                                                                        matColumnDef="header-row-first-group">
+                                                                        <th mat-header-cell *matHeaderCellDef
+                                                                            [style.text-align]="center"
+                                                                            class="mat-header-cell"
+                                                                            [attr.colspan]="3">
 
-                                    <ng-container matColumnDef="expandedDetail">
-                                        <td mat-cell *matCellDef="let element"
-                                            [attr.colspan]="columnsToDisplay.length">
-                                            <ng-container *ngIf="element.SubCovers">
-                                                <div class="example-element-detail"
-                                                    [@detailExpand]="element?.expanded"
-                                                    *ngIf="element?.expanded">
-                                                    <div class="row p-0">
-                                                        <div class="col-md-11 col-lg-11 offset-1 p-0">
-                                                            <table mat-table [dataSource]="element.SubCovers"
-                                                                multiTemplateDataRows matSort>
-                                                                <ng-container
-                                                                    matColumnDef="header-row-first-group">
-                                                                    <th mat-header-cell *matHeaderCellDef
-                                                                        [style.text-align]="center"
-                                                                        class="mat-header-cell"
-                                                                        [attr.colspan]="3">
-
-                                                                    </th>
-                                                                </ng-container>
-                                                                <ng-container
-                                                                    matColumnDef="header-row-second-group">
-                                                                    <th mat-header-cell *matHeaderCellDef
-                                                                        [attr.colspan]="3"
-                                                                        [style.text-align]="center"
-                                                                        class="innerHead mat-header-cell">
-                                                                        Premium </th>
-                                                                </ng-container>
-                                                                <ng-container
-                                                                    *ngFor="let col of innerColumnHeader; let i = index;"
-                                                                    [matColumnDef]="col.key" [sticky]="i===0"
-                                                                    [stickyEnd]="i === 10">
-                                                                    <th mat-header-cell *matHeaderCellDef
-                                                                        mat-sort-header
-                                                                        class="innerHead table-header mat-header-cell"
-                                                                        style="white-space: pre-line !important;">
-                                                                        <ng-container
-                                                                            *ngIf="innerColumnHeader[i]['display']=='Sum Insured' || innerColumnHeader[i]['display']=='Minimum' || innerColumnHeader[i]['display']=='After Discount' || innerColumnHeader[i]['display']=='Premium'">
-                                                                            {{ innerColumnHeader[i]["display"]
-                                                                            }}&nbsp;({{currencyCode}})
-                                                                        </ng-container>
-                                                                        <ng-container
-                                                                            *ngIf="innerColumnHeader[i]['display']=='Rate'">
-                                                                            {{ innerColumnHeader[i]["display"]
-                                                                            }}&nbsp;(%)
-                                                                        </ng-container>
-                                                                        <ng-container
-                                                                            *ngIf="innerColumnHeader[i]['display']=='ExcessPercent'">
-                                                                            Excess
-                                                                        </ng-container>
-                                                                        <ng-container
-                                                                            *ngIf="innerColumnHeader[i]['display']!='Sum Insured' && innerColumnHeader[i]['display']!='ExcessPercent' && innerColumnHeader[i]['display']!='Rate' && innerColumnHeader[i]['display']!='Minimum' && innerColumnHeader[i]['display']!='After Discount' && innerColumnHeader[i]['display']!='Premium'">
-                                                                            {{ innerColumnHeader[i]["display"]
-                                                                            }}
-                                                                        </ng-container>
-
-                                                                    </th>
-                                                                    <td mat-cell class="customCellInner"
-                                                                        *matCellDef="let subElement">
-                                                                        <ng-container
-                                                                            *ngIf="!col.config; else hasConfig">
+                                                                        </th>
+                                                                    </ng-container>
+                                                                    <ng-container
+                                                                        matColumnDef="header-row-second-group">
+                                                                        <th mat-header-cell *matHeaderCellDef
+                                                                            [attr.colspan]="3"
+                                                                            [style.text-align]="center"
+                                                                            class="innerHead mat-header-cell">
+                                                                            Premium </th>
+                                                                    </ng-container>
+                                                                    <ng-container
+                                                                        *ngFor="let col of innerColumnHeader; let i = index;"
+                                                                        [matColumnDef]="col.key" [sticky]="i===0"
+                                                                        [stickyEnd]="i === 10">
+                                                                        <th mat-header-cell *matHeaderCellDef
+                                                                            mat-sort-header
+                                                                            class="innerHead table-header mat-header-cell"
+                                                                            style="white-space: pre-line !important;">
                                                                             <ng-container
-                                                                                *ngIf="col.key=='Status'">
-                                                                                <span
-                                                                                    *ngIf="subElement[col.key]=='Y'">Active</span>
-                                                                                <span
-                                                                                    *ngIf="subElement[col.key]!='Y'">DeActive</span>
+                                                                                *ngIf="innerColumnHeader[i]['display']=='Sum Insured' || innerColumnHeader[i]['display']=='Minimum' || innerColumnHeader[i]['display']=='After Discount' || innerColumnHeader[i]['display']=='Premium'">
+                                                                                {{ innerColumnHeader[i]["display"]
+                                                                                }}&nbsp;({{currencyCode}})
                                                                             </ng-container>
                                                                             <ng-container
-                                                                                *ngIf="col.key!='Status' && col.key!='CalcType'">
-                                                                                {{ subElement[col.key] }}
+                                                                                *ngIf="innerColumnHeader[i]['display']=='Rate'">
+                                                                                {{ innerColumnHeader[i]["display"]
+                                                                                }}&nbsp;(%)
+                                                                            </ng-container>
+                                                                            <ng-container
+                                                                                *ngIf="innerColumnHeader[i]['display']=='ExcessPercent'">
+                                                                                Excess
+                                                                            </ng-container>
+                                                                            <ng-container
+                                                                                *ngIf="innerColumnHeader[i]['display']!='Sum Insured' && innerColumnHeader[i]['display']!='ExcessPercent' && innerColumnHeader[i]['display']!='Rate' && innerColumnHeader[i]['display']!='Minimum' && innerColumnHeader[i]['display']!='After Discount' && innerColumnHeader[i]['display']!='Premium'">
+                                                                                {{ innerColumnHeader[i]["display"]
+                                                                                }}
                                                                             </ng-container>
 
-                                                                        </ng-container>
-                                                                        <ng-template #hasConfig>
+                                                                        </th>
+                                                                        <td mat-cell class="customCellInner"
+                                                                            *matCellDef="let subElement">
                                                                             <ng-container
-                                                                                *ngIf="col.config.isChecked">
-                                                                                <mat-checkbox
-                                                                                    class="example-margin"
-                                                                                    [(ngModel)]="subElement[col.config.model]"
-                                                                                    (change)="onSelectCustomer.emit(subElement)">
-                                                                                </mat-checkbox>
-                                                                            </ng-container>
-                                                                            <ng-container
-                                                                                *ngIf="col.config.select">
-                                                                                &nbsp;&nbsp;
+                                                                                *ngIf="!col.config; else hasConfig">
                                                                                 <ng-container
-                                                                                    *ngIf="subElement.MultiSelectYn=='Y'">
+                                                                                    *ngIf="col.key=='Status'">
+                                                                                    <span
+                                                                                        *ngIf="subElement[col.key]=='Y'">Active</span>
+                                                                                    <span
+                                                                                        *ngIf="subElement[col.key]!='Y'">DeActive</span>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="col.key!='Status' && col.key!='CalcType'">
+                                                                                    {{ subElement[col.key] }}
+                                                                                </ng-container>
+
+                                                                            </ng-container>
+                                                                            <ng-template #hasConfig>
+                                                                                <ng-container
+                                                                                    *ngIf="col.config.isChecked">
                                                                                     <mat-checkbox
                                                                                         class="example-margin"
-                                                                                        [checked]="subElement.selected"
-                                                                                        (change)="onChangeSubCover(subElement,element,menu,$event.checked)">
+                                                                                        [(ngModel)]="subElement[col.config.model]"
+                                                                                        (change)="onSelectCustomer.emit(subElement)">
                                                                                     </mat-checkbox>
                                                                                 </ng-container>
                                                                                 <ng-container
-                                                                                    *ngIf="subElement.MultiSelectYn!='Y'">
-                                                                                    <mat-radio-button
-                                                                                        [value]="subElement[col.key]"
-                                                                                        id="customRadio{{subElement[col.key]}}"
-                                                                                        [name]="'customRadio'+i"
-                                                                                        (change)="onSelectCustomer.emit(subElement)">
-                                                                                    </mat-radio-button>
+                                                                                    *ngIf="col.config.select">
+                                                                                    &nbsp;&nbsp;
+                                                                                    <ng-container
+                                                                                        *ngIf="subElement.MultiSelectYn=='Y'">
+                                                                                        <mat-checkbox
+                                                                                            class="example-margin"
+                                                                                            [checked]="subElement.selected"
+                                                                                            (change)="onChangeSubCover(subElement,element,menu,$event.checked)">
+                                                                                        </mat-checkbox>
+                                                                                    </ng-container>
+                                                                                    <ng-container
+                                                                                        *ngIf="subElement.MultiSelectYn!='Y'">
+                                                                                        <mat-radio-button
+                                                                                            [value]="subElement[col.key]"
+                                                                                            id="customRadio{{subElement[col.key]}}"
+                                                                                            [name]="'customRadio'+i"
+                                                                                            (change)="onSelectCustomer.emit(subElement)">
+                                                                                        </mat-radio-button>
+                                                                                    </ng-container>
                                                                                 </ng-container>
-                                                                            </ng-container>
-                                                                            <ng-container
-                                                                                *ngIf="col.config.isEdit">
-                                                                                <button
-                                                                                    class="btn btn-primary btn-sm"
-                                                                                    (click)="onEdit.emit(subElement)">
-                                                                                    <i
-                                                                                        class="fas fa-marker"></i>
-                                                                                </button>
-                                                                            </ng-container>
-                                                                            <ng-container
-                                                                                *ngIf="col.config.isConfigure">
-                                                                                <button
-                                                                                    class="btn btn-primary btn-sm"
-                                                                                    (click)="onConfigure.emit(subElement)">
-                                                                                    <i class="fas fa-cog"></i>
-                                                                                </button>
-                                                                            </ng-container>
-                                                                            <ng-container
-                                                                                *ngIf="col.config.isRemove">
-                                                                                <button
-                                                                                    class="btn btn-danger btn-sm">
-                                                                                    <i class="fas fa-trash"></i>
-                                                                                </button>
-                                                                            </ng-container>
-                                                                            <ng-container
-                                                                                *ngIf="col.config.isOpenGridAction">
-                                                                                <button mat-icon-button
-                                                                                    [matMenuTriggerFor]="menu"
-                                                                                    aria-label="Example icon-button with a menu">
-                                                                                    <i
-                                                                                        class="fas fa-ellipsis-v"></i>
-                                                                                </button>
-                                                                                <mat-menu #menu="matMenu">
-                                                                                    <button mat-menu-item>
-                                                                                        <span>Lc Details</span>
+                                                                                <ng-container
+                                                                                    *ngIf="col.config.isEdit">
+                                                                                    <button
+                                                                                        class="btn btn-primary btn-sm"
+                                                                                        (click)="onEdit.emit(subElement)">
+                                                                                        <i
+                                                                                            class="fas fa-marker"></i>
                                                                                     </button>
-                                                                                    <button mat-menu-item
-                                                                                        (click)="onOpenCoverAction.emit({data:subElement,name:'Certificate'})">
-                                                                                        <span>Certificate</span>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="col.config.isConfigure">
+                                                                                    <button
+                                                                                        class="btn btn-primary btn-sm"
+                                                                                        (click)="onConfigure.emit(subElement)">
+                                                                                        <i class="fas fa-cog"></i>
                                                                                     </button>
-                                                                                    <button mat-menu-item
-                                                                                        (click)="onOpenCoverAction.emit({data:subElement,name:'Schedule'})">
-                                                                                        <span>Schedule</span>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="col.config.isRemove">
+                                                                                    <button
+                                                                                        class="btn btn-danger btn-sm">
+                                                                                        <i class="fas fa-trash"></i>
                                                                                     </button>
-                                                                                    <button mat-menu-item>
-                                                                                        <span>Policy
-                                                                                            Wording</span>
+                                                                                </ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="col.config.isOpenGridAction">
+                                                                                    <button mat-icon-button
+                                                                                        [matMenuTriggerFor]="menu"
+                                                                                        aria-label="Example icon-button with a menu">
+                                                                                        <i
+                                                                                            class="fas fa-ellipsis-v"></i>
                                                                                     </button>
-                                                                                </mat-menu>
-                                                                            </ng-container>
-                                                                        </ng-template>
-                                                                    </td>
-                                                                </ng-container>
-                                                                <tr mat-header-row
-                                                                    *matHeaderRowDef="['header-row-first-group', 'header-row-second-group']">
-                                                                </tr>
-                                                                <tr mat-header-row *matHeaderRowDef="innerKeys">
-                                                                </tr>
-                                                                <tr mat-row
-                                                                    *matRowDef="let element;let i = dataIndex; columns: innerKeys;"
-                                                                    [ngClass]="{'striped-row': i % 2}"
-                                                                    [class.example-element-row]="element.SubCovers?.length"
-                                                                    [class.example-expanded-row]="element?.expanded">
-                                                                </tr>
-                                                            </table>
+                                                                                    <mat-menu #menu="matMenu">
+                                                                                        <button mat-menu-item>
+                                                                                            <span>Lc Details</span>
+                                                                                        </button>
+                                                                                        <button mat-menu-item
+                                                                                            (click)="onOpenCoverAction.emit({data:subElement,name:'Certificate'})">
+                                                                                            <span>Certificate</span>
+                                                                                        </button>
+                                                                                        <button mat-menu-item
+                                                                                            (click)="onOpenCoverAction.emit({data:subElement,name:'Schedule'})">
+                                                                                            <span>Schedule</span>
+                                                                                        </button>
+                                                                                        <button mat-menu-item>
+                                                                                            <span>Policy
+                                                                                                Wording</span>
+                                                                                        </button>
+                                                                                    </mat-menu>
+                                                                                </ng-container>
+                                                                            </ng-template>
+                                                                        </td>
+                                                                    </ng-container>
+                                                                    <tr mat-header-row
+                                                                        *matHeaderRowDef="['header-row-first-group', 'header-row-second-group']">
+                                                                    </tr>
+                                                                    <tr mat-header-row *matHeaderRowDef="innerKeys">
+                                                                    </tr>
+                                                                    <tr mat-row
+                                                                        *matRowDef="let element;let i = dataIndex; columns: innerKeys;"
+                                                                        [ngClass]="{'striped-row': i % 2}"
+                                                                        [class.example-element-row]="element.SubCovers?.length"
+                                                                        [class.example-expanded-row]="element?.expanded">
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+
                                                         </div>
-
                                                     </div>
-                                                </div>
-                                            </ng-container>
+                                                </ng-container>
 
-                                        </td>
+                                            </td>
 
-                                    </ng-container>
-                                        <!-- <tr mat-header-row
-                                            *matHeaderRowDef="['header-row-first-group', 'header-row-second-group']">
-                                        </tr> -->
-                                    <tr mat-header-row *matHeaderRowDef="keys"></tr>
-                                    <tr mat-row *matRowDef="let element; columns: keys;let i = dataIndex;"
-                                        [ngClass]="{'striped-row': i % 2}"
-                                        [class.example-element-row]="element.SubCovers?.length"
-                                        [class.example-expanded-row]="element?.expanded"></tr>
-                                    <!-- <tr mat-row
-                                        *matRowDef="let row;let j = dataIndex; columns: ['expandedDetail']"
-                                        [ngClass]="{'striped-row': j % 2}" class="example-detail-row"></tr>-->
-                                        <tr mat-footer-row *matFooterRowDef="keys"></tr> 
+                                        </ng-container>
+                                            <!-- <tr mat-header-row
+                                                *matHeaderRowDef="['header-row-first-group', 'header-row-second-group']">
+                                            </tr> -->
+                                        <tr mat-header-row *matHeaderRowDef="keys"></tr>
+                                        <tr mat-row *matRowDef="let element; columns: keys;let i = dataIndex;"
+                                            [ngClass]="{'striped-row': i % 2}"
+                                            [class.example-element-row]="element.SubCovers?.length"
+                                            [class.example-expanded-row]="element?.expanded"></tr>
+                                        <!-- <tr mat-row
+                                            *matRowDef="let row;let j = dataIndex; columns: ['expandedDetail']"
+                                            [ngClass]="{'striped-row': j % 2}" class="example-detail-row"></tr>-->
+                                            <tr mat-footer-row *matFooterRowDef="keys"></tr> 
 
-                                </table>
+                                    </table>
+                                </ng-container>
+                               
+                            </div>
+                            <div class="text-end">
+                                
                             </div>
                             <div class="text-center">
-                                <button class="btn btn-info"><i class="fas fa-eye mx-1"></i>Benefits Illustrator</button>&nbsp;
-                                <button class="btn btn-primary"><i class="fas fa-print mx-1"></i>Print</button>&nbsp;
+                                <button class="btn btn-info" (click)="ongetBenefitDetails('benefit')"><i class="fas fa-eye mx-1"></i>Benefits Illustrator</button>&nbsp;
+                                <button class="btn btn-primary" (click)="ongetBenefitDetails('print')"><i class="fas fa-print mx-1"></i>Print</button>&nbsp;
                                 <button class="btn btn-warning"><i class="fas fa-envelope mx-1"></i>Email</button>&nbsp;
                             </div>
                     </div>
-                    <div class="customCard" *ngIf="!premiumSection">
+                    <div class="customCard mt-2" *ngIf="!premiumSection">
                             <div class="row">
-                                <div class="text-center" style="color: #333b85 !important;">
-                           <div class="text-center" style="color: #040405!important;">
-<div class="row mt-2">
+                                <div class="text-center" style="color: #333b85 !important;"> <u><b>Key Product Features</b></u></div>
+                            </div>
+                            <div class="row mt-2">
                                 <div class="text-center" style="color: #555050;">
                                     <b>Monthly Income</b>
                                 </div>
