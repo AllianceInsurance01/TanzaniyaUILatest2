@@ -836,15 +836,15 @@ export class VehicleWishListComponent implements OnInit {
       else this.uploadProceed('Add');
   }
   uploadProceed(type){
-    let createdBy="";
     let quoteStatus = sessionStorage.getItem('QuoteStatus');
     this.subUsertype = sessionStorage.getItem('typeValue');
       console.log("AcExecutive",this.acExecutiveId,this.vehicleDetails,this.sourceType,this.brokerCode,this.customerCode);
       
-      let appId = "1",loginId="",brokerbranchCode="";
+      this.subuserType = sessionStorage.getItem('typeValue');
+    let appId = "1",loginId="",brokerbranchCode="",createdBy="";
       if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
-        brokerbranchCode = this.updateComponent.brokerBranchCode;
-          createdBy = this.updateComponent.brokerLoginId;
+        brokerbranchCode = this.vehicleDetails.BrokerBranchCode;
+          createdBy = this.vehicleDetails.CreatedBy;
       }
       else{
         createdBy = this.loginId;
@@ -855,6 +855,7 @@ export class VehicleWishListComponent implements OnInit {
         }
         else{
           appId = this.loginId;
+          loginId = this.vehicleDetails.LoginId;
           loginId = this.updateComponent.brokerLoginId
           brokerbranchCode = this.updateComponent.brokerBranchCode;
         }
@@ -863,9 +864,14 @@ export class VehicleWishListComponent implements OnInit {
         this.sourceType = this.updateComponent.sourceType;
         this.bdmCode = this.updateComponent.brokerCode;
         this.brokerCode = this.updateComponent.brokerCode;
+        brokerbranchCode =  this.updateComponent.brokerBranchCode;
         this.customerCode = this.updateComponent.CustomerCode;
         this.customerName = this.updateComponent.CustomerName;
-      }
+        }
+        else {
+          this.sourceType = this.subuserType;
+          this.customerCode = this.userDetails?.Result.CustomerCode;
+        }
   
     console.log("AcExecutive",this.acExecutiveId,this.vehicleDetails,this.sourceType,this.bdmCode,this.brokerCode,this.customerCode);
   
@@ -882,7 +888,7 @@ export class VehicleWishListComponent implements OnInit {
       "CustomerRefNo": sessionStorage.getItem('customerReferenceNo'),
       "AcExecutiveId":null,
       "BrokerCode": this.brokerCode,
-      "LoginId": this.loginId,
+      "LoginId": loginId,
       "SubUserType": this.subUsertype,
       "ApplicationId":appId,
       "EndorsementYn":"N",
@@ -980,11 +986,11 @@ export class VehicleWishListComponent implements OnInit {
                   {
                     this.uploadDocList = [];
                     this.uploadStatus = null;
-                }, (4*1000));
+                }, (2*1000));
                 }
                 else{
                   this.uploadStatus = res?.StatusDesc;
-                  setTimeout(() => this.checkUploadStatus(), (2*1000));
+                  setTimeout(() => this.checkUploadStatus(), (1*1000));
                 }
               }
             },  
