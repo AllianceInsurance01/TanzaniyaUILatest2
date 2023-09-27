@@ -963,14 +963,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
         console.log(data);
         if(data.Result){
           this.sumInsuredDetails = data.Result;
-          console.log('SUMMMMMMMMMM',this.sumInsuredDetails);
-          let homeObj = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
-          if(this.item==undefined || this.item == null){
-              this.item = this.sumInsuredDetails?.ProductSuminsuredDetails?.SectionId;
-              console.log('GGGGGGGGGGGGGGGG',this.item);
-              this.setTabSections();
-              
-          }
+          this.item = this.sumInsuredDetails?.ProductSuminsuredDetails?.SectionId;
+          this.setTabSections();
           this.getContentList();
           if(this.six){
             this.Electronic();

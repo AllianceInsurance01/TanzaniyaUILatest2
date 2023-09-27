@@ -2188,6 +2188,7 @@ export class CustomerDetailsComponent implements OnInit {
           Details[0]['BranchCode'] = this.branchValue;
           Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
           Details[0]['CustomerCode'] = this.customerCode;
+          Details[0]['CustomerName'] = this.customerName;
           Details[0]['LoginId'] = this.brokerLoginId;
           if(this.IndustryId && this.industryList!=null)
           Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
@@ -2198,6 +2199,7 @@ export class CustomerDetailsComponent implements OnInit {
           Details[0]['BranchCode'] = this.branchValue;
           Details[0]['BrokerBranchCode'] = this.brokerBranchCode;
           Details[0]['CustomerCode'] = this.customerCode;
+          Details[0]['CustomerName'] = this.customerName;
           Details[0]['LoginId'] = this.loginId;
           if(this.IndustryId && this.industryList!=null)
           Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
@@ -2495,6 +2497,7 @@ export class CustomerDetailsComponent implements OnInit {
           vehicle['BranchCode'] = this.branchValue;
           vehicle['BrokerBranchCode'] = this.brokerBranchCode;
           vehicle['CustomerCode'] = this.customerCode;
+          vehicle['CustomerName'] = this.customerName;
           vehicle['LoginId'] = this.brokerLoginId;
         }
         else{
@@ -2555,6 +2558,7 @@ export class CustomerDetailsComponent implements OnInit {
         vehicle['BranchCode'] = this.branchValue;
         vehicle['BrokerBranchCode'] = this.brokerBranchCode;
         vehicle['CustomerCode'] = this.customerCode;
+        vehicle['CustomerName'] = this.customerName;
         vehicle['LoginId'] = this.brokerLoginId;
       }
       else{
@@ -2563,6 +2567,7 @@ export class CustomerDetailsComponent implements OnInit {
         vehicle['BranchCode'] = this.branchValue;
         vehicle['BrokerBranchCode'] = this.brokerBranchCode;
         vehicle['CustomerCode'] = this.customerCode;
+        vehicle['CustomerName'] = this.customerName;
         vehicle['LoginId'] = this.loginId;
       }
       vehicle['modifiedYN'] = this.updateComponent.modifiedYN;
