@@ -4,9 +4,9 @@
             <div class="col-md-3 col-xl-3 col-lg-3">
                 Company Configuration
             </div>
-            <div class="col-md-4 col-xl-4 col-lg-4 offset-5 pl-4" >
+            <!-- <div class="col-md-4 col-xl-4 col-lg-4 offset-5 pl-4" >
                 Company Name - <b></b>
-            </div>
+            </div> -->
         </div>
     </div>
 <div class="card p-1">
@@ -23,6 +23,8 @@
                 <label for="menu5">Mail</label>
                 <input type="radio" id="menu6" name="menu" value="Sms" (click)="onRedirect('Sms')" [(ngModel)]="activeMenu">
                 <label for="menu6">SMS</label>
+                <input type="radio" id="menu7" name="menu" value="CompanyTax" (click)="onRedirect('CompanyTax')" [(ngModel)]="activeMenu">
+                <label for="menu7">Company Tax</label>
             </div>
         </div>
         <div class="vision-grid-item">

@@ -31,6 +31,7 @@ export class PoliciesComponent implements OnInit {
   show: boolean = false;
   OthersList:any[]=[];
   searchValue:any[]=[];brokerCode:any='';brokerList:any[]=[];
+  customersearch:any;
   constructor(private router:Router,private sharedService: SharedService) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -95,6 +96,24 @@ export class PoliciesComponent implements OnInit {
         // },
 
       ];
+
+      let endorsement =  sessionStorage.getItem('otherpolicysearch');
+      let policyno =  sessionStorage.getItem('otherpolicy');
+
+      if(endorsement == 'otherpolicysearch'){
+        console.log('NNNNNNNNNNNN',policyno);
+        this.customersearch =true;
+        this.show=true;
+        this.eventothers('direct',policyno,'change');
+        sessionStorage.removeItem('otherpolicy');
+        sessionStorage.removeItem('otherpolicysearch')
+      }
+      else{
+        this.show=false;
+        this.customersearch=false;
+        sessionStorage.removeItem('otherpolicy');
+        sessionStorage.removeItem('otherpolicysearch');
+      }
 
      
     }
@@ -366,7 +385,22 @@ export class PoliciesComponent implements OnInit {
     sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
     sessionStorage.setItem('quoteNo',rowData.QuoteNo);
     sessionStorage.setItem('endorsePolicyNo',rowData.OriginalPolicyNo);
+    sessionStorage.setItem('Pagefrom','endorsement');
     this.router.navigate(['Home/policies/Endorsements']);
+  }
+ongetEndorsement(rowData){
+  sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+  sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
+  sessionStorage.setItem('quoteNo',rowData.QuoteNo);
+  sessionStorage.setItem('endorsePolicyNo',rowData.OriginalPolicyNo);
+  sessionStorage.setItem('Pagefrom','Otherendorsement');
+  this.router.navigate(['Home/policies/Endorsements']);
+}
+  ongetBacks(){
+    this.show=false;
+    this.onSelectCustomer(false);
+    this.searchValue=[];
+    this.customersearch=false;
   }
 
   onViews(rowData){
@@ -402,9 +436,11 @@ export class PoliciesComponent implements OnInit {
     
     if(event){
     this.show= true;
+    this.customersearch=true;
     }
     else{
       this.show=false;
+      this.customersearch=false;
     }
       }
       eventothers(element,searchvalues,entryType){

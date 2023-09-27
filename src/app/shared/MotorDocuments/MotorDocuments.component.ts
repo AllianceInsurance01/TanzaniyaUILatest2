@@ -476,7 +476,7 @@ export class MotorDocumentsComponent implements OnInit {
               if(this.ViewRisk?.length!=0){
                 this.onTravelRiskPassenger();
               }
-              console.log('mmmmmmmmmm',this.ViewRisk)
+              console.log('Travel Passenger',this.ViewRisk)
               //this.quoteno=data.Result.QuoteNo
 
 
@@ -497,7 +497,8 @@ this.passengerName=type;
       let ReqObj ={
         "QuoteNo": this.quoteNo,
       }
-      let urlLink = `${this.motorApiUrl}api/getallpasshistorydetails`;
+      //let urlLink = `${this.motorApiUrl}api/getallpasshistorydetails`;
+      let urlLink = `${this.motorApiUrl}api/getactiverpassengers`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
           console.log(data);

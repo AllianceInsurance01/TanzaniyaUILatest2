@@ -426,8 +426,8 @@
                                             <div class="heading2">{{ViewRisk?.HavePromoCode}}</div>
                                          </div>
                                          <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">Type of Paln</div>
-                                            <div class="heading2" >{{ViewRisk?.SectionName}}</div>
+                                            <div class="heading1">Type of Plan</div>
+                                            <div class="heading2" >{{ViewRisk?.PlanTypeDesc}}</div>
                                         </div>
                                     </div>
                                     <div class="row mt-2">
@@ -437,7 +437,7 @@
                                         </div>
                                         <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">Premium Plan</div>
-                                            <div class="heading2"> {{ViewRisk?.PremiumPlan}}</div>
+                                            <div class="heading2"> {{ViewRisk?.SectionName}}</div>
                                          </div>
                                          <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">No Of Persons</div>
@@ -457,7 +457,8 @@
 
                                            <div class="row">
                                             <div class="col-6 col-md-4" *ngFor="let h of historyRecords">
-                                                <div class="card my_class2" style="padding:10px 10px 10px 10px !important;cursor: pointer;background-color:lightblue"
+                                                <!--padding:10px 10px 10px 10px-->
+                                                <div class="card my_class2" style="padding:0px 5px !important;cursor: pointer;background-color:lightblue"
                                                 [ngClass]="{'my_class': h.PassengerName != passengerName, 'my_class2' :  h.PassengerName == passengerName }" (click)="passnger(h?.PassengerName)">
                                                     <div class="mails">
                                                       <div class="mail-names">

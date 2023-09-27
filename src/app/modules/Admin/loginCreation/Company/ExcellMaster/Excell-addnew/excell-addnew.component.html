@@ -29,6 +29,7 @@
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">DataType</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">FieldLength</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">DataRange</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Status</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">IsArrayYn</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Array JsonKey</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Array TableColumn</th>
@@ -37,7 +38,6 @@
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Object JsonKey</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Object TableColumn</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Object DefaultCol</th>
-                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Status</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Remove</th>
                                 </tr>
                                
@@ -69,7 +69,7 @@
                                     </td>
                                     <td class="tbl-content">
                                         <ng-select class="custom" name="dataType" [(ngModel)]="row.DataType" placeholder="Select Data Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
-                                            <ng-option *ngFor="let opt of dataType" [value]="opt.ItemCode" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:auto;">{{opt.ItemValue}}</ng-option>
+                                            <ng-option *ngFor="let opt of dataType" [value]="opt.ItemValue" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:auto;">{{opt.ItemValue}}</ng-option>
                                         </ng-select>
                                     </td>
                                  
@@ -81,6 +81,16 @@
                                     <td class="tbl-content">
                                         <div class="input-control-container">
                                             <input type="text" maxlength="20" [(ngModel)]="row.DataRange" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px;">
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar" style="white-space: nowrap;">
+                                                <input [id]="'orginwarehouse_StatusYNL'+i" type="radio" [(ngModel)]="row.Status" [name]="'originatingStatusY'+i" value="Y">
+                                                <label class="customRadioLabel" [for]="'orginwarehouse_StatusYNL'+i">Active</label>
+                                                <input type="radio" [id]="'orginwarehouse_StatusYL'+i" [(ngModel)]="row.Status" [name]="'originatingStatusY'+i" value="N">
+                                                <label class="customRadioLabel" [for]="'orginwarehouse_StatusYL'+i">DeActive</label>
+                                            </div>
                                         </div>
                                     </td>
                                     <td class="tbl-content">
@@ -145,17 +155,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="tbl-content">
-                                        <div class="input-form-radio-box">
-                                            <div class="radio-toolbar" style="white-space: nowrap;">
-                                                <input [id]="'orginwarehouse_StatusYNL'+i" type="radio" [(ngModel)]="row.Status" [name]="'originatingStatusY'+i" value="Y">
-                                                <label class="customRadioLabel" [for]="'orginwarehouse_StatusYNL'+i">Yes</label>
-                                                <input type="radio" [id]="'orginwarehouse_StatusYL'+i" [(ngModel)]="row.Status" [name]="'originatingStatusY'+i" value="N">
-                                                <label class="customRadioLabel" [for]="'orginwarehouse_StatusYL'+i">No</label>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    
+
                                     <td class="tbl-content">
                                         <a mat-raised-button class="mx-1" data-toggle="tooltip" id="remove" data-placement="top" title="Delete" (click)="deleteRow(row.FieldId,row.ObjDefaulVal,i)"><i
                                             class="fa fa-trash"></i></a>

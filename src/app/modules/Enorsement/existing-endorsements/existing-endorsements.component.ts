@@ -140,8 +140,17 @@ export class ExistingEndorsementsComponent {
     this.router.navigate(['/Home/policies/Endorsements/endorsementTypes'])
   }
   ongetBack(){
+    let page =  sessionStorage.getItem('Pagefrom');
     sessionStorage.removeItem('endorseTypeId');
     sessionStorage.removeItem('endorseStartDate');
-    this.router.navigate(['/Home/policies'])
-  }
+    if(page=='Otherendorsement'){
+      sessionStorage.setItem('otherpolicy',this.policyNo);
+      sessionStorage.setItem('otherpolicysearch','otherpolicysearch')
+    }
+    else if(page=='endorsement'){
+      sessionStorage.setItem('otherpolicy',null);
+      sessionStorage.setItem('otherpolicysearch','policysearch')
+    }
+  this.router.navigate(['/Home/policies'])
+}
 }

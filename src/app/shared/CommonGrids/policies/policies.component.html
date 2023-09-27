@@ -16,8 +16,8 @@
                     </ng-select>
                 </div>
             </div>
-            <div [ngClass]="show ? 'col-md-2 col-lg-2 col-xl-2 offset-6' : 'col-md-2 col-lg-2 col-xl-2 offset-6'" *ngIf="userType == 'Issuer'">
-                <mat-checkbox class="example-margin" (change)="onSelectCustomer($event.checked)">Other Policy Search</mat-checkbox>
+            <div  *ngIf="userType == 'Issuer'" [ngClass]="show ? 'col-md-2 col-lg-2 col-xl-2 offset-10' : 'col-md-2 col-lg-2 col-xl-2 offset-6'"><!--[ngClass]="show ? 'col-md-2 col-lg-2 col-xl-2 offset-6' : 'col-md-2 col-lg-2 col-xl-2 offset-6'"-->
+                <mat-checkbox class="example-margin" (change)="onSelectCustomer($event.checked)" [checked]="customersearch">Other Policy Search</mat-checkbox>
             </div>
         </div>
         <div class="row mt-1">
@@ -54,14 +54,7 @@
                     <div class="row">
                         <div class="col-12 col-md-12 col-lg-12">
                             <ng-container *ngIf="OthersList.length!=0 && searchValue.length > 5">
-
-                                <!-- <app-commodity-table [cols]="quoteHeader" (onSchedule)="onGetSchedule($event)" (onCredit)="onCreditdownload($event)" (onDebit)="onDebitdownload($event)"  [data]="OthersList" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onGetEndorsements)="onGetEndorsements($event)" (onAdd)="onInnerData($event)"  (onView)="onViews($event)"> -->
-
-
-                                <!-- <app-commodity-table [cols]="quoteHeader" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo"  [totalQuoteRecords]="totalQuoteRecords" (onSchedule)="onGetSchedule($event)" (onCredit)="onCreditdownload($event)" (onLoadPreviousData)="onPreviousDataInnergrid($event,searchValue)" (onLoadNextData)="onNextInnerData($event,searchValue)" (onDebit)="onDebitdownload($event)"  [data]="OthersList" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onGetEndorsements)="onGetEndorsements($event)" (onAdd)="onInnerData($event)"  (onView)="onViews($event)"> -->
-
-                                <app-commodity-table [cols]="quoteHeader" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo"  [totalQuoteRecords]="totalQuoteRecords" (onSchedule)="onGetSchedule($event)" (onCredit)="onCreditdownload($event)" (onLoadPreviousData)="onPreviousDataInnergrid($event,searchValue)" (onLoadNextData)="onNextInnerData($event,searchValue)" (onDebit)="onDebitdownload($event)"  [data]="OthersList" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onGetEndorsements)="onGetEndorsements($event)" (onAdd)="onInnerData($event)"  (onView)="onViews($event)">
-
+                                <app-commodity-table [cols]="quoteHeader" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo"  [totalQuoteRecords]="totalQuoteRecords" (onSchedule)="onGetSchedule($event)" (onCredit)="onCreditdownload($event)" (onLoadPreviousData)="onPreviousDataInnergrid($event,searchValue)" (onLoadNextData)="onNextInnerData($event,searchValue)" (onDebit)="onDebitdownload($event)"  [data]="OthersList" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onGetEndorsements)="ongetEndorsement($event)" (onAdd)="onInnerData($event)"  (onView)="onViews($event)">
                                 </app-commodity-table>
                             </ng-container>
                             <ng-container *ngIf="OthersList.length==0">
@@ -69,11 +62,11 @@
                                     No Other Policy Available
                                 </div>
                             </ng-container>
-
-                         
                             </div>
                     </div>
-                    
+                        <div class="text-center mt-2" *ngIf="show && userType == 'Issuer'">
+                            <button class="btn btn-danger" (click)="ongetBacks()">Back</button>
+                        </div>
                 </div>
                 </div>
                

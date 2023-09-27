@@ -12,7 +12,7 @@ import { count } from 'console';
   styleUrls: ['./companytax.component.scss']
 })
 export class CompanyTaxListComponent implements OnInit {
-    activeMenu = "Tax";insuranceName:any;insuranceId:any;productId:any;loginId:any;
+    activeMenu="CompanyTax";insuranceName:any;insuranceId:any;productId:any;loginId:any;
     public AppConfig: any = (Mydatas as any).default;
     public ApiUrl1: any = this.AppConfig.ApiUrl1;calculationTypes2:any[]=[];
     taxforlist:any[]=[]; changeorrefundlist:any[]=[];
@@ -371,6 +371,7 @@ export class CompanyTaxListComponent implements OnInit {
         if(value=='PolicyType') this.router.navigate(['/Admin/companyList/companyConfigure/policyTypeDetails'])
         if(value=='Mail') this.router.navigate(['/Admin/mailMaster']);
         if(value=='Sms') this.router.navigate(['/Admin/smsMaster/newSmsDetails']);
+        if(value=='CompanyTax') this.router.navigate(['/Admin/CompanyTax']);
 
       }
     getTaxFor(){
