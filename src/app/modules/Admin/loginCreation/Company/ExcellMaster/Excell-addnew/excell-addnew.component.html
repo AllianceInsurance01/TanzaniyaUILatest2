@@ -37,6 +37,7 @@
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Object JsonKey</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Object TableColumn</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Object DefaultCol</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Status</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Remove</th>
                                 </tr>
                                
@@ -141,6 +142,16 @@
                                                 <label class="customRadioLabel" [for]="'orginwarehouse_ObjectDefaultColY'+i">Yes</label>
                                                 <input type="radio" [id]="'orginwarehouse_ObjectDefaultColN'+i" [(ngModel)]="row.ObjDefaulVal" [name]="'originatingObjectDefaultCol'+i" value="N">
                                                 <label class="customRadioLabel" [for]="'orginwarehouse_ObjectDefaultColN'+i">No</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar" style="white-space: nowrap;">
+                                                <input [id]="'orginwarehouse_StatusYNL'+i" type="radio" [(ngModel)]="row.Status" [name]="'originatingStatusY'+i" value="Y">
+                                                <label class="customRadioLabel" [for]="'orginwarehouse_StatusYNL'+i">Yes</label>
+                                                <input type="radio" [id]="'orginwarehouse_StatusYL'+i" [(ngModel)]="row.Status" [name]="'originatingStatusY'+i" value="N">
+                                                <label class="customRadioLabel" [for]="'orginwarehouse_StatusYL'+i">No</label>
                                             </div>
                                         </div>
                                     </td>

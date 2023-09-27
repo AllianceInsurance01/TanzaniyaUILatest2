@@ -96,20 +96,20 @@ export class ExcellAddNewComponent implements OnInit {
         "TypeId": this.typeid,
         "FieldId":null,
         "ExcelHeaderName": null,
-        "Status": "Y",
-        "MandatoryYn": "Y",
+        "Status": "N",
+        "MandatoryYn": "N",
         "DataType":null,
         "FieldNameRaw":null,
         "FieldLength":null,
         "DataRange":null,
-        "IsMainDefauVal": "Y",
+        "IsMainDefauVal": "N",
         "ApiJsonKey":null,
         "SelColName":null,
-        "IsObject": "Y",
-        "IsArray": "Y",
+        "IsObject": "N",
+        "IsArray": "N",
         "ObjApijsonKey":null,
         "ObjSelcolKey":null,
-        "ObjDefaulVal": "Y"
+        "ObjDefaulVal": "N"
       }
     );
     this.NewList.push()
