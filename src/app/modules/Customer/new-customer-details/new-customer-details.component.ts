@@ -508,6 +508,8 @@ export class NewCustomerDetailsComponent {
 		}
 		let quoteNo = sessionStorage.getItem('quoteNo'),refNo = null;
 		if(this.loginType=='B2CFlow' || (this.loginType=='B2cFlow2' && quoteNo!=undefined && quoteNo!=null)){
+				if(ReqObj.PinCode==null || ReqObj.PinCode=='' || ReqObj.PinCode==undefined) ReqObj['PinCode'] = '99999';
+				if(ReqObj.Email1==null || ReqObj.Email1=='' || ReqObj.Email1==undefined) ReqObj['Email1'] = 'info@alliance.co.tz';
 				ReqObj['Type'] = 'b2c';
 				if(quoteNo!=undefined) ReqObj['QuoteNo'] = quoteNo;
 				else ReqObj['QuoteNo'] = null;
