@@ -314,5 +314,6 @@ export class ProductDetailsComponent implements OnInit {
     if(value=='Endorsement') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/endorsementType'])
     if(value=='Benefit') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/productbenefit']);
     if(value=='PlanType') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/planTypeBenefits'])
+    if(value=='Excell') console.log('FFFFFFFFFFFF');this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/excelllist'])
   }
 }
