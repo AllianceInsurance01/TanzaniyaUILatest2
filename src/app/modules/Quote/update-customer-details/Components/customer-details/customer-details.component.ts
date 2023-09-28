@@ -693,7 +693,7 @@ export class CustomerDetailsComponent implements OnInit {
             this.updateComponent.CustomerType = this.productItem.IdType;
             this.productItem.MobileCodeDesc = customerDetails?.MobileCodeDesc1;
             this.productItem.PolicyHolderTypeid = customerDetails?.PolicyHolderTypeid;
-            if(customerDetails.EmailId){ this.checkEmailYN = 'Y';this.productItem.EnailId = customerDetails?.EmailId;}
+            if(customerDetails.Email1){ this.checkEmailYN = 'Y';this.productItem.EmailId = customerDetails?.Email1;}
             this.updateComponent.Title = this.productItem.Title;
             this.updateComponent.UserName = this.productItem.ClientName;
             this.productItem.MobileCodeDesc = this.mobileCodeList.find(ele=>ele.Code==this.productItem.MobileCode)?.CodeDesc
