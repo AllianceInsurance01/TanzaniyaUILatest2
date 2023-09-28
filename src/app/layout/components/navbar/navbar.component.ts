@@ -440,10 +440,11 @@ export class NavbarComponent implements OnInit {
           if (data.Result) {
             sessionStorage.clear();
              this.authService.logout();
-            if(this.typeValue=='b2c' || this.typeValue=='B2C' || this.loginType=='B2CFlow'){
-              this.router.navigate(['/b2clogin']);
-            }
-            else this.router.navigate(['/login']);
+             this.router.navigate(['/login']);
+            // if(this.typeValue=='b2c' || this.typeValue=='B2C' || this.loginType=='B2CFlow'){
+            //   this.router.navigate(['/b2clogin']);
+            // }
+            // else 
 
           }
           //

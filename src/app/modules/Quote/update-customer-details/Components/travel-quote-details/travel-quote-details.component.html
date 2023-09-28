@@ -1,3 +1,17 @@
+<div class="maan-grid-item"  *ngIf="errorSection">
+    <div class="maan-grid-item-body row">
+        <div class="text-center">
+                <span class="text-danger" *ngIf="customerTitleError"><b>Please Choose Customer Title<br></b></span>
+                <span class="text-danger" *ngIf="customerNameError"><b>Please Enter Customer Name<br></b></span>
+                <span class="text-danger" *ngIf="customerMobileCodeError"><b>Please Choose Customer Mobile Code<br></b></span>
+                <span class="text-danger" *ngIf="customerMobileNoError"><b>Please Enter Customer Mobile Number<br></b></span>
+                <span class="text-danger" *ngIf="customerTypeError"><b>Please Choose Customer Type</b></span>
+                <span class="text-danger" *ngIf="customerPolicyTypeError"><b>Please Choose Identity Type<br></b></span>
+                
+                <span class="text-danger" *ngIf="customerIdNumberError"><b>Please Enter ID Number</b></span>
+        </div>
+    </div>
+</div>
 <div class="maan-grid-item" [formGroup]="TravelForm">
     <div class="maan-grid-item-title">
         <span class="mx-0">
@@ -191,7 +205,7 @@
 
                 <!-- need to cut-->
                 <div class="text-center my-2">
-                    <button class="custom-btn btn-5 mr-2" [routerLink]="['/Home/existingQuotes']" routerLinkActive="router-link-active" matRipple><<&nbsp;Back</button>&nbsp;
+                    <button class="custom-btn btn-5 mr-2" *ngIf="loginType!='B2CFlow'" [routerLink]="['/Home/existingQuotes']" routerLinkActive="router-link-active" matRipple><<&nbsp;Back</button>&nbsp;
                     <button class="custom-btn btn-6 maan-button-data" matRipple (click)="onProceed()"><i class="fas fa-check"></i>&nbsp;Proceed</button>
                 </div>
             </div>

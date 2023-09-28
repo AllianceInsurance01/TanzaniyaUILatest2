@@ -379,9 +379,11 @@ export class NewCustomerDetailsComponent {
 					this.productItem.Address2 = customerDetails.Address2;
 					this.productItem.BusinessType = customerDetails.BusinessType;
 					this.productItem.CityName = customerDetails.CityCode;
+					if(this.productItem.CityName==null) this.productItem.CityName = '';
 					this.productItem.Clientstatus = customerDetails.Clientstatus;
 					this.productItem.EmailId = customerDetails.Email1;
 					this.productItem.Country = customerDetails.Nationality;
+					if(this.productItem.Country==null) this.productItem.Country='';
 					this.productItem.PinCode = customerDetails.PinCode;
 					this.productItem.Gender = customerDetails.Gender;
 					this.productItem.IdNumber = customerDetails.IdNumber;
@@ -398,7 +400,9 @@ export class NewCustomerDetailsComponent {
 
 					this.productItem.PolicyHolderTypeid = customerDetails.PolicyHolderTypeid;
 					this.productItem.PreferredNotification = customerDetails.PreferredNotification;
+					if(this.productItem.PreferredNotification==null) this.productItem.PreferredNotification='';
 					this.productItem.state = customerDetails.StateCode;
+					if(this.productItem.state==null) this.productItem.state = '';
 					this.getStateList(null);
 					if (customerDetails.DobOrRegDate != null && customerDetails.DobOrRegDate != undefined) {
 						if(new Date(this.maxDobDate).setHours(0,0,0,0) >= (new Date(customerDetails.DobOrRegDate)).setHours(0,0,0,0) ){
@@ -411,6 +415,13 @@ export class NewCustomerDetailsComponent {
 					this.productItem.Occupation = customerDetails.Occupation;
 					this.productItem.Title = customerDetails.Title;
 					this.productItem.vrngst = customerDetails.VrTinNo;
+					if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2')){
+						if(this.productItem.Address1==null || this.productItem.Address1==''){
+							this.productItem.Occupation = '';
+							if(this.productItem.Title=='1') this.productItem.Gender = 'M';
+							else this.productItem.Gender = 'F';
+						}
+					}
 					console.log("Final Edit Data", this.productItem)
 				}
 			},
@@ -507,7 +518,7 @@ export class NewCustomerDetailsComponent {
 			"SaveOrSubmit": 'Submit'
 		}
 		let quoteNo = sessionStorage.getItem('quoteNo'),refNo = null;
-		if(this.loginType=='B2CFlow' || (this.loginType=='B2cFlow2' && quoteNo!=undefined && quoteNo!=null)){
+		if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2')){
 				if(ReqObj.PinCode==null || ReqObj.PinCode=='' || ReqObj.PinCode==undefined) ReqObj['PinCode'] = '99999';
 				if(ReqObj.Email1==null || ReqObj.Email1=='' || ReqObj.Email1==undefined) ReqObj['Email1'] = 'info@alliance.co.tz';
 				ReqObj['Type'] = 'b2c';
@@ -549,7 +560,7 @@ export class NewCustomerDetailsComponent {
 				}
 				else {
 					let quoteNo = sessionStorage.getItem('quoteNo');
-					if(this.loginType=='B2CFlow' || (this.loginType=='B2cFlow2' && quoteNo!=undefined && quoteNo!=null)){
+					if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2' && quoteNo!=undefined && quoteNo!=null)){
 						this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
 					}
 					else this.router.navigate(['/Home/customer/'])

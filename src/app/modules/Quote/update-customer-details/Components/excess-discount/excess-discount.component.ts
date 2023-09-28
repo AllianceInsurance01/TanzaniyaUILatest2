@@ -237,6 +237,8 @@ emiyn="N";
   otpId: any;
   OtpBtnEnable: boolean;
   otpValue: string;
+  sampleloginId: any;
+  loginType: any;
   constructor(public sharedService: SharedService,private authService: AuthService,private router:Router,private modalService: NgbModal,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe,public dialog: MatDialog) {
     let loginType = sessionStorage.getItem('resetLoginDetails');
@@ -244,12 +246,14 @@ emiyn="N";
       sessionStorage.removeItem('resetLoginDetails');
       let sectionType = sessionStorage.getItem('riskSection');
       if(sectionType=='additional') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
+      else if(this.productId=='4') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details'])
       else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
     }
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     console.log("Received Session",this.userDetails)
     this.localCurrency = this.userDetails.Result.CurrencyId;
     this.loginId = this.userDetails.Result.LoginId;
+    this.sampleloginId = this.loginId;
     this.userType = this.userDetails?.Result?.UserType;
     this.agencyCode = this.userDetails.Result.OaCode;
     this.branchCode = this.userDetails.Result.BranchCode;
@@ -258,6 +262,7 @@ emiyn="N";
     this.productName =  this.userDetails.Result.ProductName;
     this.insuranceId = this.userDetails.Result.InsuranceId;
     this.brokerbranchCode = this.userDetails.Result.BrokerBranchCode;
+    this.loginType = this.userDetails.Result.LoginType;
     this.updateComponent.showStepperSection = true;
     this.updateComponent.modifiedYN = 'N';
     sessionStorage.removeItem('vehicleDetailsList');
@@ -3148,7 +3153,7 @@ getMotorUsageList(vehicleValue){
       let loginType = this.userDetails.Result.LoginType;
       let i=0;
       if(loginType){
-        if(loginType=='B2CFlow' && this.loginId=='guest'){
+        if(loginType=='B2CFlow' && this.sampleloginId =='guest'){
           this.customerReferenceNo = null;
           let customerObj = JSON.parse(sessionStorage.getItem('b2cCustomerObj'));
             this.customerObj = this.customerDetails
@@ -3332,7 +3337,7 @@ getMotorUsageList(vehicleValue){
             let res: any = data;
             console.log(data);
               if (data.Result) {
-                this.loginId = loginId;
+                this.sampleloginId = loginId;
                 const Token = data?.Result?.Token;
                 this.authService.login(data);
                 this.authService.UserToken(Token);
@@ -3488,7 +3493,10 @@ getMotorUsageList(vehicleValue){
       }
       else if(this.productId == '4'){
         console.log('Referral Approved');
-        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']);
+        if(this.loginType=='B2CFlow' && this.loginId=='guest'){
+          window.location.reload();
+        }
+        else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']);
       }
     
     }
@@ -3785,7 +3793,10 @@ getMotorUsageList(vehicleValue){
       }
 
       else if(this.productId == '4'){
-        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']);
+        if(this.loginType=='B2CFlow' && this.loginId=='guest'){
+          window.location.reload();
+        }
+        else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']);
       }
       // else if(this.productId=='5'){
       //   let accessoriesSI = this.vehicleData[0]?.RiskDetails?.AcccessoriesSumInsured;
@@ -3966,7 +3977,10 @@ getMotorUsageList(vehicleValue){
               }
 
               else if(this.productId == '4'){
-                this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']);
+                if(this.loginType=='B2CFlow' && this.loginId=='guest'){
+                  window.location.reload();
+                }
+                else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']);
               }
               // else if(this.productId=='5'){
               //   let accessoriesSI = this.vehicleData[0]?.RiskDetails?.AcccessoriesSumInsured;

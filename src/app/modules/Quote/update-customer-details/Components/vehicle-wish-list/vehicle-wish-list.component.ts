@@ -851,7 +851,7 @@ export class VehicleWishListComponent implements OnInit {
         if(this.userType!='Issuer'){
           this.brokerCode = this.agencyCode;
           appId = "1"; loginId=this.loginId;
-          brokerbranchCode = this.brokerBranchCode;
+          brokerbranchCode = this.userDetails.Result.BrokerBranchCode;
         }
         else{
           appId = this.loginId;
