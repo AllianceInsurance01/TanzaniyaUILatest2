@@ -11,7 +11,7 @@ import { SharedService } from '../../../../../../shared/shared.service';
 })
 export class ExcellDetailsComponent implements OnInit {
 
-  activeMenu:any="FactorType";factorData:any;
+  activeMenu:any="Excell";factorData:any;
   columnHeader:any[]=[];
   insuranceName: string;
   insuranceId: string;

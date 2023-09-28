@@ -32,24 +32,24 @@
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Status</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">IsArrayYn</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Array JsonKey</th>
-                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Array TableColumn</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Array DefaultVal</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Array TableColumn</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Is ObjectYn</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Object JsonKey</th>
-                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Object TableColumn</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Object DefaultCol</th>
+                                    <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Object TableColumn</th>
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Remove</th>
                                 </tr>
                                
                                 <tr *ngFor="let row of NewList;let i = index;">
                                     <td class="tbl-content">
                                         <div class="input-control-container">
-                                            <input type="text" [(ngModel)]="row.FieldId" maxlength="10" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px !important;">
+                                            <input type="text" [(ngModel)]="row.FieldId"  style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px !important;">
                                         </div>
                                     </td>
                                     <td class="tbl-content">
                                         <div class="input-control-container">
-                                            <input type="text" [(ngModel)]="row.ExcelHeaderName" maxlength="30" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px !important;">
+                                            <input type="text" [(ngModel)]="row.ExcelHeaderName" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px !important;">
                                         </div>
                                     </td>
                                     <td class="tbl-content">
@@ -75,12 +75,12 @@
                                  
                                     <td class="tbl-content">
                                         <div class="input-control-container">
-                                            <input type="text" maxlength="20" [(ngModel)]="row.FieldLength" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px;">
+                                            <input type="text"  [(ngModel)]="row.FieldLength" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px;">
                                         </div>
                                     </td>
                                     <td class="tbl-content">
                                         <div class="input-control-container">
-                                            <input type="text" maxlength="20" [(ngModel)]="row.DataRange" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px;">
+                                            <input type="text"  [(ngModel)]="row.DataRange" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px;">
                                         </div>
                                     </td>
                                     <td class="tbl-content">
@@ -105,13 +105,8 @@
                                     </td>
                                     <td class="tbl-content">
                                         <div class="input-control-container">
-                                            <input type="text" maxlength="20" [(ngModel)]="row.ApiJsonKey" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px;">
+                                            <input type="text" [(ngModel)]="row.ApiJsonKey" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px;">
                                         </div>
-                                    </td>
-                                    <td class="tbl-content">
-                                        <ng-select class="custom" name="TaxType" [(ngModel)]="row.SelColName" placeholder="Select Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
-                                            <ng-option *ngFor="let opt of taxType" [value]="opt.ColumnName" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:auto;">{{opt.CodeDesc}}</ng-option>
-                                        </ng-select>
                                     </td>
                                     <td class="tbl-content">
                                         <div class="input-form-radio-box">
@@ -123,6 +118,20 @@
                                             </div>
                                         </div>
                                     </td>
+
+                                    <td class="tbl-content">
+                                        <ng-container *ngIf="row.IsMainDefauVal=='N'">
+                                            <ng-select class="custom" name="TaxType" [(ngModel)]="row.SelColName" placeholder="Select Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                                <ng-option *ngFor="let opt of taxType" [value]="opt.ColumnName" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:auto;">{{opt.CodeDesc}}</ng-option>
+                                            </ng-select>
+                                        </ng-container>
+                                        <ng-container *ngIf="row.IsMainDefauVal=='Y'">
+                                            <div class="input-control-container">
+                                                <input type="text" [(ngModel)]="row.SelColName" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:130px;">
+                                            </div>
+                                        </ng-container>
+                                    </td>
+                                   
                                     <td class="tbl-content">
                                         <div class="input-form-radio-box">
                                             <div class="radio-toolbar" style="white-space: nowrap;">
@@ -141,11 +150,6 @@
                                         </div>
                                     </td>
                                     <td class="tbl-content">
-                                        <ng-select class="custom" name="TaxType" [(ngModel)]="row.ObjSelcolKey" placeholder="Select Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
-                                            <ng-option *ngFor="let opt of taxType" [value]="opt.ColumnName" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:auto;">{{opt.CodeDesc}}</ng-option>
-                                        </ng-select>
-                                    </td>
-                                    <td class="tbl-content">
                                         <div class="input-form-radio-box">
                                             <div class="radio-toolbar" style="white-space: nowrap;">
                                                 <input [id]="'orginwarehouse_ObjectDefaultColY'+i" type="radio" [(ngModel)]="row.ObjDefaulVal" [name]="'originatingObjectDefaultCol'+i" value="Y">
@@ -155,6 +159,19 @@
                                             </div>
                                         </div>
                                     </td>
+                                    <td class="tbl-content">
+                                        <ng-container *ngIf="row.ObjDefaulVal=='N'">
+                                            <ng-select class="custom" name="TaxType" [(ngModel)]="row.ObjSelcolKey" placeholder="Select Type" appendTo="body" [searchable]="true" [clearable]="true" [closeOnSelect]="true">
+                                                <ng-option *ngFor="let opt of taxType" [value]="opt.ColumnName" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:auto;">{{opt.CodeDesc}}</ng-option>
+                                            </ng-select>
+                                        </ng-container>
+                                       <ng-container *ngIf="row.ObjDefaulVal=='Y'">
+                                        <div class="input-control-container">
+                                            <input type="text" [(ngModel)]="row.ObjSelcolKey" style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:130px;">
+                                        </div>
+                                    </ng-container>
+                                    </td>
+                                   
 
                                     <td class="tbl-content">
                                         <a mat-raised-button class="mx-1" data-toggle="tooltip" id="remove" data-placement="top" title="Delete" (click)="deleteRow(row.FieldId,row.ObjDefaulVal,i)"><i
