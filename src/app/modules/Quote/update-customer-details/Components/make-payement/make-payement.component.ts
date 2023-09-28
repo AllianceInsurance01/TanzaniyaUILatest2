@@ -70,6 +70,7 @@ export class MakePayementComponent implements OnInit {
   quoteSubUsertype: any;
   quoteUsertype: any;
   quoteBranchCode: any;
+  loginType: any;
   constructor(private router:Router,private sharedService: SharedService,
     private updateComponent:UpdateCustomerDetailsComponent,private route:ActivatedRoute,
    private datePipe:DatePipe) {
@@ -92,7 +93,7 @@ export class MakePayementComponent implements OnInit {
     this.productName = this.userDetails.Result.ProductName
     this.subuserType = sessionStorage.getItem('typeValue');
     this.insuranceId = this.userDetails.Result.InsuranceId;
-   
+    this.loginType = this.userDetails.Result.LoginType;
     this.redirectUrl = "aHR0cHM6Ly90ei5zZWxjb20ub25saW5lL3BheW1lbnRndy9jaGVja291dC9XbXRLVmpWbVVGWmtWRTFTY2xGWlVIbEpWR1ZFYTFWbFlqQmFkWHBEWmtJelpFOXdlR1JSTUhZNGQwTjBZa2hZVTFFMVJVNXZTbmwwYWs1cGNHd3dhV3BrYWxZMGFGVkdZbUpWUFE9PS8=";
     this.decodeUrl();
       
@@ -533,6 +534,9 @@ export class MakePayementComponent implements OnInit {
   ongetBack(){
     if(this.endorsementSection && this.cancelEndorse){
       this.router.navigate(['Home/policies/Endorsements/endorsementTypes'])
+    }
+    else if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2')){
+      this.router.navigate(['/Home/customer/ClientDetails']);
     }
     else{
       this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])

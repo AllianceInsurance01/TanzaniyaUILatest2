@@ -1123,7 +1123,7 @@ toggle(index: number) {
                   this.saveCustomerDetails();
             }
             else{
-              if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2' && this.customerDetails.Address1==null)){
+              if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2')){
                 this.router.navigate(['/Home/customer/ClientDetails']);
               }
               else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
@@ -1149,7 +1149,7 @@ toggle(index: number) {
           }
           else {
             
-            if(this.loginType=='B2CFlow'){
+            if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2')){
               this.router.navigate(['/Home/customer/ClientDetails']);
             }
             else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
@@ -1255,7 +1255,7 @@ toggle(index: number) {
           // this.toastr.success(
           // 	  'Customer Details',
           // 	  'Customer Details Inserted/Updated Successfully',);
-          if(this.loginType=='B2CFlow'){
+          if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2')){
             this.router.navigate(['/Home/customer/ClientDetails']);
           }
           else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
@@ -1300,7 +1300,7 @@ toggle(index: number) {
           }
           else if(data.Result.PaymentId){
             sessionStorage.setItem('quotePaymentId',data.Result.PaymentId);
-            if(this.loginType=='B2CFlow'){
+            if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2')){
               this.router.navigate(['/Home/customer/ClientDetails']);
             }
             else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
