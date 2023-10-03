@@ -4173,6 +4173,18 @@ onSaveMedicalDetails(type,formType){
         "IsFinanceEndt": this.isFinanceEndt,
         "OrginalPolicyNo": this.orginalPolicyNo
     }
+    if (this.endorsementSection) {
+      if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {
+        ReqObj['Status'] = 'E';
+      }
+      else {
+        ReqObj['Status'] = this.productItem?.Status;
+      }
+      ReqObj['PolicyNo'] = this.endorsePolicyNo
+    }
+    else {
+      ReqObj['Status'] = 'Y';
+    }
     let urlLink = `${this.motorApiUrl}api/slide12/savepublicliability`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
@@ -4217,6 +4229,18 @@ onSaveFireAlliedDetails(type,formType){
     "EndtStatus": this.endtStatus,
     "IsFinanceEndt": this.isFinanceEndt,
     "OrginalPolicyNo": this.orginalPolicyNo,
+  }
+  if (this.endorsementSection) {
+    if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {
+      ReqObj['Status'] = 'E';
+    }
+    else {
+      ReqObj['Status'] = this.productItem?.Status;
+    }
+    ReqObj['PolicyNo'] = this.endorsePolicyNo
+  }
+  else {
+    ReqObj['Status'] = 'Y';
   }
   let urlLink = `${this.motorApiUrl}api/slide4/savefireandperils`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -4263,6 +4287,18 @@ onSaveMachineryDetails(type,formType){
     "EndtStatus": this.endtStatus,
     "IsFinanceEndt": this.isFinanceEndt,
     "OrginalPolicyNo": this.orginalPolicyNo,
+  }
+  if (this.endorsementSection) {
+    if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {
+      ReqObj['Status'] = 'E';
+    }
+    else {
+      ReqObj['Status'] = this.productItem?.Status;
+    }
+    ReqObj['PolicyNo'] = this.endorsePolicyNo
+  }
+  else {
+    ReqObj['Status'] = 'Y';
   }
   let urlLink = `${this.motorApiUrl}api/slide9/savemachinerybreakdown`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -4535,6 +4571,18 @@ onSaveElectronicEquipment(type,formType){
     "SectionId": this.ProductCode,
     "ElecEquipSuminsured":this.productItem.ElectronicEquipSuminsured
   }
+  if (this.endorsementSection) {
+    if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {
+      ReqObj['Status'] = 'E';
+    }
+    else {
+      ReqObj['Status'] = this.productItem?.Status;
+    }
+    ReqObj['PolicyNo'] = this.endorsePolicyNo
+  }
+  else {
+    ReqObj['Status'] = 'Y';
+  }
   let urlLink = `${this.motorApiUrl}api/slide6/saveelectronicequip`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
@@ -4577,6 +4625,18 @@ onSaveBussinessrisk(type,formType){
     "RiskId": "1",
     "SectionId":  "3",
     "EquipmentSi":productsi
+  }
+  if (this.endorsementSection) {
+    if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {
+      ReqObj['Status'] = 'E';
+    }
+    else {
+      ReqObj['Status'] = this.productItem?.Status;
+    }
+    ReqObj['PolicyNo'] = this.endorsePolicyNo
+  }
+  else {
+    ReqObj['Status'] = 'Y';
   }
   let urlLink = `${this.motorApiUrl}api/slide2/saveallriskdetails`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -4719,6 +4779,18 @@ onSaveMoneyDetails(type,formType){
     "IsFinanceEndt": this.isFinanceEndt,
     "OrginalPolicyNo": this.orginalPolicyNo,
   }
+  if (this.endorsementSection) {
+    if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {
+      ReqObj['Status'] = 'E';
+    }
+    else {
+      ReqObj['Status'] = this.productItem?.Status;
+    }
+    ReqObj['PolicyNo'] = this.endorsePolicyNo
+  }
+  else {
+    ReqObj['Status'] = 'Y';
+  }
   let urlLink = `${this.motorApiUrl}api/slide10/savemoneydetails`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
@@ -4783,6 +4855,18 @@ onSavePersonalAccidentDetails(type,formType){
         "OrginalPolicyNo": this.orginalPolicyNo,
       
     } ]
+    if (this.endorsementSection) {
+      if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {
+        emp[0]['Status'] = 'E';
+      }
+      else {
+        emp[0]['Status'] = this.productItem?.Status;
+      }
+      emp[0]['PolicyNo'] = this.endorsePolicyNo
+    }
+    else {
+      emp[0]['Status'] = 'Y';
+    }
     let urlLink = `${this.motorApiUrl}api/slide13/savepersonlaccident`;
     this.sharedService.onPostMethodSync(urlLink, emp).subscribe(
       (data: any) => {
@@ -4824,6 +4908,18 @@ onSavePersonalLiability(type,formType){
   emp['LiabilityOccupationId'] = this.productItem.LiabilityOccupationId;
   emp['EmpLiabilitySi'] = this.productItem.EmpLiabilitySi;
   emp['SectionId'] = "36";
+  if (this.endorsementSection) {
+    if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {
+      emp['Status'] = 'E';
+    }
+    else {
+      emp['Status'] = this.productItem?.Status;
+    }
+    emp['PolicyNo'] = this.endorsePolicyNo
+  }
+  else {
+    emp['Status'] = 'Y';
+  }
   let urlLink = `${this.motorApiUrl}api/slide7/saveempliablity`;
   this.sharedService.onPostMethodSync(urlLink, [emp]).subscribe(
       (data: any) => {
@@ -4913,6 +5009,18 @@ onSaveFidelityDetails(type,formType){
         emp['EndtStatus'] = this.endtStatus;
         emp['IsFinanceEndt'] = this.isFinanceEndt;
         emp['OrginalPolicyNo'] = this.orginalPolicyNo;
+        if (this.endorsementSection) {
+          if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {
+            emp['Status'] = 'E';
+          }
+          else {
+            emp['Status'] = this.productItem?.Status;
+          }
+          emp['PolicyNo'] = this.endorsePolicyNo
+        }
+        else {
+          emp['Status'] = 'Y';
+        }
         if(this.productId=='14') emp['SectionId'] = "45";
         else if(this.productId=='32' || this.productId=='19') emp['SectionId'] = "43";
         i+=1;
