@@ -519,8 +519,8 @@ export class NewCustomerDetailsComponent {
 		}
 		let quoteNo = sessionStorage.getItem('quoteNo'),refNo = null;
 		if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2')){
-				if(ReqObj.PinCode==null || ReqObj.PinCode=='' || ReqObj.PinCode==undefined) ReqObj['PinCode'] = '99999';
-				if(ReqObj.Email1==null || ReqObj.Email1=='' || ReqObj.Email1==undefined) ReqObj['Email1'] = 'info@alliance.co.tz';
+				// if(ReqObj.PinCode==null || ReqObj.PinCode=='' || ReqObj.PinCode==undefined) ReqObj['PinCode'] = '99999';
+				// if(ReqObj.Email1==null || ReqObj.Email1=='' || ReqObj.Email1==undefined) ReqObj['Email1'] = 'info@alliance.co.tz';
 				ReqObj['Type'] = 'b2c';
 				if(quoteNo!=undefined) ReqObj['QuoteNo'] = quoteNo;
 				else ReqObj['QuoteNo'] = null;

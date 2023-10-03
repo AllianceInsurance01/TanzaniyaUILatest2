@@ -1351,7 +1351,13 @@ export class VehicleWishListComponent implements OnInit {
                 this.updateComponent.resetVehicleTab();
                 sessionStorage.removeItem('vehicleDetails');
                 console.log("On Final Vehicle List 3",vehicleList)
-                this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+                if(this.updateComponent.ModifiedCurrencyYN=='Y'){
+                  this.updateCurrencyDetails();
+                }
+                else{
+                  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+                }
+                
               }
             }
           }
@@ -1362,11 +1368,36 @@ export class VehicleWishListComponent implements OnInit {
                 this.updateComponent.resetVehicleTab();
                 sessionStorage.removeItem('vehicleDetails');
                 console.log("On Final Vehicle List 2",vehicleList)
-                this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+                if(this.updateComponent.ModifiedCurrencyYN=='Y'){
+                  this.updateCurrencyDetails();
+                }
+                else{
+                  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+                }
           }
         }
       }
     }
+  }
+  updateCurrencyDetails(){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId,
+      "Currency": this.currencyCode,
+      "ExchangeRate": this.exchangeRate,
+      "RequestReferenceNo": this.quoteRefNo,
+      "ProductId": this.productId
+    }
+    let urlLink = `${this.motorApiUrl}api/update/changeofcurrencysi`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          this.updateComponent.ModifiedCurrencyYN = 'N';
+          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+        }
+      },
+      (err) => { },
+    );
   }
   onSearchVehicle(){
     let loginType = this.userDetails.Result.LoginType;

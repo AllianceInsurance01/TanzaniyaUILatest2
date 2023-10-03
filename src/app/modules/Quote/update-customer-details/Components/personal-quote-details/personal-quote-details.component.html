@@ -17,7 +17,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="maan-grid-item-body" *ngIf="formSection && productId!='3' && productId!='45'">
+                <div class="maan-grid-item-body" *ngIf="formSection && productId!='45'">
                 
                     <div class="row p-2" *ngIf="!viewSection && (productId=='15')">
                         <div class="col-12 col-md-6 col-lg-6 input-control-container" style="padding-left: 10px !important;">
@@ -41,12 +41,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form__wrapper" *ngIf="productId!='19' && productId!='42'">
+                    <div class="form__wrapper" *ngIf="productId!='19' && productId!='3' && productId!='42'">
                         <form [formGroup]="form" (ngSubmit)="onSubmit(productItem)">
                             <formly-form [form]="form" [fields]="fields" [model]="productItem"></formly-form>
                         </form>
                     </div>
-                    <div class="form__wrapper" *ngIf="productId=='19' && showSection">
+                    <div class="form__wrapper" *ngIf="(productId=='19' || productId=='3') && showSection">
                         <mat-tab-group [(selectedIndex)]="selectedIndex" #tabs>
                             <mat-tab *ngFor="let tab of fields[0].fieldGroup; let i = index; let last = last" [label]="tab.props.label">
                             <div class="maan-grid-item">
@@ -184,7 +184,7 @@
                         <button class="custom-btn btn-6 maan-button-data "  *ngIf="formSection || viewSection" matRipple (click)="onSubmit(productItem)"><i class="fas fa-check"></i>&nbsp;Proceed</button>
                     </div>
                 </div> -->
-                <div class="row" *ngIf="productId=='3'">
+                <!-- <div class="row" *ngIf="productId=='3'">
                     <div class="col-9 col-lg-9 col-xl-9 col-sm-9">
                         <div class="row" *ngIf="!viewSection">
                             <div class="col-md-4 col-lg-4  col-xl-4 offset-1">
@@ -442,7 +442,7 @@
                             <button class="custom-btn btn-6 maan-button-data "  *ngIf="formSection || viewSection" matRipple (click)="onSubmit(productItem)"><i class="fas fa-check"></i>&nbsp;Proceed</button>
                         </div>
                     </div>
-                    <div class="col-12 col-md-3 col-lg-3 col-xl-3 p-0"><!--col-3-->
+                    <div class="col-12 col-md-3 col-lg-3 col-xl-3 p-0">
                         <div class="w3-animate-top form_wrapper">
                             <div class="maan-grid-item-title ">
                                 <div class="d-flex justify-content-between">
@@ -505,12 +505,12 @@
                                 <ng-container *ngIf="questionSection">
                                     <div class="row">
                                         <div class="col-12 col-md-12 col-lg-12">
-                                            <ul class="list-group list-group-flush" style="list-style-type: circle !important;"><!-- class="list-group list-group-flush"diamond px-3-->
+                                            <ul class="list-group list-group-flush" style="list-style-type: circle !important;">
                                                 <ng-container  *ngFor="let ques of uwQuestionList;let i=index">
                                                     <li class="list-group-item" [hidden]="checkHideQUestion(ques)">
                                                         <div class="row p-0 w-100 customRow">
                                                             <div class="col-md-12 col-lg-12 col-xl-12  customFont" [ngClass]="{'customRowBg': ques?.Status === 'R'}">
-                                                                <span class="spancommon spanc" style="font-size: 12.5px;">{{ques.UwQuestionDesc}}</span><!--span_font_size-->
+                                                                <span class="spancommon spanc" style="font-size: 12.5px;">{{ques.UwQuestionDesc}}</span>
                                                                 <ng-container *ngIf="ques.MandatoryYn=='Y'"> &nbsp;<span class="text-danger">*</span></ng-container>
                                                             </div>
                                                             <div class="col-md-12 col-lg-12 col-xl-12">
@@ -551,7 +551,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="maan-grid-item" *ngIf="productId!='19' && productId!='3' && productId!='1' && uwQuestionList.length!=0 ">
                 <div class="maan-grid-item-title">

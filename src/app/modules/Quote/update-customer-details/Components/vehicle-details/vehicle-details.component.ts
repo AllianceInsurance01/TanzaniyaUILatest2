@@ -1690,7 +1690,7 @@ export class VehicleDetailsComponent implements OnInit {
     let i=0,j=0;
     for(let veh of this.vehicleDetailsList){
       let refNo = veh?.MSRefNo;
-      if(refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection || this.changeUwSection)){
+      if(refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection || this.changeUwSection || (this.endorsementSection && (this.enableAddVehicle && this.endorsementYn=='Y')))){
         i+=1;
       }
       j+=1;
