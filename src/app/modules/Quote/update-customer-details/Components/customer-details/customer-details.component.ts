@@ -843,8 +843,8 @@ export class CustomerDetailsComponent implements OnInit {
       "ProductId": this.productId,
       "InsuranceId": this.insuranceId
     }
-    if(this.productId=='3') urlLink = `${this.motorApiUrl}home/getbuildingdetails`;
-    else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14'  || this.productId=='19' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId=='21' || this.productId == '25' || this.productId=='42') urlLink = `${this.motorApiUrl}api/slide/getcommondetails`;
+    //if(this.productId=='3') urlLink = `${this.motorApiUrl}home/getbuildingdetails`;
+    if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14'  || this.productId=='19' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId=='21' || this.productId == '25' || this.productId=='42' || this.productId=='3') urlLink = `${this.motorApiUrl}api/slide/getcommondetails`;
     else urlLink =  `${this.motorApiUrl}api/geteservicebyriskid`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
@@ -852,8 +852,8 @@ export class CustomerDetailsComponent implements OnInit {
         if(data.Result){
             this.customerData = data.Result;
               let entry:any;
-              if(this.productId=='3') entry = this.customerData[0];
-              else entry = this.customerData
+              //if(this.productId=='3') entry = this.customerData[0];
+               entry = this.customerData
                 if(entry?.EndorsementDate!=null){
                   this.endorsementDetails['EndorsementDate'] = entry?.EndorsementDate;
                   this.endorsementDetails['EndorsementEffectiveDate'] = entry?.EndorsementEffectiveDate;
@@ -1455,6 +1455,9 @@ export class CustomerDetailsComponent implements OnInit {
       this.editSection=true;
     }
     if(this.productId=='5' && type=='change'){this.updateComponent.modifiedYN = 'Y'}
+    if(type=='change' && this.quoteRefNo!=null){
+      this.updateComponent.ModifiedCurrencyYN = 'Y';
+    }
   }
   onStartDateChange(type){
     if(this.productId!='4'){
@@ -1535,7 +1538,12 @@ export class CustomerDetailsComponent implements OnInit {
     sessionStorage.setItem('vehicleDetails',JSON.stringify(this.vehicleDetails));
     console.log("On Final Vehicle List 8",this.vehicleDetails)
     if(this.endorsementSection && this.enableAddVehicle) sessionStorage.removeItem('editVehicleId')
-    this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+    if(this.updateComponent.ModifiedCurrencyYN=='Y'){
+      this.updateCurrencyDetails();
+    }
+    else{
+      this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+    }
   }
   onAddVehicleWishList(){
     this.wishSection = false;
@@ -2205,7 +2213,7 @@ export class CustomerDetailsComponent implements OnInit {
           Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
         }
         sessionStorage.setItem('homeCommonDetails',JSON.stringify(Details))
-        if(this.productId=='19'){
+        if(this.productId=='19' || this.productId == '3'){
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
         }
         else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1'|| this.productId=='21' || this.productId=='26' || this.productId =='25' || this.productId=='43') this.saveCommonDetails(Details); 
@@ -2258,7 +2266,7 @@ export class CustomerDetailsComponent implements OnInit {
                     }
                     sessionStorage.setItem('homeCommonDetails',JSON.stringify(Details))
                     console.log("On First Save",Details);
-                    if(this.productId=='19'){
+                    if(this.productId=='19' || this.productId=='3'){
                       this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
                     }
                     else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='43') this.saveCommonDetails(Details); 
@@ -2292,7 +2300,7 @@ export class CustomerDetailsComponent implements OnInit {
                       Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
                   }
                   sessionStorage.setItem('homeCommonDetails',JSON.stringify(Details))
-                  if(this.productId=='19'){
+                  if(this.productId=='19' || this.productId=='3'){
                     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
                   }
                   else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId =='21' || this.productId=='43') this.saveCommonDetails(Details); 
@@ -2538,7 +2546,12 @@ export class CustomerDetailsComponent implements OnInit {
           sessionStorage.removeItem('editVehicleId');
           sessionStorage.removeItem('vehicleDetails');
           console.log("On Final Vehicle List",this.vehicleWishList)
-          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+          if(this.updateComponent.ModifiedCurrencyYN=='Y'){
+            this.updateCurrencyDetails();
+          }
+          else{
+            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+          }
         }
       }
     }
@@ -2581,7 +2594,7 @@ export class CustomerDetailsComponent implements OnInit {
       vehicle['RiskId'] = String(1);
       vehicle['Active'] = false;
       sessionStorage.setItem('homeCommonDetails',JSON.stringify([vehicle]));
-      if(this.productId=='19'){
+      if(this.productId=='19' || this.productId=='3'){
         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
       }
       else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='21'  || this.productId=='26' || this.productId == '25' || this.productId=='43') this.saveCommonDetails([vehicle]); 
@@ -2653,7 +2666,12 @@ export class CustomerDetailsComponent implements OnInit {
                         console.log("On Final Vehicle List 4",vehicleList)
                         sessionStorage.removeItem('vehicleDetails');
                         
-                        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+                        if(this.updateComponent.ModifiedCurrencyYN=='Y'){
+                          this.updateCurrencyDetails();
+                        }
+                        else{
+                          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+                        }
                       }
                     }
                   }
@@ -2664,7 +2682,12 @@ export class CustomerDetailsComponent implements OnInit {
                       this.updateComponent.resetVehicleTab();
                       sessionStorage.removeItem('vehicleDetails');
                       console.log("On Final Vehicle List 5",vehicleList)
-                      this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+                      if(this.updateComponent.ModifiedCurrencyYN=='Y'){
+                        this.updateCurrencyDetails();
+                      }
+                      else{
+                        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+                      }
                   }
                 }
               }
@@ -2746,7 +2769,12 @@ export class CustomerDetailsComponent implements OnInit {
 
                     sessionStorage.removeItem('vehicleDetails');
                     console.log("On Final Vehicle List 6",vehicleList)
-                    this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+                    if(this.updateComponent.ModifiedCurrencyYN=='Y'){
+                      this.updateCurrencyDetails();
+                    }
+                    else{
+                      this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+                    }
                   }
                 }
               }
@@ -2757,7 +2785,12 @@ export class CustomerDetailsComponent implements OnInit {
                   this.updateComponent.resetVehicleTab();
                   sessionStorage.removeItem('vehicleDetails');
                   console.log("On Final Vehicle List 7",vehicleList)
-                  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+                  if(this.updateComponent.ModifiedCurrencyYN=='Y'){
+                    this.updateCurrencyDetails();
+                  }
+                  else{
+                    this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+                  }
               }
             }
           }
@@ -2836,6 +2869,26 @@ export class CustomerDetailsComponent implements OnInit {
   }
   onSelectVehicle(rowData){
     this.vehicleDetails = rowData;
+  }
+  updateCurrencyDetails(){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId,
+      "Currency": this.currencyCode,
+      "ExchangeRate": this.exchangeRate,
+      "RequestReferenceNo": this.quoteRefNo,
+      "ProductId": this.productId
+    }
+    let urlLink = `${this.motorApiUrl}api/update/changeofcurrencysi`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          this.updateComponent.ModifiedCurrencyYN = 'N';
+          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+        }
+      },
+      (err) => { },
+    );
   }
   ongetBack(){
     if(this.statusValue){

@@ -99,6 +99,7 @@ export class SectionModificationComponent implements OnInit {
       }
       let existEnd = JSON.parse(sessionStorage.getItem('endorseTypeId'));
       if(existEnd){
+        
         this.endorsementSection = true;
         this.endorsementDetails = existEnd;
         console.log("Entered Data",existEnd)
@@ -151,7 +152,7 @@ getSectionDetails(){
         this.BuildingOwnerYn = data?.Result?.BuildingOwnerYn;
         let contents:boolean=false,building:boolean=false;
         if(this.selectedSections.some(ele=>ele=='47')) contents = true;
-        if(this.selectedSections.some(ele=>ele=='40')) building = true;
+        if(this.selectedSections.some(ele=>ele=='40' || ele=='1')) building = true;
         if(building) this.coversRequired = 'B';
         if(contents) this.coversRequired = 'C';
         if(building && contents) this.coversRequired = 'BC';
@@ -239,9 +240,9 @@ getIndustryList() {
   onOwnerYNChange(){
     this.coversRequired = 'C';
     if(this.coversRequired=='C' || this.coversRequired==null){
-      let entry = this.productList.find(ele=>ele.Code=='40');
+      let entry = this.productList.find(ele=>ele.Code=='40' || ele.Code=='1');
       entry.checked = false;
-      this.selectedSections = this.selectedSections.filter(ele=>ele!='40');
+      this.selectedSections = this.selectedSections.filter(ele=>ele!='40' && ele!='1');
    }
    if(this.coversRequired=='B' || this.coversRequired==null){
      let entry = this.productList.find(ele=>ele.Code=='47');
@@ -251,9 +252,9 @@ getIndustryList() {
   }
   onChangeCoversType(){
     if(this.coversRequired=='C'){
-       let entry = this.productList.find(ele=>ele.Code=='40');
+       let entry = this.productList.find(ele=>ele.Code=='40' || ele.Code=='1');
        entry.checked = false;
-       this.selectedSections = this.selectedSections.filter(ele=>ele!='40');
+       this.selectedSections = this.selectedSections.filter(ele=>ele!='40' && ele!='1');
     }
     else if(this.coversRequired=='B'){
       let entry = this.productList.find(ele=>ele.Code=='47');
@@ -393,7 +394,7 @@ getIndustryList() {
     );
   }
   checkDisable(){
-    return this.selectedSections.some(ele=>ele =='56' || ele=='3' || ele=='39' || ele=='53' || ele=='54')
+    return this.selectedSections.some(ele=>ele =='56' || ele=='39' || ele=='53' || ele=='54')
   }
   checkSectionOpted(rowData){
     return this.selectedSections.some(ele=>ele==rowData.Code);
@@ -405,18 +406,21 @@ getIndustryList() {
     return rowData.checked;
   }
   onChangeSections(rowData,index){
-    let entry = this.checkSectionOpted(rowData);
-    if(!entry){
-      this.sectionError = false;
-      this.productList[index].checked = true;
-      this.selectedSections.push(rowData.Code);
-
+    if(!this.endorsementSection){
+      let entry = this.checkSectionOpted(rowData);
+      if(!entry){
+        this.sectionError = false;
+        this.productList[index].checked = true;
+        this.selectedSections.push(rowData.Code);
+  
+      }
+      else{
+        this.selectedSections = this.selectedSections.filter(ele=>ele!=rowData.Code);
+        this.productList[index].checked = false;
+        if(this.selectedSections.length==0) this.sectionError = true;
+      }
     }
-    else{
-      this.selectedSections = this.selectedSections.filter(ele=>ele!=rowData.Code);
-      this.productList[index].checked = false;
-      if(this.selectedSections.length==0) this.sectionError = true;
-    }
+    
     //if(this.selectedSections.length!=0){
     //   let entry = this.selectedSections.some(ele=>ele==rowData.Code);
     //   if(entry){

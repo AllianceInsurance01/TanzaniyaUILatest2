@@ -119,7 +119,7 @@ export class ExistingEndorsementsComponent {
   downloadMyFile(data) {
     const link = document.createElement('a');
     link.setAttribute('target', '_blank');
-    link.setAttribute('href', data.PdfOutFilePath);
+    link.setAttribute('href', data);
     link.setAttribute('download', 'Schedule');
     document.body.appendChild(link);
     link.click();

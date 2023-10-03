@@ -44,7 +44,7 @@ export class ProductData {
 	MoneyOutSafeBusiness:any='0';MoneyInPremises:any='0';MoneyInLocker:any='0';
 	TpliabilityAnyoccuSuminsured:any='0';PersonalIntermediarySuminsured:any='0';
 	BuildingUsageId: any='';Status:any='Y';TotalNoOfEmployees:any;TotalRejoinedEmployees:any;
-	PersonalAccidentSuminsured: any;LiabilityOccupationId:any='';AccountOutstandingEmployees:any;
+	PersonalAccidentSuminsured: any='0';LiabilityOccupationId:any='';AccountOutstandingEmployees:any;
 	AllriskSumInsured: any = '0';WallType:any='';RoofType:any='';TotalOutstandingAmount:any;
 	AccountAuditentType:any;
 	/*Product Burglary*/
@@ -85,7 +85,7 @@ export class ProductData {
 	ContentSerialNo: any
 	ContentType: any; ContentLocation:any;
 	AccDob:any = ''; AccNationID:any; AccSI:any ='';AccName:any; AccOccupation:any;
-	AccidentLocation:any ='';
+	AccidentLocation:any ='';EmpLiabilitySi:any='0';
 	IndDob:any = null; IndNationID:any=null; IndSI:any =null;IndName:any = null; IndOccupation:any =null;
 	IndLocation:any =null; DeviceLocation:any=null;DeviceType: any=null; DeviceMake:any=null;
 	DeviceYear:any=null;DeviceSNo:any=null; RiskSI:any=null;RiskDescription:any=null;RiskSerialNo:any;
@@ -191,6 +191,7 @@ MoneyMajorLoss:any='0';
 		this.BackDoors = data?.BackDoors ?? '';
 		this.TrapDoors = data?.TrapDoors ?? '';
 		this.Address = data?.Address ?? '';
+		this.EmpLiabilitySi = data?.EmpLiabilitySi ?? '0';
 		this.CashInHandDirectors = data?.CashInHandDirectors ?? '0';
 		this.CashInTransit = data?.CashInTransit ?? '0';
 		this.CashInHandEmployees = data?.CashInHandEmployees ?? '0';

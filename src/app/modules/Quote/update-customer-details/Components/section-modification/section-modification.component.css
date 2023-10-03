@@ -190,3 +190,9 @@
   /* right: 2px; */
   font-size: 18px;
 }
+::ng-deep *:disabled {
+  background-color: white;
+  color: black;
+  opacity: 1;
+  cursor: not-allowed !important;
+}

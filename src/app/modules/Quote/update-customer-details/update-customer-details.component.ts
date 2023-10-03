@@ -54,6 +54,7 @@ export class UpdateCustomerDetailsComponent implements OnInit {
   MobileCodeDesc: any;
   ModifiedCustomer: boolean=false;
   CustomerType: any;
+  ModifiedCurrencyYN: string;
   //public orderStatus="customerDetails"
 
   constructor(
