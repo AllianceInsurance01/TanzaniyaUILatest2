@@ -40,7 +40,7 @@ export class ReferralRequoteComponent {
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails?.Result?.UserType;
     this.insuranceId = this.userDetails.Result.InsuranceId;
-    
+    this.brokerCode = this.loginId;
     sessionStorage.removeItem('customerReferenceNo')
     sessionStorage.removeItem('loadingType');
     if(this.productId=='5'){
