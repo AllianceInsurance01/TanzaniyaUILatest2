@@ -30,6 +30,8 @@ export class ReferralRejectedComponent implements OnInit {
   totalEndtRecords: any;
   limit: any='0';
   pageCount: number;
+  brokerList:any[]=[];
+  brokerCode: string;
 
 
   constructor(private router:Router,private sharedService: SharedService) { 
@@ -186,16 +188,68 @@ export class ReferralRejectedComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getExistingQuotes(null,'change');
+    this.getBrokerList();
+    // this.getExistingQuotes(null,'change');
   }
-  setSection(val){this.section = val;this.getExistingQuotes(null,'change')}
-  getExistingQuotes(element,entryType){
-    let appId = "1",loginId="";
-    if(this.userType=='Broker'){
-      appId = "1"; loginId = this.loginId;
+  setSection(val){this.section = val;this.getBrokerList();}//this.getExistingQuotes(null,'change')}
+
+  getBrokerList(){
+    let appId = "1",loginId="",brokerbranchCode="";let type:any;
+    if(this.userType!='Issuer'){
+      appId = "1"; loginId = this.brokerCode;
+      console.log('Broker',this.loginId,this.userType,loginId)
+      //brokerbranchCode = this.brokerbranchCode;
     }
     else{
       appId = this.loginId;
+      loginId=this.brokerCode;
+      brokerbranchCode = '';
+      console.log('Adminsssssssssss',this.loginId,this.userType,loginId)
+    }
+    if(this.section=='quote'){
+      type="Q";
+    }
+    else{
+      type="E";
+    }
+    let ReqObj = {
+      "ProductId": this.productId,
+      "InsuranceId": this.insuranceId,
+      "LoginId": loginId,
+      "ApplicationId":appId,
+      "UserType":this.userType,
+      "BranchCode": this.branchCode,
+      "Type":type
+    }
+    let urlLink = `${this.CommonApiUrl}api/adminreferralrejectropdown`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+          let defaultObj = []
+          this.brokerList = defaultObj.concat(data.Result);
+          if(this.brokerList.length==0){this.brokerCode = ''; this.brokerList = []}
+          else this.brokerCode = this.loginId;
+          if(this.brokerCode!=null && this.brokerCode!=''){
+            if(!this.brokerList.some(ele=>ele.CodeDesc==this.brokerCode)) this.brokerCode = this.brokerList[0].CodeDesc;
+            this.getExistingQuotes(null,'change')
+          }
+        }
+        
+      },
+      (err) => { },
+    );
+
+  }
+  getExistingQuotes(element,entryType){
+    let appId = "1",loginId="";this.quoteData=[];
+    if(this.userType=='Broker'){
+      appId = "1"; 
+      loginId = this.brokerCode;
+      //loginId = this.loginId;
+    }
+    else{
+      appId = this.loginId;
+      loginId = this.brokerCode;
     }
     let type=null;
     if(this.section=='quote'){type='Q'}

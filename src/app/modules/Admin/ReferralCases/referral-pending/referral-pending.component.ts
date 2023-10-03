@@ -30,6 +30,8 @@ export class ReferralPendingComponent implements OnInit {
   totalEndtRecords: any;
   limit: string;
   pageCount: number;
+  brokerCode:any='';
+  brokerList:any[]=[];
 
   constructor(private router:Router,private sharedService: SharedService) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -161,15 +163,69 @@ export class ReferralPendingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getExistingQuotes(null,'change');
+    this.getBrokerList();
+    //this.getExistingQuotes(null,'change');
   }
-  getExistingQuotes(element,entryType){
-    let appId = "1",loginId="";
-    if(this.userType=='Broker'){
-      appId = "1"; loginId = this.loginId;
+
+  getBrokerList(){
+    let appId = "1",loginId="",brokerbranchCode="";let type:any;
+    if(this.userType!='Issuer'){
+      appId = "1"; loginId = this.brokerCode;
+      console.log('Broker',this.loginId,this.userType,loginId)
+      //brokerbranchCode = this.brokerbranchCode;
     }
     else{
       appId = this.loginId;
+      loginId=this.brokerCode;
+      brokerbranchCode = '';
+      console.log('Adminsssssssssss',this.loginId,this.userType,loginId)
+    }
+    if(this.section=='quote'){
+      type="Q";
+    }
+    else{
+      type="E";
+    }
+    let ReqObj = {
+      "ProductId": this.productId,
+      "InsuranceId": this.insuranceId,
+      "LoginId": loginId,
+      "ApplicationId":appId,
+      "UserType":this.userType,
+      "BranchCode": this.branchCode,
+      "Type":type
+    }
+    let urlLink = `${this.CommonApiUrl}api/adminreferralpendingsdropdown`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+          let defaultObj = []
+          this.brokerList = defaultObj.concat(data.Result);
+          if(this.brokerList.length==0){this.brokerCode = ''; this.brokerList = []}
+          else this.brokerCode = this.loginId;
+          if(this.brokerCode!=null && this.brokerCode!=''){
+            if(!this.brokerList.some(ele=>ele.CodeDesc==this.brokerCode)) this.brokerCode = this.brokerList[0].CodeDesc;
+            this.getExistingQuotes(null,'change')
+          }
+        }
+        
+      },
+      (err) => { },
+    );
+
+  }
+  getExistingQuotes(element,entryType){
+    let appId = "1",loginId="";this.quoteData=[];
+    console.log('Brokerssssssssss',this.loginId,this.userType)
+    if(this.userType=='Broker'){
+      appId = "1"; 
+      //loginId = this.loginId;
+      loginId = this.brokerCode;
+
+    }
+    else{ 
+      appId = this.loginId;
+      loginId= this.brokerCode;
     }
     let type=null;
     if(this.section=='quote'){type='Q'}
@@ -273,7 +329,8 @@ export class ReferralPendingComponent implements OnInit {
     }
     this.getExistingQuotes(element,'direct');
   }
-  setSection(val){this.section = val;this.getExistingQuotes(null,'change')}
+  setSection(val){this.section = val; this.getBrokerList();}
+    //this.getExistingQuotes(null,'change')}
   onInnerData(rowData){
     let ReqObj = {
         "RequestReferenceNo": rowData.RequestReferenceNo
