@@ -4067,7 +4067,7 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
             let personalList = res.Result.PersonalDetails;
             if(personalList.length!=0){
               if(this.endorsementSection){
-                this.personalAccidentSection = !this.enableFieldsList.some(ele=>ele=='PersonalAccidentSuminsured' || ele=='OccupationType');
+                this.personalAccidentSection = this.enableFieldsList.some(ele=>ele=='PersonalAccidentSuminsured' || ele=='OccupationType');
               }
               else this.personalAccidentSection = true;
               let i=0;
