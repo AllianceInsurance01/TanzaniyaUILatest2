@@ -28,6 +28,10 @@
                     <label for="menu3">SubCover</label> -->
                     <input type="radio" id="menu8" name="menu" value="Tax" (click)="onRedirect('Tax')" [(ngModel)]="activeMenu">
                     <label for="menu8">Tax</label>
+                    <ng-container *ngIf="productId=='45'">
+                    <input type="radio" id="menu25" name="menu" value="policyterm" (click)="onRedirect('policyterm')" [(ngModel)]="activeMenu">
+                    <label for="menu25">PolicyTerm</label>
+                    </ng-container>
                     <input type="radio" id="menu9" name="menu" value="Prorata" (click)="onRedirect('Prorata')" [(ngModel)]="activeMenu">
                     <label for="menu9">ProRata</label>
                     <input type="radio" id="menu7" name="menu" value="UwQues" (click)="onRedirect('UwQues')" [(ngModel)]="activeMenu">

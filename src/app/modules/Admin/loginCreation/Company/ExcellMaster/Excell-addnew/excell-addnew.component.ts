@@ -124,9 +124,39 @@ export class ExcellAddNewComponent implements OnInit {
     let urlLink = `${this.ApiUrl1}xlconfig/getall`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
-        console.log(data);
-        if(data.Result){
-          this.NewList = data.Result;
+        console.log('data entered',data);
+        if(data.Message=='Details Found'){
+          if(data.Result){
+            this.NewList = data.Result;
+          }
+        }
+        else {
+          //if(data.Message=='Details Not Found')
+          console.log('KKKKKKKKKKK',data.Message)
+              this.NewList = [
+                {
+                  "CompanyId": this.insuranceId,
+                  "ProductId":this.productId,
+                  "SectionId": "0",
+                  "TypeId": this.typeid,
+                  "FieldId":null,
+                  "ExcelHeaderName": null,
+                  "Status": "N",
+                  "MandatoryYn": "N",
+                  "DataType":null,
+                  "FieldNameRaw":null,
+                  "FieldLength":null,
+                  "DataRange":null,
+                  "IsMainDefauVal": "N",
+                  "ApiJsonKey":null,
+                  "SelColName":null,
+                  "IsObject": "N",
+                  "IsArray": "N",
+                  "ObjApijsonKey":null,
+                  "ObjSelcolKey":null,
+                  "ObjDefaulVal": "N"
+                }
+              ]
         }
       },
       (err) => { },
