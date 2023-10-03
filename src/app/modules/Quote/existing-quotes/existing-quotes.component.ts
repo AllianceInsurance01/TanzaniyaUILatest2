@@ -62,7 +62,7 @@ export class ExistingQuotesComponent implements OnInit {
     sessionStorage.removeItem('quoteNo');
     sessionStorage.removeItem('updatebar');
     sessionStorage.removeItem('loadingType');
-    if(this.productId=='5'){
+    if(this.productId=='5' || this.productId=='46'){
 
 
         this.quoteHeader =  [

@@ -287,11 +287,11 @@
 
             <div class="hh-grayBox" *ngIf="productId=='3'">
                 <div class="row justify-content-between">
-                    <div class="order-tracking domesticrisk" [ngClass]="{completed: activeStep !='Customer-stepper'}" (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/customer-details')">
+                    <div class="order-tracking domesticrisk" [ngClass]="{completed: checkRouting('customerDetails')}" (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/customer-details')">
                         <span class="is-complete"></span>
                         <p>Customer Details</p>
                     </div>
-                    <div class="order-tracking domesticrisk" [ngClass]="{completed: activeStep !='Domestic-stepper' && activeStep !='Motor-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Customer-stepper'}"
+                    <div class="order-tracking domesticrisk" [ngClass]="{completed: checkRouting('riskDetails')}"
                      (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/domestic-quote-details')">
                         <span class="is-complete"></span>
                         <p>Risk Details</p>
@@ -301,22 +301,22 @@
                       <span class="is-complete"></span>
                       <p>UnderWriter Questions</p>
                   </div>-->
-                    <div class="order-tracking domesticrisk" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='Motor-stepper' && activeStep !='Excess-stepper' && activeStep !='Customer-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Domestic-stepper'}"
+                    <div class="order-tracking domesticrisk" [ngClass]="{completed: checkRouting('coverDetails')}"
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/excess-discount')">
                         <span class="is-complete"></span>
                         <p>Cover Details</p>
                     </div>
-                    <div class="order-tracking domesticrisk" [ngClass]="{completed: activeStep !='DomesticRisk-stepper'  && activeStep !='UW-stepper' && activeStep !='Motor-stepper' && activeStep !='Customer-stepper' && activeStep !='Domestic-stepper' && activeStep !='Excess-stepper' && activeStep != 'Vehicle-stepper'}"
+                    <div class="order-tracking domesticrisk" [ngClass]="{completed: checkRouting('additionalDetails')}" 
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details')">
                         <span class="is-complete"></span>
                         <p>Policy Details</p>
                     </div>
-                    <div class="order-tracking domesticrisk" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='Motor-stepper' && activeStep !='Premium-stepper' && activeStep !='Customer-stepper' && activeStep !='Excess-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Domestic-stepper' && activeStep !='DomesticRisk-stepper'}"
+                    <div class="order-tracking domesticrisk" [ngClass]="{completed: checkRouting('premiumDetails')}"  
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/premium-details')">
                         <span class="is-complete"></span>
                         <p>Document Details</p>
                     </div>
-                    <div class="order-tracking domesticrisk" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='Motor-stepper' && activeStep !='Payment-stepper' && activeStep !='Premium-stepper' && activeStep !='Customer-stepper' && activeStep !='Excess-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Domestic-stepper' && activeStep !='DomesticRisk-stepper'}"
+                    <div class="order-tracking domesticrisk" [ngClass]="{completed: checkRouting('paymentDetails')}" 
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/make-payment')">
                         <span class="is-complete"></span>
                         <p>Make Payment</p>

@@ -440,14 +440,14 @@ emiyn="N";
       if(quoteStatus) this.statusValue = quoteStatus;
       this.adminSection = false;
     }
-      if(this.productId=='5'  || this.productId=='3'){
+      if(this.productId=='5'  || this.productId=='3' || this.productId=='46'){
         //let vehicles = JSON.parse(sessionStorage.getItem('vehicleDetailsList'));
         let vehicles:any;
         if(this.statusValue=='RA'){
           this.getUpdatedVehicleDetails();
         }
         else{
-          if(vehicles && this.productId=='5'){
+          if(vehicles && (this.productId=='5' || this.productId=='46')){
             let vehicleList=[];
             let i=0;
             for(let veh of vehicles){
@@ -533,7 +533,7 @@ emiyn="N";
           }
         }
       }
-      else if(this.productId!='5' && this.productId!='3'){
+      else if(this.productId!='5' && this.productId!='3' && this.productId!='46'){
         // let coverListObj = JSON.parse(sessionStorage.getItem('travelCoverListObj'));
         // if(coverListObj){
         //   this.getCoverList(coverListObj);
@@ -1435,7 +1435,7 @@ getMotorUsageList(vehicleValue){
                       console.log("Vehiclessss",this.vehicleData,data.Result)
                       console.log("Final Vehicle List",vehicleList)
                       //sessionStorage.setItem('vehicleDetailsList',JSON.stringify(vehicleList));
-                      if(this.productId!='4' && this.productId!='5'){
+                      if(this.productId!='4' && this.productId!='5' && this.productId!='46'){
                         this.vehicleData = vehicleList;
                         this.filterVehicleList();
                       }
@@ -2201,7 +2201,7 @@ getMotorUsageList(vehicleValue){
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/underwriter-details']);
         }
         else{
-          if(this.productId=='5'){
+          if(this.productId=='5' || this.productId=='46'){
             this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details']);
           }
           else if(this.productId=='3'){
@@ -2348,7 +2348,7 @@ getMotorUsageList(vehicleValue){
     
     if(type=='coverList'){
         let vehicle:any;
-        if(this.productId!='4' && this.productId!='5'){
+        if(this.productId!='4' && this.productId!='5' && this.productId!='46'){
           vehicle = this.vehicleDetailsList.find(ele=>(ele.Vehicleid==vehicleId || ele.VehicleId==vehicleId) && (ele.SectionId==rowData.SectionId));
         }
         else{
@@ -3814,7 +3814,7 @@ getMotorUsageList(vehicleValue){
          // this.getExistingEserviceDetails();
         //}
       }
-      else if(this.productId=='5'){
+      else if(this.productId=='5' || this.productId=='46'){
         this.coverlist=[];let i=0;
         console.log('TTTTTTTTTT', this.vehicleDetailsList);
         console.log('NNNNNNNNNNNN', this.newcoverlist);
@@ -3862,7 +3862,7 @@ getMotorUsageList(vehicleValue){
 				if(data?.Result){
 				  let quoteDetails = data?.Result?.QuoteDetails;
 				  this.localPremiumCost = quoteDetails?.OverallPremiumLc;
-          if(this.productId=='5'){
+          if(this.productId=='5' || this.productId=='46'){
             let i=0;
             for(let vehicle of this.newcoverlist){
               let vehEntry = vehicle.Covers;
@@ -4194,13 +4194,13 @@ getMotorUsageList(vehicleValue){
   getcall(){
     let referenceNo =  sessionStorage.getItem('customerReferenceNo');
     this.getCustomerDetails(referenceNo);
-   if(this.productId=='5'  || this.productId=='3'){
+   if(this.productId=='5'  || this.productId=='3' || this.productId=='46'){
     let vehicles:any;
     if(this.statusValue=='RA'){
       this.getUpdatedVehicleDetails();
     }
     else{
-      if(vehicles && this.productId=='5'){
+      if(vehicles && (this.productId=='5' || this.productId=='46')){
         let vehicleList=[];
         let i=0;
         for(let veh of vehicles){

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
@@ -34,6 +34,7 @@ import { Building } from '../models/Building';
 import { AllRisk } from '../models/AllRisk';
 import { PersonalLiability } from '../models/PersonalLiability';
 import { PersonalAccident } from '../models/PersonalAccident';
+import { MatStepper } from '@angular/material/stepper';
 export class ForceLengthValidators {
   static maxLength(maxLength: number) {
     return (control: FormControl): ValidationErrors => {
@@ -70,6 +71,7 @@ export class ForceLengthValidators {
   styleUrls: ['./personal-quote-details.component.scss']
 })
 export class PersonalQuoteDetailsComponent implements OnInit {
+  @ViewChild('myStepper', {static: false}) private myStepper: MatStepper;
   fields: any[] = [];
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
@@ -146,6 +148,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
   paymentModeList: any[]=[];
   endorseCoverModification: any=null;
   customerName: any;
+  enableProceed: boolean;
   constructor(private formlyJsonschema: FormlyJsonschema, private sharedService: SharedService, private datePipe: DatePipe,
     private router: Router, private http: HttpClient, private updateComponent: UpdateCustomerDetailsComponent) {
     this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -3602,6 +3605,17 @@ onNextProceed(){
     this.onSaveBurglaryDetails(type,'Group');
   }
 }
+isValid(field: FormlyFieldConfig): boolean {
+    
+  if (field.key) {
+    return field.formControl.value!='' && field.formControl.value!='0';
+  }
+  return field.fieldGroup ? field.fieldGroup.every((f) => this.isValid(f)) : true;
+}
+onCheckProceed(index){
+  if(index == this.fields[0].fieldGroup.length-1) this.enableProceed = false;
+  else this.enableProceed = true;
+}
 getYearList() {
   var d = new Date();
   var year = d.getFullYear();
@@ -5162,7 +5176,7 @@ onCalculate(buildDetails,type,formType) {
             console.log("Indexxx", i, buildDetails.length,formType,type)
             if (i == buildDetails.length) {
               if(formType=='Group'){
-                if(type=='save'){this.selectedIndex +=1;}
+                if(type=='save'){this.selectedIndex +=1;this.myStepper.next();}
                 else{this.onFinalProceed();}
               }
               else if(type!='save'){ this.onFinalProceed();}
@@ -5175,6 +5189,7 @@ onCalculate(buildDetails,type,formType) {
 
   }
 }
+onPreviousStepper(){this.selectedIndex-=1;this.myStepper.previous();}
 onFinalProceed() {
   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
   // if (this.uwQuestionList.length != 0) {

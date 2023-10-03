@@ -39,7 +39,7 @@ export class CancelledPoliciesComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    if(this.productId=='5'){
+    if(this.productId=='5' || this.productId=='46'){
       this.quoteHeader =  [
         { key: 'OriginalPolicyNo', display: 'Policy No' },
         { key: 'QuoteNo', display: 'Quote No' },

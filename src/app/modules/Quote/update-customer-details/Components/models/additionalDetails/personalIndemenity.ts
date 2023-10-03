@@ -50,7 +50,7 @@ export class PersonalIndemenitys{
           
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -66,7 +66,7 @@ export class PersonalIndemenitys{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
                         },
                       
                       },
@@ -80,7 +80,7 @@ export class PersonalIndemenitys{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
                         },
                       
                       }, 

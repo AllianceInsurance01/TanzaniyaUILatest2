@@ -208,7 +208,7 @@ currencyValue:any;
 
      ];
 
-     if(this.productId=='5'){
+     if(this.productId=='5' || this.productId=='46'){
      this.innerColumnHeader=[
       { key: 'PolicyType', display: 'Policy Type' },
       { key: 'PolicyStartDate', display: 'Policy StartDate' },
@@ -221,7 +221,7 @@ currencyValue:any;
 }
 
 
-  if(this.productId!='5'){
+  if(this.productId!='5' && this.productId!='46'){
     this.innerColumnHeader=[
       //{ key: 'PolicyType', display: 'Policy Type' },
       { key: 'OverallPremiumLc', display: 'Premium' },

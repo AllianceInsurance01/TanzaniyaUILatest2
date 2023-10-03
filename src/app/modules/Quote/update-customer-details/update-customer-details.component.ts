@@ -90,6 +90,17 @@ export class UpdateCustomerDetailsComponent implements OnInit {
         return null;
       }))as Observable<NavigationStart>;
   }
+  checkRouting(type){
+    if(type=='customerDetails') return this.router.url!='/Home/existingQuotes/customerSelection/customerDetails/customer-details';
+    if(type=='riskDetails'){
+     
+      return (this.checkRouting('customerDetails') && this.router.url!='/Home/existingQuotes/customerSelection/customerDetails/risk-selection' && this.router.url!='/Home/existingQuotes/customerSelection/customerDetails/personal-accident');
+    }
+    if(type=='coverDetails') return (this.checkRouting('riskDetails') && this.router.url!='/Home/existingQuotes/customerSelection/customerDetails/excess-discount');
+    if(type=='additionalDetails') return (this.checkRouting('coverDetails') && this.router.url=='/Home/existingQuotes/customerSelection/customerDetails/premium-details');
+    if(type=='premiumDetails') return (this.checkRouting('additionalDetails') && this.router.url=='/Home/existingQuotes/customerSelection/customerDetails/make-payment');
+    if(type=='paymentDetails') return (this.checkRouting('premiumDetails') && this.router.url!='/Home/existingQuotes/customerSelection/customerDetails/make-payment');
+  }
   getCustomerDetails(referenceNo){
     let ReqObj = {
       "CustomerReferenceNo": referenceNo

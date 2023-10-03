@@ -245,12 +245,12 @@ export class CustomerDetailsComponent implements OnInit {
         if(referenceNo){
           this.quoteRefNo = referenceNo;
         }
-        if(this.productId=='5'){
+        if(this.productId=='5' || this.productId=='46'){
           vehicleDetails = JSON.parse(sessionStorage.getItem('vehicleDetailsList'));
           //this.getExistingVehiclesList();
           //this.setCommonValues('direct');
         }
-        else if(this.productId!='5'){
+        else if(this.productId!='5' && this.productId!='46'){
           vehicleDetails = JSON.parse( sessionStorage.getItem('homeCommonDetails'));
         }
         if(vehicleDetails!=undefined){
@@ -262,8 +262,8 @@ export class CustomerDetailsComponent implements OnInit {
             let referenceNo =  sessionStorage.getItem('quoteReferenceNo');
             if(referenceNo){
               this.quoteRefNo = referenceNo;
-             if(this.productId=='5') this.getExistingVehiclesList();
-             if(this.productId!='5' && this.productId!='4') this.getExistingBuildingList();
+             if(this.productId=='5' || this.productId=='46') this.getExistingVehiclesList();
+             if(this.productId!='5' && this.productId!='4' && this.productId!='46') this.getExistingBuildingList();
             }
             else{
               
@@ -281,8 +281,8 @@ export class CustomerDetailsComponent implements OnInit {
           let referenceNo =  sessionStorage.getItem('quoteReferenceNo');
           if(referenceNo){
             this.quoteRefNo = referenceNo;
-           if(this.productId=='5') this.getExistingVehiclesList();
-           if(this.productId!='5' && this.productId!='4') this.getExistingBuildingList();
+           if(this.productId=='5' || this.productId=='46') this.getExistingVehiclesList();
+           if(this.productId!='5' && this.productId!='4' && this.productId!='46') this.getExistingBuildingList();
           }
           else{
             this.quoteRefNo=null;
@@ -294,7 +294,7 @@ export class CustomerDetailsComponent implements OnInit {
               var year = d.getFullYear();
               var month = d.getMonth();
               var day = d.getDate();
-              if(this.productId=='5'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
+              if(this.productId=='5' || this.productId=='46'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
               this.searchSection = true;
             this.commonSection = true;
             let quoteStatus = sessionStorage.getItem('QuoteStatus');
@@ -422,7 +422,7 @@ export class CustomerDetailsComponent implements OnInit {
 
 
     });
-      if(this.productId=='5' || this.productId=='4'){
+      if(this.productId=='5' || this.productId=='4' || this.productId=='46'){
         this.minDate = new Date();
         var d = this.minDate;
         var year = d.getFullYear();
@@ -747,7 +747,7 @@ export class CustomerDetailsComponent implements OnInit {
       if(referenceNo){
         this.quoteRefNo = referenceNo;
       }
-      if(this.productId=='5'){
+      if(this.productId=='5' || this.productId=='46'){
         vehicleDetails = JSON.parse(sessionStorage.getItem('vehicleDetailsList'));
         //this.getExistingVehiclesList();
         //this.setCommonValues('direct');
@@ -764,8 +764,8 @@ export class CustomerDetailsComponent implements OnInit {
           let referenceNo =  sessionStorage.getItem('quoteReferenceNo');
           if(referenceNo){
             this.quoteRefNo = referenceNo;
-           if(this.productId=='5') this.getExistingVehiclesList();
-           if(this.productId!='5' && this.productId!='4') this.getExistingBuildingList();
+           if(this.productId=='5' || this.productId=='46') this.getExistingVehiclesList();
+           if(this.productId!='5' && this.productId!='4' && this.productId!='46') this.getExistingBuildingList();
           }
           else{
             this.quoteRefNo=null;
@@ -781,8 +781,8 @@ export class CustomerDetailsComponent implements OnInit {
         let referenceNo =  sessionStorage.getItem('quoteReferenceNo');
         if(referenceNo){
           this.quoteRefNo = referenceNo;
-         if(this.productId=='5') this.getExistingVehiclesList();
-         if(this.productId!='5' && this.productId!='4') this.getExistingBuildingList();
+         if(this.productId=='5' || this.productId=='46') this.getExistingVehiclesList();
+         if(this.productId!='5' && this.productId!='4' && this.productId!='46') this.getExistingBuildingList();
         }
         else{
           this.quoteRefNo=null;
@@ -794,7 +794,7 @@ export class CustomerDetailsComponent implements OnInit {
             var year = d.getFullYear();
             var month = d.getMonth();
             var day = d.getDate();
-            if(this.productId=='5'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
+            if(this.productId=='5' || this.productId=='46'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
           this.searchSection = true;
           this.commonSection = true;
           let quoteStatus = sessionStorage.getItem('QuoteStatus');
@@ -1089,7 +1089,7 @@ export class CustomerDetailsComponent implements OnInit {
           this.brokerList = data.Result;
           //if(this.Code=='Agent') this.executiveSection = true;
           if(type=='change'){
-            if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
+            if(this.productId=='5' || this.productId=='46'){this.updateComponent.modifiedYN = 'Y'}
             this.updateComponent.CustomerCode = null;
             this.updateComponent.brokerCode = null;
             this.updateComponent.brokerBranchCode = null;
@@ -1137,12 +1137,12 @@ export class CustomerDetailsComponent implements OnInit {
   }
   onBranchValueChange(){
     this.updateComponent.branchValue = this.branchValue;
-    if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
+    if(this.productId=='5' || this.productId=='46'){this.updateComponent.modifiedYN = 'Y'}
   }
   onBrokerChange(){
     //if(this.Code=='Broker' || this.Code=='Agent'){
       if(this.productId=='3') this.getBackDaysDetails();
-      if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
+      if(this.productId=='5' || this.productId=='46'){this.updateComponent.modifiedYN = 'Y'}
       let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
       if(entry){
         this.brokerLoginId = entry.Name; 
@@ -1167,7 +1167,7 @@ export class CustomerDetailsComponent implements OnInit {
   onBrokerBranchChange(){
     this.updateComponent.brokerBranchCode = this.brokerBranchCode;
     console.log("Final Branches",this.brokerBranchList.find(ele=>ele.Code==this.brokerBranchCode))
-    if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
+    if(this.productId=='5' || this.productId=='46'){this.updateComponent.modifiedYN = 'Y'}
   }
   getBrokerBranchList(type){
     let urlLink = `${this.ApiUrl1}api/brokerbranches`;
@@ -1272,7 +1272,7 @@ export class CustomerDetailsComponent implements OnInit {
       
       this.updateComponent.CustomerCode = code;
     
-      if(this.productId=='5' && type=='change'){this.updateComponent.modifiedYN = 'Y'}
+      if((this.productId=='5' || this.productId=='46') && type=='change'){this.updateComponent.modifiedYN = 'Y'}
   }
   setCommonValues(entry){
     console.log("Entry Values",entry);
@@ -1315,7 +1315,7 @@ export class CustomerDetailsComponent implements OnInit {
   }
   onExchangeRateChange(){
     this.updateComponent.exchangeRate = this.exchangeRate;
-    if(this.productId=='5' ){this.updateComponent.modifiedYN = 'Y'}
+    if((this.productId=='5' || this.productId=='46')){this.updateComponent.modifiedYN = 'Y'}
   }
   getExistingTravelDetails(){
     let ReqObj = {
@@ -1454,14 +1454,14 @@ export class CustomerDetailsComponent implements OnInit {
     else{
       this.editSection=true;
     }
-    if(this.productId=='5' && type=='change'){this.updateComponent.modifiedYN = 'Y'}
+    if((this.productId=='5' || this.productId=='46') && type=='change'){this.updateComponent.modifiedYN = 'Y'}
     if(type=='change' && this.quoteRefNo!=null){
       this.updateComponent.ModifiedCurrencyYN = 'Y';
     }
   }
   onStartDateChange(type){
     if(this.productId!='4'){
-      if(this.productId=='5' && type=='change'){this.updateComponent.modifiedYN = 'Y'}
+      if((this.productId=='5' || this.productId=='46') && type=='change'){this.updateComponent.modifiedYN = 'Y'}
       var d = this.policyStartDate;
       var year = d.getFullYear();
       var month = d.getMonth();
@@ -1499,15 +1499,15 @@ export class CustomerDetailsComponent implements OnInit {
     }
     this.updateComponent.HavePromoCode = this.HavePromoCode;
     this.updateComponent.PromoCode= this.PromoCode;
-    if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
+    if(this.productId=='5' || this.productId=='46'){this.updateComponent.modifiedYN = 'Y'}
   }
   onPromoCodeChange(){
     this.updateComponent.PromoCode= this.PromoCode;
-    if(this.productId=='5'){this.updateComponent.modifiedYN = 'Y'}
+    if(this.productId=='5' || this.productId=='46'){this.updateComponent.modifiedYN = 'Y'}
   }
   onChangeEndDate(type){
     if(this.productId!='4'){
-      if(this.productId=='5' && type=='change'){this.updateComponent.modifiedYN = 'Y'}
+      if((this.productId=='5' || this.productId=='46') && type=='change'){this.updateComponent.modifiedYN = 'Y'}
     const oneday = 24 * 60 * 60 * 1000;
     const momentDate = new Date(this.policyEndDate); // Replace event.value with your date value
     const formattedDate = moment(momentDate).format("YYYY-MM-DD");
@@ -1908,7 +1908,7 @@ export class CustomerDetailsComponent implements OnInit {
           //   preventDuplicates: false,};
               if(this.policyStartDate!='' && this.policyStartDate!=undefined && this.policyStartDate!=null){
                 this.policyStartError = false;
-                if( (this.productId=='5' || this.productId=='4') && (new Date(this.policyStartDate)).setHours(0,0,0,0) >= (new Date()).setHours(0,0,0,0) ){
+                if( (this.productId=='5' || this.productId=='4' || this.productId=='46') && (new Date(this.policyStartDate)).setHours(0,0,0,0) >= (new Date()).setHours(0,0,0,0) ){
                  
                   this.policyPassDate = false;
                   if(this.policyEndDate!='' && this.policyEndDate!=undefined && this.policyEndDate!=null){
@@ -2486,7 +2486,7 @@ export class CustomerDetailsComponent implements OnInit {
     );
   }
   setVehicleValue(){
-    if(this.productId=='5' || this.productId=='4' || this.productId=='3'){
+    if(this.productId=='5' || this.productId=='4' || this.productId=='3' || this.productId=='46'){
       console.log("Entered Loop 1")
       this.vehicleWishList = this.updateComponent.vehicleWishList
       let i=0;

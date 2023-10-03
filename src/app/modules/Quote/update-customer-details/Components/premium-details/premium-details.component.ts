@@ -265,7 +265,7 @@ export class PremiumDetailsComponent implements OnInit {
             if(data.Result){
               let obj = [{"Code":null,"CodeDesc":"-Select-"}]
               this.mobileCodeList= obj.concat(data.Result);
-              if(this.productId=='5'){
+              if(this.productId=='5' || this.productId=='46'){
                 this.getDriverDetails();
               }
             }
@@ -952,7 +952,7 @@ toggle(index: number) {
   }
 
   getBacks(){
-    if(this.productId=='5'){
+    if(this.productId=='5' || this.productId=='46'){
     //   console.log('JJJJJJJJJJ',this.Riskdetails);
     //   let entry=this.Riskdetails.filter(ele => ele.AcccessoriesSumInsured!=0)
     //   if(entry.length!=0){
@@ -1141,7 +1141,7 @@ toggle(index: number) {
         }
         else{
           sessionStorage.removeItem('quotePaymentId');
-          if(this.productId=='5' && this.enableDriverDetails){
+          if((this.productId=='5' || this.productId=='46') && this.enableDriverDetails){
             this.onsave();
           }
           else if(this.enableCustomerDetails){
@@ -1294,7 +1294,7 @@ toggle(index: number) {
       (data: any) => {
         console.log(data);
         if(data.Result){
-          if(this.productId=='5' && this.driverDetailsList.length!=0 && (!this.endorsementSection || (this.endorsementSection && this.enableDriverDetails))){
+          if((this.productId=='5' || this.productId=='46')&& this.driverDetailsList.length!=0 && (!this.endorsementSection || (this.endorsementSection && this.enableDriverDetails))){
             sessionStorage.setItem('quotePaymentId',data.Result.PaymentId);
             this.onsave();
           }
