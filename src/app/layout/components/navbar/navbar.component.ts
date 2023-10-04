@@ -146,7 +146,7 @@ export class NavbarComponent implements OnInit {
     else{this.router.navigate(['/Home'])}
   }
   home() {
-    if(this.typeValue=='B2C' && this.loginId=='guest'){
+    if(this.loginType=='B2CFlow'){
       this.router.navigate(['/customerProducts']);
     }
     else this.router.navigate(['/product']);
