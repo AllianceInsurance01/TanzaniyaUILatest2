@@ -199,34 +199,43 @@ export class EndrosementUserComponent {
             console.log('rrrrrr',res?.Result)
             if(res){
            console.log('dddddddddd',res?.Result.EndorsementMasterListRes)
+           if(res?.Result[0].EndorsementMasterListRes){
+            this.endorseData = res?.Result[0]?.EndorsementMasterListRes;
+          console.log('eeeeeeee',this.endorseData)
+
+          if(this.categoryId!=undefined && this.categoryId!=null){
+            let docObj = {"ItemType":this.categoryId};
+            sessionStorage.setItem('addDocDetailsObj',JSON.stringify(docObj));
+          }
+        }
               
-           let endorseData=res?.Result;
-           console.log('TTTTTTTTTTTTTTTT',this.endorseData)
-            if(endorseData.length!=0){  
-              let endroses=[]; 
-                //endorseData = res?.Result.EndorsementMasterListRes;
-                for(let v of endorseData){
-                  endrose=v.EndorsementMasterListRes[0]; 
-                  if(endrose!=null){
-                  console.log('GGGGGGGGGGGGGG',i);  
-                  endroses.push(endrose);
-                  i+=1; 
-                  }
+          //  let endorseData=res?.Result;
+          //  console.log('TTTTTTTTTTTTTTTT',this.endorseData)
+            // if(endorseData.length!=0){  
+            //   let endroses=[]; 
+            //     //endorseData = res?.Result.EndorsementMasterListRes;
+            //     for(let v of endorseData){
+            //       endrose=v.EndorsementMasterListRes[0]; 
+            //       if(endrose!=null){
+            //       console.log('GGGGGGGGGGGGGG',i);  
+            //       endroses.push(endrose);
+            //       i+=1; 
+            //       }
                      
-                  if(i==endorseData?.length){
-                   this.endorseData=endroses;
-                   console.log('TTTTTTTTTTTTTTTT',this.endorseData)
-                  }
-                }
-                //console.log('TTTTTTTTTTTTTTTT',this.endorseData)
+            //       if(i==endorseData?.length){
+            //        this.endorseData=endroses;
+            //        console.log('TTTTTTTTTTTTTTTT',this.endorseData)
+            //       }
+            //     }
+            //     //console.log('TTTTTTTTTTTTTTTT',this.endorseData)
                
     
-              if(this.categoryId!=undefined && this.categoryId!=null){
-                let docObj = {"ItemType":this.categoryId};
-                sessionStorage.setItem('addDocDetailsObj',JSON.stringify(docObj));
-              }
+            //   if(this.categoryId!=undefined && this.categoryId!=null){
+            //     let docObj = {"ItemType":this.categoryId};
+            //     sessionStorage.setItem('addDocDetailsObj',JSON.stringify(docObj));
+            //   }
               
-            }
+            // }
         }
           },
           (err) => { },
