@@ -35,6 +35,7 @@ import { AllRisk } from '../models/AllRisk';
 import { PersonalLiability } from '../models/PersonalLiability';
 import { PersonalAccident } from '../models/PersonalAccident';
 import { MatStepper } from '@angular/material/stepper';
+import { ShortTermVehicle } from '../models/ShortTermVehicle';
 export class ForceLengthValidators {
   static maxLength(maxLength: number) {
     return (control: FormControl): ValidationErrors => {
@@ -149,14 +150,31 @@ export class PersonalQuoteDetailsComponent implements OnInit {
   endorseCoverModification: any=null;
   customerName: any;
   enableProceed: boolean;
+  title: any;
+  clientName: any;
+  ownerName: any;
+  dateOfBirth: any;
+  clientType: string;
+  emailId: any;
+  mobileNo: any;
+  idNumber: any;
+  ownerList: any[]=[];
+  makeList: any[]=[];
+  fuelTypeList: any;
+  colorList: any;
+  bodyTypeList: any;
+  usageList: any;
+  motorCategoryList: any;
+  modelList: any;
+  noOfDays: number;
+  vehicleDetails: any;
+  motorDetails: any;
   constructor(private formlyJsonschema: FormlyJsonschema, private sharedService: SharedService, private datePipe: DatePipe,
     private router: Router, private http: HttpClient, private updateComponent: UpdateCustomerDetailsComponent) {
     this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
     let commonDetails = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
-    if (commonDetails){this.commonDetails = commonDetails;
-    this.currencyCode = this.commonDetails[0].Currency
-    if(this.commonDetails[0].IndustryName) this.industryName = this.commonDetails[0].IndustryName;
-    }
+    if (commonDetails){this.commonDetails = commonDetails;}
+    
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
     this.userType = this.userDetails?.Result?.UserType;
@@ -168,10 +186,17 @@ export class PersonalQuoteDetailsComponent implements OnInit {
     this.branchList = this.userDetails.Result.LoginBranchDetails;
     this.countryId = this.userDetails.Result.CountryId;
     this.productId = this.userDetails.Result.ProductId;
+    if(this.productId=='46'){
+      let commonDetails = JSON.parse(sessionStorage.getItem('vehicleDetailsList'));
+      if (commonDetails){this.commonDetails = commonDetails;}
+    }
+    this.currencyCode = this.commonDetails[0].Currency
+    if(this.commonDetails[0].IndustryName) this.industryName = this.commonDetails[0].IndustryName;
+    
     this.insuranceId = this.userDetails.Result.InsuranceId;
     console.log('OOOOOOOOOOOOO',this.insuranceId);
      this.updateComponent.showStepperSection = false;
-    if (this.productId != '3' && this.productId != '19' && this.productId != '42' && this.productId != '43' && this.productId!='39' && this.productId!='16' && this.productId!='1' && this.productId!='25' && this.productId!='21' && this.productId!='26' && this.productId!='27') {
+    if (this.productId != '3' && this.productId != '19' && this.productId != '46' && this.productId != '42' && this.productId != '43' && this.productId!='39' && this.productId!='16' && this.productId!='1' && this.productId!='25' && this.productId!='21' && this.productId!='26' && this.productId!='27') {
       this.getOccupationList(null);
     }
     if(this.productId=='45'){
@@ -223,6 +248,19 @@ export class PersonalQuoteDetailsComponent implements OnInit {
     var month = d.getMonth();
     var day = d.getDate();
     this.dobDate = new Date(year - 18, month, day);
+    if(this.customerDetails){
+      console.log("customer details",this.customerDetails)
+      this.title = this.customerDetails?.TitleDesc;
+      this.clientName = this.customerDetails?.ClientName;
+      this.ownerName = this.customerDetails?.ClientName;
+      this.dateOfBirth = this.customerDetails?.DobOrRegDate;
+      if(this.customerDetails?.PolicyHolderType == '1') this.clientType = "Individual";
+      if(this.customerDetails?.PolicyHolderType == '2') this.clientType = "Corporate";
+      //this.ownerCategory = this.customerDetails?.PolicyHolderType;
+      this.emailId = this.customerDetails?.Email1;
+      this.mobileNo = this.customerDetails?.MobileNo1;
+      this.idNumber = this.customerDetails?.IdNumber;
+    }
     if (this.productId == '13') {
       this.fields = [
         {
@@ -728,6 +766,37 @@ export class PersonalQuoteDetailsComponent implements OnInit {
     else if (this.productId == '32') {
       
       
+    }
+    else if (this.productId == '46') {
+      let fireData = new ShortTermVehicle();
+      let entry = [];
+      this.fields[0] = fireData?.fields;
+      let makeHooks ={ onInit: (field: FormlyFieldConfig) => {
+        field.formControl.valueChanges.subscribe(() => {
+          this.onMakeChange('change')
+        });
+      } }
+      this.fields[0].fieldGroup[0].fieldGroup[0].hooks = makeHooks;
+      let referenceNo = sessionStorage.getItem('quoteReferenceNo');
+      if (referenceNo) {
+        this.requestReferenceNo = referenceNo;
+        this.setCommonFormValues();
+      }
+      else {
+          this.productItem = new ProductData();
+          this.formSection = true; this.viewSection = false;
+          this.productItem.OwnerName = this.customerDetails.ClientName;
+          if(this.customerDetails?.PolicyHolderType){
+            this.productItem.OwnerCategory = this.customerDetails.PolicyHolderType;
+          } 
+          this.getMakeList();
+          this.getFuelTypeList();
+          this.getYearList();
+          this.getColorsList();
+          this.getBodyTypeList();
+          this.getUsageList();
+          //this.getMotorCategoryList();
+      }
     }
     // else if (this.productId == '3') {
     //   this.checkDomesticForm('direct');
@@ -3236,6 +3305,202 @@ onAddVehicle(value) {
   }
 
 }
+getMakeList(){
+  let ReqObj = {
+    "InsuranceId": this.insuranceId,
+    "BranchCode": this.branchCode
+  }
+  let urlLink = `${this.commonApiUrl}master/dropdown/motormake`;
+  this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+    (data: any) => {
+      console.log(data);
+      if(data.Result){
+          this.makeList = data.Result;
+          for (let i = 0; i < this.makeList.length; i++) {
+            this.makeList[i].label = this.makeList[i]['CodeDesc'];
+            this.makeList[i].value = this.makeList[i]['Code'];
+            delete this.makeList[i].CodeDesc;
+            if (i == this.makeList.length - 1) {
+                let defaultObj = [{ 'label': '-Select-', 'value': '' }];
+                this.fields[0].fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.makeList);
+                if(this.motorDetails){
+                  this.productItem.Make = this.makeList.find(ele=>ele.label==this.motorDetails.Vehiclemake || ele.Code==this.motorDetails.Vehiclemake)?.Code;
+                  if(this.productItem.Make) this.onMakeChange('direct');
+                  else this.formSection = true; this.viewSection = false;
+                }
+            }
+          }
+      }
+
+    },
+    (err) => { },
+  );
+}
+onMakeChange(type){
+  let ReqObj = {
+    "InsuranceId": this.insuranceId,
+    "BranchCode": this.branchCode,
+    "MakeId": this.productItem.Make
+  }
+  let urlLink = `${this.commonApiUrl}master/dropdown/motormakemodel`;
+  this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+    (data: any) => {
+      console.log(data);
+      if(data.Result){
+          this.modelList = data.Result;
+          for (let i = 0; i < this.modelList.length; i++) {
+            this.modelList[i].label = this.modelList[i]['CodeDesc'];
+            this.modelList[i].value = this.modelList[i]['Code'];
+            delete this.modelList[i].CodeDesc;
+            if (i == this.modelList.length - 1) {
+                let defaultObj = [{ 'label': '-Select-', 'value': '' }];
+                this.fields[0].fieldGroup[0].fieldGroup[1].props.options = defaultObj.concat(this.modelList);
+                if(type=='change') this.productItem.Model = '';
+                else if(this.motorDetails){
+                  this.productItem.Model = this.modelList.find(ele=>ele.label==this.motorDetails.Vehcilemodel || ele.Code==this.motorDetails.Vehcilemodel)?.Code;
+                  this.formSection = true; this.viewSection = false;
+                }
+                else this.formSection = true; this.viewSection = false;
+            }
+          }
+      }
+    },
+    (err) => { },
+  );
+}
+getFuelTypeList(){
+  let ReqObj = {
+    "InsuranceId": this.insuranceId,
+    "BranchCode": this.branchCode
+  }
+  let urlLink = `${this.commonApiUrl}dropdown/fueltype`;
+  this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+    (data: any) => {
+      console.log(data);
+      if(data.Result){
+          this.fuelTypeList = data.Result;
+          for (let i = 0; i < this.fuelTypeList.length; i++) {
+            this.fuelTypeList[i].label = this.fuelTypeList[i]['CodeDesc'];
+            this.fuelTypeList[i].value = this.fuelTypeList[i]['Code'];
+            delete this.fuelTypeList[i].CodeDesc;
+            if (i == this.fuelTypeList.length - 1) {
+                let defaultObj = [{ 'label': '-Select-', 'value': '' }];
+                this.fields[0].fieldGroup[0].fieldGroup[9].props.options = defaultObj.concat(this.fuelTypeList);
+                if(this.motorDetails){
+                  this.productItem.FuelType = this.fuelTypeList.find(ele=>ele.label==this.motorDetails.FuelType || ele.Code==this.motorDetails.FuelType)?.Code;
+                }
+            }
+          }
+      }
+
+    },
+    (err) => { },
+  );
+}
+getColorsList(){
+  let ReqObj = {
+    "InsuranceId": this.insuranceId,
+    "BranchCode": this.branchCode
+  }
+  let urlLink = `${this.commonApiUrl}master/dropdown/color`;
+  this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+    (data: any) => {
+      if(data.Result){
+          this.colorList = data.Result;
+          for (let i = 0; i < this.colorList.length; i++) {
+            this.colorList[i].label = this.colorList[i]['CodeDesc'];
+            this.colorList[i].value = this.colorList[i]['Code'];
+            delete this.colorList[i].CodeDesc;
+            if (i == this.colorList.length - 1) {
+                let defaultObj = [{ 'label': '-Select-', 'value': '' }];
+                this.fields[0].fieldGroup[0].fieldGroup[10].props.options = defaultObj.concat(this.colorList);
+                if(this.motorDetails){
+                  this.productItem.Color = this.colorList.find(ele=>ele.label==this.motorDetails.Color || ele.Code == this.motorDetails.Color)?.Code;
+                }
+            }
+          }
+      }
+    },
+    (err) => { },
+  );
+}
+getBodyTypeList(){
+  let ReqObj = {
+    "InsuranceId": this.insuranceId,
+    "BranchCode": this.branchCode
+  }
+  let urlLink = `${this.commonApiUrl}master/dropdown/induvidual/bodytype`;
+  this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+    (data: any) => {
+      console.log(data);
+      if(data.Result){
+          this.bodyTypeList = data.Result;
+          for (let i = 0; i < this.bodyTypeList.length; i++) {
+            this.bodyTypeList[i].label = this.bodyTypeList[i]['CodeDesc'];
+            this.bodyTypeList[i].value = this.bodyTypeList[i]['Code'];
+            delete this.bodyTypeList[i].CodeDesc;
+            if (i == this.bodyTypeList.length - 1) {
+                let defaultObj = [{ 'label': '-Select-', 'value': '' }];
+                this.fields[0].fieldGroup[0].fieldGroup[2].props.options = defaultObj.concat(this.bodyTypeList);
+                if(this.motorDetails){
+                  this.productItem.BodyType = this.bodyTypeList.find(ele=>ele.label==this.motorDetails.VehicleType || ele.Code ==this.motorDetails.VehicleType)?.Code;
+                }
+            }
+          } 
+      }
+
+    },
+    (err) => { },
+  );
+}
+getUsageList(){
+  let ReqObj = {
+    "InsuranceId": this.insuranceId,
+    "BranchCode": this.branchCode
+  }
+  let urlLink = `${this.commonApiUrl}api/dropdown/induvidual/vehicleusage`;
+  this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+    (data: any) => {
+      console.log(data);
+      if(data.Result){
+          this.usageList = data.Result;
+          for (let i = 0; i < this.usageList.length; i++) {
+            this.usageList[i].label = this.usageList[i]['CodeDesc'];
+            this.usageList[i].value = this.usageList[i]['Code'];
+            delete this.usageList[i].CodeDesc;
+            if (i == this.usageList.length - 1) {
+                let defaultObj = [{ 'label': '-Select-', 'value': '' }];
+                this.fields[0].fieldGroup[0].fieldGroup[11].props.options = defaultObj.concat(this.usageList);
+                if(this.motorDetails){
+                  this.productItem.MotorUsage = this.usageList.find(ele=>ele.label==this.motorDetails.Motorusage || ele.Code ==this.motorDetails.Motorusage)?.Code;
+                }
+            }
+          } 
+          
+      }
+
+    },
+    (err) => { },
+  );
+}
+// getMotorCategoryList(){
+//   let ReqObj = {
+//     "InsuranceId": this.insuranceId,
+//     "BranchCode": this.branchCode
+//   }
+//   let urlLink = `${this.commonApiUrl}dropdown/motorcategory`;
+//   this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+//     (data: any) => {
+//       console.log(data);
+//       if(data.Result){
+//           this.motorCategoryList = data.Result;
+          
+//       }
+
+//     },
+//     (err) => { },
+//   );
+// }
 getNatureTradeList(){
   this.natureTradeList = [];
   if(this.productId!='19'){this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].props.options = [];}
@@ -3558,6 +3823,259 @@ getIndemityPeriodList(){
 onPreviousTab(){
   this.selectedIndex-=1;
 }
+onSaveMotorDetails(){
+  let make = "";
+    if(this.productItem.Make!='' && this.productItem.Make!=undefined && this.productItem.Make!=null){
+      let entry = this.makeList.find(ele=>ele.Code==this.productItem.Make);
+      make = entry.label;
+    }
+    let regNo = null;
+    if(this.productItem.RegistrationNo=='' || this.productItem.RegistrationNo==null){
+      regNo = this.productItem.ChassisNo;
+    }
+    else regNo = this.productItem.RegistrationNo;
+    let ReqObj = {
+      "AxelDistance": '01',
+      "Chassisnumber": this.productItem.ChassisNo,
+      "Color": this.productItem.Color,
+      "CreatedBy": this.loginId,
+      "EngineNumber": this.productItem.EngineNo,
+      "FuelType": this.productItem.FuelType,
+      "Grossweight": "100",
+      "ManufactureYear": this.productItem.ManufactureYear,
+      "MotorCategory": "01",
+      "Motorusage": this.productItem.MotorUsage,
+      "NumberOfAxels": "1",
+      "OwnerCategory": this.productItem.OwnerCategory,
+      "Registrationnumber": regNo,
+      "ResEngineCapacity": this.productItem.EngineCapacity,
+      "ResOwnerName": this.productItem.OwnerName,
+      "ResStatusCode": "Y",
+      "ResStatusDesc": "None",
+      "SeatingCapacity": this.productItem.SeatingCapacity,
+      "Tareweight": "100",
+      "Vehcilemodel": this.productItem.Model,
+      "VehicleType": this.productItem.BodyType,
+      "Vehiclemake": make
+    }
+    let urlLink = `${this.motorApiUrl}regulatory/savevehicleinfo`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+          //this.saveMotorRiskDetails(ReqObj);
+        }
+      });
+}
+saveMotorRiskDetails(){
+    let make = "";
+    if(this.productItem.Make!='' && this.productItem.Make!=undefined && this.productItem.Make!=null){
+      let entry = this.makeList.find(ele=>ele.Code==this.productItem.Make);
+      make = entry.label;
+    }
+    let regNo = null;
+    if(this.productItem.RegistrationNo=='' || this.productItem.RegistrationNo==null){
+      regNo = this.productItem.ChassisNo;
+    }
+    else regNo = this.productItem.RegistrationNo;
+    let createdBy="";
+        let startDate = "",endDate = "",vehicleSI="",accSI="",windSI="",tppSI="";
+        startDate = this.commonDetails[0].PolicyStartDate;
+        endDate = this.commonDetails[0].PolicyEndDate;
+        if(this.policyStartDate){
+          // if(this.endorsementSection && (this.enableAddVehicle && this.endorsementYn=='Y')){
+          //    startDate = this.endorseEffectiveDate;
+          //    const oneday = 24 * 60 * 60 * 1000;
+          //     const momentDate = new Date(this.policyEndDate); // Replace event.value with your date value
+          //     const formattedDate = moment(momentDate).format("YYYY-MM-DD");
+          //     const formattedDatecurrent = new Date(startDate);
+          //     console.log(formattedDate);
+    
+          //   console.log(formattedDatecurrent);
+    
+          //   this.noOfDays = Math.round(Math.abs((Number(momentDate)  - Number(formattedDatecurrent) )/oneday)+1);
+          // }
+        }
+      let quoteStatus = sessionStorage.getItem('QuoteStatus');
+      this.subuserType = sessionStorage.getItem('typeValue');
+      console.log("AcExecutive",this.acExecutiveId,this.sourceType,this.bdmCode,this.brokerCode,this.customerCode);
+      
+      let appId = "1",loginId="",brokerbranchCode="";
+      if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
+        brokerbranchCode = this.commonDetails[0].BrokerBranchCode;
+          createdBy = this.commonDetails[0].CreatedBy;
+      }
+      else{
+        createdBy = this.loginId;
+        if(this.userType!='Issuer'){
+          this.brokerCode = this.agencyCode;
+          appId = "1"; loginId=this.loginId;
+          brokerbranchCode = this.brokerbranchCode;
+        }
+        else{
+          appId = this.loginId;
+          loginId = this.commonDetails[0].LoginId;
+          loginId = this.updateComponent.brokerLoginId
+          brokerbranchCode = this.commonDetails[0].BrokerBranchCode;
+        }
+      }
+      if(this.userType!='Broker' && this.userType!='User'){
+        if(this.updateComponent.sourceType==null || this.updateComponent.sourceType==undefined){
+          
+          this.sourceType = this.commonDetails[0].SourceType;
+          this.bdmCode = this.commonDetails[0].BrokerCode;
+          this.brokerCode = this.commonDetails[0].BrokerCode;
+          brokerbranchCode =  this.commonDetails[0].BrokerBranchCode;
+          this.customerCode = this.commonDetails[0].CustomerCode;
+        }
+        else{
+          this.sourceType = this.updateComponent.sourceType;
+          this.bdmCode = this.updateComponent.brokerCode;
+          this.brokerCode = this.updateComponent.brokerCode;
+          brokerbranchCode =  this.updateComponent.brokerBranchCode;
+          this.customerCode = this.updateComponent.CustomerCode;
+        }
+        }
+        else {
+          this.sourceType = this.subuserType;
+          this.customerCode = this.userDetails?.Result.CustomerCode;
+        }
+      let refNo = "99999",regYear="99999",IdType="99999",IdNo="99999";
+      if(this.customerDetails){refNo = this.customerDetails?.CustomerReferenceNo;
+        IdNo = this.customerDetails?.IdNumber;
+        regYear=this.customerDetails?.DobOrRegDate;IdType=this.customerDetails?.PolicyHolderType;};
+   
+    let ReqObj = {
+      "BrokerBranchCode": brokerbranchCode,
+      "AcExecutiveId": this.acExecutiveId,
+      "CommissionType": this.commissionType,
+      "CustomerCode": this.customerCode,
+      "CustomerName": this.productItem.OwnerName,
+      "BdmCode": this.customerCode,
+      "BrokerCode": this.brokerCode,
+      "LoginId": loginId,
+      "SubUserType": this.subuserType,
+      "ApplicationId": appId,
+      "CustomerReferenceNo": refNo,
+      "RequestReferenceNo": this.requestReferenceNo,
+      "Idnumber": IdNo,
+      "VehicleId": "1",
+      "AcccessoriesSumInsured": null,
+      "AccessoriesInformation": "",
+      "AdditionalCircumstances": "",
+      "AxelDistance": '01',
+      "Chassisnumber": this.productItem.ChassisNo,
+      "Color": this.productItem.Color,
+      "CityLimit": null,
+      "CoverNoteNo": null,
+      "OwnerCategory": this.productItem.OwnerCategory,
+      "CubicCapacity": "100",
+      "CreatedBy": createdBy,
+      "DrivenByDesc": 'Driver',
+      "EngineNumber": this.productItem.EngineNo,
+      "EngineCapacity": this.productItem.EngineCapacity,
+      "FuelType": this.productItem.FuelType,
+      "Gpstrackinginstalled": 'N',
+      "Grossweight": "100",
+      "HoldInsurancePolicy": "N",
+      "Insurancetype": "73",
+      "InsuranceId": this.insuranceId,
+      "InsuranceClass": "3",
+      "InsurerSettlement": "",
+      "InterestedCompanyDetails": "",
+      "ManufactureYear":this.productItem.ManufactureYear,
+      "ModelNumber": null,
+      "MotorCategory": "01",
+      "Motorusage": this.productItem.MotorUsage,
+      "NcdYn": 'N',
+      "NoOfClaims": null,
+      "NumberOfAxels": "1",
+      "BranchCode": this.branchCode,
+      "AgencyCode": this.agencyCode,
+      "ProductId": this.productId,
+      "SectionId": '73',
+      "PolicyType": IdType,
+      "RadioOrCasseteplayer": null,
+      "RegistrationYear": regYear,
+      "Registrationnumber": regNo,
+      "RoofRack": null,
+      "SeatingCapacity": this.productItem.SeatingCapacity,
+      "SourceType":this.sourceType,
+      "SpotFogLamp": null,
+      "Stickerno": null,
+      "SumInsured": vehicleSI,
+      "Tareweight": '100',
+      "TppdFreeLimit": null,
+      "TppdIncreaeLimit": tppSI,
+      "TrailerDetails": null,
+      "Vehcilemodel": this.productItem.Model,
+      "VehicleType": this.productItem.BodyType,
+      "Vehiclemake":this.productItem.Make,
+      "WindScreenSumInsured": windSI,
+      "Windscreencoverrequired": null,
+      "accident": null,
+      "periodOfInsurance": "30",
+      "PolicyStartDate": startDate,
+      "PolicyEndDate": endDate,
+      "Currency" : this.currencyCode,
+      "ExchangeRate": this.commonDetails[0].ExchangeRate,
+      "HavePromoCode": this.commonDetails[0].HavePromoCode,
+      "PromoCode" : this.commonDetails[0].PromoCode,
+      "CollateralYn": 'N',
+      "BorrowerType": null,
+      "CollateralName": null,
+      "FirstLossPayee": null,
+      "FleetOwnerYn": 'N',
+      "NoOfVehicles": "1",
+      "NoOfComprehensives": null,
+      "ClaimRatio": null,
+      "SavedFrom": "Owner",
+      "UserType": this.userType,
+      "TiraCoverNoteNo": null,
+      "EndorsementYn": 'N',
+      "EndorsementDate":this.endorsementDate,
+      "EndorsementEffectiveDate": this.endorsementEffectiveDate,
+      "EndorsementRemarks": this.endorsementRemarks,
+      "EndorsementType": this.endorsementType,
+      "EndorsementTypeDesc": this.endorsementTypeDesc,
+      "EndtCategoryDesc": this.endtCategoryDesc,
+      "EndtCount":this.endtCount,
+      "EndtPrevPolicyNo":this.endtPrevPolicyNo,
+      "EndtPrevQuoteNo": this.endtPrevQuoteNo,
+      "EndtStatus": this.endtStatus,
+      "IsFinanceEndt": this.isFinanceEndt,
+      "OrginalPolicyNo": this.orginalPolicyNo,
+      "Scenarios": {
+        "ExchangeRateScenario": {
+          "OldAcccessoriesSumInsured": null,
+          "OldCurrency": null,
+          "OldExchangeRate": null,
+          "OldSumInsured": null,
+          "OldTppdIncreaeLimit": null,
+          "OldWindScreenSumInsured": null
+        }
+      }
+      }
+      ReqObj['FleetOwnerYn'] = "N";
+      if(this.endorsementSection){
+         ReqObj['Status'] = 'E';
+        ReqObj['PolicyNo'] = this.endorsePolicyNo
+      }
+      else{
+        ReqObj['Status'] = 'Y';
+      }
+      let urlLink = `${this.motorApiUrl}api/savemotordetails`;
+      this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+        (data: any) => {
+          let res:any = data;
+          if(data.ErrorMessage.length!=0){
+            if(res.ErrorMessage){
+            }
+          }
+          else{
+            this.onCheckUWQuestionProceed([data.Result],'proceed','Direct');
+          }
+        });
+}
 onNextProceed(){
   
   let count = this.selectedIndex;
@@ -3627,19 +4145,25 @@ getYearList() {
     years.push({ "label": String(yearEntry), "value": String(yearEntry) });
     if (year == currentYear) {
       let defaultObj = [{ 'label': '-Select-', 'value': '' }]
-      if (this.productId != '3') this.fields[0].fieldGroup[0].fieldGroup[4].props.options = defaultObj.concat(years);
+      if (this.productId != '3' && this.productId!='46') this.fields[0].fieldGroup[0].fieldGroup[4].props.options = defaultObj.concat(years);
+      if(this.productId=='46'){
+        this.fields[0].fieldGroup[0].fieldGroup[8].props.options = defaultObj.concat(years);
+      }
       //if(this.productId=='3') this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[3].props.options = defaultObj.concat(years);
-      let referenceNo = sessionStorage.getItem('quoteReferenceNo');
-      if (referenceNo) {
-        this.requestReferenceNo = referenceNo;
-        if (this.productId != '19' && this.productId != '3') this.setFormValues();
-        else this.setSMEFormValues('edit')
+      if(this.productId!='46'){
+        let referenceNo = sessionStorage.getItem('quoteReferenceNo');
+        if (referenceNo) {
+          this.requestReferenceNo = referenceNo;
+          if (this.productId != '19' && this.productId != '3') this.setFormValues();
+          else this.setSMEFormValues('edit')
+        }
+        else if (this.productId != '19'){
+          this.productItem = new ProductData();
+          this.formSection = true; this.viewSection = false;
+  
+        }
       }
-      else if (this.productId != '19'){
-        this.productItem = new ProductData();
-        this.formSection = true; this.viewSection = false;
-
-      }
+      
     }
 
   }
@@ -5158,7 +5682,7 @@ onCheckUWQuestionProceed(buildDetails,type,formType){
                 ques['BranchCode'] = this.branchCode;
        
                 let status = null,loading = null,vehicleId=null;
-                if(this.productId=='42' || this.productId=='43') vehicleId = '1';
+                if(this.productId=='42' || this.productId=='43' || this.productId=='46') vehicleId = '1';
                 else vehicleId = build.LocationId
                 if(ques.QuestionType == '01' && ques.Value!=null && ques.Value!='' && ques.Options!=null){
                   let obj = ques.Options.find(ele=>ele.UwQuesOptionDesc==ques.Value);
@@ -5248,6 +5772,7 @@ onCalculate(buildDetails,type,formType) {
     let i = 0;
     for (let build of buildDetails) {
       let effectiveDate = null, coverModificationYN = 'N';
+      
       if (this.endorsementSection) {
         effectiveDate = this.endorseEffectiveDate;
         // let entry = this.enableFieldsList.some(ele => ele == 'Covers' && this.endorsementId!=850);
@@ -5258,6 +5783,7 @@ onCalculate(buildDetails,type,formType) {
       else {
         effectiveDate = this.commonDetails[0].PolicyStartDate
       }
+      if(this.productId=='46') build['RiskId'] = '1';
       let ReqObj = {
         "InsuranceId": this.insuranceId,
         "BranchCode": this.branchCode,
@@ -5294,7 +5820,6 @@ onCalculate(buildDetails,type,formType) {
         (err) => { },
       );
     }
-
   }
 }
 onPreviousStepper(){this.selectedIndex-=1;this.myStepper.previous();}
@@ -5587,6 +6112,7 @@ setCommonFormValues(){
   else if(this.productId=='25'){ReqObj.SectionId='39';urlLink=`${this.motorApiUrl}api/slide6/getelectronicequip`;}
   else if(this.productId=='42'){urlLink=`${this.motorApiUrl}api/slide6/getelectronicequip`;}
   else if(this.productId=='43'){ReqObj.SectionId='70';urlLink=`${this.motorApiUrl}api/slide12/getpublicliability`;}
+  else if(this.productId=='46'){ReqObj['Vehicleid']='1';urlLink=`${this.motorApiUrl}api/getmotordetails`;}
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
       console.log(data);
@@ -5820,6 +6346,36 @@ setCommonFormValues(){
             // }
               
           }
+          else if(this.productId=='46'){
+            this.productItem = new ProductData();
+            this.motorDetails = data.Result;
+            this.vehicleDetails = data.Result;
+            this.vehicleDetails['OldExchangeRate'] = data?.Result.ExchangeRate;
+            this.vehicleDetails['OldAcccessoriesSumInsured'] = data?.Result.AcccessoriesSumInsured;
+            this.vehicleDetails['OldCurrency'] = data?.Result.Currency;
+            this.vehicleDetails['OldSumInsured'] = data?.Result.SumInsured;
+            this.vehicleDetails['OldTppdIncreaeLimit'] = data?.Result.TppdIncreaeLimit;
+            this.vehicleDetails['OldWindScreenSumInsured'] = data?.Result.WindScreenSumInsured;
+            this.productItem.ChassisNo = this.vehicleDetails.Chassisnumber;
+            this.productItem.RegistrationNo = this.vehicleDetails.Registrationnumber;
+            this.productItem.ManufactureYear = data.Result.ManufactureYear;
+            // this.productItem.EngineNo = 
+            if(this.productItem.ChassisNo == this.productItem.RegistrationNo){this.productItem.RegistrationNo=null;}
+            this.productItem.OwnerName = this.customerDetails.ClientName;
+            this.productItem.SeatingCapacity = data.Result.SeatingCapacity;
+            this.productItem.EngineNo = data.Result.EngineNumber;
+            this.productItem.EngineCapacity = data.Result.ResEngineCapacity;
+            this.productItem.ManufactureYear = data.Result.ManufactureYear;
+              if(this.customerDetails?.PolicyHolderType){
+                this.productItem.OwnerCategory = this.customerDetails.PolicyHolderType;
+              } 
+              this.getFuelTypeList();
+              this.getYearList();
+              this.getColorsList();
+              this.getBodyTypeList();
+              this.getUsageList();
+              this.getMakeList();
+          }
           else{
             if(this.productId=='6' && this.insuranceId == '100004'){
               //this.productItem.FireBuildingSi=details?.FireBuildingSi;
@@ -5834,11 +6390,44 @@ setCommonFormValues(){
             this.productItem.BuildingSuminsured = details?.BuildingSuminsured;
             this.formSection = true; this.viewSection = false;
           }
-          this.formSection = true; this.viewSection = false;
+          if(this.productId!='46') this.formSection = true; this.viewSection = false;
       }
     },
     (err) => { },
   );
+}
+getVehicleInfo(){
+  let ReqObj = {
+    "ReqChassisNumber": this.productItem.ChassisNo,
+    "ReqRegNumber": this.productItem.RegistrationNo
+  }
+  let urlLink = `${this.motorApiUrl}regulatory/showvehicleinfo`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      console.log(data);
+      if(data.Result){
+        this.motorDetails = data.Result;
+        this.productItem.ManufactureYear = data.Result.ManufactureYear;
+        // this.productItem.EngineNo = 
+        if(this.productItem.ChassisNo == this.productItem.RegistrationNo){this.productItem.RegistrationNo=null;}
+        this.productItem.OwnerName = this.customerDetails.ClientName;
+        this.productItem.SeatingCapacity = data.Result.SeatingCapacity;
+        this.productItem.EngineNo = data.Result.EngineNumber;
+        this.productItem.EngineCapacity = data.Result.ResEngineCapacity;
+        this.productItem.ManufactureYear = data.Result.ManufactureYear;
+          if(this.customerDetails?.PolicyHolderType){
+            this.productItem.OwnerCategory = this.customerDetails.PolicyHolderType;
+          } 
+          this.getFuelTypeList();
+          this.getYearList();
+          this.getColorsList();
+          this.getBodyTypeList();
+          this.getUsageList();
+          this.getMakeList();
+          
+      }
+      console.log("Final List ",this.productItem)
+    });
 }
 setSMEFormValues(type) {
   let ReqObj = {
@@ -6108,7 +6697,10 @@ onFormSubmit() {
   if(this.productId=='45'){
     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/life-cover-details']);
   }
-  if(this.productId=='6'){
+  else if(this.productId=='46'){
+    this.saveMotorRiskDetails();
+  }
+  else if(this.productId=='6'){
     this.onSaveFireAlliedDetails('proceed','individual');
   }
   else if(this.productId=='42'){this.onCyperSave('proceed','individual')}
@@ -6124,7 +6716,7 @@ onFormSubmit() {
   else if(this.productId=='26'){this.onSaveBussinessrisk('proceed','individual')}
   else if(this.productId=='25'){this.onSaveElectronicEquipment('proceed','individual')}
  else if(this.productId=='43'){this.onSaveMedicalDetails('proceed','individual')}
-  else{
+  else {
     let createdBy = "";
     let quoteStatus = sessionStorage.getItem('QuoteStatus');
     let appId = "1", loginId = "", brokerbranchCode = "";

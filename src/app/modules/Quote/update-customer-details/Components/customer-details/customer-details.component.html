@@ -538,13 +538,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="text-center mt-1" *ngIf="productId!='5' && productId!='46' && productId!='4'">
+                    <div class="text-center mt-1" *ngIf="productId!='5' && productId!='4'">
                         <button class="custom-btn btn-5 mr-2" (click)="ongetBack()" matRipple><<&nbsp;Back</button>&nbsp;
                         <button class="custom-btn btn-6 maan-button-data" matRipple *ngIf="productId!='3'" (click)="onWishListProceed([])"><i class="fas fa-check"></i>&nbsp;Proceed</button>
                         <button class="custom-btn btn-6 maan-button-data" matRipple *ngIf="productId=='3'" (click)="onHomeInsuranceSave()"><i class="fas fa-check"></i>&nbsp;Proceed</button>
                     </div>
                 </div>
-                <ng-container *ngIf="commonSection && (productId=='5' || this.productId=='46')">
+                <ng-container *ngIf="commonSection && (productId=='5')">
                     <app-vehicle-wish-list (getBack)="ongetBack()" (onWishListProceed)="onWishListProceed($event)" [customerDetails]="customerDetails" (redirectCreateVehicle)="redirectCreateVehicle($event)"></app-vehicle-wish-list>
                 </ng-container>
                 <ng-container *ngIf="commonSection && productId=='4'">
