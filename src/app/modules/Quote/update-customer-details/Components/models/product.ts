@@ -108,7 +108,18 @@ MoneyDirectorResidence:any='0';
 MoneyCollector:any='0';
 MoneyAnnualEstimate:any='0';
 MoneyMajorLoss:any='0';
-              
+	/*ShortTerm Product*/
+	OwnerName:any=null;
+	OwnerCategory: any=null;RegistrationNo:any=null;
+	ChassisNo: any=null;ManufactureYear:any=null;
+	FuelType: any=null;Color:any=null;
+	Make: any=null;
+	Model: any=null;
+	BodyType: any=null;
+	MotorUsage: any=null;
+	EngineNo: any
+	EngineCapacity: any
+	SeatingCapacity: any
 	constructor(data?) {
 		this.id = data?.id ?? ''
 		this.CustomerName = data?.CustomerName ?? '';
@@ -258,8 +269,21 @@ MoneyMajorLoss:any='0';
         this.MoneyDirectorResidence = data?.MoneyDirectorResidence ?? '0';
           this.MoneyCollector = data?.MoneyCollector ?? '0';
         this.MoneyAnnualEstimate = data?.MoneyAnnualEstimate ?? '0';
-      this.MoneyMajorLoss = data?.MoneyMajorLoss ?? '0';
-	
+      	this.MoneyMajorLoss = data?.MoneyMajorLoss ?? '0';
+		this.OwnerName = data?.OwnerName ?? '';
+		this.OwnerCategory = data?.OwnerCategory ?? '';
+		this.ChassisNo = data?.ChassisNo ?? '';
+		this.RegistrationNo = data?.RegistrationNo ?? '';
+		this.ManufactureYear = data?.ManufactureYear ?? '';
+		this.FuelType = data?.FuelType ?? '';
+		this.Color = data?.Color ?? '';
+		this.Make = data?.Make ?? '';
+		this.Model = data?.Model ?? '';
+		this.BodyType = data?.BodyType ?? '';
+		this.MotorUsage = data?.MotorUsage ?? '';
+		this.EngineNo = data?.EngineNo ?? '';
+		this.EngineCapacity = data?.EngineCapacity ?? '';
+		this.SeatingCapacity = data?.SeatingCapacity ?? ''
 		// this.EquipmentSi = data?.EquipmentSi ?? '0';
 		// this.ElectronicEquipSuminsured = data.ElectronicEquipSuminsured ?? '0';
 	}

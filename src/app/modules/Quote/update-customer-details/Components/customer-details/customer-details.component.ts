@@ -1466,15 +1466,28 @@ export class CustomerDetailsComponent implements OnInit {
       var year = d.getFullYear();
       var month = d.getMonth();
       var day = d.getDate();
-      this.endMinDate = new Date(this.policyStartDate);
-      this.policyEndDate = new Date(year + 1, month, day-1);
-      this.endMaxDate = new Date(year + 2, month, day-1);
-      this.updateComponent.idNumber = this.idNumber
-      this.updateComponent.policyStartDate = this.policyStartDate;
-      //this.updateComponent.policyEndDate = this.policyEndDate;
-      this.updateComponent.HavePromoCode = this.HavePromoCode;
-      this.updateComponent.PromoCode = this.PromoCode;
-      this.onChangeEndDate(type);
+      if(this.productId=='5'){
+        this.endMinDate = new Date(this.policyStartDate);
+        this.policyEndDate = new Date(year + 1, month, day-1);
+        this.endMaxDate = new Date(year + 2, month, day-1);
+        this.updateComponent.idNumber = this.idNumber
+        this.updateComponent.policyStartDate = this.policyStartDate;
+        //this.updateComponent.policyEndDate = this.policyEndDate;
+        this.updateComponent.HavePromoCode = this.HavePromoCode;
+        this.updateComponent.PromoCode = this.PromoCode;
+        this.onChangeEndDate(type);
+      }
+      else{
+        this.endMinDate = new Date(this.policyStartDate);
+        this.policyEndDate = new Date(year, month, day+29);
+        this.endMaxDate = new Date(year, month, day+30);
+        this.updateComponent.idNumber = this.idNumber
+        this.updateComponent.policyStartDate = this.policyStartDate;
+        //this.updateComponent.policyEndDate = this.policyEndDate;
+        this.updateComponent.HavePromoCode = this.HavePromoCode;
+        this.updateComponent.PromoCode = this.PromoCode;
+        this.onChangeEndDate(type);
+      }
     }
     else{
       var d = this.travelStartDate;
@@ -1888,7 +1901,6 @@ export class CustomerDetailsComponent implements OnInit {
     this.vehicleWishList = this.vehicleWishList.filter(ele=>ele.ReqChassisNumber!=rowData.ReqChassisNumber)
   }
   onWishListProceed(rowData){
-    
     // if(this.productId=='13'){
     //   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident'])
     // }
@@ -1909,8 +1921,7 @@ export class CustomerDetailsComponent implements OnInit {
               if(this.policyStartDate!='' && this.policyStartDate!=undefined && this.policyStartDate!=null){
                 this.policyStartError = false;
                 if( (this.productId=='5' || this.productId=='4' || this.productId=='46') && (new Date(this.policyStartDate)).setHours(0,0,0,0) >= (new Date()).setHours(0,0,0,0) ){
-                 
-                  this.policyPassDate = false;
+                 this.policyPassDate = false;
                   if(this.policyEndDate!='' && this.policyEndDate!=undefined && this.policyEndDate!=null){
                     this.policyEndError = false;
                     console.log("Form Validated 2")
@@ -2488,7 +2499,10 @@ export class CustomerDetailsComponent implements OnInit {
   setVehicleValue(){
     if(this.productId=='5' || this.productId=='4' || this.productId=='3' || this.productId=='46'){
       console.log("Entered Loop 1")
-      this.vehicleWishList = this.updateComponent.vehicleWishList
+      this.vehicleWishList = this.updateComponent.vehicleWishList;
+      if(this.productId=='46' && this.vehicleWishList.length==0){
+        this.vehicleWishList.push({"Vehicleid":"1"})
+      }
       let i=0;
       for(let vehicle of this.vehicleWishList){
         if(this.executiveSection){
@@ -2550,12 +2564,16 @@ export class CustomerDetailsComponent implements OnInit {
             this.updateCurrencyDetails();
           }
           else{
-            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+            if(this.productId=='46') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+            else{
+              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+            }
           }
         }
       }
     }
     else{
+      alert("Entered Vehicle")
       let vehicle = {};
       if(this.executiveSection){
         vehicle['AcExecutiveId'] = this.executiveValue;
@@ -2884,7 +2902,10 @@ export class CustomerDetailsComponent implements OnInit {
         console.log(data);
         if(data.Result){
           this.updateComponent.ModifiedCurrencyYN = 'N';
-          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+          if(this.productId=='46') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+          else{
+            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
+          }
         }
       },
       (err) => { },
