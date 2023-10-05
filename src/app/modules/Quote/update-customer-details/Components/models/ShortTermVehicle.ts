@@ -9,6 +9,7 @@ export class ShortTermVehicle{
     commonDetails: any[]=[];
     endorsementSection: boolean=false;
     enableFieldsList: any[]=[];
+    public model = {}
     constructor() {
         this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
         let commonDetails = JSON.parse(sessionStorage.getItem('vehicleDetailsList'));
@@ -27,10 +28,32 @@ export class ShortTermVehicle{
                 fieldGroupClassName: 'row',
                 fieldGroup: [
                     {
+                      type: 'select',
+                      key: 'BodyType',
+                      defaultValue: '',
+                      className: 'col-4',
+                      props: {
+                        label: `Body Type`,
+                        disabled: this.checkDisable('BodyType'),
+                        required: true,
+                        options: [
+        
+                        ],
+                      },
+                      validators: {
+                        validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                      },
+                      hooks: {
+                      },
+                      expressions: {
+                      },
+                    },
+                    {
                         type: 'select',
                         key: 'Make',
                         defaultValue: '',
                         className: 'col-4',
+                        
                         props: {
                           label: `Make`,
                           disabled: this.checkDisable('Make'),
@@ -48,8 +71,29 @@ export class ShortTermVehicle{
                         },
                     },
                     {
-                        type: 'select',
-                        key: 'Model',
+                      type: 'select',
+                      key: 'Model',
+                      defaultValue: '',
+                      className: 'col-4',
+                      props: {
+                        label: `Model`,
+                        disabled: this.checkDisable('Model'),
+                        required: true,
+                        options: [
+        
+                        ],
+                      },
+                      validators: {
+                        validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                      },
+                      hooks: {
+                      },
+                      expressions: {
+                      },
+                    },
+                    {
+                        type: 'input',
+                        key: 'ModelDesc',
                         defaultValue: '',
                         className: 'col-4',
                         props: {
@@ -68,27 +112,7 @@ export class ShortTermVehicle{
                         expressions: {
                         },
                     },
-                    {
-                        type: 'select',
-                        key: 'BodyType',
-                        defaultValue: '',
-                        className: 'col-4',
-                        props: {
-                          label: `Body Type`,
-                          disabled: this.checkDisable('BodyType'),
-                          required: true,
-                          options: [
-          
-                          ],
-                        },
-                        validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
-                        },
-                        hooks: {
-                        },
-                        expressions: {
-                        },
-                    },
+                    
                     {
                         className: 'col-4',
                         type: 'input',
@@ -102,19 +126,19 @@ export class ShortTermVehicle{
                           validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
                         },
                     },
-                    {
-                        className: 'col-4',
-                        type: 'input',
-                        key: 'RegistrationNo',
-                        templateOptions: {
-                          label: 'Registration Number',
-                          disabled: this.checkDisable('RegistrationNo'),
-                          required: false,
-                        },
-                        validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
-                        },
-                    },
+                    // {
+                    //     className: 'col-4',
+                    //     type: 'input',
+                    //     key: 'RegistrationNo',
+                    //     templateOptions: {
+                    //       label: 'Registration Number',
+                    //       disabled: this.checkDisable('RegistrationNo'),
+                    //       required: false,
+                    //     },
+                    //     validators: {
+                    //       validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                    //     },
+                    // },
                     {
                         className: 'col-4',
                         type: 'input',

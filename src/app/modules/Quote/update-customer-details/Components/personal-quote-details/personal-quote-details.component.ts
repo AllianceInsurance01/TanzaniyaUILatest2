@@ -771,12 +771,18 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       let fireData = new ShortTermVehicle();
       let entry = [];
       this.fields[0] = fireData?.fields;
+      let bodyTypeHooks = { onInit: (field: FormlyFieldConfig) => {
+        field.formControl.valueChanges.subscribe(() => {
+              this.onBodyTypeChange('change')
+        });
+      } }
       let makeHooks ={ onInit: (field: FormlyFieldConfig) => {
         field.formControl.valueChanges.subscribe(() => {
           this.onMakeChange('change')
         });
       } }
-      this.fields[0].fieldGroup[0].fieldGroup[0].hooks = makeHooks;
+      this.fields[0].fieldGroup[0].fieldGroup[0].hooks = bodyTypeHooks;
+      this.fields[0].fieldGroup[0].fieldGroup[1].hooks = makeHooks;
       let referenceNo = sessionStorage.getItem('quoteReferenceNo');
       if (referenceNo) {
         this.requestReferenceNo = referenceNo;
@@ -784,6 +790,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       }
       else {
           this.productItem = new ProductData();
+          this.onBodyTypeChange('change');
           this.formSection = true; this.viewSection = false;
           this.productItem.OwnerName = this.customerDetails.ClientName;
           if(this.customerDetails?.PolicyHolderType){
@@ -3322,9 +3329,11 @@ getMakeList(){
             delete this.makeList[i].CodeDesc;
             if (i == this.makeList.length - 1) {
                 let defaultObj = [{ 'label': '-Select-', 'value': '' }];
-                this.fields[0].fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.makeList);
+                this.fields[0].fieldGroup[0].fieldGroup[1].props.options = defaultObj.concat(this.makeList);
+                console.log("Final Details",this.fields)
                 if(this.motorDetails){
                   this.productItem.Make = this.makeList.find(ele=>ele.label==this.motorDetails.Vehiclemake || ele.Code==this.motorDetails.Vehiclemake)?.Code;
+                  this.productItem.ModelDesc = this.motorDetails.VehicleModelDesc;
                   if(this.productItem.Make) this.onMakeChange('direct');
                   else this.formSection = true; this.viewSection = false;
                 }
@@ -3336,37 +3345,66 @@ getMakeList(){
     (err) => { },
   );
 }
-onMakeChange(type){
-  let ReqObj = {
-    "InsuranceId": this.insuranceId,
-    "BranchCode": this.branchCode,
-    "MakeId": this.productItem.Make
-  }
-  let urlLink = `${this.commonApiUrl}master/dropdown/motormakemodel`;
-  this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
-    (data: any) => {
-      console.log(data);
-      if(data.Result){
-          this.modelList = data.Result;
-          for (let i = 0; i < this.modelList.length; i++) {
-            this.modelList[i].label = this.modelList[i]['CodeDesc'];
-            this.modelList[i].value = this.modelList[i]['Code'];
-            delete this.modelList[i].CodeDesc;
-            if (i == this.modelList.length - 1) {
-                let defaultObj = [{ 'label': '-Select-', 'value': '' }];
-                this.fields[0].fieldGroup[0].fieldGroup[1].props.options = defaultObj.concat(this.modelList);
-                if(type=='change') this.productItem.Model = '';
-                else if(this.motorDetails){
-                  this.productItem.Model = this.modelList.find(ele=>ele.label==this.motorDetails.Vehcilemodel || ele.Code==this.motorDetails.Vehcilemodel)?.Code;
-                  this.formSection = true; this.viewSection = false;
-                }
-                else this.formSection = true; this.viewSection = false;
-            }
-          }
+onBodyTypeChange(type){
+      if(type=='change'){
+        this.productItem.Model = '';
+        this.productItem.ModelDesc = null;
       }
-    },
-    (err) => { },
-  );
+      if(this.productItem.BodyType==null || this.productItem.BodyType=='' || this.productItem.BodyType=='1' || this.productItem.BodyType=='2' || this.productItem.BodyType=='3' || this.productItem.BodyType=='4' || this.productItem.BodyType=='5'){
+        let fields = this.fields[0].fieldGroup[0].fieldGroup;
+        for(let field of fields){
+          if(field.key=='Model'){field.hideExpression=false;field.hide=false;}
+          else if(field.key=='ModelDesc'){field.hideExpression=true;}
+        }
+        // this.fields[0].fieldGroup[0].fieldGroup[3].hideExpression = true;
+        // this.fields[0].fieldGroup[0].fieldGroup[2].hideExpression = false;
+      }
+      else{
+        let fields = this.fields[0].fieldGroup[0].fieldGroup;
+        for(let field of fields){
+          if(field.key=='Model'){field.hideExpression=true;field.hide=true;}
+          else if(field.key=='ModelDesc'){field.hideExpression=false;}
+        }
+      }
+      console.log("Final Fields",this.fields[0])
+}
+onMakeChange(type){
+  if(this.productItem.Make!='' && this.productItem.Make!=null){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId,
+      "BranchCode": this.branchCode,
+      "MakeId": this.productItem.Make
+    }
+    let urlLink = `${this.commonApiUrl}master/dropdown/motormakemodel`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+            this.modelList = data.Result;
+            for (let i = 0; i < this.modelList.length; i++) {
+              this.modelList[i].label = this.modelList[i]['CodeDesc'];
+              this.modelList[i].value = this.modelList[i]['Code'];
+              delete this.modelList[i].CodeDesc;
+              if (i == this.modelList.length - 1) {
+                  let defaultObj = [{ 'label': '-Select-', 'value': '' }];
+                  this.fields[0].fieldGroup[0].fieldGroup[2].props.options = defaultObj.concat(this.modelList);
+                  if(type=='change') this.productItem.Model = '';
+                  else if(this.motorDetails){
+                    this.productItem.Model = this.modelList.find(ele=>ele.label==this.motorDetails.Vehcilemodel || ele.Code==this.motorDetails.Vehcilemodel)?.Code;
+                    this.formSection = true; this.viewSection = false;
+                  }
+                  else this.formSection = true; this.viewSection = false;
+              }
+            }
+        }
+      },
+      (err) => { },
+    );
+  }
+  else{
+    this.productItem.Model='';
+    this.fields[0].fieldGroup[0].fieldGroup[2].props.options = [{ 'label': '-Select-', 'value': '' }];
+  }
 }
 getFuelTypeList(){
   let ReqObj = {
@@ -3376,7 +3414,6 @@ getFuelTypeList(){
   let urlLink = `${this.commonApiUrl}dropdown/fueltype`;
   this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
     (data: any) => {
-      console.log(data);
       if(data.Result){
           this.fuelTypeList = data.Result;
           for (let i = 0; i < this.fuelTypeList.length; i++) {
@@ -3441,9 +3478,10 @@ getBodyTypeList(){
             delete this.bodyTypeList[i].CodeDesc;
             if (i == this.bodyTypeList.length - 1) {
                 let defaultObj = [{ 'label': '-Select-', 'value': '' }];
-                this.fields[0].fieldGroup[0].fieldGroup[2].props.options = defaultObj.concat(this.bodyTypeList);
+                this.fields[0].fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.bodyTypeList);
                 if(this.motorDetails){
                   this.productItem.BodyType = this.bodyTypeList.find(ele=>ele.label==this.motorDetails.VehicleType || ele.Code ==this.motorDetails.VehicleType)?.Code;
+                  this.onBodyTypeChange('direct');
                 }
             }
           } 
@@ -3871,6 +3909,22 @@ saveMotorRiskDetails(){
     if(this.productItem.Make!='' && this.productItem.Make!=undefined && this.productItem.Make!=null){
       let entry = this.makeList.find(ele=>ele.Code==this.productItem.Make);
       make = entry.label;
+
+    }
+    let model=null,modelDesc = null;
+    if(this.productItem.BodyType!='' && this.productItem.BodyType!=undefined && this.productItem.BodyType!=null){
+      let bodyType = this.productItem.BodyType
+        if(bodyType=='1' || bodyType=='2' || bodyType=='3' || bodyType=='4' || bodyType=='5'){
+          if(this.productItem.Model!='' && this.productItem.Model!=null){
+            let entry = this.modelList.find(ele=>ele.Code==this.productItem.Model);
+            modelDesc = entry.label;
+            model = this.productItem.Model;
+          }
+        }
+        else{
+          model = null;
+          modelDesc = this.productItem.ModelDesc;
+        }
     }
     let regNo = null;
     if(this.productItem.RegistrationNo=='' || this.productItem.RegistrationNo==null){
@@ -4007,7 +4061,8 @@ saveMotorRiskDetails(){
       "TppdFreeLimit": null,
       "TppdIncreaeLimit": tppSI,
       "TrailerDetails": null,
-      "Vehcilemodel": this.productItem.Model,
+      "Vehcilemodel": model,
+      "VehicleModelDesc": modelDesc,
       "VehicleType": this.productItem.BodyType,
       "Vehiclemake":this.productItem.Make,
       "WindScreenSumInsured": windSI,
@@ -4030,6 +4085,7 @@ saveMotorRiskDetails(){
       "ClaimRatio": null,
       "SavedFrom": "Owner",
       "UserType": this.userType,
+      "SearchFromApi":false,
       "TiraCoverNoteNo": null,
       "EndorsementYn": 'N',
       "EndorsementDate":this.endorsementDate,
@@ -4140,6 +4196,7 @@ getYearList() {
   var month = d.getMonth();
   var day = d.getDate();
   const currentYear = new Date().getFullYear() - 40, years = [];
+  console.log("Entered File",this.fields)
   while (year >= currentYear) {
     let yearEntry = year--
     years.push({ "label": String(yearEntry), "value": String(yearEntry) });
@@ -4147,7 +4204,14 @@ getYearList() {
       let defaultObj = [{ 'label': '-Select-', 'value': '' }]
       if (this.productId != '3' && this.productId!='46') this.fields[0].fieldGroup[0].fieldGroup[4].props.options = defaultObj.concat(years);
       if(this.productId=='46'){
-        this.fields[0].fieldGroup[0].fieldGroup[8].props.options = defaultObj.concat(years);
+        let fields = this.fields[0].fieldGroup[0].fieldGroup;
+        for(let field of fields){
+          console.log("Received Iterate",field)
+          if(field.key=='ManufactureYear'){
+            field.props.options = defaultObj.concat(years);
+          }
+        }
+        //this.fields[0].fieldGroup[0].fieldGroup[8].props.options = defaultObj.concat(years);
       }
       //if(this.productId=='3') this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[3].props.options = defaultObj.concat(years);
       if(this.productId!='46'){
@@ -6115,7 +6179,6 @@ setCommonFormValues(){
   else if(this.productId=='46'){ReqObj['Vehicleid']='1';urlLink=`${this.motorApiUrl}api/getmotordetails`;}
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
-      console.log(data);
       if (data.Result) {
           let details = data?.Result;
           if(this.productId=='14'){
@@ -6390,7 +6453,7 @@ setCommonFormValues(){
             this.productItem.BuildingSuminsured = details?.BuildingSuminsured;
             this.formSection = true; this.viewSection = false;
           }
-          if(this.productId!='46') this.formSection = true; this.viewSection = false;
+          if(this.productId!='46') {this.formSection = true; this.viewSection = false;}
       }
     },
     (err) => { },

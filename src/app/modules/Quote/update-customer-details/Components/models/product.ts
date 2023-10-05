@@ -120,6 +120,7 @@ MoneyMajorLoss:any='0';
 	EngineNo: any
 	EngineCapacity: any
 	SeatingCapacity: any
+  	ModelDesc: any=null;
 	constructor(data?) {
 		this.id = data?.id ?? ''
 		this.CustomerName = data?.CustomerName ?? '';
@@ -283,7 +284,8 @@ MoneyMajorLoss:any='0';
 		this.MotorUsage = data?.MotorUsage ?? '';
 		this.EngineNo = data?.EngineNo ?? '';
 		this.EngineCapacity = data?.EngineCapacity ?? '';
-		this.SeatingCapacity = data?.SeatingCapacity ?? ''
+		this.SeatingCapacity = data?.SeatingCapacity ?? '';
+		this.ModelDesc = data?.ModelDesc ?? '';
 		// this.EquipmentSi = data?.EquipmentSi ?? '0';
 		// this.ElectronicEquipSuminsured = data.ElectronicEquipSuminsured ?? '0';
 	}
