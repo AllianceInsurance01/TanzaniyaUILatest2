@@ -1110,7 +1110,7 @@ export class CustomerDetailsComponent implements OnInit {
                 this.updateComponent.brokerLoginId = this.brokerLoginId;
                 this.updateComponent.brokerCode = this.brokerCode;
               }
-              if(this.Code=='broker' || this.Code=='direct' || this.Code=='agent' || this.Code == 'bank' || this.Code=='Broker' || this.Code == 'Agent' || this.Code =='Direct' || this.Code == 'Bank'){
+              if(this.Code=='broker' || this.Code=='direct' || this.Code=='agent' || this.Code == 'bank' || this.Code=='Broker' || this.Code == 'Agent' || this.Code =='Direct' || this.Code == 'Bank' || this.Code == 'whatsapp'){
                 this.getBrokerBranchList('direct');
                 
               }
