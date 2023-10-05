@@ -1466,10 +1466,10 @@ export class CustomerDetailsComponent implements OnInit {
       var year = d.getFullYear();
       var month = d.getMonth();
       var day = d.getDate();
-      if(this.productId=='5'){
+      if(this.productId=='46'){
         this.endMinDate = new Date(this.policyStartDate);
-        this.policyEndDate = new Date(year + 1, month, day-1);
-        this.endMaxDate = new Date(year + 2, month, day-1);
+        this.policyEndDate = new Date(year, month, day+29);
+        this.endMaxDate = new Date(year, month, day+30);
         this.updateComponent.idNumber = this.idNumber
         this.updateComponent.policyStartDate = this.policyStartDate;
         //this.updateComponent.policyEndDate = this.policyEndDate;
@@ -1477,10 +1477,10 @@ export class CustomerDetailsComponent implements OnInit {
         this.updateComponent.PromoCode = this.PromoCode;
         this.onChangeEndDate(type);
       }
-      else{
+      else {
         this.endMinDate = new Date(this.policyStartDate);
-        this.policyEndDate = new Date(year, month, day+29);
-        this.endMaxDate = new Date(year, month, day+30);
+        this.policyEndDate = new Date(year + 1, month, day-1);
+        this.endMaxDate = new Date(year + 2, month, day-1);
         this.updateComponent.idNumber = this.idNumber
         this.updateComponent.policyStartDate = this.policyStartDate;
         //this.updateComponent.policyEndDate = this.policyEndDate;
@@ -2417,7 +2417,7 @@ export class CustomerDetailsComponent implements OnInit {
     if(this.productId=='43'){section.push('70');this.IndustryId='44'};
     let ReqObj = { 
         "AcexecutiveId": "",
-        "PolicyNo": "",
+        "PolicyNo": this.endorsePolicyNo,
         "ProductId": this.productId,
         "ProductType": null,
         "TiraCoverNoteNo": null,
@@ -2573,7 +2573,6 @@ export class CustomerDetailsComponent implements OnInit {
       }
     }
     else{
-      alert("Entered Vehicle")
       let vehicle = {};
       if(this.executiveSection){
         vehicle['AcExecutiveId'] = this.executiveValue;
