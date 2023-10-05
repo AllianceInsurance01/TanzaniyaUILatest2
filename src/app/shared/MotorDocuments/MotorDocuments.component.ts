@@ -79,6 +79,8 @@ export class MotorDocumentsComponent implements OnInit {
   machineries:any[]=[];
   LocationList:any[]=[];
   borrowerList:any[]=[];
+  moneydetails:any[]=[];
+  curency: any;MechineryInfo:any;
 
   constructor(public router:Router,private sharedService: SharedService,public dialogService: MatDialog){
 
@@ -272,7 +274,8 @@ export class MotorDocumentsComponent implements OnInit {
        this.productId=CustomerObj?.ProductId;
        this.CustomerName=CustomerObj?.CustomerName
        this.PolicyNo=CustomerObj?.PolicyNo
-       this.ProductName=CustomerObj?.ProductName
+       this.ProductName=CustomerObj?.ProductName;
+       this.curency=CustomerObj?.Currency;
 
        console.log('sssssssssss',this.search)
             
@@ -286,6 +289,9 @@ export class MotorDocumentsComponent implements OnInit {
            }
            if(this.productId!='42'){
             this.getbuilding();
+           }
+           if(this.productId == '39'){
+            this.getmachinerydetails();
            }
 
            if(this.productId =='5' && this.quoteNo){
@@ -302,6 +308,9 @@ export class MotorDocumentsComponent implements OnInit {
             this.getContentDetails();
             this.getPersonalAccidentDetails();
             this.getPersonalIntermediaryDetails();
+           }
+           if(this.productId =='16'){
+            this.getMoneyDetails();
            }
 
            if(this.ReferenceNo){
@@ -578,6 +587,24 @@ this.passengerName=type;
         (err) => { },
       );
     }
+    getmachinerydetails(){
+      let ReqObj ={
+          "RequestReferenceNo":this.ReferenceNo,
+          "RiskId": "1",
+          "SectionId": "41"
+      }
+      let urlLink = `${this.motorApiUrl}api/slide9/getmachinerybreakdown`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          console.log(data);
+          if(data?.Result){
+              this.MechineryInfo=data?.Result;
+              console.log('kkkkkkkkk',this.customerInfo)
+          }
+        },
+        (err) => { },
+      );
+    }
     onCustomerSearch(){
     
       let app
@@ -716,6 +743,33 @@ this.passengerName=type;
           (err) => { },
         );
        }
+
+
+       getMoneyDetails(){
+        let sectionId = null;
+        sectionId='42';
+        let ReqObj = {
+          "RequestReferenceNo": this.ReferenceNo,
+          "RiskId": "1",
+          "SectionId":  sectionId
+        }
+        let urlLink = `${this.motorApiUrl}api/slide10/getmoneydetails`;
+        this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+          (data: any) => {
+            console.log(data);
+            if (data.Result) {
+              this.moneydetails = data?.Result;
+              // this.productItem.MoneySafeLimit=details?.MoneySafeLimit;
+              // this.productItem.MoneyOutofSafe=details?.MoneyOutofSafe;
+              // this.productItem.MoneyDirectorResidence=details?.MoneyDirectorResidence;
+              // this.productItem.MoneyCollector=details?.MoneyCollector;
+              // this.productItem.MoneyAnnualEstimate=details?.MoneyAnnualEstimate;
+              // this.productItem.MoneyMajorLoss=details?.MoneyMajorLoss;
+            }
+          },
+          (err) => { },
+        );
+      }
 
        getDriverName(Id){
         let DriverList=[];
@@ -929,7 +983,7 @@ this.passengerName=type;
     
         let urlLink = `${this.motorApiUrl}api/getallcontentrisk`;
         let ReqObj = {
-          "QuoteNo": sessionStorage.getItem('quoteNo'),
+          "QuoteNo": this.quoteNo,
           "SectionId":"41"
         }
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(

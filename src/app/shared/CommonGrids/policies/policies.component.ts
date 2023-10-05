@@ -410,7 +410,11 @@ ongetEndorsement(rowData){
       "QuoteNo":rowData.QuoteNo,
       "RequestReferenceNo":rowData.RequestReferenceNo,
       "ProductId":this.productId,
-      "pageFrom": 'policy'
+      "pageFrom": 'policy',
+      "CustomerName": rowData.ClientName,
+      "ProductName":rowData.ProductName,
+      "PolicyNo":rowData.PolicyNo,
+      "Currency":rowData.Currency
     }
     sessionStorage.setItem('editCustomer',JSON.stringify(ReqObj));
  this.router.navigate(['/Home/MotorDocument']);
