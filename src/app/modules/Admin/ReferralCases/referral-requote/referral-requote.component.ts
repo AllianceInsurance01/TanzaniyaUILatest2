@@ -218,7 +218,7 @@ export class ReferralRequoteComponent {
     let entry = this.brokerList.find(ele=>ele.Code==this.brokerCode);
     if(entry){
       console.log("Entry Received",entry) 
-      if(entry.Type!='broker' && entry.Type!='Direct' && entry.Type!='Agent'){
+      if(entry.Type!='broker' && entry.Type!='Broker' && entry.Type!='Direct' && entry.Type!='Agent'){
         loginId='';
         bdmCode=this.brokerCode;
       }
