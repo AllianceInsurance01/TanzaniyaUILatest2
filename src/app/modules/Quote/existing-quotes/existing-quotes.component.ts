@@ -640,8 +640,11 @@ export class ExistingQuotesComponent implements OnInit {
         // "from":'Existing',
         "CustomerReferenceNo": rowData.CustomerReferenceNo,
         "RequestReferenceNo": rowData.RequestReferenceNo,
+        "CustomerName": rowData.ClientName,
         "ProductId":this.productId,
-        "pageFrom": 'Existing'
+        "ProductName":rowData.ProductName,
+        "pageFrom": 'Existing',
+        "Currency":rowData.Currency
         //"QuoteNo":rowData.QuoteNo
       }
       //sessionStorage.setItem('FromDetails',JSON.stringify(quoteObj));
