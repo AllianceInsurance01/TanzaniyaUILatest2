@@ -9,10 +9,44 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-12 col-md-11 col-lg-11 ml-5">
-                <ng-container *ngIf="customerData.length!=0">
-                    <app-commodity-table [cols]="quoteHeader" [data]="customerData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onAdd)="onInnerData($event)">
-                    </app-commodity-table>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Branch</label>
+                    <ng-select class="input-form-select" (click)="getsearchs()" [(ngModel)]="branchValue" [items]="branchList" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 input-control-container">
+                <label class="input-form-label">Start Date</label><span class="text-danger">*</span>
+                <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="startdate" (dateChange)="getsearchs()" [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4 input-control-container">
+                <label class="input-form-label">End Date</label><span class="text-danger">*</span>
+                <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker1" [(ngModel)]="enddate" (dateChange)="getsearchs()" [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div style="text-align: center;" class="col-12 col-md-2 offset-md-5" *ngIf="startdate && enddate">
+                <button class="btn btn-primary" (click)="getsearch()">Search</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-2 offset-9" *ngIf="customerData.length!=0 && showgrid">
+                <button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Download" (click)="onCommonDocumentDownload()">
+                    <i class="fa fa-download"></i>
+                    Download
+                </button>
+            </div>
+            <div class="col-12 col-md-12 col-lg-12 mt-2">
+                <ng-container *ngIf="customerData.length!=0 && showgrid">
+                    <app-grid-table [cols]="quoteData" [data]="customerData">
+                    </app-grid-table>
                 </ng-container>
                 <ng-container *ngIf="customerData.length==0">
                     <div class="text-center spancommon span_font_size">
