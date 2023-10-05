@@ -38,10 +38,11 @@ export class PoliciesComponent implements OnInit {
     this.agencyCode = this.userDetails.Result.OaCode;
     this.brokerbranchCode = this.userDetails.Result.BrokerBranchCode;
     this.branchCode = this.userDetails.Result.BranchCode;
-    this.brokerCode = this.loginId;
+   
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails?.Result?.UserType;
     this.insuranceId = this.userDetails.Result.InsuranceId;
+    if(this.userType!='Issuer')this.brokerCode = this.loginId;
     sessionStorage.removeItem('loadingType');
    }
 
@@ -167,13 +168,13 @@ export class PoliciesComponent implements OnInit {
       brokerbranchCode = '';
     }
     let ReqObj = {
-      "ApplicationId":appId,
-      "UserType":this.userType,
       "ProductId": this.productId,
       "InsuranceId": this.insuranceId,
       "LoginId": loginId,
+      "ApplicationId":appId,
+      "UserType":this.userType,
+      "BranchCode": this.branchCode,
       "Status": "Y",
-      "BranchCode": this.branchCode
     }
     let urlLink = `${this.CommonApiUrl}api/portfoliobrokerdropdown`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -181,8 +182,14 @@ export class PoliciesComponent implements OnInit {
         if(data.Result){
           let defaultObj = []
           this.brokerList = defaultObj.concat(data.Result);
-          if(this.brokerCode!=null){
-            if(!this.brokerList.some(ele=>ele.CodeDesc==this.brokerCode)) this.brokerCode = this.brokerList[0].CodeDesc;
+          if(this.brokerList.length==0){this.brokerCode = ''; this.brokerList = []}
+          else this.brokerCode = this.loginId;
+          if(this.brokerCode!=null && this.brokerCode!=''){
+            if(!this.brokerList.some(ele=>ele.Code==this.brokerCode)) this.brokerCode = this.brokerList[0].Code;
+            this.getExistingQuotes(null,'change')
+          }
+          else{
+            this.brokerCode = this.brokerList[0].Code;
             this.getExistingQuotes(null,'change')
           }
         }
@@ -269,76 +276,88 @@ export class PoliciesComponent implements OnInit {
     link.remove();
   }
   getExistingQuotes(element,entryType){
-    if(element==null) this.quoteData = [];
-    let appId = "1",loginId="",brokerbranchCode="";
+    if(element==null) this.quoteData=[];
+    let appId = "1",loginId="",brokerbranchCode="",bdmCode=null;
     if(this.userType!='Issuer'){
-      appId = "1"; loginId = this.loginId;
+      appId = "1"; loginId = this.brokerCode;
       brokerbranchCode = this.brokerbranchCode;
+      bdmCode=this.agencyCode;
     }
     else{
       appId = this.loginId;
       loginId=this.brokerCode;
-      brokerbranchCode = null;
+      brokerbranchCode = '';
     }
-    let ReqObj = {
+    let entry = this.brokerList.find(ele=>ele.Code==this.brokerCode);
+    if(entry){
+      console.log("Entry Received",entry) 
+      if(entry.Type!='broker' && entry.Type!='Direct' && entry.Type!='Agent'){
+        loginId='';
+        bdmCode=this.brokerCode;
+      }
+      else{
+        bdmCode=null;
+      }
+      let ReqObj = {
           "BrokerBranchCode": brokerbranchCode,
           "BranchCode":this.branchCode,
-          "InsuranceId": this.insuranceId,
-          "LoginId":loginId,
-          "ApplicationId":appId,
-          "UserType":this.userType,
-          "SubUserType":sessionStorage.getItem('typeValue'),
-          "SourceType":"",
-          "BdmCode": this.agencyCode,
-           "ProductId":this.productId,
-          "Limit":this.limit,
-          "Offset":60
-   }
-    let urlLink = `${this.CommonApiUrl}api/portfolio/active`;
-    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-      (data: any) => {
-        console.log(data);
-        sessionStorage.removeItem('loadingType');
-        if(data.Result){
-          if (data.Result?.PortfolioList) {
-            if (data.Result?.PortfolioList.length != 0) {
-              this.totalQuoteRecords = data.Result?.Count;
-              this.pageCount = 10;
-              if (entryType == 'change') {
-                this.quotePageNo = 1;
-                let startCount = 1, endCount = this.pageCount;
-                startCount = endCount + 1;
-                  let quoteData = data.Result?.PortfolioList;
-                  this.quoteData = data.Result?.PortfolioList;
-                  if (quoteData.length <= this.pageCount) {
-                    endCount = quoteData.length
+            "InsuranceId": this.insuranceId,
+            "LoginId":loginId,
+            "ApplicationId":appId,
+            "UserType":this.userType,
+            "SubUserType":sessionStorage.getItem('typeValue'),
+            "SourceType":"",
+            "BdmCode": bdmCode,
+            "ProductId":this.productId,
+            "Limit":this.limit,
+            "Offset": 60
+      }
+      let urlLink = `${this.CommonApiUrl}api/portfolio/active`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          console.log(data);
+          sessionStorage.removeItem('loadingType');
+          if(data.Result){
+            if (data.Result?.PortfolioList) {
+              if (data.Result?.PortfolioList.length != 0) {
+                this.totalQuoteRecords = data.Result?.Count;
+                this.pageCount = 10;
+                if (entryType == 'change') {
+                  this.quotePageNo = 1;
+                  let startCount = 1, endCount = this.pageCount;
+                  startCount = endCount + 1;
+                    let quoteData = data.Result?.PortfolioList;
+                    this.quoteData = data.Result?.PortfolioList;
+                    if (quoteData.length <= this.pageCount) {
+                      endCount = quoteData.length
+                    }
+                    else endCount = this.pageCount;
+                  
+                  this.startIndex = startCount; this.endIndex = endCount;
+                }
+                else {
+
+                  let startCount = element.startCount, endCount = element.endCount;
+                  this.pageCount = element.n;
+                  startCount = endCount + 1;
+                    let quoteData = data.Result?.PortfolioList;
+                    this.quoteData = this.quoteData.concat(data.Result?.PortfolioList);
+                  if (this.totalQuoteRecords <= endCount + (element.n)) {
+                    endCount = this.totalQuoteRecords
                   }
-                  else endCount = this.pageCount;
-                
-                this.startIndex = startCount; this.endIndex = endCount;
+                  else endCount = endCount + (element.n);
+                  this.startIndex = startCount; this.endIndex = endCount;
+                }
               }
               else {
-
-                let startCount = element.startCount, endCount = element.endCount;
-                this.pageCount = element.n;
-                startCount = endCount + 1;
-                  let quoteData = data.Result?.PortfolioList;
-                  this.quoteData = this.quoteData.concat(data.Result?.PortfolioList);
-                if (this.totalQuoteRecords <= endCount + (element.n)) {
-                  endCount = this.totalQuoteRecords
-                }
-                else endCount = endCount + (element.n);
-                this.startIndex = startCount; this.endIndex = endCount;
+                this.quoteData = []; 
               }
             }
-            else {
-              this.quoteData = []; 
-            }
           }
-        }
-      },
-      (err) => { },
-    );
+        },
+        (err) => { },
+      );
+    }
   }
   onNextData(element){
     this.limit = String(Number(this.limit)+1);

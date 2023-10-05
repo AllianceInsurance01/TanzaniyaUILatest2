@@ -42,6 +42,7 @@ export class ReferralRequoteComponent {
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails?.Result?.UserType;
     this.insuranceId = this.userDetails.Result.InsuranceId;
+    if(this.userType!='Issuer')this.brokerCode = this.loginId;
     sessionStorage.removeItem('customerReferenceNo')
     sessionStorage.removeItem('loadingType');
     if(this.productId=='5' || this.productId=='46'){
@@ -158,23 +159,17 @@ export class ReferralRequoteComponent {
   setSection(val){this.section = val;this.getBrokerList();}//this.getExistingQuotes(null,'change')}
 
   getBrokerList(){
-    let appId = "1",loginId="",brokerbranchCode="";let type:any;
+    let type=null;
+    if(this.section=='quote'){type='Q'}
+    else type='E';
+    let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
       appId = "1"; loginId = this.brokerCode;
-      console.log('Broker',this.loginId,this.userType,loginId)
-      //brokerbranchCode = this.brokerbranchCode;
     }
     else{
       appId = this.loginId;
-      loginId=this.brokerCode;
+      loginId="";
       brokerbranchCode = '';
-      console.log('Adminsssssssssss',this.loginId,this.userType,loginId)
-    }
-    if(this.section=='quote'){
-      type="Q";
-    }
-    else{
-      type="E";
     }
     let ReqObj = {
       "ProductId": this.productId,
@@ -183,7 +178,7 @@ export class ReferralRequoteComponent {
       "ApplicationId":appId,
       "UserType":this.userType,
       "BranchCode": this.branchCode,
-      "Type":type
+      "Type": type
     }
     let urlLink = `${this.CommonApiUrl}api/adminreferralrequoteropdown`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -194,7 +189,11 @@ export class ReferralRequoteComponent {
           if(this.brokerList.length==0){this.brokerCode = ''; this.brokerList = []}
           else this.brokerCode = this.loginId;
           if(this.brokerCode!=null && this.brokerCode!=''){
-            if(!this.brokerList.some(ele=>ele.CodeDesc==this.brokerCode)) this.brokerCode = this.brokerList[0].CodeDesc;
+            if(!this.brokerList.some(ele=>ele.Code==this.brokerCode)) this.brokerCode = this.brokerList[0].Code;
+            this.getExistingQuotes(null,'change')
+          }
+          else{
+            this.brokerCode = this.brokerList[0].Code;
             this.getExistingQuotes(null,'change')
           }
         }
@@ -205,102 +204,110 @@ export class ReferralRequoteComponent {
 
   }
   getExistingQuotes(element,entryType){
-    let appId = "1",loginId="",brokerbranchCode="";
-    this.quoteData=[];
-      if(this.userType!='Issuer'){
-        appId = "1"; 
-        loginId=this.brokerCode;
-        //loginId = this.loginId;
-        brokerbranchCode = this.brokerbranchCode;
+    if(element==null) this.quoteData=[];
+    let appId = "1",loginId="",brokerbranchCode="",bdmCode=null;
+    if(this.userType!='Issuer'){
+      appId = "1"; loginId = this.brokerCode;
+      bdmCode=this.agencyCode;
+    }
+    else{
+      appId = this.loginId;
+      loginId=this.brokerCode;
+      brokerbranchCode = '';
+    }
+    let entry = this.brokerList.find(ele=>ele.Code==this.brokerCode);
+    if(entry){
+      console.log("Entry Received",entry) 
+      if(entry.Type!='broker' && entry.Type!='Direct' && entry.Type!='Agent'){
+        loginId='';
+        bdmCode=this.brokerCode;
       }
       else{
-        appId = this.loginId;
-        loginId=this.brokerCode;
-        brokerbranchCode = null;
+        bdmCode=null;
       }
       let type=null;
       if(this.section=='quote'){type='Q'}
       else type='E';
       let ReqObj = {
-          "BrokerBranchCode": brokerbranchCode,
           "BranchCode":this.branchCode,
-          "InsuranceId": this.insuranceId,
-          "LoginId":loginId,
-          "ApplicationId":appId,
-          "UserType":this.userType,
-          "SubUserType":sessionStorage.getItem('typeValue'),
-          "SourceType":"",
-          "BdmCode": this.agencyCode,
-           "ProductId":this.productId,
-           "Type":type,
-          "Limit": this.limit,
-          "Offset":60
+            "InsuranceId": this.insuranceId,
+            "LoginId":loginId,
+            "ApplicationId":appId,
+            "UserType":this.userType,
+            "SubUserType":sessionStorage.getItem('typeValue'),
+            "SourceType":"",
+            "BdmCode": bdmCode,
+            "ProductId":this.productId,
+            "Type":type,
+            "Limit":this.limit,
+            "Offset": 60
       }
-    let urlLink = `${this.CommonApiUrl}api/referralrequote`;
-    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-      (data: any) => {
-        sessionStorage.removeItem('loadingType');
-        if(data.Result){
-          if (data.Result?.CustomerDetailsRes) {
-            if (data.Result?.CustomerDetailsRes.length != 0) {
-              this.totalRecords = data.Result?.TotalCount;
-              this.totalQuoteRecords = data.Result?.TotalCount;
-              this.pageCount = 10;
-              if (entryType == 'change') {
-                this.quotePageNo = 1;
-                this.endtpageNo = 1;
-                let startCount = 1, endCount = this.pageCount;
-                startCount = endCount + 1;
-                if (this.section == 'quote') {
-                  let quoteData = data.Result?.CustomerDetailsRes;
-                  this.quoteData = data.Result?.CustomerDetailsRes;
-                  if (quoteData.length <= this.pageCount) {
-                    endCount = quoteData.length
+      let urlLink = `${this.CommonApiUrl}api/referralrequote`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          sessionStorage.removeItem('loadingType');
+          if(data.Result){
+            if (data.Result?.CustomerDetailsRes) {
+              if (data.Result?.CustomerDetailsRes.length != 0) {
+                this.totalRecords = data.Result?.TotalCount;
+                this.totalQuoteRecords = data.Result?.TotalCount;
+                this.pageCount = 10;
+                if (entryType == 'change') {
+                  this.quotePageNo = 1;
+                  this.endtpageNo = 1;
+                  let startCount = 1, endCount = this.pageCount;
+                  startCount = endCount + 1;
+                  if (this.section == 'quote') {
+                    let quoteData = data.Result?.CustomerDetailsRes;
+                    this.quoteData = data.Result?.CustomerDetailsRes;
+                    if (quoteData.length <= this.pageCount) {
+                      endCount = quoteData.length
+                    }
+                    else endCount = this.pageCount;
                   }
-                  else endCount = this.pageCount;
+                  else {
+                    this.referralData = data.Result?.CustomerDetailsRes;
+                    let referralData = data.Result?.CustomerDetailsRes;
+                    if (referralData.length <= this.pageCount) {
+                      endCount = referralData.length
+                    }
+                    else endCount = this.pageCount;
+                  }
+                  this.startIndex = startCount; this.endIndex = endCount;
+                  console.log("Final Data", this.referralData, this.quoteData, this.section)
                 }
                 else {
-                  this.referralData = data.Result?.CustomerDetailsRes;
-                  let referralData = data.Result?.CustomerDetailsRes;
-                  if (referralData.length <= this.pageCount) {
-                    endCount = referralData.length
+
+                  let startCount = element.startCount, endCount = element.endCount;
+                  this.pageCount = element.n;
+                  startCount = endCount + 1;
+                  if (this.section == 'quote') {
+                    let quoteData = data.Result?.CustomerDetailsRes;
+                    this.quoteData = this.quoteData.concat(data.Result?.CustomerDetailsRes);
                   }
-                  else endCount = this.pageCount;
+                  else {
+                    this.referralData = this.referralData.concat(data.Result?.CustomerDetailsRes);
+                    let referralData = data.Result?.CustomerDetailsRes;
+                  }
+                  if (this.totalQuoteRecords <= endCount + (element.n)) {
+                    endCount = this.totalQuoteRecords
+                  }
+                  else endCount = endCount + (element.n);
+                  this.startIndex = startCount; this.endIndex = endCount;
+                  console.log("Final Received Data", this.quoteData, this.referralData, this.startIndex, this.endIndex)
                 }
-                this.startIndex = startCount; this.endIndex = endCount;
-                console.log("Final Data", this.referralData, this.quoteData, this.section)
               }
               else {
-
-                let startCount = element.startCount, endCount = element.endCount;
-                this.pageCount = element.n;
-                startCount = endCount + 1;
-                if (this.section == 'quote') {
-                  let quoteData = data.Result?.CustomerDetailsRes;
-                  this.quoteData = this.quoteData.concat(data.Result?.CustomerDetailsRes);
-                }
-                else {
-                  this.referralData = this.referralData.concat(data.Result?.CustomerDetailsRes);
-                  let referralData = data.Result?.CustomerDetailsRes;
-                }
-                if (this.totalQuoteRecords <= endCount + (element.n)) {
-                  endCount = this.totalQuoteRecords
-                }
-                else endCount = endCount + (element.n);
-                this.startIndex = startCount; this.endIndex = endCount;
-                console.log("Final Received Data", this.quoteData, this.referralData, this.startIndex, this.endIndex)
+                this.quoteData = []; this.referralData = []
               }
             }
-            else {
-              this.quoteData = []; this.referralData = []
-            }
+            //this.quoteData = data?.Result;
+            else this.section = 'quote';
           }
-          //this.quoteData = data?.Result;
-          else this.section = 'quote';
-        }
-      },
-      (err) => { },
-    );
+        },
+        (err) => { },
+      );
+    }
   }
   onNextData(element){
     this.limit = String(Number(this.limit)+1);

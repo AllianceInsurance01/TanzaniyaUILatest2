@@ -34,7 +34,7 @@ export class RejectedQuotesComponent implements OnInit {
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails?.Result?.UserType;
     this.insuranceId = this.userDetails.Result.InsuranceId;
-    this.brokerCode = this.loginId;
+    if(this.userType!='Issuer')this.brokerCode = this.loginId;
     this.brokerList = [{Code:'',CodeDesc:'ALL'}]
     sessionStorage.removeItem('customerReferenceNo');
     sessionStorage.removeItem('vehicleDetailsList');
@@ -114,7 +114,7 @@ export class RejectedQuotesComponent implements OnInit {
     }
     else{
       appId = this.loginId;
-      loginId=this.brokerCode;
+      loginId="";
       brokerbranchCode = '';
     }
     let ReqObj = {
@@ -134,7 +134,11 @@ export class RejectedQuotesComponent implements OnInit {
           if(this.brokerList.length==0){this.brokerCode = ''; this.brokerList = []}
           else this.brokerCode = this.loginId;
           if(this.brokerCode!=null && this.brokerCode!=''){
-            if(!this.brokerList.some(ele=>ele.CodeDesc==this.brokerCode)) this.brokerCode = this.brokerList[0].CodeDesc;
+            if(!this.brokerList.some(ele=>ele.Code==this.brokerCode)) this.brokerCode = this.brokerList[0].Code;
+            this.getRejectedQuotes(null,'change')
+          }
+          else{
+            this.brokerCode = this.brokerList[0].Code;
             this.getRejectedQuotes(null,'change')
           }
         }
@@ -146,17 +150,28 @@ export class RejectedQuotesComponent implements OnInit {
   }
   getRejectedQuotes(element,entryType){
     if(element==null) this.quoteData=[];
-    let appId = "1",loginId="",brokerbranchCode="";
+    let appId = "1",loginId="",brokerbranchCode="",bdmCode=null;
     if(this.userType!='Issuer'){
       appId = "1"; loginId = this.brokerCode;
       brokerbranchCode = this.brokerbranchCode;
+      bdmCode=this.agencyCode;
     }
     else{
       appId = this.loginId;
       loginId=this.brokerCode;
       brokerbranchCode = '';
     }
-    let ReqObj = {
+    let entry = this.brokerList.find(ele=>ele.Code==this.brokerCode);
+    if(entry){
+      console.log("Entry Received",entry) 
+      if(entry.Type!='broker' && entry.Type!='Direct' && entry.Type!='Agent'){
+        loginId='';
+        bdmCode=this.brokerCode;
+      }
+      else{
+        bdmCode=null;
+      }
+      let ReqObj = {
           "BrokerBranchCode": brokerbranchCode,
           "BranchCode":this.branchCode,
           "InsuranceId": this.insuranceId,
@@ -165,56 +180,57 @@ export class RejectedQuotesComponent implements OnInit {
           "UserType":this.userType,
           "SubUserType":sessionStorage.getItem('typeValue'),
           "SourceType":"",
-          "BdmCode": this.agencyCode,
+          "BdmCode": bdmCode,
            "ProductId":this.productId,
           "Limit":this.limit,
           "Offset":60
-   }
-    let urlLink = `${this.CommonApiUrl}api/rejectedquotedetails`;
-    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-      (data: any) => {
-        sessionStorage.removeItem('loadingType');
-        console.log(data);
-        if(data.Result){
-          if (data.Result?.CustomerDetails) {
-            if (data.Result?.CustomerDetails.length != 0) {
-              this.totalQuoteRecords = data.Result?.TotalCount;
-              this.pageCount = 10;
-              if (entryType == 'change') {
-                this.quotePageNo = 1;
-                let startCount = 1, endCount = this.pageCount;
-                startCount = endCount + 1;
-                  let quoteData = data.Result?.CustomerDetails;
-                  this.quoteData = data.Result?.CustomerDetails;
-                  if (quoteData.length <= this.pageCount) {
-                    endCount = quoteData.length
+      }
+      let urlLink = `${this.CommonApiUrl}api/rejectedquotedetails`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          sessionStorage.removeItem('loadingType');
+          console.log(data);
+          if(data.Result){
+            if (data.Result?.CustomerDetails) {
+              if (data.Result?.CustomerDetails.length != 0) {
+                this.totalQuoteRecords = data.Result?.TotalCount;
+                this.pageCount = 10;
+                if (entryType == 'change') {
+                  this.quotePageNo = 1;
+                  let startCount = 1, endCount = this.pageCount;
+                  startCount = endCount + 1;
+                    let quoteData = data.Result?.CustomerDetails;
+                    this.quoteData = data.Result?.CustomerDetails;
+                    if (quoteData.length <= this.pageCount) {
+                      endCount = quoteData.length
+                    }
+                    else endCount = this.pageCount;
+                  
+                  this.startIndex = startCount; this.endIndex = endCount;
+                }
+                else {
+
+                  let startCount = element.startCount, endCount = element.endCount;
+                  this.pageCount = element.n;
+                  startCount = endCount + 1;
+                    let quoteData = data.Result?.CustomerDetails;
+                    this.quoteData = this.quoteData.concat(data.Result?.CustomerDetails);
+                  if (this.totalQuoteRecords <= endCount + (element.n)) {
+                    endCount = this.totalQuoteRecords
                   }
-                  else endCount = this.pageCount;
-                
-                this.startIndex = startCount; this.endIndex = endCount;
+                  else endCount = endCount + (element.n);
+                  this.startIndex = startCount; this.endIndex = endCount;
+                }
               }
               else {
-
-                let startCount = element.startCount, endCount = element.endCount;
-                this.pageCount = element.n;
-                startCount = endCount + 1;
-                  let quoteData = data.Result?.CustomerDetails;
-                  this.quoteData = this.quoteData.concat(data.Result?.CustomerDetails);
-                if (this.totalQuoteRecords <= endCount + (element.n)) {
-                  endCount = this.totalQuoteRecords
-                }
-                else endCount = endCount + (element.n);
-                this.startIndex = startCount; this.endIndex = endCount;
+                this.quoteData = []; 
               }
             }
-            else {
-              this.quoteData = []; 
-            }
           }
-        }
-      },
-      (err) => { },
-    );
+        },
+        (err) => { },
+      );
+    }
   }
   onNextData(element){
     this.limit = String(Number(this.limit)+1);

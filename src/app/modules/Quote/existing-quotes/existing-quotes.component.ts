@@ -54,7 +54,7 @@ export class ExistingQuotesComponent implements OnInit {
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails?.Result?.UserType;
     this.insuranceId = this.userDetails.Result.InsuranceId;
-    this.brokerCode = this.loginId;
+    if(this.userType!='Issuer')this.brokerCode = this.loginId;
     sessionStorage.removeItem('customerReferenceNo');
     sessionStorage.removeItem('vehicleDetailsList');
     sessionStorage.removeItem('endorsePolicyNo');
@@ -306,7 +306,7 @@ export class ExistingQuotesComponent implements OnInit {
     }
     else{
       appId = this.loginId;
-      loginId=this.brokerCode;
+      loginId="";
       brokerbranchCode = '';
     }
     let ReqObj = {
@@ -326,7 +326,11 @@ export class ExistingQuotesComponent implements OnInit {
           if(this.brokerList.length==0){this.brokerCode = ''; this.brokerList = []}
           else this.brokerCode = this.loginId;
           if(this.brokerCode!=null && this.brokerCode!=''){
-            if(!this.brokerList.some(ele=>ele.CodeDesc==this.brokerCode)) this.brokerCode = this.brokerList[0].CodeDesc;
+            if(!this.brokerList.some(ele=>ele.Code==this.brokerCode)) this.brokerCode = this.brokerList[0].Code;
+            this.getExistingQuotes(null,'change')
+          }
+          else{
+            this.brokerCode = this.brokerList[0].Code;
             this.getExistingQuotes(null,'change')
           }
         }
@@ -338,17 +342,28 @@ export class ExistingQuotesComponent implements OnInit {
   }
   getExistingQuotes(element,entryType){
     if(element==null) this.quoteData=[];
-    let appId = "1",loginId="",brokerbranchCode="";
+    let appId = "1",loginId="",brokerbranchCode="",bdmCode=null;
     if(this.userType!='Issuer'){
       appId = "1"; loginId = this.brokerCode;
       brokerbranchCode = this.brokerbranchCode;
+      bdmCode=this.agencyCode;
     }
     else{
       appId = this.loginId;
       loginId=this.brokerCode;
       brokerbranchCode = '';
     }
-    let ReqObj = {
+    let entry = this.brokerList.find(ele=>ele.Code==this.brokerCode);
+    if(entry){
+      console.log("Entry Received",entry) 
+      if(entry.Type!='broker' && entry.Type!='Direct' && entry.Type!='Agent'){
+        loginId='';
+        bdmCode=this.brokerCode;
+      }
+      else{
+        bdmCode=null;
+      }
+      let ReqObj = {
           "BrokerBranchCode": brokerbranchCode,
           "BranchCode":this.branchCode,
           "InsuranceId": this.insuranceId,
@@ -357,11 +372,11 @@ export class ExistingQuotesComponent implements OnInit {
           "UserType":this.userType,
           "SubUserType":sessionStorage.getItem('typeValue'),
           "SourceType":"",
-          "BdmCode": this.agencyCode,
+          "BdmCode": bdmCode,
            "ProductId":this.productId,
           "Limit":this.limit,
           "Offset":60
-   }
+    }
     let urlLink = `${this.CommonApiUrl}api/existingquotedetails`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
@@ -407,6 +422,9 @@ export class ExistingQuotesComponent implements OnInit {
       },
       (err) => { },
     );
+    }
+    
+    
   }
   onNextData(element){
     this.limit = String(Number(this.limit)+1);
