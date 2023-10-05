@@ -348,6 +348,7 @@ export class TravelQuoteDetailsComponent implements OnInit {
         let i = 0;
         this.customerTitleError = false;this.customerNameError=false;this.customerMobileCodeError = false;this.customerTypeError=false;
         this.customerMobileNoError = false;this.customerIdNumberError = false;this.customerPolicyTypeError = false;
+          
           if(this.updateComponent.Title==null || this.updateComponent.Title==undefined || this.updateComponent.Title ==''){this.customerTitleError = true;i+=1;}
           if(this.updateComponent.UserName==null || this.updateComponent.UserName==undefined || this.updateComponent.UserName ==''){this.customerNameError = true;i+=1;}
           if(this.updateComponent.MobileCode==null || this.updateComponent.MobileCode==undefined || this.updateComponent.MobileCode ==''){this.customerMobileCodeError = true;i+=1;}
@@ -357,6 +358,7 @@ export class TravelQuoteDetailsComponent implements OnInit {
           if(this.updateComponent.CustomerType==null || this.updateComponent.CustomerType==undefined || this.updateComponent.CustomerType =='') {this.customerTypeError = true;i+=1;}
           if(i>0) this.errorSection = true;
           if(i==0){
+            alert("Save")
             let customerObj = {
               "Title":this.updateComponent.Title,
               "ClientName":this.updateComponent.UserName,
@@ -374,6 +376,10 @@ export class TravelQuoteDetailsComponent implements OnInit {
                 this.saveCustomerDetails(customerObj,'create');
             }
             else{
+              let validDetais = this.checkMandatories();
+              if (validDetais) {
+                this.onSave();
+              }
             } 
           }
       }

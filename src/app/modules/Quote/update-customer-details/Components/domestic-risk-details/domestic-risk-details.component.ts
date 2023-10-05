@@ -3564,10 +3564,12 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
     this.employeeUploadRecords = [];
     this.uploadStatus = null;
   }
-  onUploadDocuments(target:any,fileType:any,type:any){
+  onUploadDocuments(target:any,fileType:any,type:any,uploadType:any){
     console.log("Event ",target);
     this.imageUrl = null;this.uploadDocList=[];
-    let event:any = target.target.files;
+    let event:any = null;
+    if(uploadType=='drag') event = target
+    else event = target.target.files;
 
     let fileList = event;
     for (let index = 0; index < fileList.length; index++) {

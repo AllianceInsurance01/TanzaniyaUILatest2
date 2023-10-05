@@ -138,7 +138,7 @@
                             <ng-container *ngFor="let step of fields[0].fieldGroup; let index = index; let last = last">
                                 <ng-template matStepperIcon="edit" let-index="index"><div (click)="selectedIndex=index">{{index + 1}}</div></ng-template>
                                 <ng-template matStepperIcon="done" let-index="index"><div (click)="selectedIndex=index">{{index + 1}}</div></ng-template>
-                                <mat-step >
+                                <mat-step (click)="selectedIndex=index">
                                     <ng-template matStepLabel><div (click)="selectedIndex=index">{{ step.props.label }}</div></ng-template>
                                     <form [formGroup]="form">
                                           <formly-form [form]="form" [fields]="step.fieldGroup" [model]="productItem"></formly-form>

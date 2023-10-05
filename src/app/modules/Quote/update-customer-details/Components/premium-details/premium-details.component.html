@@ -574,8 +574,8 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-lg-6 offset-1" >
-                                <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct')" #doc>
-                                <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onDragDocument($event,null,'direct')" (click)="doc.click()">
+                                <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct','select')" #doc>
+                                <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadDocuments($event,null,'direct','drag')" (click)="doc.click()">
                                     <div>
                                         <div class="center">
                                             <b class="text-dark" style="font-size:1rem">
@@ -688,8 +688,8 @@
                                 </div>
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
-                                <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct')" #doc>
-                                <div class="imag-card my-3" style="width:200px !important;" appDragDropFileUpload (fileDropped)="onDragDocument($event,null,'direct')" (click)="doc.click()">
+                                <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct','select')" #doc>
+                                <div class="imag-card my-3" style="width:200px !important;" appDragDropFileUpload (fileDropped)="onUploadDocuments($event,null,'direct','drag')" (click)="doc.click()">
                                     <div>
                                         <div class="center">
                                             <b class="text-dark" style="font-size:1rem">
@@ -868,8 +868,8 @@
                     <div class="maan-grid-item-body " style="padding-left: 25px !important;padding-right: 40px !important;">
                         <div class="row customFlow">
                             <div class="col-md-6 col-lg-6 offset-3"  *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
-                                <input style="display: none;" type="file" (change)="onUploadListDocuments($event,null,'direct',j)" #doc>
-                                <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onDragDocument($event,null,'direct')" (click)="doc.click()">
+                                <input style="display: none;" type="file" (change)="onUploadListDocuments($event,null,'direct',j,'select')" #doc>
+                                <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadListDocuments($event,null,'direct',j,'drag')" (click)="doc.click()">
                                     <div>
                                         <div class="center">
                                             <b class="text-dark" style="font-size:1rem">
@@ -1005,8 +1005,8 @@
                     <div class="maan-grid-item-body">
                         <div class="row customFlow">
                             <div class="col-12 col-md-6 col-lg-6" *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
-                                <input style="display: none;" type="file" (change)="onUploadListDocuments($event,null,'direct',j)" #doc>
-                                <div class="imag-card my-3" style="width:200px;" appDragDropFileUpload (fileDropped)="onDragDocument($event,null,'direct')" (click)="doc.click()">
+                                <input style="display: none;" type="file" (change)="onUploadListDocuments($event,null,'direct',j,'select')" #doc>
+                                <div class="imag-card my-3" style="width:200px;" appDragDropFileUpload (fileDropped)="onUploadListDocuments($event,null,'direct',j,'drag')" (click)="doc.click()">
                                     <div>
                                         <div class="center">
                                             <b class="text-dark" style="font-size:1rem">

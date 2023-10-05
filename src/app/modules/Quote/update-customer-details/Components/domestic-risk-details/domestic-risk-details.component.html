@@ -1219,8 +1219,8 @@
                                 <div *ngIf="enableEmployeeUploadSection && !showEmpRecordsSection">
                                     <div class="row" *ngIf="uploadStatus==null">
                                         <div class="col-md-8 col-lg-8 offset-2" >
-                                            <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct')" #doc>
-                                            <div class="imag-card my-3" appDragDropFileUpload (click)="doc.click()">
+                                            <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct','select')" #doc>
+                                            <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadDocuments($event,null,'direct','drag')" (click)="doc.click()">
                                                 <div>
                                                     <div class="center">
                                                         <b class="text-dark" style="font-size:1rem">
@@ -1594,8 +1594,8 @@
                                 <div *ngIf="enableFidelityUploadSection && !showFidelityRecordsSection">
                                     <div class="row" *ngIf="uploadStatus==null">
                                         <div class="col-md-8 col-lg-8 offset-2" >
-                                            <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct')" #doc>
-                                            <div class="imag-card my-3" appDragDropFileUpload (click)="doc.click()">
+                                            <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct','select')" #doc>
+                                            <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadDocuments($event,null,'direct','drag')" (click)="doc.click()">
                                                 <div>
                                                     <div class="center">
                                                         <b class="text-dark" style="font-size:1rem">

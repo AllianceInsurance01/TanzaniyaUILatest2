@@ -54,6 +54,7 @@ export class EndorsementTypeDetailsComponent {
   productItem: ProductData;
   emiYN: any;
   enableFinancialList: boolean=false;
+  vehilceCount: number;
   constructor(private router:Router,private sharedService: SharedService,private datePipe: DatePipe) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -1354,7 +1355,7 @@ export class EndorsementTypeDetailsComponent {
     );
   }
   saveVehicleDetails(type){
-    let i = 0;
+    this.vehilceCount = 0;
     for(let veh of this.vehicleList){
       let refNo = veh?.MSRefNo;
       if(refNo == undefined){
@@ -1571,8 +1572,7 @@ export class EndorsementTypeDetailsComponent {
                     veh['VehicleId'] = veh.Vehicleid
                     veh['Active'] = true;
                     console.log("Save Iterate",veh)
-                    i+=1;
-                    this.getCalculationDetails(veh,i,type);
+                    this.getCalculationDetails(veh,this.vehilceCount,type);
                     
                     
 
@@ -1591,8 +1591,8 @@ export class EndorsementTypeDetailsComponent {
         );
       }
       else{
-        i+=1;
-        if(i==this.vehicleList.length)  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
+        this.vehilceCount+=1;
+        if(this.vehilceCount==this.vehicleList.length)  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
       }
     }
   }
@@ -1644,7 +1644,8 @@ export class EndorsementTypeDetailsComponent {
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         let res:any = data;
-        if(i==this.vehicleList.length){
+        this.vehilceCount +=1;
+        if(this.vehilceCount==this.vehicleList.length){
           if(type!='cancel'){
               this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
           }

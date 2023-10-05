@@ -241,19 +241,8 @@ emiyn="N";
   loginType: any;
   constructor(public sharedService: SharedService,private authService: AuthService,private router:Router,private modalService: NgbModal,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe,public dialog: MatDialog) {
-    let loginType = sessionStorage.getItem('resetLoginDetails');
-    if(loginType){
-      sessionStorage.removeItem('resetLoginDetails');
-      let sectionType = sessionStorage.getItem('riskSection');
-      if(sectionType=='additional') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
-      else if(this.productId=='4') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details'])
-      else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
-    }
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
-    console.log("Received Session",this.userDetails)
-    this.localCurrency = this.userDetails.Result.CurrencyId;
-    this.loginId = this.userDetails.Result.LoginId;
-    this.sampleloginId = this.loginId;
+    let loginType = sessionStorage.getItem('resetLoginDetails');
     this.userType = this.userDetails?.Result?.UserType;
     this.agencyCode = this.userDetails.Result.OaCode;
     this.branchCode = this.userDetails.Result.BranchCode;
@@ -265,6 +254,19 @@ emiyn="N";
     this.loginType = this.userDetails.Result.LoginType;
     this.updateComponent.showStepperSection = true;
     this.updateComponent.modifiedYN = 'N';
+    if(loginType){
+      sessionStorage.removeItem('resetLoginDetails');
+      let sectionType = sessionStorage.getItem('riskSection');
+      if(sectionType=='additional' ) this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
+      else if(this.productId=='4') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details'])
+      else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
+    }
+   
+    console.log("Received Session",this.userDetails)
+    this.localCurrency = this.userDetails.Result.CurrencyId;
+    this.loginId = this.userDetails.Result.LoginId;
+    this.sampleloginId = this.loginId;
+    
     sessionStorage.removeItem('vehicleDetailsList');
       let endorseObj = JSON.parse(sessionStorage.getItem('endorseTypeId'))
       if(endorseObj){
