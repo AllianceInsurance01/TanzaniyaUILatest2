@@ -726,10 +726,11 @@ toggle(index: number) {
     ).forEach(menu => menu.Collapse = false);
   }
 }
-  onUploadDocuments(target:any,fileType:any,type:any){
+  onUploadDocuments(target:any,fileType:any,type:any,uploadType:any){
     console.log("Event ",target);
-    let event:any = target.target.files;
-
+    let event:any=null;
+    if(uploadType=='drag') event = target
+    else event = target.target.files;
     let fileList = event;
     for (let index = 0; index < fileList.length; index++) {
       const element = fileList[index];
@@ -748,11 +749,12 @@ toggle(index: number) {
     }
     console.log("Final File List",this.uploadDocList)
   }
-  onUploadListDocuments(target:any,fileType:any,type:any,i:any){
+  onUploadListDocuments(target:any,fileType:any,type:any,i:any,uploadType:any){
     
     console.log("Event ",target);
-    let event:any = target.target.files;
-
+    let event:any = null;
+    if(uploadType=='drag') event = target
+    else event = target.target.files;
     let fileList = event;
     for (let index = 0; index < fileList.length; index++) {
       const element = fileList[index];
