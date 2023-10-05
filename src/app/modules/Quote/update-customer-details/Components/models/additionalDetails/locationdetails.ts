@@ -39,7 +39,7 @@ export class LocationDetails{
                           props: {
                             label: `Location Name`,
                             required: true,
-                            disabled:this.checkEndorseDisable('building'),
+                            //disabled:!this.checkEndorseDisable('building'),
                           },
                          
                           validators: {
@@ -57,7 +57,7 @@ export class LocationDetails{
                           templateOptions: {
                             label: 'Address',
                             required: true,
-                            disabled:this.checkEndorseDisable('building'),
+                            //disabled:!this.checkEndorseDisable('building'),
                           },
                           validators: {
                             validation: [ForceLengthValidators.maxLength(250), ForceLengthValidators.min(1)]

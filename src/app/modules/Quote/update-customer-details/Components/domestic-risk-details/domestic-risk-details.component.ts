@@ -26,6 +26,7 @@ import { ElectronicEquip } from '../models/additionalDetails/Electronicequip';
 import { Accessories } from '../models/additionalDetails/Accsessories';
 import { Accessorieswh } from '../models/additionalDetails/Accsessorieswh';
 import { ConstantPool } from '@angular/compiler';
+import { retry } from 'rxjs';
 
 export class ForceLengthValidators {
   static maxLength(maxLength: number) {
@@ -441,17 +442,24 @@ export class DomesticRiskDetailsComponent implements OnInit {
   checkEndorseDisable(type){
       if(this.endorsementSection){
         console.log('Enbales Endorsement Sections',type,this.buildingSection,this.enableAllSection);
-            if(type =='building') return (!this.buildingSection && !this.enableAllSection);           
-            else if(type=='content') return (!this.contentRiskSection && !this.enableAllSection);
-            else if(type=='personalAccident') return (!this.personalAccidentSection && !this.enableAllSection);
-            else if(type == 'personalIndeminity') return (!this.personalIntermeditySection && !this.enableAllSection);
-            else if(type=='allRisk') return (!this.allRiskSection && !this.enableAllSection);
-            else if(type == 'electronic') return (!this.electronicEquipSection && !this.enableAllSection);
-            else if(type == 'accessories' && this.enableAllSection || this.accessoriesSection) {
-              return true;
-            }
-            else if(type == 'accessories' && !this.enableAllSection || !this.accessoriesSection) {
-                return (!this.accessoriesSection && !this.enableAllSection);}
+
+        if(this.enableAllSection){
+            return true;
+        }
+        else {
+          return false;
+        }
+            // if(type =='building') return (!this.buildingSection && !this.enableAllSection);           
+            // else if(type=='content') return (!this.contentRiskSection && !this.enableAllSection);
+            // else if(type=='personalAccident') return (!this.personalAccidentSection && !this.enableAllSection);
+            // else if(type == 'personalIndeminity') return (!this.personalIntermeditySection && !this.enableAllSection);
+            // else if(type=='allRisk') return (!this.allRiskSection && !this.enableAllSection);
+            // else if(type == 'electronic') return (!this.electronicEquipSection && !this.enableAllSection);
+            // else if(type == 'accessories' && this.enableAllSection || this.accessoriesSection) {
+            //   return true;
+            // }
+            // else if(type == 'accessories' && !this.enableAllSection || !this.accessoriesSection) {
+            //     return (!this.accessoriesSection && !this.enableAllSection);}
             //else if(type == 'accessories') return (!this.accessoriesSection && !this.enableAllSection);
       }
       else return true;
@@ -931,18 +939,31 @@ export class DomesticRiskDetailsComponent implements OnInit {
   enableAddNewBtn(type){
     console.log('YYYYYYYYYY',this.buildingSection,this.enableAllSection);
     if(this.endorsementSection){
-      if(type=='building') return (!this.buildingSection && !this.enableAllSection) ;
-      else if(type=='content') return (!this.contentRiskSection && !this.enableAllSection);
-      else if(type=='personalAccident') return (!this.personalAccidentSection && !this.enableAllSection);
-      else if(type == 'personalIndeminity') return (!this.personalIntermeditySection && !this.enableAllSection);
-      else if(type=='allRisk') return (!this.allRiskSection && !this.enableAllSection);
-      else if(type == 'electronic') return (!this.electronicEquipSection && !this.enableAllSection);
-      else if(type == 'Cyber') return (!this.enableCyberSection && !this.enableAllSection);
-      else if(type == 'accessories' && this.enableAllSection || this.accessoriesSection) {
+      if(this.enableAllSection){
         return true;
       }
-      else if(type == 'accessories' && !this.enableAllSection || !this.accessoriesSection) {
-          return (!this.accessoriesSection && !this.enableAllSection);}
+      else{
+        return false;
+      }
+    //   if(type=='building'){ 
+    //   if(type=='building' && this.enableAllSection){
+    //     return true;
+    //   }
+    //   else{
+    //     return (!this.buildingSection && !this.enableAllSection) ;
+    //   }
+    // } 
+    //   else if(type=='content') return (!this.contentRiskSection && !this.enableAllSection);
+    //   else if(type=='personalAccident') return (!this.personalAccidentSection && !this.enableAllSection);
+    //   else if(type == 'personalIndeminity') return (!this.personalIntermeditySection && !this.enableAllSection);
+    //   else if(type=='allRisk') return (!this.allRiskSection && !this.enableAllSection);
+    //   else if(type == 'electronic') return (!this.electronicEquipSection && !this.enableAllSection);
+    //   else if(type == 'Cyber') return (!this.enableCyberSection && !this.enableAllSection);
+    //   else if(type == 'accessories' && this.enableAllSection || this.accessoriesSection) {
+    //     return true;
+    //   }
+    //   else if(type == 'accessories' && !this.enableAllSection || !this.accessoriesSection) {
+    //       return (!this.accessoriesSection && !this.enableAllSection);}
     }
     else return true;
   }
@@ -2903,9 +2924,9 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
           if(this.endorsementSection){
             console.log('Enable Building Suminsureds',this.enableFieldsList);
             //this.buildingSection = !this.enableFieldsList.some(ele=>ele=='BuildingSuminsured');
-            this.buildingSection = !this.enableFieldsList.some(ele=>ele=='BuildingSuminsured');
+            this.buildingSection = this.enableFieldsList.some(ele=>ele=='BuildingSuminsured');
           }
-          else this.buildingSection = true;
+          else this.buildingSection = false;
           //else this.buildingSection = false;
           this.building = res.Result;
           let i=0;
