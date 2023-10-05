@@ -71,6 +71,7 @@ export class SectionModificationComponent implements OnInit {
   isFinanceEndt: any=null;
   endorsementDetails: any;
   customerName: any;
+  endorsePolicyNo: any=null;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -105,6 +106,7 @@ export class SectionModificationComponent implements OnInit {
         console.log("Entered Data",existEnd)
         this.endrosementid=existEnd?.EndtTypeId;
         this.enableFieldsList = existEnd.FieldsAllowed;
+        this.endorsePolicyNo = existEnd?.PolicyNo;
         let addSection = this.enableFieldsList.some(ele=>ele=='AddSection' || ele=='Add Section');
         let removeSection = this.enableFieldsList.some(ele=>ele=='RemoveSection' || ele=='Remove Section');
           if(addSection){
@@ -326,7 +328,7 @@ getIndustryList() {
     }
     let ReqObj = { 
         "AcexecutiveId": "",
-        "PolicyNo": "",
+        "PolicyNo": this.endorsePolicyNo,
         "ProductId": this.productId,
         "ProductType": "Asset",
         "TiraCoverNoteNo": null,
