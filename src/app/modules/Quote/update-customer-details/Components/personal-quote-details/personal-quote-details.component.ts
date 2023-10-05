@@ -3354,7 +3354,7 @@ onBodyTypeChange(type){
         let fields = this.fields[0].fieldGroup[0].fieldGroup;
         for(let field of fields){
           if(field.key=='Model'){field.hideExpression=false;field.hide=false;}
-          else if(field.key=='ModelDesc'){field.hideExpression=true;}
+          else if(field.key=='ModelDesc'){field.hideExpression=true;field.hide=true;}
         }
         // this.fields[0].fieldGroup[0].fieldGroup[3].hideExpression = true;
         // this.fields[0].fieldGroup[0].fieldGroup[2].hideExpression = false;
@@ -3363,7 +3363,7 @@ onBodyTypeChange(type){
         let fields = this.fields[0].fieldGroup[0].fieldGroup;
         for(let field of fields){
           if(field.key=='Model'){field.hideExpression=true;field.hide=true;}
-          else if(field.key=='ModelDesc'){field.hideExpression=false;}
+          else if(field.key=='ModelDesc'){field.hideExpression=false;field.hide=false;}
         }
       }
       console.log("Final Fields",this.fields[0])
@@ -3451,9 +3451,6 @@ getColorsList(){
             if (i == this.colorList.length - 1) {
                 let defaultObj = [{ 'label': '-Select-', 'value': '' }];
                 this.fields[0].fieldGroup[0].fieldGroup[10].props.options = defaultObj.concat(this.colorList);
-                if(this.motorDetails){
-                  this.productItem.Color = this.colorList.find(ele=>ele.label==this.motorDetails.Color || ele.Code == this.motorDetails.Color)?.Code;
-                }
             }
           }
       }
@@ -6429,7 +6426,7 @@ setCommonFormValues(){
             this.productItem.OwnerName = this.customerDetails.ClientName;
             this.productItem.SeatingCapacity = data.Result.SeatingCapacity;
             this.productItem.EngineNo = data.Result.EngineNumber;
-            this.productItem.EngineCapacity = data.Result.ResEngineCapacity;
+            this.productItem.EngineCapacity = data.Result.EngineCapacity;
             this.productItem.ManufactureYear = data.Result.ManufactureYear;
               if(this.customerDetails?.PolicyHolderType){
                 this.productItem.OwnerCategory = this.customerDetails.PolicyHolderType;
@@ -6478,6 +6475,7 @@ getVehicleInfo(){
         this.productItem.OwnerName = this.customerDetails.ClientName;
         this.productItem.SeatingCapacity = data.Result.SeatingCapacity;
         this.productItem.EngineNo = data.Result.EngineNumber;
+        this.productItem.Color = data.Result.Color;
         this.productItem.EngineCapacity = data.Result.ResEngineCapacity;
         this.productItem.ManufactureYear = data.Result.ManufactureYear;
           if(this.customerDetails?.PolicyHolderType){
