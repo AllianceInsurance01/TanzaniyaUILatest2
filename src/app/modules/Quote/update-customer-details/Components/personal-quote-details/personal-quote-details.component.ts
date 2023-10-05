@@ -6036,10 +6036,12 @@ getOccupationList(sections) {
               }
               if (this.productId == '3') {
                 if (this.coversRequired == 'C' || this.coversRequired == 'B') {
+                  console.log('Fileds to setss',this.fields[0].fieldGroup[3].fieldGroup[0].fieldGroup[0].props.options)
                   this.fields[0].fieldGroup[2].fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.occupationList);
                   this.fields[0].fieldGroup[3].fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.occupationList);
                 }
                 else {
+                  console.log('Fileds to be setting',this.fields[0].fieldGroup[3].fieldGroup[0].fieldGroup[0].props.options)
                   this.fields[0].fieldGroup[3].fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.occupationList);
                   this.fields[0].fieldGroup[4].fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.occupationList);
                 }
