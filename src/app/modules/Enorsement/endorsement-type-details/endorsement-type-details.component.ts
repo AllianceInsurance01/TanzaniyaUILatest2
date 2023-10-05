@@ -495,7 +495,7 @@ export class EndorsementTypeDetailsComponent {
             if(this.productId == '3' && this.selectedEndorsement.EndtType == '54'){
               this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
             }
-            else if((this.productId!= '3' || this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14'  || this.productId=='19' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId=='21' || this.productId == '25')){
+            else if((this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14'  || this.productId=='19' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId=='21' || this.productId == '25')){
               this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
             }
             else{
