@@ -3858,49 +3858,6 @@ getIndemityPeriodList(){
 onPreviousTab(){
   this.selectedIndex-=1;
 }
-onSaveMotorDetails(){
-  let make = "";
-    if(this.productItem.Make!='' && this.productItem.Make!=undefined && this.productItem.Make!=null){
-      let entry = this.makeList.find(ele=>ele.Code==this.productItem.Make);
-      make = entry.label;
-    }
-    let regNo = null;
-    if(this.productItem.RegistrationNo=='' || this.productItem.RegistrationNo==null){
-      regNo = this.productItem.ChassisNo;
-    }
-    else regNo = this.productItem.RegistrationNo;
-    let ReqObj = {
-      "AxelDistance": '01',
-      "Chassisnumber": this.productItem.ChassisNo,
-      "Color": this.productItem.Color,
-      "CreatedBy": this.loginId,
-      "EngineNumber": this.productItem.EngineNo,
-      "FuelType": this.productItem.FuelType,
-      "Grossweight": "100",
-      "ManufactureYear": this.productItem.ManufactureYear,
-      "MotorCategory": "01",
-      "Motorusage": this.productItem.MotorUsage,
-      "NumberOfAxels": "1",
-      "OwnerCategory": this.productItem.OwnerCategory,
-      "Registrationnumber": regNo,
-      "ResEngineCapacity": this.productItem.EngineCapacity,
-      "ResOwnerName": this.productItem.OwnerName,
-      "ResStatusCode": "Y",
-      "ResStatusDesc": "None",
-      "SeatingCapacity": this.productItem.SeatingCapacity,
-      "Tareweight": "100",
-      "Vehcilemodel": this.productItem.Model,
-      "VehicleType": this.productItem.BodyType,
-      "Vehiclemake": make
-    }
-    let urlLink = `${this.motorApiUrl}regulatory/savevehicleinfo`;
-    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
-      (data: any) => {
-        if(data.Result){
-          //this.saveMotorRiskDetails(ReqObj);
-        }
-      });
-}
 saveMotorRiskDetails(){
     let make = "";
     if(this.productItem.Make!='' && this.productItem.Make!=undefined && this.productItem.Make!=null){
@@ -6421,6 +6378,7 @@ setCommonFormValues(){
             this.productItem.ChassisNo = this.vehicleDetails.Chassisnumber;
             this.productItem.RegistrationNo = this.vehicleDetails.Registrationnumber;
             this.productItem.ManufactureYear = data.Result.ManufactureYear;
+            this.productItem.Color = data.Result.Color;
             // this.productItem.EngineNo = 
             if(this.productItem.ChassisNo == this.productItem.RegistrationNo){this.productItem.RegistrationNo=null;}
             this.productItem.OwnerName = this.customerDetails.ClientName;
@@ -6457,40 +6415,6 @@ setCommonFormValues(){
     },
     (err) => { },
   );
-}
-getVehicleInfo(){
-  let ReqObj = {
-    "ReqChassisNumber": this.productItem.ChassisNo,
-    "ReqRegNumber": this.productItem.RegistrationNo
-  }
-  let urlLink = `${this.motorApiUrl}regulatory/showvehicleinfo`;
-  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-    (data: any) => {
-      console.log(data);
-      if(data.Result){
-        this.motorDetails = data.Result;
-        this.productItem.ManufactureYear = data.Result.ManufactureYear;
-        // this.productItem.EngineNo = 
-        if(this.productItem.ChassisNo == this.productItem.RegistrationNo){this.productItem.RegistrationNo=null;}
-        this.productItem.OwnerName = this.customerDetails.ClientName;
-        this.productItem.SeatingCapacity = data.Result.SeatingCapacity;
-        this.productItem.EngineNo = data.Result.EngineNumber;
-        this.productItem.Color = data.Result.Color;
-        this.productItem.EngineCapacity = data.Result.ResEngineCapacity;
-        this.productItem.ManufactureYear = data.Result.ManufactureYear;
-          if(this.customerDetails?.PolicyHolderType){
-            this.productItem.OwnerCategory = this.customerDetails.PolicyHolderType;
-          } 
-          this.getFuelTypeList();
-          this.getYearList();
-          this.getColorsList();
-          this.getBodyTypeList();
-          this.getUsageList();
-          this.getMakeList();
-          
-      }
-      console.log("Final List ",this.productItem)
-    });
 }
 setSMEFormValues(type) {
   let ReqObj = {

@@ -156,7 +156,8 @@ export class PendingPoliciesComponent implements OnInit {
     let entry = this.brokerList.find(ele=>ele.Code==this.brokerCode);
     if(entry){
       console.log("Entry Received",entry) 
-      if(entry.Type!='broker' && entry.Type!='Broker' && entry.Type!='Direct' && entry.Type!='Agent'){
+      if(entry.Type!='broker' && entry.Type!='Broker' && entry.Type!='Direct' && entry.Type!='direct' 
+      && entry.Type!='Agent' && entry.Type!='agent' && entry.Type!='bank' && entry.Type!='whatsapp'){
         loginId='';
         bdmCode=this.brokerCode;
       }
