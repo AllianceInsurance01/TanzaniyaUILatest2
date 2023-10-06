@@ -114,12 +114,12 @@ export class DashboardComponent implements OnInit {
     sessionStorage.removeItem('customerReferenceNo');
     sessionStorage.removeItem('endorsePolicyNo');
     sessionStorage.removeItem('endorseTypeId');
-    this.getReferralApprovedList(null,'change');
+    //this.getReferralApprovedList(null,'change');
     this.getCustomerList();
     
     //this.getQuotesList(null,'change');
     // this.getPolicyList(null,'change');
-    this.getLapsedList();
+    //this.getLapsedList();
     //this.getReferralPendingList(null,'change');
   }
   ngOnInit() {
@@ -206,116 +206,128 @@ export class DashboardComponent implements OnInit {
 		// });
   }
   getReferralApprovedList(element,entryType){
-    let appId = "1",loginId="",brokerbranchCode="";
+    if(element==null) this.quoteRAData=[];
+    let appId = "1",loginId="",brokerbranchCode="",bdmCode=null;
     if(this.userType!='Issuer'){
-      appId = "1"; 
-      //loginId = this.loginId;
-      loginId = this.brokerCode3;
+      appId = "1"; loginId = this.brokerCode3;
       brokerbranchCode = this.brokerbranchCode;
+      bdmCode=this.agencyCode;
     }
     else{
       appId = this.loginId;
-      loginId = this.brokerCode3;
-      brokerbranchCode = null;
+      loginId=this.brokerCode3;
+      brokerbranchCode = '';
     }
-    let type=null;
-    if(this.raSection=='quote'){type='Q'}
-    else type='E';
-    let ReqObj = {
-        "BrokerBranchCode": brokerbranchCode,
-        "BranchCode":this.branchCode,
-          "InsuranceId": this.insuranceId,
-          "LoginId":loginId,
-          "ApplicationId":appId,
-          "UserType":this.userType,
-          "SubUserType":sessionStorage.getItem('typeValue'),
-          "SourceType":"",
-          "Type":type,
-          "BdmCode": this.agencyCode,
-           "ProductId":this.productId,
-           "Limit":this.raLimit,
-           "Offset": this.offset
-   }
-    let urlLink = `${this.CommonApiUrl}api/referralapproved`;
-    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-      (data: any) => {
-        console.log(data);
-        if(data.Result){
-          this.referralHeaders =  [
-            { key: 'QuoteNo', display: 'Quote No' },
-            { key: 'ClientName', display: 'Customer Name' },
-            { key: 'AdminRemarks', display: 'Remarks' },
-            {
-              key: 'actions',
-              display: 'Action',
-              config: {
-                isEdit: true,
+    let entry = this.brokerListapproved.find(ele=>ele.Code==this.brokerCode3);
+    if(entry){
+      console.log("Entry Received",entry) 
+      if(entry.Type!='broker' && entry.Type!='Broker' && entry.Type!='Direct' && entry.Type!='direct' 
+      && entry.Type!='Agent' && entry.Type!='agent' && entry.Type!='bank' && entry.Type!='whatsapp'){
+        loginId='';
+        bdmCode=this.brokerCode3;
+      }
+      else{
+        bdmCode=null;
+      }
+      let type=null;
+      if(this.raSection=='quote'){type='Q'}
+      else type='E';
+      let ReqObj = {
+          "BrokerBranchCode": brokerbranchCode,
+          "BranchCode":this.branchCode,
+            "InsuranceId": this.insuranceId,
+            "LoginId":loginId,
+            "ApplicationId":appId,
+            "UserType":this.userType,
+            "SubUserType":sessionStorage.getItem('typeValue'),
+            "SourceType":"",
+            "BdmCode": bdmCode,
+            "ProductId":this.productId,
+            "Type":type,
+            "Limit":this.raLimit,
+            "Offset": this.offset
+      }
+      let urlLink = `${this.CommonApiUrl}api/referralapproved`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          console.log(data);
+          if(data.Result){
+            this.referralHeaders =  [
+              { key: 'QuoteNo', display: 'Quote No' },
+              { key: 'ClientName', display: 'Customer Name' },
+              { key: 'AdminRemarks', display: 'Remarks' },
+              {
+                key: 'actions',
+                display: 'Action',
+                config: {
+                  isEdit: true,
+                },
               },
-            },
-          ];
-          sessionStorage.removeItem('loadingType');
-          if(data.Result?.CustomerDetailsRes){
-            if(data.Result?.CustomerDetailsRes.length!=0){
-              this.raTotalRecords = data.Result?.TotalCount;
-              this.raTotalRecords = data.Result?.TotalCount;
-              this.raPageCount = 10;
-              if(entryType=='change'){
-                this.quoteRAPageNo = 1;
-                this.endtRApageNo = 1;
-                let startCount = 1, endCount = this.raPageCount;
-                startCount = endCount+1;
-                if(this.raSection=='quote'){
-                  let quoteRAData = data.Result?.CustomerDetailsRes;
-                  this.quoteRAData = data.Result?.CustomerDetailsRes;
-                  if(quoteRAData.length<=this.raPageCount){
-                    endCount = quoteRAData.length
+            ];
+            sessionStorage.removeItem('loadingType');
+            if(data.Result?.CustomerDetailsRes){
+              if(data.Result?.CustomerDetailsRes.length!=0){
+                this.raTotalRecords = data.Result?.TotalCount;
+                this.raTotalRecords = data.Result?.TotalCount;
+                this.raPageCount = 10;
+                if(entryType=='change'){
+                  this.quoteRAPageNo = 1;
+                  this.endtRApageNo = 1;
+                  let startCount = 1, endCount = this.raPageCount;
+                  startCount = endCount+1;
+                  if(this.raSection=='quote'){
+                    let quoteRAData = data.Result?.CustomerDetailsRes;
+                    this.quoteRAData = data.Result?.CustomerDetailsRes;
+                    if(quoteRAData.length<=this.raPageCount){
+                      endCount = quoteRAData.length
+                    }
+                    else endCount = this.raPageCount;
                   }
-                  else endCount = this.raPageCount;
+                  else{
+                    this.referralAppData = data.Result?.CustomerDetailsRes;
+                    let referralData = data.Result?.CustomerDetailsRes;
+                    if(referralData.length<=this.raPageCount){
+                      endCount = referralData.length
+                    }
+                    else endCount =this.raPageCount;
+                  }
+                  this.startRAIndex = startCount;this.endRAIndex=endCount;
+                  console.log("Final Data",this.referralAppData,this.quoteData,this.raSection)
                 }
                 else{
-                  this.referralAppData = data.Result?.CustomerDetailsRes;
-                  let referralData = data.Result?.CustomerDetailsRes;
-                  if(referralData.length<=this.raPageCount){
-                    endCount = referralData.length
+                  
+                  let startCount = element.startCount, endCount = element.endCount;
+                  this.raPageCount = element.n;
+                  startCount = endCount+1;
+                  if(this.raSection=='quote'){
+                    let quoteData = data.Result?.CustomerDetailsRes;
+                    this.quoteRAData = this.quoteRAData.concat(data.Result?.CustomerDetailsRes);
                   }
-                  else endCount =this.raPageCount;
+                  else{
+                    this.referralAppData = this.referralAppData.concat(data.Result?.CustomerDetailsRes);
+                    let referralData = data.Result?.CustomerDetailsRes;
+                  }
+                    if(this.raTotalRecords<=endCount+(element.n)){
+                      endCount = this.raTotalRecords
+                    }
+                    else endCount = endCount+(element.n);
+                  this.startRAIndex = startCount;this.endRAIndex=endCount;
+                  console.log("Final Received Data",this.quoteData,this.referralAppData,this.startRAIndex,this.endRAIndex)
                 }
-                this.startRAIndex = startCount;this.endRAIndex=endCount;
-                console.log("Final Data",this.referralAppData,this.quoteData,this.raSection)
+                
+                let datas = data.Result?.CustomerDetailsRes;
               }
               else{
-                
-                let startCount = element.startCount, endCount = element.endCount;
-                this.raPageCount = element.n;
-                startCount = endCount+1;
-                if(this.raSection=='quote'){
-                  let quoteData = data.Result?.CustomerDetailsRes;
-                  this.quoteRAData = this.quoteRAData.concat(data.Result?.CustomerDetailsRes);
-                }
-                else{
-                  this.referralAppData = this.referralAppData.concat(data.Result?.CustomerDetailsRes);
-                  let referralData = data.Result?.CustomerDetailsRes;
-                }
-                  if(this.raTotalRecords<=endCount+(element.n)){
-                    endCount = this.raTotalRecords
-                  }
-                  else endCount = endCount+(element.n);
-                this.startRAIndex = startCount;this.endRAIndex=endCount;
-                console.log("Final Received Data",this.quoteData,this.referralAppData,this.startRAIndex,this.endRAIndex)
-              }
-              
-              let datas = data.Result?.CustomerDetailsRes;
+                this.quoteRAData=[];this.referralAppData=[]}
             }
-            else{
-              this.quoteRAData=[];this.referralAppData=[]}
+              //this.quoteData = data?.Result;
+              this.referralApprovedSection = true;
+              if(this.referralApprovedSection && this.quoteSection && this.policySection) this.setChartValue();
           }
-            //this.quoteData = data?.Result;
-            this.referralApprovedSection = true;
-            if(this.referralApprovedSection && this.quoteSection && this.policySection) this.setChartValue();
-        }
-      },
-      (err) => { },
-    );
+        },
+        (err) => { },
+      );
+    }
   }
   onNextRAData(element){
     this.raLimit = String(Number(this.raLimit)+1);
@@ -374,19 +386,30 @@ export class DashboardComponent implements OnInit {
   );
   }
   getQuotesList(element,entryType){
-    let appId = "1",loginId="",brokerbranchCode="";
+     if(element==null) this.quoteData=[];
+    let appId = "1",loginId="",brokerbranchCode="",bdmCode=null;
     if(this.userType!='Issuer'){
-      appId = "1"; 
-      //loginId = this.loginId;
-      loginId=this.brokerCode;
+      appId = "1"; loginId = this.brokerCode;
       brokerbranchCode = this.brokerbranchCode;
+      bdmCode=this.agencyCode;
     }
     else{
       appId = this.loginId;
       loginId=this.brokerCode;
-      brokerbranchCode = null;
+      brokerbranchCode = '';
     }
-    let ReqObj = {
+    let entry = this.brokerList.find(ele=>ele.Code==this.brokerCode);
+    if(entry){
+      console.log("Entry Received",entry) 
+      if(entry.Type!='broker' && entry.Type!='Broker' && entry.Type!='Direct' && entry.Type!='direct' 
+      && entry.Type!='Agent' && entry.Type!='agent' && entry.Type!='bank' && entry.Type!='whatsapp'){
+        loginId='';
+        bdmCode=this.brokerCode;
+      }
+      else{
+        bdmCode=null;
+      }
+      let ReqObj = {
           "BrokerBranchCode": brokerbranchCode,
           "BranchCode":this.branchCode,
           "InsuranceId": this.insuranceId,
@@ -395,49 +418,158 @@ export class DashboardComponent implements OnInit {
           "UserType":this.userType,
           "SubUserType":sessionStorage.getItem('typeValue'),
           "SourceType":"",
-          "BdmCode": this.agencyCode,
+          "BdmCode": bdmCode,
            "ProductId":this.productId,
-           "Limit":this.quoteLimit,
-           "Offset":60
-   }
-    let urlLink = `${this.CommonApiUrl}api/existingquotedetails`;
-    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-      (data: any) => {
-        console.log(data);
-        if(data.Result){
-          if(this.productId=='5' || this.productId=='46'){
+          "Limit":this.quoteLimit,
+          "Offset":60
+      }
+      let urlLink = `${this.CommonApiUrl}api/existingquotedetails`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          console.log(data);
+          if(data.Result){
+            if(this.productId=='5' || this.productId=='46'){
 
 
+              this.quoteHeader =  [
+                { key: 'QuoteNo', display: 'Quote No' },
+                { key: 'RequestReferenceNo', display: 'Reference No' },
+                { key: 'ClientName', display: 'Customer Name' },
+                { key: 'PolicyStartDate', display: 'Start Date' },
+                // { key: 'PolicyEndDate', display: 'End Date' },
+                { key: 'Premium', display: 'Premium' },
+                {
+                  key: 'edit',
+                  display: 'Vehicle Details',
+                  sticky: false,
+                  config: {
+                    isCollapse: true,
+                    isCollapseName:'Vehicles'
+                  },
+                },
+                // {
+                //   key: 'actions',
+                //   display: 'Edit',
+                //   config: {
+                //     //isView:true,
+                //     isEdit: true,
+                //     // isReject: true,
+                //   },
+                // },
+                {
+                  key: 'mail',
+                  display: 'Action',
+                  config: {
+                    isNewConfig: true,
+                  },
+                },
+                // {
+                //   key: 'mail',
+                //   display: 'Mail / Followup / Sms',
+                //   config: {
+                //     isMail:true,
+                //     isFollowup: true,
+                //     isSms: true,
+                //   },
+                // },
+      
+              ];
+      
+      
+              this.innerColumnHeader =  [
+                { key: 'Vehicleid', display: 'VehicleID' },
+                { key: 'Registrationnumber', display: 'Registration No' },
+                { key: 'Chassisnumber', display: 'Chassis No' },
+                { key: 'PolicyTypeDesc', display: 'Policy Type' },
+                { key: 'Vehiclemake', display: 'Make' },
+                { key: 'Vehcilemodel', display: 'Model' },
+                { key: 'OverallPremiumFc', display: 'Premium' },
+                // {
+                //   key: 'actions',
+                //   display: 'Action',
+                //   config: {
+                //     isEdit: true,
+                //   },
+                // },
+      
+              ];
+          }
+          else if(this.productId=='4'){
             this.quoteHeader =  [
               { key: 'QuoteNo', display: 'Quote No' },
               { key: 'RequestReferenceNo', display: 'Reference No' },
               { key: 'ClientName', display: 'Customer Name' },
               { key: 'PolicyStartDate', display: 'Start Date' },
               // { key: 'PolicyEndDate', display: 'End Date' },
+              { key: 'Count', display: 'Passengers' },
               { key: 'Premium', display: 'Premium' },
               {
-                key: 'edit',
-                display: 'Vehicle Details',
-                sticky: false,
+                key: 'actions',
+                display: 'Edit',
                 config: {
-                  isCollapse: true,
-                  isCollapseName:'Vehicles'
+                  //isView:true,
+                  isEdit: true,
+                  //isReject: true,
                 },
               },
-              // {
-              //   key: 'actions',
-              //   display: 'Edit',
-              //   config: {
-              //     //isView:true,
-              //     isEdit: true,
-              //     // isReject: true,
-              //   },
-              // },
               {
                 key: 'mail',
                 display: 'Action',
                 config: {
-                  isNewConfig: true,
+                  ismailConfig: true,
+                },
+              },
+              // {
+              //   key: 'mail',
+              //   display: 'Mail / Followup / Sms',
+              //   config: {
+              //     isMail:true,
+              //     isFollowup: true,
+              //     isSms: true,
+              //   },
+              //},
+            ];
+            this.innerColumnHeader =  [
+              { key: 'Vehicleid', display: 'VehicleID' },
+              { key: 'Registrationnumber', display: 'Registration No' },
+              { key: 'Chassisnumber', display: 'Chassis No' },
+              { key: 'PolicyTypeDesc', display: 'Policy Type' },
+              { key: 'Vehiclemake', display: 'Make' },
+              { key: 'Vehcilemodel', display: 'Model' },
+              { key: 'OverallPremiumFc', display: 'Premium' },
+      
+              // {
+              //   key: 'actions',
+              //   display: 'Action',
+              //   config: {
+              //     isEdit: true,
+              //   },
+              // },
+      
+            ];
+          }
+          else if(this.productId=='3'){
+            this.quoteHeader =  [
+              { key: 'QuoteNo', display: 'Quote No' },
+              { key: 'RequestReferenceNo', display: 'Reference No' },
+              { key: 'ClientName', display: 'Customer Name' },
+              { key: 'PolicyStartDate', display: 'Policy Start Date' },
+              //{ key: 'PolicyEndDate', display: 'Policy End Date' },
+              /*{ key: 'Count', display: 'No.Of.Locations' },*/
+              {
+                key: 'actions',
+                display: 'Edit',
+                config: {
+                  //isView:true,
+                  isEdit: true,
+                  //isReject: true,
+                },
+              },
+              {
+                key: 'mail',
+                display: 'Action',
+                config: {
+                  ismailConfig: true,
                 },
               },
               // {
@@ -449,10 +581,7 @@ export class DashboardComponent implements OnInit {
               //     isSms: true,
               //   },
               // },
-    
             ];
-    
-    
             this.innerColumnHeader =  [
               { key: 'Vehicleid', display: 'VehicleID' },
               { key: 'Registrationnumber', display: 'Registration No' },
@@ -468,208 +597,103 @@ export class DashboardComponent implements OnInit {
               //     isEdit: true,
               //   },
               // },
-    
+      
             ];
-        }
-        else if(this.productId=='4'){
-          this.quoteHeader =  [
-            { key: 'QuoteNo', display: 'Quote No' },
-            { key: 'RequestReferenceNo', display: 'Reference No' },
-            { key: 'ClientName', display: 'Customer Name' },
-            { key: 'PolicyStartDate', display: 'Start Date' },
-            // { key: 'PolicyEndDate', display: 'End Date' },
-            { key: 'Count', display: 'Passengers' },
-            { key: 'Premium', display: 'Premium' },
-            {
-              key: 'actions',
-              display: 'Edit',
-              config: {
-                //isView:true,
-                isEdit: true,
-                //isReject: true,
+          }
+          else{
+            this.quoteHeader =  [
+              { key: 'QuoteNo', display: 'Quote No' },
+              { key: 'RequestReferenceNo', display: 'Reference No' },
+              { key: 'ClientName', display: 'Customer Name' },
+              { key: 'PolicyStartDate', display: 'Policy Start Date' },
+              { key: 'PolicyEndDate', display: 'Policy End Date' },
+              { key: 'Count', display: 'No.Of.Risk' },
+              {
+                key: 'actions',
+                display: 'Edit',
+                config: {
+                  //isView:true,
+                  isEdit: true,
+                  //isReject: true,
+                },
               },
-            },
-            {
-              key: 'mail',
-              display: 'Action',
-              config: {
-                ismailConfig: true,
+              {
+                key: 'mail',
+                display: 'Action',
+                config: {
+                  ismailConfig: true,
+                },
               },
-            },
-            // {
-            //   key: 'mail',
-            //   display: 'Mail / Followup / Sms',
-            //   config: {
-            //     isMail:true,
-            //     isFollowup: true,
-            //     isSms: true,
-            //   },
-            //},
-          ];
-          this.innerColumnHeader =  [
-            { key: 'Vehicleid', display: 'VehicleID' },
-            { key: 'Registrationnumber', display: 'Registration No' },
-            { key: 'Chassisnumber', display: 'Chassis No' },
-            { key: 'PolicyTypeDesc', display: 'Policy Type' },
-            { key: 'Vehiclemake', display: 'Make' },
-            { key: 'Vehcilemodel', display: 'Model' },
-            { key: 'OverallPremiumFc', display: 'Premium' },
-    
-            // {
-            //   key: 'actions',
-            //   display: 'Action',
-            //   config: {
-            //     isEdit: true,
-            //   },
-            // },
-    
-          ];
-        }
-        else if(this.productId=='3'){
-          this.quoteHeader =  [
-            { key: 'QuoteNo', display: 'Quote No' },
-            { key: 'RequestReferenceNo', display: 'Reference No' },
-            { key: 'ClientName', display: 'Customer Name' },
-            { key: 'PolicyStartDate', display: 'Policy Start Date' },
-            //{ key: 'PolicyEndDate', display: 'Policy End Date' },
-            /*{ key: 'Count', display: 'No.Of.Locations' },*/
-            {
-              key: 'actions',
-              display: 'Edit',
-              config: {
-                //isView:true,
-                isEdit: true,
-                //isReject: true,
-              },
-            },
-            {
-              key: 'mail',
-              display: 'Action',
-              config: {
-                ismailConfig: true,
-              },
-            },
-            // {
-            //   key: 'mail',
-            //   display: 'Mail / Followup / Sms',
-            //   config: {
-            //     isMail:true,
-            //     isFollowup: true,
-            //     isSms: true,
-            //   },
-            // },
-          ];
-          this.innerColumnHeader =  [
-            { key: 'Vehicleid', display: 'VehicleID' },
-            { key: 'Registrationnumber', display: 'Registration No' },
-            { key: 'Chassisnumber', display: 'Chassis No' },
-            { key: 'PolicyTypeDesc', display: 'Policy Type' },
-            { key: 'Vehiclemake', display: 'Make' },
-            { key: 'Vehcilemodel', display: 'Model' },
-            { key: 'OverallPremiumFc', display: 'Premium' },
-            // {
-            //   key: 'actions',
-            //   display: 'Action',
-            //   config: {
-            //     isEdit: true,
-            //   },
-            // },
-    
-          ];
-        }
-        else{
-          this.quoteHeader =  [
-            { key: 'QuoteNo', display: 'Quote No' },
-            { key: 'RequestReferenceNo', display: 'Reference No' },
-            { key: 'ClientName', display: 'Customer Name' },
-            { key: 'PolicyStartDate', display: 'Policy Start Date' },
-            { key: 'PolicyEndDate', display: 'Policy End Date' },
-            { key: 'Count', display: 'No.Of.Risk' },
-            {
-              key: 'actions',
-              display: 'Edit',
-              config: {
-                //isView:true,
-                isEdit: true,
-                //isReject: true,
-              },
-            },
-            {
-              key: 'mail',
-              display: 'Action',
-              config: {
-                ismailConfig: true,
-              },
-            },
-            // {
-            //   key: 'mail',
-            //   display: 'Mail / Followup / Sms',
-            //   config: {
-            //     isMail:true,
-            //     isFollowup: true,
-            //     isSms: true,
-            //   },
-            // },
-          ];
-          this.innerColumnHeader =  [
-            { key: 'Vehicleid', display: 'VehicleID' },
-            { key: 'Registrationnumber', display: 'Registration No' },
-            { key: 'Chassisnumber', display: 'Chassis No' },
-            { key: 'PolicyTypeDesc', display: 'Policy Type' },
-            { key: 'Vehiclemake', display: 'Make' },
-            { key: 'Vehcilemodel', display: 'Model' },
-            { key: 'OverallPremiumFc', display: 'Premium' },
-            // {
-            //   key: 'actions',
-            //   display: 'Action',
-            //   config: {
-            //     isEdit: true,
-            //   },
-            // },
-    
-          ];
-        }
-        if (data.Result?.CustomerDetails) {
-          if (data.Result?.CustomerDetails.length != 0) {
-            this.totalQuoteRecords = data.Result?.TotalCount;
-            this.quotePageCount = 10;
-            if (entryType == 'change') {
-              this.quotePageNo = 1;
-              let startCount = 1, endCount = this.quotePageCount;
-              startCount = endCount + 1;
-                let quoteData = data.Result?.CustomerDetails;
-                this.quoteData = data.Result?.CustomerDetails;
-                if (quoteData.length <= this.quotePageCount) {
-                  endCount = quoteData.length
+              // {
+              //   key: 'mail',
+              //   display: 'Mail / Followup / Sms',
+              //   config: {
+              //     isMail:true,
+              //     isFollowup: true,
+              //     isSms: true,
+              //   },
+              // },
+            ];
+            this.innerColumnHeader =  [
+              { key: 'Vehicleid', display: 'VehicleID' },
+              { key: 'Registrationnumber', display: 'Registration No' },
+              { key: 'Chassisnumber', display: 'Chassis No' },
+              { key: 'PolicyTypeDesc', display: 'Policy Type' },
+              { key: 'Vehiclemake', display: 'Make' },
+              { key: 'Vehcilemodel', display: 'Model' },
+              { key: 'OverallPremiumFc', display: 'Premium' },
+              // {
+              //   key: 'actions',
+              //   display: 'Action',
+              //   config: {
+              //     isEdit: true,
+              //   },
+              // },
+      
+            ];
+          }
+          if (data.Result?.CustomerDetails) {
+            if (data.Result?.CustomerDetails.length != 0) {
+              this.totalQuoteRecords = data.Result?.TotalCount;
+              this.quotePageCount = 10;
+              if (entryType == 'change') {
+                this.quotePageNo = 1;
+                let startCount = 1, endCount = this.quotePageCount;
+                startCount = endCount + 1;
+                  let quoteData = data.Result?.CustomerDetails;
+                  this.quoteData = data.Result?.CustomerDetails;
+                  if (quoteData.length <= this.quotePageCount) {
+                    endCount = quoteData.length
+                  }
+                  else endCount = this.quotePageCount;
+                
+                this.startQuoteIndex = startCount; this.endQuoteIndex = endCount;
+              }
+              else {
+
+                let startCount = element.startCount, endCount = element.endCount;
+                this.quotePageCount = element.n;
+                startCount = endCount + 1;
+                  let quoteData = data.Result?.CustomerDetails;
+                  this.quoteData = this.quoteData.concat(data.Result?.CustomerDetails);
+                if (this.totalQuoteRecords <= endCount + (element.n)) {
+                  endCount = this.totalQuoteRecords
                 }
-                else endCount = this.quotePageCount;
-              
-              this.startQuoteIndex = startCount; this.endQuoteIndex = endCount;
+                else endCount = endCount + (element.n);
+                this.startQuoteIndex = startCount; this.endQuoteIndex = endCount;
+              }
             }
             else {
-
-              let startCount = element.startCount, endCount = element.endCount;
-              this.quotePageCount = element.n;
-              startCount = endCount + 1;
-                let quoteData = data.Result?.CustomerDetails;
-                this.quoteData = this.quoteData.concat(data.Result?.CustomerDetails);
-              if (this.totalQuoteRecords <= endCount + (element.n)) {
-                endCount = this.totalQuoteRecords
-              }
-              else endCount = endCount + (element.n);
-              this.startQuoteIndex = startCount; this.endQuoteIndex = endCount;
+              this.quoteData = []; 
             }
           }
-          else {
-            this.quoteData = []; 
+              this.quoteSection = true;
+              if(this.referralApprovedSection && this.quoteSection && this.policySection) this.setChartValue();
           }
-        }
-            this.quoteSection = true;
-            if(this.referralApprovedSection && this.quoteSection && this.policySection) this.setChartValue();
-        }
-      },
-      (err) => { },
-    );
+        },
+        (err) => { },
+      );
+    }
   }
   onNextQuoteData(element){
     this.quoteLimit = String(Number(this.quoteLimit)+1);
@@ -730,32 +754,43 @@ export class DashboardComponent implements OnInit {
 
   }
   getPolicyList(element,entryType){
-    let appId = "1",loginId="",brokerbranchCode="";
+    if(element==null) this.policyData=[];
+    let appId = "1",loginId="",brokerbranchCode="",bdmCode=null;
     if(this.userType!='Issuer'){
-      appId = "1"; 
-      loginId = this.brokerCode1;
+      appId = "1"; loginId = this.brokerCode1;
       brokerbranchCode = this.brokerbranchCode;
+      bdmCode=this.agencyCode;
     }
     else{
       appId = this.loginId;
-      brokerbranchCode = null;
-      loginId = this.brokerCode1;
+      loginId=this.brokerCode1;
+      brokerbranchCode = '';
     }
-    let ReqObj = {
+    let entry = this.brokerListpolicy.find(ele=>ele.Code==this.brokerCode1);
+    if(entry){
+      console.log("Entry Received",entry) 
+      if(entry.Type!='broker' && entry.Type!='Broker' && entry.Type!='Direct' && entry.Type!='direct' 
+      && entry.Type!='Agent' && entry.Type!='agent' && entry.Type!='bank' && entry.Type!='whatsapp'){
+        loginId='';
+        bdmCode=this.brokerCode1;
+      }
+      else{
+        bdmCode=null;
+      }
+      let ReqObj = {
           "BrokerBranchCode": brokerbranchCode,
           "BranchCode":this.branchCode,
-          "InsuranceId": this.insuranceId,
-          "LoginId":loginId,
-          "ApplicationId":appId,
-          "UserType":this.userType,
-          "SubUserType":sessionStorage.getItem('typeValue'),
-          "SourceType":"",
-          "BdmCode":null,
-          //"BdmCode": this.agencyCode,
-           "ProductId":this.productId,
-          "Limit":this.policyLimit,
-          "Offset":this.offset
-   }
+            "InsuranceId": this.insuranceId,
+            "LoginId":loginId,
+            "ApplicationId":appId,
+            "UserType":this.userType,
+            "SubUserType":sessionStorage.getItem('typeValue'),
+            "SourceType":"",
+            "BdmCode": bdmCode,
+            "ProductId":this.productId,
+            "Limit":this.policyLimit,
+            "Offset": 60
+      }
     let urlLink = `${this.CommonApiUrl}api/portfolio/active`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
@@ -884,6 +919,7 @@ export class DashboardComponent implements OnInit {
       },
       (err) => { },
     );
+    }
   }
   onNextPolicyData(element){
     this.policyLimit = String(Number(this.policyLimit)+1);
@@ -898,169 +934,181 @@ export class DashboardComponent implements OnInit {
     this.getPolicyList(element,'direct');
   }
   getReferralPendingList(element,entryType){
-    let appId = "1",loginId="",brokerbranchCode="";
+    if(element==null) this.rpQuoteData=[];
+    let appId = "1",loginId="",brokerbranchCode="",bdmCode=null;
     if(this.userType!='Issuer'){
-      appId = "1";
-      // loginId = this.loginId;
-      loginId = this.brokerCode2;
+      appId = "1"; loginId = this.brokerCode2;
       brokerbranchCode = this.brokerbranchCode;
+      bdmCode=this.agencyCode;
     }
     else{
       appId = this.loginId;
-      loginId = this.brokerCode2;
-      brokerbranchCode = null;
+      loginId=this.brokerCode2;
+      brokerbranchCode = '';
     }
-    let type=null;
+    let entry = this.brokerListReferral.find(ele=>ele.Code==this.brokerCode2);
+    if(entry){
+      console.log("Entry Received",entry) 
+      if(entry.Type!='broker' && entry.Type!='Broker' && entry.Type!='Direct' && entry.Type!='direct' 
+      && entry.Type!='Agent' && entry.Type!='agent' && entry.Type!='bank' && entry.Type!='whatsapp'){
+        loginId='';
+        bdmCode=this.brokerCode2;
+      }
+      else{
+        bdmCode=null;
+      }
+      let type=null;
       if(this.rpSection=='quote'){type='Q'}
       else type='E';
-    let ReqObj = {
-      "BrokerBranchCode": brokerbranchCode,
-      "BranchCode":this.branchCode,
-      "InsuranceId": this.insuranceId,
-      "LoginId":loginId,
-      "ApplicationId":appId,
-      "UserType":this.userType,
-      "SubUserType":sessionStorage.getItem('typeValue'),
-      "SourceType":"",
-      "BdmCode": this.agencyCode,
-       "ProductId":this.productId,
-       "Type":type,
-       "Limit":this.rpLimit,
-       "Offset":this.offset
-    }
-    let urlLink = `${this.CommonApiUrl}api/referralpending`;
-    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-      (data: any) => {
-        console.log(data);
-        if(data.Result){
-          if(this.productId=='5' || this.productId=='46'){
-            this.referralHeader =  [
-              { key: 'RequestReferenceNo', display: 'Reference No' },
-              { key: 'ClientName', display: 'Customer Name' },
-              { key: 'PolicyStartDate', display: 'Policy Start Date' },
-              { key: 'PolicyEndDate', display: 'Policy End Date' },
-              
-              {
-                key: 'edit',
-                display: 'Vehicle Details',
-                sticky: false,
-                config: {
-                  isCollapse: true,
-                  isCollapseName:'Vehicles'
-                },
-              },
-              {
-                key: 'actions',
-                display: 'Action',
-                config: {
-                  isEdit: true,
-                },
-              },
-            ];
-            this.innerColumnHeader =  [
-              { key: 'Vehicleid', display: 'VehicleID' },
-              { key: 'Registrationnumber', display: 'Registration No' },
-              { key: 'Chassisnumber', display: 'Chassis No' },
-              { key: 'Vehiclemake', display: 'Make' },
-              { key: 'Vehcilemodel', display: 'Model' },
-              { key: 'PolicyTypeDesc', display: 'Policy Type' },
-              { key: 'ReferalRemarks', display: 'ReferralRemarks' },
-              { key: 'OverallPremiumFc', display: 'Premium' },
-              // {
-              //   key: 'actions',
-              //   display: 'Action',
-              //   config: {
-              //     isEdit: true,
-              //   },
-              // },
-              
-            ];
-          }
-          else{
-            this.referralHeader =  [
-              { key: 'RequestReferenceNo', display: 'Reference No' },
-              { key: 'ClientName', display: 'Customer Name' },
-              { key: 'PolicyStartDate', display: 'Policy Start Date' },
-              { key: 'PolicyEndDate', display: 'Policy End Date' },
-              { key: 'ReferalRemarks', display: 'ReferralRemarks' },
-              {
-                key: 'actions',
-                display: 'Action',
-                config: {
-                  isEdit: true,
-                },
-              },
-            ];
-            this.innerColumnHeader =  [
-              { key: 'Vehicleid', display: 'VehicleID' },
-              { key: 'Registrationnumber', display: 'Registration No' },
-              { key: 'Chassisnumber', display: 'Chassis No' },
-              { key: 'Vehiclemake', display: 'Make' },
-              { key: 'Vehcilemodel', display: 'Model' },
-              { key: 'PolicyTypeDesc', display: 'Policy Type' },
-              { key: 'ReferalRemarks', display: 'ReferralRemarks' },
-              { key: 'OverallPremiumFc', display: 'Premium' }
-            ];
-          }
-          sessionStorage.removeItem('loadingType');
-          if(data.Result?.CustomerDetailsRes){
-            if(data.Result?.CustomerDetailsRes.length!=0){
-              this.totalRPRecords = data.Result?.TotalCount;
-              this.rpPageCount = 10;
-              if(entryType=='change'){
-                this.rpQuotePageNo = 1;
-                this.rpEndtpageNo = 1;
-                let startCount = 1, endCount = this.rpPageCount;
-                startCount = endCount+1;
-                if(this.rpSection=='quote'){
-                  let quoteData = data.Result?.CustomerDetailsRes;
-                  this.rpQuoteData = data.Result?.CustomerDetailsRes;
-                  if(quoteData.length<=this.rpPageCount){
-                    endCount = quoteData.length
-                  }
-                  else endCount = this.rpPageCount;
-                }
-                else{
-                  this.referralPendingList = data.Result?.CustomerDetailsRes;
-                  let referralData = data.Result?.CustomerDetailsRes;
-                  if(referralData.length<=this.rpPageCount){
-                    endCount = referralData.length
-                  }
-                  else endCount =this.rpPageCount;
-                }
-                this.startRPIndex = startCount;this.endRPIndex=endCount;
-                console.log("Final Data",this.referralPendingList,this.quoteData,this.rpSection)
-              }
-              else{
+      let ReqObj = {
+          "BrokerBranchCode": brokerbranchCode,
+          "BranchCode":this.branchCode,
+            "InsuranceId": this.insuranceId,
+            "LoginId":loginId,
+            "ApplicationId":appId,
+            "UserType":this.userType,
+            "SubUserType":sessionStorage.getItem('typeValue'),
+            "SourceType":"",
+            "BdmCode": bdmCode,
+            "ProductId":this.productId,
+            "Type":type,
+            "Limit":this.rpLimit,
+            "Offset": this.offset
+      }
+      let urlLink = `${this.CommonApiUrl}api/referralpending`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          console.log(data);
+          if(data.Result){
+            if(this.productId=='5' || this.productId=='46'){
+              this.referralHeader =  [
+                { key: 'RequestReferenceNo', display: 'Reference No' },
+                { key: 'ClientName', display: 'Customer Name' },
+                { key: 'PolicyStartDate', display: 'Policy Start Date' },
+                { key: 'PolicyEndDate', display: 'Policy End Date' },
                 
-                let startCount = element.startCount, endCount = element.endCount;
-                this.rpPageCount = element.n;
-                startCount = endCount+1;
-                if(this.rpSection=='quote'){
-                  let quoteData = data.Result?.CustomerDetailsRes;
-                  this.rpQuoteData = this.rpQuoteData.concat(data.Result?.CustomerDetailsRes);
-                }
-                else{
-                  this.referralPendingList = this.referralPendingList.concat(data.Result?.CustomerDetailsRes);
-                  let referralData = data.Result?.CustomerDetailsRes;
-                }
-                  if(this.totalRPRecords<=endCount+(element.n)){
-                    endCount = this.totalRPRecords
-                  }
-                  else endCount = endCount+(element.n);
-                this.startRPIndex = startCount;this.endRPIndex=endCount;
-              }
-              
-              let datas = data.Result?.CustomerDetailsRes;
+                {
+                  key: 'edit',
+                  display: 'Vehicle Details',
+                  sticky: false,
+                  config: {
+                    isCollapse: true,
+                    isCollapseName:'Vehicles'
+                  },
+                },
+                {
+                  key: 'actions',
+                  display: 'Action',
+                  config: {
+                    isEdit: true,
+                  },
+                },
+              ];
+              this.innerColumnHeader =  [
+                { key: 'Vehicleid', display: 'VehicleID' },
+                { key: 'Registrationnumber', display: 'Registration No' },
+                { key: 'Chassisnumber', display: 'Chassis No' },
+                { key: 'Vehiclemake', display: 'Make' },
+                { key: 'Vehcilemodel', display: 'Model' },
+                { key: 'PolicyTypeDesc', display: 'Policy Type' },
+                { key: 'ReferalRemarks', display: 'ReferralRemarks' },
+                { key: 'OverallPremiumFc', display: 'Premium' },
+                // {
+                //   key: 'actions',
+                //   display: 'Action',
+                //   config: {
+                //     isEdit: true,
+                //   },
+                // },
+                
+              ];
             }
             else{
-              this.rpQuoteData=[];this.referralPendingList=[]}
+              this.referralHeader =  [
+                { key: 'RequestReferenceNo', display: 'Reference No' },
+                { key: 'ClientName', display: 'Customer Name' },
+                { key: 'PolicyStartDate', display: 'Policy Start Date' },
+                { key: 'PolicyEndDate', display: 'Policy End Date' },
+                { key: 'ReferalRemarks', display: 'ReferralRemarks' },
+                {
+                  key: 'actions',
+                  display: 'Action',
+                  config: {
+                    isEdit: true,
+                  },
+                },
+              ];
+              this.innerColumnHeader =  [
+                { key: 'Vehicleid', display: 'VehicleID' },
+                { key: 'Registrationnumber', display: 'Registration No' },
+                { key: 'Chassisnumber', display: 'Chassis No' },
+                { key: 'Vehiclemake', display: 'Make' },
+                { key: 'Vehcilemodel', display: 'Model' },
+                { key: 'PolicyTypeDesc', display: 'Policy Type' },
+                { key: 'ReferalRemarks', display: 'ReferralRemarks' },
+                { key: 'OverallPremiumFc', display: 'Premium' }
+              ];
+            }
+            sessionStorage.removeItem('loadingType');
+            if(data.Result?.CustomerDetailsRes){
+              if(data.Result?.CustomerDetailsRes.length!=0){
+                this.totalRPRecords = data.Result?.TotalCount;
+                this.rpPageCount = 10;
+                if(entryType=='change'){
+                  this.rpQuotePageNo = 1;
+                  this.rpEndtpageNo = 1;
+                  let startCount = 1, endCount = this.rpPageCount;
+                  startCount = endCount+1;
+                  if(this.rpSection=='quote'){
+                    let quoteData = data.Result?.CustomerDetailsRes;
+                    this.rpQuoteData = data.Result?.CustomerDetailsRes;
+                    if(quoteData.length<=this.rpPageCount){
+                      endCount = quoteData.length
+                    }
+                    else endCount = this.rpPageCount;
+                  }
+                  else{
+                    this.referralPendingList = data.Result?.CustomerDetailsRes;
+                    let referralData = data.Result?.CustomerDetailsRes;
+                    if(referralData.length<=this.rpPageCount){
+                      endCount = referralData.length
+                    }
+                    else endCount =this.rpPageCount;
+                  }
+                  this.startRPIndex = startCount;this.endRPIndex=endCount;
+                  console.log("Final Data",this.referralPendingList,this.quoteData,this.rpSection)
+                }
+                else{
+                  
+                  let startCount = element.startCount, endCount = element.endCount;
+                  this.rpPageCount = element.n;
+                  startCount = endCount+1;
+                  if(this.rpSection=='quote'){
+                    let quoteData = data.Result?.CustomerDetailsRes;
+                    this.rpQuoteData = this.rpQuoteData.concat(data.Result?.CustomerDetailsRes);
+                  }
+                  else{
+                    this.referralPendingList = this.referralPendingList.concat(data.Result?.CustomerDetailsRes);
+                    let referralData = data.Result?.CustomerDetailsRes;
+                  }
+                    if(this.totalRPRecords<=endCount+(element.n)){
+                      endCount = this.totalRPRecords
+                    }
+                    else endCount = endCount+(element.n);
+                  this.startRPIndex = startCount;this.endRPIndex=endCount;
+                }
+                
+                let datas = data.Result?.CustomerDetailsRes;
+              }
+              else{
+                this.rpQuoteData=[];this.referralPendingList=[]}
+            }
+                //this.quoteData = data?.Result;
           }
-              //this.quoteData = data?.Result;
-        }
-      },
-      (err) => { },
-    );
+        },
+        (err) => { },
+      );
+    }
   }
   onNextRPData(element){
     this.rpLimit = String(Number(this.rpLimit)+1);
