@@ -253,6 +253,15 @@
             <div class="card-body">
               <ng-container *ngIf="tabSection=='quote'">
                 <div class="row">
+                  <div class="col-md-4 col-lg-4 col-xl-4">
+                      <div class="input-control-container">
+                          <label class="input-form-label">Broker Name</label><span class="text-danger">*</span>
+                          <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerCode"  [items]="brokerList" bindValue="Code" bindLabel="CodeDesc" (change)="getQuotesList(null,'change')">
+                          </ng-select>
+                      </div>
+                  </div>
+              </div>
+                <div class="row">
                   <div class="col-12 col-md-12 col-lg-12">
                     <ng-container *ngIf="quoteData.length!=0">
                       <app-commodity-table [cols]="quoteHeader" [data]="quoteData" [start]="startQuoteIndex" [pageCount]="quotePageCount" [end]="endQuoteIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousQuoteData($event)" (onLoadNextData)="onNextQuoteData($event)" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onAdd)="onInnerData($event)" (onView)="onViews($event)" (onReject)="onRejects($event,mymodal)" (onMail)="onMail($event,mymail)"
@@ -268,6 +277,15 @@
               </div>
               </ng-container>
               <ng-container *ngIf="tabSection=='policy'">
+                <div class="row">
+                  <div class="col-md-4 col-lg-4 col-xl-4">
+                      <div class="input-control-container">
+                          <label class="input-form-label">Broker Name</label><span class="text-danger">*</span>
+                          <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerCode1"  [items]="brokerListpolicy" bindValue="Code" bindLabel="CodeDesc" (change)="getPolicyList(null,'change')">
+                          </ng-select>
+                      </div>
+                  </div>
+              </div>
                 <div class="row mt-1">
                     <div class="col-12 col-md-12 col-lg-12">
                       <ng-container *ngIf="policyData.length!=0">
@@ -299,6 +317,13 @@
               </ng-container>
               <ng-container *ngIf="tabSection=='referral'">
                 <div class="row">
+                  <div class="col-md-4 col-lg-4 col-xl-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Broker Name</label><span class="text-danger">*</span>
+                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerCode2"  [items]="brokerListReferral" bindValue="Code" bindLabel="CodeDesc" (change)="getReferralPendingList(null,'change')">
+                        </ng-select>
+                    </div>
+                </div>
                   <div class="col-md-4 col-lg-4 col-xl-4 offset-4">
                       <button class="button-tab" role="button" style="cursor: not-allowed;" *ngIf="rpSection=='quote'">Quotes</button>&nbsp;
                       <button type="button" class="button-tab-alt" (click)="setRPSection('quote')"  *ngIf="rpSection!='quote'">Quotes</button>&nbsp;
@@ -334,6 +359,13 @@
               </div>
               </ng-container>
               <ng-container *ngIf="tabSection=='approved'">
+                <div class="col-md-4 col-lg-4 col-xl-4">
+                  <div class="input-control-container">
+                      <label class="input-form-label">Broker Name</label><span class="text-danger">*</span>
+                      <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerCode3"  [items]="brokerListapproved" bindValue="Code" bindLabel="CodeDesc" (change)="getReferralApprovedList(null,'change')">
+                      </ng-select>
+                  </div>
+              </div>
                 <div class="row">
                   <div class="col-md-4 col-lg-4 col-xl-4 offset-4">
                       <button class="button-tab" role="button" style="cursor: not-allowed;" *ngIf="raSection=='quote'">Quotes</button>&nbsp;

@@ -90,6 +90,14 @@ export class DashboardComponent implements OnInit {
   rpQuoteData: any;
   startRPIndex: number;
   endRPIndex: number;
+  brokerCode:any='';
+  brokerCode1:any='';
+  brokerList:any[]=[];
+  brokerListpolicy:any[]=[];
+  brokerCode2:any='';
+  brokerListReferral:any[]=[];
+  brokerListapproved:any[]=[];
+  brokerCode3:any='';
   constructor(private router:Router,private sharedService: SharedService){
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -99,18 +107,26 @@ export class DashboardComponent implements OnInit {
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails?.Result?.UserType;
     this.insuranceId = this.userDetails.Result.InsuranceId;
+    if(this.userType!='Issuer')this.brokerCode = this.loginId;
+    if(this.userType!='Issuer')this.brokerCode1 = this.loginId;
+    if(this.userType!='Issuer')this.brokerCode2 = this.loginId;
+    if(this.userType!='Issuer')this.brokerCode3 = this.loginId;
     sessionStorage.removeItem('customerReferenceNo');
     sessionStorage.removeItem('endorsePolicyNo');
     sessionStorage.removeItem('endorseTypeId');
     this.getReferralApprovedList(null,'change');
     this.getCustomerList();
-    this.getQuotesList(null,'change');
-    this.getPolicyList(null,'change');
+    
+    //this.getQuotesList(null,'change');
+    // this.getPolicyList(null,'change');
     this.getLapsedList();
-    this.getReferralPendingList(null,'change');
+    //this.getReferralPendingList(null,'change');
   }
   ngOnInit() {
-    
+    this.getBrokerList();
+    this.getPolicyBrokerList();
+    this.getBrokerListrp();
+    this.getBrokerListapproved();
     // this._chart = {
     //   chart: {
     //     plotBackgroundColor: null,
@@ -192,11 +208,14 @@ export class DashboardComponent implements OnInit {
   getReferralApprovedList(element,entryType){
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
-      appId = "1"; loginId = this.loginId;
+      appId = "1"; 
+      //loginId = this.loginId;
+      loginId = this.brokerCode3;
       brokerbranchCode = this.brokerbranchCode;
     }
     else{
       appId = this.loginId;
+      loginId = this.brokerCode3;
       brokerbranchCode = null;
     }
     let type=null;
@@ -357,11 +376,14 @@ export class DashboardComponent implements OnInit {
   getQuotesList(element,entryType){
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
-      appId = "1"; loginId = this.loginId;
+      appId = "1"; 
+      //loginId = this.loginId;
+      loginId=this.branchCode;
       brokerbranchCode = this.brokerbranchCode;
     }
     else{
       appId = this.loginId;
+      loginId=this.branchCode;
       brokerbranchCode = null;
     }
     let ReqObj = {
@@ -710,12 +732,14 @@ export class DashboardComponent implements OnInit {
   getPolicyList(element,entryType){
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
-      appId = "1"; loginId = this.loginId;
+      appId = "1"; 
+      loginId = this.brokerCode1;
       brokerbranchCode = this.brokerbranchCode;
     }
     else{
       appId = this.loginId;
       brokerbranchCode = null;
+      loginId = this.brokerCode1;
     }
     let ReqObj = {
           "BrokerBranchCode": brokerbranchCode,
@@ -875,11 +899,14 @@ export class DashboardComponent implements OnInit {
   getReferralPendingList(element,entryType){
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
-      appId = "1"; loginId = this.loginId;
+      appId = "1";
+      // loginId = this.loginId;
+      loginId = this.brokerCode2;
       brokerbranchCode = this.brokerbranchCode;
     }
     else{
       appId = this.loginId;
+      loginId = this.brokerCode2;
       brokerbranchCode = null;
     }
     let type=null;
@@ -1052,7 +1079,10 @@ export class DashboardComponent implements OnInit {
     }
     this.getReferralPendingList(element,'direct');
   }
-  setRPSection(val){this.rpSection = val;this.getReferralPendingList(null,'change')}
+  setRPSection(val){this.rpSection = val;
+    //this.getBrokerListrp();
+    this.getReferralPendingList(null,'change')
+  }
   getLapsedList(){
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
@@ -1272,6 +1302,185 @@ export class DashboardComponent implements OnInit {
   public updateOptions() {
     this.salesChart.data.datasets[0].data = this.data;
     this.salesChart.update();
+  }
+  getBrokerList(){
+    let appId = "1",loginId="",brokerbranchCode="";
+    if(this.userType!='Issuer'){
+      appId = "1"; loginId = this.brokerCode;
+      brokerbranchCode = this.brokerbranchCode;
+    }
+    else{
+      appId = this.loginId;
+      loginId="";
+      brokerbranchCode = '';
+    }
+    let ReqObj = {
+      "ProductId": this.productId,
+      "InsuranceId": this.insuranceId,
+      "LoginId": loginId,
+      "ApplicationId":appId,
+      "UserType":this.userType,
+      "BranchCode": this.branchCode
+    }
+    let urlLink = `${this.CommonApiUrl}api/brokeruserdropdown`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+          let defaultObj = []
+          this.brokerList = defaultObj.concat(data.Result);
+          if(this.brokerList.length==0){this.brokerCode = ''; this.brokerList = []}
+          else this.brokerCode = this.loginId;
+          if(this.brokerCode!=null && this.brokerCode!=''){
+            if(!this.brokerList.some(ele=>ele.Code==this.brokerCode)) this.brokerCode = this.brokerList[0].Code;
+            this.getQuotesList(null,'change');
+          }
+          else{
+            this.brokerCode = this.brokerList[0].Code;
+            this.getQuotesList(null,'change');
+          }
+        }
+        
+      },
+      (err) => { },
+    );
+
+  }
+  getPolicyBrokerList(){
+    let appId = "1",loginId="",brokerbranchCode="";
+    if(this.userType!='Issuer'){
+      appId = "1"; 
+      loginId = this.brokerCode1;
+      brokerbranchCode = this.brokerbranchCode;
+    }
+    else{
+      appId = this.loginId;
+      loginId=this.brokerCode1;
+      brokerbranchCode = '';
+    }
+    let ReqObj = {
+      "ProductId": this.productId,
+      "InsuranceId": this.insuranceId,
+      "LoginId": loginId,
+      "ApplicationId":appId,
+      "UserType":this.userType,
+      "BranchCode": this.branchCode,
+      "Status": "Y",
+    }
+    let urlLink = `${this.CommonApiUrl}api/portfoliobrokerdropdown`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+          let defaultObj = [];
+          this.brokerListpolicy = defaultObj.concat(data.Result);
+          if(this.brokerListpolicy.length==0){this.brokerCode1 = ''; this.brokerListpolicy = []}
+          else this.brokerCode1= this.loginId;
+          if(this.brokerCode1!=null && this.brokerCode1!=''){
+            if(!this.brokerListpolicy.some(ele=>ele.Code==this.brokerCode1)) this.brokerCode1 = this.brokerListpolicy[0].Code;
+            this.getPolicyList(null,'change');
+          }
+          else{
+            this.brokerCode = this.brokerList[0].Code;
+            this.getPolicyList(null,'change');
+          }
+        }
+        
+      },
+      (err) => { },
+    );
+
+  }
+
+  getBrokerListrp(){
+    let type=null;
+    if(this.rpSection=='quote'){type='Q'}
+    else type='E';
+    let appId = "1",loginId="",brokerbranchCode="";
+    if(this.userType!='Issuer'){
+      appId = "1"; loginId = this.brokerCode2;
+      brokerbranchCode = this.brokerbranchCode;
+    }
+    else{
+      appId = this.loginId;
+      loginId="";
+      brokerbranchCode = '';
+    }
+    let ReqObj = {
+      "ProductId": this.productId,
+      "InsuranceId": this.insuranceId,
+      "LoginId": loginId,
+      "ApplicationId":appId,
+      "UserType":this.userType,
+      "BranchCode": this.branchCode,
+      "Type": type
+    }
+  let urlLink = `${this.CommonApiUrl}api/referralpendingsdropdown`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      if(data.Result){
+        let defaultObj = []
+          this.brokerListReferral = defaultObj.concat(data.Result);
+          if(this.brokerListReferral.length==0){this.brokerCode2 = ''; this.brokerListReferral = []}
+          else this.brokerCode2 = this.loginId;
+          if(this.brokerCode2!=null && this.brokerCode2!=''){
+            if(!this.brokerListReferral.some(ele=>ele.Code==this.brokerCode2)) this.brokerCode2 = this.brokerListReferral[0].Code;
+            this.getReferralPendingList(null,'change');
+          }
+          else{
+            this.brokerCode2 = this.brokerListReferral[0].Code;
+            this.getReferralPendingList(null,'change');
+          }
+      }
+      
+    },
+    (err) => { },
+  );
+
+  }
+  getBrokerListapproved(){
+    let type=null;
+    if(this.raSection=='quote'){type='Q'}
+    else type='E';
+    let appId = "1",loginId="",brokerbranchCode="";
+    if(this.userType!='Issuer'){
+      appId = "1"; loginId = this.brokerCode3;
+      brokerbranchCode = this.brokerbranchCode;
+    }
+    else{
+      appId = this.loginId;
+      loginId="";
+      brokerbranchCode = '';
+    }
+    let ReqObj = {
+      "ProductId": this.productId,
+      "InsuranceId": this.insuranceId,
+      "LoginId": loginId,
+      "ApplicationId":appId,
+      "UserType":this.userType,
+      "BranchCode": this.branchCode,
+      "Type": type
+    }
+  let urlLink = `${this.CommonApiUrl}api/referralapproveddropdown`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      if(data.Result){
+        let defaultObj = []
+          this.brokerListapproved = defaultObj.concat(data.Result);
+          if(this.brokerListapproved.length==0){this.brokerCode3 = ''; this.brokerListapproved = []}
+          else this.brokerCode3 = this.loginId;
+          if(this.brokerCode3!=null && this.brokerCode3!=''){
+            if(!this.brokerListapproved.some(ele=>ele.Code==this.brokerCode3)) this.brokerCode3 = this.brokerListapproved[0].Code;
+            this.getReferralApprovedList(null,'change');
+          }
+          else{
+            this.brokerCode3 = this.brokerListapproved[0].Code;
+            this.getReferralApprovedList(null,'change');
+          }
+      }
+      
+    },
+    (err) => { },
+  );
+
   }
 
 }

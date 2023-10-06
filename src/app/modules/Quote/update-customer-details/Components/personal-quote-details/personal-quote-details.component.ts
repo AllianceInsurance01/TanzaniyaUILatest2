@@ -5828,7 +5828,10 @@ onCalculate(buildDetails,type,formType) {
             console.log("Indexxx", i, buildDetails.length,formType,type)
             if (i == buildDetails.length) {
               if(formType=='Group'){
-                if(type=='save'){this.selectedIndex +=1;this.myStepper.next();}
+                if(type=='save'){this.selectedIndex +=1;
+                  this.onNextProceed();
+                  //this.myStepper.next();
+                }
                 else{this.onFinalProceed();}
               }
               else if(type!='save'){ this.onFinalProceed();}

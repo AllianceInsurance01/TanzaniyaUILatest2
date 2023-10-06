@@ -328,6 +328,9 @@ export class TravelPassengerDetailsComponent implements OnInit {
     );
   }
   getRelationshipList(type){
+    if(type=='change'){
+      this.RelationId = '';
+    }
     let ReqObj ={
       "InsuranceId":this.insuranceId,
       "BranchCode": this.branchCode,
@@ -339,7 +342,15 @@ export class TravelPassengerDetailsComponent implements OnInit {
         if(data.Result){
           let defaultObj = [{'Code':null,"CodeDesc":"- - Select - -"}]
           this.relationShipList = defaultObj.concat(data.Result);
-          if(this.historyRecordsList.length==0 && type=='change') this.RelationId = '9';
+          if(this.historyRecordsList.length==0 && type=='change'){
+            if(this.GenderId == 'M'){
+              this.RelationId = '9';
+            }
+            else if(this.GenderId == 'F'){
+              this.RelationId = '10';
+            }
+          } 
+          
           // this.PassengerDetails[index]['relationship'] = data.Result;
           // if(index==0 &&  this.PassengerDetails[index].RelationId == null) this.PassengerDetails[index].RelationId = "9";
         }
