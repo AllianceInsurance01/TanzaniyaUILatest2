@@ -27,7 +27,7 @@ export class AllRisk{
                 fieldGroupClassName: 'row',
                 fieldGroup: [
                   {
-                    className: 'offset-3 col-6',
+                    className: 'offset-2 col-8',
                     type: 'commaSeparator',
                     key: 'AllriskSumInsured',
   

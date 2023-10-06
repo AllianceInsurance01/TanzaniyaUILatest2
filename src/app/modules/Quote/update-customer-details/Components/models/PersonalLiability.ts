@@ -30,7 +30,7 @@ export class PersonalLiability{
                     type: 'select',
                     key: 'LiabilityOccupationId',
                     defaultValue: '',
-                    className: 'offset-1 col-5',
+                    className: 'offset-1 col-10',
                     props: {
                       label: `Occupation`,
                       disabled: this.checkDisable('OccupationType'),
@@ -50,7 +50,7 @@ export class PersonalLiability{
                   },
                   {
                     type: 'commaSeparator',
-                    className: 'col-5',
+                    className: 'offset-1 col-10',
                     key: 'EmpLiabilitySi',
                     defaultValue: '0',
                     props: {

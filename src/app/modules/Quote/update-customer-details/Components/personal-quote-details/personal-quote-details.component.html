@@ -134,23 +134,38 @@
                             </div>    
                             </mat-tab>
                         </mat-tab-group> -->
-                        <ng-container>
-                            <div class="card" *ngFor="let step of fields[0].fieldGroup; let index = index; let last = last">
-                                <div style="text-decoration: underline;" (click)="selectedIndex=index">
-                                    <div (click)="selectedIndex=index" style="font-size:20px;text-align:center; font-family:'Inter' !important;color:#002b5c" class="mt-2"><i><b>{{ step.props.label }}</b></i></div>
-                                </div>
-                                <div class="card-body">
-                                    <form [formGroup]="form">
-                                        <formly-form [form]="form" [fields]="step.fieldGroup" [model]="productItem"></formly-form>
-                                  </form>
-                                </div>
+                            <div class="row">
+                                <ng-container *ngFor="let step of fields[0].fieldGroup; let index = index; let last = last">
+                                    <ng-container *ngIf="step.props.label=='Building Risk'">
+                                        <div class="card col-md-12 col-lg-12 col-xl-12">
+                                            <div style="text-decoration: underline;" (click)="selectedIndex=index">
+                                                <div (click)="selectedIndex=index" style="font-size:20px;text-align:center; font-family:'Inter' !important;color:#002b5c" class="mt-2"><i><b>{{ step.props.label }}</b></i></div>
+                                            </div>
+                                            <div class="card-body">
+                                                <form [formGroup]="form">
+                                                    <formly-form [form]="form" [fields]="step.fieldGroup" [model]="productItem"></formly-form>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="step.props.label!='Building Risk'">
+                                        <div class="card col-md-6 col-lg-6 col-xl-6">
+                                            <div style="text-decoration: underline;" (click)="selectedIndex=index">
+                                                <div (click)="selectedIndex=index" style="font-size:20px;text-align:center; font-family:'Inter' !important;color:#002b5c" class="mt-2"><i><b>{{ step.props.label }}</b></i></div>
+                                            </div>
+                                            <div class="card-body">
+                                                <form [formGroup]="form">
+                                                    <formly-form [form]="form" [fields]="step.fieldGroup" [model]="productItem"></formly-form>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
                             </div>
-                            <div class="text-center">
-                                <button type="button" class="btn btn-danger" routerLink="/Home/existingQuotes/customerSelection/customerDetails/risk-selection"><<&nbsp;Back</button>&nbsp;
-                                <button class="btn btn-primary" (click)="onNextProceed()">Submit</button>
-                            </div>
-                          
-                        </ng-container>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-danger" routerLink="/Home/existingQuotes/customerSelection/customerDetails/risk-selection"><<&nbsp;Back</button>&nbsp;
+                            <button class="btn btn-primary" (click)="onNextProceed()">Submit</button>
+                        </div>
                         <!-- <mat-vertical-stepper fxLayout="column" #myStepper>
                             <ng-container *ngFor="let step of fields[0].fieldGroup; let index = index; let last = last">
                                 <ng-template matStepperIcon="edit" let-index="index"><div (click)="selectedIndex=index">{{index + 1}}</div></ng-template>
