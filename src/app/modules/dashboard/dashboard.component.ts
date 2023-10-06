@@ -87,7 +87,7 @@ export class DashboardComponent implements OnInit {
   rpPageCount: number;
   rpQuotePageNo: number;
   rpEndtpageNo: number;
-  rpQuoteData: any;
+  rpQuoteData: any[]=[];
   startRPIndex: number;
   endRPIndex: number;
   brokerCode:any='';
@@ -378,12 +378,12 @@ export class DashboardComponent implements OnInit {
     if(this.userType!='Issuer'){
       appId = "1"; 
       //loginId = this.loginId;
-      loginId=this.branchCode;
+      loginId=this.brokerCode;
       brokerbranchCode = this.brokerbranchCode;
     }
     else{
       appId = this.loginId;
-      loginId=this.branchCode;
+      loginId=this.brokerCode;
       brokerbranchCode = null;
     }
     let ReqObj = {
@@ -750,7 +750,8 @@ export class DashboardComponent implements OnInit {
           "UserType":this.userType,
           "SubUserType":sessionStorage.getItem('typeValue'),
           "SourceType":"",
-          "BdmCode": this.agencyCode,
+          "BdmCode":null,
+          //"BdmCode": this.agencyCode,
            "ProductId":this.productId,
           "Limit":this.policyLimit,
           "Offset":this.offset
@@ -1416,10 +1417,10 @@ export class DashboardComponent implements OnInit {
   let urlLink = `${this.CommonApiUrl}api/referralpendingsdropdown`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
-      if(data.Result){
+      if(data?.Result){
         let defaultObj = []
           this.brokerListReferral = defaultObj.concat(data.Result);
-          if(this.brokerListReferral.length==0){this.brokerCode2 = ''; this.brokerListReferral = []}
+          if(this.brokerListReferral.length==0){this.brokerCode2 = ''; this.brokerListReferral = [];this.rpQuoteData=[];}
           else this.brokerCode2 = this.loginId;
           if(this.brokerCode2!=null && this.brokerCode2!=''){
             if(!this.brokerListReferral.some(ele=>ele.Code==this.brokerCode2)) this.brokerCode2 = this.brokerListReferral[0].Code;
