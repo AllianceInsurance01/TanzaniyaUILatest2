@@ -198,15 +198,17 @@ export class ReferralApprovedComponent implements OnInit {
       if(data.Result){
         let defaultObj = []
           this.brokerList = defaultObj.concat(data.Result);
-          if(this.brokerList.length==0){this.brokerCode = ''; this.brokerList = []}
-          else this.brokerCode = this.loginId;
-          if(this.brokerCode!=null && this.brokerCode!=''){
-            if(!this.brokerList.some(ele=>ele.Code==this.brokerCode)) this.brokerCode = this.brokerList[0].Code;
-            this.getExistingQuotes(null,'change')
-          }
+          if(this.brokerList.length==0){this.brokerCode = ''; this.brokerList = [];this.quoteData=[];}
           else{
-            this.brokerCode = this.brokerList[0].Code;
-            this.getExistingQuotes(null,'change')
+            this.brokerCode = this.loginId;
+            if(this.brokerCode!=null && this.brokerCode!=''){
+              if(!this.brokerList.some(ele=>ele.Code==this.brokerCode)) this.brokerCode = this.brokerList[0].Code;
+              this.getExistingQuotes(null,'change')
+            }
+            else{
+              this.brokerCode = this.brokerList[0].Code;
+              this.getExistingQuotes(null,'change')
+            }
           }
       }
       
@@ -345,7 +347,7 @@ export class ReferralApprovedComponent implements OnInit {
     }
     this.getExistingQuotes(element,'direct');
   }
-  setSection(val){this.section = val;this.getExistingQuotes(null,'change')}
+  setSection(val){this.section = val;this.getBrokerList()}
   onInnerData(rowData){
     let ReqObj = {
         "RequestReferenceNo": rowData.RequestReferenceNo

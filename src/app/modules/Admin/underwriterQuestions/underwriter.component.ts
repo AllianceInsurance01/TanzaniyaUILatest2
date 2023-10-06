@@ -330,7 +330,7 @@ export class UnderWriterComponent implements OnInit {
     }
     this.getUserProductList(element,'direct');
   }
-  setSection(val){this.section = val;this.getUserProductList(null,'change')}
+  setSection(val){this.section = val;this.getProductList()}
 
 //   onConfigure(event:any){
 //     sessionStorage.setItem('productuser',this.insuranceId);

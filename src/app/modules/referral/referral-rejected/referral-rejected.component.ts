@@ -366,7 +366,7 @@ export class ReferralRejectedComponent implements OnInit {
     }
     this.getExistingQuotes(element,'direct');
   }
-  setSection(val){this.section = val;this.getExistingQuotes(null,'change')}
+  setSection(val){this.section = val;this.getBrokerList()}
   onInnerData(rowData){
     let ReqObj = {
         "RequestReferenceNo": rowData.RequestReferenceNo
