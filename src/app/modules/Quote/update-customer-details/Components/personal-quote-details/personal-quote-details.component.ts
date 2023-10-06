@@ -796,7 +796,6 @@ export class PersonalQuoteDetailsComponent implements OnInit {
           if(this.customerDetails?.PolicyHolderType){
             this.productItem.OwnerCategory = this.customerDetails.PolicyHolderType;
           } 
-          this.getMakeList();
           this.getFuelTypeList();
           this.getYearList();
           this.getColorsList();
@@ -3313,43 +3312,48 @@ onAddVehicle(value) {
 
 }
 getMakeList(){
-  let ReqObj = {
-    "InsuranceId": this.insuranceId,
-    "BranchCode": this.branchCode
-  }
-  let urlLink = `${this.commonApiUrl}master/dropdown/motormake`;
-  this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
-    (data: any) => {
-      console.log(data);
-      if(data.Result){
-          this.makeList = data.Result;
-          for (let i = 0; i < this.makeList.length; i++) {
-            this.makeList[i].label = this.makeList[i]['CodeDesc'];
-            this.makeList[i].value = this.makeList[i]['Code'];
-            delete this.makeList[i].CodeDesc;
-            if (i == this.makeList.length - 1) {
-                let defaultObj = [{ 'label': '-Select-', 'value': '' }];
-                this.fields[0].fieldGroup[0].fieldGroup[1].props.options = defaultObj.concat(this.makeList);
-                console.log("Final Details",this.fields)
-                if(this.motorDetails){
-                  this.productItem.Make = this.makeList.find(ele=>ele.label==this.motorDetails.Vehiclemake || ele.Code==this.motorDetails.Vehiclemake)?.Code;
-                  this.productItem.ModelDesc = this.motorDetails.VehicleModelDesc;
-                  if(this.productItem.Make) this.onMakeChange('direct');
-                  else this.formSection = true; this.viewSection = false;
-                }
+  if(this.productItem.BodyType!='' && this.productItem.BodyType!=null){
+    let ReqObj = {
+      "BodyId": this.productItem.BodyType,
+      "InsuranceId": this.insuranceId,
+      "BranchCode": this.branchCode
+    }
+    let urlLink = `${this.commonApiUrl}master/dropdown/motormake`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+            this.makeList = data.Result;
+            for (let i = 0; i < this.makeList.length; i++) {
+              this.makeList[i].label = this.makeList[i]['CodeDesc'];
+              this.makeList[i].value = this.makeList[i]['Code'];
+              delete this.makeList[i].CodeDesc;
+              if (i == this.makeList.length - 1) {
+                  let defaultObj = [{ 'label': '-Select-', 'value': '' }];
+                  this.fields[0].fieldGroup[0].fieldGroup[1].props.options = defaultObj.concat(this.makeList);
+                  console.log("Final Details",this.fields)
+                  if(this.motorDetails){
+                    this.productItem.Make = this.makeList.find(ele=>ele.label==this.motorDetails.Vehiclemake || ele.Code==this.motorDetails.Vehiclemake)?.Code;
+                    this.productItem.ModelDesc = this.motorDetails.VehicleModelDesc;
+                    if(this.productItem.Make) this.onMakeChange('direct');
+                    else this.formSection = true; this.viewSection = false;
+                  }
+              }
             }
-          }
-      }
-
-    },
-    (err) => { },
-  );
+        }
+  
+      },
+      (err) => { },
+    );
+  }
+  
 }
 onBodyTypeChange(type){
       if(type=='change'){
         this.productItem.Model = '';
         this.productItem.ModelDesc = null;
       }
+      this.getMakeList();
       if(this.productItem.BodyType==null || this.productItem.BodyType=='' || this.productItem.BodyType=='1' || this.productItem.BodyType=='2' || this.productItem.BodyType=='3' || this.productItem.BodyType=='4' || this.productItem.BodyType=='5'){
         let fields = this.fields[0].fieldGroup[0].fieldGroup;
         for(let field of fields){
@@ -3373,7 +3377,8 @@ onMakeChange(type){
     let ReqObj = {
       "InsuranceId": this.insuranceId,
       "BranchCode": this.branchCode,
-      "MakeId": this.productItem.Make
+      "MakeId": this.productItem.Make,
+      "BodyId": this.productItem.BodyType
     }
     let urlLink = `${this.commonApiUrl}master/dropdown/motormakemodel`;
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
@@ -3876,7 +3881,7 @@ saveMotorRiskDetails(){
           }
         }
         else{
-          model = null;
+          model = '';
           modelDesc = this.productItem.ModelDesc;
         }
     }
@@ -5802,6 +5807,8 @@ onCalculate(buildDetails,type,formType) {
         effectiveDate = this.commonDetails[0].PolicyStartDate
       }
       if(this.productId=='46') build['RiskId'] = '1';
+      let sectionId = '';
+
       let ReqObj = {
         "InsuranceId": this.insuranceId,
         "BranchCode": this.branchCode,
@@ -6688,7 +6695,11 @@ onFormSubmit() {
     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/life-cover-details']);
   }
   else if(this.productId=='46'){
-    this.saveMotorRiskDetails();
+    let validate = this.checkMandatories();
+    if(validate){
+      this.saveMotorRiskDetails();
+    }
+    
   }
   else if(this.productId=='6'){
     this.onSaveFireAlliedDetails('proceed','individual');
@@ -7052,5 +7063,113 @@ checkCoverValues() {
     return ((this.productItem.BuildingSuminsured == '0' || this.productItem.BuildingSuminsured == '' || this.productItem.BuildingSuminsured == null) && (this.productItem.ContentSuminsured == '0' || this.productItem.ContentSuminsured == '') &&
       (this.productItem.PersonalAccidentSuminsured == '0' || this.productItem.PersonalAccidentSuminsured == '') && (this.productItem.PersonalIntermediarySuminsured == '0' || this.productItem.PersonalIntermediarySuminsured == '') && (this.productItem.AllriskSumInsured == '0' || this.productItem.AllriskSumInsured == ''))
   }
+  }
+  checkMandatories() {
+    let errorList = [];
+    let ulList:any='',i=0;
+     if(this.productItem.BodyType=='' ||  this.productItem.BodyType==null){
+      i+=1;
+      ulList +=`<li class="list-group-login-field">
+        <div style="color: darkgreen;">Field<span class="mx-2">:</span>BodyType</div>
+        <div style="color: red;">Message<span class="mx-2">:</span>Please Select BodyType</div>
+      </li>`
+     }
+     if(this.productItem.Make=='' ||  this.productItem.Make==null){
+      i+=1;
+      ulList +=`<li class="list-group-login-field">
+        <div style="color: darkgreen;">Field<span class="mx-2">:</span>Make</div>
+        <div style="color: red;">Message<span class="mx-2">:</span>Please Select Make</div>
+      </li>`
+     }
+     if((this.productItem.BodyType=='1' || this.productItem.BodyType=='2' || this.productItem.BodyType=='3' || this.productItem.BodyType=='4' || this.productItem.BodyType=='5') && (this.productItem.Model=='' ||  this.productItem.Model==null)){
+      i+=1;
+      ulList +=`<li class="list-group-login-field">
+        <div style="color: darkgreen;">Field<span class="mx-2">:</span>Model</div>
+        <div style="color: red;">Message<span class="mx-2">:</span>Please Select Model</div>
+      </li>`
+     }
+     if((this.productItem.BodyType!='1' && this.productItem.BodyType!='2' && this.productItem.BodyType!='3' && this.productItem.BodyType!='4' && this.productItem.BodyType!='5') && (this.productItem.ModelDesc=='' ||  this.productItem.ModelDesc==null)){
+      i+=1;
+      ulList +=`<li class="list-group-login-field">
+        <div style="color: darkgreen;">Field<span class="mx-2">:</span>Model</div>
+        <div style="color: red;">Message<span class="mx-2">:</span>Please Select Model</div>
+      </li>`
+     }
+     if(this.productItem.ChassisNo=='' ||  this.productItem.ChassisNo==null){
+      i+=1;
+      ulList +=`<li class="list-group-login-field">
+        <div style="color: darkgreen;">Field<span class="mx-2">:</span>Chasis Number</div>
+        <div style="color: red;">Message<span class="mx-2">:</span>Please Enter Chassis No</div>
+      </li>`
+     }
+     if(this.productItem.EngineNo=='' ||  this.productItem.EngineNo==null){
+      i+=1;
+      ulList +=`<li class="list-group-login-field">
+        <div style="color: darkgreen;">Field<span class="mx-2">:</span>Engine Number</div>
+        <div style="color: red;">Message<span class="mx-2">:</span>Please Enter Engine Number</div>
+      </li>`
+     }
+     if(this.productItem.EngineCapacity=='' ||  this.productItem.EngineCapacity==null){
+      i+=1;
+      ulList +=`<li class="list-group-login-field">
+        <div style="color: darkgreen;">Field<span class="mx-2">:</span>Engine Capacity</div>
+        <div style="color: red;">Message<span class="mx-2">:</span>Please Enter Engine Capacity</div>
+      </li>`
+     }
+     if(this.productItem.SeatingCapacity=='' ||  this.productItem.SeatingCapacity==null){
+      i+=1;
+      ulList +=`<li class="list-group-login-field">
+        <div style="color: darkgreen;">Field<span class="mx-2">:</span>Seating Capacity</div>
+        <div style="color: red;">Message<span class="mx-2">:</span>Please Enter Seating Capacity</div>
+      </li>`
+     }
+     if(this.productItem.ManufactureYear=='' ||  this.productItem.ManufactureYear==null){
+      i+=1;
+      ulList +=`<li class="list-group-login-field">
+        <div style="color: darkgreen;">Field<span class="mx-2">:</span>Manufacture Year</div>
+        <div style="color: red;">Message<span class="mx-2">:</span>Please Enter Manufacture Year</div>
+      </li>`
+     }
+     if(this.productItem.FuelType=='' ||  this.productItem.FuelType==null){
+      i+=1;
+      ulList +=`<li class="list-group-login-field">
+        <div style="color: darkgreen;">Field<span class="mx-2">:</span>Fuel Used</div>
+        <div style="color: red;">Message<span class="mx-2">:</span>Please Select Fuel Used</div>
+      </li>`
+     }
+     if(this.productItem.Color=='' ||  this.productItem.Color==null){
+      i+=1;
+      ulList +=`<li class="list-group-login-field">
+                  <div style="color: darkgreen;">Field<span class="mx-2">:</span>Vehicle Color</div>
+                  <div style="color: red;">Message<span class="mx-2">:</span>Please Select Vehicle Color</div>
+                </li>`
+     }
+     if(this.productItem.MotorUsage=='' ||  this.productItem.MotorUsage==null){
+      i+=1;
+      ulList +=`<li class="list-group-login-field">
+                  <div style="color: darkgreen;">Field<span class="mx-2">:</span>Vehicle Usage</div>
+                  <div style="color: red;">Message<span class="mx-2">:</span>Please Select Vehicle Usage</div>
+                </li>`
+     }
+      if(i!=0){
+        Swal.fire({
+          title: '<strong>Form Validation</strong>',
+          icon: 'info',
+          html:
+            `<ul class="list-group errorlist">
+            ${ulList}
+          </ul>`,
+          showCloseButton: true,
+          focusConfirm: false,
+          confirmButtonText:
+            '<i class="fa fa-thumbs-down"></i> Errors!',
+          confirmButtonAriaLabel: 'Thumbs down, Errors!',
+        })
+        return false;
+      }
+      else return true;
+     
+  }
 }
-}
+
+
