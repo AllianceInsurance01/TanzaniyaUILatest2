@@ -112,7 +112,27 @@ export class ShortTermVehicle{
                         expressions: {
                         },
                     },
-                    
+                    {
+                      type: 'input',
+                      key: 'OtherModelDesc',
+                      defaultValue: '',
+                      className: 'col-4',
+                      props: {
+                        label: `Model Description`,
+                        disabled: this.checkDisable('Model'),
+                        required: true,
+                        options: [
+        
+                        ],
+                      },
+                      validators: {
+                        validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                      },
+                      hooks: {
+                      },
+                      expressions: {
+                      },
+                    },
                     {
                         className: 'col-4',
                         type: 'input',

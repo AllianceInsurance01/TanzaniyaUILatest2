@@ -773,7 +773,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       this.fields[0] = fireData?.fields;
       let bodyTypeHooks = { onInit: (field: FormlyFieldConfig) => {
         field.formControl.valueChanges.subscribe(() => {
-              this.onBodyTypeChange('change')
+              this.onBodyTypeChange('change');
         });
       } }
       let makeHooks ={ onInit: (field: FormlyFieldConfig) => {
@@ -781,8 +781,14 @@ export class PersonalQuoteDetailsComponent implements OnInit {
           this.onMakeChange('change')
         });
       } }
+      let modelHooks ={ onInit: (field: FormlyFieldConfig) => {
+        field.formControl.valueChanges.subscribe(() => {
+          this.onModelChange('change')
+        });
+      } }
       this.fields[0].fieldGroup[0].fieldGroup[0].hooks = bodyTypeHooks;
       this.fields[0].fieldGroup[0].fieldGroup[1].hooks = makeHooks;
+      this.fields[0].fieldGroup[0].fieldGroup[2].hooks = modelHooks;
       let referenceNo = sessionStorage.getItem('quoteReferenceNo');
       if (referenceNo) {
         this.requestReferenceNo = referenceNo;
@@ -3335,13 +3341,14 @@ getMakeList(){
                   if(this.motorDetails){
                     this.productItem.Make = this.makeList.find(ele=>ele.label==this.motorDetails.Vehiclemake || ele.Code==this.motorDetails.Vehiclemake)?.Code;
                     this.productItem.ModelDesc = this.motorDetails.VehicleModelDesc;
+                    this.productItem.OtherModelDesc = this.motorDetails.VehicleModelDesc;
                     if(this.productItem.Make) this.onMakeChange('direct');
                     else this.formSection = true; this.viewSection = false;
                   }
+                  else{this.productItem.Make='';this.productItem.Model='';this.productItem.ModelDesc=null;this.productItem.OtherModelDesc=null;}
               }
             }
         }
-  
       },
       (err) => { },
     );
@@ -3350,15 +3357,30 @@ getMakeList(){
 }
 onBodyTypeChange(type){
       if(type=='change'){
+        
+        this.productItem.Make = '';
         this.productItem.Model = '';
         this.productItem.ModelDesc = null;
+        this.productItem.OtherModelDesc = null;
       }
       this.getMakeList();
       if(this.productItem.BodyType==null || this.productItem.BodyType=='' || this.productItem.BodyType=='1' || this.productItem.BodyType=='2' || this.productItem.BodyType=='3' || this.productItem.BodyType=='4' || this.productItem.BodyType=='5'){
         let fields = this.fields[0].fieldGroup[0].fieldGroup;
         for(let field of fields){
-          if(field.key=='Model'){field.hideExpression=false;field.hide=false;}
-          else if(field.key=='ModelDesc'){field.hideExpression=true;field.hide=true;}
+          if(field.key=='Make'){
+            if(type=='change' && field.formControl) {field.formControl.setValue('');}
+          }
+          if(field.key=='Model'){
+            if(type=='change' && field.formControl) {field.formControl.setValue('');}
+            field.hideExpression=false;field.hide=false;}
+          else if(field.key=='ModelDesc'){
+            if(type=='change' && field.formControl) {field.formControl.setValue('');}
+            field.hideExpression=true;field.hide=true;}
+          else if(field.key=='OtherModelDesc'){
+            if(type=='change' && field.formControl) {field.formControl.setValue('');}
+            if(this.productItem.Model=='99999') {field.hideExpression=false;field.hide=false;}
+            else{field.hideExpression=true;field.hide=true;}
+          }
         }
         // this.fields[0].fieldGroup[0].fieldGroup[3].hideExpression = true;
         // this.fields[0].fieldGroup[0].fieldGroup[2].hideExpression = false;
@@ -3366,11 +3388,22 @@ onBodyTypeChange(type){
       else{
         let fields = this.fields[0].fieldGroup[0].fieldGroup;
         for(let field of fields){
-          if(field.key=='Model'){field.hideExpression=true;field.hide=true;}
-          else if(field.key=='ModelDesc'){field.hideExpression=false;field.hide=false;}
+          if(field.key=='Model'){
+            if(type=='change' && field.formControl) {field.formControl.setValue('');}
+            field.hideExpression=true;field.hide=true;
+          }
+          else if(field.key=='ModelDesc'){
+            if(type=='change' && field.formControl) {field.formControl.setValue('');}
+            field.hideExpression=false;field.hide=false;
+          }
+          else if(field.key=='OtherModelDesc'){
+            if(type=='change' && field.formControl) {field.formControl.setValue('');}
+            if(this.productItem.Model=='99999') {field.hideExpression=false;field.hide=false;}
+            else{field.hideExpression=true;field.hide=true;}
+          }
         }
       }
-      console.log("Final Fields",this.fields[0])
+      console.log("Final Fields",this.fields[0],this.productItem)
 }
 onMakeChange(type){
   if(this.productItem.Make!='' && this.productItem.Make!=null){
@@ -3396,6 +3429,9 @@ onMakeChange(type){
                   if(type=='change') this.productItem.Model = '';
                   else if(this.motorDetails){
                     this.productItem.Model = this.modelList.find(ele=>ele.label==this.motorDetails.Vehcilemodel || ele.Code==this.motorDetails.Vehcilemodel)?.Code;
+                    this.productItem.ModelDesc = this.motorDetails.VehcileModelDesc;
+                    this.productItem.OtherModelDesc = this.motorDetails.VehcileModelDesc;
+                    this.onModelChange('change')
                     this.formSection = true; this.viewSection = false;
                   }
                   else this.formSection = true; this.viewSection = false;
@@ -3409,6 +3445,24 @@ onMakeChange(type){
   else{
     this.productItem.Model='';
     this.fields[0].fieldGroup[0].fieldGroup[2].props.options = [{ 'label': '-Select-', 'value': '' }];
+  }
+}
+onModelChange(type){
+  let fields = this.fields[0].fieldGroup[0].fieldGroup;
+  for(let field of fields){
+    if(field.key=='Model'){
+      if(type=='change' && field.formControl) {field.formControl.setValue('');}
+      field.hideExpression=true;field.hide=true;
+    }
+    else if(field.key=='ModelDesc'){
+      if(type=='change' && field.formControl) {field.formControl.setValue('');}
+      field.hideExpression=false;field.hide=false;
+    }
+    else if(field.key=='OtherModelDesc'){
+      if(type=='change' && field.formControl) {field.formControl.setValue('');}
+      if(this.productItem.Model=='99999') {field.hideExpression=false;field.hide=false;}
+      else{field.hideExpression=true;field.hide=true;}
+    }
   }
 }
 getFuelTypeList(){
@@ -3473,6 +3527,8 @@ getBodyTypeList(){
     (data: any) => {
       console.log(data);
       if(data.Result){
+          let sortedList = this.transform(data?.Result)
+          console.log("Sorted List",sortedList)
           this.bodyTypeList = data.Result;
           for (let i = 0; i < this.bodyTypeList.length; i++) {
             this.bodyTypeList[i].label = this.bodyTypeList[i]['CodeDesc'];
@@ -3492,6 +3548,9 @@ getBodyTypeList(){
     },
     (err) => { },
   );
+}
+transform(values: any[]): any[] {
+  return values.sort((a,b) => Number(a['Code']) -  Number(b['Code']))
 }
 getUsageList(){
   let ReqObj = {
@@ -4588,12 +4647,18 @@ onCyperSave(type,formType){
     else{
       this.sourceType = this.subuserType;
     }
-    this.customerCode = this.commonDetails[0].CustomerCode;
+    console.log("Sourceeeeee Codes",this.sourceType,)
+    if (this.commonDetails[0].CustomerCode != null && this.commonDetails[0].CustomerCode != undefined){this.customerCode = this.commonDetails[0].CustomerCode;
+      this.customerName = this.commonDetails[0].CustomerName
+    }
+    else{
+      this.customerCode = null;this.customerName=null;
+    }
   let ReqObj = {
     "AcexecutiveId": this.commonDetails[0].AcexecutiveId,
     "AgencyCode": this.agencyCode,
     "ApplicationId": appId,
-    "BdmCode": this.bdmCode,
+    "BdmCode": this.customerCode,
     "BranchCode": this.branchCode,
     "BrokerBranchCode": this.brokerbranchCode,
     "BrokerCode": this.brokerCode,
@@ -4603,6 +4668,7 @@ onCyperSave(type,formType){
     "Currency": this.commonDetails[0].Currency,
     "CustomerReferenceNo": this.customerDetails?.CustomerReferenceNo,
     "CustomerCode": this.customerCode,
+    "CustomerName": this.customerName,
     "ExchangeRate": this.commonDetails[0].ExchangeRate,
     "Havepromocode": this.commonDetails[0].HavePromoCode,
     "Promocode": promocode,
