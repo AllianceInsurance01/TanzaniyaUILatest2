@@ -64,7 +64,7 @@
                             <div class=" mt-2" *ngIf="!editSection">
                                 <button class="btn btn-warning"  (click)="AddPassenger()">Add Passenger</button>
                             </div>
-                            <div class=" mt-2" *ngIf="!editSection">
+                            <div class=" mt-2" *ngIf="!editSection && loginType!='B2CFlow' && loginType!='B2CFlow2'">
                                 <button class="btn btn-primary" (click)="UploadTravel()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
                             </div>
                         </div>
