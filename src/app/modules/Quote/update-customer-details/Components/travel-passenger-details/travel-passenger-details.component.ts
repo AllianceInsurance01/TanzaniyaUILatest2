@@ -79,6 +79,7 @@ export class TravelPassengerDetailsComponent implements OnInit {
   errorRecords: any[]=[];
   employeeList:any[]=[];
   originalEmployeeList: any[]=[];
+  loginType: any;
 
   constructor(private router:Router,private updateComponent:UpdateCustomerDetailsComponent,
     private datePipe:DatePipe,private sharedService: SharedService,) {
@@ -95,8 +96,10 @@ export class TravelPassengerDetailsComponent implements OnInit {
     this.branchCode = this.userDetails.Result.BranchCode;
     this.productId = this.userDetails.Result.ProductId;
     this.insuranceId = this.userDetails.Result.InsuranceId;
+    if(this.userDetails.Result.LoginType) this.loginType = this.userDetails.Result.LoginType;
     let quoteRefNo = sessionStorage.getItem('quoteReferenceNo');
     if(quoteRefNo) this.requestReferenceNo = quoteRefNo;
+    
     this.searchList = [
       { "Code":"01","CodeDesc":"Chassis Number"},
       { "Code":"02","CodeDesc":"Register Number"},

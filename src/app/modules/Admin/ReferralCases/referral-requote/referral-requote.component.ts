@@ -243,7 +243,7 @@ export class ReferralRequoteComponent {
             "Limit":this.limit,
             "Offset": 60
       }
-      let urlLink = `${this.CommonApiUrl}api/referralrequote`;
+      let urlLink = `${this.CommonApiUrl}api/adminreferralrequote`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
           sessionStorage.removeItem('loadingType');

@@ -94,6 +94,24 @@
                                 </ng-select>
                             </div>
                         </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Fuel Type</label>&nbsp;<span
+                                    class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="fuelTypeList"
+                                    [(ngModel)]="fuelType" bindValue="CodeDesc" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Body Type</label>&nbsp;<span
+                                    class="text-danger">*</span>
+                                <ng-select class="input-form-select" appendTo="body" [items]="bodyTypeList"
+                                    [(ngModel)]="bodyTypeValue" (change)="onBodyTypeChange('change')" bindValue="CodeDesc" bindLabel="CodeDesc">
+                                </ng-select>
+                            </div>
+                        </div>
                         <div class="col-12 col-md-3 ">
                             <div class="input-control-container">
                                 <label class="input-form-label">Make</label>
@@ -111,10 +129,6 @@
                                 </ng-select>
                             </div>
                         </div>
-
-                    </div>
-                    <div class="row mt-1">
-
                         <div class="col-12 col-md-3 ">
                             <div class="input-control-container">
                                 <label class="input-form-label">Chassis No</label>&nbsp;<span
@@ -135,6 +149,11 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row mt-1">
+
+                        
+                       
                         <div class="col-12 col-md-3">
                             <div class="input-control-container">
                                 <label class="input-form-label">Engine No</label>&nbsp;<span
@@ -155,9 +174,6 @@
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-                    <div class="row mt-1">
                         <div class="col-12 col-md-3">
                             <div class="input-control-container">
                                 <label class="input-form-label">Manufacture Year</label>&nbsp;<span
@@ -168,15 +184,7 @@
 
                             </div>
                         </div>
-                        <div class="col-12 col-md-3">
-                            <div class="input-control-container">
-                                <label class="input-form-label">Fuel Type</label>&nbsp;<span
-                                    class="text-danger">*</span>
-                                <ng-select class="input-form-select" appendTo="body" [items]="fuelTypeList"
-                                    [(ngModel)]="fuelType" bindValue="CodeDesc" bindLabel="CodeDesc">
-                                </ng-select>
-                            </div>
-                        </div>
+                        
                         <div class="col-12 col-md-3">
                             <div class="input-control-container">
                                 <label class="input-form-label">Color</label>
@@ -185,6 +193,9 @@
                                 </ng-select>
                             </div>
                         </div>
+                    </div>
+                    <div class="row mt-1">
+                        
                         <div class="col-12 col-md-3">
                             <div class="input-control-container">
                                 <label class="input-form-label">Motor Category</label>&nbsp;<span
@@ -194,8 +205,6 @@
                                 </ng-select>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-12 col-md-3">
                             <div class="input-control-container">
                                 <label class="input-form-label">Seating Capacity</label>&nbsp;<span
@@ -206,15 +215,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-md-3">
-                            <div class="input-control-container">
-                                <label class="input-form-label">Body Type</label>&nbsp;<span
-                                    class="text-danger">*</span>
-                                <ng-select class="input-form-select" appendTo="body" [items]="bodyTypeList"
-                                    [(ngModel)]="bodyTypeValue" bindValue="CodeDesc" bindLabel="CodeDesc">
-                                </ng-select>
-                            </div>
-                        </div>
+                        
                         <div class="col-12 col-md-3">
                             <div class="input-control-container">
                                 <label class="input-form-label">Motor Usage</label>&nbsp;<span

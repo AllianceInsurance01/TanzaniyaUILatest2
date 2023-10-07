@@ -49,6 +49,7 @@ export class MotorDetailsComponent implements OnInit {
   acExecutiveId: any;
   commissionType: any;
   referenceNo: string;
+  bodyTypeId: any;
   constructor(private sharedService: SharedService,private datePipe:DatePipe,
     private router:Router, private updateComponent:UpdateCustomerDetailsComponent,) {
       this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -142,7 +143,8 @@ omit_special_char(event)
         console.log(data);
         if(data.Result){
             this.ownerList = data.Result;
-            this.getMakeList();
+            this.getFuelTypeList();
+            
         }
 
       },
@@ -162,10 +164,18 @@ getYears(from) {
 
     return {years, currentYear};
 }
+onBodyTypeChange(type){
+  if(this.bodyTypeValue!=null && this.bodyTypeValue!=''){
+    this.bodyTypeId = this.bodyTypeList.find(ele=>ele.CodeDesc==this.bodyTypeValue)?.Code;
+    if(type=='change'){this.makeValue=null;this.modelValue=null;}
+    if(this.bodyTypeId) this.getMakeList();
+  }
+}
   getMakeList(){
     let ReqObj = {
       "InsuranceId": this.insuranceId,
-      "BranchCode": this.branchCode
+      "BranchCode": this.branchCode,
+      "BodyId": this.bodyTypeId
     }
     let urlLink = `${this.commonApiUrl}master/dropdown/motormake`;
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
@@ -173,7 +183,7 @@ getYears(from) {
         console.log(data);
         if(data.Result){
             this.makeList = data.Result;
-            this.getFuelTypeList();
+            
         }
 
       },
@@ -278,6 +288,7 @@ getYears(from) {
     let ReqObj = {
       "InsuranceId": this.insuranceId,
       "BranchCode": this.branchCode,
+      "BodyId": this.bodyTypeId,
       "MakeId": this.makeValue
     }
     let urlLink = `${this.commonApiUrl}master/dropdown/motormakemodel`;
@@ -465,7 +476,10 @@ getYears(from) {
     this.ownerName = vehDetails?.ResOwnerName;
     this.seatingCapacity = vehDetails?.SeatingCapacity;
     this.tareWeight = vehDetails?.Tareweight;
+    if(vehDetails?.VehicleType!=null && vehDetails?.VehicleType!=''){
     this.bodyTypeValue = vehDetails?.VehicleType;
+    this.onBodyTypeChange('direct');
+    }
     if(vehDetails?.Vehiclemake!=null && vehDetails?.Vehiclemake!=''){
       let entry = this.makeList.find(ele=>ele.CodeDesc==vehDetails?.Vehiclemake);
       this.makeValue = entry.Code;

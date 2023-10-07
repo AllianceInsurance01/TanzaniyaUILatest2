@@ -228,7 +228,7 @@ export class ShortTermVehicle{
                         props: {
                           label: `Vehicle Color`,
                           disabled: this.checkDisable('Color'),
-                          required: true,
+                          required: false,
                           options: [
           
                           ],
