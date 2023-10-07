@@ -137,9 +137,9 @@
                             <div class="row">
                                 <ng-container *ngFor="let step of fields[0].fieldGroup; let index = index; let last = last">
                                     <ng-container *ngIf="step.props.label=='Building Risk'">
-                                        <div class="card col-md-12 col-lg-12 col-xl-12">
-                                            <div style="text-decoration: underline;" (click)="selectedIndex=index">
-                                                <div (click)="selectedIndex=index" style="font-size:20px;text-align:center; font-family:'Inter' !important;color:#002b5c" class="mt-2"><i><b>{{ step.props.label }}</b></i></div>
+                                        <div class="col-md-12 col-lg-12 col-xl-12">
+                                            <div class="col-md-2 col-lg-2 col-xl-2 splitCardHeader" (click)="selectedIndex=index">
+                                                <div (click)="selectedIndex=index" class="mt-2"><h1 class="headings"><u>{{ step.props.label }}</u></h1></div>
                                             </div>
                                             <div class="card-body">
                                                 <form [formGroup]="form">
@@ -148,17 +148,21 @@
                                             </div>
                                         </div>
                                     </ng-container>
+                                    
+                                    
                                     <ng-container *ngIf="step.props.label!='Building Risk'">
-                                        <div class="card col-md-6 col-lg-6 col-xl-6">
-                                            <div style="text-decoration: underline;" (click)="selectedIndex=index">
-                                                <div (click)="selectedIndex=index" style="font-size:20px;text-align:center; font-family:'Inter' !important;color:#002b5c" class="mt-2"><i><b>{{ step.props.label }}</b></i></div>
+                                        <div class="col-md-4 col-lg-4 col-xl-4 splitCard">
+                                            <div class="col-md-12 col-lg-12 col-xl-12 splitCardHeader" (click)="selectedIndex=index">
+                                                <div (click)="selectedIndex=index" class="mt-2"><h1 class="headings"><u>{{ step.props.label }}</u></h1></div>
                                             </div>
-                                            <div class="card-body">
+                                            <div>
                                                 <form [formGroup]="form">
                                                     <formly-form [form]="form" [fields]="step.fieldGroup" [model]="productItem"></formly-form>
                                                 </form>
                                             </div>
+                                            <!-- <div class="line-middle" *ngIf="step.props.label=='HouseHold Contents Risk' || step.props.label=='Personal Accident'"></div> -->
                                         </div>
+                                        
                                     </ng-container>
                                 </ng-container>
                             </div>

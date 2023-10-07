@@ -1243,6 +1243,10 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         let contentData = new HouseHoldContents();
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields])
       }
+      if(sections.some(ele=>ele=='3')){
+        let contentData = new AllRisk();
+        this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields])
+      }
       if(sections.some(ele=>ele=='36')){
         let contentData = new PersonalLiability();
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields])
@@ -1251,10 +1255,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         let contentData = new PersonalAccident();
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields])
       }
-      if(sections.some(ele=>ele=='3')){
-        let contentData = new AllRisk();
-        this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields])
-      }
+     
       if(sections.some(ele=>ele=='45')){
         let employeeData = new EmployersLiability();
         let field = {
@@ -3340,8 +3341,10 @@ getMakeList(){
                   console.log("Final Details",this.fields)
                   if(this.motorDetails){
                     this.productItem.Make = this.makeList.find(ele=>ele.label==this.motorDetails.Vehiclemake || ele.Code==this.motorDetails.Vehiclemake)?.Code;
+                    this.productItem.Model = this.motorDetails.Model;
                     this.productItem.ModelDesc = this.motorDetails.VehicleModelDesc;
                     this.productItem.OtherModelDesc = this.motorDetails.VehicleModelDesc;
+                    this.onModelChange('direct');
                     if(this.productItem.Make) this.onMakeChange('direct');
                     else this.formSection = true; this.viewSection = false;
                   }
@@ -3430,8 +3433,9 @@ onMakeChange(type){
                   if(type=='change') this.productItem.Model = '';
                   else if(this.motorDetails){
                     this.productItem.Model = this.modelList.find(ele=>ele.label==this.motorDetails.Vehcilemodel || ele.Code==this.motorDetails.Vehcilemodel)?.Code;
-                    this.productItem.ModelDesc = this.motorDetails.VehcileModelDesc;
-                    this.productItem.OtherModelDesc = this.motorDetails.VehcileModelDesc;
+                    this.productItem.ModelDesc = this.motorDetails.VehicleModelDesc;
+                    this.productItem.OtherModelDesc = this.motorDetails.VehicleModelDesc;
+                    this.onModelChange('direct');
                     this.formSection = true; this.viewSection = false;
                   }
                   else this.formSection = true; this.viewSection = false;
@@ -4204,7 +4208,7 @@ onNextProceed(){
   if(rowData.props.label=='Fire & Allied Perils'){
      this.onSaveFireAlliedDetails(type,'Group');
   }
-  else if(rowData.props.label=='HouseHold Contents Risk'){
+  else if(rowData.props.label=='Contents Risk'){
     this.onSaveContentRiskDetails(type,'Group');
   }
   else if(rowData.props.label=='All Risk'){

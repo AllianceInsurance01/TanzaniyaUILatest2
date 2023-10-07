@@ -49,7 +49,7 @@ export class MotorDetailsComponent implements OnInit {
   acExecutiveId: any;
   commissionType: any;
   referenceNo: string;
-  bodyTypeId: any;
+  bodyTypeId: any=null;modelDesc:any='';
   constructor(private sharedService: SharedService,private datePipe:DatePipe,
     private router:Router, private updateComponent:UpdateCustomerDetailsComponent,) {
       this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -62,7 +62,7 @@ export class MotorDetailsComponent implements OnInit {
       let vehicleDetails = JSON.parse(sessionStorage.getItem('vehicleDetailsList'));
       if(vehicleDetails)
       console.log("Vehicle Details List",vehicleDetails);
-    this.getOwnerCategoryList();
+      this.getOwnerCategoryList();
    }
 
   ngOnInit(): void {  
@@ -311,6 +311,8 @@ onBodyTypeChange(type){
       make = entry.CodeDesc;
     }
     let ReqObj = {
+      "Insuranceid": this.insuranceId,
+      "BranchCode": this.branchCode,
       "AxelDistance": this.axelDistance,
       "Chassisnumber": this.chassisNo,
       "Color": this.colorValue,

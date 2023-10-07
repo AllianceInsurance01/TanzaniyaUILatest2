@@ -21,13 +21,13 @@ export class HouseHoldContents{
             }
         }
         this.fields={
-          props: { label: 'HouseHold Contents Risk' },
+          props: { label: 'Contents Risk' },
           fieldGroup: [
             {
               fieldGroupClassName: 'row',
               fieldGroup: [
                 {
-                  className: 'offset-3 col-6',
+                  className: 'col-12',
                   type: 'commaSeparator',
                   key: 'ContentSuminsured',
     

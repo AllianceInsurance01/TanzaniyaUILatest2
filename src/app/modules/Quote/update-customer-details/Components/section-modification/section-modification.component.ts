@@ -256,12 +256,35 @@ getIndustryList() {
     if(this.coversRequired=='C'){
        let entry = this.productList.find(ele=>ele.Code=='40' || ele.Code=='1');
        entry.checked = false;
+       let build = this.productList.find(ele=>ele.Code=='47');
+      if(build) build.checked = true;
        this.selectedSections = this.selectedSections.filter(ele=>ele!='40' && ele!='1');
+       if(this.productList.some(ele=>ele.Code=='47') && !this.selectedSections.some(ele=>ele=='47')) this.selectedSections.push('47');
+       
     }
     else if(this.coversRequired=='B'){
       let entry = this.productList.find(ele=>ele.Code=='47');
       entry.checked = false;
+      let build = this.productList.find(ele=>ele.Code=='40');
+      if(build) build.checked = true;
+      let build2 = this.productList.find(ele=>ele.Code=='1');
+      if(build2) build2.checked = true;
       this.selectedSections = this.selectedSections.filter(ele=>ele!='47');
+      if(this.productList.some(ele=>ele.Code=='1') && !this.selectedSections.some(ele=>ele=='1')){this.selectedSections.push('1');}
+      if(this.productList.some(ele=>ele.Code=='40') && !this.selectedSections.some(ele=>ele=='40')) this.selectedSections.push('40');
+   }
+   else{
+    let build3 = this.productList.find(ele=>ele.Code=='47');
+      if(build3) build3.checked = true;
+       this.selectedSections = this.selectedSections.filter(ele=>ele!='40' && ele!='1');
+       if(this.productList.some(ele=>ele.Code=='47') && !this.selectedSections.some(ele=>ele=='47')) this.selectedSections.push('47');
+    let build = this.productList.find(ele=>ele.Code=='40');
+      if(build) build.checked = true;
+      let build2 = this.productList.find(ele=>ele.Code=='1');
+      if(build2) build2.checked = true;
+    if(this.productList.some(ele=>ele.Code=='1') && !this.selectedSections.some(ele=>ele=='1')){this.selectedSections.push('1');}
+    if(this.productList.some(ele=>ele.Code=='40') && !this.selectedSections.some(ele=>ele=='40')) this.selectedSections.push('40');
+
    }
   }
   finalProceed(){
