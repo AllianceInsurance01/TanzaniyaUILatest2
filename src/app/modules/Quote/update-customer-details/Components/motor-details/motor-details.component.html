@@ -124,8 +124,8 @@
                         <div class="col-12 col-md-3" *ngIf="bodyTypeId=='1' || bodyTypeId=='2' || bodyTypeId=='3' || bodyTypeId=='4' || bodyTypeId=='5' || bodyTypeId=='' || bodyTypeId==null">
                             <div class="input-control-container">
                                 <label class="input-form-label">Model</label>
-                                <ng-select class="input-form-select" appendTo="body" [items]="modelList"
-                                    [(ngModel)]="modelValue" bindValue="CodeDesc" bindLabel="CodeDesc">
+                                <ng-select class="input-form-select" appendTo="body" (change)="onModelChange()" [items]="modelList"
+                                    [(ngModel)]="modelValue" bindValue="Code" bindLabel="CodeDesc">
                                 </ng-select>
                             </div>
                         </div>

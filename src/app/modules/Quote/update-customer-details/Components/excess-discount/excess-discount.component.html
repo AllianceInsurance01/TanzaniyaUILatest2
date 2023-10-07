@@ -98,30 +98,33 @@
         <div class="maan-grid-item customPadding" *ngIf="coverSection">
             <div class="maan-grid-item-title" style="margin: 0px !important;top:0rem;bottom: 0rem !important;padding-top: 9px !important;">
                 <div class="d-flex justify-content-between">
-                    <div>
+                    <div><b>
                         <span class="mx-1">
                             <i class="fas fa-book mx-1"></i>
-                        </span>  <span class="spancommon span_font_size" style="font-weight:600">Coverage Details</span>
+                        </span>  <span class="spancommon span_font_size" style="font-weight:600">Coverage Details</span></b>
                     </div>
-                    <div>
+                    <!-- <div>
                         <span class="spancommon span_font_size" style="font-weight:600">Policy Period</span>&nbsp;({{policyStartDate}}&nbsp;-{{policyEndDate}})
-                    </div>
+                    </div> -->
                     <div class=" ml-3">
                         <ng-container *ngIf="ClausesData.length!=0">
-                            <button class="btn clausebutton btn-sm"
+                            <button class="btn clausebutton btn-sm" data-toggle="tooltip" data-placement="top"
+                            title="Clauses"
                                 style="font-family: var(--our-font-family-new)!important;font-weight: 600;"
-                                (click)="ClausesStatuss()">Clauses</button>&nbsp;
+                                (click)="ClausesStatuss()">C</button>&nbsp;
                         </ng-container>
                         <ng-container *ngIf="ExclusionData.length!=0">
-                            <button class="btn clausebutton btn-sm"
+                            <button class="btn clausebutton btn-sm" data-toggle="tooltip" data-placement="top"
+                            title="Exclusion"
                                 style="font-family: var(--our-font-family-new)!important;font-weight: 600;"
-                                (click)="ExclusioStatuss()">Exclusion</button>&nbsp;
+                                (click)="ExclusioStatuss()">E</button>&nbsp;
                         </ng-container>
 
                         <ng-container *ngIf="WarrantyData.length!=0">
-                            <button class="btn clausebutton btn-sm"
+                            <button class="btn clausebutton btn-sm" data-toggle="tooltip" data-placement="top"
+                            title="Warranties"
                                 style="font-family: var(--our-font-family-new)!important;font-weight: 600;"
-                                (click)="WarrantyStatuss()">Warranties</button>
+                                (click)="WarrantyStatuss()">W</button>
                         </ng-container>
 
                     </div>
@@ -129,7 +132,7 @@
             </div>
             <div class="maan-grid-item-body" style="min-height: 385px !important;">
                 <div class="row p-0">
-                    <div class="col-md-8 col-lg-8 col-xl-8">
+                    <div class="col-md-4 col-lg-4 col-xl-4">
                         <div class="input-control-container" *ngIf="vehicleDetailsList.length!=0 && vehicleDetailsList.length!=1">
                             <ng-select class="input-form-select" [searchable]="true" [clearable]="true"
                                 [(ngModel)]="selectedRowData" (change)="onSelectSection($event)">
@@ -137,10 +140,7 @@
                                     <ng-option [value]="menu">
                                         <ng-container *ngIf="productId=='5'">
                                             <span class="spancommon" style="color:navy;font-size: 1rem;">
-                                                {{menu.RiskDetails.PolicyTypeDesc}}&nbsp;|&nbsp;{{
-                                                menu.RiskDetails.Vehiclemake }} &nbsp;|&nbsp; {{
-                                                menu.RiskDetails.Vehcilemodel
-                                                }} &nbsp;|&nbsp; {{ menu.RiskDetails.Registrationnumber }} &nbsp;</span>
+                                                {{menu.RiskDetails.PolicyTypeDesc}} &nbsp;|&nbsp; {{ menu.RiskDetails.Registrationnumber }} &nbsp;</span>
 
                                         </ng-container>
                                         <ng-container *ngIf="productId=='4'">

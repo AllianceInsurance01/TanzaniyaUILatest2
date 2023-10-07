@@ -283,6 +283,15 @@ onBodyTypeChange(type){
       (err) => { },
     );
   }
+  onModelChange(type){
+    if(this.modelValue!=null && this.modelValue!=''){
+      if(this.modelValue!='99999'){
+        this.modelDesc = this.bodyTypeList.find(ele=>ele.CodeDesc==this.modelValue)?.CodeDesc;
+      }
+      
+      else if(type=='change'){this.modelDesc = null}
+    }
+  }
   onMakeChange(){
     console.log("on make change",this.makeValue);
     let ReqObj = {
@@ -332,7 +341,7 @@ onBodyTypeChange(type){
       "ResStatusDesc": "None",
       "SeatingCapacity": this.seatingCapacity,
       "Tareweight": this.tareWeight,
-      "Vehcilemodel": this.modelValue,
+      "Vehcilemodel": this.modelDesc,
       "VehicleType": this.bodyTypeValue,
       "Vehiclemake": make
     }
