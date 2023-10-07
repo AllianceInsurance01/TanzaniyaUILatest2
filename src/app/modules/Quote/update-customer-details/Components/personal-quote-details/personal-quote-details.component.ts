@@ -3372,7 +3372,8 @@ onBodyTypeChange(type){
           }
           if(field.key=='Model'){
             if(type=='change' && field.formControl) {field.formControl.setValue('');}
-            field.hideExpression=false;field.hide=false;}
+            field.hideExpression=false;field.hide=false;
+          }
           else if(field.key=='ModelDesc'){
             if(type=='change' && field.formControl) {field.formControl.setValue('');}
             field.hideExpression=true;field.hide=true;}
@@ -3431,7 +3432,6 @@ onMakeChange(type){
                     this.productItem.Model = this.modelList.find(ele=>ele.label==this.motorDetails.Vehcilemodel || ele.Code==this.motorDetails.Vehcilemodel)?.Code;
                     this.productItem.ModelDesc = this.motorDetails.VehcileModelDesc;
                     this.productItem.OtherModelDesc = this.motorDetails.VehcileModelDesc;
-                    this.onModelChange('change')
                     this.formSection = true; this.viewSection = false;
                   }
                   else this.formSection = true; this.viewSection = false;
@@ -3450,15 +3450,7 @@ onMakeChange(type){
 onModelChange(type){
   let fields = this.fields[0].fieldGroup[0].fieldGroup;
   for(let field of fields){
-    if(field.key=='Model'){
-      if(type=='change' && field.formControl) {field.formControl.setValue('');}
-      field.hideExpression=true;field.hide=true;
-    }
-    else if(field.key=='ModelDesc'){
-      if(type=='change' && field.formControl) {field.formControl.setValue('');}
-      field.hideExpression=false;field.hide=false;
-    }
-    else if(field.key=='OtherModelDesc'){
+     if(field.key=='OtherModelDesc'){
       if(type=='change' && field.formControl) {field.formControl.setValue('');}
       if(this.productItem.Model=='99999') {field.hideExpression=false;field.hide=false;}
       else{field.hideExpression=true;field.hide=true;}
@@ -3481,7 +3473,13 @@ getFuelTypeList(){
             delete this.fuelTypeList[i].CodeDesc;
             if (i == this.fuelTypeList.length - 1) {
                 let defaultObj = [{ 'label': '-Select-', 'value': '' }];
-                this.fields[0].fieldGroup[0].fieldGroup[9].props.options = defaultObj.concat(this.fuelTypeList);
+                let fields = this.fields[0].fieldGroup[0].fieldGroup;
+                for(let field of fields){
+                  console.log("Received Iterate",field)
+                  if(field.key=='FuelType'){
+                    field.props.options = defaultObj.concat(this.fuelTypeList);
+                  }
+                }
                 if(this.motorDetails){
                   this.productItem.FuelType = this.fuelTypeList.find(ele=>ele.label==this.motorDetails.FuelType || ele.Code==this.motorDetails.FuelType)?.Code;
                 }
@@ -3509,7 +3507,13 @@ getColorsList(){
             delete this.colorList[i].CodeDesc;
             if (i == this.colorList.length - 1) {
                 let defaultObj = [{ 'label': '-Select-', 'value': '' }];
-                this.fields[0].fieldGroup[0].fieldGroup[10].props.options = defaultObj.concat(this.colorList);
+                let fields = this.fields[0].fieldGroup[0].fieldGroup;
+                for(let field of fields){
+                  console.log("Received Iterate",field)
+                  if(field.key=='Color'){
+                    field.props.options = defaultObj.concat(this.colorList);
+                  }
+                }
             }
           }
       }
@@ -3569,7 +3573,13 @@ getUsageList(){
             delete this.usageList[i].CodeDesc;
             if (i == this.usageList.length - 1) {
                 let defaultObj = [{ 'label': '-Select-', 'value': '' }];
-                this.fields[0].fieldGroup[0].fieldGroup[11].props.options = defaultObj.concat(this.usageList);
+                let fields = this.fields[0].fieldGroup[0].fieldGroup;
+                for(let field of fields){
+                  console.log("Received Iterate",field)
+                  if(field.key=='MotorUsage'){
+                    field.props.options = defaultObj.concat(this.usageList);
+                  }
+                }
                 if(this.motorDetails){
                   this.productItem.MotorUsage = this.usageList.find(ele=>ele.label==this.motorDetails.Motorusage || ele.Code ==this.motorDetails.Motorusage)?.Code;
                 }
@@ -3923,20 +3933,43 @@ onPreviousTab(){
   this.selectedIndex-=1;
 }
 saveMotorRiskDetails(){
-    let make = "";
+    let make = "",color='',fuel='',usageDesc='',bodyType='';
     if(this.productItem.Make!='' && this.productItem.Make!=undefined && this.productItem.Make!=null){
       let entry = this.makeList.find(ele=>ele.Code==this.productItem.Make);
       make = entry.label;
 
+    }
+    if(this.productItem.BodyType!='' && this.productItem.BodyType!=undefined && this.productItem.BodyType!=null){
+      let entry = this.bodyTypeList.find(ele=>ele.Code==this.productItem.BodyType);
+      bodyType = entry.label;
+    }
+    if(this.productItem.Color!='' && this.productItem.Color!=undefined && this.productItem.Color!=null){
+      let entry = this.colorList.find(ele=>ele.Code==this.productItem.Color);
+      color = entry.label;
+    }
+    if(this.productItem.FuelType!='' && this.productItem.FuelType!=undefined && this.productItem.FuelType!=null){
+      let entry = this.fuelTypeList.find(ele=>ele.Code==this.productItem.FuelType);
+      fuel = entry.label;
+    }
+    if(this.productItem.MotorUsage!='' && this.productItem.MotorUsage!=undefined && this.productItem.MotorUsage!=null){
+      let entry = this.usageList.find(ele=>ele.Code==this.productItem.MotorUsage);
+      usageDesc = entry.label;
     }
     let model=null,modelDesc = null;
     if(this.productItem.BodyType!='' && this.productItem.BodyType!=undefined && this.productItem.BodyType!=null){
       let bodyType = this.productItem.BodyType
         if(bodyType=='1' || bodyType=='2' || bodyType=='3' || bodyType=='4' || bodyType=='5'){
           if(this.productItem.Model!='' && this.productItem.Model!=null){
-            let entry = this.modelList.find(ele=>ele.Code==this.productItem.Model);
-            modelDesc = entry.label;
-            model = this.productItem.Model;
+            if(this.productItem.Model=='99999'){
+              modelDesc = this.productItem.OtherModelDesc;
+              model = this.productItem.Model;
+            }
+            else{
+              let entry = this.modelList.find(ele=>ele.Code==this.productItem.Model);
+              modelDesc = entry.label;
+              model = this.productItem.Model;
+            }
+            
           }
         }
         else{
@@ -4037,6 +4070,7 @@ saveMotorRiskDetails(){
       "AxelDistance": '01',
       "Chassisnumber": this.productItem.ChassisNo,
       "Color": this.productItem.Color,
+      "ColorDesc": color,
       "CityLimit": null,
       "CoverNoteNo": null,
       "OwnerCategory": this.productItem.OwnerCategory,
@@ -4046,6 +4080,7 @@ saveMotorRiskDetails(){
       "EngineNumber": this.productItem.EngineNo,
       "EngineCapacity": this.productItem.EngineCapacity,
       "FuelType": this.productItem.FuelType,
+      "FuelTypeDesc": fuel,
       "Gpstrackinginstalled": 'N',
       "Grossweight": "100",
       "HoldInsurancePolicy": "N",
@@ -4058,6 +4093,7 @@ saveMotorRiskDetails(){
       "ModelNumber": null,
       "MotorCategory": "01",
       "Motorusage": this.productItem.MotorUsage,
+      "MotorusageDesc": usageDesc,
       "NcdYn": 'N',
       "NoOfClaims": null,
       "NumberOfAxels": "1",
@@ -4082,7 +4118,9 @@ saveMotorRiskDetails(){
       "Vehcilemodel": model,
       "VehicleModelDesc": modelDesc,
       "VehicleType": this.productItem.BodyType,
+      "VehicleTypeDesc": bodyType,
       "Vehiclemake":this.productItem.Make,
+      "VehicleMakeDesc": make,
       "WindScreenSumInsured": windSI,
       "Windscreencoverrequired": null,
       "accident": null,
@@ -7153,6 +7191,15 @@ checkCoverValues() {
         <div style="color: darkgreen;">Field<span class="mx-2">:</span>Model</div>
         <div style="color: red;">Message<span class="mx-2">:</span>Please Select Model</div>
       </li>`
+     }
+     if((this.productItem.BodyType=='1' || this.productItem.BodyType=='2' || this.productItem.BodyType=='3' || this.productItem.BodyType=='4' || this.productItem.BodyType=='5') && (this.productItem.Model!='' ||  this.productItem.Model!=null)){
+      if(this.productItem.Model=='99999' && (this.productItem.OtherModelDesc=='' || this.productItem.OtherModelDesc==null)){
+        i+=1;
+        ulList +=`<li class="list-group-login-field">
+          <div style="color: darkgreen;">Field<span class="mx-2">:</span>Model Description</div>
+          <div style="color: red;">Message<span class="mx-2">:</span>Please Enter Model Description</div>
+        </li>`
+      }
      }
      if((this.productItem.BodyType!='1' && this.productItem.BodyType!='2' && this.productItem.BodyType!='3' && this.productItem.BodyType!='4' && this.productItem.BodyType!='5') && (this.productItem.ModelDesc=='' ||  this.productItem.ModelDesc==null)){
       i+=1;
