@@ -69,7 +69,7 @@ export class ExcellDetailsComponent implements OnInit {
   }
 
   getrawtable(){
-    let urlLink = `${this.CommonApiUrl}dropdown/eservicetable`;
+    let urlLink = `${this.CommonApiUrl}dropdown/exceltable`;
     this.sharedService.onGetMethodSync(urlLink).subscribe(
         (data: any) => {
           console.log(data);
