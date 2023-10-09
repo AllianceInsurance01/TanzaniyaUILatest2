@@ -215,7 +215,13 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       this.dobminDate = new Date();
     }
     else{
-      if(this.productId=='46'){}
+      if(this.productId=='46'){
+        let referenceNo = sessionStorage.getItem('quoteReferenceNo');
+        if (referenceNo) {
+          this.requestReferenceNo = referenceNo;
+          this.getMotorDetails();
+        }
+      }
       else{
         let referenceNo = sessionStorage.getItem('quoteReferenceNo');
         if (referenceNo) {
@@ -1239,6 +1245,39 @@ export class PersonalQuoteDetailsComponent implements OnInit {
           this.dobminDate = new Date();
         }
         if(!this.activeSection){this.activeSection=true;this.setProductSections();}
+      });
+  }
+  getMotorDetails(){
+    let ReqObj = {
+      "RequestReferenceNo": this.requestReferenceNo
+    }
+    let urlLink = `${this.motorApiUrl}api/getallmotordetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+            if(data.Result.length!=0){
+              let vehicleDetails = data.Result;
+              this.currencyCode = vehicleDetails[0].Currency;
+              this.updateComponent.sourceType = vehicleDetails[0].SourceType;
+              this.updateComponent.branchValue = vehicleDetails[0].BranchCode;
+              this.updateComponent.brokerBranchCode = vehicleDetails[0].BrokerBranchCode;
+              this.updateComponent.CustomerCode = vehicleDetails[0].CustomerCode;
+              this.updateComponent.HavePromoCode = vehicleDetails[0].HavePromoCode;
+              this.updateComponent.PromoCode = vehicleDetails[0].PromoCode;
+              if(vehicleDetails[0].CustomerName) this.updateComponent.CustomerName = vehicleDetails[0].CustomerName;
+              else this.updateComponent.CustomerName = null;
+              this.updateComponent.CurrencyCode = vehicleDetails[0].Currency;
+              this.updateComponent.exchangeRate = vehicleDetails[0].ExchangeRate;
+              if(vehicleDetails[0].PolicyStartDate){
+                this.updateComponent.policyStartDate = vehicleDetails[0].PolicyStartDate;
+                this.updateComponent.policyEndDate = vehicleDetails[0].PolicyEndDate;
+              }
+              sessionStorage.setItem('vehicleDetailsList',JSON.stringify(vehicleDetails));
+              this.commonDetails = data.Result;
+              if(!this.activeSection){this.activeSection=true;this.setProductSections();}
+            }
+        }
       });
   }
   onChangeOwnerType(type) {
