@@ -97,6 +97,7 @@ export class VehicleDetailsComponent implements OnInit {
   changeUwSection: boolean;
   enableCollateralDetails: boolean=false;
   endorseCoverModification: any=null;
+  customerName: any;
   constructor(private router:Router,private sharedService: SharedService,
     private updateComponent:UpdateCustomerDetailsComponent,
    private datePipe:DatePipe) {
@@ -1026,12 +1027,13 @@ export class VehicleDetailsComponent implements OnInit {
       if(this.userType!='Broker' && this.userType!='User'){
         console.log("Vehicle Details",this.vehicleDetails,this.updateComponent.sourceType)
         if(this.updateComponent.sourceType==null || this.updateComponent.sourceType==undefined){
-          
+          alert(this.updateComponent.sourceType)
           this.sourceType = this.vehicleDetails.SourceType;
           this.bdmCode = this.vehicleDetails.BrokerCode;
           this.brokerCode = this.vehicleDetails.BrokerCode;
           brokerbranchCode =  this.vehicleDetails.BrokerBranchCode;
           this.customerCode = this.vehicleDetails.CustomerCode;
+          this.customerName = this.vehicleDetails.CustomerName;
         }
         else{
           this.sourceType = this.updateComponent.sourceType;
@@ -1039,12 +1041,14 @@ export class VehicleDetailsComponent implements OnInit {
           this.brokerCode = this.updateComponent.brokerCode;
           brokerbranchCode =  this.updateComponent.brokerBranchCode;
           this.customerCode = this.updateComponent.CustomerCode;
+          this.customerName = this.updateComponent.CustomerName;
         }
         }
         else {
           this.sourceType = this.subuserType;
           this.customerCode = this.userDetails?.Result.CustomerCode;
         }
+        if(this.customerName ==undefined) this.customerName = null;
       let refNo = "99999",regYear="99999",IdType="99999",IdNo="99999";
       if(this.customerDetails){refNo = this.customerDetails?.CustomerReferenceNo;
         IdNo = this.customerDetails?.IdNumber;
@@ -1055,7 +1059,7 @@ export class VehicleDetailsComponent implements OnInit {
       "AcExecutiveId": this.acExecutiveId,
       "CommissionType": this.commissionType,
       "CustomerCode": this.customerCode,
-      "CustomerName": this.vehicleDetails?.CustomerName,
+      "CustomerName": this.customerName,
       "BdmCode": this.customerCode,
       "BrokerCode": this.brokerCode,
       "LoginId": loginId,
@@ -1921,6 +1925,7 @@ export class VehicleDetailsComponent implements OnInit {
                   this.brokerCode = this.vehicleDetails.BrokerCode;
                   brokerbranchCode =  this.vehicleDetails.BrokerBranchCode;
                   this.customerCode = this.vehicleDetails.CustomerCode;
+                  this.customerName = this.vehicleDetails.CustomerName;
                 }
                 else{
                   this.sourceType = this.updateComponent.sourceType;
@@ -1928,6 +1933,7 @@ export class VehicleDetailsComponent implements OnInit {
                   this.brokerCode = this.updateComponent.brokerCode;
                   brokerbranchCode =  this.updateComponent.brokerBranchCode;
                   this.customerCode = this.updateComponent.CustomerCode;
+                  this.customerName = this.updateComponent.CustomerName;
                 }
                 
               }
@@ -1947,7 +1953,7 @@ export class VehicleDetailsComponent implements OnInit {
                 "AcExecutiveId": this.acExecutiveId,
                 "CommissionType": this.commissionType,
                 "CustomerCode": this.customerCode,
-                "CustomerName": vehicleDetails?.CustomerName,
+                "CustomerName": this.customerName,
                 "BdmCode": this.customerCode,
                 "BrokerCode": this.brokerCode,
                 "LoginId": loginId,

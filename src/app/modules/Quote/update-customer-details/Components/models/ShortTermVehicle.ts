@@ -41,7 +41,7 @@ export class ShortTermVehicle{
                         ],
                       },
                       validators: {
-                        validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                        validation: [ForceLengthValidators.maxLength(5), ForceLengthValidators.min(1)]
                       },
                       hooks: {
                       },
@@ -63,7 +63,7 @@ export class ShortTermVehicle{
                           ],
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(5), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -84,7 +84,7 @@ export class ShortTermVehicle{
                         ],
                       },
                       validators: {
-                        validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                        validation: [ForceLengthValidators.maxLength(10), ForceLengthValidators.min(1)]
                       },
                       hooks: {
                       },
@@ -105,7 +105,7 @@ export class ShortTermVehicle{
                           ],
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(15), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -126,7 +126,7 @@ export class ShortTermVehicle{
                         ],
                       },
                       validators: {
-                        validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                        validation: [ForceLengthValidators.maxLength(15), ForceLengthValidators.min(1)]
                       },
                       hooks: {
                       },
@@ -143,7 +143,7 @@ export class ShortTermVehicle{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
                         },
                     },
                     // {
@@ -169,7 +169,7 @@ export class ShortTermVehicle{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
                         },
                     },
                     {
@@ -182,7 +182,7 @@ export class ShortTermVehicle{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(5), ForceLengthValidators.min(1)]
                         },
                     },
                     {
@@ -195,7 +195,7 @@ export class ShortTermVehicle{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(3), ForceLengthValidators.min(1)]
                         },
                     },
                     {
@@ -212,7 +212,7 @@ export class ShortTermVehicle{
                           ],
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(4), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -233,7 +233,7 @@ export class ShortTermVehicle{
                           ],
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(5), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -254,7 +254,7 @@ export class ShortTermVehicle{
                           ],
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(5), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -276,7 +276,7 @@ export class ShortTermVehicle{
                           ],
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(5), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
