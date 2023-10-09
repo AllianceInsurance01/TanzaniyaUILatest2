@@ -319,6 +319,16 @@ onBodyTypeChange(type){
       let entry = this.makeList.find(ele=>ele.Code==this.makeValue);
       make = entry.CodeDesc;
     }
+    let modelDesc = null;
+    if(this.bodyTypeId=='1' || this.bodyTypeId=='2' || this.bodyTypeId=='3' || this.bodyTypeId=='4' || this.bodyTypeId=='5'){
+      if(this.modelValue=='99999'){
+          modelDesc = this.modelDesc;
+      }
+      else if(this.modelValue!='' && this.modelValue!=null){
+        modelDesc = this.modelList.find(ele=>ele.Code==this.modelValue)?.CodeDesc
+      }
+    }
+    else modelDesc = this.modelDesc;
     let ReqObj = {
       "Insuranceid": this.insuranceId,
       "BranchCode": this.branchCode,
@@ -341,7 +351,7 @@ onBodyTypeChange(type){
       "ResStatusDesc": "None",
       "SeatingCapacity": this.seatingCapacity,
       "Tareweight": this.tareWeight,
-      "Vehcilemodel": this.modelDesc,
+      "Vehcilemodel": modelDesc,
       "VehicleType": this.bodyTypeValue,
       "Vehiclemake": make
     }

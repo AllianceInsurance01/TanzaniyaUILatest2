@@ -69,7 +69,7 @@ export class Building{
                   type: 'select',
                   key: 'WallType',
                   props: {
-                    label: 'Contruction (Wall)',
+                    label: 'Construction (Wall)',
                     disabled: this.checkDisable('WallType'),
                     required: false,
                     options: [
@@ -84,7 +84,7 @@ export class Building{
                   type: 'select',
                   key: 'RoofType',
                   props: {
-                    label: 'Contruction (Roof)',
+                    label: 'Construction (Roof)',
                     disabled: this.checkDisable('RoofType'),
                     required: false,
                     options: [

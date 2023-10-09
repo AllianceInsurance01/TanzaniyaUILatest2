@@ -604,11 +604,52 @@ export class VehicleDetailsComponent implements OnInit {
               }
             }
             else{
-              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+              
+              if(sessionStorage.getItem('quoteReferenceNo')){
+                this.requestReferenceNo = sessionStorage.getItem('quoteReferenceNo');
+                this.getExistingVehiclesList();
+              }
+              
             }
             
         }
 
+      },
+      (err) => { },
+    );
+  }
+  getExistingVehiclesList(){
+    this.vehicleDetailsList = [];
+    let ReqObj = {
+      "RequestReferenceNo": this.requestReferenceNo
+    }
+    let urlLink = `${this.motorApiUrl}api/getallmotordetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+            this.vehicleDetailsList = data.Result;
+            if(this.vehicleDetailsList.length!=0){
+              this.updateComponent.CurrencyCode = this.vehicleDetailsList[0].Currency;
+              this.currencyValue = this.vehicleDetailsList[0].Currency;
+              this.exchangeRate = this.vehicleDetailsList[0].ExchangeRate;
+              this.policyStartDate = this.vehicleDetailsList[0].PolicyStartDate;
+              this.policyEndDate = this.vehicleDetailsList[0].PolicyEndDate;
+              this.havePromoCodeYN = this.vehicleDetailsList[0].HavePromoCode;
+              this.promoCode = this.vehicleDetailsList[0].PromoCode;
+              this.acExecutiveId = this.vehicleDetailsList[0].AcExecutiveId;
+              this.commissionType = this.vehicleDetailsList[0].CommissionType;
+              this.updateComponent.setCommonValues(this.vehicleDetailsList[0]);
+              for(let veh of this.vehicleDetailsList){
+                veh['Active'] = true;
+              }
+              this.getInsuranceClassList();
+              if(this.vehicleId==null || this.vehicleId==undefined || this.vehicleId=='') this.vehicleId = this.vehicleDetailsList[0].Vehicleid;
+              this.getEditVehicleDetails(this.vehicleId,'direct')
+              this.currentIndex = 1;
+              this.totalCount = this.vehicleDetailsList.length;
+            }
+        }
       },
       (err) => { },
     );

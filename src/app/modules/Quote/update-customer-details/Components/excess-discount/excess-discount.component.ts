@@ -463,20 +463,30 @@ emiyn="N";
                     this.isMannualReferal = "Y";
                     console.log('MannnnnnnnReferral', this.isMannualReferal);
                   }
+                  if(this.statusValue=='RP' && !this.adminSection){
+                    if(!this.vehicleDetailsList.some(ele=>ele.Status=='RP') && this.isMannualReferal!='Y'){
+                      this.statusValue = null;
+                      sessionStorage.removeItem('QuoteStatus')
+                    }
+                  }
                   this.selectedRowData = this.vehicleDetailsList[0];
                   this.onSelectSection();
                   this.coverSection = true;
-                  if(((this.uwReferralSection && !this.adminSection && (this.statusValue=='RP' || this.statusValue==null || this.statusValue==undefined))  || (!this.adminSection && this.statusValue=='RP') || (this.statusValue=='RP' && !this.adminSection))){
+                  // if(((this.uwReferralSection && !this.adminSection  && (this.statusValue=='RP' || this.statusValue==null || this.statusValue==undefined))  || (!this.adminSection && this.statusValue=='RP' && this.vehicleDetailsList.some(ele=>ele.Status=='RP')) || (this.statusValue=='RP' && !this.adminSection && this.vehicleDetailsList.some(ele=>ele.Status=='RP')))){
+                  //   this.columnHeader = [
+                  //     {
+                  //       key: 'selected',
+                  //       display: 'Select',
+                  //       config: {
+                  //         isChecked:true
+                  //       },
+                  //     },
+                  //     { key: 'CoverName', display: 'Cover Name' },
+                  //     { key: 'SumInsured', display: 'Sum Insured' }
+                  //   ]
+                  // }
+                  // else{
                     this.columnHeader = [
-
-                      // {
-                      //   key: 'CalcType',
-                      //   display: '',
-                      //   config: {
-                      //     isExpand:true
-                      //   },
-                      // },
-                      // { key: 'SectionName', display: 'Section Name' },
                       {
                         key: 'selected',
                         display: 'Select',
@@ -485,46 +495,14 @@ emiyn="N";
                         },
                       },
                       { key: 'CoverName', display: 'Cover Name' },
-                      // { key: 'ReferalDescription', display: 'Referral' },
                       { key: 'SumInsured', display: 'Sum Insured' },
-                      // { key: 'ExcessPercent', display: 'Excess Percent' },
-                      // { key: 'ExcessAmount', display: 'Excess Amount' },
-                      //{ key: 'MinimumPremium', display: 'Minimum' },
-              
-                    ]
-                  }
-                  else{
-                    this.columnHeader = [
-
-                      // {
-                      //   key: 'CalcType',
-                      //   display: '',
-                      //   config: {
-                      //     isExpand:true
-                      //   },
-                      // },
-                      // { key: 'SectionName', display: 'Section Name' },
-                      {
-                        key: 'selected',
-                        display: 'Select',
-                        config: {
-                          isChecked:true
-                        },
-                      },
-                      { key: 'CoverName', display: 'Cover Name' },
-                      // { key: 'ReferalDescription', display: 'Referral' },
-                      { key: 'SumInsured', display: 'Sum Insured' },
-                      // { key: 'Rate', display: 'Rate' },
-                      // { key: 'ExcessPercent', display: 'Excess Percent' },
-                      // { key: 'ExcessAmount', display: 'Excess Amount' },
-                      //{ key: 'MinimumPremium', display: 'Minimum' },
                       { key: 'PremiumAfterDiscount', display: 'After Discount' },
                       { key: 'PremiumIncludedTax', display: 'Included Tax' },
               
                     ]
               
                    
-                  }
+                  //}
                   this.EmiInstallment();
               }
             }
@@ -1054,7 +1032,6 @@ getMotorUsageList(vehicleValue){
               this.selectedCoverList.push(element);
               console.log("Selected Covers",this.selectedCoverList)
               if(vehicle?.totalPremium){
-                alert('Entered')
                 if(cover.Endorsements!=null){
                   vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTaxFC;
                   vehicle['totalPremium'] =  vehicle['totalPremium']+cover.Endorsements[cover.Endorsements.length-1].PremiumIncludedTax;
@@ -2172,7 +2149,10 @@ getMotorUsageList(vehicleValue){
           else{
             if(this.statusValue=='RA') this.router.navigate(['/Home/referralApproved']);
             else if(this.statusValue=='RE') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
-            else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+            else{
+              this.onSetBackPage();
+             
+            } 
           }
       }
       else{
@@ -2180,11 +2160,18 @@ getMotorUsageList(vehicleValue){
           this.router.navigate(['/Home/policies/Endorsements/endorsementTypes']);
         }
         else{
-          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+          this.onSetBackPage();
         }
       }
       //}
     //}
+  }
+  onSetBackPage(){
+    if(this.productId=='5'){
+      this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details']);
+    }
+    else if(this.productId=='4') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+    else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
   }
   getUWDetails(){
     let ReqObj = {
@@ -2261,34 +2248,21 @@ getMotorUsageList(vehicleValue){
           this.selectedRowData = this.vehicleDetailsList[0];
           this.onSelectSection();
           this.coverSection = true;
-          if(((this.uwReferralSection && !this.adminSection && (this.statusValue=='RP' || this.statusValue=='' || this.statusValue==null || this.statusValue==undefined))  || (!this.adminSection && this.statusValue=='RP'))){
-            this.columnHeader = [
-
-              // {
-              //   key: 'CalcType',
-              //   display: '',
-              //   config: {
-              //     isExpand:true
-              //   },
-              // },
-              // { key: 'SectionName', display: 'Section Name' },
-              {
-                key: 'selected',
-                display: 'Select',
-                config: {
-                  isChecked:true
-                },
-              },
-              { key: 'CoverName', display: 'Cover Name' },
-              // { key: 'ReferalDescription', display: 'Referral' },
-              { key: 'SumInsured', display: 'Sum Insured' },
-              // { key: 'ExcessPercent', display: 'Excess Percent' },
-              // { key: 'ExcessAmount', display: 'Excess Amount' },
-              //{ key: 'MinimumPremium', display: 'Minimum' },
+          // if(((this.uwReferralSection && !this.adminSection && (this.statusValue=='RP' || this.statusValue=='' || this.statusValue==null || this.statusValue==undefined))  || (!this.adminSection && this.statusValue=='RP' && this.vehicleDetailsList.some(ele=>ele.Status=='RP')))){
+          //   this.columnHeader = [
+          //     {
+          //       key: 'selected',
+          //       display: 'Select',
+          //       config: {
+          //         isChecked:true
+          //       },
+          //     },
+          //     { key: 'CoverName', display: 'Cover Name' },
+          //     { key: 'SumInsured', display: 'Sum Insured' }
       
-            ]
-          }
-          else{
+          //   ]
+          // }
+          // else{
             this.columnHeader = [
 
               // {
@@ -2319,7 +2293,7 @@ getMotorUsageList(vehicleValue){
             ]
       
            
-          }
+          //}
           if(!this.endorsementSection){
             this.EmiInstallment();
           }
@@ -4038,7 +4012,8 @@ getMotorUsageList(vehicleValue){
         );
   }
   checkReferralStatus(){
-    return ((this.uwReferralSection && !this.adminSection && (this.statusValue=='RP' || this.statusValue=='' || this.statusValue==null || this.statusValue==undefined))  || (!this.adminSection && this.statusValue=='RP'))
+    return false;
+    // return ((this.uwReferralSection && !this.adminSection && (this.statusValue=='RP' || this.statusValue=='' || this.statusValue==null || this.statusValue==undefined))  || (!this.adminSection && this.statusValue=='RP' && this.vehicleDetailsList.some(ele=>ele.Status=='RP')))
   }
   getExistingEserviceDetails(){
     let ReqObj = {
