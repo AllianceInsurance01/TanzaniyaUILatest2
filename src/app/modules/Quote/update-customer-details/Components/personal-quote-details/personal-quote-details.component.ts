@@ -4139,6 +4139,7 @@ saveMotorRiskDetails(){
           this.brokerCode = this.commonDetails[0].BrokerCode;
           brokerbranchCode =  this.commonDetails[0].BrokerBranchCode;
           this.customerCode = this.commonDetails[0].CustomerCode;
+          this.customerName = this.commonDetails[0].CustomerName;
         }
         else{
           this.sourceType = this.updateComponent.sourceType;
@@ -4146,6 +4147,7 @@ saveMotorRiskDetails(){
           this.brokerCode = this.updateComponent.brokerCode;
           brokerbranchCode =  this.updateComponent.brokerBranchCode;
           this.customerCode = this.updateComponent.CustomerCode;
+          this.customerName = this.updateComponent.CustomerName;
         }
         }
         else {
@@ -4156,13 +4158,13 @@ saveMotorRiskDetails(){
       if(this.customerDetails){refNo = this.customerDetails?.CustomerReferenceNo;
         IdNo = this.customerDetails?.IdNumber;
         regYear=this.customerDetails?.DobOrRegDate;IdType=this.customerDetails?.PolicyHolderType;};
-   
+        if(this.customerName ==undefined) this.customerName = null;
     let ReqObj = {
       "BrokerBranchCode": brokerbranchCode,
       "AcExecutiveId": this.acExecutiveId,
       "CommissionType": this.commissionType,
       "CustomerCode": this.customerCode,
-      "CustomerName": this.productItem.OwnerName,
+      "CustomerName": this.customerName,
       "BdmCode": this.customerCode,
       "BrokerCode": this.brokerCode,
       "LoginId": loginId,
