@@ -197,10 +197,7 @@
                             <ng-container *ngFor="let menu of vehicleDetailsList">
                                 <ng-container *ngIf="productId=='5'">
                                     <span class="spancommon" style="color:navy;font-size: 1rem;font-weight: 600;">
-                                        {{menu.RiskDetails.PolicyTypeDesc}}&nbsp;|&nbsp;{{
-                                        menu.RiskDetails.Vehiclemake }} &nbsp;|&nbsp; {{
-                                        menu.RiskDetails.Vehcilemodel
-                                        }} &nbsp;|&nbsp; {{ menu.RiskDetails.Registrationnumber }} &nbsp;</span>
+                                        {{menu.RiskDetails.PolicyTypeDesc}} &nbsp;|&nbsp; {{ menu.RiskDetails.Registrationnumber }} &nbsp;</span>
     
                                 </ng-container>
                                 <ng-container *ngIf="productId=='4'">
@@ -288,10 +285,7 @@
                                 <div class="display2">
                                     <ng-container *ngIf="productId=='5'">
                                         <span class="spancommon" style="color:navy;font-size: 1rem;">
-                                            {{menu.RiskDetails.PolicyTypeDesc}}&nbsp;|&nbsp;{{
-                                            menu.RiskDetails.Vehiclemake }} &nbsp;|&nbsp; {{
-                                            menu.RiskDetails.Vehcilemodel
-                                            }} &nbsp;|&nbsp; {{ menu.RiskDetails.Registrationnumber }} | &nbsp;</span>
+                                            {{menu.RiskDetails.PolicyTypeDesc}}&nbsp;|&nbsp;{{ menu.RiskDetails.Registrationnumber }} | &nbsp;</span>
 
                                         <ng-container *ngIf="menu.Status!='D'">
                                             <button class="fa fa-eye"
@@ -467,7 +461,7 @@
                                                             <ng-container *ngIf="(element.Endorsements==null)">
                                                                 <div class="d-flex justify-content-between">
                                                                     <div>
-                                                                        <ng-container *ngIf="(element.Discounts!=null && element.Discounts.length!=0) || (element.Loadings!=null && element.Loadings.length!=0) || adminSection">
+                                                                        <ng-container>
     
                                                                             &nbsp;&nbsp;<button type="button"
                                                                                 class="btn maan-btn-blue btn-circle"

@@ -150,6 +150,7 @@ ul{
 }
 .btn:disabled{cursor: not-allowed !important;}
 .headings {
+    padding-left: 7px;
     color: var(--theme1);
     font-feature-settings: 'clig' off, 'liga' off;
     font-size: 18px;
@@ -180,8 +181,12 @@ ul{
 }
 .splitCardHeader{
     display: block;
+    padding-left: 3px;
+    padding-top: 1px;
+    padding-right: 3px;
+    padding-bottom: 2px;
+    border-radius: 25px;
     cursor: pointer;
     background: #e3e0e0;
-    padding: 3px;
     color: #6f6c6c;
 }

@@ -28,7 +28,7 @@ export class ShortTermVehicle{
                 fieldGroupClassName: 'row',
                 fieldGroup: [
                     {
-                      type: 'select',
+                      type: 'ngselect',
                       key: 'BodyType',
                       defaultValue: '',
                       className: 'col-4',
@@ -49,7 +49,7 @@ export class ShortTermVehicle{
                       },
                     },
                     {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'Make',
                         defaultValue: '',
                         className: 'col-4',
@@ -71,7 +71,7 @@ export class ShortTermVehicle{
                         },
                     },
                     {
-                      type: 'select',
+                      type: 'ngselect',
                       key: 'Model',
                       defaultValue: '',
                       className: 'col-4',
@@ -199,7 +199,7 @@ export class ShortTermVehicle{
                         },
                     },
                     {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'ManufactureYear',
                         defaultValue: '',
                         className: 'col-4',
@@ -220,7 +220,7 @@ export class ShortTermVehicle{
                         },
                     },
                     {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'FuelType',
                         defaultValue: '',
                         className: 'col-4',
@@ -241,7 +241,7 @@ export class ShortTermVehicle{
                         },
                     },
                     {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'Color',
                         defaultValue: '',
                         className: 'col-4',
@@ -263,7 +263,7 @@ export class ShortTermVehicle{
                     },
                     
                     {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'MotorUsage',
                         defaultValue: '',
                         className: 'col-4',

@@ -28,7 +28,7 @@ export class Building{
               fieldGroup: [
                 {
                   className: 'col-3',
-                  type: 'select',
+                  type: 'ngselect',
                   key: 'BuildingUsageId',
                   props: {
                     label: 'Building Usage',
@@ -66,7 +66,7 @@ export class Building{
                 },
                 {
                   className: 'col-2',
-                  type: 'select',
+                  type: 'ngselect',
                   key: 'WallType',
                   props: {
                     label: 'Construction (Wall)',
@@ -81,7 +81,7 @@ export class Building{
                 },
                 {
                   className: 'col-2',
-                  type: 'select',
+                  type: 'ngselect',
                   key: 'RoofType',
                   props: {
                     label: 'Construction (Roof)',

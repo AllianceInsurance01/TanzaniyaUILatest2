@@ -42,7 +42,7 @@ export class ElectronicEquip{
                     fieldGroupClassName: 'row',
                     fieldGroup: [
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'ElqLocation',
                         defaultValue: '',
                         className: 'col-sm-4',
@@ -63,7 +63,7 @@ export class ElectronicEquip{
                         },
                       },
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'ElqList',
                         defaultValue: '',
                         className: 'col-sm-4',
@@ -101,7 +101,7 @@ export class ElectronicEquip{
                       //   },
                       // },
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'ElqJoin',
                         defaultValue: '',
                         className: 'col-sm-4',

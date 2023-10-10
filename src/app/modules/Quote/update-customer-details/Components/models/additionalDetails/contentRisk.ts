@@ -31,7 +31,7 @@ export class ContentRisk{
                     fieldGroupClassName: 'row',
                     fieldGroup: [
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'ContentLocation',
                         defaultValue: '',
                         className: 'col-sm-4',
@@ -52,7 +52,7 @@ export class ContentRisk{
                         },
                       },
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'ContentType',
                         defaultValue: '',
                         className: 'col-sm-4',

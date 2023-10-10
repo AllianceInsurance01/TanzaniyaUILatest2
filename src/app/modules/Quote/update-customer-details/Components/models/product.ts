@@ -288,6 +288,7 @@ MoneyMajorLoss:any='0';
 		this.SeatingCapacity = data?.SeatingCapacity ?? '';
 		this.ModelDesc = data?.ModelDesc ?? '';
 		this.OtherModelDesc = data?.OtherModelDesc ?? '';
+		this.LiabilityOccupationId = data?.LiabilityOccupationId ?? '';
 		// this.EquipmentSi = data?.EquipmentSi ?? '0';
 		// this.ElectronicEquipSuminsured = data.ElectronicEquipSuminsured ?? '0';
 	}

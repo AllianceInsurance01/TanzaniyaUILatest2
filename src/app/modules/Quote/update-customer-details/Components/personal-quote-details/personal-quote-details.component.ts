@@ -1285,6 +1285,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
     this.checkDomesticForm(type);
   }
   checkDomesticForm(type) {
+    
     let sectionList = [];
     if (this.coversRequired != null) {
       if (type != 'change') {
@@ -1298,12 +1299,17 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         else {
           this.productItem.BuildingBuildYear = '';
           this.productItem.BuildingOwnerYn = 'Y';
-
+        
            if (this.productId == '3') this.setDomesticForm('create', type);
            if (this.productId == '19' || this.productId=='3') this.setSMEForm('create', type);
         }
       }
       else {
+        this.productItem.BuildingBuildYear = '';
+        this.productItem.OccupationType = null;
+          if(this.productItem.PersonalAccidentSuminsured== '' || this.productItem.PersonalAccidentSuminsured==null){
+            this.productItem.PersonalAccidentSuminsured='0';
+          }
         if (this.coversRequired == 'C') this.productItem.BuildingSuminsured = null;
         else if (this.coversRequired == 'B') this.productItem.ContentSuminsured = null;
         // if (this.productId == '3') this.setDomesticForm('change', type);
@@ -1314,6 +1320,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
     }
   }
   setSMEForm(type, mode) {
+    
     let sections:any[] = this.commonDetails[0].SectionId;
     this.tab = new FormlyFieldTabs();
     this.fields = [
@@ -1327,6 +1334,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
     ];
     
     if(sections){
+      
       //this.updateComponent.setTabCountSection(0);
       this.showSection = true;
       if(sections.some(ele=>ele=='1')){
@@ -1460,7 +1468,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
           
       }
       else{
-        
+       
         this.formSection = true; this.viewSection = false;
       }
       console.log("Final Fields",this.fields)
@@ -1971,7 +1979,7 @@ getPersonalAccidentDetails(sections){
             }
             console.log("Products",this.productItem)
         }
-        else this.productItem.OccupationType = null;
+        else{this.productItem.OccupationType = null; this.productItem.PersonalAccidentSuminsured='0'}
         this.getOccupationList(sections);
       }
     },
@@ -1991,7 +1999,8 @@ getPersonalLiabilityDetails(sections){
       if (data.Result) {
         if(data.Result.length!=0){
           this.productItem.EmpLiabilitySi = data.Result[0].EmpLiabilitySi;
-          this.productItem.LiabilityOccupationId = data.Result[0].LiabilityOccupationId;
+          if(data.Result[0].LiabilityOccupationId!=null && data.Result[0].LiabilityOccupationId!='') this.productItem.LiabilityOccupationId = data.Result[0].LiabilityOccupationId;
+          else this.productItem.LiabilityOccupationId = null;
           let entry = data?.Result[0];
             if(entry.EndorsementDate){
               this.endorsementDate = entry?.EndorsementDate;
@@ -2009,7 +2018,7 @@ getPersonalLiabilityDetails(sections){
             }
             console.log("Products",this.productItem)
         }
-        else this.productItem.LiabilityOccupationId = null;
+        else{this.productItem.LiabilityOccupationId = null;this.productItem.PersonalIntermediarySuminsured='0'}
         this.getOccupationList(sections);
       }
     },
@@ -2030,6 +2039,7 @@ getBuildingDetails(sections){
             this.productItem.BuildingBuildYear = data?.Result?.BuildingBuildYear;
             if(data?.Result?.BuildingOwnerYn) this.productItem.BuildingOwnerYn = data.Result.BuildingOwnerYn;
             if(data?.Result?.BuildingUsageId) this.productItem.BuildingUsageId = data.Result.BuildingUsageId;
+            else this.productItem.BuildingUsageId = '';
             if(data?.Result?.WallType) this.productItem.WallType = data.Result.WallType;
             if(data?.Result?.RoofType) this.productItem.RoofType = data.Result.RoofType;
             let entry = data?.Result;
@@ -2049,9 +2059,10 @@ getBuildingDetails(sections){
             }
             this.sectionCount +=1;
             if(sections.length==this.sectionCount){
+              alert(1);
               this.formSection = true; this.viewSection = false;
             }
-            console.log("Products",this.productItem)
+            console.log("Products in Building",this.productItem)
       }
     },
     (err) => { },
@@ -2085,6 +2096,7 @@ getAllRiskDetails(sections){
             }
             this.sectionCount +=1;
             if(sections.length==this.sectionCount){
+              alert(2);
               this.formSection = true; this.viewSection = false;
             }
             console.log("Products",this.productItem)
@@ -2098,6 +2110,7 @@ addEmployee(){
   this.model.investments = entry.concat(this.model.investments)
 }
 setDomesticForm(type, mode){
+  
   if(this.insuranceId!='100004'){
   this.fields = [
     {
@@ -4389,6 +4402,11 @@ getYearList() {
         }
         else if (this.productId != '19'){
           this.productItem = new ProductData();
+          this.productItem.OccupationType = '';
+          if(this.productItem.PersonalAccidentSuminsured== '' || this.productItem.PersonalAccidentSuminsured==null){
+            this.productItem.PersonalAccidentSuminsured='0';
+          }
+          alert(3);
           this.formSection = true; this.viewSection = false;
   
         }
@@ -6301,14 +6319,16 @@ getOccupationList(sections) {
                           }
                           else if(field.props.label=='Personal Liability' || field.props.label=='Personal Accident'){
                             console.log("Final Fields",field)
-                            let defaultObj = [{ 'label': '-Select-', 'value': null }]
+                            let defaultObj = [{ 'label': '-Select-', 'value': '' }]
                             field.fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.occupationList);
                             this.sectionCount +=1;
                             if(sections.length==this.sectionCount){
+                              alert(4);
                               this.formSection = true; this.viewSection = false;
                             }
                           }
                     }
+                    console.log("Fields in Occupation",this.productItem,this.fields)
               }
               if (this.productId != '19' && this.productId != '3' && this.productId!='6' && this.productId != '1' && this.productId != '32' && this.productId!='14' && this.productId!='16' && this.productId!='25' && this.productId!='26' && this.productId!='21' && this.productId!='27') this.fields[0].fieldGroup[0].fieldGroup[2].props.options = defaultObj.concat(this.occupationList);
               if(this.productId=='14' && this.insuranceId == '100002'){
@@ -6362,19 +6382,8 @@ getOccupationList(sections) {
                 }
                 else {
                     this.productItem = new ProductData();
+                    
                     this.formSection = true; this.viewSection = false;
-                }
-              }
-              if (this.productId == '3') {
-                if (this.coversRequired == 'C' || this.coversRequired == 'B') {
-                  console.log('Fileds to setss',this.fields[0].fieldGroup[3].fieldGroup[0].fieldGroup[0].props.options)
-                  this.fields[0].fieldGroup[2].fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.occupationList);
-                  this.fields[0].fieldGroup[3].fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.occupationList);
-                }
-                else {
-                  console.log('Fileds to be setting',this.fields[0].fieldGroup[3].fieldGroup[0].fieldGroup[0].props.options)
-                  this.fields[0].fieldGroup[3].fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.occupationList);
-                  this.fields[0].fieldGroup[4].fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.occupationList);
                 }
               }
              
@@ -6389,6 +6398,10 @@ getOccupationList(sections) {
                 }
                 else {
                   this.productItem.BuildingBuildYear = '';
+                  this.productItem.OccupationType = '';
+                    if(this.productItem.PersonalAccidentSuminsured== '' || this.productItem.PersonalAccidentSuminsured==null){
+                      this.productItem.PersonalAccidentSuminsured='0';
+                    }
                   this.formSection = true; this.viewSection = false;
                 }
               }
@@ -6497,7 +6510,7 @@ setCommonFormValues(){
               this.formSection = true; this.viewSection = false;
             }
             else{
-            this.productItem.OccupationType = '';
+            this.productItem.OccupationType = null;
             this.productItem.fidelityList = [{"LiabilityOccupationId":null,"TotalNoOfEmployees":null,"EmpLiabilitySi":'0'}];
             this.formSection = true; this.viewSection = false;
             }
@@ -6748,7 +6761,8 @@ setSMEFormValues(type) {
       this.productItem.BuildingBuildYear = customerDatas?.BuildingBuildYear;
       this.productItem.BuildingUsageId = customerDatas?.BuildingUsageId;
       this.productItem.BuildingOwnerYn = customerDatas?.BuildingOwnerYn;
-      this.productItem.OccupationType = customerDatas?.OccupationType;
+      if(customerDatas?.OccupationType!=null) this.productItem.OccupationType = customerDatas?.OccupationType;
+      else this.productItem.OccupationType = '';
       this.productItem.InbuildConstructType = customerDatas?.InbuildConstructType;
       this.productItem.OutbuildConstructType = customerDatas?.OutbuildConstructType;
       this.productItem.BuildingFloors = customerDatas?.BuildingFloors;

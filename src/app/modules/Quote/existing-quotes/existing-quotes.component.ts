@@ -474,13 +474,8 @@ export class ExistingQuotesComponent implements OnInit {
           date2 = dates[2]+'-'+dates[1]+'-'+dates[0]
         }
       } 
-      if((rowData.QuoteNo!=null && rowData.QuoteNo!='' && rowData.QuoteNo!=undefined) && date2>=date1){
-        sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
-        sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
-        sessionStorage.setItem('quoteNo',rowData.QuoteNo);
-        sessionStorage.setItem('updatebar',rowData.QuoteNo);
-        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
-
+      if(rowData.QuoteNo!='' && rowData.QuoteNo!=undefined && rowData.QuoteNo!=null){
+        this.checkStatus(rowData);
       }
       else{
         sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
@@ -490,6 +485,24 @@ export class ExistingQuotesComponent implements OnInit {
         sessionStorage.removeItem('quoteNo');
         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails']);
       }
+      // if((rowData.QuoteNo!=null && rowData.QuoteNo!='' && rowData.QuoteNo!=undefined) && date2>=date1){
+      
+      //     sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+      //     sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
+      //     sessionStorage.setItem('quoteNo',rowData.QuoteNo);
+      //     sessionStorage.setItem('updatebar',rowData.QuoteNo);
+      //     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
+        
+
+      // }
+      // else{
+      //   sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+      //   if(rowData.QuoteNo!=null && rowData.QuoteNo!='' && rowData.QuoteNo!=undefined) sessionStorage.setItem('quoteNo',rowData.QuoteNo);
+      //   sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
+      //   sessionStorage.setItem('TravelQuoteRefNo',rowData.RequestReferenceNo);
+      //   sessionStorage.removeItem('quoteNo');
+      //   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails']);
+      // }
     }
     // if(this.productId=='4'){
     //   sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
@@ -498,6 +511,18 @@ export class ExistingQuotesComponent implements OnInit {
     //   this.router.navigate(['/Travel/customerDetails']);
     // }
 
+
+  }
+  checkStatus(rowData){
+    let urlLink = `${this.CommonApiUrl}selcom/v1/checkout/order-status/${rowData.QuoteNo}`;
+    
+    this.sharedService.onGetMethodSync(urlLink).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+            
+        }
+      })
 
   }
   onCreateQuote(){

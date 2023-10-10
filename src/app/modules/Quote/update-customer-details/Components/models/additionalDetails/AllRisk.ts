@@ -37,7 +37,7 @@ export class AllRisks{
                     fieldGroupClassName: 'row',
                     fieldGroup: [
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'RiskLocation',
                         defaultValue: '',
                         className: 'col-sm-4',
@@ -58,7 +58,7 @@ export class AllRisks{
                         },
                       },
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'RiskContentType',
                         defaultValue: '',
                         className: 'col-sm-4',

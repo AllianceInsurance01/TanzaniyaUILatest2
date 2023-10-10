@@ -1027,7 +1027,6 @@ export class VehicleDetailsComponent implements OnInit {
       if(this.userType!='Broker' && this.userType!='User'){
         console.log("Vehicle Details",this.vehicleDetails,this.updateComponent.sourceType)
         if(this.updateComponent.sourceType==null || this.updateComponent.sourceType==undefined){
-          alert(this.updateComponent.sourceType)
           this.sourceType = this.vehicleDetails.SourceType;
           this.bdmCode = this.vehicleDetails.BrokerCode;
           this.brokerCode = this.vehicleDetails.BrokerCode;

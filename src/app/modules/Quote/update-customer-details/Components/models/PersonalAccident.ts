@@ -27,7 +27,7 @@ export class PersonalAccident{
                 fieldGroupClassName: 'row',
                 fieldGroup: [
                   {
-                    type: 'select',
+                    type: 'ngselect',
                     key: 'OccupationType',
                     defaultValue: '',
                     className: 'col-12',

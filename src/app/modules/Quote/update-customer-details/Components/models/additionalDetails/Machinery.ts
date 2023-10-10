@@ -37,7 +37,7 @@ export class Machineryss{
                     fieldGroupClassName: 'row',
                     fieldGroup: [
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'MLocation',
                         defaultValue: '',
                         className: 'col-sm-4',
@@ -85,7 +85,7 @@ export class Machineryss{
                       
                       }, 
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'MContentType',
                         defaultValue: '',
                         className: 'col-sm-4',

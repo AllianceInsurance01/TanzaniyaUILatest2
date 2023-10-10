@@ -32,7 +32,7 @@ export class Burglary{
                     fieldGroup: [
                       {
                         className: 'col-4',
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'NatureOfTradeId',
                         props: {
                           label: 'Nature Of Trade',
@@ -46,7 +46,7 @@ export class Burglary{
                       },
                       // {
                       //   className: 'col-6',
-                      //   type: 'select',
+                      //   type: 'ngselect',
                       //   key: 'IndustryId',
                       //   props: {
                       //     label: 'Industry Type',
@@ -131,7 +131,7 @@ export class Burglary{
                       },
                       {
                         className: 'col-4',
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'WallType',
                         props: {
                           label: 'External Wall Type',
@@ -145,7 +145,7 @@ export class Burglary{
                       },
                       {
                         className: 'col-4',
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'InternalWallType',
                         props: {
                           label: 'Internal Wall Type',
@@ -159,7 +159,7 @@ export class Burglary{
                       },
                       {
                         className: 'col-4',
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'RoofType',
                         props: {
                           label: 'Roof Type',
@@ -173,7 +173,7 @@ export class Burglary{
                       },
                       {
                         className: 'col-4',
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'CeilingType',
                         props: {
                           label: 'Ceiling Type',
@@ -213,7 +213,7 @@ export class Burglary{
                         },
                         {
                           className: 'col-4',
-                          type: 'select',
+                          type: 'ngselect',
                           key: 'RegionCode',
                           props: {
                             label: 'Region',
@@ -230,7 +230,7 @@ export class Burglary{
                         },
                         {
                           className: 'col-4',
-                          type: 'select',
+                          type: 'ngselect',
                           key: 'DistrictCode',
                           props: {
                             label: 'District',
@@ -393,7 +393,7 @@ export class Burglary{
                       },
                       {
                         className: 'col-4',
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'WindowsMaterialId',
                         props: {
                           label: 'Windows Construction Material',
@@ -407,7 +407,7 @@ export class Burglary{
                       },
                       {
                         className: 'col-4',
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'DoorsMaterialId',
                         props: {
                           label: 'Doors Construction Material',
@@ -421,7 +421,7 @@ export class Burglary{
                       },
                       {
                         className: 'col-4',
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'NightLeftDoor',
                         props: {
                           label: 'In Night by which door are the premises Left',
@@ -435,7 +435,7 @@ export class Burglary{
                       },
                       {
                         className: 'col-4',
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'BuildingOccupied',
                         props: {
                           label: 'Building occupied',
@@ -503,7 +503,7 @@ export class Burglary{
                                         },
                                       },
                                       {
-                                        type: 'select',
+                                        type: 'ngselect',
                                         key: 'StockLossPercent',
                       
                                         templateOptions: {
@@ -558,7 +558,7 @@ export class Burglary{
                                         },
                                       },
                                       {
-                                        type: 'select',
+                                        type: 'ngselect',
                                         key: 'GoodsLossPercent',
                                         
                                         templateOptions: {
@@ -612,7 +612,7 @@ export class Burglary{
                                         },
                                       },
                                       {
-                                        type: 'select',
+                                        type: 'ngselect',
                                         key: 'FurnitureLossPercent',
                                         
                                         templateOptions: {
@@ -666,7 +666,7 @@ export class Burglary{
                                           },
                                         },
                                         {
-                                          type: 'select',
+                                          type: 'ngselect',
                                           key: 'ApplianceLossPercent',
                                          
                                           templateOptions: {
@@ -720,7 +720,7 @@ export class Burglary{
                                         },
                                       },
                                       {
-                                        type: 'select',
+                                        type: 'ngselect',
                                         key: 'CashValueablesLossPercent',
                                         
                                         templateOptions: {

@@ -34,7 +34,7 @@ export class EmployersLiability{
                   fieldGroupClassName: 'row',
                   fieldGroup: [
                     {
-                      type: 'select',
+                      type: 'ngselect',
                       key: 'LiabilityOccupationId',
                       defaultValue: '',
                       className: 'col-sm-4',
