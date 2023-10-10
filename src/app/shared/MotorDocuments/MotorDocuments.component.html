@@ -143,18 +143,20 @@
                                             <div class="heading1">ApplicationId</div>
                                             <div class="heading2">{{Cus.ApplicationId}}</div>
                                         </div>
-                                        <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">Source</div>
-                                            <div class="heading2">{{Cus.Source}}</div>
-                                        </div>
+                                     
                                            <div class="col-6 col-md-4 mt-2">
                                                 <div class="heading1">Source Type</div>
                                                 <div class="heading2">{{Cus.SourceType}}</div>
                                             </div>
+
+                                            <div class="col-6 col-md-4 mt-2">
+                                                <div class="heading1">Customer Code</div>
+                                                <div class="heading2">{{Cus.CustomerCode}}</div>
+                                            </div>
                                         
                                         <div class="col-6 col-md-4 mt-2">
                                             <div class="heading1">CustomerCodeName</div>
-                                            <div class="heading2">broker</div>
+                                            <div class="heading2">{{Cus?.CustomerCodeName}}</div>
                                         </div>
                                      
                                         <div class="col-6 col-md-4 mt-2">
@@ -854,6 +856,77 @@
                                                 <div class="heading1">Pressure Plants  SI</div>
                                                 <div class="heading2">{{MechineryInfo?.BoilerPlantsSi}}</div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                           
+                    </div>
+                   </ng-container>
+
+                   <ng-container *ngIf="productId == '46'">
+                    <div class="row p-3 ml-4 mr-4"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
+                        <div class="col-12 col-md-6">
+                            <div>
+                                <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;" class="mt-2">Short Term Details</h1></div>
+                                <div class="mt-2 pl-5 pr-5">
+    
+                                    <div class="row mt-2">
+                                        <div class="col-6 col-md-4 mt-2">
+                                            <div class="heading1">Body Type</div>
+                                            <div class="heading2">{{shorttermpolicy?.VehicleTypeDesc}}</div>
+                                        </div>
+                                        <div class="col-6 col-md-4 mt-2">
+                                            <div class="heading1">Make</div>
+                                            <div class="heading2">{{shorttermpolicy?.VehiclemakeDesc}}</div>
+                                        </div>
+                                        <div class="col-6 col-md-4 mt-2">
+                                            <div class="heading1">Currency</div>
+                                            <div class="heading2" >{{shorttermpolicy?.VehicleModelDesc}}</div>
+                                        </div>
+                                    </div>
+                                        <div class="row mt-2">
+                                            <div class="col-6 col-md-4 mt-2">
+                                                <div class="heading1">Chassis Number</div>
+                                                <div class="heading2">{{shorttermpolicy?.Chassisnumber}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-4 mt-2">
+                                                <div class="heading1">Engine Number</div>
+                                                <div class="heading2">{{shorttermpolicy?.EngineNumber}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-4 mt-2">
+                                                <div class="heading1">Engine Capacity</div>
+                                                <div class="heading2" >{{shorttermpolicy?.EngineCapacity}}</div>
+                                            </div>
+                                    </div>
+                                   
+                                </div>
+                             </div>
+                        </div>
+                            
+                        <div class="line-in-middle"></div>
+                        <div class="col-12 col-md-5">
+                                    <div>
+                                        <div class="Personal Details">
+                                            <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral" class="mt-2">Additional Information</h1></div>
+                                           </div>
+                                           <div class="row mt-2">
+                                            <div class="col-6 col-md-4 mt-2">
+                                                <div class="heading1">Seating Capacity</div>
+                                                <div class="heading2">{{shorttermpolicy?.SeatingCapacity}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-4 mt-2">
+                                                <div class="heading1">Manufacture Year</div>
+                                                <div class="heading2">{{shorttermpolicy?.ManufactureYear}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-4 mt-2">
+                                                <div class="heading1">Fuel Used</div>
+                                                <div class="heading2">{{shorttermpolicy?.FuelTypeDesc}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-4 mt-2">
+                                                <div class="heading1">Vehicle Color</div>
+                                                <div class="heading2">{{shorttermpolicy?.ColorDesc}}</div>
+                                            </div>
+                                           
                                         </div>
                                     </div>
                                 </div>
