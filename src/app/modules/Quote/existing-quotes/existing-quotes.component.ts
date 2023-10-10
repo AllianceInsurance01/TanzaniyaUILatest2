@@ -514,13 +514,16 @@ export class ExistingQuotesComponent implements OnInit {
 
   }
   checkStatus(rowData){
+    let ReqObj = {
+      
+    }
     let urlLink = `${this.CommonApiUrl}selcom/v1/checkout/order-status/${rowData.QuoteNo}`;
     
-    this.sharedService.onGetMethodSync(urlLink).subscribe(
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         console.log(data);
         if(data.Result){
-            
+
         }
       })
 

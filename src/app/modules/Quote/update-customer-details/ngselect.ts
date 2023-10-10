@@ -6,7 +6,7 @@ import { FieldType } from '@ngx-formly/core';
        template: `
               <div class="input-control-container mt-3">
                      <label class="input-form-label">{{to.label}}</label>
-                     <ng-select class="input-form-select" appendTo="body" [formControl]="formControl"   [items]="to.options" bindValue="Code" bindLabel="label">
+                     <ng-select class="input-form-select" appendTo="body" [formControl]="formControl"   [items]="to.options" bindValue="value" bindLabel="label">
                     </ng-select>
               </div> 
  `,

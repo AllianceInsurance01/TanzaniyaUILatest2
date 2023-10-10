@@ -4094,7 +4094,7 @@ saveMotorRiskDetails(){
           }
         }
         else{
-          model = '';
+          model = '99999';
           modelDesc = this.productItem.ModelDesc;
         }
     }
@@ -4380,7 +4380,7 @@ getYearList() {
     let yearEntry = year--
     years.push({ "label": String(yearEntry), "value": String(yearEntry) });
     if (year == currentYear) {
-      let defaultObj = [{ 'label': '-Select-', 'value': '' }]
+      let defaultObj = [{ 'label': '-Select-', 'value': '','Code':'' }]
       if (this.productId != '3' && this.productId!='46') this.fields[0].fieldGroup[0].fieldGroup[4].props.options = defaultObj.concat(years);
       if(this.productId=='46'){
         let fields = this.fields[0].fieldGroup[0].fieldGroup;
@@ -7384,6 +7384,7 @@ checkCoverValues() {
   checkMandatories() {
     let errorList = [];
     let ulList:any='',i=0;
+    console.log("Year",this.productItem)
      if(this.productItem.BodyType=='' ||  this.productItem.BodyType==null){
       i+=1;
       ulList +=`<li class="list-group-login-field">
