@@ -461,26 +461,9 @@ export class ExistingQuotesComponent implements OnInit {
     sessionStorage.removeItem('endorsePolicyNo');
     sessionStorage.removeItem('homeCommonDetails');
     if(this.productId){
-      let date = rowData.PolicyStartDate;
-      var d = new Date();
-      var year = d.getFullYear();
-      var month = d.getMonth();
-      var day = d.getDate();
-      let date1 = formatDate(new Date(),'yyyy-MM-dd','en_US');
-      let date2 = null;
-      if(date!='' && date !=null){
-        if(date.split('/').length>1){
-          let dates = date.split('/')
-          date2 = dates[2]+'-'+dates[1]+'-'+dates[0]
-        }
-      } 
-      if((rowData.QuoteNo!=null && rowData.QuoteNo!='' && rowData.QuoteNo!=undefined) && date2>=date1){
-        sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
-        sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
-        sessionStorage.setItem('quoteNo',rowData.QuoteNo);
-        sessionStorage.setItem('updatebar',rowData.QuoteNo);
-        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
-
+      
+      if(rowData.QuoteNo!='' && rowData.QuoteNo!=undefined && rowData.QuoteNo!=null){
+        this.checkStatus(rowData);
       }
       else{
         sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
@@ -490,6 +473,24 @@ export class ExistingQuotesComponent implements OnInit {
         sessionStorage.removeItem('quoteNo');
         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails']);
       }
+      // if((rowData.QuoteNo!=null && rowData.QuoteNo!='' && rowData.QuoteNo!=undefined) && date2>=date1){
+      
+      //     sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+      //     sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
+      //     sessionStorage.setItem('quoteNo',rowData.QuoteNo);
+      //     sessionStorage.setItem('updatebar',rowData.QuoteNo);
+      //     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
+        
+
+      // }
+      // else{
+      //   sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+      //   if(rowData.QuoteNo!=null && rowData.QuoteNo!='' && rowData.QuoteNo!=undefined) sessionStorage.setItem('quoteNo',rowData.QuoteNo);
+      //   sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
+      //   sessionStorage.setItem('TravelQuoteRefNo',rowData.RequestReferenceNo);
+      //   sessionStorage.removeItem('quoteNo');
+      //   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails']);
+      // }
     }
     // if(this.productId=='4'){
     //   sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
@@ -498,6 +499,54 @@ export class ExistingQuotesComponent implements OnInit {
     //   this.router.navigate(['/Travel/customerDetails']);
     // }
 
+
+  }
+  checkStatus(rowData){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId
+    }
+    let urlLink = `${this.CommonApiUrl}selcom/v1/checkout/order-status/${rowData.QuoteNo}`;
+    
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.result=='FAIL'){
+          let date = rowData.PolicyStartDate;
+          var d = new Date();
+          var year = d.getFullYear();
+          var month = d.getMonth();
+          var day = d.getDate();
+          let date1 = formatDate(new Date(),'yyyy-MM-dd','en_US');
+          let date2 = null;
+          if(date!='' && date !=null){
+            if(date.split('/').length>1){
+              let dates = date.split('/')
+              date2 = dates[2]+'-'+dates[1]+'-'+dates[0]
+            }
+          } 
+          if((rowData.QuoteNo!=null && rowData.QuoteNo!='' && rowData.QuoteNo!=undefined) && date2>=date1){
+      
+              sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+              sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
+              sessionStorage.setItem('quoteNo',rowData.QuoteNo);
+              sessionStorage.setItem('updatebar',rowData.QuoteNo);
+              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
+            
+
+          }
+          else{
+            sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+            if(rowData.QuoteNo!=null && rowData.QuoteNo!='' && rowData.QuoteNo!=undefined) sessionStorage.setItem('quoteNo',rowData.QuoteNo);
+            sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
+            sessionStorage.setItem('TravelQuoteRefNo',rowData.RequestReferenceNo);
+            sessionStorage.removeItem('quoteNo');
+            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails']);
+          }
+        }
+        else{
+
+        }
+      })
 
   }
   onCreateQuote(){
