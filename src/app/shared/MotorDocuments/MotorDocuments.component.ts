@@ -75,6 +75,7 @@ export class MotorDocumentsComponent implements OnInit {
   pa:Number=1;
   fa:Number=1;
   all:Number=1;
+  shorttermpolicy:any;
   Allrisk:any[]=[];
   machineries:any[]=[];
   LocationList:any[]=[];
@@ -316,6 +317,10 @@ export class MotorDocumentsComponent implements OnInit {
            if(this.ReferenceNo){
             this.onRating()
            }
+
+           if(this.productId =='46'){
+            this.getmotordetails();
+           }
            if(this.quoteNo){
             if(this.productId=='14' || this.productId=='32'){
               this.getEmployeeDetails();
@@ -324,6 +329,7 @@ export class MotorDocumentsComponent implements OnInit {
               this.getCyberDetails();
             }
             this.getMachineryRisk();
+
            }
       //  if(this.searchValue){
       //    this.onCustomerSearch();
@@ -394,6 +400,7 @@ export class MotorDocumentsComponent implements OnInit {
       else if(this.pageFrom == 'Existing') { this.router.navigate(['/Home/existingQuotes'])}
       else if(this.pageFrom =='Portfolio') { this.router.navigate(['Home/NewDetails']);
     sessionStorage.setItem('Dates','new')}
+    else if(this.pageFrom == 'dashboard') { this.router.navigate(['/Home'])}
     }
     getCyberDetails(){
       let urlLink = `${this.motorApiUrl}api/getallcontentrisk`;
@@ -586,6 +593,25 @@ this.passengerName=type;
         },
         (err) => { },
       );
+    }
+    getmotordetails(){
+      let ReqObj ={
+        "RequestReferenceNo":this.ReferenceNo,
+        "RiskId": "1",
+        "SectionId": "",
+        "Vehicleid": "1"
+    }
+    let urlLink = `${this.motorApiUrl}api/getmotordetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data?.Result){
+           this.shorttermpolicy=data?.Result;
+            console.log('kkkkkkkkk',this.customerInfo)
+        }
+      },
+      (err) => { },
+    );
     }
     getmachinerydetails(){
       let ReqObj ={
