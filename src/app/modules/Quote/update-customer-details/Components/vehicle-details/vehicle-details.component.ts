@@ -97,6 +97,7 @@ export class VehicleDetailsComponent implements OnInit {
   changeUwSection: boolean;
   enableCollateralDetails: boolean=false;
   endorseCoverModification: any=null;
+  customerName: any;
   constructor(private router:Router,private sharedService: SharedService,
     private updateComponent:UpdateCustomerDetailsComponent,
    private datePipe:DatePipe) {
@@ -604,11 +605,52 @@ export class VehicleDetailsComponent implements OnInit {
               }
             }
             else{
-              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+              
+              if(sessionStorage.getItem('quoteReferenceNo')){
+                this.requestReferenceNo = sessionStorage.getItem('quoteReferenceNo');
+                this.getExistingVehiclesList();
+              }
+              
             }
             
         }
 
+      },
+      (err) => { },
+    );
+  }
+  getExistingVehiclesList(){
+    this.vehicleDetailsList = [];
+    let ReqObj = {
+      "RequestReferenceNo": this.requestReferenceNo
+    }
+    let urlLink = `${this.motorApiUrl}api/getallmotordetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+            this.vehicleDetailsList = data.Result;
+            if(this.vehicleDetailsList.length!=0){
+              this.updateComponent.CurrencyCode = this.vehicleDetailsList[0].Currency;
+              this.currencyValue = this.vehicleDetailsList[0].Currency;
+              this.exchangeRate = this.vehicleDetailsList[0].ExchangeRate;
+              this.policyStartDate = this.vehicleDetailsList[0].PolicyStartDate;
+              this.policyEndDate = this.vehicleDetailsList[0].PolicyEndDate;
+              this.havePromoCodeYN = this.vehicleDetailsList[0].HavePromoCode;
+              this.promoCode = this.vehicleDetailsList[0].PromoCode;
+              this.acExecutiveId = this.vehicleDetailsList[0].AcExecutiveId;
+              this.commissionType = this.vehicleDetailsList[0].CommissionType;
+              this.updateComponent.setCommonValues(this.vehicleDetailsList[0]);
+              for(let veh of this.vehicleDetailsList){
+                veh['Active'] = true;
+              }
+              this.getInsuranceClassList();
+              if(this.vehicleId==null || this.vehicleId==undefined || this.vehicleId=='') this.vehicleId = this.vehicleDetailsList[0].Vehicleid;
+              this.getEditVehicleDetails(this.vehicleId,'direct')
+              this.currentIndex = 1;
+              this.totalCount = this.vehicleDetailsList.length;
+            }
+        }
       },
       (err) => { },
     );
@@ -985,12 +1027,12 @@ export class VehicleDetailsComponent implements OnInit {
       if(this.userType!='Broker' && this.userType!='User'){
         console.log("Vehicle Details",this.vehicleDetails,this.updateComponent.sourceType)
         if(this.updateComponent.sourceType==null || this.updateComponent.sourceType==undefined){
-          
           this.sourceType = this.vehicleDetails.SourceType;
           this.bdmCode = this.vehicleDetails.BrokerCode;
           this.brokerCode = this.vehicleDetails.BrokerCode;
           brokerbranchCode =  this.vehicleDetails.BrokerBranchCode;
           this.customerCode = this.vehicleDetails.CustomerCode;
+          this.customerName = this.vehicleDetails.CustomerName;
         }
         else{
           this.sourceType = this.updateComponent.sourceType;
@@ -998,12 +1040,14 @@ export class VehicleDetailsComponent implements OnInit {
           this.brokerCode = this.updateComponent.brokerCode;
           brokerbranchCode =  this.updateComponent.brokerBranchCode;
           this.customerCode = this.updateComponent.CustomerCode;
+          this.customerName = this.updateComponent.CustomerName;
         }
         }
         else {
           this.sourceType = this.subuserType;
           this.customerCode = this.userDetails?.Result.CustomerCode;
         }
+        if(this.customerName ==undefined) this.customerName = null;
       let refNo = "99999",regYear="99999",IdType="99999",IdNo="99999";
       if(this.customerDetails){refNo = this.customerDetails?.CustomerReferenceNo;
         IdNo = this.customerDetails?.IdNumber;
@@ -1014,7 +1058,7 @@ export class VehicleDetailsComponent implements OnInit {
       "AcExecutiveId": this.acExecutiveId,
       "CommissionType": this.commissionType,
       "CustomerCode": this.customerCode,
-      "CustomerName": this.vehicleDetails?.CustomerName,
+      "CustomerName": this.customerName,
       "BdmCode": this.customerCode,
       "BrokerCode": this.brokerCode,
       "LoginId": loginId,
@@ -1880,6 +1924,7 @@ export class VehicleDetailsComponent implements OnInit {
                   this.brokerCode = this.vehicleDetails.BrokerCode;
                   brokerbranchCode =  this.vehicleDetails.BrokerBranchCode;
                   this.customerCode = this.vehicleDetails.CustomerCode;
+                  this.customerName = this.vehicleDetails.CustomerName;
                 }
                 else{
                   this.sourceType = this.updateComponent.sourceType;
@@ -1887,6 +1932,7 @@ export class VehicleDetailsComponent implements OnInit {
                   this.brokerCode = this.updateComponent.brokerCode;
                   brokerbranchCode =  this.updateComponent.brokerBranchCode;
                   this.customerCode = this.updateComponent.CustomerCode;
+                  this.customerName = this.updateComponent.CustomerName;
                 }
                 
               }
@@ -1906,7 +1952,7 @@ export class VehicleDetailsComponent implements OnInit {
                 "AcExecutiveId": this.acExecutiveId,
                 "CommissionType": this.commissionType,
                 "CustomerCode": this.customerCode,
-                "CustomerName": vehicleDetails?.CustomerName,
+                "CustomerName": this.customerName,
                 "BdmCode": this.customerCode,
                 "BrokerCode": this.brokerCode,
                 "LoginId": loginId,

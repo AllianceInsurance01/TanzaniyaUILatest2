@@ -27,10 +27,10 @@ export class PersonalAccident{
                 fieldGroupClassName: 'row',
                 fieldGroup: [
                   {
-                    type: 'select',
+                    type: 'ngselect',
                     key: 'OccupationType',
                     defaultValue: '',
-                    className: 'offset-1 col-10',
+                    className: 'col-12',
                     props: {
                       label: `Occupation`,
                       disabled: this.checkDisable('OccupationType'),
@@ -50,11 +50,11 @@ export class PersonalAccident{
                   },
                   {
                     type: 'commaSeparator',
-                    className: 'offset-1 col-10',
+                    className: 'col-12',
                     key: 'PersonalAccidentSuminsured',
                     defaultValue: '0',
                     props: {
-                      label: `SumInsured`,
+                      label: `Sum Insured`,
                       disabled: this.checkDisable('PersonalAccidentSuminsured'),
                       required: true,
                       options: [

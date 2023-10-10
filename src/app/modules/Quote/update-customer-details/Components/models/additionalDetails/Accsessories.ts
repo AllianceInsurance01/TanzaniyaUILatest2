@@ -32,7 +32,7 @@ export class Accessories{
                     fieldGroupClassName: 'row',
                     fieldGroup: [
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'AccessoriesChassisNo',
                         defaultValue: '',
                         className: 'col-sm-6',
@@ -53,7 +53,7 @@ export class Accessories{
                         },
                       },
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'AccessoriesType',
                         defaultValue: '',
                         className: 'col-sm-6',

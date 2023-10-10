@@ -1111,6 +1111,10 @@ export class CustomerDetailsComponent implements OnInit {
                 this.updateComponent.brokerCode = this.brokerCode;
               }
               if(this.Code=='broker' || this.Code=='direct' || this.Code=='agent' || this.Code == 'bank' || this.Code=='Broker' || this.Code == 'Agent' || this.Code =='Direct' || this.Code == 'Bank' || this.Code == 'whatsapp'){
+                if(type=='change'){
+                  this.updateComponent.CustomerCode = null;
+                  this.updateComponent.CustomerName = null;
+                }
                 this.getBrokerBranchList('direct');
                 
               }
@@ -1187,6 +1191,10 @@ export class CustomerDetailsComponent implements OnInit {
               this.brokerBranchCode = this.brokerBranchList[0].Code;
               this.updateComponent.brokerBranchCode = this.brokerBranchCode;
               this.updateComponent.brokerCode = this.brokerCode;
+              if(type=='change'){
+                this.updateComponent.CustomerCode=null;
+                this.updateComponent.CustomerName = null;
+              }
             }
             
           }

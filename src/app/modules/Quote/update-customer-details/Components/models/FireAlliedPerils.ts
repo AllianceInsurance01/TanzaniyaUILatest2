@@ -28,7 +28,7 @@ export class FireAlliedPerils{
                 fieldGroup: [
                   {
                     className: 'col-4 col-lg-4 col-md-4 offset-2',
-                    type: 'select',
+                    type: 'ngselect',
                     key: 'IndemityPeriod',
                     props: {
                       label: 'Indemity Period',

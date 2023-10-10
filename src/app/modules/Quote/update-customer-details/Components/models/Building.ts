@@ -27,8 +27,8 @@ export class Building{
               fieldGroupClassName: 'row',
               fieldGroup: [
                 {
-                  className: 'col-6',
-                  type: 'select',
+                  className: 'col-3',
+                  type: 'ngselect',
                   key: 'BuildingUsageId',
                   props: {
                     label: 'Building Usage',
@@ -43,7 +43,7 @@ export class Building{
                   },
                 },
                 {
-                  className: 'col-6',
+                  className: 'col-2',
                   type: 'input',
                   key: 'BuildingBuildYear',
                   props: {
@@ -65,11 +65,11 @@ export class Building{
                   },
                 },
                 {
-                  className: 'col-6',
-                  type: 'select',
+                  className: 'col-2',
+                  type: 'ngselect',
                   key: 'WallType',
                   props: {
-                    label: 'Used Contruction Materials (Wall)',
+                    label: 'Construction (Wall)',
                     disabled: this.checkDisable('WallType'),
                     required: false,
                     options: [
@@ -80,11 +80,11 @@ export class Building{
                   },
                 },
                 {
-                  className: 'col-6',
-                  type: 'select',
+                  className: 'col-2',
+                  type: 'ngselect',
                   key: 'RoofType',
                   props: {
-                    label: 'Used Contruction Materials (Roof)',
+                    label: 'Construction (Roof)',
                     disabled: this.checkDisable('RoofType'),
                     required: false,
                     options: [
@@ -94,6 +94,7 @@ export class Building{
   
                   },
                 },
+               
                 // {
                 //   className: 'col-6',
                 //   key: 'OutbuildConstructType',
@@ -129,7 +130,7 @@ export class Building{
                 // },
   
                 {
-                  className: 'col-6',
+                  className: 'col-3',
                   type: 'commaSeparator',
                   key: 'BuildingSuminsured',
                   templateOptions: {

@@ -37,7 +37,7 @@ export class PersonalAccident{
                     fieldGroupClassName: 'row',
                     fieldGroup: [
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'AccidentLocation',
                         defaultValue: '',
                         className: 'col-sm-4 col-lg-4 col-md-4',

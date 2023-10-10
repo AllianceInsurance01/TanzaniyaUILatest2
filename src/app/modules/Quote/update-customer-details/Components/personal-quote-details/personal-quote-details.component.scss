@@ -149,3 +149,44 @@ ul{
     margin-left: 10px !important;
 }
 .btn:disabled{cursor: not-allowed !important;}
+.headings {
+    padding-left: 7px;
+    color: var(--theme1);
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.line-middle {
+    width: 1px;
+    height: 270px;
+    background: linear-gradient(to right,
+            transparent 0%,
+            transparent calc(50% - 0.81px),
+            #EAECF0 calc(50% - 0.8px),
+            #EAECF0 calc(50% + 0.8px),
+            transparent calc(50% + 0.81px),
+            transparent 100%);
+}
+.splitCard{
+    box-shadow: 1px 1px 8px rgba(0,0,0,.1);
+    border-radius: 25px;
+    margin: 1%;
+    padding: 5px;
+    width: 22%;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+}
+.splitCardHeader{
+    display: block;
+    padding-left: 3px;
+    padding-top: 1px;
+    padding-right: 3px;
+    padding-bottom: 2px;
+    border-radius: 25px;
+    cursor: pointer;
+    background: #e3e0e0;
+    color: #6f6c6c;
+}

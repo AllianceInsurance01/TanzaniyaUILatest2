@@ -49,7 +49,7 @@ export class MotorDetailsComponent implements OnInit {
   acExecutiveId: any;
   commissionType: any;
   referenceNo: string;
-  bodyTypeId: any;
+  bodyTypeId: any=null;modelDesc:any='';
   constructor(private sharedService: SharedService,private datePipe:DatePipe,
     private router:Router, private updateComponent:UpdateCustomerDetailsComponent,) {
       this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -62,7 +62,7 @@ export class MotorDetailsComponent implements OnInit {
       let vehicleDetails = JSON.parse(sessionStorage.getItem('vehicleDetailsList'));
       if(vehicleDetails)
       console.log("Vehicle Details List",vehicleDetails);
-    this.getOwnerCategoryList();
+      this.getOwnerCategoryList();
    }
 
   ngOnInit(): void {  
@@ -283,6 +283,15 @@ onBodyTypeChange(type){
       (err) => { },
     );
   }
+  onModelChange(type){
+    if(this.modelValue!=null && this.modelValue!=''){
+      if(this.modelValue!='99999'){
+        this.modelDesc = this.bodyTypeList.find(ele=>ele.CodeDesc==this.modelValue)?.CodeDesc;
+      }
+      
+      else if(type=='change'){this.modelDesc = null}
+    }
+  }
   onMakeChange(){
     console.log("on make change",this.makeValue);
     let ReqObj = {
@@ -310,7 +319,19 @@ onBodyTypeChange(type){
       let entry = this.makeList.find(ele=>ele.Code==this.makeValue);
       make = entry.CodeDesc;
     }
+    let modelDesc = null;
+    if(this.bodyTypeId=='1' || this.bodyTypeId=='2' || this.bodyTypeId=='3' || this.bodyTypeId=='4' || this.bodyTypeId=='5'){
+      if(this.modelValue=='99999'){
+          modelDesc = this.modelDesc;
+      }
+      else if(this.modelValue!='' && this.modelValue!=null){
+        modelDesc = this.modelList.find(ele=>ele.Code==this.modelValue)?.CodeDesc
+      }
+    }
+    else modelDesc = this.modelDesc;
     let ReqObj = {
+      "Insuranceid": this.insuranceId,
+      "BranchCode": this.branchCode,
       "AxelDistance": this.axelDistance,
       "Chassisnumber": this.chassisNo,
       "Color": this.colorValue,
@@ -330,7 +351,7 @@ onBodyTypeChange(type){
       "ResStatusDesc": "None",
       "SeatingCapacity": this.seatingCapacity,
       "Tareweight": this.tareWeight,
-      "Vehcilemodel": this.modelValue,
+      "Vehcilemodel": modelDesc,
       "VehicleType": this.bodyTypeValue,
       "Vehiclemake": make
     }

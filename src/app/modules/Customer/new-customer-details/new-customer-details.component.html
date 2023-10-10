@@ -220,14 +220,14 @@
                 <div class="col-12 mt-1">
                     <div class="headinglbels">Identity Type<span class="star">*</span></div> 
                     <div class="mt-1">
-                    <ng-select class="custom" appendTo="body" [items]="policyHolderTypeList"  [(ngModel)]="productItem.PolicyHolderTypeid" bindValue="Code" bindLabel="CodeDesc">
-                    </ng-select>
+                        <ng-select class="custom" appendTo="body" [items]="policyHolderTypeList"  [(ngModel)]="productItem.PolicyHolderTypeid" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
                     </div>
                 </div>
                 <div class="col-12 mt-1">
                     <div class="headinglbels">ID Number<span class="star">*</span></div> 
                     <div class="mt-1">
-                    <input type="text" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.IdNumber" maxlength="20">
+                        <input type="text" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.IdNumber" maxlength="20">
                     </div>
                 </div>
                 <div class="col-12 mt-1">
@@ -320,7 +320,7 @@
             <div class="col-4">
                 <div class="headinglbels">Address<span class="star">*</span></div> 
                 <div class="mt-1">
-                    <input type="text" maxlength="100" (keypress)="omit_special_char($event)"  class="layout"   [(ngModel)]="productItem.Address1">
+                    <textarea id="" class="layout" cols="30" rows="2" maxlength="100" [(ngModel)]="productItem.Address1"></textarea>
                 </div>
             </div>
               <!-- <div class="col-4">

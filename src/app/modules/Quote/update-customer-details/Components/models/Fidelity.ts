@@ -33,7 +33,7 @@ export class Fidelity{
                   fieldGroupClassName: 'row',
                   fieldGroup: [
                     {
-                      type: 'select',
+                      type: 'ngselect',
                       key: 'LiabilityOccupationId',
                       defaultValue: '',
                       className: 'col-sm-4',

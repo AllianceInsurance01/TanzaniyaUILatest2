@@ -41,7 +41,7 @@ export class MedicalInsurance{
                 },
                 {
                     className: 'col-5 col-lg-5 col-md-5 offset-1',
-                    type: 'select',
+                    type: 'ngselect',
                     key: 'AooSumInsured',
                     props: {
                       label: 'Limit Of Indeminity(AOO)',
@@ -57,7 +57,7 @@ export class MedicalInsurance{
                   },
                   {
                     className: 'col-5 col-lg-5 col-md-5',
-                    type: 'select',
+                    type: 'ngselect',
                     key: 'AggSumInsured',
                     props: {
                       label: 'Limit Of Indeminity(AGG)',

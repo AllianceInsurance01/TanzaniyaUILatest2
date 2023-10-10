@@ -50,7 +50,7 @@ export class EmployeeLiablityss{
                           
                        },
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'EmpsOccupation',
                         defaultValue: '',
                         className: 'col-sm-8',
@@ -110,7 +110,7 @@ export class EmployeeLiablityss{
                         }
                       },
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'EmpsJoin',
                         defaultValue: '',
                         className: 'col-sm-4',
@@ -144,7 +144,7 @@ export class EmployeeLiablityss{
                       
                       }, 
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'EmpsLocation',
                         defaultValue: '',
                         className: 'col-sm-4',

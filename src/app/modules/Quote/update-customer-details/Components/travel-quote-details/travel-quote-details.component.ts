@@ -358,7 +358,6 @@ export class TravelQuoteDetailsComponent implements OnInit {
           if(this.updateComponent.CustomerType==null || this.updateComponent.CustomerType==undefined || this.updateComponent.CustomerType =='') {this.customerTypeError = true;i+=1;}
           if(i>0) this.errorSection = true;
           if(i==0){
-            alert("Save")
             let customerObj = {
               "Title":this.updateComponent.Title,
               "ClientName":this.updateComponent.UserName,

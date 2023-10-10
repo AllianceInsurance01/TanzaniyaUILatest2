@@ -50,7 +50,7 @@ export class Fedilitis{
                           
                        },
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'fdOccupation',
                         defaultValue: '',
                         className: 'col-sm-8',
@@ -110,7 +110,7 @@ export class Fedilitis{
                         }
                       },
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'fdJoin',
                         defaultValue: '',
                         className: 'col-sm-4',
@@ -144,7 +144,7 @@ export class Fedilitis{
                       
                       }, 
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'fdLocation',
                         defaultValue: '',
                         className: 'col-sm-4',

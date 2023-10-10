@@ -37,7 +37,7 @@ export class PersonalIndemenitys{
                     fieldGroupClassName: 'row',
                     fieldGroup: [
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'IndLocation',
                         defaultValue: '',
                         className: 'col-sm-4',

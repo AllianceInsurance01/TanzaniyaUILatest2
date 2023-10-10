@@ -12,13 +12,10 @@
             </div>
             <div class="card-body">
                 <div class="row mb-2 display1">
-                    <div>
+                    <div class="col-md-4 col-lg-4 col-4">
                         <div class="input-control-container" style="position:absolute;">
                             <div class="input-form-box">
-                                <input type="text" class="input-form-control with-icon" [(ngModel)]="searchValue" placeholder="Search By TIN No / Passport / Driving License">
-                                <span class="input-form-icon">
-                                    <i class="fas fa-search"></i>
-                                </span>
+                                <input type="text" style="min-width: 300px;" class="input-form-control" [(ngModel)]="searchValue" placeholder="Search By TIN No / Passport / Driving License">
                             </div>
                         </div>
                     </div>
@@ -30,10 +27,8 @@
                     <div class="col-6">
                         <div class="input-control-container">
                             <div class="input-form-box">
-                                <input type="text" class="input-form-control with-icon" [(ngModel)]="searchValue" placeholder="Search By TIN No / Passport / Driving License">
-                                <span class="input-form-icon">
-                                    <i class="fas fa-search"></i>
-                                </span>
+                                <input type="text" class="input-form-control" [(ngModel)]="searchValue" placeholder="Search By TIN No / Passport / Driving License">
+                                
                             </div>
                         </div>
                     </div>

@@ -222,7 +222,7 @@ export class DashboardComponent implements OnInit {
     if(entry){
       console.log("Entry Received",entry) 
       if(entry.Type!='broker' && entry.Type!='Broker' && entry.Type!='Direct' && entry.Type!='direct' 
-      && entry.Type!='Agent' && entry.Type!='agent' && entry.Type!='bank' && entry.Type!='whatsapp'){
+      && entry.Type!='Agent' && entry.Type!='agent' && entry.Type!='b2c' && entry.Type!='bank' && entry.Type!='whatsapp'){
         loginId='';
         bdmCode=this.brokerCode3;
       }
@@ -402,7 +402,7 @@ export class DashboardComponent implements OnInit {
     if(entry){
       console.log("Entry Received",entry) 
       if(entry.Type!='broker' && entry.Type!='Broker' && entry.Type!='Direct' && entry.Type!='direct' 
-      && entry.Type!='Agent' && entry.Type!='agent' && entry.Type!='bank' && entry.Type!='whatsapp'){
+      && entry.Type!='Agent' && entry.Type!='agent' && entry.Type!='b2c' && entry.Type!='bank' && entry.Type!='whatsapp'){
         loginId='';
         bdmCode=this.brokerCode;
       }
@@ -770,7 +770,7 @@ export class DashboardComponent implements OnInit {
     if(entry){
       console.log("Entry Received",entry) 
       if(entry.Type!='broker' && entry.Type!='Broker' && entry.Type!='Direct' && entry.Type!='direct' 
-      && entry.Type!='Agent' && entry.Type!='agent' && entry.Type!='bank' && entry.Type!='whatsapp'){
+      && entry.Type!='Agent' && entry.Type!='agent' && entry.Type!='b2c' && entry.Type!='bank' && entry.Type!='whatsapp'){
         loginId='';
         bdmCode=this.brokerCode1;
       }
@@ -950,7 +950,7 @@ export class DashboardComponent implements OnInit {
     if(entry){
       console.log("Entry Received",entry) 
       if(entry.Type!='broker' && entry.Type!='Broker' && entry.Type!='Direct' && entry.Type!='direct' 
-      && entry.Type!='Agent' && entry.Type!='agent' && entry.Type!='bank' && entry.Type!='whatsapp'){
+      && entry.Type!='Agent' && entry.Type!='agent' && entry.Type!='b2c' && entry.Type!='bank' && entry.Type!='whatsapp'){
         loginId='';
         bdmCode=this.brokerCode2;
       }

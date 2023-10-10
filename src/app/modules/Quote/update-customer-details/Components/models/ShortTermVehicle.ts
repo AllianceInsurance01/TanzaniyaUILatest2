@@ -28,7 +28,7 @@ export class ShortTermVehicle{
                 fieldGroupClassName: 'row',
                 fieldGroup: [
                     {
-                      type: 'select',
+                      type: 'ngselect',
                       key: 'BodyType',
                       defaultValue: '',
                       className: 'col-4',
@@ -41,7 +41,7 @@ export class ShortTermVehicle{
                         ],
                       },
                       validators: {
-                        validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                        validation: [ForceLengthValidators.maxLength(5), ForceLengthValidators.min(1)]
                       },
                       hooks: {
                       },
@@ -49,7 +49,7 @@ export class ShortTermVehicle{
                       },
                     },
                     {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'Make',
                         defaultValue: '',
                         className: 'col-4',
@@ -63,7 +63,7 @@ export class ShortTermVehicle{
                           ],
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(5), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -71,7 +71,7 @@ export class ShortTermVehicle{
                         },
                     },
                     {
-                      type: 'select',
+                      type: 'ngselect',
                       key: 'Model',
                       defaultValue: '',
                       className: 'col-4',
@@ -84,7 +84,7 @@ export class ShortTermVehicle{
                         ],
                       },
                       validators: {
-                        validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                        validation: [ForceLengthValidators.maxLength(10), ForceLengthValidators.min(1)]
                       },
                       hooks: {
                       },
@@ -105,14 +105,34 @@ export class ShortTermVehicle{
                           ],
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(15), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
                         expressions: {
                         },
                     },
-                    
+                    {
+                      type: 'input',
+                      key: 'OtherModelDesc',
+                      defaultValue: '',
+                      className: 'col-4',
+                      props: {
+                        label: `Model Description`,
+                        disabled: this.checkDisable('Model'),
+                        required: true,
+                        options: [
+        
+                        ],
+                      },
+                      validators: {
+                        validation: [ForceLengthValidators.maxLength(15), ForceLengthValidators.min(1)]
+                      },
+                      hooks: {
+                      },
+                      expressions: {
+                      },
+                    },
                     {
                         className: 'col-4',
                         type: 'input',
@@ -123,7 +143,7 @@ export class ShortTermVehicle{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
                         },
                     },
                     // {
@@ -149,7 +169,7 @@ export class ShortTermVehicle{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
                         },
                     },
                     {
@@ -162,7 +182,7 @@ export class ShortTermVehicle{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(5), ForceLengthValidators.min(1)]
                         },
                     },
                     {
@@ -175,11 +195,11 @@ export class ShortTermVehicle{
                           required: true,
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(3), ForceLengthValidators.min(1)]
                         },
                     },
                     {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'ManufactureYear',
                         defaultValue: '',
                         className: 'col-4',
@@ -192,7 +212,7 @@ export class ShortTermVehicle{
                           ],
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(10), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -200,7 +220,7 @@ export class ShortTermVehicle{
                         },
                     },
                     {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'FuelType',
                         defaultValue: '',
                         className: 'col-4',
@@ -213,7 +233,7 @@ export class ShortTermVehicle{
                           ],
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(5), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -221,7 +241,7 @@ export class ShortTermVehicle{
                         },
                     },
                     {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'Color',
                         defaultValue: '',
                         className: 'col-4',
@@ -234,7 +254,7 @@ export class ShortTermVehicle{
                           ],
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(5), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -243,7 +263,7 @@ export class ShortTermVehicle{
                     },
                     
                     {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'MotorUsage',
                         defaultValue: '',
                         className: 'col-4',
@@ -256,7 +276,7 @@ export class ShortTermVehicle{
                           ],
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(5), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },

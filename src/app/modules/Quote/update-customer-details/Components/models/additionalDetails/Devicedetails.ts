@@ -37,7 +37,7 @@ export class DeviceDetails{
                     fieldGroupClassName: 'row',
                     fieldGroup: [
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'DeviceLocation',
                         defaultValue: '',
                         className: 'col-sm-4',
@@ -58,7 +58,7 @@ export class DeviceDetails{
                         },
                       },
                       {
-                        type: 'select',
+                        type: 'ngselect',
                         key: 'DeviceType',
                         defaultValue: '',
                         className: 'col-sm-4',
