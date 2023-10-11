@@ -217,7 +217,7 @@
                 </ng-container>
             </div>
         </div>
-        <div class="text-center mb-2">
+        <div class="text-center mb-2 mt-2">
             <button class="custom-btn btn-5 mr-2" *ngIf="!searchSection && vehicleWishList.length==0 && loginType!='B2CFlow'" (click)="ongetBack()" matRipple><<&nbsp;Back</button>&nbsp;
             <button class="custom-btn btn-6 maan-button-data mr-2" *ngIf="!vehicleDetails && !searchSection && this.customerData.length!=0" (click)="WishListProceed()" matRipple>&nbsp;Proceed</button>
         </div>
@@ -293,7 +293,7 @@
                 </ng-container>
             </div>
         <div class="text-center mb-2">
-            <button class="custom-btn btn-6 maan-button-data" matRipple *ngIf="vehicleDetails" (click)="onAddVehicleWishList()" ><i class="fas fa-plus"></i>&nbsp;Add Vehicle</button>
+            <button class="custom-btn btn-6 maan-button-data" matRipple *ngIf="vehicleDetails && customerData2.length!=0" (click)="onAddVehicleWishList()" ><i class="fas fa-plus"></i>&nbsp;Add Vehicle</button>
         </div>
     </div>
 </div>

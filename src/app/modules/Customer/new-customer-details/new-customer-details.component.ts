@@ -91,8 +91,8 @@ export class NewCustomerDetailsComponent {
 		else {
 			this.customerReferenceNo = null;
 			this.productItem = new ProductData()
-      this.productItem.IdType=1;
-      this.productItem.Clientstatus = 'Y';
+			this.productItem.IdType=1;
+			
 		}
 		this.getTitleList();
 		this.getPolicyHolderList();
@@ -262,6 +262,8 @@ export class NewCustomerDetailsComponent {
 		if(title!='' && title!=null && title!=undefined){
 				if(title=='2') this.productItem.IdType = '2';
 				else this.productItem.IdType = '1';
+				if(title=='1') this.productItem.Gender = 'M';
+				else this.productItem.Gender = 'F';
 				this.getPolicyIdTypeList(null);
 		}
 		else{
@@ -328,13 +330,19 @@ export class NewCustomerDetailsComponent {
 							}
 							else {
 								this.productItem = new ProductData();
-								this.productItem.Clientstatus = 'P';
+								this.productItem.Clientstatus = 'Y';
+								this.productItem.isTaxExempted = 'N'; 
+								this.productItem.PreferredNotification = 'Sms';
 								this.productItem.Gender = '';
 								this.productItem.PolicyHolderTypeid = '';
 								this.productItem.IdType = 1;
-								this.productItem.PreferredNotification = '';
-								this.productItem.MobileCode = '';
-								this.productItem.Country = '';
+								if(this.mobileCodeList.length!=0 && this.mobileCodeList.length>1){
+									this.productItem.MobileCode = this.mobileCodeList[1].Code;
+								}
+								if(this.countryList.length!=0 && this.countryList.length>1){
+									this.productItem.Country = this.countryList[1].Code;
+										this.getRegionList('change');
+								}
 								this.productItem.state = '';
 								this.productItem.CityName = '';
 								this.productItem.Occupation = '';
