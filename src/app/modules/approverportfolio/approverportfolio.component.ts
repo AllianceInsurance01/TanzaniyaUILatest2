@@ -67,7 +67,7 @@ export class ApproverPortfolioComponent implements OnInit,OnChanges, AfterViewIn
       
       this.quoteHeader =  [
         { key: 'BrokerName', display: 'Broker' },
-        { key: 'SubUserType', display: 'Channel' },
+        { key: 'SourceType', display: 'Channel' },
         {
           key: 'actions',
           display: 'Count',
