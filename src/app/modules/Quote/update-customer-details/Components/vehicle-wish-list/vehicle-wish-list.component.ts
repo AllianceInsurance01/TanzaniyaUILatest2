@@ -86,7 +86,6 @@ export class VehicleWishListComponent implements OnInit {
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
-    console.log("UserDetails",this.userDetails);
     if(this.userDetails.Result.LoginType) this.loginType = this.userDetails.Result.LoginType;
     this.loginId = this.userDetails.Result.LoginId;
     this.userType = this.userDetails?.Result?.UserType;
@@ -194,7 +193,6 @@ export class VehicleWishListComponent implements OnInit {
         this.quoteRefNo = referenceNo;
       }
     if(this.quoteRefNo){
-      console.log("Quote Exist Section",this.quoteRefNo)
       this.wishSection = true;
       this.getExistingVehiclesList();
     }
@@ -211,8 +209,6 @@ export class VehicleWishListComponent implements OnInit {
         this.commissionType = this.updateComponent.vehicleWishList[0].CommissionType;
       }
       this.vehicleWishList = this.updateComponent.vehicleWishList;
-      console.log("Vehicle Wishes",this.vehicleWishList,this.updateComponent.policyStartDate,this.updateComponent.policyEndDate,
-      this.updateComponent.HavePromoCode,this.updateComponent.PromoCode)
        this.searchSection = true;
         this.wishSection = true;
     }
@@ -227,7 +223,6 @@ export class VehicleWishListComponent implements OnInit {
         this.endorseEffectiveDate = endorseObj?.EffectiveDate;
         this.endorsePolicyNo = endorseObj.PolicyNo;
         this.enableFieldsList = endorseObj.FieldsAllowed;
-        console.log("Enable Obj",this.enableFieldsList)
         if(this.endorsementId!=42){
             this.enableAddVehicle = this.enableFieldsList.some(ele=>ele=='addVehicle');
             this.enableRemoveVehicle = this.enableFieldsList.some(ele=>ele=='removeVehicle');
@@ -258,7 +253,6 @@ export class VehicleWishListComponent implements OnInit {
     }
   }
   onDelete(rowData){
-      console.log("On Delete Vehicle",rowData);
       if(rowData.Active){
         Swal.fire({
             title: '<strong> &nbsp;Delete Vehicle!</strong>',
@@ -335,7 +329,6 @@ export class VehicleWishListComponent implements OnInit {
     let urlLink = `${this.motorApiUrl}api/getallmotordetails`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
-        console.log(data);
         if(data.Result){
           this.uploadSection = false;
             this.customerData = data.Result;
@@ -375,7 +368,6 @@ export class VehicleWishListComponent implements OnInit {
     // };
     let list:any[] = this.vehicleWishList;
     let entry = this.vehicleWishList.find(ele=>ele.ReqChassisNumber == this.vehicleDetails.ReqChassisNumber);
-    console.log(entry,this.vehicleDetails)
     if(entry == undefined){
       let existEntry = this.customerData.find(ele=>ele.Chassisnumber == this.vehicleDetails.ReqChassisNumber);
       if(existEntry==undefined){
@@ -386,7 +378,6 @@ export class VehicleWishListComponent implements OnInit {
         else{
           this.vehicleDetails['EndorsementYn'] = 'N';
         }
-        console.log("Details",this.vehicleDetails,this.updateComponent.policyStartDate,this.updateComponent.policyEndDate)
         if(this.vehicleDetails?.PolicyStartDate==null || this.vehicleDetails?.PolicyStartDate==undefined){
           if(this.endorsementSection && this.enableAddVehicle){
             this.vehicleDetails.PolicyStartDate = this.endorseEffectiveDate;
@@ -428,7 +419,6 @@ export class VehicleWishListComponent implements OnInit {
     
   }
   onSaveSearchVehicles(){
-    console.log("Save Vehicle Details",this.vehicleDetails);
     this.subuserType = sessionStorage.getItem('typeValue');
     let appId = "1",loginId="",brokerbranchCode="",createdBy="";
     let quoteStatus = sessionStorage.getItem('QuoteStatus');
@@ -784,8 +774,6 @@ export class VehicleWishListComponent implements OnInit {
     
   }
   onUploadDocuments(target:any,fileType:any,type:any,uploadType){
-    
-    console.log("Event ",target);
     this.imageUrl = null;this.uploadDocList=[];
     let event:any = null;
     if(uploadType=='drag') event = target
@@ -807,7 +795,6 @@ export class VehicleWishListComponent implements OnInit {
         }
 
     }
-    console.log("Final File List",this.uploadDocList)
   }
   onUploadVehicleData(){
       if(this.customerData.length!=0){
@@ -841,7 +828,6 @@ export class VehicleWishListComponent implements OnInit {
   uploadProceed(type){
     let quoteStatus = sessionStorage.getItem('QuoteStatus');
     this.subUsertype = sessionStorage.getItem('typeValue');
-      console.log("AcExecutive",this.acExecutiveId,this.vehicleDetails,this.sourceType,this.brokerCode,this.customerCode);
       
       this.subuserType = sessionStorage.getItem('typeValue');
     let appId = "1",loginId="",brokerbranchCode="",createdBy="";
@@ -875,7 +861,6 @@ export class VehicleWishListComponent implements OnInit {
           this.customerCode = this.userDetails?.Result.CustomerCode;
         }
   
-    console.log("AcExecutive",this.acExecutiveId,this.vehicleDetails,this.sourceType,this.bdmCode,this.brokerCode,this.customerCode);
   
     let ReqObj = {
       "CompanyId": this.insuranceId,
@@ -954,7 +939,6 @@ export class VehicleWishListComponent implements OnInit {
     let urlLink = `${this.ApiUrl1}eway/vehicle/sample/download/`
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
-        console.log(data);
         const link = document.createElement('a');
         link.setAttribute('target', '_blank');
         link.setAttribute('href', data?.Result.Base64);
@@ -1110,7 +1094,6 @@ export class VehicleWishListComponent implements OnInit {
         sessionStorage.setItem('vehicleType','edit');
         this.updateComponent.resetVehicleTab();
          sessionStorage.setItem('editVehicleId',String(rowData.Vehicleid));
-         console.log("Final Filters 1",this.vehicleDetails,this.vehicleWishList,this.customerData)
          this.onWishListProceed.emit(this.customerData);
         //  this.setVehicleList('direct',null);
         //  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
@@ -1220,7 +1203,6 @@ export class VehicleWishListComponent implements OnInit {
                 const momentDate = new Date(this.policyEndDate); // Replace event.value with your date value
                 const formattedDate = moment(momentDate).format("YYYY-MM-DD");
                 const formattedDatecurrent = new Date(this.endorseEffectiveDate);
-                console.log(formattedDate);
                 vehicle['PolicyPeriod'] = Math.round(Math.abs((Number(momentDate)  - Number(formattedDatecurrent) )/oneday)+1);
                 vehicle['PolicyEndDate'] = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
               }
@@ -1268,7 +1250,6 @@ export class VehicleWishListComponent implements OnInit {
             const momentDate = new Date(this.policyEndDate); // Replace event.value with your date value
             const formattedDate = moment(momentDate).format("YYYY-MM-DD");
             const formattedDatecurrent = new Date(this.endorseEffectiveDate);
-            console.log(formattedDate);
             vehicle['PolicyPeriod'] = Math.round(Math.abs((Number(momentDate)  - Number(formattedDatecurrent) )/oneday)+1);
             vehicle['PolicyEndDate'] = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
           }
@@ -1334,7 +1315,6 @@ export class VehicleWishListComponent implements OnInit {
                 const momentDate = new Date(this.policyEndDate); // Replace event.value with your date value
                 const formattedDate = moment(momentDate).format("YYYY-MM-DD");
                 const formattedDatecurrent = new Date(this.endorseEffectiveDate);
-                console.log(formattedDate);
                 vehicle['PolicyPeriod'] = Math.round(Math.abs((Number(momentDate)  - Number(formattedDatecurrent) )/oneday)+1);
                 vehicle['PolicyEndDate'] = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
               }
@@ -1353,7 +1333,6 @@ export class VehicleWishListComponent implements OnInit {
                 sessionStorage.setItem('vehicleType','edit');
                 this.updateComponent.resetVehicleTab();
                 sessionStorage.removeItem('vehicleDetails');
-                console.log("On Final Vehicle List 3",vehicleList)
                 if(this.updateComponent.ModifiedCurrencyYN=='Y'){
                   this.updateCurrencyDetails();
                 }
@@ -1370,7 +1349,6 @@ export class VehicleWishListComponent implements OnInit {
                 sessionStorage.setItem('vehicleType','edit');
                 this.updateComponent.resetVehicleTab();
                 sessionStorage.removeItem('vehicleDetails');
-                console.log("On Final Vehicle List 2",vehicleList)
                 if(this.updateComponent.ModifiedCurrencyYN=='Y'){
                   this.updateCurrencyDetails();
                 }
@@ -1393,7 +1371,6 @@ export class VehicleWishListComponent implements OnInit {
     let urlLink = `${this.motorApiUrl}api/update/changeofcurrencysi`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
-        console.log(data);
         if(data.Result){
           this.updateComponent.ModifiedCurrencyYN = 'N';
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
@@ -1468,15 +1445,18 @@ export class VehicleWishListComponent implements OnInit {
                 let urlLink = `${this.motorApiUrl}regulatory/showvehicleinfo`;
                 this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
                   (data: any) => {
-                    console.log(data);
                     if(data.Result){
-                        this.customerData2 = [data?.Result];
-                        this.emptySection = false;
+                      let searchData = [data.Result];
+                      if(searchData.length!=0){
+                        this.vehicleDetails = searchData[0];
+                        this.onAddVehicleWishList();
+                      }
+                        // this.customerData2 = [data?.Result];
+                        // this.emptySection = false;
                     }
                     else if(data.ErrorMessage){
                       if(data.ErrorMessage){
                         this.emptySection = true;
-                        console.log("Error Iterate",data.ErrorMessage)
                       }
                   }
                   },
@@ -1530,7 +1510,6 @@ export class VehicleWishListComponent implements OnInit {
           pinCode = this.customerDetails.PinCode;
           street = this.customerDetails.Street;
         }
-        console.log("Customer Details",this.customerDetails)
       }
     let ReqObj = {
       "BrokerBranchCode": this.brokerBranchCode,
@@ -1589,7 +1568,6 @@ export class VehicleWishListComponent implements OnInit {
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         let res: any = data;
-        console.log(data);
         if (data.ErrorMessage.length != 0) {
           if (res.ErrorMessage) {
             const errorList: any[] = res.ErrorMessage || res?.Result?.ErrorMessage;
@@ -1650,7 +1628,6 @@ export class VehicleWishListComponent implements OnInit {
     this.getBack.emit();
   }
   WishListProceed(){
-    console.log("Final Filters 2",this.vehicleDetails,this.vehicleWishList,this.customerData)
     let loginType = this.userDetails.Result.LoginType;
     let i=0;
     if(loginType){

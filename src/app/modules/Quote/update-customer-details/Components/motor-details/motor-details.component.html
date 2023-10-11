@@ -136,7 +136,7 @@
                                 <label class="input-form-label">Model Description</label>&nbsp;<span
                                 class="text-danger">*</span>
                                 <div class="input-form-box">
-                                    <input type="text" [(ngModel)]="modelDesc" [disabled]="editSection" maxlength="100"
+                                    <input type="text" [(ngModel)]="modelDesc" [disabled]="editSection" maxlength="50"
                                         class="input-form-control without-icon" (keypress)="omit_special_char($event)">
                                 </div>
                             </div>
@@ -176,7 +176,7 @@
                                 <label class="input-form-label">Engine Capacity</label>&nbsp;<span
                                     class="text-danger">*</span>
                                 <div class="input-form-box">
-                                    <input type="text" [(ngModel)]="engineCapacity" maxlength="10"
+                                    <input type="text" [(ngModel)]="engineCapacity" maxlength="5"
                                         class="input-form-control without-icon">
                                 </div>
                             </div>

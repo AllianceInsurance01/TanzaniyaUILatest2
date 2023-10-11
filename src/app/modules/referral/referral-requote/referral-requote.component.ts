@@ -364,12 +364,29 @@ export class ReferralRequoteComponent {
       );
   }
   onEditQuotes(rowData){
-    sessionStorage.setItem('QuoteStatus','RE');
-    sessionStorage.removeItem('endorsePolicyNo');
-    sessionStorage.removeItem('endorseTypeId');
-    sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
-    sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
-    sessionStorage.setItem('quoteNo',rowData.QuoteNo);
-    this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
+   this.checkStatus(rowData)
+  }
+  checkStatus(rowData){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId
+    }
+    let urlLink = `${this.CommonApiUrl}selcom/v1/checkout/order-status/${rowData.QuoteNo}`;
+    
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.result=='FAIL'){
+          sessionStorage.setItem('QuoteStatus','RE');
+          sessionStorage.removeItem('endorsePolicyNo');
+          sessionStorage.removeItem('endorseTypeId');
+          sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+          sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
+          sessionStorage.setItem('quoteNo',rowData.QuoteNo);
+          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
+        }
+        else{
+          
+        }
+      });
   }
 }
