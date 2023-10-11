@@ -2615,6 +2615,9 @@ export class CustomerDetailsComponent implements OnInit {
                       if(this.modifiedCustomer){
                           this.saveCustomerDetails(customerObj,'proceed');
                       }
+                      else{
+                        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+                      }
                     }
                   }
                   else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
@@ -3109,7 +3112,10 @@ export class CustomerDetailsComponent implements OnInit {
     );
   }
   ongetBack(){
-    if(this.statusValue){
+    if(this.loginType=='B2CFlow' || this.loginType=='B2CFlow2'){
+      this.router.navigate(['/customerProducts'])
+    }
+    else if(this.statusValue){
         if(this.adminSection){
           if(this.statusValue == 'RP')  this.router.navigate(['/Admin/referralPending']);
           if(this.statusValue == 'RR')  this.router.navigate(['/Admin/referralRejected']);

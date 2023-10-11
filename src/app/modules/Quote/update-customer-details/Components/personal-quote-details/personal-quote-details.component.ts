@@ -222,6 +222,10 @@ export class PersonalQuoteDetailsComponent implements OnInit {
           this.updateComponent.referenceNo = referenceNo;
           this.getMotorDetails();
         }
+        else{
+          this.activeSection = true;
+          this.setProductSections();
+        }
       }
       else{
         let referenceNo = sessionStorage.getItem('quoteReferenceNo');
@@ -263,7 +267,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
   BenifitList: any[] = []; public form = new FormGroup({})
   public model: any = { maxDate: '2019-09-10',employeeList: [{}] }
   ngOnInit(): void {
-    if(this.commonDetails){
+    if(this.commonDetails && !this.activeSection){
       this.activeSection = true;
         this.setProductSections();
     }
