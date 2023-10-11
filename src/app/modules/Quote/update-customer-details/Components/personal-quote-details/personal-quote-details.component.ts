@@ -219,6 +219,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         let referenceNo = sessionStorage.getItem('quoteReferenceNo');
         if (referenceNo) {
           this.requestReferenceNo = referenceNo;
+          this.updateComponent.referenceNo = referenceNo;
           this.getMotorDetails();
         }
       }
@@ -226,6 +227,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         let referenceNo = sessionStorage.getItem('quoteReferenceNo');
         if (referenceNo) {
           this.requestReferenceNo = referenceNo;
+          this.updateComponent.referenceNo = referenceNo;
           this.getCommonDetails();
         }
       }
@@ -289,6 +291,12 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       this.emailId = this.customerDetails?.Email1;
       this.mobileNo = this.customerDetails?.MobileNo1;
       this.idNumber = this.customerDetails?.IdNumber;
+    }
+    else{
+      let referenceNo =  sessionStorage.getItem('customerReferenceNo');
+      if(referenceNo){
+        this.getCustomerDetails(referenceNo)
+      }
     }
     if (this.productId == '13') {
       this.fields = [
@@ -821,6 +829,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       let referenceNo = sessionStorage.getItem('quoteReferenceNo');
       if (referenceNo) {
         this.requestReferenceNo = referenceNo;
+        this.updateComponent.referenceNo = referenceNo;
         this.setCommonFormValues();
       }
       else {
@@ -864,6 +873,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
        let referenceNo = sessionStorage.getItem('quoteReferenceNo');
       if (referenceNo) {
         this.requestReferenceNo = referenceNo;
+        this.updateComponent.referenceNo = referenceNo;
         this.setCommonFormValues();
       }
       else {
@@ -893,6 +903,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
        let referenceNo = sessionStorage.getItem('quoteReferenceNo');
       if (referenceNo) {
         this.requestReferenceNo = referenceNo;
+        this.updateComponent.referenceNo = referenceNo;
         this.setCommonFormValues();
       }
       else {
@@ -930,6 +941,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
            let referenceNo = sessionStorage.getItem('quoteReferenceNo');
             if (referenceNo) {
               this.requestReferenceNo = referenceNo;
+              this.updateComponent.referenceNo = referenceNo;
               this.setCommonFormValues();
             }
             else {
@@ -960,6 +972,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
             this.checkMoneyYNChanges();
             if (referenceNo) {
               this.requestReferenceNo = referenceNo;
+              this.updateComponent.referenceNo = referenceNo;
               this.setCommonFormValues();
             }
             else {
@@ -1016,6 +1029,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       this.fields[0] = fireData?.fields;
       if (referenceNo) {
         this.requestReferenceNo = referenceNo;
+        this.updateComponent.referenceNo = referenceNo;
         this.productItem = new ProductData();
         this.setCommonFormValues();
        
@@ -1033,6 +1047,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       let referenceNo = sessionStorage.getItem('quoteReferenceNo');
       if (referenceNo) {
         this.requestReferenceNo = referenceNo;
+        this.updateComponent.referenceNo = referenceNo;
         this.productItem = new ProductData();
         this.setCommonFormValues();
        
@@ -1050,6 +1065,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       let referenceNo = sessionStorage.getItem('quoteReferenceNo');
       if (referenceNo) {
         this.requestReferenceNo = referenceNo;
+        this.updateComponent.referenceNo = referenceNo;
         this.productItem = new ProductData();
         this.setCommonFormValues();
        
@@ -1067,6 +1083,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       let referenceNo = sessionStorage.getItem('quoteReferenceNo');
       if (referenceNo) {
         this.requestReferenceNo = referenceNo;
+        this.updateComponent.referenceNo = referenceNo;
         this.productItem = new ProductData();
         this.setCommonFormValues();
        
@@ -1083,6 +1100,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       let referenceNo = sessionStorage.getItem('quoteReferenceNo');
       if (referenceNo) {
         this.requestReferenceNo = referenceNo;
+        this.updateComponent.referenceNo = referenceNo;
         this.productItem = new ProductData();
         this.setCommonFormValues();
        
@@ -1099,6 +1117,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       let referenceNo = sessionStorage.getItem('quoteReferenceNo');
       if (referenceNo) {
         this.requestReferenceNo = referenceNo;
+        this.updateComponent.referenceNo = referenceNo;
         this.productItem = new ProductData();
         this.fields[0].fieldGroup[0].fieldGroup[0].templateOptions.options = [
           { value: 'A', 
@@ -1186,6 +1205,29 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       this.cyberinsutypes();
       this.productTypes();
     }
+  }
+  getCustomerDetails(referenceNo){
+    let ReqObj = {
+      "CustomerReferenceNo": referenceNo
+    }
+    let urlLink = `${this.CommonApiUrl}api/getcustomerdetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          this.customerDetails = data.Result;
+          this.title = this.customerDetails?.TitleDesc;
+          this.clientName = this.customerDetails?.ClientName;
+          this.ownerName = this.customerDetails?.ClientName;
+          this.dateOfBirth = this.customerDetails?.DobOrRegDate;
+          if(this.customerDetails?.PolicyHolderType == '1') this.clientType = "Individual";
+          if(this.customerDetails?.PolicyHolderType == '2') this.clientType = "Corporate";
+          //this.ownerCategory = this.customerDetails?.PolicyHolderType;
+          this.emailId = this.customerDetails?.Email1;
+          this.mobileNo = this.customerDetails?.MobileNo1;
+          this.idNumber = this.customerDetails?.IdNumber;
+        }
+      });
   }
   getCommonDetails(){
     let urlLink:any;
@@ -1292,6 +1334,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         let referenceNo = sessionStorage.getItem('quoteReferenceNo');
         if (referenceNo) {
           this.requestReferenceNo = referenceNo;
+          this.updateComponent.referenceNo = referenceNo;
           //this.setSMEFormValues(type)
           //if (this.productId == '3') this.setSMEFormValues('edit');
           if (this.productId == '19' || this.productId=='3') this.setSMEForm('create', type);
@@ -2059,7 +2102,6 @@ getBuildingDetails(sections){
             }
             this.sectionCount +=1;
             if(sections.length==this.sectionCount){
-              alert(1);
               this.formSection = true; this.viewSection = false;
             }
             console.log("Products in Building",this.productItem)
@@ -2096,7 +2138,6 @@ getAllRiskDetails(sections){
             }
             this.sectionCount +=1;
             if(sections.length==this.sectionCount){
-              alert(2);
               this.formSection = true; this.viewSection = false;
             }
             console.log("Products",this.productItem)
@@ -3334,6 +3375,7 @@ getCategoryList() {
           let referenceNo = sessionStorage.getItem('quoteReferenceNo');
           if (referenceNo) {
             this.requestReferenceNo = referenceNo;
+            this.updateComponent.referenceNo = referenceNo;
             if (this.productId != '19' && this.productId != '3') this.setFormValues();
             else this.setSMEFormValues('edit')
           }
@@ -4035,6 +4077,7 @@ getIndemityPeriodList(){
                 let referenceNo = sessionStorage.getItem('quoteReferenceNo');
                 if (referenceNo) {
                   this.requestReferenceNo = referenceNo;
+                  this.updateComponent.referenceNo = referenceNo;
                 }
                 else {
                     this.productItem = new ProductData();
@@ -4397,6 +4440,7 @@ getYearList() {
         let referenceNo = sessionStorage.getItem('quoteReferenceNo');
         if (referenceNo) {
           this.requestReferenceNo = referenceNo;
+          this.updateComponent.referenceNo = referenceNo;
           if (this.productId != '19' && this.productId != '3') this.setFormValues();
           else this.setSMEFormValues('edit')
         }
@@ -4406,7 +4450,6 @@ getYearList() {
           if(this.productItem.PersonalAccidentSuminsured== '' || this.productItem.PersonalAccidentSuminsured==null){
             this.productItem.PersonalAccidentSuminsured='0';
           }
-          alert(3);
           this.formSection = true; this.viewSection = false;
   
         }
@@ -6323,7 +6366,6 @@ getOccupationList(sections) {
                             field.fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.occupationList);
                             this.sectionCount +=1;
                             if(sections.length==this.sectionCount){
-                              alert(4);
                               this.formSection = true; this.viewSection = false;
                             }
                           }
@@ -6340,6 +6382,7 @@ getOccupationList(sections) {
                 let referenceNo = sessionStorage.getItem('quoteReferenceNo');
                 if (referenceNo) {
                   this.requestReferenceNo = referenceNo;
+                  this.updateComponent.referenceNo = referenceNo;
                   this.setCommonFormValues();
                   this.productItem = new ProductData();
                  
@@ -6358,6 +6401,7 @@ getOccupationList(sections) {
                 let referenceNo = sessionStorage.getItem('quoteReferenceNo');
                 if (referenceNo) {
                   this.requestReferenceNo = referenceNo;
+                  this.updateComponent.referenceNo = referenceNo;
                   this.setCommonFormValues();
                   this.productItem = new ProductData();
                  
@@ -6376,6 +6420,7 @@ getOccupationList(sections) {
                 let referenceNo = sessionStorage.getItem('quoteReferenceNo');
                 if (referenceNo) {
                   this.requestReferenceNo = referenceNo;
+                  this.updateComponent.referenceNo = referenceNo;
                   this.productItem = new ProductData();
                   this.setCommonFormValues();
                  
@@ -6393,6 +6438,7 @@ getOccupationList(sections) {
                 let referenceNo = sessionStorage.getItem('quoteReferenceNo');
                 if (referenceNo) {
                   this.requestReferenceNo = referenceNo;
+                  this.updateComponent.referenceNo = referenceNo;
                   if (this.productId != '19') this.setFormValues();
                   else this.setSMEFormValues('edit')
                 }
@@ -6421,6 +6467,7 @@ getOccupationList(sections) {
             let referenceNo = sessionStorage.getItem('quoteReferenceNo');
             if (referenceNo) {
               this.requestReferenceNo = referenceNo;
+              this.updateComponent.referenceNo = referenceNo;
               if(this.productId == '3' ) this.checkDomesticForm('direct');
               else if (this.productId == '6' || this.productId == '16' || this.productId == '39' || this.productId == '1') this.setCommonFormValues();
               else this.setFormValues();

@@ -119,7 +119,7 @@ export class DashboardComponent implements OnInit {
     
     //this.getQuotesList(null,'change');
     // this.getPolicyList(null,'change');
-    //this.getLapsedList();
+    this.getLapsedList();
     //this.getReferralPendingList(null,'change');
   }
   ngOnInit() {
@@ -316,13 +316,17 @@ export class DashboardComponent implements OnInit {
                 }
                 
                 let datas = data.Result?.CustomerDetailsRes;
+                this.referralApprovedSection = true;
+                if(this.referralApprovedSection && this.quoteSection && this.policySection) this.setChartValue();
               }
               else{
-                this.quoteRAData=[];this.referralAppData=[]}
+                this.quoteRAData=[];this.referralAppData=[]
+                this.referralApprovedSection = true;
+                if(this.referralApprovedSection && this.quoteSection && this.policySection) this.setChartValue();
+              }
             }
               //this.quoteData = data?.Result;
-              this.referralApprovedSection = true;
-              if(this.referralApprovedSection && this.quoteSection && this.policySection) this.setChartValue();
+              
           }
         },
         (err) => { },

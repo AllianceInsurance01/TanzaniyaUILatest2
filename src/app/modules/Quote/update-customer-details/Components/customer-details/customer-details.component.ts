@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 import { SharedService } from '../../../../../shared/shared.service';
 import { ProductData } from 'src/app/modules/Customer/models/product';
+import Swal from 'sweetalert2';
 declare var $:any;
 //import { ClientComponent } from '../../../../client/client.component';
 @Component({
@@ -92,6 +93,16 @@ export class CustomerDetailsComponent implements OnInit {
   checkEmailYN: any=null;
   loginType: any=null;
   policyHolderList: any[]=[];
+  modifiedCustomer: boolean;
+  errorSection: boolean;
+  customerTitleError: boolean;
+  customerNameError: boolean;
+  customerMobileCodeError: boolean;
+  customerTypeError: boolean;
+  customerPolicyTypeError: boolean;
+  customerIdNumberError: boolean;
+  customerMobileNoError: boolean;
+  customerReferenceNo: any;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       
@@ -2572,7 +2583,46 @@ export class CustomerDetailsComponent implements OnInit {
             this.updateCurrencyDetails();
           }
           else{
-            if(this.productId=='46') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+            if(this.productId=='46'){
+              let loginType = this.loginType;
+              if(loginType){
+                if(loginType=='B2CFlow' || loginType=='B2CFlow2'){
+                  let i=0;
+                  this.customerTitleError = false;this.customerNameError=false;this.customerMobileCodeError = false;this.customerTypeError=false;
+                  this.customerMobileNoError = false;this.customerIdNumberError = false;this.customerPolicyTypeError = false;
+                    if(this.updateComponent.Title==null || this.updateComponent.Title==undefined || this.updateComponent.Title ==''){this.customerTitleError = true;i+=1;}
+                    if(this.updateComponent.UserName==null || this.updateComponent.UserName==undefined || this.updateComponent.UserName ==''){this.customerNameError = true;i+=1;}
+                    if(this.updateComponent.MobileCode==null || this.updateComponent.MobileCode==undefined || this.updateComponent.MobileCode ==''){this.customerMobileCodeError = true;i+=1;}
+                    if(this.updateComponent.MobileNo==null || this.updateComponent.MobileNo==undefined || this.updateComponent.MobileNo =='') {this.customerMobileNoError = true;i+=1;}
+                    if(this.updateComponent.IdNumber==null || this.updateComponent.IdNumber==undefined || this.updateComponent.IdNumber =='') {this.customerIdNumberError = true;i+=1;}
+                    if(this.updateComponent.PolicyHolderTypeid==null || this.updateComponent.PolicyHolderTypeid==undefined || this.updateComponent.PolicyHolderTypeid =='') {this.customerPolicyTypeError = true;i+=1;}
+                    if(this.updateComponent.CustomerType==null || this.updateComponent.CustomerType==undefined || this.updateComponent.CustomerType =='') {this.customerTypeError = true;i+=1;}
+                    if(i>0) this.errorSection = true;
+                    if(i==0){
+                      let customerObj = {
+                        "Title":this.updateComponent.Title,
+                        "ClientName":this.updateComponent.UserName,
+                        "MobileCode":this.updateComponent.MobileCode,
+                        "MobileNo":this.updateComponent.MobileNo,
+                        "MobileCodeDesc": this.updateComponent.MobileCodeDesc,
+                        "IdNumber":this.updateComponent.IdNumber,
+                        "IdType": this.updateComponent.CustomerType,
+                        "PolicyHolderTypeid":this.updateComponent.PolicyHolderTypeid,
+                        "EmailId":this.updateComponent.EmailId,
+                      }
+                      sessionStorage.setItem('b2cCustomerObj',JSON.stringify(customerObj));
+                      this.modifiedCustomer = this.updateComponent.ModifiedCustomer;
+                      if(this.modifiedCustomer){
+                          this.saveCustomerDetails(customerObj,'proceed');
+                      }
+                    }
+                  }
+                  else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+              }
+              else{
+                this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+              }
+            }
             else{
               this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
             }
@@ -2625,6 +2675,146 @@ export class CustomerDetailsComponent implements OnInit {
       else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='21'  || this.productId=='26' || this.productId == '25' || this.productId=='43') this.saveCommonDetails([vehicle]); 
       else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
     }
+  }
+  saveCustomerDetails(data,type){
+    let appointmentDate = "",street=null, dobOrRegDate = "",vrngst='0', taxExemptedId = null,cityName=null, stateName=null,businessType = '1',
+    add1=null,StateCode=null,status='P',IsTaxExempted='N',Gender=null,cityCode=null,countryCode=null,pinCode=null;
+    //  if(data.AppointmentDate!= undefined && data.AppointmentDate!=null && data.AppointmentDate!=''){
+    // 	appointmentDate = this.datePipe.transform(data.AppointmentDate, "dd/MM/yyyy");
+    //  }
+    // if(data.CityName!=null && data.CityName!='') cityName = this.stateList.find(ele=>ele.Code==data.CityName)?.CodeDesc;
+    // if(data.state!=null && data.state!='') stateName = this.regionList.find(ele=>ele.Code==data.state)?.CodeDesc;
+    let refNo = sessionStorage.getItem('customerReferenceNo');
+    if(refNo) this.customerReferenceNo = refNo;
+    else this.customerReferenceNo = null;
+      if(this.customerReferenceNo==null){
+        businessType = '1';
+        status = 'P';
+      }
+      else{
+        if(this.customerDetails){
+          if(this.customerDetails.BusinessType==null){
+            businessType = '1';
+            vrngst = '0';
+          }
+          else{
+            businessType = this.customerDetails.BusinessType;
+            vrngst = this.customerDetails.VrTinNo;
+            
+          }
+          add1 = this.customerDetails.Address1;
+          stateName = this.customerDetails.StateName;
+          StateCode =  this.customerDetails.StateCode;
+          status = this.customerDetails.Status;
+          IsTaxExempted = this.customerDetails?.IsTaxExempted;
+          Gender = this.customerDetails?.Gender;
+          cityName = this.customerDetails.CityName
+          cityCode = this.customerDetails.CityCode;
+          dobOrRegDate = this.customerDetails.DobOrRegDate;
+          countryCode = this.customerDetails.Nationality;
+          taxExemptedId = this.customerDetails.TaxExemptedId;
+          pinCode = this.customerDetails.PinCode;
+          street = this.customerDetails.Street;
+        }
+      }
+    let ReqObj = {
+      "BrokerBranchCode": this.brokerbranchCode,
+      "CustomerReferenceNo": this.customerReferenceNo,
+      "InsuranceId": this.insuranceId,
+      "BranchCode": this.branchCode,
+      "ProductId": "5",
+      "AppointmentDate": null,
+      "Address1": add1,
+      "Address2": null,
+      "BusinessType": businessType,
+      "CityCode": cityCode,
+      "CityName": cityName,
+      "ClientName": data?.ClientName,
+      "Clientstatus": 'P',
+      "CreatedBy": this.loginId,
+      "DobOrRegDate": dobOrRegDate,
+      "Email1": data?.EmailId,
+      "Email2": null,
+      "Email3": null,
+      "Fax": null,
+      "Gender": Gender,
+      "IdNumber": data?.IdNumber,
+      "IdType": data?.IdType,
+      "IsTaxExempted": IsTaxExempted,
+      "Language": "1",
+      "MobileNo1": data.MobileNo,
+      "MobileNo2": null,
+      "MobileNo3": null,
+      "Nationality": countryCode,
+      "Occupation": data?.Occupation,
+      "Placeofbirth": "Chennai",
+      "PolicyHolderType": data.IdType,
+      "PolicyHolderTypeid": data?.PolicyHolderTypeid,
+      "PreferredNotification": data?.PreferredNotification,
+      "RegionCode": "01",
+      "MobileCode1": data?.MobileCode,
+      "WhatsappCode": data?.MobileCode,
+      "MobileCodeDesc1": data?.MobileCodeDesc,
+      "WhatsappDesc": data?.MobileCodeDesc,
+      "WhatsappNo": data.MobileNo,
+      "StateCode": StateCode,
+      "StateName": stateName,
+      "Status": status,
+      "Street": street,
+      "TaxExemptedId": taxExemptedId,
+      "TelephoneNo1": data?.TelephoneNo,
+      "PinCode": pinCode,
+      "TelephoneNo2": null,
+      "TelephoneNo3": null,
+      "Title": data.Title,
+      "VrTinNo": vrngst,
+      "SaveOrSubmit": 'Submit'
+    }
+    let urlLink = `${this.CommonApiUrl}api/customer`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        let res: any = data;
+        if (data.ErrorMessage.length != 0) {
+          if (res.ErrorMessage) {
+            const errorList: any[] = res.ErrorMessage || res?.Result?.ErrorMessage;
+              let ulList:any='';
+              for (let index = 0; index < errorList.length; index++) {
+      
+              const element = errorList[index];
+              ulList +=`<li class="list-group-login-field">
+                <div style="color: darkgreen;">Field<span class="mx-2">:</span>${element?.Field}</div>
+                <div style="color: red;">Message<span class="mx-2">:</span>${element?.Message}</div>
+              </li>`
+              }
+              Swal.fire({
+              title: '<strong>Form Validation</strong>',
+              icon: 'info',
+              html:
+                `<ul class="list-group errorlist">
+                ${ulList}
+              </ul>`,
+              showCloseButton: true,
+              focusConfirm: false,
+              confirmButtonText:
+                '<i class="fa fa-thumbs-down"></i> Errors!',
+              confirmButtonAriaLabel: 'Thumbs down, Errors!',
+              })
+            }
+        }
+        else {
+          sessionStorage.setItem('customerReferenceNo',data?.Result?.SuccessId)
+          this.customerReferenceNo = data?.Result?.SuccessId;
+          if(type=='proceed'){
+            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+          }
+          else if(type=='create'){
+            
+          }
+        }
+      },
+  
+      (err: any) => { console.log(err); },
+    );
   }
   setVehicleList(rowData,type,id){
     if(this.endorsementSection && this.enableAddVehicle) sessionStorage.removeItem('editVehicleId')
