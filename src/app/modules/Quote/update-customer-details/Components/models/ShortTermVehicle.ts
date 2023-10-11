@@ -105,7 +105,7 @@ export class ShortTermVehicle{
                           ],
                         },
                         validators: {
-                          validation: [ForceLengthValidators.maxLength(15), ForceLengthValidators.min(1)]
+                          validation: [ForceLengthValidators.maxLength(30), ForceLengthValidators.min(1)]
                         },
                         hooks: {
                         },
@@ -126,7 +126,7 @@ export class ShortTermVehicle{
                         ],
                       },
                       validators: {
-                        validation: [ForceLengthValidators.maxLength(15), ForceLengthValidators.min(1)]
+                        validation: [ForceLengthValidators.maxLength(30), ForceLengthValidators.min(1)]
                       },
                       hooks: {
                       },
