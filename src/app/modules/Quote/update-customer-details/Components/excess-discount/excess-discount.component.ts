@@ -3358,11 +3358,11 @@ getMotorUsageList(vehicleValue){
           userDetails.Result['InsuranceId'] = this.insuranceId;
           
           sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
-            Swal.fire(
-              'Success',
-              `Otp Validated Successfully`,
-              'success',
-              )
+            // Swal.fire(
+            //   'Success',
+            //   `Otp Validated Successfully`,
+            //   'success',
+            //   )
             sessionStorage.setItem('resetLoginDetails','true');
             this.onFormSubmit();
             }

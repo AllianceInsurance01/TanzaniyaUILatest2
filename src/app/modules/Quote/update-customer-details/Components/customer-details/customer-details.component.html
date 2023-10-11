@@ -220,6 +220,21 @@
                     </div>
                     </div>
                 </div>
+                <div class="maan-grid-item"  *ngIf="errorSection">
+                    <div class="maan-grid-item-body row">
+                        <div class="text-center">
+                                <span class="text-danger" *ngIf="customerCodeError"><b>Please Enter Customer Code<br></b></span>
+                                <span class="text-danger" *ngIf="customerTitleError"><b>Please Choose Customer Title<br></b></span>
+                                <span class="text-danger" *ngIf="customerNameError"><b>Please Enter Customer Name<br></b></span>
+                                <span class="text-danger" *ngIf="customerMobileCodeError"><b>Please Choose Customer Mobile Code<br></b></span>
+                                <span class="text-danger" *ngIf="customerMobileNoError"><b>Please Enter Customer Mobile Number<br></b></span>
+                                <span class="text-danger" *ngIf="customerTypeError"><b>Please Choose Customer Type</b></span>
+                                <span class="text-danger" *ngIf="customerPolicyTypeError"><b>Please Choose Identity Type<br></b></span>
+                                
+                                <span class="text-danger" *ngIf="customerIdNumberError"><b>Please Enter ID Number</b></span>
+                        </div>
+                    </div>
+                </div>
                 <div class="maan-grid-item" *ngIf="issuerSection" style="z-index: 100 !important;overflow: visible !important;">
                     <div class="maan-grid-item-title p-0" style="margin: 0px !important;top:0rem;bottom: 0rem !important;padding-top: 9px !important;">
                         <span class="mx-1">

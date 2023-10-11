@@ -390,7 +390,13 @@ export class NewCustomerDetailsComponent {
 					if(this.productItem.CityName==null) this.productItem.CityName = '';
 					this.productItem.Clientstatus = customerDetails.Clientstatus;
 					this.productItem.EmailId = customerDetails.Email1;
-					this.productItem.Country = customerDetails.Nationality;
+					if(customerDetails.Nationality!=null){
+						this.productItem.Country = customerDetails.Nationality;
+					}
+					else if(this.countryList.length!=0 && this.countryList.length>1){
+						this.productItem.Country = this.countryList[1].Code;
+							
+					}
 					if(this.productItem.Country==null) this.productItem.Country='';
 					this.productItem.PinCode = customerDetails.PinCode;
 					this.productItem.Gender = customerDetails.Gender;
@@ -399,7 +405,6 @@ export class NewCustomerDetailsComponent {
 						this.productItem.IdType = Number(customerDetails.PolicyHolderType);
 					}
 					this.getPolicyIdTypeList(null);
-					this.getRegionList(null);
 					this.productItem.isTaxExempted = customerDetails.IsTaxExempted;
 					if (this.productItem.isTaxExempted == 'Y') this.productItem.TaxExemptedId = customerDetails.TaxExemptedId;
 					this.productItem.MobileNo = customerDetails.MobileNo1;
@@ -410,8 +415,12 @@ export class NewCustomerDetailsComponent {
 					this.productItem.PreferredNotification = customerDetails.PreferredNotification;
 					if(this.productItem.PreferredNotification==null) this.productItem.PreferredNotification='';
 					this.productItem.state = customerDetails.StateCode;
-					if(this.productItem.state==null) this.productItem.state = '';
+					if(this.productItem.state==null){
+						this.productItem.state = '';
+						
+					}
 					this.getStateList(null);
+					this.getRegionList(null);
 					if (customerDetails.DobOrRegDate != null && customerDetails.DobOrRegDate != undefined) {
 						if(new Date(this.maxDobDate).setHours(0,0,0,0) >= (new Date(customerDetails.DobOrRegDate)).setHours(0,0,0,0) ){
 							var dateParts = customerDetails.DobOrRegDate.split("/");
