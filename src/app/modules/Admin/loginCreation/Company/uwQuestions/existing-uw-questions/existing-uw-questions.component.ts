@@ -19,9 +19,14 @@ export class ExistingUwQuestionsComponent implements OnInit {
   public CommonApiUrl1: any = this.AppConfig.CommonApiUrl;
   insuranceId: string;branchList:any[]=[];branchValue:any;
   productId: string;
+  MotoYn: string;
+  UWList:any[]=[];
+  uwValue:any;
+  uwdesc: any;
   constructor(private router:Router,private sharedService: SharedService ,) {
     this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
     this.productId =  sessionStorage.getItem('companyProductId');
+    this.MotoYn=sessionStorage.getItem('productType');
     this.columnHeader = [
       { key: 'UwQuestionDesc', display: 'Question' },
       { key: 'QuestionType', display: 'QuestionType' },
@@ -51,6 +56,7 @@ export class ExistingUwQuestionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBranchList();
+    
   }
   getBranchList(){
     let ReqObj = {
@@ -62,19 +68,53 @@ export class ExistingUwQuestionsComponent implements OnInit {
       if(data.Result){
         let obj = [{Code:"99999",CodeDesc:"ALL"}];
         this.branchList = obj.concat(data?.Result);
-        if(!this.branchValue){ this.branchValue = "99999"; this.getUWQuesList() }
+        if(!this.branchValue){ this.branchValue = "99999"; 
+        this.uwquestions();
+        //this.getUWQuesList() 
+      }
+      }
+    },
+    (err) => { },
+  );
+  }
+  uwquestions(){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId,
+      "BranchCode": this.branchValue
+    }
+    let urlLink = `${this.ApiUrl1}dropdown/questiontype`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      if(data.Result){
+        //let obj = [{Code:"99999",CodeDesc:"ALL"}];
+        this.UWList = data?.Result;
+        if(this.uwValue!=null){
+          this.getUWQuesList(); 
+        }
+       
       }
     },
     (err) => { },
   );
   }
   getUWQuesList(){
+    let uwdesc:any;
+this.questionData=[];
+    if(this.uwValue!=null){
+      let code = this.UWList.filter(ele => ele.Code == this.uwValue)
+      if(code){
+        this.uwdesc = code[0].CodeDesc;
+      }
+    }
     let ReqObj = {
       "Limit":"0",
       "Offset":"100",
       "ProductId": this.productId,
       "InsuranceId": this.insuranceId,
-      "BranchCode" : this.branchValue
+      "BranchCode" : this.branchValue,
+      "QuestionCategory":this.uwValue,
+       "questionCategoryDesc":this.uwdesc
+
       }
       let urlLink = `${this.CommonApiUrl1}master/getalluwquestions`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -91,7 +131,9 @@ export class ExistingUwQuestionsComponent implements OnInit {
   onAddQuestion(){
     let entry = {
       "UwQuestionId":null,
-      "BranchCode": this.branchValue
+      "BranchCode": this.branchValue,
+      "UwID":this.uwValue,
+      "uwDesc":this.uwdesc
     }
     sessionStorage.setItem('uwQuesId',JSON.stringify(entry));
     this.router.navigate(['Admin/companyList/companyConfigure/productDetails/uwQuestionsList/updateUWQuestionDetails'])
@@ -158,13 +200,21 @@ export class ExistingUwQuestionsComponent implements OnInit {
     if(value=='EndorsementField') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/endorsementfield'])
     if(value=='Endorsement') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/endorsementType'])
     if(value=='Benefit') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/productbenefit']);
-    if(value=='PlanType') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/planTypeBenefits'])
+    if(value=='PlanType') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/planTypeBenefits']);
+    if(value=='policyterm') this.router.navigate(['/Admin/lifepolicyterms']);
+    if(value=='SURVIVAL')this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/survival']);
+    if(value=='Surrender')this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/surrender']);
+    if(value=='Excell')this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/excelllist']);
   }
+
+ 
   onEditQues(rowData){
     if(rowData){
       let entry = {
         "UwQuestionId":rowData?.UwQuestionId,
-        "BranchCode": this.branchValue
+        "BranchCode": this.branchValue,
+        "UwID":this.uwValue,
+        "uwDesc":this.uwdesc
       }
       sessionStorage.setItem('uwQuesId',JSON.stringify(entry));
       this.router.navigate(['Admin/companyList/companyConfigure/productDetails/uwQuestionsList/updateUWQuestionDetails'])

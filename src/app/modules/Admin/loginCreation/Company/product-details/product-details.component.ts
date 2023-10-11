@@ -31,6 +31,7 @@ export class ProductDetailsComponent implements OnInit {
   agency: string;
   typeList:any[]=[];
   commissionError: boolean;
+  MotoYn: string;
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,) {
 
@@ -50,6 +51,7 @@ export class ProductDetailsComponent implements OnInit {
       this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
       this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
      this.productId =  sessionStorage.getItem('companyProductId');
+     this.MotoYn=sessionStorage.getItem('productType');
       this.productDetails = new Product();
       this.getProductDetails();
     }
@@ -315,6 +317,8 @@ export class ProductDetailsComponent implements OnInit {
     if(value=='Benefit') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/productbenefit']);
     if(value=='PlanType') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/planTypeBenefits']);
     if(value=='policyterm') this.router.navigate(['/Admin/lifepolicyterms']);
+    if(value=='SURVIVAL')this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/survival']);
+    if(value=='Surrender')this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/surrender']);
     if(value=='Excell')this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/excelllist']);
   }
 }

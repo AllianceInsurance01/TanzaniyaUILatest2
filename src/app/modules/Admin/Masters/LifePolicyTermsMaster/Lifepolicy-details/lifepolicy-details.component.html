@@ -1,0 +1,164 @@
+
+
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div>
+                Company Configuration
+            </div>
+            <div *ngIf="insuranceName">
+                Company Name - <b>{{insuranceName}}</b>
+            </div>
+        </div>
+    </div>
+    <div class="card p-1">
+        <div class="vision-grid vision-grid-column-2">
+            <div class="vision-grid-item">
+                <div class="radio-toolbar menu-bar">
+                    <input id="menu" type="radio" name="menu" value="Product" (click)="onRedirect('Product')" [(ngModel)]="activeMenu">
+                    <label for="menu">Product Details</label>
+                    <input type="radio" id="menu6" name="menu" value="FactorType" (click)="onRedirect('FactorType')" [(ngModel)]="activeMenu">
+                    <label for="menu6">Factor Type</label>
+                    <input type="radio" id="menu1" name="menu" value="Section" (click)="onRedirect('Section')" [(ngModel)]="activeMenu">
+                    <label for="menu1">Section</label>
+                    <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+                    <label for="menu2">Cover</label>
+                    <ng-container *ngIf="productId=='4'">
+                        <input type="radio" id="menu20" name="menu" value="PlanType" (click)="onRedirect('PlanType')" [(ngModel)]="activeMenu">
+                        <label for="menu20">PlanType Benefit</label>
+                    </ng-container> 
+                    <input type="radio" id="menu20" name="menu" value="Benefit" (click)="onRedirect('Benefit')" [(ngModel)]="activeMenu">
+                    <label for="menu20">Product Benefit</label>
+                    <input type="radio" id="menu15" name="menu" value="Policy"(click)="onRedirect('Policy')" [(ngModel)]="activeMenu">
+                    <label for="menu15">Policy Type</label>
+                    <input type="radio" id="menu10" name="menu" value="Emi" (click)="onRedirect('Emi')" [(ngModel)]="activeMenu">
+                    <label for="menu10">EMI</label>
+                    <!-- <input type="radio" id="menu3" name="menu" value="SubCover" (click)="onRedirect('SubCover')" [(ngModel)]="activeMenu">
+                    <label for="menu3">SubCover</label> -->
+                    <input type="radio" id="menu8" name="menu" value="Tax" (click)="onRedirect('Tax')" [(ngModel)]="activeMenu">
+                    <label for="menu8">Tax</label>
+                    <ng-container *ngIf="productId=='45'">
+                        <input type="radio" id="menu25" name="menu" value="policyterm" (click)="onRedirect('policyterm')" [(ngModel)]="activeMenu">
+                        <label for="menu25">PolicyTerm</label>
+                        </ng-container>
+                        <ng-container *ngIf="productId=='45'">
+                            <input type="radio" id="menu27" name="menu" value="SURVIVAL" (click)="onRedirect('SURVIVAL')" [(ngModel)]="activeMenu">
+                            <label for="menu27">SURVIVAL MASTER</label>
+                        </ng-container>
+                        <ng-container *ngIf="productId=='45'">
+                            <input type="radio" id="menu28" name="menu" value="Surrender" (click)="onRedirect('Surrender')" [(ngModel)]="activeMenu">
+                            <label for="menu28">Surrender</label>
+                        </ng-container>
+                    <input type="radio" id="menu9" name="menu" value="Prorata" (click)="onRedirect('Prorata')" [(ngModel)]="activeMenu">
+                    <label for="menu9">ProRata</label>
+                    <input type="radio" id="menu7" name="menu" value="UwQues" (click)="onRedirect('UwQues')" [(ngModel)]="activeMenu">
+                    <label for="menu7">UnderWriter Questions</label>
+                    <input type="radio" id="menu5" name="menu" value="Referral" (click)="onRedirect('Referral')" [(ngModel)]="activeMenu">
+                    <label for="menu5">Referral</label>
+                    <input type="radio" id="menu4" name="menu" value="Document" (click)="onRedirect('Document')" [(ngModel)]="activeMenu">
+                    <label for="menu4">Attached Documents</label>
+                    <input type="radio" id="menu11" name="menu" value="Payment" (click)="onRedirect('Payment')" [(ngModel)]="activeMenu">
+                    <label for="menu11">Payment</label>
+                    <input type="radio" id="menu12" name="menu" value="Notification"(click)="onRedirect('Notification')" [(ngModel)]="activeMenu">
+                    <label for="menu12">Notification</label>
+                    <input type="radio" id="menu13" name="menu" value="TinyUrl"(click)="onRedirect('TinyUrl')" [(ngModel)]="activeMenu">
+                    <label for="menu13">TinyUrl</label>
+                    <input type="radio" id="menu14" name="menu" value="Premia"(click)="onRedirect('Premia')" [(ngModel)]="activeMenu">
+                    <label for="menu14">Premia Configuration</label>
+                    <!--<input type="radio" id="menu16" name="menu" value="Industry"(click)="onRedirect('Industry')" [(ngModel)]="activeMenu">
+                    <label for="menu16">Industry</label>-->
+                    <input type="radio" id="menu17" name="menu" value="Promo"(click)="onRedirect('Promo')" [(ngModel)]="activeMenu">
+                    <label for="menu17">PromoCode</label>
+                    <input type="radio" id="menu19" name="menu" value="EndorsementField"(click)="onRedirect('EndorsementField')" [(ngModel)]="activeMenu">
+                    <label for="menu19">EndorsementField Type</label>
+                    <input type="radio" id="menu18" name="menu" value="Promo"(click)="onRedirect('Endorsement')" [(ngModel)]="activeMenu">
+                    <label for="menu18">Endorsement Type</label>
+                </div>
+            </div>
+            <div class="vision-grid-item">
+                <div class="card">
+                    <div class="card-header">Life Policy Terms Details</div>
+                    <div class="card-body">
+                        <div class="row mt-2">
+                            <div class="col-md-6 col-lg-6 col-xl-6">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Policy Term<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" class="input-form-control without-icon" digitOnly [(ngModel)]="policytermId" maxlength="30">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">PolicyTermDesc<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="exchangeDetails.PolicyTermDesc" maxlength="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="exchangeDetails.CoreAppCode" maxlength="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Regulatory Code<span class="text-required">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="exchangeDetails.RegulatoryCode" maxlength="100">
+                                    </div>
+                                </div>
+                            </div>
+            
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="input-control-container">
+                                  <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                                    <mat-form-field appearance="fill">
+                                        <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="exchangeDetails.EffectiveDateStart">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                               
+                        <div class="col-12 col-md-6 col-lg-6">
+                          <div class="input-control-container">
+                              <label class="input-form-label">Status<span class="text-required">*</span></label>
+                              <div class="input-form-radio-box">
+                                  <div class="radio-toolbar">
+                                      <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="exchangeDetails.Status" value="Y">
+                                      <label for="orginwarehouse_Yes">Active</label>
+                                      <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="exchangeDetails.Status" value="N">
+                                      <label for="orginwarehouse_No">DeActive</label>
+                                      <input type="radio" id="orginwarehouse_Referral" name="originatingWarehouse" [(ngModel)]="exchangeDetails.Status" value="P">
+                                      <label for="orginwarehouse_Referral">Pending</label>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-6">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Remarks</label>
+                            <div class="input-form-box">
+                                <textarea cols="120" rows="2" class="input-form-control without-icon" [(ngModel)]="exchangeDetails.Remarks" maxlength="200"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                        
+                        <div class="text-center mt-2">
+                            <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>&nbsp;
+                            <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+

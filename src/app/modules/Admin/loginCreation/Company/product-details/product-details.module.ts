@@ -17,11 +17,14 @@ import { ProductDetailsService } from './product-details.service';
 import { NewProductDetailsComponent } from '../new-product-details/new-product-details.component';
 //import { ThemeModule } from '../../../../../@theme/theme.module';
 import { TaxDetailsComponent } from '../tax-details/tax-details.component';
+import { SurvivalDetailsComponent } from '../survivalMaster/survivallist/survivallist.component';
+import { SurrenderDetailsComponent } from '../SurrenderMaster/Surrender.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ɵb } from 'ngx-toast-notifications';
 import { MultilevelMenuService } from 'ng-material-multilevel-menu';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { PlanTypeBenefitsListComponent } from '../PlanTypeBenefits/plan-type-benefits-list/plan-type-benefits-list.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -34,7 +37,9 @@ import { PlanTypeBenefitsListComponent } from '../PlanTypeBenefits/plan-type-ben
     ProductDetailsComponent,
     NewProductDetailsComponent,
     TaxDetailsComponent,
-    PlanTypeBenefitsListComponent
+    PlanTypeBenefitsListComponent,
+    SurvivalDetailsComponent,
+    SurrenderDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -43,6 +48,7 @@ import { PlanTypeBenefitsListComponent } from '../PlanTypeBenefits/plan-type-ben
     ReactiveFormsModule,
     DirectivesModule,
     NgSelectModule,
+    NgxPaginationModule,
     // ThemeModule,
     // NbTabsetModule,
     // NbRouteTabsetModule,
