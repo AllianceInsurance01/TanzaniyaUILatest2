@@ -22,7 +22,7 @@
       </div> -->
   <div class="card p-1">
       <div class="vision-grid vision-grid-column-2">
-          <div class="vision-grid-item">
+        <div class="vision-grid-item">
             <div class="radio-toolbar menu-bar">
                 <input id="menu" type="radio" name="menu" value="Product" (click)="onRedirect('Product')" [(ngModel)]="activeMenu">
                 <label for="menu">Product Details</label>
@@ -38,6 +38,7 @@
                     <label for="menu20">PlanType Benefit</label>
                 </ng-container> 
                 <input type="radio" id="menu20" name="menu" value="Benefit" (click)="onRedirect('Benefit')" [(ngModel)]="activeMenu">
+
                 <label for="menu20">Product Benefit</label>
                 <input type="radio" id="menu15" name="menu" value="Policy"(click)="onRedirect('Policy')" [(ngModel)]="activeMenu">
                 <label for="menu15">Policy Type</label>
@@ -47,6 +48,19 @@
                 <label for="menu3">SubCover</label> -->
                 <input type="radio" id="menu8" name="menu" value="Tax" (click)="onRedirect('Tax')" [(ngModel)]="activeMenu">
                 <label for="menu8">Tax</label>
+                <ng-container *ngIf="MotoYn=='L'">
+                <input type="radio" id="menu25" name="menu" value="policyterm" (click)="onRedirect('policyterm')" [(ngModel)]="activeMenu">
+                <label for="menu25">PolicyTerm</label>
+                </ng-container>
+                <ng-container *ngIf="MotoYn=='L'">
+                    <input type="radio" id="menu27" name="menu" value="SURVIVAL" (click)="onRedirect('SURVIVAL')" [(ngModel)]="activeMenu">
+                    <label for="menu27">SURVIVAL</label>
+                </ng-container>
+                 <ng-container *ngIf="MotoYn=='L'">
+                    <input type="radio" id="menu28" name="menu" value="Surrender" (click)="onRedirect('Surrender')" [(ngModel)]="activeMenu">
+                    <label for="menu28">Surrender</label>
+                </ng-container>
+             
                 <input type="radio" id="menu9" name="menu" value="Prorata" (click)="onRedirect('Prorata')" [(ngModel)]="activeMenu">
                 <label for="menu9">ProRata</label>
                 <input type="radio" id="menu7" name="menu" value="UwQues" (click)="onRedirect('UwQues')" [(ngModel)]="activeMenu">
@@ -69,10 +83,14 @@
                 <label for="menu17">PromoCode</label>
                 <input type="radio" id="menu19" name="menu" value="EndorsementField"(click)="onRedirect('EndorsementField')" [(ngModel)]="activeMenu">
                 <label for="menu19">EndorsementField Type</label>
-                <input type="radio" id="menu18" name="menu" value="Promo"(click)="onRedirect('Endorsement')" [(ngModel)]="activeMenu">
+                <input type="radio" id="menu18" name="menu" value="Endorsement"(click)="onRedirect('Endorsement')" [(ngModel)]="activeMenu">
                 <label for="menu18">Endorsement Type</label>
+                <input type="radio" id="menu23" name="menu" value="Excell" (click)="onRedirect('Excell')" [(ngModel)]="activeMenu">
+                <label for="menu23">Excel</label>
+             
+              
             </div>
-          </div>
+        </div>
           <div class="vision-grid-item">
               <div class="vision-grid-item">
                   <div class="card">

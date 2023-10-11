@@ -96,7 +96,7 @@ export class ExcellAddNewComponent implements OnInit {
         "TypeId": this.typeid,
         "FieldId":null,
         "ExcelHeaderName": null,
-        "Status": "N",
+        "Status": "Y",
         "MandatoryYn": "N",
         "DataType":null,
         "FieldNameRaw":null,

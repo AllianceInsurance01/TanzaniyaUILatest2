@@ -25,12 +25,14 @@ export class TaxDetailsComponent implements OnInit {
   TaxForList:any[]=[];
   CountryId: string;
   taxType :any[]=[];
+  MotoYn: string;
   constructor(private router:Router,private sharedService: SharedService,
    private datePipe:DatePipe) {
     this.minDate = new Date();
     this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
     this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
     this.productId =  sessionStorage.getItem('companyProductId');
+    this.MotoYn=sessionStorage.getItem('productType');
     let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if(userDetails){
       this.loginId = userDetails?.Result?.LoginId;
@@ -323,6 +325,7 @@ export class TaxDetailsComponent implements OnInit {
 
 
   }
+
   onRedirect(value){
     if(value=='Product') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails'])
     if(value=='Section') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/sectionDetails'])
@@ -346,9 +349,12 @@ export class TaxDetailsComponent implements OnInit {
     if(value=='EndorsementField') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/endorsementfield'])
     if(value=='Endorsement') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/endorsementType'])
     if(value=='Benefit') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/productbenefit']);
-    if(value=='PlanType') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/planTypeBenefits'])
+    if(value=='PlanType') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/planTypeBenefits']);
+    if(value=='policyterm') this.router.navigate(['/Admin/lifepolicyterms']);
+    if(value=='SURVIVAL')this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/survival']);
+    if(value=='Surrender')this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/surrender']);
+    if(value=='Excell')this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/excelllist']);
   }
-
   getTaxFor(){
     let ReqObj = {
       "InsuranceId": this.insuranceId,

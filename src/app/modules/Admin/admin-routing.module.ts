@@ -132,6 +132,15 @@ const routes: Routes = [
     }
   },
   {
+    path: 'lifepolicyterms',
+    loadChildren: () => import('./Masters/LifePolicyTermsMaster/Lifepolicy-list/lifepolicy-list.module').then(m => m.LifepolicytermsModule),
+    data: {
+      preload: true,
+      title: "LifePolicyTerms Master",
+      breadcrumb: 'LifePolicyTerms Master',
+    }
+  },
+  {
     path: 'bodyTypeMaster',
     loadChildren: () => import('./Masters/BodyType/body-type-list/body-type-list.module').then(m => m.BodyTypeListModule),
     data: {

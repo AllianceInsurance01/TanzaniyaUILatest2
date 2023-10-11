@@ -4,7 +4,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProductDetailsComponent } from './product-details.component';
 import { TaxDetailsComponent } from '../tax-details/tax-details.component';
+import { SurvivalDetailsComponent } from '../survivalMaster/survivallist/survivallist.component';
 import { PlanTypeBenefitsListComponent } from '../PlanTypeBenefits/plan-type-benefits-list/plan-type-benefits-list.component';
+import { SurrenderDetailsComponent } from '../SurrenderMaster/Surrender.component';
 
 const routes: Routes = [
   {
@@ -54,6 +56,24 @@ const routes: Routes = [
       preload: true,
       title: "Tax Details",
       breadcrumb:  "Tax Details",
+    }
+  },
+  {
+    path: 'survival',
+    component:SurvivalDetailsComponent,
+    data: {
+      preload: true,
+      title: "Survival Details",
+      breadcrumb:  "Survival Details",
+    }
+  },
+  {
+    path: 'surrender',
+    component:SurrenderDetailsComponent,
+    data: {
+      preload: true,
+      title: "Surrender Details",
+      breadcrumb:  "Surrender Details",
     }
   },
   {

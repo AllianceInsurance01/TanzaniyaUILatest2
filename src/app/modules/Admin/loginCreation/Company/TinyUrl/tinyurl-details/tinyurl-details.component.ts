@@ -27,6 +27,7 @@ export class TinyurlDetailsComponent implements OnInit {
   typeList:any[]=[];
   jsonList:any[]=[];
   KeyNameValue:any;
+  MotoYn: string;
 
   constructor(private router:Router,private sharedService:SharedService,private datePipe:DatePipe) {
     this.minDate = new Date();
@@ -34,6 +35,7 @@ export class TinyurlDetailsComponent implements OnInit {
     this.productId = sessionStorage.getItem('companyProductId');
     console.log("pppppp", this.productId)
     let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+     this.MotoYn=sessionStorage.getItem('productType');
     if (userDetails) {
       this.loginId = userDetails?.Result?.LoginId;
     }
@@ -304,6 +306,11 @@ else if(this.tinyUrldetalis.RequestYn == 'N'){
     if(value=='EndorsementField') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/endorsementfield'])
     if(value=='Endorsement') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/endorsementType'])
     if(value=='Benefit') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/productbenefit']);
-    if(value=='PlanType') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/planTypeBenefits'])
+    if(value=='PlanType') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/planTypeBenefits']);
+    if(value=='policyterm') this.router.navigate(['/Admin/lifepolicyterms']);
+    if(value=='SURVIVAL')this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/survival']);
+    if(value=='Surrender')this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/surrender']);
+    if(value=='Excell')this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/excelllist']);
   }
+
 }

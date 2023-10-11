@@ -11,7 +11,7 @@
                     <input type="radio" id="menu1" name="menu" value="Section" (click)="onRedirect('Section')" [(ngModel)]="activeMenu">
                     <label for="menu1">Section</label>
                     <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
-
+          
                     <label for="menu2">Cover</label>
                     <ng-container *ngIf="productId=='4'">
                         <input type="radio" id="menu20" name="menu" value="PlanType" (click)="onRedirect('PlanType')" [(ngModel)]="activeMenu">
@@ -27,6 +27,18 @@
                     <label for="menu3">SubCover</label> -->
                     <input type="radio" id="menu8" name="menu" value="Tax" (click)="onRedirect('Tax')" [(ngModel)]="activeMenu">
                     <label for="menu8">Tax</label>
+                      <ng-container *ngIf="MotoYn=='L'">
+                    <input type="radio" id="menu25" name="menu" value="policyterm" (click)="onRedirect('policyterm')" [(ngModel)]="activeMenu">
+                    <label for="menu25">PolicyTerm</label>
+                    </ng-container>
+                    <ng-container *ngIf="MotoYn=='L'">
+                        <input type="radio" id="menu27" name="menu" value="SURVIVAL" (click)="onRedirect('SURVIVAL')" [(ngModel)]="activeMenu">
+                        <label for="menu27">SURVIVAL MASTER</label>
+                    </ng-container>
+                    <ng-container *ngIf="MotoYn=='L'">
+                        <input type="radio" id="menu28" name="menu" value="Surrender" (click)="onRedirect('Surrender')" [(ngModel)]="activeMenu">
+                        <label for="menu28">Surrender</label>
+                    </ng-container>
                     <input type="radio" id="menu9" name="menu" value="Prorata" (click)="onRedirect('Prorata')" [(ngModel)]="activeMenu">
                     <label for="menu9">ProRata</label>
                     <input type="radio" id="menu7" name="menu" value="UwQues" (click)="onRedirect('UwQues')" [(ngModel)]="activeMenu">
@@ -51,14 +63,16 @@
                     <label for="menu19">EndorsementField Type</label>
                     <input type="radio" id="menu18" name="menu" value="Endorsement"(click)="onRedirect('Endorsement')" [(ngModel)]="activeMenu">
                     <label for="menu18">Endorsement Type</label>
-                </div>
+                    <input type="radio" id="menu23" name="menu" value="Excell" (click)="onRedirect('Excell')" [(ngModel)]="activeMenu">
+                    <label for="menu23">Excel</label>
+                  </div>
             </div>
             <div class="vision-grid-item">
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
                             <div>
-                                Excell List
+                                Excel List
                             </div>
                             <div>
                                 <button class="btn btn-warning" (click)="onAddNew()">Add New</button>

@@ -20,10 +20,12 @@ export class TinyurlListComponent implements OnInit {
   minDate: Date;
   insuranceId: string;
   productId: string;
+  MotoYn: string;
   constructor(private router:Router,private sharedService:SharedService,) {
     this.minDate = new Date();
     this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
     this.productId = sessionStorage.getItem('companyProductId');
+      this.MotoYn=sessionStorage.getItem('productType');
    }
 
   ngOnInit(): void {
@@ -166,6 +168,11 @@ export class TinyurlListComponent implements OnInit {
     if(value=='EndorsementField') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/endorsementfield'])
     if(value=='Endorsement') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/endorsementType'])
     if(value=='Benefit') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/productbenefit']);
-    if(value=='PlanType') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/planTypeBenefits'])
+    if(value=='PlanType') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/planTypeBenefits']);
+    if(value=='policyterm') this.router.navigate(['/Admin/lifepolicyterms']);
+    if(value=='SURVIVAL')this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/survival']);
+    if(value=='Surrender')this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/surrender']);
+    if(value=='Excell')this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/excelllist']);
   }
+
 }
