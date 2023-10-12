@@ -61,6 +61,8 @@ export class ReportComponent implements OnInit {
       { key: 'StartDate', display: 'Start Date' },
       { key: 'EndDate', display: 'End Date' },
       { key: 'SumInured', display: 'Sum Inured' },
+      { key: 'PolicyDesc', display: 'Policy Desc' },
+      { key: 'CommisionAmt', display: 'Commision Amt' },
       { key: 'PaymentType', display: 'Payment Type' },
       { key: 'Premium', display: 'Premium' },
       // {
@@ -105,9 +107,9 @@ export class ReportComponent implements OnInit {
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
       if(data.Result){
-        let obj = [{Code:"99999",CodeDesc:"ALL"}];
+        let obj = [{Code:"",CodeDesc:"ALL"}];
         this.branchList = obj.concat(data?.Result);
-        if(!this.branchValue){ this.branchValue = "99999";
+        if(!this.branchValue){ this.branchValue = "";
          }
       }
     },

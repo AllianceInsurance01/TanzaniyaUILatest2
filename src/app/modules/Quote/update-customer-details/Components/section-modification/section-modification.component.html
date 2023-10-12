@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div class="row" *ngIf="productId=='19' || productId=='3'">
-                        <div class="col-12 col-md-5 col-lg-5 offset-1">
+                        <div class="col-12 col-md-5 col-lg-5 offset-md-1 offset-lg-1">
                             <div class="input-control-container">
                                   <label class="input-form-label">Industry</label>&nbsp;<ng-container *ngIf="categoryDesc">({{categoryDesc}})</ng-container><span class="text-danger">*</span>
                                   <ng-select class="custom" [items]="industryList" [disabled]="endorsementSection && !enableIndustry" [(ngModel)]="IndustryId" placeholder="Select Industry" (change)="onIndustryChange()" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
@@ -68,7 +68,7 @@
                         </div> -->
                     </div>
                     <div class="row mt-4 mb-2" *ngIf="(productId=='19' || productId=='3') && newsection">
-                      <div class="col-md-10 col-lg-10  col-xl-10 offset-1">
+                      <div class="col-md-10 col-lg-10  col-xl-10 offset-md-1 offset-lg-1">
                         <div class="Choose-Section-Box padd0 bwT">
                             <span class="heading">SELECT THE SECTIONS YOU WISH TO BUY</span>
                             <div class="row mt-3" *ngIf="sectionError">

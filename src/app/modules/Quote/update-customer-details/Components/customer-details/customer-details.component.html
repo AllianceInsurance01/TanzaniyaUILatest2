@@ -364,7 +364,7 @@
                     </div>
                     <div class="maan-grid-item-body">
                         <div class="row p-1">
-                            <div class="col-12 col-md-6 col-lg-6 offset-3 mt-4" [ngStyle]="{'position':'realtive','bottom':'0.2rem'}" *ngIf="productId=='6' || this.productId=='16' || productId=='39' || productId=='14' || productId=='32' || productId=='1' || productId=='21'
+                            <div class="col-12 col-md-6 col-lg-6 offset-lg-3 offset-md-3 mt-4" [ngStyle]="{'position':'realtive','bottom':'0.2rem'}" *ngIf="productId=='6' || this.productId=='16' || productId=='39' || productId=='14' || productId=='32' || productId=='1' || productId=='21'
                             || productId=='26' || this.productId=='25'">
                                 <div class="Choose-Section-Box padd0 bwT">
                                     <span class="heading">SELECT INDUSTRY TYPE <span class="text-danger">*</span></span>
@@ -406,7 +406,7 @@
                                 </mat-form-field>
                             </div>
                             
-                            <div class="col-12 col-md-3 col-lg-3" *ngIf="productId!='4'">
+                            <div class="col-12 col-md-4 col-lg-3" *ngIf="productId!='4'">
                                 <label class="input-form-label spancommon span_font_size">Policy Start Date<span class="text-danger">*</span></label>
                                 <ng-container >
                                     <mat-form-field appearance="fill">
@@ -427,7 +427,7 @@
                                 </div>
 
                             </div>
-                            <div class="col-12 col-md-3 col-lg-3" *ngIf="productId!='4' && productId!='46'">
+                            <div class="col-12 col-md-4 col-lg-3" *ngIf="productId!='4' && productId!='46'">
                                 <label class="input-form-label spancommon span_font_size">Policy End Date<span class="text-danger">*</span></label>
                                 <mat-form-field appearance="fill">
                                     <!-- <mat-label>Policy End Date<span class="text-danger">*</span></mat-label> -->
@@ -442,7 +442,7 @@
                                 </div>
 
                             </div>
-                            <div class="col-12 col-md-3 col-lg-3" *ngIf="productId!='46'">
+                            <div class="col-12 col-md-4 col-lg-3" *ngIf="productId!='46'">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Number Of Days<span class="text-danger">*</span></label>
                                     <div class="input-form-box">
@@ -450,7 +450,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-3 col-lg-3 col-xl-3">
+                            <div class="col-12 col-md-4 col-lg-3 col-xl-3">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Have Promo Code</label>
                                     <div class="input-form-radio-box">
@@ -468,7 +468,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-3" [ngStyle]="{'position':'realtive','bottom':'0.2rem'}">
+                            <div class="col-12 col-md-4 col-lg-3" [ngStyle]="{'position':'realtive','bottom':'0.2rem'}">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Currency</label><span class="text-danger">*</span>
                                     <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableCurrency) || checkDisableField()" [(ngModel)]="currencyCode" [items]="currencyList" (change)="onCurrencyChange('change')" bindValue="Code" bindLabel="CodeDesc">
@@ -480,7 +480,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-3 col-lg-3" *ngIf="productId!='4'">
+                            <div class="col-12 col-md-4 col-lg-3" *ngIf="productId!='4'">
                                 <div class="input-control-container">
                                     <label class="input-form-label" style="font-size: .73rem !important;">Exchange Rates <span *ngIf="editSection && currencyCode!=cyrrencylogin">({{minCurrencyRate | number : '1.2-2'}} ~ {{maxCurrencyRate | number : '1.2-2'}})</span></label><span class="text-danger">*</span>
                                     <div class="input-form-box">
@@ -513,7 +513,7 @@
 
                             </div> -->
                            
-                            <div class="col-12 col-md-3 col-lg-3" *ngIf="HavePromoCode=='Y'">
+                            <div class="col-12 col-md-4 col-lg-3" *ngIf="HavePromoCode=='Y'">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Promo Code</label>
                                     <div class="input-form-box">
@@ -527,7 +527,7 @@
                                 </div>
                             </div>
                             
-                            <div class="col-12 col-md-4" *ngIf="executiveSection">
+                            <div class="col-12 col-md-4 col-lg-3" *ngIf="executiveSection">
                                 <div class="input-control-container">
                                     <label class="input-form-label">ACExecutive</label><span class="text-danger">*</span>
                                     <ng-select class="input-form-select" appendTo="body" [items]="executiveList" [(ngModel)]="executiveValue" bindValue="AcExecutiveId" bindLabel="AcExecutiveName">
@@ -539,7 +539,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4" *ngIf="executiveSection">
+                            <div class="col-12 col-md-4 col-lg-3" *ngIf="executiveSection">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Commission Type</label><span class="text-danger">*</span>
                                     <ng-select class="input-form-select" appendTo="body" [items]="commissionTypeList" [(ngModel)]="commissionValue" bindValue="Code" bindLabel="CodeDesc">
