@@ -413,7 +413,7 @@ export class NewCustomerDetailsComponent {
 
 					this.productItem.PolicyHolderTypeid = customerDetails.PolicyHolderTypeid;
 					this.productItem.PreferredNotification = customerDetails.PreferredNotification;
-					if(this.productItem.PreferredNotification==null) this.productItem.PreferredNotification='';
+					if(this.productItem.PreferredNotification==null) this.productItem.PreferredNotification='Sms';
 					this.productItem.state = customerDetails.StateCode;
 					if(this.productItem.state==null){
 						this.productItem.state = '';
