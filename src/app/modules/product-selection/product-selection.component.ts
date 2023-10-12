@@ -191,7 +191,15 @@ export class ProductSelectionComponent implements OnInit {
 
           }
             //
-        });
+        },
+        
+        (err: any) => {
+          sessionStorage.clear();
+            this.authService.logout();
+            this.router.navigate(['/login']);
+          // console.log(err);
+        },
+        );
 
     }
   }

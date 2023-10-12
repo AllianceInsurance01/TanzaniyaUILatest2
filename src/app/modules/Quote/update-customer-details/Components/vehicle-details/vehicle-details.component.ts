@@ -949,6 +949,7 @@ export class VehicleDetailsComponent implements OnInit {
       }
     }
     else{
+      
       let createdBy="";
       let startDate = "",endDate = "",vehicleSI="",accSI="",windSI="",tppSI="";
       if(this.vehicleSI==undefined) vehicleSI = null;
@@ -986,20 +987,29 @@ export class VehicleDetailsComponent implements OnInit {
           this.noOfDays = Math.round(Math.abs((Number(momentDate)  - Number(formattedDatecurrent) )/oneday)+1);
         }
         else{
-          startDate = this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy");
+          
+          if(this.policyStartDate.includes('/')) startDate = this.policyStartDate;
+          else startDate = this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy");
+          
           const oneday = 24 * 60 * 60 * 1000;
+          
           const momentDate = new Date(this.policyEndDate); // Replace event.value with your date value
           const formattedDate = moment(momentDate).format("YYYY-MM-DD");
           const formattedDatecurrent = new Date(this.policyStartDate);
+          
           console.log(formattedDate);
           this.noOfDays = Math.round(Math.abs((Number(momentDate)  - Number(formattedDatecurrent) )/oneday)+1);
+          
         }
       }
       if(this.policyEndDate){
         if(this.endorsementSection && this.vehicleDetails.Status=='D'){
           endDate = this.endorseEffectiveDate;
         }
-        else endDate = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
+        else{
+          if(this.policyEndDate.includes('/')) endDate = this.policyEndDate;
+          else endDate = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
+        }
       }
       let quoteStatus = sessionStorage.getItem('QuoteStatus');
       this.subuserType = sessionStorage.getItem('typeValue');
@@ -1244,6 +1254,7 @@ export class VehicleDetailsComponent implements OnInit {
             entry['Active'] = true;
             entry['VehicleId'] = data.Result?.VehicleId;
             if(type=='proceedSave'){
+             
               if(this.uwQuestionList.length!=0 && this.changeUwSection){
                 let j = 0;
                 let uwList:any[]=new Array();
@@ -1489,13 +1500,17 @@ export class VehicleDetailsComponent implements OnInit {
           else{
             createdBy = this.loginId;
           }
+         
           let endDate:any = null;
           if(this.policyEndDate){
             if(this.endorsementSection && vehicleDetails.Status=='D'){
               coverModificationYN = 'Y';
               endDate = this.endorseEffectiveDate;
             }
-            else endDate = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
+            else{
+              if(this.policyStartDate.includes('/')) endDate = this.policyStartDate;
+              else endDate = this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy");
+            }
           }
           let effectiveDate=null;
           if(this.endorsementSection){
@@ -1503,7 +1518,8 @@ export class VehicleDetailsComponent implements OnInit {
           }
           else {
             if(this.policyStartDate){
-              effectiveDate = this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy");
+              if(this.policyStartDate.includes('/')) effectiveDate = this.policyStartDate;
+              else effectiveDate = this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy");
             }
           }
           
@@ -1718,11 +1734,13 @@ export class VehicleDetailsComponent implements OnInit {
 
   }
   onProceed(){
+    
     if(this.checkDisableField()){
       this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
     }
     else if(this.vehicleDetailsList.length!=0){
       if(this.vehicleDetailsList.length==1){
+        
         this.onFormSubmit('proceedSave');
       }
       else{
@@ -1858,7 +1876,8 @@ export class VehicleDetailsComponent implements OnInit {
                 this.noOfDays = Math.round(Math.abs((Number(momentDate)  - Number(formattedDatecurrent) )/oneday)+1);
               }
               else{
-                startDate = this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy");
+                if(this.policyStartDate.includes('/')) startDate = this.policyStartDate;
+                else startDate = this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy");
                 const oneday = 24 * 60 * 60 * 1000;
                 const momentDate = new Date(this.policyEndDate); // Replace event.value with your date value
                 const formattedDate = moment(momentDate).format("YYYY-MM-DD");
@@ -1873,8 +1892,8 @@ export class VehicleDetailsComponent implements OnInit {
                 endDate = this.endorseEffectiveDate;
               }
               else if(this.policyEndDate){
-                
-                 endDate = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
+                if(this.policyEndDate.includes('/')) endDate = this.policyEndDate;
+                else endDate = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
               }
              
               let createdBy="";

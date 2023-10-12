@@ -437,7 +437,6 @@ export class NavbarComponent implements OnInit {
         (data: any) => {
           let res: any = data;
           console.log(data);
-          if (data.Result) {
             sessionStorage.clear();
              this.authService.logout();
              this.router.navigate(['/login']);
@@ -445,10 +444,15 @@ export class NavbarComponent implements OnInit {
             //   this.router.navigate(['/b2clogin']);
             // }
             // else 
-
-          }
           //
-        });
+        },
+        (err: any) => {
+          sessionStorage.clear();
+            this.authService.logout();
+            this.router.navigate(['/login']);
+          // console.log(err);
+        },
+        );
 
     }
   }
