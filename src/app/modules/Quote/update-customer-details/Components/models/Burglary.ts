@@ -31,7 +31,7 @@ export class Burglary{
                     fieldGroupClassName: 'row',
                     fieldGroup: [
                       {
-                        className: 'col-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         type: 'ngselect',
                         key: 'NatureOfTradeId',
                         props: {
@@ -59,7 +59,7 @@ export class Burglary{
                       // },
                       {
                         key: 'InsuranceForId',
-                        className: 'col-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         type: 'multicheckbox',
                         props: {
                           label: 'Insurance For',
@@ -71,7 +71,7 @@ export class Burglary{
                         },
                       },
                       {
-                        className: 'col-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         key: 'BuildingOwnerYn',
                         type: 'radio',
                         templateOptions: {
@@ -84,7 +84,7 @@ export class Burglary{
                         }
                       },
                       {
-                        className: 'col-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         type: 'input',
                         key: 'BuildingBuildYear',
                         props: {
@@ -107,7 +107,7 @@ export class Burglary{
                         },
                       },
                       {
-                        className: 'col-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         type: 'input',
                         key: 'OccupiedYear',
                         props: {
@@ -130,7 +130,7 @@ export class Burglary{
                         },
                       },
                       {
-                        className: 'col-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         type: 'ngselect',
                         key: 'WallType',
                         props: {
@@ -144,7 +144,7 @@ export class Burglary{
                         }
                       },
                       {
-                        className: 'col-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         type: 'ngselect',
                         key: 'InternalWallType',
                         props: {
@@ -158,7 +158,7 @@ export class Burglary{
                         }
                       },
                       {
-                        className: 'col-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         type: 'ngselect',
                         key: 'RoofType',
                         props: {
@@ -172,7 +172,7 @@ export class Burglary{
                         }
                       },
                       {
-                        className: 'col-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         type: 'ngselect',
                         key: 'CeilingType',
                         props: {
@@ -196,7 +196,7 @@ export class Burglary{
                       fieldGroupClassName: 'row',
                       fieldGroup:[
                         {
-                          className: 'col-4',
+                          className: 'col-12 col-md-6 col-lg-4',
                           type: 'input',
                           key: 'Address',
                           props: {
@@ -212,7 +212,7 @@ export class Burglary{
                           }
                         },
                         {
-                          className: 'col-4',
+                          className: 'col-12 col-md-6 col-lg-4',
                           type: 'ngselect',
                           key: 'RegionCode',
                           props: {
@@ -229,7 +229,7 @@ export class Burglary{
                           },
                         },
                         {
-                          className: 'col-4',
+                          className: 'col-12 col-md-6 col-lg-4',
                           type: 'ngselect',
                           key: 'DistrictCode',
                           props: {
@@ -243,7 +243,7 @@ export class Burglary{
                           }
                         },
                         {
-                          className: 'col-4',
+                          className: 'col-12 col-md-6 col-lg-4',
                           type: 'input',
                           key: 'WatchmanGuardHours',
                           props: {
@@ -277,7 +277,7 @@ export class Burglary{
                     fieldGroupClassName: 'row',
                     fieldGroup: [
                       {
-                        className: 'col-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         type: 'input',
                         key: 'AccessibleWindows',
                         props: {
@@ -300,7 +300,7 @@ export class Burglary{
                         },
                       },
                       {
-                        className: 'col-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         type: 'input',
                         key: 'ShowWindow',
                         props: {
@@ -323,7 +323,7 @@ export class Burglary{
                         },
                       },
                       {
-                        className: 'col-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         type: 'input',
                         key: 'FrontDoors',
                         props: {
@@ -346,7 +346,7 @@ export class Burglary{
                         },
                       },
                       {
-                        className: 'col-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         type: 'input',
                         key: 'BackDoors',
                         props: {
@@ -369,7 +369,7 @@ export class Burglary{
                         },
                       },
                       {
-                        className: 'col-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         type: 'input',
                         key: 'TrapDoors',
                         props: {
@@ -392,7 +392,7 @@ export class Burglary{
                         },
                       },
                       {
-                        className: 'col-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         type: 'ngselect',
                         key: 'WindowsMaterialId',
                         props: {
@@ -406,7 +406,7 @@ export class Burglary{
                         }
                       },
                       {
-                        className: 'col-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         type: 'ngselect',
                         key: 'DoorsMaterialId',
                         props: {
@@ -420,7 +420,7 @@ export class Burglary{
                         }
                       },
                       {
-                        className: 'col-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         type: 'ngselect',
                         key: 'NightLeftDoor',
                         props: {
@@ -434,7 +434,7 @@ export class Burglary{
                         }
                       },
                       {
-                        className: 'col-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         type: 'ngselect',
                         key: 'BuildingOccupied',
                         props: {

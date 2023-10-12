@@ -87,8 +87,9 @@
     /* display: flex; */
     /* justify-content: space-between; */
     /* align-items: center; */
-    text-align:center;
+    text-align:center !important;
     padding: 1rem 2.5rem;
+    line-height:1rem !important;
   }
   
   .customBg {

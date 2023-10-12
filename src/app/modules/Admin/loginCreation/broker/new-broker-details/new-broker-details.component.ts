@@ -447,8 +447,11 @@ export class NewBrokerDetailsComponent implements OnInit {
     if (this.subUserType == 'bank' && this.bankCode != null && this.bankCode != undefined) bankCode = this.bankCode
     let creditLimit = null;
     if(this.creditLimit){
-      if(this.creditLimit.includes(',')) creditLimit = this.creditLimit.replace(',','');
-      else creditLimit = this.creditLimit
+      if(this.creditLimit.includes(',')) {//creditLimit = this.creditLimit.replace(',',''); 
+        creditLimit = this.creditLimit.replace(/,/g, '');
+      console.log('KKKKKKKKKKKKKKK',this.creditLimit);
+    }
+      else {creditLimit = this.creditLimit;}
     }
     console.log('this', this.brokerCompanyYn)
     if (this.brokerCompanyYn == null || this.brokerCompanyYn == '' || this.brokerCompanyYn == undefined) {

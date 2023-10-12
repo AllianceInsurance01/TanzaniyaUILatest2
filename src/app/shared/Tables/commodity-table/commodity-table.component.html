@@ -107,7 +107,21 @@
                                 <button mat-menu-item><i class="fas fa-credit-card"></i>&nbsp;Pay EMI</button>
                             </mat-menu>
                         </ng-container>
-                        
+                        <ng-container *ngIf="col.config.isPolicyConfigss">
+                            <button mat-button [matMenuTriggerFor]="menu">
+                                <i class="fas fa-cog"></i>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item *ngIf="element.PolicyNo==null && element.Status=='Y' || element.Status=='RP'" (click)="onEdit.emit(element)"><i class="fas fa-marker"></i>&nbsp;Edit</button>
+                                <button mat-menu-item (click)="onSchedule.emit(element)" *ngIf="element.PolicyNo!=null && element.Status=='P'"><i class="fas fa-file"></i>&nbsp;Schedule</button>
+                                <button mat-menu-item (click)="onCredit.emit(element)" *ngIf="element.CreditNo!=null && element.CreditNo!=''"><i class="fas fa-file"></i>&nbsp;Credit Note</button>
+                                <button mat-menu-item (click)="onDebit.emit(element)" *ngIf="element.DebitNoteNo!=null && element.DebitNoteNo!=''"><i class="fas fa-file"></i>&nbsp;Debit Note</button>
+                                <button mat-menu-item (click)="onGetEndorsements.emit(element)" *ngIf="element.PolicyNo!=null && element.Status=='P'"><i class="fas fa-address-card"></i>&nbsp;Endorsement</button>
+                                <button mat-menu-item (click)="onView.emit(element)" *ngIf="element.Status=='R'"><i class="fas fa-eye"></i>&nbsp;View Quote Details</button>
+                                <button mat-menu-item (click)="onView.emit(element)" *ngIf="element.PolicyNo!=null && element.Status=='P'"><i class="fas fa-eye"></i>&nbsp;View Quote Details</button>
+                                <button mat-menu-item  *ngIf="element.PolicyNo!=null && element.Status=='P'"><i class="fas fa-credit-card"></i>&nbsp;Pay EMI</button>
+                            </mat-menu>
+                        </ng-container>
                         <ng-container *ngIf="col.config.ismailConfig">
                             <button mat-button [matMenuTriggerFor]="menu">
                                 <i class="fas fa-cog"></i>
@@ -279,16 +293,18 @@
                                
                             </ng-container>
                             <ng-container *ngIf="col.config.isEdit">
-                               
+                                <div class="col-6">
+                                <span class="mobile-label"> {{ columnHeader[i]["display"] }}</span>
+                                </div>
                                 <button class="circle btn btn-primary btn-sm" (click)="onEdit.emit(element)">
                                     <i class="fas fa-marker"></i>
                                 </button>&nbsp;
                             </ng-container>
         
                           <ng-container *ngIf="col.config.isMail">
-                            
-                            <span class="mobile-label"> {{ columnHeader[i]["display"] }}</span>
-                           
+                            <div class="col-6">
+                                <span class="mobile-label"> {{ columnHeader[i]["display"] }}</span>
+                            </div>
                            
                             <button class="circle btn btn-primary btn-sm" (click)="onMail.emit(element)">
                               <i class="fa fa-envelope"></i>
@@ -357,7 +373,10 @@
                                 </mat-menu>
                             </ng-container>
                             <ng-container *ngIf="col.config.ismailConfig">
-                                <span class="mobile-label"> {{ columnHeader[i]["display"] }}</span>
+                                <div class="col-4">
+                                    <span class="mobile-label"> {{ columnHeader[i]["display"] }}</span>
+                                </div>
+                                
                                 <button mat-button [matMenuTriggerFor]="menu" style="margin-left:20px">
                                     <i class="fas fa-cog"></i>
                                 </button>
@@ -420,6 +439,37 @@
     
        <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>
     </mat-table>
+
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-5">
+            <div style="margin-top:16px;" *ngIf="nextSection"><!--padding: 15px !important;-->
+                <span class="spancommon span_font_size mt-3">Items Per Page: </span>
+            </div>
+        </div>
+       <div class="col-5">
+        <div style="margin-top:10px;" *ngIf="nextSection"><!--padding-right: 25px !important;-->
+            <select [(ngModel)]="pageCount" (change)="onChangePageCount($event)" class="form-control">  
+                <option value="5">5</option>  
+                <option value="10">10</option>  
+                <option value="15">15</option>  
+            </select> &nbsp;&nbsp;
+        </div>
+       </div>
+        
+    </div>
+   
+    <div class="d-flex justify-content-end">
+        <div style="background-color: transparent !important;" *ngIf="nextSection"> <!--padding-right: 15px !important;-->
+            <ul class="pagination" >
+                <li style="cursor:pointer !important" *ngIf="startCount!=1" (click)="onPreviousPage()" ><a>&lt; Previous</a></li>
+                <li style="cursor:not-allowed !important" *ngIf="startCount==1" ><a style="cursor:not-allowed !important">&lt; Previous</a></li>
+                <li style="margin-top: 15px !important;">{{startCount}}&nbsp;-&nbsp;{{endCount}}&nbsp;of&nbsp;{{totalQuoteRecords}}</li>
+                <li style="cursor:pointer !important" (click)="onNextPage()" *ngIf="nextSection && checkDataIndex()"><a >Next &gt; </a></li>
+                <li style="cursor:not-allowed !important" *ngIf="!nextSection || !checkDataIndex()"><a style="cursor:not-allowed !important">Next &gt; </a></li>
+            </ul>
+        </div>
+    </div>
     <!-- <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Select page of periodic elements">
     </mat-paginator> -->
    </div>

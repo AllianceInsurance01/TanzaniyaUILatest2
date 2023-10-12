@@ -27,7 +27,7 @@ export class Building{
               fieldGroupClassName: 'row',
               fieldGroup: [
                 {
-                  className: 'col-3',
+                  className: 'col-12 col-md-6 col-lg-4',
                   type: 'ngselect',
                   key: 'BuildingUsageId',
                   props: {
@@ -43,7 +43,7 @@ export class Building{
                   },
                 },
                 {
-                  className: 'col-2',
+                  className: 'col-12 col-md-6 col-lg-4',
                   type: 'input',
                   key: 'BuildingBuildYear',
                   props: {
@@ -65,7 +65,7 @@ export class Building{
                   },
                 },
                 {
-                  className: 'col-2',
+                  className: 'col-12 col-md-6 col-lg-4',
                   type: 'ngselect',
                   key: 'WallType',
                   props: {
@@ -80,7 +80,7 @@ export class Building{
                   },
                 },
                 {
-                  className: 'col-2',
+                  className: 'col-12 col-md-6 col-lg-4',
                   type: 'ngselect',
                   key: 'RoofType',
                   props: {
@@ -130,7 +130,7 @@ export class Building{
                 // },
   
                 {
-                  className: 'col-3',
+                  className: 'col-12 col-md-6 col-lg-4',
                   type: 'commaSeparator',
                   key: 'BuildingSuminsured',
                   templateOptions: {
