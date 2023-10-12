@@ -714,6 +714,7 @@ export class CustomerDetailsComponent implements OnInit {
             this.updateComponent.IdNumber = this.productItem.IdNumber;
             this.updateComponent.PolicyHolderTypeid = this.productItem.PolicyHolderTypeid;
             this.updateComponent.EmailId = this.productItem.EmailId;
+            this.updateComponent.PreferredNotification = customerDetails?.PreferredNotification;
             this.showEmailSection = true;
             this.getPolicyIdTypeList(null);
           }
@@ -2609,6 +2610,8 @@ export class CustomerDetailsComponent implements OnInit {
                         "IdType": this.updateComponent.CustomerType,
                         "PolicyHolderTypeid":this.updateComponent.PolicyHolderTypeid,
                         "EmailId":this.updateComponent.EmailId,
+                        "PreferredNotification": this.updateComponent.PreferredNotification
+                        
                       }
                       sessionStorage.setItem('b2cCustomerObj',JSON.stringify(customerObj));
                       this.modifiedCustomer = this.updateComponent.ModifiedCustomer;
@@ -2719,6 +2722,10 @@ export class CustomerDetailsComponent implements OnInit {
           pinCode = this.customerDetails.PinCode;
           street = this.customerDetails.Street;
         }
+      }
+      if(data?.PreferredNotification==null || data.PreferredNotification=='' || data.PreferredNotification==undefined){
+        if(data?.EmailId!=null && data.EmailId!='' && data.EmailId!=undefined) data['PreferredNotification'] = 'Mail';
+        else data['PreferredNotification'] = 'Sms';
       }
     let ReqObj = {
       "BrokerBranchCode": this.brokerbranchCode,

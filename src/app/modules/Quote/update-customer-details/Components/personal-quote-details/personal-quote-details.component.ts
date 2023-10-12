@@ -840,7 +840,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
           this.productItem = new ProductData();
           this.onBodyTypeChange('change');
           this.formSection = true; this.viewSection = false;
-          this.productItem.OwnerName = this.customerDetails.ClientName;
+          if(this.customerDetails) this.productItem.OwnerName = this.customerDetails.ClientName;
           if(this.customerDetails?.PolicyHolderType){
             this.productItem.OwnerCategory = this.customerDetails.PolicyHolderType;
           } 
@@ -3707,11 +3707,13 @@ getBodyTypeList(){
             delete this.bodyTypeList[i].CodeDesc;
             if (i == this.bodyTypeList.length - 1) {
                 let defaultObj = [{ 'label': '-Select-', 'value': '' }];
+                
                 this.fields[0].fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.bodyTypeList);
                 if(this.motorDetails){
                   this.productItem.BodyType = this.bodyTypeList.find(ele=>ele.label==this.motorDetails.VehicleType || ele.Code ==this.motorDetails.VehicleType)?.Code;
                   this.onBodyTypeChange('direct');
                 }
+                console.log("Entered BodyType")
             }
           } 
       }
@@ -6758,7 +6760,7 @@ setCommonFormValues(){
             this.productItem.Color = data.Result.Color;
             // this.productItem.EngineNo = 
             if(this.productItem.ChassisNo == this.productItem.RegistrationNo){this.productItem.RegistrationNo=null;}
-            this.productItem.OwnerName = this.customerDetails.ClientName;
+            if(this.customerDetails) this.productItem.OwnerName = this.customerDetails.ClientName;
             this.productItem.SeatingCapacity = data.Result.SeatingCapacity;
             this.productItem.EngineNo = data.Result.EngineNumber;
             this.productItem.EngineCapacity = data.Result.EngineCapacity;
