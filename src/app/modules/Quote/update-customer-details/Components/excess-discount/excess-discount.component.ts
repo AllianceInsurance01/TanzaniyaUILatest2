@@ -259,6 +259,7 @@ emiyn="N";
       let sectionType = sessionStorage.getItem('riskSection');
       if(sectionType=='additional' ) this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
       else if(this.productId=='4') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details'])
+      else if(this.productId!='5' && this.productId!='46') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
       else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
     }
    
@@ -3454,11 +3455,17 @@ getMotorUsageList(vehicleValue){
          if(this.productId=='3' || this.productId=='19' || this.productId=='39' || this.productId=='32' || this.productId=='14' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId=='42' || this.productId=='43' || this.productId=='25'){
           let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
           if(homeSession){
-            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
+            if(this.loginType=='B2CFlow' && this.loginId=='guest'){
+              window.location.reload();
+            }
+            else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
           }
           else{
             if(this.productId=='3') this.getExistingBuildingList();
-            else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
+            else  if(this.loginType=='B2CFlow' && this.loginId=='guest'){
+              window.location.reload();
+            }
+            else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
           }
 
         }
@@ -3787,7 +3794,10 @@ getMotorUsageList(vehicleValue){
       if(this.productId=='3'){
         let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
         if(homeSession){
-          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
+          if(this.loginType=='B2CFlow' && this.loginId=='guest'){
+            window.location.reload();
+          }
+          else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
         }
         else{
           this.getExistingBuildingList();
@@ -3811,7 +3821,10 @@ getMotorUsageList(vehicleValue){
       else if(this.productId=='32' || this.productId=='39' || this.productId=='14' || this.productId=='15' || this.productId=='19' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId =='21' || this.productId =='26' || this.productId =='25'|| this.productId=='42' || this.productId=='43'){
         // let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
         // if(homeSession){
-           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
+          if(this.loginType=='B2CFlow' && this.loginId=='guest'){
+            window.location.reload();
+          }
+          else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
         // }
         // else{
          // this.getExistingEserviceDetails();
@@ -4063,7 +4076,10 @@ getMotorUsageList(vehicleValue){
           "Promocode": customerDatas.Promocode,
         }]
         sessionStorage.setItem('homeCommonDetails',JSON.stringify(commonDetails));
-        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
+        if(this.loginType=='B2CFlow' && this.loginId=='guest'){
+          window.location.reload();
+        }
+        else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
       },
       (err) => { },
     );
