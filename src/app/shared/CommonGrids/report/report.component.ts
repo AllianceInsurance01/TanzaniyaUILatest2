@@ -158,7 +158,8 @@ getQuotes(){
     "BranchCode": this.branchValue,
     "EndDate": enddate,
     "LoginId": this.loginId,
-    "StartDate": startdate
+    "StartDate": startdate,
+    "ProductId": this.productId,
   }
   let urlLink = `${this.CommonApiUrl}pdf/getPremiumReportDetails`;
 this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
