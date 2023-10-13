@@ -356,7 +356,18 @@ export class ReferralPendingComponent implements OnInit {
       );
   }
   onEditQuotes(rowData){
+    if(rowData.QuoteNo!=null && rowData.QuoteNo!='' && rowData.QuoteNo!=undefined){
       this.checkStatus(rowData);
+    } 
+    else{
+      sessionStorage.removeItem('endorsePolicyNo');
+          sessionStorage.removeItem('endorseTypeId');
+          sessionStorage.setItem('QuoteStatus','RP');
+          sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+          sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
+          sessionStorage.setItem('quoteNo',rowData.QuoteNo);
+          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
+    }
     
   }
   checkStatus(rowData){
@@ -378,7 +389,7 @@ export class ReferralPendingComponent implements OnInit {
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
         }
         else{
-          
+          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
         }
       });
   }

@@ -18,7 +18,7 @@
             <h2>Products</h2>
         </div>
         <div class="row p-3" >
-            <div class="group  box-1padd0 InsuranceType AllTabShow col-12 col-md-12 col-lg-2 col-xl-2 col-sm-12 col-xs-12" *ngFor="let item of productList">
+            <div class="group  box-1 padd0 InsuranceType AllTabShow col-12 col-md-12 col-lg-2 col-xl-2 col-sm-12 col-xs-12" *ngFor="let item of productList">
                 <div (click)="onSelectProduct(item)">
                     <div class="topIco">
                         <div class="InsuranceIcon InsuranceIcon1 domesticIcon" matTooltip="Domestic" *ngIf="item.ProductId=='3'"></div>

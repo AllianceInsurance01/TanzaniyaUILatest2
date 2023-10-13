@@ -2332,10 +2332,97 @@ export class CustomerDetailsComponent implements OnInit {
                   }
                   sessionStorage.setItem('homeCommonDetails',JSON.stringify(Details))
                   if(this.productId=='19' || this.productId=='3'){
-                    this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
+                    let loginType = this.loginType;
+                    if(loginType){
+                      if(loginType=='B2CFlow' || loginType=='B2CFlow2'){
+                        let i=0;
+                        this.customerTitleError = false;this.customerNameError=false;this.customerMobileCodeError = false;this.customerTypeError=false;
+                        this.customerMobileNoError = false;this.customerIdNumberError = false;this.customerPolicyTypeError = false;
+                          if(this.updateComponent.Title==null || this.updateComponent.Title==undefined || this.updateComponent.Title ==''){this.customerTitleError = true;i+=1;}
+                          if(this.updateComponent.UserName==null || this.updateComponent.UserName==undefined || this.updateComponent.UserName ==''){this.customerNameError = true;i+=1;}
+                          if(this.updateComponent.MobileCode==null || this.updateComponent.MobileCode==undefined || this.updateComponent.MobileCode ==''){this.customerMobileCodeError = true;i+=1;}
+                          if(this.updateComponent.MobileNo==null || this.updateComponent.MobileNo==undefined || this.updateComponent.MobileNo =='') {this.customerMobileNoError = true;i+=1;}
+                          if(this.updateComponent.IdNumber==null || this.updateComponent.IdNumber==undefined || this.updateComponent.IdNumber =='') {this.customerIdNumberError = true;i+=1;}
+                          if(this.updateComponent.PolicyHolderTypeid==null || this.updateComponent.PolicyHolderTypeid==undefined || this.updateComponent.PolicyHolderTypeid =='') {this.customerPolicyTypeError = true;i+=1;}
+                          if(this.updateComponent.CustomerType==null || this.updateComponent.CustomerType==undefined || this.updateComponent.CustomerType =='') {this.customerTypeError = true;i+=1;}
+                          if(i>0) this.errorSection = true;
+                          if(i==0){
+                            let customerObj = {
+                              "Title":this.updateComponent.Title,
+                              "ClientName":this.updateComponent.UserName,
+                              "MobileCode":this.updateComponent.MobileCode,
+                              "MobileNo":this.updateComponent.MobileNo,
+                              "MobileCodeDesc": this.updateComponent.MobileCodeDesc,
+                              "IdNumber":this.updateComponent.IdNumber,
+                              "IdType": this.updateComponent.CustomerType,
+                              "PolicyHolderTypeid":this.updateComponent.PolicyHolderTypeid,
+                              "EmailId":this.updateComponent.EmailId,
+                              "PreferredNotification": this.updateComponent.PreferredNotification
+                              
+                            }
+                            sessionStorage.setItem('b2cCustomerObj',JSON.stringify(customerObj));
+                            this.modifiedCustomer = this.updateComponent.ModifiedCustomer;
+                            if(this.modifiedCustomer){
+                                this.saveCustomerDetails(customerObj,'proceed');
+                            }
+                            else{
+                                this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
+                            }
+                          }
+                        }
+                        else  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
+                    }
+                    else{
+                        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
+                    }
+                    
                   }
                   else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId =='21' || this.productId=='43') this.saveCommonDetails(Details); 
-                  else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+                  else{
+                    let loginType = this.loginType;
+                    if(loginType){
+                      if(loginType=='B2CFlow' || loginType=='B2CFlow2'){
+                        let i=0;
+                        this.customerTitleError = false;this.customerNameError=false;this.customerMobileCodeError = false;this.customerTypeError=false;
+                        this.customerMobileNoError = false;this.customerIdNumberError = false;this.customerPolicyTypeError = false;
+                          if(this.updateComponent.Title==null || this.updateComponent.Title==undefined || this.updateComponent.Title ==''){this.customerTitleError = true;i+=1;}
+                          if(this.updateComponent.UserName==null || this.updateComponent.UserName==undefined || this.updateComponent.UserName ==''){this.customerNameError = true;i+=1;}
+                          if(this.updateComponent.MobileCode==null || this.updateComponent.MobileCode==undefined || this.updateComponent.MobileCode ==''){this.customerMobileCodeError = true;i+=1;}
+                          if(this.updateComponent.MobileNo==null || this.updateComponent.MobileNo==undefined || this.updateComponent.MobileNo =='') {this.customerMobileNoError = true;i+=1;}
+                          if(this.updateComponent.IdNumber==null || this.updateComponent.IdNumber==undefined || this.updateComponent.IdNumber =='') {this.customerIdNumberError = true;i+=1;}
+                          if(this.updateComponent.PolicyHolderTypeid==null || this.updateComponent.PolicyHolderTypeid==undefined || this.updateComponent.PolicyHolderTypeid =='') {this.customerPolicyTypeError = true;i+=1;}
+                          if(this.updateComponent.CustomerType==null || this.updateComponent.CustomerType==undefined || this.updateComponent.CustomerType =='') {this.customerTypeError = true;i+=1;}
+                          if(i>0) this.errorSection = true;
+                          if(i==0){
+                            let customerObj = {
+                              "Title":this.updateComponent.Title,
+                              "ClientName":this.updateComponent.UserName,
+                              "MobileCode":this.updateComponent.MobileCode,
+                              "MobileNo":this.updateComponent.MobileNo,
+                              "MobileCodeDesc": this.updateComponent.MobileCodeDesc,
+                              "IdNumber":this.updateComponent.IdNumber,
+                              "IdType": this.updateComponent.CustomerType,
+                              "PolicyHolderTypeid":this.updateComponent.PolicyHolderTypeid,
+                              "EmailId":this.updateComponent.EmailId,
+                              "PreferredNotification": this.updateComponent.PreferredNotification
+                              
+                            }
+                            sessionStorage.setItem('b2cCustomerObj',JSON.stringify(customerObj));
+                            this.modifiedCustomer = this.updateComponent.ModifiedCustomer;
+                            if(this.modifiedCustomer){
+                                this.saveCustomerDetails(customerObj,'proceed');
+                            }
+                            else{
+                                this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+                            }
+                          }
+                        }
+                        else  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+                    }
+                    else{
+                        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+                    }
+                  }
                 }
               }
               else{
@@ -2509,7 +2596,49 @@ export class CustomerDetailsComponent implements OnInit {
                     if(this.IndustryId && this.industryList!=null)
                     homeDetails[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
                     sessionStorage.setItem('homeCommonDetails', JSON.stringify(homeDetails))
-                    this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+                    let loginType = this.loginType;
+                    if(loginType){
+                      if(loginType=='B2CFlow' || loginType=='B2CFlow2'){
+                        let i=0;
+                        this.customerTitleError = false;this.customerNameError=false;this.customerMobileCodeError = false;this.customerTypeError=false;
+                        this.customerMobileNoError = false;this.customerIdNumberError = false;this.customerPolicyTypeError = false;
+                          if(this.updateComponent.Title==null || this.updateComponent.Title==undefined || this.updateComponent.Title ==''){this.customerTitleError = true;i+=1;}
+                          if(this.updateComponent.UserName==null || this.updateComponent.UserName==undefined || this.updateComponent.UserName ==''){this.customerNameError = true;i+=1;}
+                          if(this.updateComponent.MobileCode==null || this.updateComponent.MobileCode==undefined || this.updateComponent.MobileCode ==''){this.customerMobileCodeError = true;i+=1;}
+                          if(this.updateComponent.MobileNo==null || this.updateComponent.MobileNo==undefined || this.updateComponent.MobileNo =='') {this.customerMobileNoError = true;i+=1;}
+                          if(this.updateComponent.IdNumber==null || this.updateComponent.IdNumber==undefined || this.updateComponent.IdNumber =='') {this.customerIdNumberError = true;i+=1;}
+                          if(this.updateComponent.PolicyHolderTypeid==null || this.updateComponent.PolicyHolderTypeid==undefined || this.updateComponent.PolicyHolderTypeid =='') {this.customerPolicyTypeError = true;i+=1;}
+                          if(this.updateComponent.CustomerType==null || this.updateComponent.CustomerType==undefined || this.updateComponent.CustomerType =='') {this.customerTypeError = true;i+=1;}
+                          if(i>0) this.errorSection = true;
+                          if(i==0){
+                            let customerObj = {
+                              "Title":this.updateComponent.Title,
+                              "ClientName":this.updateComponent.UserName,
+                              "MobileCode":this.updateComponent.MobileCode,
+                              "MobileNo":this.updateComponent.MobileNo,
+                              "MobileCodeDesc": this.updateComponent.MobileCodeDesc,
+                              "IdNumber":this.updateComponent.IdNumber,
+                              "IdType": this.updateComponent.CustomerType,
+                              "PolicyHolderTypeid":this.updateComponent.PolicyHolderTypeid,
+                              "EmailId":this.updateComponent.EmailId,
+                              "PreferredNotification": this.updateComponent.PreferredNotification
+                              
+                            }
+                            sessionStorage.setItem('b2cCustomerObj',JSON.stringify(customerObj));
+                            this.modifiedCustomer = this.updateComponent.ModifiedCustomer;
+                            if(this.modifiedCustomer){
+                                this.saveCustomerDetails(customerObj,'proceed');
+                            }
+                            else{
+                                this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+                            }
+                          }
+                        }
+                        else  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+                    }
+                    else{
+                        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+                    }
                 }
         }
       },
@@ -2676,10 +2805,96 @@ export class CustomerDetailsComponent implements OnInit {
       vehicle['Active'] = false;
       sessionStorage.setItem('homeCommonDetails',JSON.stringify([vehicle]));
       if(this.productId=='19' || this.productId=='3'){
-        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
+        let loginType = this.loginType;
+        if(loginType){
+          if(loginType=='B2CFlow' || loginType=='B2CFlow2'){
+            let i=0;
+            this.customerTitleError = false;this.customerNameError=false;this.customerMobileCodeError = false;this.customerTypeError=false;
+            this.customerMobileNoError = false;this.customerIdNumberError = false;this.customerPolicyTypeError = false;
+              if(this.updateComponent.Title==null || this.updateComponent.Title==undefined || this.updateComponent.Title ==''){this.customerTitleError = true;i+=1;}
+              if(this.updateComponent.UserName==null || this.updateComponent.UserName==undefined || this.updateComponent.UserName ==''){this.customerNameError = true;i+=1;}
+              if(this.updateComponent.MobileCode==null || this.updateComponent.MobileCode==undefined || this.updateComponent.MobileCode ==''){this.customerMobileCodeError = true;i+=1;}
+              if(this.updateComponent.MobileNo==null || this.updateComponent.MobileNo==undefined || this.updateComponent.MobileNo =='') {this.customerMobileNoError = true;i+=1;}
+              if(this.updateComponent.IdNumber==null || this.updateComponent.IdNumber==undefined || this.updateComponent.IdNumber =='') {this.customerIdNumberError = true;i+=1;}
+              if(this.updateComponent.PolicyHolderTypeid==null || this.updateComponent.PolicyHolderTypeid==undefined || this.updateComponent.PolicyHolderTypeid =='') {this.customerPolicyTypeError = true;i+=1;}
+              if(this.updateComponent.CustomerType==null || this.updateComponent.CustomerType==undefined || this.updateComponent.CustomerType =='') {this.customerTypeError = true;i+=1;}
+              if(i>0) this.errorSection = true;
+              if(i==0){
+                let customerObj = {
+                  "Title":this.updateComponent.Title,
+                  "ClientName":this.updateComponent.UserName,
+                  "MobileCode":this.updateComponent.MobileCode,
+                  "MobileNo":this.updateComponent.MobileNo,
+                  "MobileCodeDesc": this.updateComponent.MobileCodeDesc,
+                  "IdNumber":this.updateComponent.IdNumber,
+                  "IdType": this.updateComponent.CustomerType,
+                  "PolicyHolderTypeid":this.updateComponent.PolicyHolderTypeid,
+                  "EmailId":this.updateComponent.EmailId,
+                  "PreferredNotification": this.updateComponent.PreferredNotification
+                  
+                }
+                sessionStorage.setItem('b2cCustomerObj',JSON.stringify(customerObj));
+                this.modifiedCustomer = this.updateComponent.ModifiedCustomer;
+                if(this.modifiedCustomer){
+                    this.saveCustomerDetails(customerObj,'proceed');
+                }
+                else{
+                    this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
+                }
+              }
+            }
+            else  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
+        }
+        else{
+            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
+        }
       }
       else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='21'  || this.productId=='26' || this.productId == '25' || this.productId=='43') this.saveCommonDetails([vehicle]); 
-      else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+      else{
+        let loginType = this.loginType;
+                    if(loginType){
+                      if(loginType=='B2CFlow' || loginType=='B2CFlow2'){
+                        let i=0;
+                        this.customerTitleError = false;this.customerNameError=false;this.customerMobileCodeError = false;this.customerTypeError=false;
+                        this.customerMobileNoError = false;this.customerIdNumberError = false;this.customerPolicyTypeError = false;
+                          if(this.updateComponent.Title==null || this.updateComponent.Title==undefined || this.updateComponent.Title ==''){this.customerTitleError = true;i+=1;}
+                          if(this.updateComponent.UserName==null || this.updateComponent.UserName==undefined || this.updateComponent.UserName ==''){this.customerNameError = true;i+=1;}
+                          if(this.updateComponent.MobileCode==null || this.updateComponent.MobileCode==undefined || this.updateComponent.MobileCode ==''){this.customerMobileCodeError = true;i+=1;}
+                          if(this.updateComponent.MobileNo==null || this.updateComponent.MobileNo==undefined || this.updateComponent.MobileNo =='') {this.customerMobileNoError = true;i+=1;}
+                          if(this.updateComponent.IdNumber==null || this.updateComponent.IdNumber==undefined || this.updateComponent.IdNumber =='') {this.customerIdNumberError = true;i+=1;}
+                          if(this.updateComponent.PolicyHolderTypeid==null || this.updateComponent.PolicyHolderTypeid==undefined || this.updateComponent.PolicyHolderTypeid =='') {this.customerPolicyTypeError = true;i+=1;}
+                          if(this.updateComponent.CustomerType==null || this.updateComponent.CustomerType==undefined || this.updateComponent.CustomerType =='') {this.customerTypeError = true;i+=1;}
+                          if(i>0) this.errorSection = true;
+                          if(i==0){
+                            let customerObj = {
+                              "Title":this.updateComponent.Title,
+                              "ClientName":this.updateComponent.UserName,
+                              "MobileCode":this.updateComponent.MobileCode,
+                              "MobileNo":this.updateComponent.MobileNo,
+                              "MobileCodeDesc": this.updateComponent.MobileCodeDesc,
+                              "IdNumber":this.updateComponent.IdNumber,
+                              "IdType": this.updateComponent.CustomerType,
+                              "PolicyHolderTypeid":this.updateComponent.PolicyHolderTypeid,
+                              "EmailId":this.updateComponent.EmailId,
+                              "PreferredNotification": this.updateComponent.PreferredNotification
+                              
+                            }
+                            sessionStorage.setItem('b2cCustomerObj',JSON.stringify(customerObj));
+                            this.modifiedCustomer = this.updateComponent.ModifiedCustomer;
+                            if(this.modifiedCustomer){
+                                this.saveCustomerDetails(customerObj,'proceed');
+                            }
+                            else{
+                                this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+                            }
+                          }
+                        }
+                        else  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+                    }
+                    else{
+                        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+                    }
+      }
     }
   }
   saveCustomerDetails(data,type){
@@ -2727,6 +2942,11 @@ export class CustomerDetailsComponent implements OnInit {
         if(data?.EmailId!=null && data.EmailId!='' && data.EmailId!=undefined) data['PreferredNotification'] = 'Mail';
         else data['PreferredNotification'] = 'Sms';
       }
+      let createdBy = null;
+      if(data.MobileCodeDesc !=null && data.MobileCodeDesc!=''){
+        createdBy = data.MobileCodeDesc + data.MobileNo;
+      }
+      else createdBy = this.loginId;
     let ReqObj = {
       "BrokerBranchCode": this.brokerbranchCode,
       "CustomerReferenceNo": this.customerReferenceNo,
@@ -2740,8 +2960,8 @@ export class CustomerDetailsComponent implements OnInit {
       "CityCode": cityCode,
       "CityName": cityName,
       "ClientName": data?.ClientName,
-      "Clientstatus": 'P',
-      "CreatedBy": this.loginId,
+      "Clientstatus": 'Y',
+      "CreatedBy": createdBy,
       "DobOrRegDate": dobOrRegDate,
       "Email1": data?.EmailId,
       "Email2": null,
@@ -2769,7 +2989,7 @@ export class CustomerDetailsComponent implements OnInit {
       "WhatsappNo": data.MobileNo,
       "StateCode": StateCode,
       "StateName": stateName,
-      "Status": status,
+      "Status": 'Y',
       "Street": street,
       "TaxExemptedId": taxExemptedId,
       "TelephoneNo1": data?.TelephoneNo,
@@ -2815,7 +3035,10 @@ export class CustomerDetailsComponent implements OnInit {
           sessionStorage.setItem('customerReferenceNo',data?.Result?.SuccessId)
           this.customerReferenceNo = data?.Result?.SuccessId;
           if(type=='proceed'){
-            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+            if(this.productId=='3' || this.productId=='19'){
+              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
+            }
+            else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
           }
           else if(type=='create'){
             
