@@ -1518,6 +1518,11 @@ export class VehicleWishListComponent implements OnInit {
         if(data?.EmailId!=null && data.EmailId!='' && data.EmailId!=undefined) data['PreferredNotification'] = 'Mail';
         else data['PreferredNotification'] = 'Sms';
       }
+      let createdBy = null;
+      if(data.MobileCodeDesc !=null && data.MobileCodeDesc!=''){
+        createdBy = data.MobileCodeDesc + data.MobileNo;
+      }
+      else createdBy = this.loginId;
       
     let ReqObj = {
       "BrokerBranchCode": this.brokerBranchCode,
@@ -1533,7 +1538,7 @@ export class VehicleWishListComponent implements OnInit {
       "CityName": cityName,
       "ClientName": data?.ClientName,
       "Clientstatus": 'P',
-      "CreatedBy": this.loginId,
+      "CreatedBy": createdBy,
       "DobOrRegDate": dobOrRegDate,
       "Email1": data?.EmailId,
       "Email2": null,
