@@ -10,6 +10,8 @@ import { BehaviorSubject, Observable, Subscription, throwError, timer } from 'rx
 import { catchError, map, retry, take } from 'rxjs/operators';
 import { AuthService } from '../Auth/auth.service';
 import { IdleTimeoutManager } from 'idle-timer-manager';
+import * as Mydatas from '../../app/app-config.json';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +25,10 @@ export class SharedService {
   timeoutHandle: NodeJS.Timeout;
   redirectSection: boolean = false;
   timeLimit: Subscription; public value: number;
+  userDetails: any;
+  loginId: any;
+  public AppConfig: any = (Mydatas as any).default;
+  public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   constructor(
     private http: HttpClient,
     private authService: AuthService,
@@ -123,19 +129,23 @@ export class SharedService {
   clearTimeOut() {
     console.log('Clear Time Out');
     const redirectStatus = sessionStorage.getItem('redirectStatus');
+    console.log('Router url',this.router.url);
     // tslint:disable-next-line: triple-equals
     if ((redirectStatus == undefined && this.router != undefined)) {
       // tslint:disable-next-line: triple-equals
+      console.log('Clear Time Out1');
       if (this.router.url != '/' && this.router.url != '/Login/Home' && this.router.url != '/Login/sessionRedirect' && this.router.url != '/Login/Officer' && this.router.url != '/Login/Assessor' && this.router.url != '/Login/Garage' ) {
         window.clearTimeout(this.timeoutHandle);
+        console.log('Clear Time Out2');
         this.setTimeOutSection();
       }
     }
     return true;
   }
   setTimeOutSection() {
-    this.timeoutHandle = setTimeout(() => this.showAlert(this.redirectSection, this.router), (20 * 60 * 1000));
-    this.redirectRouting();
+    this.timeoutHandle = setTimeout(() => this.showAlert(this.redirectSection,this.router),(5 * 60 * 1000));
+    //(30 * 1000)
+    //this.redirectRouting();
   }
   showAlert(redirectSection, router) {
     const redirectStatus = sessionStorage.getItem('redirectStatus');
@@ -157,10 +167,65 @@ export class SharedService {
           () => this.timeLimit = null,
         );
           console.log('Alert Time Out', router, this.redirectSection, this.timeLimit);
-          sessionStorage.clear();
-          this.router.navigate(['/Login/Home']);
+          // alert('User Ti');
+          Swal.fire({
+            title: '<strong> Time Out</strong>',
+            icon: 'info',
+            html:
+              `<ul class="list-group errorlist">
+               <li>Do You Want to Still Proceed?</li>
+           </ul>`,
+            showCloseButton: false,
+            //focusConfirm: false,
+            showCancelButton:true,
+  
+           //confirmButtonColor: '#3085d6',
+           cancelButtonColor: '#d33',
+           confirmButtonText: 'YES',
+           cancelButtonText: 'NO',
+          }).then((result) => {
+            if (result.isConfirmed) {
+                  this.onProceed('Yes')
+            }
+            else if(result.isDismissed){
+              this.onProceed('No')
+            }
+            else {
+              this.redirectRouting();
+            }
+          })
+       
       }
     }
+  }
+
+  onProceed(type){
+     if(type=='Yes'){
+      this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+      this.loginId = this.userDetails.Result.LoginId;
+    
+      let ReqObj={
+        "LoginId":this.loginId
+      }
+      let urlLink = `${this.CommonApiUrl}authentication/tokenregenrate`;
+          this.onPostMethodSync(urlLink, ReqObj).subscribe(
+            (data: any) => {
+                if(data){
+                  const Token = data?.Result?.Token;
+                  //this.authService.login(data);
+                  this.authService.UserToken(Token);
+                  sessionStorage.setItem('UserToken',Token);
+                  sessionStorage.removeItem('redirectStatus');
+                
+                }
+              },  
+              (err) => { },
+            );
+     }
+     else if(type=='No'){
+      sessionStorage.clear();
+      this.router.navigate(['/Login/Home']);
+     }
   }
 
   redirectRouting() {
