@@ -426,6 +426,10 @@ export class NewCustomerDetailsComponent {
 							var dateParts = customerDetails.DobOrRegDate.split("/");
 							this.productItem.dobOrRegDate = dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
 						}
+						else{
+							var dateParts = customerDetails.DobOrRegDate.split("/");
+							this.productItem.dobOrRegDate = dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
+						}
 					}
 					this.productItem.Street = customerDetails.Street;
 					this.productItem.TelephoneNo = customerDetails.TelephoneNo1;

@@ -106,7 +106,7 @@
     
             <!--<img src="assets/images/nick.png">-->
             <div style="margin-left:-40px;">
-                <a (click)="onLog(title)" class="productlogout"> LogOut </a>
+                <a (click)="onLog('Log out')" class="productlogout"> LogOut </a>
             </div>
         </div>
         <!--<div class="d-flex flex-row-reverse">
@@ -133,8 +133,11 @@
     </div>
     <div class="prductBg">
         <div class="AllinProductBox ml-5 mr-5">
-            <div class="Choose-Product-Box col-sm-10 col-xs-10 col-12 col-md-6 col-lg-6 offset-md-4 offset-lg-4 padd0 bwT">
+            <div class="Choose-Product-Box col-sm-10 col-xs-10 col-12 col-md-6 col-lg-6 offset-md-4 offset-lg-4 padd0 bwT display1">
                 <span class="heading">SELECT THE PRODUCT YOU WISH TO BUY</span>
+            </div>
+            <div class="Choose-Product-Box col-sm-12 col-xs-12 col-12 col-md-12 col-lg-12 padd0 bwT display2">
+                <span class="heading">SELECT PRODUCT</span>
             </div>
             <div class="row p-3" >
                 <div class="group  box-1padd0 InsuranceType AllTabShow col-12 col-md-12 col-lg-2 col-xl-2 col-sm-12 col-xs-12" *ngFor="let item of productList">
