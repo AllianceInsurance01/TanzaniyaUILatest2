@@ -364,7 +364,18 @@ export class ReferralRequoteComponent {
       );
   }
   onEditQuotes(rowData){
-   this.checkStatus(rowData)
+    if(rowData.QuoteNo!=null && rowData.QuoteNo!='' && rowData.QuoteNo!=undefined){
+      this.checkStatus(rowData);
+    } 
+    else{
+      sessionStorage.setItem('QuoteStatus','RE');
+      sessionStorage.removeItem('endorsePolicyNo');
+      sessionStorage.removeItem('endorseTypeId');
+      sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+      sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
+      sessionStorage.setItem('quoteNo',rowData.QuoteNo);
+      this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
+    }
   }
   checkStatus(rowData){
     let ReqObj = {
@@ -385,7 +396,7 @@ export class ReferralRequoteComponent {
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
         }
         else{
-          
+          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
         }
       });
   }

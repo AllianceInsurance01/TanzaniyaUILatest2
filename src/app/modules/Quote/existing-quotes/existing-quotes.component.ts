@@ -544,7 +544,7 @@ export class ExistingQuotesComponent implements OnInit {
           }
         }
         else{
-
+            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
         }
       })
 
