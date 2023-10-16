@@ -44,6 +44,7 @@
                             {{ element[col.key] }}
                         </ng-container>
                     </ng-container>
+                   
                     <ng-container *ngIf="columnHeader[i]['display']=='CoverBased Endt'">
                         <ng-container *ngIf="element[col.key]=='Y'">Yes</ng-container>
                         <ng-container *ngIf="element[col.key]!='Y'">No</ng-container>
@@ -59,6 +60,7 @@
                         <ng-container *ngIf="element[col.key]=='01'">RadioButton</ng-container>
                         <ng-container *ngIf="element[col.key]!='01'">TextBox</ng-container>
                     </ng-container>
+                   
                     <ng-container *ngIf="col.key=='Status'">
 
                         <span *ngIf="element[col.key]=='Y'">Active</span>
@@ -83,7 +85,16 @@
                             <span *ngIf="endorsementSection && element[col.key]==null">Base policy</span>
                     </ng-container>
                     <ng-container *ngIf="col.key!='Status' && columnHeader[i]['display']!='QuestionType' && columnHeader[i]['display']!='CoverBased Endt'  && columnHeader[i]['display']!='EndorsementStatus' && columnHeader[i]['display']!='BrokerConfigProductName' && columnHeader[i]['display']!='Cover Type' && columnHeader[i]['display']!='Endorsements Premium' && columnHeader[i]['display']!='Endorsement Premium'">
-                        {{ element[col.key] }}
+                        <ng-container *ngIf="columnHeader[i]['display']=='Commision Amt' || columnHeader[i]['display']=='Sum Inured' || columnHeader[i]['display']=='Premium'">
+                            <div style="text-align:right !important;">
+                               
+                                {{ element[col.key] }}
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="columnHeader[i]['display']!='Commision Amt' && columnHeader[i]['display']!='Sum Inured' && columnHeader[i]['display']!='Premium'">
+                            {{ element[col.key] }}
+                            </ng-container>
+                       
                     </ng-container>
                     <ng-container *ngIf="columnHeader[i]['display']=='Endorsements Premium' || columnHeader[i]['display']=='Endorsement Premium'">
                         <ng-container *ngIf="element[col.key]==0 || element[col.key]=='0'">
