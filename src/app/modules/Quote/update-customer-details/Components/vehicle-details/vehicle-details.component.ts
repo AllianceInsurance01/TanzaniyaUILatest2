@@ -1508,8 +1508,8 @@ export class VehicleDetailsComponent implements OnInit {
               endDate = this.endorseEffectiveDate;
             }
             else{
-              if(this.policyStartDate.includes('/')) endDate = this.policyStartDate;
-              else endDate = this.datePipe.transform(this.policyStartDate, "dd/MM/yyyy");
+              if(this.policyEndDate.includes('/')) endDate = this.policyEndDate;
+              else endDate = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
             }
           }
           let effectiveDate=null;
