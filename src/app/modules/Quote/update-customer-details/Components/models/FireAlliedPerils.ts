@@ -27,7 +27,7 @@ export class FireAlliedPerils{
                 fieldGroupClassName: 'row',
                 fieldGroup: [
                   {
-                    className: 'col-4 col-lg-4 col-md-4 offset-2',
+                    className: 'col-12 col-lg-4 col-md-6',
                     type: 'ngselect',
                     key: 'IndemityPeriod',
                     props: {
@@ -45,7 +45,7 @@ export class FireAlliedPerils{
                   
                   
                   {
-                    className: 'col-4 col-lg-4 col-md-4',
+                    className: 'col-12 col-lg-4 col-md-6',
                     type: 'commaSeparator',
                     key: 'BuildingSuminsured',
       
@@ -67,7 +67,7 @@ export class FireAlliedPerils{
                     },
                   },
                   {
-                    className: 'col-6 col-lg-6 col-md-6 offset-2',
+                    className: 'col-12 col-lg-4 col-md-6',
                     key: 'MakutiYn',
                     type: 'radio',
                     templateOptions: {

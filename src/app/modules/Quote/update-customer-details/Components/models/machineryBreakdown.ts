@@ -28,11 +28,11 @@ export class MachineryBreakDown{
               fieldGroup: [
                 {
                   className: 'col-12',
-                  type: 'table',
+                  type: 'tables',
                   fieldGroup: [
                     {
                         fieldGroup:[
-                          {props:{label:`Select`}},
+                          // {props:{label:`Select`}},
                           {props:{label:`Items to be Insured`}},
                           {props:{label:`Sum Insured`}},
                         ]
@@ -41,22 +41,22 @@ export class MachineryBreakDown{
                       fieldGroup:[
                             {
                               fieldGroup:[
-                                {
-                                  className:'customCheckbox',
-                                  key: 'PowerPlantSIYN',
-                                  type: 'checkbox',
-                                  templateOptions: {
-                                    type: 'checkbox',
-                                    label: '',
-                                    required: false,
-                                    disabled: this.checkDisable('SumInsuredYN'),
-                                    name: 'PowerPlantSIYN',
-                                    options: [],
-                                  }
-                                },
+                                // {
+                                //   className:'customCheckbox',
+                                //   key: 'PowerPlantSIYN',
+                                //   type: 'checkbox',
+                                //   templateOptions: {
+                                //     type: 'checkbox',
+                                //     label: '',
+                                //     required: false,
+                                //     disabled: this.checkDisable('SumInsuredYN'),
+                                //     name: 'PowerPlantSIYN',
+                                //     options: [],
+                                //   }
+                                // },
                                 {
                                   className: "mt-1",
-                                  type: 'display',
+                                  type: 'displays',
                 
                                   templateOptions: {
                                     label: `Power Plant`,
@@ -65,8 +65,12 @@ export class MachineryBreakDown{
                                   },
                                 },
                                 {
+                                  className:"labelsum",
                                   type: 'commaSeparator',
                                   key: 'PowerPlantSi',
+                                    props: {
+                                    label: `Sum Insured`,
+                                  },
                                   templateOptions: {
                                     disabled: this.checkDisable('SumInsured'),
                                   },
@@ -84,22 +88,22 @@ export class MachineryBreakDown{
                             },
                             {
                               fieldGroup:[
-                                {
-                                  className:'customCheckbox',
-                                  key: 'ElecMachinesSIYN',
-                                  type: 'checkbox',
-                                  templateOptions: {
-                                    type: 'checkbox',
-                                    label: '',
-                                    required: false,
-                                    disabled: this.checkDisable('SumInsuredYN'),
-                                    name: 'ElecMachinesSIYN',
-                                    options: [],
-                                  }
-                                },
+                                // {
+                                //   className:'customCheckbox',
+                                //   key: 'ElecMachinesSIYN',
+                                //   type: 'checkbox',
+                                //   templateOptions: {
+                                //     type: 'checkbox',
+                                //     label: '',
+                                //     required: false,
+                                //     disabled: this.checkDisable('SumInsuredYN'),
+                                //     name: 'ElecMachinesSIYN',
+                                //     options: [],
+                                //   }
+                                // },
                                 {
                                   className: "mt-1",
-                                  type: 'display',
+                                  type: 'displays',
                 
                                   templateOptions: {
                                     label: `Electrical Machines`,
@@ -108,8 +112,12 @@ export class MachineryBreakDown{
                                   },
                                 },
                                 {
+                                  className:"labelsum",
                                   type: 'commaSeparator',
                                   key: 'ElecMachinesSi',
+                                  props: {
+                                    label: `Sum Insured`,
+                                  },
                                   templateOptions: {
                                     disabled: this.checkDisable('SumInsured'),
                                   },
@@ -127,32 +135,36 @@ export class MachineryBreakDown{
                             },
                             {
                               fieldGroup:[
-                                {
-                                  className:'customCheckbox',
-                                  key: 'EquipmentSIYN',
-                                  type: 'checkbox',
-                                  templateOptions: {
-                                    type: 'checkbox',
-                                    label: '',
-                                    required: false,
-                                    disabled: this.checkDisable('SumInsuredYN'),
-                                    name: 'EquipmentSIYN',
-                                    options: [],
-                                  }
-                                },
+                                // {
+                                //   className:'customCheckbox',
+                                //   key: 'EquipmentSIYN',
+                                //   type: 'checkbox',
+                                //   templateOptions: {
+                                //     type: 'checkbox',
+                                //     label: '',
+                                //     required: false,
+                                //     disabled: this.checkDisable('SumInsuredYN'),
+                                //     name: 'EquipmentSIYN',
+                                //     options: [],
+                                //   }
+                                // },
                                 {
                                   className: "mt-1",
-                                  type: 'display',
+                                  type: 'displays',
                 
                                   templateOptions: {
-                                    label: `Equipments Suminsured`,
+                                    label: `Equipments`,
                                     required: false,
                 
                                   },
                                 },
                                 {
+                                  className:"labelsum",
                                   type: 'commaSeparator',
                                   key: 'EquipmentSi',
+                                  props: {
+                                    label: `Sum Insured`,
+                                  },
                                   templateOptions: {
                                     disabled: this.checkDisable('SumInsured'),
                                   },
@@ -170,32 +182,36 @@ export class MachineryBreakDown{
                             },
                             {
                               fieldGroup:[
-                                {
-                                  className:'customCheckbox',
-                                  key: 'MachineEquipSIYN',
-                                  type: 'checkbox',
-                                  templateOptions: {
-                                    type: 'checkbox',
-                                    label: '',
-                                    required: false,
-                                    disabled: this.checkDisable('SumInsuredYN'),
-                                    name: 'MachineEquipSIYN',
-                                    options: [],
-                                  }
-                                },
+                                // {
+                                //   className:'customCheckbox',
+                                //   key: 'MachineEquipSIYN',
+                                //   type: 'checkbox',
+                                //   templateOptions: {
+                                //     type: 'checkbox',
+                                //     label: '',
+                                //     required: false,
+                                //     disabled: this.checkDisable('SumInsuredYN'),
+                                //     name: 'MachineEquipSIYN',
+                                //     options: [],
+                                //   }
+                                // },
                                 {
                                   className: "mt-1",
-                                  type: 'display',
+                                  type: 'displays',
                 
                                   templateOptions: {
-                                    label: `Electronic Equipment Suminsured`,
+                                    label: `Electronic Equipment`,
                                     required: false,
                 
                                   },
                                 },
                                 {
+                                  className:"labelsum",
                                   type: 'commaSeparator',
                                   key: 'MachineEquipSi',
+                                  props: {
+                                    label: `Sum Insured`,
+                                  },
                                   templateOptions: {
                                     disabled: this.checkDisable('SumInsured'),
                                   },
@@ -213,32 +229,36 @@ export class MachineryBreakDown{
                             },
                             {
                               fieldGroup:[
-                                {
-                                  className:'customCheckbox',
-                                  key: 'GeneralMachineSIYN',
-                                  type: 'checkbox',
-                                  templateOptions: {
-                                    type: 'checkbox',
-                                    label: '',
-                                    required: false,
-                                    disabled: this.checkDisable('SumInsuredYN'),
-                                    name: 'GeneralMachineSIYN',
-                                    options: [],
-                                  }
-                                },
+                                // {
+                                //   className:'customCheckbox',
+                                //   key: 'GeneralMachineSIYN',
+                                //   type: 'checkbox',
+                                //   templateOptions: {
+                                //     type: 'checkbox',
+                                //     label: '',
+                                //     required: false,
+                                //     disabled: this.checkDisable('SumInsuredYN'),
+                                //     name: 'GeneralMachineSIYN',
+                                //     options: [],
+                                //   }
+                                // },
                                 {
                                   className: "mt-1",
-                                  type: 'display',
+                                  type: 'displays',
                 
                                   templateOptions: {
-                                    label: `General Machines Suminsured`,
+                                    label: `General Machines`,
                                     required: false,
                 
                                   },
                                 },
                                 {
+                                  className:"labelsum",
                                   type: 'commaSeparator',
                                   key: 'GeneralMachineSi',
+                                  props: {
+                                    label: `Sum Insured`,
+                                  },
                                   templateOptions: {
                                     disabled: this.checkDisable('SumInsured'),
                                   },
@@ -256,32 +276,36 @@ export class MachineryBreakDown{
                             },
                             {
                               fieldGroup:[
-                                {
-                                  className:'customCheckbox',
-                                  key: 'ManuUnitsSIYN',
-                                  type: 'checkbox',
-                                  templateOptions: {
-                                    type: 'checkbox',
-                                    label: '',
-                                    required: false,
-                                    disabled: this.checkDisable('SumInsuredYN'),
-                                    name: 'ManuUnitsSIYN',
-                                    options: [],
-                                  }
-                                },
+                                // {
+                                //   className:'customCheckbox',
+                                //   key: 'ManuUnitsSIYN',
+                                //   type: 'checkbox',
+                                //   templateOptions: {
+                                //     type: 'checkbox',
+                                //     label: '',
+                                //     required: false,
+                                //     disabled: this.checkDisable('SumInsuredYN'),
+                                //     name: 'ManuUnitsSIYN',
+                                //     options: [],
+                                //   }
+                                // },
                                 {
                                   className: "mt-1",
-                                  type: 'display',
+                                  type: 'displays',
                 
                                   templateOptions: {
-                                    label: `Manufacturing Units Suminsured`,
+                                    label: `Manufacturing Units`,
                                     required: false,
                 
                                   },
                                 },
                                 {
+                                  className:"labelsum",
                                   type: 'commaSeparator',
                                   key: 'ManuUnitsSi',
+                                  props: {
+                                    label: `Sum Insured`,
+                                  },
                                   templateOptions: {
                                     disabled: this.checkDisable('SumInsured'),
                                   },
@@ -299,22 +323,22 @@ export class MachineryBreakDown{
                             },
                             {
                               fieldGroup:[
-                                {
-                                  className:'customCheckbox',
-                                  key: 'BoilerPlantsSIYN',
-                                  type: 'checkbox',
-                                  templateOptions: {
-                                    type: 'checkbox',
-                                    label: '',
-                                    required: false,
-                                    disabled: this.checkDisable('SumInsuredYN'),
-                                    name: 'BoilerPlantsSIYN',
-                                    options: [],
-                                  }
-                                },
+                                // {
+                                //   className:'customCheckbox',
+                                //   key: 'BoilerPlantsSIYN',
+                                //   type: 'checkbox',
+                                //   templateOptions: {
+                                //     type: 'checkbox',
+                                //     label: '',
+                                //     required: false,
+                                //     disabled: this.checkDisable('SumInsuredYN'),
+                                //     name: 'BoilerPlantsSIYN',
+                                //     options: [],
+                                //   }
+                                // },
                                 {
                                   className: "mt-1",
-                                  type: 'display',
+                                  type: 'displays',
                 
                                   templateOptions: {
                                     label: `Boiler And Pressure Plants`,
@@ -323,8 +347,12 @@ export class MachineryBreakDown{
                                   },
                                 },
                                 {
+                                  className:"labelsum",
                                   type: 'commaSeparator',
                                   key: 'BoilerPlantsSi',
+                                  props: {
+                                    label: `Sum Insured`,
+                                  },
                                   templateOptions: {
                                     disabled: this.checkDisable('SumInsured'),
                                   },

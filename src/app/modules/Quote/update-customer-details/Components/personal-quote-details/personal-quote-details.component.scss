@@ -8,6 +8,12 @@
 //     /* border: 3px solid var(--theme1); */
 //     box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 // }
+:host ::ng-deep .formlymargin .input-control-container{
+    margin-top: -14px !important;
+}
+.classnew{
+    margin-top:20px !important;
+}
 .mdc-tab__text-label {
     color: #3f51b5;
     font-size: 0.8rem !important;
@@ -157,6 +163,7 @@ ul{
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+    text-decoration: none !important;
 }
 .line-middle {
     width: 1px;
@@ -170,22 +177,38 @@ ul{
             transparent 100%);
 }
 
-.splitCardHeader{
-    display: block;
-    padding-left: 3px;
-    padding-top: 1px;
-    padding-right: 3px;
-    padding-bottom: 2px;
-    border-radius: 25px;
+
+u{
+    text-decoration: none !important;
+}
+:host ::ng-deep .labelsum .form-label{
+font-size:.75rem !important;
+}
+:host ::ng-deep .labelsum .customInput{
+    width:85% !important;
+    margin-left:13px !important;
+    margin-right: 10px !important;
+}
+.splitCardHeaders{
+    //display: block !important; 
+    // padding-left: 3px;
+    // padding-top: 1px;
+    // padding-right: 3px;
+    //padding-bottom: 2px;
+    //border-radius: 5px;
     cursor: pointer;
     background: #e3e0e0;
-    color: #6f6c6c;
+    color: #6f6c6c;  
+    width:100% !important;
+    border-radius: 10px !important;
 }
 
-
 @media screen and (min-width: 280px) and (max-width: 750px) {
+    .formlabel{
+        padding-top: 0px !important;
+        }
     .splitCard{
-        box-shadow: 1px 1px 8px rgba(0,0,0,.1);
+        box-shadow: 1px 1px 8px rgba(0,0,0,.1) !important;
         border-radius: 25px;
         margin: 1%;
         padding: 5px;
@@ -193,14 +216,38 @@ ul{
         display: inline-block;
         vertical-align: top;
         text-align: center;
+        //box-shadow: 0 9px 7px 6px rgba(0, 0, 0, 0.2) !important;
     }
     .splicards1{
         width: 90% !important;
     }
+    .splitCardHeader{
+        display: block !important; 
+        padding-left: 3px;
+        padding-top: 1px;
+        padding-right: 3px;
+        padding-bottom: 2px;
+        margin-left:0px !important;
+        width:90%;
+        margin-right:0px !important;
+        //border-radius: 5px;
+        cursor: pointer;
+        background: #e3e0e0;
+        color: #6f6c6c;  
+    }
+    :host ::ng-deep .mat-vertical-content-container{
+margin-left:0px !important;
+    }
+    label {
+        line-height: .9rem!important;
+    }
     }
     @media screen and (min-width: 768px) and (max-width: 1024px) {
+        .formlabel{
+            padding-top: 9px !important;
+            }
         .splitCard{
-            box-shadow: 1px 1px 8px rgba(0,0,0,.1);
+            box-shadow: 1px 1px 8px rgba(0,0,0,.1) !important;
             border-radius: 25px;
             margin: 1%;
             padding: 5px;
@@ -212,19 +259,104 @@ ul{
         .splicards1{
             width: 45% !important;
         }
+        .splitCardHeader{
+            display: block !important; 
+            padding-left: 3px;
+            padding-top: 1px;
+            padding-right: 3px;
+            padding-bottom: 2px;
+            margin-left:0px !important;
+            width:100%;
+            margin-right:0px !important;
+            //border-radius: 5px;
+            cursor: pointer;
+            background: #e3e0e0;
+            color: #6f6c6c;  
+        }
+        :host ::ng-deep .mat-vertical-content-container{
+            margin-left:0px !important;
+                }
+                label {
+                    line-height: .9rem!important;
+                }
     }
     @media screen and (min-width: 1024px) and (max-width: 20000px) {
+        .formlabel{
+            padding-top: 9px !important;
+            }
         .splitCard{
-            box-shadow: 1px 1px 8px rgba(0,0,0,.1);
-            border-radius: 25px;
+            box-shadow: 1px 1px 8px rgba(0,0,0,.1) !important;
+            //border-radius:10px;
             margin: 1%;
             padding: 5px;
             width: 22%;
             display: inline-block;
             vertical-align: top;
             text-align: center;
+            //box-shadow: 0 9px 7px 6px rgba(0, 0, 0, 0.2) !important;
         }
         .splicards1{
             width: 45% !important;
         }
+        .splitCardHeader{
+            display: block !important; 
+            padding-left: 3px;
+            padding-top: 1px;
+            padding-right: 3px;
+            padding-bottom: 2px;
+            margin-left:-5px !important;
+            width:104% !important;
+            margin-right:-10px !important;
+            margin-top:-6px !important;
+            //border-radius: 5px;
+            cursor: pointer;
+            background: #e3e0e0;
+            color: #6f6c6c;  
+        }
+        :host ::ng-deep .mat-vertical-content-container{
+            margin-left:36px !important;
+        }
+        label {
+            line-height: .5rem!important;
+        }
     }
+
+
+    .leftBox {
+        width: 34% !important;
+        height: min-content !important;
+    }
+    
+    .cards {
+        box-shadow: 0 0 6px 0 rgba(76, 90, 111, 0.17) !important;
+        /* border: solid 1px #ffffff; */
+        background-color: #ffffff !important;
+    }
+    .rounded {
+        border-radius: 4px !important;
+    }
+    .prodPageLogoBox {
+        padding: 15px;
+        height: auto;
+    }
+
+    .labeltable{
+        font-size: 14px !important;
+        font-family: 'Inter', sans-serif !important;
+        margin-top:0px !important;
+        margin-left:0px !important;
+    }
+    
+    .splitCardHeaderss
+    {
+        font-size: 13px !important;
+        font-family: 'Inter', sans-serif !important;
+        display: block !important; 
+        padding-left: 3px !important;
+        padding-top: 1px !important;
+        padding-right: 3px !important;
+        padding-bottom: 2px !important;
+        margin-left:-5px !important;
+        cursor: pointer !important;
+        background: #e3e0e0 !important;
+        color: #6f6c6c !important;}

@@ -61,6 +61,9 @@ import { DisplayLabel } from './displayText';
 import { CustomerModelComponent } from '../../Customer/customer-model/customer-model.component';
 import { RadioList } from './radioList';
 import { NgSelect } from './ngselect';
+import { TablesTypeComponent } from './formlytable';
+import { DisplayLabels } from './displayformly';
+//import { CommaSeparatorsInput } from './Commaseperatorin';
 
 export function maxlengthValidationMessage(err, field) {
   return `This value should be less than ${field.templateOptions.maxLength} characters`;
@@ -101,6 +104,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     FormlyFieldTabs,
     RepeatTypeComponent,
     TableTypeComponent,
+    TablesTypeComponent,
     CustomerModelComponent,
     RadioList,
     NgSelect
@@ -136,10 +140,13 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
         { name: 'multischema', component: MultiSchemaTypeComponent },
         { name: 'repeat', component: RepeatTypeComponent },
         { name: 'display', component: DisplayLabel },
+        { name: 'displays', component: DisplayLabels },
         { name: 'radioList', component: RadioList },
         {name: 'ngselect', component:NgSelect},
         { name: 'commaSeparator', component: CommaSeparatorInput, wrappers: ['form-field'] },
+        //{ name: 'commaSeparators', component: CommaSeparatorsInput, wrappers: ['form-field'] },
         { name: 'table', component: TableTypeComponent, wrappers: ['form-field'] },
+        { name: 'tables', component: TablesTypeComponent, wrappers: ['form-field'] },
         {
           name: 'datepicker',
           component: DatepickerTypeComponent,

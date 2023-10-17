@@ -504,8 +504,8 @@ export class Burglary{
                                       },
                                       {
                                         type: 'ngselect',
+                                        className:'formlymargin',
                                         key: 'StockLossPercent',
-                      
                                         templateOptions: {
                                           required: false,
                                           disabled: this.checkDisable('SumInsured'),
@@ -538,7 +538,7 @@ export class Burglary{
                                         },
                                       },
                                       {
-                                        className: "mt-3",
+                                        className: "mt-1",
                                         type: 'commaSeparator',
                                         key: 'GoodsSi',
                       
@@ -559,6 +559,7 @@ export class Burglary{
                                       },
                                       {
                                         type: 'ngselect',
+                                        className:'formlymargin',
                                         key: 'GoodsLossPercent',
                                         
                                         templateOptions: {
@@ -613,6 +614,7 @@ export class Burglary{
                                       },
                                       {
                                         type: 'ngselect',
+                                        className:'formlymargin',
                                         key: 'FurnitureLossPercent',
                                         
                                         templateOptions: {
@@ -666,9 +668,10 @@ export class Burglary{
                                           },
                                         },
                                         {
+                                          className:'formlymargin',
                                           type: 'ngselect',
                                           key: 'ApplianceLossPercent',
-                                         
+                                        
                                           templateOptions: {
                                             disabled: this.checkDisable('SumInsured'),
                                             required: false,
@@ -720,9 +723,9 @@ export class Burglary{
                                         },
                                       },
                                       {
+                                        className:'formlymargin',
                                         type: 'ngselect',
                                         key: 'CashValueablesLossPercent',
-                                        
                                         templateOptions: {
                                           disabled: this.checkDisable('SumInsured'),
                                           required: false,
