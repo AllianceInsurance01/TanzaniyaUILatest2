@@ -63,8 +63,11 @@ export class ReportComponent implements OnInit {
       { key: 'SumInured', display: 'Sum Inured' },
       { key: 'PolicyDesc', display: 'Policy Desc' },
       { key: 'CommisionAmt', display: 'Commision Amt' },
-      { key: 'PaymentType', display: 'Payment Type' },
       { key: 'Premium', display: 'Premium' },
+      { key: 'Currency', display: 'Currency' },
+      { key: 'PaymentType', display: 'Payment Type' },
+     
+     
       // {
       //   key: 'edit',
       //   display: 'Vehicle Details',
@@ -124,7 +127,8 @@ onCommonDocumentDownload(){
     "BranchCode": this.branchValue,
     "EndDate": enddate,
     "LoginId": this.loginId,
-    "StartDate": startdate
+    "StartDate": startdate,
+    "ProductId": this.productId,
   }
   let urlLink = `${this.CommonApiUrl}pdf/premium/report`;
   this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
@@ -152,6 +156,7 @@ getsearch(){
 }
  
 getQuotes(){
+  this.customerData=[];
   let startdate=this.datePipe.transform(this.startdate, "dd/MM/yyyy");
   let enddate=this.datePipe.transform(this.enddate, "dd/MM/yyyy");
   let ReqObj = {

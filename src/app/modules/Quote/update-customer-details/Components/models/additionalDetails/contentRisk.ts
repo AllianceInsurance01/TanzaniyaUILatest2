@@ -34,7 +34,7 @@ export class ContentRisk{
                         type: 'ngselect',
                         key: 'ContentLocation',
                         defaultValue: '',
-                        className: 'col-sm-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         props: {
                           label: `Location`,
                           required: true,
@@ -55,7 +55,7 @@ export class ContentRisk{
                         type: 'ngselect',
                         key: 'ContentType',
                         defaultValue: '',
-                        className: 'col-sm-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         props: {
                           label: `Content Type`,
                           required: true,
@@ -73,7 +73,7 @@ export class ContentRisk{
                         },
                       },
                       {
-                        className: 'col-sm-4',
+                        className: 'col-12 col-md-6 col-lg-4',
                         type: 'input',
                         key: 'ContentSerialNo',
                         templateOptions: {
@@ -86,7 +86,7 @@ export class ContentRisk{
                       
                       },
                       {
-                        className: 'col-sm-7 col-lg-7 col-xl-7',
+                        className: 'col-sm-12 col-md-6 col-lg-7 col-xl-7',
                         type: 'input',
                         key: 'ContentDesc',
                         templateOptions: {
@@ -99,7 +99,7 @@ export class ContentRisk{
                       
                       },
                       {
-                        className: 'col-sm-5',
+                        className: 'col-12 col-md-6 col-lg-4',
                         type: 'commaSeparator',
                         key: 'ContentSI',
                         templateOptions: {

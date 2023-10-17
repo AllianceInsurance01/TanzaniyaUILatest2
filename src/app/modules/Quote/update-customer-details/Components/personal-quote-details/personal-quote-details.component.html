@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div class="maan-grid-item">
-                <div class="maan-grid-item-title p-0" style="margin: 0px !important;top:0rem;bottom: 0rem !important;padding-top: 9px !important;">
+                <div class="maan-grid-item-title p-0 formlabel" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
                     <div class="d-flex justify-content-between">
                         <div>
                             <span class="mx-1">
@@ -136,9 +136,9 @@
                         </mat-tab-group> -->
                             <div class="row">
                                 <ng-container *ngFor="let step of fields[0].fieldGroup; let index = index; let last = last">
-                                    <ng-container *ngIf="step.props.label=='Building Risk'|| step.props.label=='Burglary'|| step.props.label=='Fidelity' || step.props.label=='Employers Liability' ">
+                                    <ng-container *ngIf="step.props.label=='Building Risk' ||step.props.label=='Machinery BreakDown'||step.props.label=='Money'||step.props.label=='Burglary'|| step.props.label=='Fidelity' || step.props.label=='Employers Liability'|| step.props.label=='Fire & Allied Perils'">
                                         <div class="col-md-12 col-lg-12 col-xl-12">
-                                            <div class="col-md-4 col-lg-4 col-xl-4 splitCardHeader d-flex justify-content-between" (click)="selectedIndex=index">
+                                            <div class="col-md-4 col-lg-4 col-xl-4 splitCardHeaders d-flex justify-content-between" (click)="selectedIndex=index">
                                                 <div (click)="selectedIndex=index" class="mt-2 pl-4"><h1 class="headings"><u>{{ step.props.label }}</u></h1></div>
                                                 <div class="pr-3 pt-1">
                                                     <!-- <button class="btn btn-primary btn-sm" >
@@ -156,14 +156,12 @@
                                     
                                  <!--*ngIf="step.props.label=='Fidelity' || step.props.label=='Employers Liability'"-->
                                  <!--*ngIf="step.props.label=='Fidelity' || step.props.label=='Employers Liability' || step.props.label=='Money' || step.props.label=='Machinery BreakDown'"-->
-                                 <ng-container *ngIf="step.props.label=='Money' || step.props.label=='Machinery BreakDown'">
+                                 <!-- <ng-container *ngIf="step.props.label=='Machinery BreakDown'">
                                     <div class="col-md-6 col-lg-6 col-xl-6">
-                                        <div class="col-md-4 col-lg-4 col-xl-4 splitCardHeader d-flex justify-content-between" (click)="selectedIndex=index">
+                                        <div class="col-md-4 col-lg-4 col-xl-4 splitCardHeaders d-flex justify-content-between" (click)="selectedIndex=index">
                                             <div (click)="selectedIndex=index" class="mt-2 pl-4"><h1 class="headings"><u>{{ step.props.label }}</u></h1></div>
                                             <div class="pr-3 pt-1">
-                                                <!-- <button class="btn btn-primary btn-sm" >
-                                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                                </button> -->
+                                            
                                             </div>
                                         </div>
                                         <div class="card-body">
@@ -172,9 +170,9 @@
                                             </form>
                                         </div>
                                     </div>
-                                </ng-container>
-                                    <ng-container *ngIf="step.props.label!='Building Risk' && step.props.label!='Burglary' && step.props.label!='Fidelity' && step.props.label!='Employers Liability' && step.props.label!='Money' && step.props.label!='Machinery BreakDown'">
-                                        <div class="col-md-6 col-lg-4 col-xl-4 col-12 splitCard">
+                                </ng-container> -->
+                                    <ng-container *ngIf="step.props.label!='Building Risk' && step.props.label!='Burglary' && step.props.label!='Fidelity' && step.props.label!='Employers Liability' && step.props.label!='Money' && step.props.label!='Machinery BreakDown' && step.props.label!='Fire & Allied Perils'">
+                                        <div class="col-md-6 col-lg-4 col-xl-4 col-12 ml-2 splitCard">
                                             <div class="col-md-12 col-lg-12 col-xl-12 splitCardHeader d-flex justify-content-between" (click)="selectedIndex=index">
                                                 <div (click)="selectedIndex=index" class="mt-2 pl-4"><h1 class="headings"><u>{{ step.props.label }}</u></h1></div>
                                                 <div class="pr-3 pt-1">
@@ -761,6 +759,27 @@
                 </ng-container>
             </div>
             </div>
+           <!-- <section>
+            <div class="container">
+                <div class="row">
+               <div class="d-flex" style="width:100% !important;">
+                <div class="cards leftBox mr-1 rounded">
+                    <div class="prodPageLogoBox d-flex p-2 border-bottom-primary flex-wrap">
+                            <div class="d-flex align-items-center pr-3 mobileLogoBox w-50">
+                                <img src="/IPruTerm/images/web/clientLogo.png" alt="Client Logo">
+                            </div>
+                            <div class="clientPrdName d-flex flex-column align-items-start justify-content-center">
+                                iPRU iProtect Smart<span id="additionalPlanName"></span>
+                            </div>
+                        <div class="achivement">Highest claims settled worth <b>₹2,977.5 Cr</b> in FY22</div>
+                    </div>
+                   
+                </div>
+               </div>
+                 </div>
+                </div>
+           
+           </section> -->
             <div class="text-center my-2" *ngIf="productId!='19' && productId!='3'">
                 <button class="custom-btn btn-5 mr-2" [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/customer-details']" routerLinkActive="router-link-active" matRipple><<&nbsp;Back</button>&nbsp;
                 <button class="custom-btn btn-6 maan-button-data " matRipple (click)="onFormSubmit()"><i class="fas fa-check"></i>&nbsp;Proceed</button>
