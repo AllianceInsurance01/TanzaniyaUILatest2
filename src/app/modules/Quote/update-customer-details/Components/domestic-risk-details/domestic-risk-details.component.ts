@@ -937,7 +937,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
       });
   }
   enableAddNewBtn(type){
-    console.log('YYYYYYYYYY',this.buildingSection,this.enableAllSection);
+    //console.log('YYYYYYYYYY',this.buildingSection,this.enableAllSection);
     if(this.endorsementSection){
       if(this.enableAllSection){
         return true;
@@ -4944,15 +4944,109 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
     if(this.productId!='19' && this.selectedTab!=1 && this.LocationList.length==0) this.onSave(event.tab.textLabel)
     }
   }
-  getBack(){
+  getBack(type){
     if(this.endorsementSection){
-      if(this.endorseCategory=='Financial'){
+      if(this.endorseCategory=='Financial' && type=='Building'){
         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
       }
-      else{
+      else if(type=='Content Risk'){
+        this.fourth = true;
+        this.getContentDetails();
+        this.selectedTab -=1; 
+        
+      }
+      else if(type=='Personal Accident'){
+        this.fourth = true;
+        this.getPersonalAccidentDetails();
+        this.selectedTab -=1; 
+      }
+      else if(type=='All Risk'){
+        this.fourth = true;this.getallriskDetails();
+        this.selectedTab -=1; 
+      }
+      else if(type=='Personal Indemenity'){
+        this.fourth = true;this.getPersonalIntermediaryDetails();
+        this.selectedTab -=1; 
+      }
+      else if(type=='ElectricalEquipment'){
+        this.fourth = true;this.getElectronicEquipment();
+        this.selectedTab -=1; 
+      }
+      else if(type== 'Machinery Breakdown'){
+        this.nine =true;
+        this.getMachineryRisk();
+        this.selectedTab -=1; 
+        }
+        else if(type== 'employers'){
+          this.selectedTab -=1; 
+          }
+          else if(type== 'Fedility'){
+            this.selectedTab -=1; 
+            }
+            else if(type== 'Accessories'){
+              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
+              }
+              else if(type== 'Device Details'){
+                this.selectedTab -=1; 
+                }
+      else if(type == 'Building'){
         this.router.navigate(['/Home/policies/Endorsements/endorsementTypes'])
       }
     }
-    else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
+    else if(!this.endorsementSection){
+      if(type=='Building'){
+        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
+      }
+      if(type=='Content Risk'){
+        this.fourth = true;
+        this.getContentDetails();
+        this.selectedTab -=1; 
+        
+      }
+      else if(type=='Personal Accident'){
+        this.fourth = true;
+        this.getPersonalAccidentDetails();
+        this.selectedTab -=1; 
+      }
+      else if(type=='All Risk'){
+        this.fourth = true;this.getallriskDetails();
+        this.selectedTab -=1; 
+      }
+      else if(type=='Personal Indemenity'){
+        this.fourth = true;this.getPersonalIntermediaryDetails();
+        this.selectedTab -=1; 
+      }
+      else if(type=='ElectricalEquipment'){
+        this.fourth = true;this.getElectronicEquipment();
+        this.selectedTab -=1; 
+      }
+      else if(type== 'Machinery Breakdown'){
+        this.nine =true;
+        this.getMachineryRisk();
+        this.selectedTab -=1; 
+        }
+        else if(type== 'employers'){
+          this.selectedTab -=1; 
+          }
+          else if(type== 'Fedility'){
+            this.selectedTab -=1; 
+            }
+            else if(type== 'Accessories'){
+              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
+              }
+              else if(type== 'Device Details'){
+                this.selectedTab -=1; 
+                }
+                else if(type=='Medical'){
+                  this.selectedTab-=1;
+                }
+     
+      // else if(this.buildingDetailsSection){
+      //   console.log('Buildingss else block',this.buildingDetailsSection)
+      //   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
+      // }
+    }
+
+    
   }
 }

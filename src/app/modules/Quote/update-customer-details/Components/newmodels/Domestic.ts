@@ -27,7 +27,7 @@ export class Domestic{
               fieldGroupClassName: 'row',
               fieldGroup: [
                 {
-                  className: 'col-4 col-lg-4 col-md-4',
+                  className: 'col-12 col-lg-4 col-md-6',
                   type: 'commaSeparator',
                   key: 'BuildingsofClass1Construction',
                   props: {
@@ -42,7 +42,7 @@ export class Domestic{
                   },
                 },
                 {
-                  className: 'col-4 col-lg-4 col-md-4',
+                  className: 'col-12 col-lg-4 col-md-6',
                   type: 'commaSeparator',
                   key: 'Contents',
     
@@ -64,7 +64,7 @@ export class Domestic{
                   },
                 },
                 {
-                  className: 'col-4 col-lg-4 col-md-4',
+                  className: 'col-12 col-lg-4 col-md-6',
                   type: 'commaSeparator',
                   key: 'AllRiskExcludingCash',
                   templateOptions: {

@@ -504,6 +504,7 @@ export class Burglarys{
                                     },
                                     {
                                       type: 'select',
+                                      className:'formlymargin',
                                       key: 'StockLossPercent',
                     
                                       templateOptions: {
@@ -560,7 +561,7 @@ export class Burglarys{
                                     {
                                       type: 'select',
                                       key: 'GoodsLossPercent',
-                                      
+                                      className:'formlymargin',
                                       templateOptions: {
                                         disabled: this.checkDisable('SumInsured'),
                                         required: false,

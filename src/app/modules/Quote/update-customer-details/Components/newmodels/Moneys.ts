@@ -29,11 +29,11 @@ export class Moneys{
               {
                 
                 fieldGroupClassName: 'col-8 col-md-8 col-lg-8 offset-2',
-                type: 'table',
+                type: 'tables',
                 fieldGroup: [
                   {
                       fieldGroup:[
-                        {props:{label:`Select`}},
+                        // {props:{label:`Select`}},
                         {props:{label:`Items to be Insured`}},
                         {props:{label:`Sum Insured`}},
                       ]
@@ -42,22 +42,22 @@ export class Moneys{
                     fieldGroup:[
                           {
                             fieldGroup:[
+                              // {
+                              //   className:'customCheckbox',
+                              //   key: 'MoneyInSafeBusinessSIYN',
+                              //   type: 'checkbox',
+                              //   templateOptions: {
+                              //     type: 'checkbox',
+                              //     label: '',
+                              //     required: false,
+                              //     disabled: this.checkDisable('MoneyInSafeBusinessSIYN'),
+                              //     name: 'MoneyInSafeBusinessSIYN',
+                              //     options: [],
+                              //   }
+                              // },
                               {
-                                className:'customCheckbox',
-                                key: 'MoneyInSafeBusinessSIYN',
-                                type: 'checkbox',
-                                templateOptions: {
-                                  type: 'checkbox',
-                                  label: '',
-                                  required: false,
-                                  disabled: this.checkDisable('MoneyInSafeBusinessSIYN'),
-                                  name: 'MoneyInSafeBusinessSIYN',
-                                  options: [],
-                                }
-                              },
-                              {
-                                className: "mt-1",
-                                type: 'display',
+                                className: "splitCardHeaderss",
+                                type: 'displays',
               
                                 templateOptions: {
                                   label: `Damage to Safe Limit`,
@@ -66,8 +66,12 @@ export class Moneys{
                                 },
                               },
                               {
+                                className:"labelsum",
                                 type: 'commaSeparator',
                                 key: 'MoneySafeLimit',
+                                props: { 
+                                  label: `Sum Insured`,
+                                },
                                 templateOptions: {
                                   disabled: this.checkDisable('MoneySafeLimit')
                                 },
@@ -85,32 +89,37 @@ export class Moneys{
                           },
                           {
                             fieldGroup:[
+                              // {
+                              //   className:'customCheckbox',
+                              //   key: 'MoneyOutSafeBusinessSIYN',
+                              //   type: 'checkbox',
+                              //   templateOptions: {
+                              //     type: 'checkbox',
+                              //     label: '',
+                              //     required: false,
+                              //     disabled: this.checkDisable('MoneyOutSafeBusinessSIYN'),
+                              //     name: 'MoneyOutSafeBusinessSIYN',
+                              //     options: [],
+                              //   }
+                              // },
                               {
-                                className:'customCheckbox',
-                                key: 'MoneyOutSafeBusinessSIYN',
-                                type: 'checkbox',
-                                templateOptions: {
-                                  type: 'checkbox',
-                                  label: '',
-                                  required: false,
-                                  disabled: this.checkDisable('MoneyOutSafeBusinessSIYN'),
-                                  name: 'MoneyOutSafeBusinessSIYN',
-                                  options: [],
-                                }
-                              },
-                              {
-                                className: "mt-1",
-                                type: 'display',
+                                className: "splitCardHeaderss",
+                                type: 'displays',
               
                                 templateOptions: {
-                                  label: `Money out of safe on premises out of business hrs`,
+                                  label: `Money Out of Safe`,
+                                  //on premises out of business hrs
                                   required: false,
               
                                 },
                               },
                               {
+                                className:"labelsum",
                                 type: 'commaSeparator',
                                 key: 'MoneyOutofSafe',
+                                props: { 
+                                  label: `Sum Insured`,
+                                },
                                 templateOptions: {
                                   disabled: this.checkDisable('MoneyOutofSafe')
                                 },
@@ -128,32 +137,36 @@ export class Moneys{
                           },
                           {
                             fieldGroup:[
+                              // {
+                              //   className:'customCheckbox',
+                              //   key: 'MoneyInPremisesSIYN',
+                              //   type: 'checkbox',
+                              //   templateOptions: {
+                              //     type: 'checkbox',
+                              //     label: '',
+                              //     required: false,
+                              //     disabled: this.checkDisable('MoneyInPremisesSIYN'),
+                              //     name: 'MoneyInPremisesSIYN',
+                              //     options: [],
+                              //   }
+                              // },
                               {
-                                className:'customCheckbox',
-                                key: 'MoneyInPremisesSIYN',
-                                type: 'checkbox',
-                                templateOptions: {
-                                  type: 'checkbox',
-                                  label: '',
-                                  required: false,
-                                  disabled: this.checkDisable('MoneyInPremisesSIYN'),
-                                  name: 'MoneyInPremisesSIYN',
-                                  options: [],
-                                }
-                              },
-                              {
-                                className: "mt-1",
-                                type: 'display',
+                                className: "splitCardHeaderss",
+                                type: 'displays',
               
                                 templateOptions: {
-                                  label: `Residence Of Director / Managers`,
+                                  label: `Director/Manager- Residence`,
                                   required: false,
               
                                 },
                               },
                               {
+                                className:"labelsum",
                                 type: 'commaSeparator',
                                 key: 'MoneyDirectorResidence',
+                                props: { 
+                                  label: `Sum Insured`,
+                                },
                                 templateOptions: {
                                   disabled: this.checkDisable('MoneyDirectorResidence')
                                 },
@@ -171,32 +184,37 @@ export class Moneys{
                           },
                           {
                             fieldGroup:[
+                              // {
+                              //   className:'customCheckbox',
+                              //   key: 'CashInTransitSIYN',
+                              //   type: 'checkbox',
+                              //   templateOptions: {
+                              //     type: 'checkbox',
+                              //     label: '',
+                              //     required: false,
+                              //     disabled: this.checkDisable('CashInTransitSIYN'),
+                              //     name: 'CashInTransitSIYN',
+                              //     options: [],
+                              //   }
+                              // },
                               {
-                                className:'customCheckbox',
-                                key: 'CashInTransitSIYN',
-                                type: 'checkbox',
-                                templateOptions: {
-                                  type: 'checkbox',
-                                  label: '',
-                                  required: false,
-                                  disabled: this.checkDisable('CashInTransitSIYN'),
-                                  name: 'CashInTransitSIYN',
-                                  options: [],
-                                }
-                              },
-                              {
-                                className: "mt-1",
-                                type: 'display',
+                                className: "splitCardHeaderss",
+                                type: 'displays',
               
                                 templateOptions: {
-                                  label: `Major Loss Limit (Premises & In Transit)`,
+                                  label: `Major Loss Limit`,
+                                  //(Premises & In Transit)
                                   required: false,
               
                                 },
                               },
                               {
+                                className:"labelsum",
                                 type: 'commaSeparator',
                                 key: 'MoneyMajorLoss',
+                                props: { 
+                                  label: `Sum Insured`,
+                                },
                                 templateOptions: {
                                   disabled: this.checkDisable('MoneyMajorLoss')
                                 },
@@ -214,22 +232,22 @@ export class Moneys{
                           },
                           {
                             fieldGroup:[
+                              // {
+                              //   className:'customCheckbox',
+                              //   key: 'CashInHandEmployeesSIYN',
+                              //   type: 'checkbox',
+                              //   templateOptions: {
+                              //     type: 'checkbox',
+                              //     label: '',
+                              //     required: false,
+                              //     disabled: this.checkDisable('CashInHandEmployeesSIYN'),
+                              //     name: 'CashInHandEmployeesSIYN',
+                              //     options: [],
+                              //   }
+                              // },
                               {
-                                className:'customCheckbox',
-                                key: 'CashInHandEmployeesSIYN',
-                                type: 'checkbox',
-                                templateOptions: {
-                                  type: 'checkbox',
-                                  label: '',
-                                  required: false,
-                                  disabled: this.checkDisable('CashInHandEmployeesSIYN'),
-                                  name: 'CashInHandEmployeesSIYN',
-                                  options: [],
-                                }
-                              },
-                              {
-                                className: "mt-1",
-                                type: 'display',
+                                className: "splitCardHeaderss",
+                                type: 'displays',
               
                                 templateOptions: {
                                   label: `Collectors / salesman`,
@@ -238,8 +256,12 @@ export class Moneys{
                                 },
                               },
                               {
+                                className:"labelsum",
                                 type: 'commaSeparator',
                                 key: 'MoneyCollector',
+                                props: { 
+                                  label: `Sum Insured`,
+                                },
                                 templateOptions: {
                                   disabled: this.checkDisable('MoneyCollector')
                                 },
@@ -272,7 +294,7 @@ export class Moneys{
                           //     },
                           //     {
                           //       className: "mt-1",
-                          //       type: 'display',
+                          //       type: 'displays',
               
                           //       templateOptions: {
                           //         label: `Estimated Annual Carry`,
@@ -300,32 +322,36 @@ export class Moneys{
                           // },
                           {
                             fieldGroup:[
+                              // {
+                              //   className:'customCheckbox',
+                              //   key: 'MoneyAnnualcarrySuminsuredSIYN',
+                              //   type: 'checkbox',
+                              //   templateOptions: {
+                              //     type: 'checkbox',
+                              //     label: '',
+                              //     required: false,
+                              //     disabled: this.checkDisable('MoneyAnnualcarrySuminsuredSIYN'),
+                              //     name: 'MoneyAnnualcarrySuminsuredSIYN',
+                              //     options: [],
+                              //   }
+                              // },
                               {
-                                className:'customCheckbox',
-                                key: 'MoneyAnnualcarrySuminsuredSIYN',
-                                type: 'checkbox',
-                                templateOptions: {
-                                  type: 'checkbox',
-                                  label: '',
-                                  required: false,
-                                  disabled: this.checkDisable('MoneyAnnualcarrySuminsuredSIYN'),
-                                  name: 'MoneyAnnualcarrySuminsuredSIYN',
-                                  options: [],
-                                }
-                              },
-                              {
-                                className: "mt-1",
-                                type: 'display',
+                                className: "splitCardHeaderss",
+                                type: 'displays',
               
                                 templateOptions: {
-                                  label: `Estimated Annual Carry`,
+                                  label: `Annual Carry`,
                                   required: false,
               
                                 },
                               },
                               {
+                                className:"labelsum",
                                 type: 'commaSeparator',
                                 key: 'MoneyAnnualEstimate',
+                                props: { 
+                                  label: `Sum Insured`,
+                                },
                                 templateOptions: {
                                   disabled: this.checkDisable('MoneyAnnualEstimate')
                                 },

@@ -26,12 +26,24 @@ export class BussinessAllRisk{
             {
               fieldGroupClassName: 'row',
               fieldGroup: [
+                // {
+                //   className: "splitCardHeaderss",
+                //   type: 'displays',
+
+                //   templateOptions: {
+                //     label: `Equipment`,
+                //     //on premises out of business hrs
+                //     required: false,
+
+                //   },
+                // },
                 {
-                  className: 'col-4 col-lg-4 col-md-4 offset-2',
+                  //className: 'col-12 col-lg-4 col-md-4 offset-lg-2 offset-md-2',
+                  className:"labelsum",
                   type: 'commaSeparator',
                   key: 'EquipmentSi',
                   props: {
-                    label: 'Equipment SumInsured',
+                    label: 'SumInsured',
                     // disabled: this.checkDisable('IndemityPeriod'),
                     required: true,
                     options: [

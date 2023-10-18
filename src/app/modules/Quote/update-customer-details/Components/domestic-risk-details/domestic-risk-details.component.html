@@ -11,12 +11,12 @@
                         <!-- <div class="row mt-1">
                         </div> table_expand-->
                         <div class="row mt-2" *ngIf="!enableBuildingEditSection">
-                            <div class="col-md-8 col-lg-8 col-xl-8 col-12 offset-lg-2 offset-md-2">
+                            <div class="col-md-12 col-lg-8 col-xl-8 col-12 offset-lg-2">
                                 <div class="boxForm">
                                     <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title display1">
                                         <div class="headcommon">
                                             <span><i class="fas fa-home mx-1 mt-3"></i></span>
-                                            <span class="spancommon span_font_size" style="font-weight:600">Location/Building Details</span>
+                                            <span class="spancommon span_font_size" style="font-weight:500">Location/Building Details</span>
                                         </div>
                                         <div *ngIf="sumInsured">
                                             Currency({{currencyValue}})
@@ -80,7 +80,7 @@
                                         </div> 
                                         </div>
                                         <div class="display2">
-                                            <div  class="d-flex maan-grid-item" style="flex-direction: column;" *ngIf="sumInsured">
+                                            <div  class="d-flex maan-grid-item" style="flex-direction: column;align-items: center !important;" *ngIf="sumInsured">
                                                 <div class="totalProsession">
                                                     <span ><b>Sum Insured</b></span>
                                                 </div>
@@ -104,7 +104,7 @@
                             </div>
                         </div>
                         <div class="row" *ngIf="enableBuildingEditSection">
-                            <div class="col-md-8 col-lg-8 col-xl-8 offset-lg-2 offset-md-2"><!--offset-2-->
+                            <div class="col-md-12 col-lg-8 col-xl-8 offset-lg-2"><!--offset-2-->
                                 <div class="boxForm" >
                                         <span><u> Building Risk Details </u></span>
                                         
@@ -114,21 +114,21 @@
                                             </form>
                                         </div>
                                         <div class="row" *ngIf="sumInsured">
-                                            <div class="col-6 col-md-6 col-lg-6 col-xl-6 ml-3">
+                                            <div class="col-12 col-md-6 col-lg-6 col-xl-6 ml-3">
                                                 <b style="white-space: nowrap;">Actual</b>
                                             </div>
-                                            <div class="col-6 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                                 <b style="white-space: nowrap;">{{actualBuildingSI | commaseparator }} &nbsp;({{currencyValue}})</b>
                                             </div>
-                                            <div class="col-6 col-md-6 col-lg-6 col-xl-6">
+                                            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                                 <div class="ml-3">
                                                     <b style="white-space: nowrap;">Total</b>
                                                 </div>
                                             </div>
-                                            <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalBuildingSumInsured==0 || totalBuildingSumInsured=='0' || totalBuildingSumInsured==null">
+                                            <div class="col-12 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalBuildingSumInsured==0 || totalBuildingSumInsured=='0' || totalBuildingSumInsured==null">
                                                 <b style="white-space: nowrap;">0</b>
                                             </div>
-                                            <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalBuildingSumInsured!=0 && totalBuildingSumInsured!='0' && totalBuildingSumInsured!=null">
+                                            <div class="col-12 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalBuildingSumInsured!=0 && totalBuildingSumInsured!='0' && totalBuildingSumInsured!=null">
                                                 <b style="white-space: nowrap;">{{totalBuildingSumInsured | commaseparator }} &nbsp;({{currencyValue}})</b>
                                             </div>
                                         </div>
@@ -275,7 +275,7 @@
                     </div>
                     
                     <div class="text-center mt-1 mb-2">
-                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack()"  routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack('Building')"  routerLinkActive="router-link-active"><<&nbsp;Back</button>
                         <!-- <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="building.length!=0 && !enableBuildingEditSection" (click)="AddNew()"><i class="fa fa-plus-circle"></i>&nbsp; Add New</button> -->
                         <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="building.length!=0 && !enableBuildingEditSection" matRipple (click)="onSave(null)" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
@@ -294,7 +294,7 @@
                     <div>
                         
                         <div class="row mt-2" *ngIf="!enableContentEditSection">
-                            <div class="col-md-8 col-lg-8 col-xl-8 col-12 offset-lg-2 offset-md-2">
+                            <div class="col-md-12 col-lg-8 col-xl-8 col-12 offset-lg-2">
                                 <div class="boxForm">
                                     <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title display1">
                                         <div class="headcommon">
@@ -345,7 +345,7 @@
                                                 <li>{{getContentName(entry)}} &nbsp; | &nbsp; {{entry.SerialNoDesc}}</li>
                                             </ul>
                                         </div>
-                                        <div  class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                        <div  class="small justify-content-between maan-grid-item maan-grid-item-title" style="height:60px !important;">
                                             <div class="totalProsession">
                                                 <span ><b>Sum Insured</b></span>
                                             </div>
@@ -354,10 +354,10 @@
                                             </div>
                                             <div class="totalProsession">
                                                 <ng-container *ngIf="totalContentSI!=0 && totalContentSI!='0' && totalContentSI!=null">
-                                                    &nbsp;<span style="text-align: end !important;"><b>{{totalContentSI | commaseparator }}</b></span>
+                                                    &nbsp;<span style="text-align: end !important;"><b> <span class="mobilelabel">Total</span>&nbsp;&nbsp;{{totalContentSI | commaseparator }}</b></span>
                                                 </ng-container>
                                                 <ng-container *ngIf="totalContentSI==0 || totalContentSI=='0' || totalContentSI==null">
-                                                    <span style="text-align: end !important;"><b>0</b></span>
+                                                    <span style="text-align: end !important;"><b><span class="mobilelabel">Total</span>0</b></span>
                                                 </ng-container>
                                                 
                                             </div>
@@ -368,7 +368,7 @@
                             </div>
                         </div>
                         <div class="row" *ngIf="enableContentEditSection">
-                            <div class="col-md-8 col-lg-8 col-xl-8 col-12 offset-lg-2 offset-md-2">
+                            <div class="col-md-12 col-lg-8 col-xl-8 col-12 offset-lg-2">
                                 <div class="boxForm" >
                                         <span><u> Content Risk Details </u></span>
                                         <div class="buildingcss">
@@ -417,21 +417,21 @@
                                         <span><u> Sum Insured </u></span>
                                     </div>
                                     <div class="row" >
-                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6 ml-3">
+                                        <div class="col-12 col-md-6 col-lg-6 col-xl-6 ml-3">
                                             <b style="white-space: nowrap;">Actual</b>
                                         </div>
-                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                             <b style="white-space: nowrap;">{{actualContentSI | commaseparator }} &nbsp;({{currencyValue}})</b>
                                         </div>
-                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                             <div class="ml-3">
                                                 <b style="white-space: nowrap;">Total</b>
                                             </div>
                                         </div>
-                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalContentSI==0 || totalContentSI=='0' || totalContentSI==null">
+                                        <div class="col-12 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalContentSI==0 || totalContentSI=='0' || totalContentSI==null">
                                             <b style="white-space: nowrap;">0</b>
                                         </div>
-                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalContentSI!=0 && totalContentSI!='0' && totalContentSI!=null">
+                                        <div class="col-12 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalContentSI!=0 && totalContentSI!='0' && totalContentSI!=null">
                                             <b style="white-space: nowrap;">{{totalContentSI | commaseparator }} &nbsp;({{currencyValue}})</b>
                                         </div>
                                     </div>
@@ -539,7 +539,7 @@
                         </div> -->
                     </div>
                     <div class="text-center mt-2">
-                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack('Content Risk')" routerLinkActive="router-link-active"><<&nbsp;Back</button>
 
                         <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="onSaveContentRisk()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
@@ -553,7 +553,7 @@
                     <div>
                         
                         <div class="row mt-2" *ngIf="!enablePersonalAccEditSection">
-                            <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                            <div class="col-md-12 col-12 col-lg-8 col-xl-8 offset-lg-2">
                                 <div class="boxForm">
                                     <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
                                         <div class="headcommon">
@@ -591,7 +591,7 @@
                                                 <li>{{entry.PersonName}} &nbsp; | &nbsp; {{entry.OccupationDesc}}</li>
                                             </ul>
                                         </div>
-                                        <div  class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                        <div  class="small justify-content-between maan-grid-item maan-grid-item-title">
                                             <div class="totalProsession">
                                                 <span ><b>Sum Insured</b></span>
                                             </div>
@@ -617,8 +617,8 @@
                         
                         </div>
                         <div class="row" *ngIf="enablePersonalAccEditSection">
-                            <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
-                                <div class="boxForm" >
+                            <div class="col-md-12 col-lg-8 col-xl-8 offset-lg-2">
+                                <div class="boxForm">
                                         <span><u> Personal Accident Details</u></span>
                                         <div class="buildingcss">
                                             <form [formGroup]="form">
@@ -630,21 +630,21 @@
                                         <span><u> Sum Insured </u></span>
                                     </div>
                                     <div class="row" >
-                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6 ml-3">
+                                        <div class="col-12 col-md-6 col-lg-6 col-xl-6 ml-3">
                                             <b style="white-space: nowrap;">Actual</b>
                                         </div>
-                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                             <b style="white-space: nowrap;">{{actualPersonalAccSI| commaseparator }} &nbsp;({{currencyValue}})</b>
                                         </div>
-                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                             <div class="ml-3">
                                                 <b style="white-space: nowrap;">Total</b>
                                             </div>
                                         </div>
-                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalPASI==0 || totalPASI=='0' || totalPASI==null || totalPASI ==''">
+                                        <div class="col-12 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalPASI==0 || totalPASI=='0' || totalPASI==null || totalPASI ==''">
                                             <b style="white-space: nowrap;">0</b>
                                         </div>
-                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalPASI!=0 && totalPASI!='0' && totalPASI!=null && totalPASI !=''">
+                                        <div class="col-12 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalPASI!=0 && totalPASI!='0' && totalPASI!=null && totalPASI !=''">
                                             <b style="white-space: nowrap;">{{totalPASI | commaseparator }} &nbsp;({{currencyValue}})</b>
                                         </div>
                                     </div>
@@ -661,7 +661,7 @@
                     </div>
 
                     <div class="text-center mt-3">
-                        <button class="custom-btn btn-5 maan-btn-red  custom-btn btn-5 mx-2" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5 maan-btn-red  custom-btn btn-5 mx-2" matRipple (click)="getBack('Personal Accident')" routerLinkActive="router-link-active"><<&nbsp;Back</button>
 
                         <button class="custom-btn btn-6  maan-button-data mx-2" matRipple (click)="onSavePersonalAccident()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
@@ -739,7 +739,7 @@
                             </div>
                         </div>
                         <div class="row" *ngIf="enableAllriskEditSection">
-                            <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                            <div class="col-md-12 col-lg-8 col-xl-8 offset-lg-2">
                                 <div class="boxForm">
                                         <span><u>All Risk Details</u></span>
                                         <div class="buildingcss">
@@ -786,7 +786,7 @@
 
 
                     <div class="text-center">
-                        <button class="custom-btn btn-5  mx-2" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5  mx-2" matRipple (click)="getBack('All Risk')" routerLinkActive="router-link-active"><<&nbsp;Back</button>
 
                         <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="onSaveAllRisk()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
@@ -905,7 +905,7 @@
                      
                     </div>
                     <div class="text-center mt-3">
-                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack('Personal Indemenity')" routerLinkActive="router-link-active"><<&nbsp;Back</button>
                         <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="onSavePersonalIntermedity()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
                 
@@ -1109,7 +1109,7 @@
 
 
                       <div class="text-center">
-                        <button class="custom-btn btn-5  mx-2" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5  mx-2" matRipple (click)="getBack('ElectricalEquipment')" routerLinkActive="router-link-active"><<&nbsp;Back</button>
 
                         <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="onSaveElectronic()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>              
@@ -1329,7 +1329,7 @@
                             </div>
                         </div>
                         <div class="text-center mt-2" >
-                            <button class="custom-btn btn-5 mx-2" *ngIf="!enableEmployeeUploadSection" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                            <button class="custom-btn btn-5 mx-2" *ngIf="!enableEmployeeUploadSection" matRipple (click)="getBack('employers')" routerLinkActive="router-link-active"><<&nbsp;Back</button>
                             <button class="custom-btn btn-8 mx-2" *ngIf="employeeList.length!=0 && !enableEmployeeUploadSection" matRipple (click)="onSaveEmployeeDetails('save')">Save & Proceed</button>
                             <button class="custom-btn btn-6 mx-2" *ngIf="employeeList.length!=0 && !enableEmployeeUploadSection" matRipple (click)="onSaveEmployeeDetails('proceed')" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                             <!-- <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="employeeList.length!=0 && !enableEmployeeUploadSection" matRipple (click)="onSaveEmployeeDetails('direct')" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button> -->
@@ -1707,7 +1707,7 @@
                             </div>
                         </div>
                         <div class="text-center mt-2">
-                            <button class="custom-btn btn-5 mx-2" *ngIf="!enableFidelityUploadSection" matRipple (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                            <button class="custom-btn btn-5 mx-2" *ngIf="!enableFidelityUploadSection" matRipple (click)="getBack('Fedility')" routerLinkActive="router-link-active"><<&nbsp;Back</button>
                             <button class="custom-btn btn-8 mx-2" *ngIf="fidelityList.length!=0 && !enableFidelityUploadSection"  matRipple (click)="onSaveFidelityDetails('save')" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Save & Proceed</button>
                             <button class="custom-btn btn-6 mx-2" *ngIf="fidelityList.length!=0 && !enableFidelityUploadSection"  matRipple (click)="onSaveFidelityDetails('proceed')" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                             <!-- <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="fidelityList.length!=0 && !enableFidelityUploadSection" matRipple (click)="onSaveFidelityDetails('direct')" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button> -->
@@ -2016,7 +2016,7 @@
                         </div>
                     </div>
                     <div class="text-center mt-2">
-                        <button class="custom-btn btn-5 mx-2" matRipple *ngIf="!enableMachineryEditSection" (click)="getBack()" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5 mx-2" matRipple *ngIf="!enableMachineryEditSection" (click)="getBack('Machinery Breakdown')" routerLinkActive="router-link-active"><<&nbsp;Back</button>
 
                         <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="machineries.length!=0 && !enableMachineryEditSection" (click)="onSaveMachineryRisk()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
@@ -2210,7 +2210,7 @@
                         </div>
                     </div>
                     <div class="text-center mt-1 mb-2">
-                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack()"  routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack('Accessories')"  routerLinkActive="router-link-active"><<&nbsp;Back</button>
                      
                         <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="accessoriesList.length!=0 && !enableAccessoriesEditSection" matRipple (click)="onSaveAccessories()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
@@ -2355,7 +2355,7 @@
                     </div>
                     
                     <div class="text-center mt-1 mb-2">
-                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack()"  routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack('Device Details')"  routerLinkActive="router-link-active"><<&nbsp;Back</button>
                      
                         <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="CyberItem.length!=0 && !enableCyberSection" matRipple (click)="onCyberSave()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
@@ -2367,7 +2367,7 @@
                         </form>
                     </div>
                     <div class="text-center mt-1 mb-2">
-                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack()"  routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                        <button class="custom-btn btn-5 mx-2" matRipple (click)="getBack('Medical')"  routerLinkActive="router-link-active"><<&nbsp;Back</button>
                      
                         <button class="custom-btn btn-6 maan-button-data mx-2" matRipple (click)="onMedicalSave()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
