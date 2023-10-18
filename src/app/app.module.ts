@@ -7,7 +7,7 @@ import { BranchSelectionComponent } from './modules/branch-selection/branch-sele
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatButtonModule } from '@angular/material/button'
 import { NgSelectModule } from '@ng-select/ng-select';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClientXsrfModule } from '@angular/common/http'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { MatStepperModule } from '@angular/material/stepper';
 import { FormlyModule } from '@ngx-formly/core'
@@ -47,6 +47,7 @@ import { CustomerRedirectComponent } from './modules/customer-redirect/customer-
 import { FooterComponent } from './layout/components/footer/footer.component';
 import { CustomerProductsComponent } from './modules/customer-products/customer-products.component';
 import { NgApexchartsModule } from 'ng-apexcharts'
+import { HttpXsrfInterceptor } from './HttpInterceptors/http-xsrf-interceptor.service'
 
 
 @NgModule({
@@ -65,6 +66,10 @@ import { NgApexchartsModule } from 'ng-apexcharts'
 		BrowserModule,
 		FormsModule,
 		HttpClientModule,
+		HttpClientXsrfModule.withOptions({
+			cookieName: 'My-Xsrf-Cookie',
+			headerName: 'My-Xsrf-Header',
+		  }),
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		NgSelectModule,
@@ -105,7 +110,9 @@ import { NgApexchartsModule } from 'ng-apexcharts'
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,
       multi: true,
-    },],
+    },
+	{ provide: HTTP_INTERCEPTORS, useClass: HttpXsrfInterceptor, multi: true }
+],
 	bootstrap: [AppComponent],
 	schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })

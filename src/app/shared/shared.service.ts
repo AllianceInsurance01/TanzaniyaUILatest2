@@ -51,6 +51,9 @@ export class SharedService {
 
   async onPostMethodAsync(UrlLink: any, ReqObj: any): Promise<Observable<any[]>> {
     let headers = new HttpHeaders();
+    headers = headers.append('Cache-Control', 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0');
+    headers = headers.append('Pragma','no-cache');
+    headers = headers.append('Expires','0');
     headers = headers.append('Authorization', 'Bearer ' + this.getToken());
     return await this.http
       .post<any>(UrlLink, ReqObj, { headers: headers })
@@ -58,6 +61,9 @@ export class SharedService {
   }
   async onGetMethodAsync(UrlLink: any): Promise<Observable<any[]>> {
     let headers = new HttpHeaders();
+    headers = headers.append('Cache-Control', 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0');
+    headers = headers.append('Pragma','no-cache');
+    headers = headers.append('Expires','0');
     headers = headers.append('Authorization', 'Bearer ' + this.getToken());
     return await this.http
       .get<any>(UrlLink, { headers: headers })
@@ -66,6 +72,9 @@ export class SharedService {
 
   onPostMethodSync(UrlLink: string, ReqObj: any): Observable<any[]> {
     let headers = new HttpHeaders();
+    headers = headers.append('Cache-Control', 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0');
+    headers = headers.append('Pragma','no-cache');
+    headers = headers.append('Expires','0');
     headers = headers.append('Authorization', 'Bearer ' + this.getToken());
     return this.http
       .post<any>(UrlLink, ReqObj, { headers: headers })
@@ -73,6 +82,9 @@ export class SharedService {
   }
   onGetMethodSync(UrlLink: string): Observable<any[]> {
     let headers = new HttpHeaders();
+    headers = headers.append('Cache-Control', 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0');
+    headers = headers.append('Pragma','no-cache');
+    headers = headers.append('Expires','0');
     headers = headers.append('Authorization', 'Bearer ' + this.getToken());
     return this.http
       .get<any>(UrlLink, { headers: headers })
@@ -80,6 +92,9 @@ export class SharedService {
   }
   onGetMethodPreexceptionAsync(UrlLink: string): Observable<any[]> {
     let headers = new HttpHeaders();
+    headers = headers.append('Cache-Control', 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0');
+    headers = headers.append('Pragma','no-cache');
+    headers = headers.append('Expires','0');
     headers = headers.append('Authorization', 'Basic d2hhdHNhcHBjaGF0YXBpOndoYXRzYXBwY2hhdGFwaUAxMjMj');
     return this.http
       .get<any>(UrlLink, { headers: headers })
@@ -90,6 +105,9 @@ export class SharedService {
     formData.append('File', file);
     formData.append('Req ', JSON.stringify(ReqObj));
     let headers = new HttpHeaders();
+    headers = headers.append('Cache-Control', 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0');
+    headers = headers.append('Pragma','no-cache');
+    headers = headers.append('Expires','0');
     headers = headers.append('Authorization', 'Bearer ' + this.getToken());
     return this.http
       .post<any>(UrlLink, formData, { headers: headers })
@@ -100,6 +118,9 @@ export class SharedService {
     formData.append('file', file);
     formData.append('uploadReq', JSON.stringify(ReqObj));
     let headers = new HttpHeaders();
+    headers = headers.append('Cache-Control', 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0');
+    headers = headers.append('Pragma','no-cache');
+    headers = headers.append('Expires','0');
     headers = headers.append('Authorization', 'Bearer ' + this.getToken());
     return this.http
       .post<any>(UrlLink, formData, { headers: headers })
@@ -121,6 +142,9 @@ export class SharedService {
     formData.append('file', file);
     formData.append('uploadReq', JSON.stringify(ReqObj));
     let headers = new HttpHeaders();
+    headers = headers.append('Cache-Control', 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0');
+    headers = headers.append('Pragma','no-cache');
+    headers = headers.append('Expires','0');
     headers = headers.append('Authorization', 'Bearer ' + this.getToken());
     return this.http
       .post<any>(UrlLink, formData, { headers: headers })
