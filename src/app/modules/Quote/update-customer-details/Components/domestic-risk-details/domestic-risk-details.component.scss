@@ -232,12 +232,20 @@ input:checked+.slider:before {
     .row {
         display: flex;
         flex-wrap: wrap;
-        width: 90%;
+        width: 100%;
         margin-left: 0px !important;
     }
     .display1{
         display: none !important;
     }
+    .small{
+        display:flex;
+        flex-direction: column; 
+        text-align: center;    
+    }
+    .mobilelabel{
+        display:inline-block;
+     }
     }
   
     @media screen and (min-width: 750px) and (max-width: 5464px) {
@@ -249,6 +257,14 @@ input:checked+.slider:before {
         }
         .display2{
             display: none !important;
+        }
+        .small{
+            display:flex;
+            flex-direction: row;
+            
+        }
+        .mobilelabel{
+           display:none !important
         }
       }
 

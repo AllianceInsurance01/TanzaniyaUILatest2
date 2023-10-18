@@ -21,68 +21,127 @@ export class FireAlliedPerils{
             }
         }
         this.fields = {
-            props: { label: 'Fire & Allied Perils' },
-            fieldGroup: [
-              {
-                fieldGroupClassName: 'row',
-                fieldGroup: [
-                  {
-                    className: 'col-12 col-lg-4 col-md-6',
-                    type: 'ngselect',
-                    key: 'IndemityPeriod',
-                    props: {
-                      label: 'Indemity Period',
-                      disabled: this.checkDisable('IndemityPeriod'),
-                      required: true,
-                      options: [
-                      ],
-                    },
-                    expressions: {
-      
-                    },
-                  },
-      
+          props: { label: 'Fire & Allied Perils'},
+          fieldGroup: [
+            {
+              fieldGroupClassName: 'row',
+              fieldGroup: [
+                {
                   
+                  fieldGroupClassName: 'col-8 col-md-8 col-lg-8 offset-2',
+                  type: 'tables',
+                  fieldGroup: [
+                    {
+                        fieldGroup:[
+                          // {props:{label:`Select`}},
+                          {props:{label:`Items to be Insured`}},
+                          {props:{label:`Sum Insured`}},
+                        ]
+                    },
+                    {
+                      fieldGroup:[
+                            {
+                              fieldGroup:[
+                               
+                                {
+                                  className: "splitCardHeaderss",
+                                  type: 'displays',
+                
+                                  templateOptions: {
+                                    label: `Indemity Period`,
+                                    required: false,
+                
+                                  },
+                                },
+                                {
+                              
+                                  type: 'ngselect',
+                                  key: 'IndemityPeriod',
+                                  props: {
+                                    // label: 'Indemity Period',
+                                    disabled: this.checkDisable('IndemityPeriod'),
+                                    required: true,
+                                    options: [
+                                    ],
+                                  },
+                                }
+                              ]
+                            },
+                            {
+                              fieldGroup:[
+                          
+                                {
+                                  className: "splitCardHeaderss",
+                                  type: 'displays',
+                
+                                  templateOptions: {
+                                    label: `Building`,
+                                    //on premises out of business hrs
+                                    required: false,
+                
+                                  },
+                                },
+                                {
+                                  className:"labelsum",
+                                  type: 'commaSeparator',
+                                  key: 'BuildingSuminsured',
+                                  props: { 
+                                    label: `Sum Insured`,
+                                  },
+                                  templateOptions: {
+                                    disabled: this.checkDisable('BuildingSuminsured')
+                                  },
+                                  validators: {
+                                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                                  },
+                                  hooks: {
+                                  },
                   
-                  {
-                    className: 'col-12 col-lg-4 col-md-6',
-                    type: 'commaSeparator',
-                    key: 'BuildingSuminsured',
-      
-                    props: {
-                      label: `Building Value`,
-                      disabled: this.checkDisable('SumInsured'),
-                      required: true,
-                      options: [
-      
-                      ],
-      
-                    },
-                    validators: {
-                      validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                    },
-                    hooks: {
-                    },
-                    expressions: {
-                    },
-                  },
-                  {
-                    className: 'col-12 col-lg-4 col-md-6',
-                    key: 'MakutiYn',
-                    type: 'radio',
-                    templateOptions: {
-                      type: 'radio',
-                      label: 'Makuti',
-                      required: true,
-                      disabled: this.checkDisable('MakutiYn'),
-                      name: 'MakutiYn',
-                      options: [{ value: 'Y', label: 'Yes' },{ value: 'N', label: 'No' }],
+                                  expressions: {
+                                  
+                                  },
+                                }
+                              ]
+                            },
+                            {
+                              fieldGroup:[
+                                {
+                                  className: "splitCardHeaderss",
+                                  type: 'displays',
+                
+                                  templateOptions: {
+                                    label: `Makuti`,
+                                    required: false,
+                
+                                  },
+                                },
+                                {
+                                  className:"formss",
+                                  type: 'radio',
+                                  key: 'MakutiYn',
+                                  templateOptions: {
+                                    type: 'radio',
+                                    label: 'Makuti',
+                                    required: true,
+                                    disabled: this.checkDisable('MakutiYn'),
+                                    name: 'MakutiYn',
+                                    options: [{ value: 'Y', label: 'Yes' },{ value: 'N', label: 'No' }],
+                                  }
+                                }
+                              ]
+                            },
+                         
+                      ]
                     }
-                  },
-                ]
-              }
-            ]
+                  ]
+                }
+              ]
+              
+            },
+         
+          ],
         }
+      
     }
     fields:FormlyFieldConfig;
     checkDisable(fieldName) {

@@ -20,66 +20,143 @@ export class PlantAllRisk{
             this.enableFieldsList = endorseObj.FieldsAllowed;
           }
       }
+
       this.fields = {
-          props: { label: 'Plant All Risk' },
-          fieldGroup: [
-            {
-              fieldGroupClassName: 'row',
-              fieldGroup: [
-                {
-                  className: 'col-4 col-lg-4 col-md-4',
-                  type: 'commaSeparator',
-                  key: 'MiningPlantSi',
-                  props: {
-                    label: 'Over Ground Mining Plant SumInsured',
-                    disabled: this.checkDisable('MiningPlantSi'),
-                    required: true,
-                    options: [
-                    ],
+        props: { label: 'Plant All Risk'},
+        fieldGroup: [
+          {
+            fieldGroupClassName: 'row',
+            fieldGroup: [
+              {
+                
+                fieldGroupClassName: 'col-8 col-md-8 col-lg-8 offset-2',
+                type: 'tables',
+                fieldGroup: [
+                  {
+                      fieldGroup:[
+                        // {props:{label:`Select`}},
+                        {props:{label:`Items to be Insured`}},
+                        {props:{label:`Sum Insured`}},
+                      ]
                   },
-                  expressions: {
-    
-                  },
-                },
-                {
-                  className: 'col-4 col-lg-4 col-md-4',
-                  type: 'commaSeparator',
-                  key: 'NonminingPlantSi',
-    
-                  props: {
-                    label: `Non Mining Plant / Farming Equipment`,
-                     disabled: this.checkDisable('NonminingPlantSi'),
-                    required: true,
-                    options: [
-    
-                    ],
-    
-                  },
-                  validators: {
-                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                  },
-                  hooks: {
-                  },
-                  expressions: {
-                  },
-                },
-                {
-                  className: 'col-4 col-lg-4 col-md-4',
-                  type: 'commaSeparator',
-                  key: 'GensetsSi',
-                  templateOptions: {
-                    label: 'Gensets SumInsured',
-                    required: true,
-                  },
-                  validators: {
-                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                  },
-                },
-               
-              ]
-            }
-          ]
+                  {
+                    fieldGroup:[
+                          {
+                            fieldGroup:[
+                             
+                              {
+                                className: "splitCardHeaderss",
+                                type: 'displays',
+              
+                                templateOptions: {
+                                  label: `Over Ground Mining Plant`,
+                                  required: false,
+              
+                                },
+                              },
+                              {
+                                className:"labelsum",
+                                type: 'commaSeparator',
+                                key: 'MiningPlantSi',
+                                props: { 
+                                  label: `Sum Insured`,
+                                },
+                                templateOptions: {
+                                  disabled: this.checkDisable('MiningPlantSi')
+                                },
+                                validators: {
+                                  validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                                },
+                                hooks: {
+                                },
+                
+                                expressions: {
+                                 
+                                },
+                              }
+                            ]
+                          },
+                          {
+                            fieldGroup:[
+                        
+                              {
+                                className: "splitCardHeaderss",
+                                type: 'displays',
+              
+                                templateOptions: {
+                                  label: `Non Mining/Farming`,
+                                  //on premises out of business hrs
+                                  required: false,
+              
+                                },
+                              },
+                              {
+                                className:"labelsum",
+                                type: 'commaSeparator',
+                                key: 'NonminingPlantSi',
+                                props: { 
+                                  label: `Sum Insured`,
+                                },
+                                templateOptions: {
+                                  disabled: this.checkDisable('NonminingPlantSi')
+                                },
+                                validators: {
+                                  validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                                },
+                                hooks: {
+                                },
+                
+                                expressions: {
+                                
+                                },
+                              }
+                            ]
+                          },
+                          {
+                            fieldGroup:[
+                              {
+                                className: "splitCardHeaderss",
+                                type: 'displays',
+              
+                                templateOptions: {
+                                  label: `Gensets SumInsured`,
+                                  required: false,
+              
+                                },
+                              },
+                              {
+                                className:"labelsum",
+                                type: 'commaSeparator',
+                                key: 'GensetsSi',
+                                props: { 
+                                  label: `Sum Insured`,
+                                },
+                                templateOptions: {
+                                  disabled: this.checkDisable('GensetsSi')
+                                },
+                                validators: {
+                                  validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                                },
+                                hooks: {
+                                },
+                
+                                expressions: {
+                                 
+                                },
+                              }
+                            ]
+                          },
+                    ]
+                  }
+                ]
+              }
+            ]
+            
+          },
+       
+        ],
       }
+     
   }
   fields:FormlyFieldConfig;
   checkDisable(fieldName) {

@@ -21,87 +21,175 @@ export class FireAndMaterialDamage{
           }
       }
       this.fields = {
-          props: { label: 'Fire And Material Damage' },
-          fieldGroup: [
-            {
-              fieldGroupClassName: 'row',
-              fieldGroup: [
-                {
-                  className: 'col-4 col-lg-4 col-md-4 offset-2',
-                  type: 'commaSeparator',
-                  key: 'BuildingSuminsured',
-                  props: {
-                    label: 'Building SI',
-                    disabled: this.checkDisable('Building'),
-                    required: true,
-                    options: [
-                    ],
-                    // validators: {
-                    //   validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                    // },
-                    // hooks: {
-                    // },
-                    // expressions: {
-                    // },
+        props: { label: 'Fire And Material Damage'},
+        fieldGroup: [
+          {
+            fieldGroupClassName: 'row',
+            fieldGroup: [
+              {
+                
+                fieldGroupClassName: 'col-8 col-md-8 col-lg-8 offset-2',
+                type: 'tables',
+                fieldGroup: [
+                  {
+                      fieldGroup:[
+                        // {props:{label:`Select`}},
+                        {props:{label:`Items to be Insured`}},
+                        {props:{label:`Sum Insured`}},
+                      ]
                   },
-                },
-                {
-                  className: 'col-4 col-lg-4 col-md-4',
-                  type: 'commaSeparator',
-                  key: 'FirePlantSi',
-                  props: {
-                    label: `Plant SI`,
-                    // disabled: this.checkDisable('BuildingSuminsured'),
-                    required: true,
-                    options: [
-                    ],
-                    // validators: {
-                    //   validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                    // },
-                    // hooks: {
-                    // },
-                    // expressions: {
-                    // },
-    
-                  },
-    
-                },
-                {
-                  className: 'col-4 col-lg-4 col-md-4 offset-2',
-                  type: 'commaSeparator',
-                  key: 'FireEquipSi',
-                  props: {
-                    label: `Equipment SI`,
-                    disabled: this.checkDisable('EquipmentMachinery'),
-                    required: true,
-                    options: [
-    
-                    ],
-    
-                  },
-                  validators: {
-                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                  },
-                  hooks: {
-                  },
-                  expressions: {
-                  },
-                 
-                },
-                {
-                  className: 'col-4 col-lg-4 col-md-4',
-                  type: 'commaSeparator',
-                  key: 'FireStockSi',
-                  templateOptions: {
-                    label: 'Stock SI',
-                    required: true,
-                  },
-                 
-                },
-              ]
-            }
-          ]
+                  {
+                    fieldGroup:[
+                          {
+                            fieldGroup:[
+                             
+                              {
+                                className: "splitCardHeaderss",
+                                type: 'displays',
+              
+                                templateOptions: {
+                                  label: `Building`,
+                                  required: false,
+              
+                                },
+                              },
+                              {
+                                className:"labelsum",
+                                type: 'commaSeparator',
+                                key: 'BuildingSuminsured',
+                                props: { 
+                                  label: `Sum Insured`,
+                                },
+                                templateOptions: {
+                                  disabled: this.checkDisable('Building')
+                                },
+                                validators: {
+                                  validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                                },
+                                hooks: {
+                                },
+                
+                                expressions: {
+                                 
+                                },
+                              }
+                            ]
+                          },
+                          {
+                            fieldGroup:[
+                        
+                              {
+                                className: "splitCardHeaderss",
+                                type: 'displays',
+              
+                                templateOptions: {
+                                  label: `Plant`,
+                                  //on premises out of business hrs
+                                  required: false,
+              
+                                },
+                              },
+                              {
+                                className:"labelsum",
+                                type: 'commaSeparator',
+                                key: 'FirePlantSi',
+                                props: { 
+                                  label: `Sum Insured`,
+                                },
+                                templateOptions: {
+                                  disabled: this.checkDisable('FirePlantSi')
+                                },
+                                validators: {
+                                  validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                                },
+                                hooks: {
+                                },
+                
+                                expressions: {
+                                
+                                },
+                              }
+                            ]
+                          },
+                          {
+                            fieldGroup:[
+                              {
+                                className: "splitCardHeaderss",
+                                type: 'displays',
+              
+                                templateOptions: {
+                                  label: `Equipment`,
+                                  required: false,
+              
+                                },
+                              },
+                              {
+                                className:"labelsum",
+                                type: 'commaSeparator',
+                                key: 'FireEquipSi',
+                                props: { 
+                                  label: `Sum Insured`,
+                                },
+                                templateOptions: {
+                                  disabled: this.checkDisable('FireEquipSi')
+                                },
+                                validators: {
+                                  validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                                },
+                                hooks: {
+                                },
+                
+                                expressions: {
+                                 
+                                },
+                              }
+                            ]
+                          },
+                          {
+                            fieldGroup:[
+                              {
+                                className: "splitCardHeaderss",
+                                type: 'displays',
+              
+                                templateOptions: {
+                                  label: `Stock`,
+                                  required: false,
+              
+                                },
+                              },
+                              {
+                                className:"labelsum",
+                                type: 'commaSeparator',
+                                key: 'FireStockSi',
+                                props: { 
+                                  label: `Sum Insured`,
+                                },
+                                templateOptions: {
+                                  disabled: this.checkDisable('FireStockSi')
+                                },
+                                validators: {
+                                  validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                                },
+                                hooks: {
+                                },
+                
+                                expressions: {
+                                 
+                                },
+                              }
+                            ]
+                          },
+                    ]
+                  }
+                ]
+              }
+            ]
+            
+          },
+       
+        ],
       }
+    
   }
   fields:FormlyFieldConfig;
   checkDisable(fieldName) {

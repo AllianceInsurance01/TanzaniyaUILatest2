@@ -433,9 +433,10 @@
   
       <mat-header-row *matHeaderRowDef="keys" style="font-size:14px;"></mat-header-row>
      
-      <mat-row *matRowDef="let element; columns: keys" class="mt-2" [class.example-expanded-row]="expandedElement === element"  style="overflow:scroll;
+      <mat-row *matRowDef="let element; columns: keys" class="mt-2" [class.example-expanded-row]="expandedElement === element"  style="
       display: flex !important;
       flex-direction: column; border-top:1px solid navy; border-bottom:1px solid navy;font-size:14px;"></mat-row>
+      <!--overflow:scroll;-->
     
        <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>
     </mat-table>

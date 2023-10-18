@@ -37,7 +37,7 @@ export class EmployersLiabilitys{
                       type: 'select',
                       key: 'LiabilityOccupationId',
                       defaultValue: '',
-                      className: 'col-sm-4',
+                      className: 'col-sm-12 col-md-6 col-lg-4',
                       props: {
                         label: `Occupation`,
                         disabled: this.checkDisable('LiabilityOccupationId'),
@@ -56,7 +56,7 @@ export class EmployersLiabilitys{
                       },
                     },
                     {
-                      className: 'col-sm-4',
+                      className: 'col-sm-12 col-md-6 col-lg-4',
                       type: 'number',
                       key: 'TotalNoOfEmployees',
                       templateOptions: {
@@ -70,7 +70,7 @@ export class EmployersLiabilitys{
                     
                     {
                       type: 'commaSeparator',
-                      className: 'col-sm-4',
+                      className: 'col-sm-12 col-md-6 col-lg-4',
                       key: 'EmpLiabilitySi',
                       defaultValue: '0',
                       props: {

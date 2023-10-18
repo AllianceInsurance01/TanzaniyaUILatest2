@@ -27,7 +27,7 @@ export class PublicLiabilitys{
               fieldGroupClassName: 'row',
               fieldGroup: [
                 {
-                  className: 'col-4 col-lg-4 col-md-4',
+                  className: 'col-12 col-lg-4 col-md-6',
                   type: 'commaSeparator',
                   key: 'LegalLiabilityAnnualAggreagte',
                   props: {
@@ -42,7 +42,7 @@ export class PublicLiabilitys{
                   },
                 },
                 {
-                  className: 'col-4 col-lg-4 col-md-4',
+                  className: 'col-12 col-lg-4 col-md-6',
                   type: 'commaSeparator',
                   key: 'ProductTurnover',
     

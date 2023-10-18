@@ -4072,15 +4072,17 @@ getSumInsuredList(){
 }
 getIndemityPeriodList(){
   this.indemityPeriodList = [];
-  if(this.productId=='6') this.fields[0].fieldGroup[0].fieldGroup[0].props.options=[];
+ 
+  if(this.productId=='6') this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].props.options;//this.fields[0].fieldGroup[0].fieldGroup[0].props.options=[];
   else if(this.productId=='19'){
     console.log('NNNNNN',this.fields[0]);
     let fields = this.fields[0].fieldGroup;
     for(let field of fields){
       if(field.props.label=='Fire & Allied Perils'){
-        console.log("Final Field on Occupatiion",field,field.fieldGroup[0].fieldGroup[0])
+        console.log("Final Field on Occupatiion",field.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].props.options);
         //let defaultObj = [{ 'label': '-Select-', 'value': null }]
-        field.fieldGroup[0].fieldGroup[0].props.options = [];
+        field.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].props.options =[];
+        // field.fieldGroup[0].fieldGroup[0].props.options = [];
       }
 }
   
@@ -4102,7 +4104,8 @@ getIndemityPeriodList(){
         delete this.indemityPeriodList[i].CodeDesc;
         if (i == this.indemityPeriodList.length - 1) {
           if(this.productId=='6'){
-                this.fields[0].fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.indemityPeriodList);
+            this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].props.options = defaultObj.concat(this.indemityPeriodList);
+                //this.fields[0].fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.indemityPeriodList);
                 let referenceNo = sessionStorage.getItem('quoteReferenceNo');
                 if (referenceNo) {
                   this.requestReferenceNo = referenceNo;
@@ -4121,8 +4124,9 @@ getIndemityPeriodList(){
             for(let field of fields){
               if(field.props.label=='Fire & Allied Perils'){
                 console.log("Final Field on Occupatiion",field,field.fieldGroup[0].fieldGroup[0])
-                //let defaultObj = [{ 'label': '-Select-', 'value': null }]
-                field.fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.indemityPeriodList);
+                field.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].props.options = defaultObj.concat(this.indemityPeriodList);
+                //field.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[0].props.options= defaultObj.concat(this.indemityPeriodList);
+                //field.fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.indemityPeriodList);
               }
         }
           }

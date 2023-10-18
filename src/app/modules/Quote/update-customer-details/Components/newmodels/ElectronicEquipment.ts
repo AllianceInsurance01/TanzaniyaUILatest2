@@ -27,11 +27,12 @@ export class ElectronicEquipment{
               fieldGroupClassName: 'row',
               fieldGroup: [
                 {
-                  className: 'col-4 col-lg-4 col-md-4',
+                  className:"labelsum",
+                  // className: 'col-12 col-lg-4 col-md-6',
                   type: 'commaSeparator',
                   key: 'ElectronicEquipSuminsured',
                   props: {
-                    label: 'Electronic Equipment SumInsured',
+                    label: 'SumInsured',
                     // disabled: this.checkDisable('IndemityPeriod'),
                     required: true,
                     options: [
