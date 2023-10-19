@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedService } from '../../../shared/shared.service';
 import * as Mydatas from '../../../app-config.json';
@@ -33,7 +33,9 @@ export class ReportComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   public motorApiUrl:any = this.AppConfig.MotorApiUrl;
-  
+  Currency:any;
+  // @Output('Currency') Currency:any='TZS';
+
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     console.log("UserDetails",this.userDetails);
@@ -110,8 +112,8 @@ export class ReportComponent implements OnInit {
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
       if(data.Result){
-        let obj = [{Code:"",CodeDesc:"ALL"}];
-        this.branchList = obj.concat(data?.Result);
+        //let obj = [{Code:"",CodeDesc:"ALL"}];
+        this.branchList = data?.Result;
         if(!this.branchValue){ this.branchValue = "";
          }
       }
@@ -170,7 +172,8 @@ getQuotes(){
 this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
   (data: any) => {
     if(data.Result){
-      this.customerData=data.Result
+      this.customerData=data.Result;
+      this.Currency=this.customerData[0].Currency
     }
   },
   (err) => { },

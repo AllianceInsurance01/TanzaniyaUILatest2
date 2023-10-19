@@ -246,6 +246,14 @@ input:checked+.slider:before {
     .mobilelabel{
         display:inline-block;
      }
+     .mobileheading{
+        display:block !important;
+        text-align: center !important;
+     }
+     .maan-grid-item-title{
+        height:auto !important
+     }
+    
     }
   
     @media screen and (min-width: 750px) and (max-width: 5464px) {
@@ -263,9 +271,17 @@ input:checked+.slider:before {
             flex-direction: row;
             
         }
+        .mobileheading{
+            display:flex !important;
+            justify-content: space-between !important;
+         }
+         .maan-grid-item-title{
+            height:44px !important;
+         }
         .mobilelabel{
            display:none !important
         }
+        
       }
 
 

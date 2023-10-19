@@ -746,11 +746,92 @@ a:hover {
   .display3{
       display:none;
           }
+          ::ng-deep .mat-drawer-container {
+            position: relative !important;
+            z-index: 1;
+            box-sizing: border-box;
+            -webkit-overflow-scrolling: touch;
+            display: block;
+            overflow-y: scroll !important;
+            overflow-x: hidden !important;
+        }
+        ::ng-deep .mat-drawer-content {
+          position: relative !important;
+          z-index: 1;
+          display: block !important;
+          height: 100% !important;
+          overflow-y: auto !important;
+          overflow-x: hidden !important;
+      }
+      ::ng-deep .content {
+        min-height: 80%!important;
+        border-radius: 10px !important;
+        padding: 10px!important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+    }
+    ::ng-deep .mat-sidenav{
+      margin:20px !important;
+    }
   }
-
-  @media screen and (min-width: 750px) and (max-width: 5464px) {
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) 
+{
+    .display4{
+      display:none;
+          }
+     
+          ::ng-deep .mat-drawer-container {
+            position: relative !important;
+            z-index: 1;
+            box-sizing: border-box;
+            -webkit-overflow-scrolling: touch;
+            display: block;
+            overflow: hidden !important;
+        }
+        ::ng-deep .mat-drawer-content {
+          position: relative !important;
+          z-index: 1;
+          display: block !important;
+          height: 100% !important;
+          overflow: auto !important;
+      }
+      ::ng-deep .content {
+        min-height: 80%!important;
+        border-radius: 10px !important;
+        padding: 10px!important;
+        overflow: auto !important;
+    }
+    ::ng-deep .mat-sidenav{
+      margin-top:5px !important;
+    }
+  }
+  @media screen and (min-width: 1024px) and (max-width: 5464px) {
     .display4{
         display:none;
             }
+            ::ng-deep .mat-drawer-container {
+              position: relative !important;
+              z-index: 1;
+              box-sizing: border-box;
+              -webkit-overflow-scrolling: touch;
+              display: block;
+              overflow: hidden !important;
+          }
+          ::ng-deep .mat-drawer-content {
+            position: relative !important;
+            z-index: 1;
+            display: block !important;
+            height: 100% !important;
+            overflow: auto !important;
+        }
+        ::ng-deep .content {
+          min-height: 80%!important;
+          border-radius: 10px !important;
+          padding: 10px!important;
+          overflow: auto !important;
+      }
+      ::ng-deep .mat-sidenav{
+        margin:5px !important;
+      }
     }
 

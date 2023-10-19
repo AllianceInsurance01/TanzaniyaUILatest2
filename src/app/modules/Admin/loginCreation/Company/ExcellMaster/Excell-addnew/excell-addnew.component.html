@@ -41,7 +41,7 @@
                                     <th class="tbl-header"style="font-family: var(--our-font-family-new)!important;font-weight: 500;">Remove</th>
                                 </tr>
                                
-                                <tr *ngFor="let row of NewList;let i = index;">
+                                <tr *ngFor="let row of NewList|paginate:{itemsPerPage: 5, currentPage:p,id: 'p'} ;let i = index;">
                                     <td class="tbl-content">
                                         <div class="input-control-container">
                                             <input type="text" [(ngModel)]="row.FieldId"  style="font-family: var(--our-font-family-new)!important;font-weight: 500;font-size: 1.2em;width:100px !important;">
@@ -180,6 +180,9 @@
                                 </tr>
                            
                             </table>
+                            <div class="d-flex justify-content-end">
+                                <pagination-controls (pageChange)="p=$event"  id="p"></pagination-controls>
+                              </div>
                         </div>
                     </div>
                     </div>
