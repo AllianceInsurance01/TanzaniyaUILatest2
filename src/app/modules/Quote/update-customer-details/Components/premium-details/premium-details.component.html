@@ -557,8 +557,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="display1">
-                    <div class="maan-grid-item-body" style="padding-left: 70px !important;padding-right: 40px !important;">
+                <div class="display3">
+                    <div class="maan-grid-item-body imclass">
                         <div class="row" *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
                             <div class="product_Section col-md-6 col-lg-4 ml-1" *ngIf="commonDocTypeList.length!=0">
                                 <div class="text-center">
@@ -573,7 +573,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-lg-6 offset-1" >
+                            <div class="col-md-12 col-lg-6 offset-lg-1" >
                                 <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct','select')" #doc>
                                 <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadDocuments($event,null,'direct','drag')" (click)="doc.click()">
                                     <div>
@@ -671,7 +671,7 @@
                     </div>
                 </div>
                   <!--Common documnents Mobile View-->
-                  <div class="display2">
+                  <div class="display4">
                     <div class="maan-grid-item-body" style="display:flex;flex-direction: column;">
                         <div class="row" *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
                             <div class="product_Section col-12 col-md-6 col-lg-4" *ngIf="commonDocTypeList.length!=0" style="margin-left:10px;">
@@ -702,7 +702,7 @@
                         <ng-container *ngIf="uploadDocList.length !=0">
                             <table class="table">
                                 <tbody>
-                                    <tr *ngFor="let document of uploadDocList;let i=index" style="display:flex;flex-direction: column;width:250px;">
+                                    <tr *ngFor="let document of uploadDocList;let i=index" class="tableclass" style="display:flex;flex-direction: column;">
                                         <td>
                                         <div class="row">
                                             <div class="col-6">
@@ -767,7 +767,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <table class="table" id="capture_table" style="width:250px !important">
+                            <table class="table tableclass" id="capture_table"><!--style="width:250px !important"-->
                                 <thead style="display:none;">
                                     <tr>
                                         <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
@@ -779,7 +779,7 @@
                                     </tr>
                                 </thead>
                                 <tbody style="width:100%">
-                                    <tr *ngFor="let document of uploadedDocList;let i=index" style="display:flex;flex-direction: column;width:250px;">
+                                    <tr *ngFor="let document of uploadedDocList;let i=index" class="tableclass" style="display:flex;flex-direction: column;"><!--width:250px;-->
                                         <div class="row">
                                             <div class="col-6">
                                                 S.No
@@ -864,7 +864,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="display1">
+                <div class="display3">
                     <div class="maan-grid-item-body " style="padding-left: 25px !important;padding-right: 40px !important;">
                         <div class="row customFlow">
                             <div class="col-md-6 col-lg-6 offset-3"  *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
@@ -1001,7 +1001,7 @@
                         </ng-container>
                     </div>
                 </div>
-                <div class="display2">
+                <div class="display4">
                     <div class="maan-grid-item-body">
                         <div class="row customFlow">
                             <div class="col-12 col-md-6 col-lg-6" *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
@@ -1037,7 +1037,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let document of uploadListDoc;let i=index" style="display:flex;flex-direction: column;width:250px;">
+                                    <tr *ngFor="let document of uploadListDoc;let i=index" class="tableclass" style="display:flex;flex-direction: column;"><!--width:250px;-->
                                         <div class="row">
                                             <div class="col-6">
                                                 S.No
@@ -1138,7 +1138,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let document of uploadedIndividualList;let i=index" style="display:flex;flex-direction: column;width:250px;">
+                                    <tr *ngFor="let document of uploadedIndividualList;let i=index" class="tableclass" style="display:flex;flex-direction: column;"><!--width:250px;-->
                                         <div class="row">
                                             <div class="col-6">
                                                 S.No

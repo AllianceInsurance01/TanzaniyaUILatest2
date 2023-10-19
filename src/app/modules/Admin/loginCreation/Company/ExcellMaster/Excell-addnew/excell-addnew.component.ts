@@ -14,7 +14,7 @@ export class ExcellAddNewComponent implements OnInit {
   activeMenu:any="Excell";factorData:any[]=[];
   columnHeader:any[]=[];
   insuranceName: string;
-  insuranceId: string;
+  insuranceId: string;p:Number=1;
   productId: string;
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;

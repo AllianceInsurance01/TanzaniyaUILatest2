@@ -9,14 +9,14 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-12 col-md-4 col-lg-4">
+            <div class="col-12 col-md-4 col-lg-3">
                 <div class="input-control-container">
                     <label class="input-form-label">Branch</label>
-                    <ng-select class="input-form-select" (click)="getsearchs()" [(ngModel)]="branchValue" [items]="branchList" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="input-form-select" [(ngModel)]="branchValue" [items]="branchList" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                 </div>
             </div>
-            <div class="col-12 col-md-4 col-lg-4 input-control-container">
+            <div class="col-12 col-md-4 col-lg-2 input-control-container">
                 <label class="input-form-label">Start Date</label><span class="text-danger">*</span>
                 <mat-form-field appearance="fill">
                     <input matInput [matDatepicker]="picker" [(ngModel)]="startdate" (dateChange)="getsearchs()" [ngModelOptions]="{standalone: true}">
@@ -24,7 +24,7 @@
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
             </div>
-            <div class="col-12 col-md-4 col-lg-4 input-control-container">
+            <div class="col-12 col-md-4 col-lg-2 input-control-container">
                 <label class="input-form-label">End Date</label><span class="text-danger">*</span>
                 <mat-form-field appearance="fill">
                     <input matInput [matDatepicker]="picker1" [(ngModel)]="enddate" (dateChange)="getsearchs()" [ngModelOptions]="{standalone: true}">
@@ -32,7 +32,7 @@
                     <mat-datepicker #picker1></mat-datepicker>
                 </mat-form-field>
             </div>
-            <div style="text-align: center;" class="col-12 col-md-2 offset-md-5" *ngIf="startdate && enddate">
+            <div class="col-12 col-md-2 mt-4" *ngIf="startdate && enddate">
                 <button class="btn btn-primary" (click)="getsearch()">Search</button>
             </div>
         </div>
@@ -45,7 +45,7 @@
             </div>
             <div class="col-12 col-md-12 col-lg-12 mt-2">
                 <ng-container *ngIf="customerData.length!=0 && showgrid">
-                    <app-grid-table [cols]="quoteData" [data]="customerData">
+                    <app-grid-table [cols]="quoteData" [data]="customerData" [Currency]="Currency">
                     </app-grid-table>
                 </ng-container>
                 <ng-container *ngIf="customerData.length==0">
