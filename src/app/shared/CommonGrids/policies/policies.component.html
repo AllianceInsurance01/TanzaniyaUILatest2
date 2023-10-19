@@ -16,7 +16,7 @@
                     </ng-select>
                 </div>
             </div>
-            <div  *ngIf="userType == 'Issuer'" [ngClass]="show ? 'col-md-2 col-lg-2 col-xl-2 offset-10' : 'col-md-2 col-lg-2 col-xl-2 offset-6'"><!--[ngClass]="show ? 'col-md-2 col-lg-2 col-xl-2 offset-6' : 'col-md-2 col-lg-2 col-xl-2 offset-6'"-->
+            <div  *ngIf="userType == 'Issuer'" [ngClass]="show ? 'col-md-3 col-lg-3 col-xl-3 offset-9' : 'col-md-3 col-lg-3 col-xl-3 offset-5'"><!--[ngClass]="show ? 'col-md-2 col-lg-2 col-xl-2 offset-6' : 'col-md-2 col-lg-2 col-xl-2 offset-6'"-->
                 <mat-checkbox class="example-margin" (change)="onSelectCustomer($event.checked)" [checked]="customersearch">Other Policy Search</mat-checkbox>
             </div>
         </div>
