@@ -12,6 +12,7 @@ import { AuthService } from '../Auth/auth.service';
 import { IdleTimeoutManager } from 'idle-timer-manager';
 import * as Mydatas from '../../app/app-config.json';
 import Swal from 'sweetalert2';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,7 @@ export class SharedService {
     private http: HttpClient,
     private authService: AuthService,
     private router: Router,
+    private cookieService: CookieService
   ) { }
 
 
@@ -50,11 +52,13 @@ export class SharedService {
 
 
   async onPostMethodAsync(UrlLink: any, ReqObj: any): Promise<Observable<any[]>> {
+    this.cookieService.set("XSRF-TOKEN", this.getToken(), 1, '/','localhost', false, "Strict");
     let headers = new HttpHeaders();
     headers = headers.append('Cache-Control', 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0');
     headers = headers.append('Pragma','no-cache');
     headers = headers.append('Expires','0');
     headers = headers.append('Authorization', 'Bearer ' + this.getToken());
+    headers = headers.append("X-XSRF-TOKEN", this.getToken());
     return await this.http
       .post<any>(UrlLink, ReqObj, { headers: headers })
       .pipe(catchError(this.handleError));
@@ -65,17 +69,20 @@ export class SharedService {
     headers = headers.append('Pragma','no-cache');
     headers = headers.append('Expires','0');
     headers = headers.append('Authorization', 'Bearer ' + this.getToken());
+    //headers = headers.append("X-XSRF-TOKEN", this.getToken());
     return await this.http
       .get<any>(UrlLink, { headers: headers })
       .pipe(catchError(this.handleError));
   }
 
   onPostMethodSync(UrlLink: string, ReqObj: any): Observable<any[]> {
+    this.cookieService.set("XSRF-TOKEN", this.getToken(), 1, '/','localhost', false, "Strict");
     let headers = new HttpHeaders();
     headers = headers.append('Cache-Control', 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0');
     headers = headers.append('Pragma','no-cache');
     headers = headers.append('Expires','0');
     headers = headers.append('Authorization', 'Bearer ' + this.getToken());
+    headers = headers.append("X-XSRF-TOKEN", this.getToken());
     return this.http
       .post<any>(UrlLink, ReqObj, { headers: headers })
       .pipe(catchError(this.handleError));
@@ -86,6 +93,7 @@ export class SharedService {
     headers = headers.append('Pragma','no-cache');
     headers = headers.append('Expires','0');
     headers = headers.append('Authorization', 'Bearer ' + this.getToken());
+    //headers = headers.append("X-XSRF-TOKEN", this.getToken());
     return this.http
       .get<any>(UrlLink, { headers: headers })
       .pipe(catchError(this.handleError));
@@ -104,16 +112,19 @@ export class SharedService {
     const formData: FormData = new FormData();
     formData.append('File', file);
     formData.append('Req ', JSON.stringify(ReqObj));
+    this.cookieService.set("XSRF-TOKEN", this.getToken(), 1, '/','localhost', false, "Strict");
     let headers = new HttpHeaders();
     headers = headers.append('Cache-Control', 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0');
     headers = headers.append('Pragma','no-cache');
     headers = headers.append('Expires','0');
     headers = headers.append('Authorization', 'Bearer ' + this.getToken());
+    headers = headers.append("X-XSRF-TOKEN", this.getToken());
     return this.http
       .post<any>(UrlLink, formData, { headers: headers })
       .pipe(catchError(this.handleError));
   }
   onPostExcelDocumentMethodSync(UrlLink: string, ReqObj: any,file:File): Observable<any[]> {
+    this.cookieService.set("XSRF-TOKEN", this.getToken(), 1, '/','localhost', false, "Strict");
     const formData: FormData = new FormData();
     formData.append('file', file);
     formData.append('uploadReq', JSON.stringify(ReqObj));
@@ -122,6 +133,7 @@ export class SharedService {
     headers = headers.append('Pragma','no-cache');
     headers = headers.append('Expires','0');
     headers = headers.append('Authorization', 'Bearer ' + this.getToken());
+    headers = headers.append("X-XSRF-TOKEN", this.getToken());
     return this.http
       .post<any>(UrlLink, formData, { headers: headers })
       .pipe(catchError(this.handleError));
@@ -138,6 +150,7 @@ export class SharedService {
   // }
   // TimeOut Session
   onPostCoverDocumentMethodSync(UrlLink: string, ReqObj: any,file:File): Observable<any[]> {
+    this.cookieService.set("XSRF-TOKEN", this.getToken(), 1, '/','localhost', false, "Strict");
     const formData: FormData = new FormData();
     formData.append('file', file);
     formData.append('uploadReq', JSON.stringify(ReqObj));
@@ -146,6 +159,7 @@ export class SharedService {
     headers = headers.append('Pragma','no-cache');
     headers = headers.append('Expires','0');
     headers = headers.append('Authorization', 'Bearer ' + this.getToken());
+    headers = headers.append("X-XSRF-TOKEN", this.getToken());
     return this.http
       .post<any>(UrlLink, formData, { headers: headers })
       .pipe(catchError(this.handleError));
@@ -192,32 +206,34 @@ export class SharedService {
         );
           console.log('Alert Time Out', router, this.redirectSection, this.timeLimit);
           // alert('User Ti');
-          Swal.fire({
-            title: '<strong> Time Out</strong>',
-            icon: 'info',
-            html:
-              `<ul class="list-group errorlist">
-               <li>Do You Want to Still Proceed?</li>
-           </ul>`,
-            showCloseButton: false,
-            //focusConfirm: false,
-            showCancelButton:true,
-  
-           //confirmButtonColor: '#3085d6',
-           cancelButtonColor: '#d33',
-           confirmButtonText: 'YES',
-           cancelButtonText: 'NO',
-          }).then((result) => {
-            if (result.isConfirmed) {
-                  this.onProceed('Yes')
-            }
-            else if(result.isDismissed){
-              this.onProceed('No')
-            }
-            else {
-              this.redirectRouting();
-            }
-          })
+          if(this.router.url!='/' && this.router.url!='/login' && this.loginId!='guest'){
+            Swal.fire({
+              title: '<strong> Time Out</strong>',
+              icon: 'info',
+              html:
+                `<ul class="list-group errorlist">
+                 <li>Do You Want to Still Proceed?</li>
+             </ul>`,
+              showCloseButton: false,
+              //focusConfirm: false,
+              showCancelButton:true,
+             //confirmButtonColor: '#3085d6',
+             cancelButtonColor: '#d33',
+             confirmButtonText: 'YES',
+             cancelButtonText: 'NO',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                    this.onProceed('Yes')
+              }
+              else if(result.isDismissed){
+                this.onProceed('No')
+              }
+              else {
+                this.redirectRouting();
+              }
+            })
+          }
+          
        
       }
     }
@@ -248,6 +264,7 @@ export class SharedService {
      }
      else if(type=='No'){
       sessionStorage.clear();
+      this.cookieService.delete('XSRF-TOKEN',"/","domain name",true,"None")
       this.router.navigate(['/Login/Home']);
      }
   }
@@ -260,6 +277,7 @@ export class SharedService {
         timeout: 60 * 30,
         onExpired: () => {
           sessionStorage.clear();
+          this.cookieService.delete('XSRF-TOKEN',"/","domain name",true,"None")
           // Swal.close();
           this.router.navigate(['./Login/sessionRedirect']);
         },
