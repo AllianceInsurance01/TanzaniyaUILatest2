@@ -181,7 +181,8 @@ export class SharedService {
     return true;
   }
   setTimeOutSection() {
-    this.timeoutHandle = setTimeout(() => this.showAlert(this.redirectSection,this.router),(5 * 60 * 1000));
+    this.timeoutHandle = setTimeout(() => this.showAlert(this.redirectSection,this.router),(20 * 60 * 1000));
+    this.redirectRouting();
     //(30 * 1000)
     //this.redirectRouting();
   }
@@ -229,7 +230,7 @@ export class SharedService {
                 this.onProceed('No')
               }
               else {
-                this.redirectRouting();
+                
               }
             })
           }
@@ -265,7 +266,7 @@ export class SharedService {
      else if(type=='No'){
       sessionStorage.clear();
       this.cookieService.delete('XSRF-TOKEN',"/","domain name",true,"None")
-      this.router.navigate(['/Login/Home']);
+      this.router.navigate(['/login']);
      }
   }
 
@@ -274,12 +275,15 @@ export class SharedService {
     // tslint:disable-next-line: triple-equals
     if (this.router != undefined) {
       this.timer = new IdleTimeoutManager({
-        timeout: 60 * 30,
+        timeout: (30 * 60 * 1000),
         onExpired: () => {
-          sessionStorage.clear();
-          this.cookieService.delete('XSRF-TOKEN',"/","domain name",true,"None")
-          // Swal.close();
-          this.router.navigate(['./Login/sessionRedirect']);
+          if (this.router.url != '/' && this.router.url != '/Login/Home' && this.router.url != '/Login/sessionRedirect' && this.router.url != '/Login/Officer' && this.router.url != '/Login/Assessor' && this.router.url != '/Login/Garage' ) {
+              sessionStorage.clear();
+              this.cookieService.delete('XSRF-TOKEN',"/","domain name",true,"None")
+              // Swal.close();
+          
+              this.router.navigate(['/login']);
+          }
         },
       });
     }

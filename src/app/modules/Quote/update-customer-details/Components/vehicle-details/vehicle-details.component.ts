@@ -819,7 +819,7 @@ export class VehicleDetailsComponent implements OnInit {
         "ReqRegNumber": regNo,
         "InsuranceId": this.insuranceId,
         "BranchCode": this.branchCode,
-        "BrokerBranchCode": this.updateComponent.brokerBranchCode,
+        "BrokerBranchCode": this.brokerbranchCode,
         "ProductId": this.productId,
         "CreatedBy": this.loginId
       }
@@ -862,7 +862,7 @@ export class VehicleDetailsComponent implements OnInit {
       "ReqRegNumber": null,
       "InsuranceId": this.insuranceId,
       "BranchCode": this.branchCode,
-      "BrokerBranchCode": this.updateComponent.brokerBranchCode,
+      "BrokerBranchCode": this.brokerbranchCode,
       "ProductId": this.productId,
       "CreatedBy": this.loginId
     }

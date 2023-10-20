@@ -391,7 +391,7 @@ onBodyTypeChange(type){
       "ReqRegNumber": null,
       "InsuranceId": this.insuranceId,
       "BranchCode": this.branchCode,
-      "BrokerBranchCode": this.updateComponent.brokerBranchCode,
+      "BrokerBranchCode": this.branchCode,
       "ProductId": this.productId,
       "CreatedBy": this.loginId
     }
