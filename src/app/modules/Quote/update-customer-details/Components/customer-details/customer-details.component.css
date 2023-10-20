@@ -108,3 +108,10 @@
             display:block;
         }
  }
+
+ @media only screen 
+and (min-width : 768px) {
+    .labelrem {
+        line-height: .8rem!important;
+    }
+}

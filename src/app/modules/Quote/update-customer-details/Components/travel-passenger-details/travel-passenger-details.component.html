@@ -18,7 +18,7 @@
                     </div>
                     <div class="maan-grid-item-body" style="min-height: 130px !important;">
                         <div class="row">
-                            <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                            <div class="col-md-12 col-lg-8 col-xl-8 col-12 offset-lg-2">
                                 <table class="table  table-striped">
                                     <thead>
                                       <tr >
@@ -59,7 +59,7 @@
                     
                     <div class="row mb-2" *ngIf="!editSection">
                         
-                        <div class="col-md-10 col-lg-10 col-xl-10 offset-1">
+                        <div class="col-md-12 col-lg-10 col-xl-10 col-12 offset-lg-1">
                         <div class="d-flex justify-content-between">
                             <div class=" mt-2" *ngIf="!editSection">
                                 <button class="btn btn-warning"  (click)="AddPassenger()">Add Passenger</button>
@@ -74,7 +74,7 @@
                         </div>
                             
                         <div class="row" *ngIf="showgrid">
-                            <div class="col-md-10 col-lg-10 col-xl-10 offset-1">
+                            <div class="col-md-12 col-lg-10 col-xl-10 col-12 offset-lg-1">
                                 <div class="boxForm">
                                     <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
                             <div class="headcommon" *ngIf="enableEmployeeUploadSection">
@@ -115,7 +115,7 @@
                             </div>
                             <div *ngIf="enableEmployeeUploadSection && !showEmpRecordsSection">
                                 <div class="row" *ngIf="uploadStatus==null">
-                                    <div class="col-md-8 col-lg-8 offset-2" >
+                                    <div class="col-md-8 col-lg-8 offset-lg-2 offset-md-2">
                                         <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct','select')" #doc>
                                         <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadDocuments($event,null,'direct','drag')" (click)="doc.click()">
                                             <div>
@@ -230,7 +230,7 @@
                         </div>
                     </div>
                     <div class="row" *ngIf="editSection">
-                        <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                        <div class="col-md-12 col-lg-8 col-xl-8 offset-lg-2">
                             <div class="row">
                                 <div class="col-md-4 col-lg-4 col-xl-4">
                                     <div class="input-control-container">
