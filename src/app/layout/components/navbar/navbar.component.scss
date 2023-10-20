@@ -743,9 +743,9 @@ a:hover {
 // }
 
 @media screen and (min-width: 280px) and (max-width: 750px) {
-  .display3{
-      display:none;
-          }
+  // .display3{
+  //     display:none;
+  //         }
           ::ng-deep .mat-drawer-container {
             position: relative !important;
             z-index: 1;
@@ -776,9 +776,9 @@ a:hover {
   }
   @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) 
 {
-    .display4{
-      display:none;
-          }
+    // .display4{
+    //   display:none;
+    //       }
      
           ::ng-deep .mat-drawer-container {
             position: relative !important;
@@ -806,9 +806,9 @@ a:hover {
     }
   }
   @media screen and (min-width: 1024px) and (max-width: 5464px) {
-    .display4{
-        display:none;
-            }
+    // .display4{
+    //     display:none;
+    //         }
             ::ng-deep .mat-drawer-container {
               position: relative !important;
               z-index: 1;
@@ -835,3 +835,122 @@ a:hover {
       }
     }
 
+
+
+
+
+    @media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+	/* Styles */
+  .display3{
+    display:none !important;
+        }
+}
+
+/* Smartphones (landscape) ----------- */
+@media only screen 
+and (min-width : 321px) {
+	/* Styles */
+  .display3{
+    display:none !important;
+        }
+        .display4{
+          display:block !important;
+              }
+}
+
+/* Smartphones (portrait) ----------- */
+@media only screen 
+and (max-width : 320px) {
+	/* Styles */
+  .display3{
+    display:none !important;
+        }
+}
+
+@media only screen 
+and (min-width : 768px) {
+	/* Styles */
+  .display3{
+    display:none !important;
+        }
+        .display4{
+          display:block !important;
+        }
+}
+/* iPads (portrait and landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) {
+	/* Styles */
+  .display3{
+    display:none !important;
+        }
+        
+}
+
+/* iPads (landscape) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape) {
+	/* Styles */
+  .display4{
+    display:none !important;
+        }
+}
+
+/* iPads (portrait) ----------- */
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) {
+	/* Styles */
+  .display3{
+    display:none !important;
+        }
+        .display4{
+          display:block !important;
+              }
+}
+
+/* Desktops and laptops ----------- */
+@media only screen 
+and (min-width : 1224px) {
+	/* Styles */
+  .display4{
+    display: none !important;
+        }
+}
+
+
+/* Large screens ----------- */
+// @media only screen 
+// and (min-width : 1824px) {
+// 	/* Styles */
+//   .display4{
+//     display:none !important;
+//         }
+// }
+@media screen and (min-width: 1224px) and (max-width: 5464px) {
+  .display4{
+    display:none !important;
+    }
+    .display3{
+      display: block !important;
+    }
+
+}
+
+
+
+/* iPhone 4 ----------- */
+// @media
+// only screen and (-webkit-min-device-pixel-ratio : 1.5),
+// only screen and (min-device-pixel-ratio : 1.5) {
+// 	/* Styles */
+//   .display4{
+//     display:none;
+//         }
+// }

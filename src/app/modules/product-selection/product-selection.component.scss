@@ -194,6 +194,18 @@
             background: rgba(275,275,275,.5) !important;
         }
     }
+    @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) 
+    {
+        .display2{
+            display:none;
+             }
+             .InsuranceType {
+                 width: 24% !important;
+                 border-radius: 5px 5px 0 0;
+                 opacity: 1!important;
+             }
+        
+      }
 
  @media screen and (min-width: 280px) and (max-width: 700px) {
     .display1{

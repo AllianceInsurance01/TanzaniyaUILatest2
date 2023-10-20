@@ -47,13 +47,13 @@ tr{
     position: relative;
     /* left: 1.5rem; */
 }
-@media screen and (min-width: 750px) and (max-width: 20000px) {
+/* @media screen and (min-width: 750px) and (max-width: 20000px) {
     .display2{
-        display:none;
+        display:none !important;
     }
    
-  }
-  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) 
+  } */
+  @media only screen and (min-width: 768px) and (max-width: 1024px) 
  {
     .imag-card{
 width:300px !important;
@@ -62,14 +62,14 @@ width:300px !important;
         padding-left: 10px !important;
         padding-right: 0px !important;
     }
-    .display3{
-        display:none;
-    }
+    /* .display4{
+        display:none !important;
+    } */
     .tableclass{
-        width:450px !important;
+        width:auto !important;
     }
 }
-@media only screen and (min-device-width: 1024px) and (max-device-width: 200000px) 
+@media only screen and (min-width: 1024px) and (max-width: 200000px) 
 {
    .imag-card{
 width:auto !important;
@@ -78,17 +78,17 @@ width:auto !important;
     padding-left: 70px !important;
     padding-right: 40px !important;
 }
-.display4{
-    display:none;
-}
+/* .display4{
+    display:none !important;
+} */
 .tableclass{
     width:400px !important;
 }
 }
- 
-  
+
+
   @media screen and (min-width: 280px) and (max-width: 750px) {
-    .display3{ display: none; } 
+    /* .display3{ display: none !important; }  */
     .mobile-label {
       display: inline-block;
           font-weight: bold;
@@ -115,3 +115,117 @@ width:auto !important;
 
 
   
+
+  /* */
+  
+  @media only screen 
+  and (min-device-width : 320px) 
+  and (max-device-width : 480px) {
+      /* Styles */
+    .display3{
+      display:none !important;
+          }
+  }
+  
+  /* Smartphones (landscape) ----------- */
+  @media only screen 
+  and (min-width : 321px) {
+      /* Styles */
+    .display3{
+      display:none !important;
+          }
+  }
+  
+  /* Smartphones (portrait) ----------- */
+  @media only screen 
+  and (max-width : 320px) {
+      /* Styles */
+    .display3{
+      display:none !important;
+          }
+  }
+  
+  /* iPads (portrait and landscape) ----------- */
+  @media only screen 
+  and (min-device-width : 768px) 
+  and (max-device-width : 1024px) {
+      /* Styles */
+    .display3{
+      display:none !important;
+          }
+  }
+  
+  /* iPads (landscape) ----------- */
+  @media only screen 
+  and (min-device-width : 768px) 
+  and (max-device-width : 1024px) 
+  and (orientation : landscape) {
+      /* Styles */
+      .display3{
+        display:none !important;
+            }
+            .display4{
+              display: visible !important;
+                  }
+  }
+  
+  /* iPads (portrait) ----------- */
+  @media only screen 
+  and (min-device-width : 768px) 
+  and (max-device-width : 1024px) 
+  and (orientation : portrait) {
+      /* Styles */
+    .display3{
+      display:none !important;
+          }
+          .display4{
+            display: visible !important;
+                }
+  }
+  
+  /* Desktops and laptops ----------- */
+  @media only screen 
+  and (min-width : 1224px) {
+      /* Styles */
+    .display4{
+        visibility: hidden !important;
+        display: none !important;
+    }
+    .display3{
+        visibility: visible !important;
+        display: table !important;
+          }
+  }
+
+  @media screen and (min-width: 1224px) and (max-width: 5464px) {
+    .display4{
+        visibility: hidden !important;
+        display: none !important;
+      }
+      .display3{
+        visibility: visible !important;
+        display: table !important;
+      }
+  
+  }
+  
+  @media only screen 
+and (min-width : 768px) {
+	/* Styles */
+  .display3{
+    display: none;
+        }
+}
+  /* Large screens ----------- */
+  /* @media only screen 
+  and (min-width : 1824px) {
+
+    .display4{
+      display:none !important;
+          }
+          .display3{
+            visibility: visible !important;
+            display: table !important;
+              }
+  }
+   */

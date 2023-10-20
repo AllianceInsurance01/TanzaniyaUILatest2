@@ -97,36 +97,36 @@ export class NavbarComponent implements OnInit {
         $('.branchsubName').toggle();
       });
       this.getScreenWidth().subscribe(width => {
-        if (width < 800) {
+        if (width < 1000) {
          this.showToggle = 'show';
          this.mode = 'over';
          this.openSideNav =true;
-        //  console.log('HHHHHHHHHHHHH',width);
+        console.log('HHHHHHHHHHHHH',width);
        }
-       else if (width > 800) {
+       else if (width > 1000) {
          this.showToggle = 'hide';
          this.mode = 'side';
          this.openSideNav = false;
-        //  console.log('greater',width);
+       console.log('greater',width);
        }
      });
       // let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       this.insuranceid = this.userDetails.Result.LoginBranchDetails[0].InsuranceId;
-      if(this.loginType=='B2CFlow') {this.openSideNav = false;this.showToggle = 'hide';$('#sidenav').toggle();}
+      //if(this.loginType=='B2CFlow') {this.openSideNav = false;this.showToggle = 'hide';$('#sidenav').toggle();}
   }
   ngAfterViewInit() {
       this.observer
-      .observe(['(max-width: 800px)'])
+      .observe(['(max-width: 1000px)'])
       .pipe(delay(1), untilDestroyed(this))
       .subscribe((res:any) => {
         if (res.matches) {
           this.sidenav.mode = 'over';
           this.sidenav.close();
-          // console.log('small',this.sidenav.mode);
+          console.log('small',this.sidenav.mode);
         } else {
           this.sidenav.mode = 'side';
           this.sidenav.open();
-          // console.log('large',this.sidenav.mode);
+          console.log('large',this.sidenav.mode);
         }
       });
 
@@ -140,7 +140,7 @@ export class NavbarComponent implements OnInit {
           this.sidenav.close();
         }
       });
-    if(this.loginType=='B2CFlow') {this.openSideNav = false;this.showToggle = 'hide';$('#sidenav').toggle();}
+    //if(this.loginType=='B2CFlow') {this.openSideNav = false;this.showToggle = 'hide';$('#sidenav').toggle();}
   }
   onRedirect(){
     if(this.typeValue=='SuperAdmin'){this.router.navigate(['/Admin'])}
