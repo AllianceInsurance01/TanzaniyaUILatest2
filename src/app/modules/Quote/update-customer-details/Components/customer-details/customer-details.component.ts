@@ -3273,7 +3273,12 @@ export class CustomerDetailsComponent implements OnInit {
       else{
         let ReqObj = {
           "ReqChassisNumber": chassisNo,
-          "ReqRegNumber": regNo
+          "ReqRegNumber": regNo,
+          "InsuranceId": this.insuranceId,
+          "BranchCode": this.branchCode,
+          "BrokerBranchCode": this.brokerbranchCode,
+          "ProductId": this.productId,
+          "CreatedBy": this.loginId
         }
         let urlLink = `${this.motorApiUrl}regulatory/showvehicleinfo`;
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(

@@ -32,6 +32,7 @@ export class CustomerRedirectComponent {
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params: any) => {
       this.encryptedValue = encodeURIComponent(params.params.e);
+      let productId = encodeURIComponent(params.params.productId);
       console.log("Encrypted Value",this.encryptedValue);
       if(this.encryptedValue!=undefined && this.encryptedValue!='undefined' && this.encryptedValue!=null){
         //this.encryptedValue = decodeURI(this.encryptedValue);
@@ -41,13 +42,16 @@ export class CustomerRedirectComponent {
         this.encryptedValue = this.encryptedValue.split("%3D").join("=")
         this.getDecryptData();
       }
+      else if(productId){
+        this.getGuestLogin(productId)
+      }
       else{
-        this.getGuestLogin()
+        this.getGuestLogin(null)
       }
     });
        
   }
-  getGuestLogin(){
+  getGuestLogin(productId){
     const urlLink = `${this.CommonApiUrl}authentication/login`;
     const reqData = {
       "LoginId": 'Guest',
@@ -79,8 +83,16 @@ export class CustomerRedirectComponent {
                 this.branchValue = branchList[0].BrokerBranchCode;
                 let branchData: any = this.branchList.find(ele => ele.BrokerBranchCode == this.branchValue);
                 let userDetails = JSON.parse(sessionStorage.getItem('Userdetails') as any);
-                userDetails.Result['ProductId'] = data.Result.BrokerCompanyProducts[0].ProductId;
-                userDetails.Result['ProductName'] = data.Result.BrokerCompanyProducts[0].ProductName;
+                if(productId){
+                    let productList = data.Result.BrokerCompanyProducts;
+                    userDetails.Result['ProductId'] = productList.filter(ele=>ele.ProductId==String(productId))[0]?.ProductId;
+                    userDetails.Result['ProductName'] = productList.filter(ele=>ele.ProductId==String(productId))[0]?.ProductName;
+                }
+                else{
+                  userDetails.Result['ProductId'] = data.Result.BrokerCompanyProducts[0].ProductId;
+                  userDetails.Result['ProductName'] = data.Result.BrokerCompanyProducts[0].ProductName;
+                }
+                
                 userDetails.Result['BrokerBranchCode'] = this.branchValue;
                 userDetails.Result['BranchCode'] = branchData.BranchCode;
                 userDetails.Result['CurrencyId'] = branchData?.CurrencyId;
@@ -90,7 +102,8 @@ export class CustomerRedirectComponent {
                 sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
                 sessionStorage.removeItem('customerReferenceNo');
                 //this.router.navigate(['/Home/customer/Client/client-details']);
-                this.router.navigate(['/customerProducts']);
+                if(productId) this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+                else this.router.navigate(['/customerProducts']);
               }
             }
             else{

@@ -1898,7 +1898,12 @@ getMotorUsageList(vehicleValue){
   getVehicleDetails(chassisNo){
     let ReqObj = {
       "ReqChassisNumber": chassisNo,
-      "ReqRegNumber": null
+      "ReqRegNumber": null,
+      "InsuranceId": this.insuranceId,
+      "BranchCode": this.branchCode,
+      "BrokerBranchCode": this.brokerbranchCode,
+      "ProductId": this.productId,
+      "CreatedBy": this.loginId
     }
     let urlLink = `${this.motorApiUrl}regulatory/showvehicleinfo`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
