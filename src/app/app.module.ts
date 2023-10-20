@@ -48,6 +48,7 @@ import { FooterComponent } from './layout/components/footer/footer.component';
 import { CustomerProductsComponent } from './modules/customer-products/customer-products.component';
 import { NgApexchartsModule } from 'ng-apexcharts'
 import { HttpXsrfInterceptor } from './HttpInterceptors/http-xsrf-interceptor.service'
+import { CookieService } from 'ngx-cookie-service'
 
 
 @NgModule({
@@ -66,10 +67,7 @@ import { HttpXsrfInterceptor } from './HttpInterceptors/http-xsrf-interceptor.se
 		BrowserModule,
 		FormsModule,
 		HttpClientModule,
-		HttpClientXsrfModule.withOptions({
-			cookieName: 'My-Xsrf-Cookie',
-			headerName: 'My-Xsrf-Header',
-		  }),
+		HttpClientXsrfModule,
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		NgSelectModule,
@@ -100,7 +98,7 @@ import { HttpXsrfInterceptor } from './HttpInterceptors/http-xsrf-interceptor.se
 		NgMaterialMultilevelMenuModule,
 		NgApexchartsModule 
 	],
-	providers: [ɵb,MultilevelMenuService,DatePipe, 
+	providers: [ɵb,MultilevelMenuService,DatePipe, CookieService,
 		{provide: LocationStrategy, useClass: HashLocationStrategy},
 		{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
 	AuthService,
