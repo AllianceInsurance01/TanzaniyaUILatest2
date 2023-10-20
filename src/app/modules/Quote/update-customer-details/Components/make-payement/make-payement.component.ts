@@ -4,6 +4,7 @@ import { SharedService } from '../../../../../shared/shared.service';
 import { UpdateCustomerDetailsComponent } from '../../update-customer-details.component';
 import { DatePipe } from '@angular/common';
 import * as Mydatas from '../../../../../app-config.json';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-make-payement',
@@ -71,7 +72,7 @@ export class MakePayementComponent implements OnInit {
   quoteUsertype: any;
   quoteBranchCode: any;
   loginType: any;
-  constructor(private router:Router,private sharedService: SharedService,
+  constructor(private router:Router,private sharedService: SharedService,private cookieService: CookieService,
     private updateComponent:UpdateCustomerDetailsComponent,private route:ActivatedRoute,
    private datePipe:DatePipe) {
     this.minDate = new Date();
@@ -144,6 +145,7 @@ export class MakePayementComponent implements OnInit {
   }
   onB2CRedirect(){
     sessionStorage.clear();
+    this.cookieService.delete('XSRF-TOKEN',"/","domain name",true,"None")
     this.router.navigate(['/b2clogin'])
   }
   getEditQuoteDetails(){

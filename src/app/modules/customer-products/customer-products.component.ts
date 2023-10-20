@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { LoginService } from '../login/login.service';
+import * as Mydatas from '../../app-config.json';
+import { SharedService } from 'src/app/shared/Services/shared.service';
+import { AuthService } from 'src/app/Auth/auth.service';
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-customer-products',
   templateUrl: './customer-products.component.html',
@@ -14,8 +18,12 @@ export class CustomerProductsComponent {
   isReadMoremarine: boolean = true;
   userDetails: any; userResponse: any;loginId: any;
   userType: any;userTypes: any; productList: any;
-
-  constructor(private router:Router){
+  public AppConfig: any = (Mydatas as any).default;
+  public ApiUrl1: any = this.AppConfig.ApiUrl1;
+  public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
+  loginType: any;
+  constructor(private router:Router,private SharedService: SharedService,private cookieService: CookieService, 
+    private authService: AuthService,private loginService: LoginService,){
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.userResponse = this.userDetails?.Result;
     this.loginId = this.userDetails.Result.LoginId;
@@ -23,9 +31,11 @@ export class CustomerProductsComponent {
     //this.userTypes = this.userDetails.Result.BranchCode;
     this.userTypes= this.userDetails.Result.BrokerBranchName
     this.productList = this.userDetails.Result.BrokerCompanyProducts;  
+    if(this.userDetails.Result.LoginType) this.loginType = this.userDetails.Result.LoginType;
   }
   onPress() {
         sessionStorage.clear();
+        this.cookieService.delete('XSRF-TOKEN',"/","domain name",true,"None")
         this.router.navigate(['./Home/login'])
   }
   onSelectProduct(item: any) {
@@ -73,5 +83,41 @@ export class CustomerProductsComponent {
   }
   readmoremarine() {
     this.isReadMoremarine = !this.isReadMoremarine
+  }
+  onLog(title) {
+    if (title === 'Log out') {
+      //sessionStorage.clear();
+      //this.authService.logout();
+
+      //this.router.navigate(['/login']);
+      let Req = {
+        "LoginId": this.loginId,
+        "Token": this.loginService.getToken()
+      };
+      const urlLink = `${this.CommonApiUrl}authentication/logout`;
+      this.SharedService.onPostMethodSync(urlLink, Req).subscribe(
+        (data: any) => {
+          let res: any = data;
+          console.log(data);
+            sessionStorage.clear();
+            this.cookieService.delete('XSRF-TOKEN',"/","domain name",true,"None")
+             this.authService.logout();
+             this.router.navigate(['/login']);
+            // if(this.typeValue=='b2c' || this.typeValue=='B2C' || this.loginType=='B2CFlow'){
+            //   this.router.navigate(['/b2clogin']);
+            // }
+            // else 
+          //
+        },
+        (err: any) => {
+          sessionStorage.clear();
+          this.cookieService.delete('XSRF-TOKEN',"/","domain name",true,"None")
+            this.authService.logout();
+            this.router.navigate(['/login']);
+          // console.log(err);
+        },
+        );
+
+    }
   }
 }

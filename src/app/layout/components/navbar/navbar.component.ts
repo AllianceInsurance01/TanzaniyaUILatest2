@@ -14,6 +14,7 @@ import { delay, filter } from 'rxjs';
 import { MatSidenav } from '@angular/material/sidenav';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject, Observable } from 'rxjs'
+import { CookieService } from 'ngx-cookie-service';
 @UntilDestroy()
 @Component({
   selector: 'app-navbar',
@@ -56,7 +57,7 @@ export class NavbarComponent implements OnInit {
     (window.innerWidth);
   loginType: any=null;
   constructor(
-    private authService: AuthService,
+    private authService: AuthService,private cookieService: CookieService,
     private service: HttpService,
     private loginService: LoginService,private observer: BreakpointObserver,
     private router: Router, private SharedService: SharedService
@@ -437,6 +438,7 @@ export class NavbarComponent implements OnInit {
         (data: any) => {
           let res: any = data;
           console.log(data);
+          this.cookieService.delete('XSRF-TOKEN',"/","domain name",true,"None")
             sessionStorage.clear();
              this.authService.logout();
              this.router.navigate(['/login']);
@@ -448,6 +450,7 @@ export class NavbarComponent implements OnInit {
         },
         (err: any) => {
           sessionStorage.clear();
+          this.cookieService.delete('XSRF-TOKEN',"/","domain name",true,"None")
             this.authService.logout();
             this.router.navigate(['/login']);
           // console.log(err);
@@ -535,6 +538,7 @@ export class NavbarComponent implements OnInit {
   }
   onLogout() {
     sessionStorage.clear();
+    this.cookieService.delete('XSRF-TOKEN',"/","domain name",true,"None")
     this.authService.logout();
     this.router.navigate(['/login']);
   }

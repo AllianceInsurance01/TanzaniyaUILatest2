@@ -20,6 +20,7 @@ import { LoginService } from '../modules/login/login.service';
 import { AuthService } from '../Auth/auth.service';
 import { SharedService } from '../shared/shared.service';
 import { LoginComponent } from '../modules/login/login.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
@@ -40,7 +41,7 @@ export class HttpInterceptorService implements HttpInterceptor {
   public Proceed =false;
 
   constructor(
-    public router: Router,
+    public router: Router,private cookieService:CookieService,
     private loader: CustomLoadingService,
     public dialog: MatDialog,
     private sharedService: SharedService,
@@ -109,6 +110,7 @@ export class HttpInterceptorService implements HttpInterceptor {
           if (result.isConfirmed) {
             //this.login(req?.body);
             sessionStorage.clear();
+            this.cookieService.delete('XSRF-TOKEN',"/","domain name",true,"None")
             if(this.router.url!='/b2clogin') this.router.navigate(['/login']);
         }
       });
@@ -278,7 +280,7 @@ onBranchProceed(){
     console.log(res);
     //console.log(ErrorMessage);
 
-    if (res?.ErrorMessage && res?.ErrorMessage.length > 0 || res?.Result?.ErrorMessage && res?.Result?.ErrorMessage.length > 0) {
+    if (res?.ErrorMessage && res?.ErrorMessage.length > 0) {
       const errorList: any[] = res.ErrorMessage || res?.Result?.ErrorMessage;
       console.log("ERRRRRRRR",errorList);
       let ulList:any='';

@@ -816,7 +816,12 @@ export class VehicleDetailsComponent implements OnInit {
       }
       let ReqObj = {
         "ReqChassisNumber": chassisNo,
-        "ReqRegNumber": regNo
+        "ReqRegNumber": regNo,
+        "InsuranceId": this.insuranceId,
+        "BranchCode": this.branchCode,
+        "BrokerBranchCode": this.updateComponent.brokerBranchCode,
+        "ProductId": this.productId,
+        "CreatedBy": this.loginId
       }
       let urlLink = `${this.motorApiUrl}regulatory/showvehicleinfo`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -854,7 +859,12 @@ export class VehicleDetailsComponent implements OnInit {
   getVehicleDetails(chassisNo){
     let ReqObj = {
       "ReqChassisNumber": chassisNo,
-      "ReqRegNumber": null
+      "ReqRegNumber": null,
+      "InsuranceId": this.insuranceId,
+      "BranchCode": this.branchCode,
+      "BrokerBranchCode": this.updateComponent.brokerBranchCode,
+      "ProductId": this.productId,
+      "CreatedBy": this.loginId
     }
     let urlLink = `${this.motorApiUrl}regulatory/showvehicleinfo`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(

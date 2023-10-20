@@ -83,6 +83,18 @@ export class VehicleWishListComponent implements OnInit {
   modifiedCustomer: boolean=true;
   customerReferenceNo: any;
   customerTypeError: boolean;
+  endorsementDate: any=null;
+  endorsementEffectiveDate: any=null;
+  endorsementRemarks: any=null;
+  endorsementType: any=null;
+  endorsementTypeDesc: any=null;
+  endtCategoryDesc: any=null;
+  endtCount: any=null;
+  endtPrevQuoteNo: any=null;
+  endtStatus: any=null;
+  endtPrevPolicyNo: any=null;
+  orginalPolicyNo: any=null;
+  isFinanceEndt: any=null;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -457,6 +469,23 @@ export class VehicleWishListComponent implements OnInit {
       if(this.customerDetails){refNo = this.customerDetails?.CustomerReferenceNo;
         IdNo = this.customerDetails?.IdNumber;
         regYear=this.customerDetails?.DobOrRegDate;IdType=this.customerDetails?.PolicyHolderType;};
+      if(this.endorsementSection){
+        let entry = this.customerData.filter(ele=>ele?.EndorsementDate!=undefined)
+        if(entry){
+          let details = entry[0];
+          console.log("Filtered Endorsement Set",entry)
+          this.endorsementDate = details?.EndorsementDate;
+          this.endorsementEffectiveDate = details?.EndorsementEffectiveDate;
+          this.endorsementRemarks = details?.EndorsementRemarks;
+          this.endorsementType = details?.EndorsementType;
+          this.endorsementTypeDesc = details?.EndorsementTypeDesc;
+          this.endtCategoryDesc = details?.EndtCategoryDesc;
+          this.endtCount = details?.EndtCount;
+          this.endtPrevQuoteNo = details?.EndtPrevQuoteNo;
+          this.endtStatus = details?.EndtStatus;this.orginalPolicyNo = details?.OrginalPolicyNo;
+          this.endtPrevPolicyNo = details?.EndtPrevPolicyNo;this.isFinanceEndt = details?.IsFinanceEndt;
+        }
+      }
     let ReqObj = {
       "BrokerBranchCode": brokerbranchCode,
       "AcExecutiveId": null,
@@ -544,18 +573,18 @@ export class VehicleWishListComponent implements OnInit {
       "TiraCoverNoteNo": this.vehicleDetails?.TiraCoverNoteNo,
       "EndorsementYn": this.vehicleDetails.EndorsementYn,
       "SaveOrSubmit": "Save",
-      "EndorsementDate": null,
-      "EndorsementEffectiveDate": null,
-      "EndorsementRemarks": null,
-      "EndorsementType": null,
-      "EndorsementTypeDesc": null,
-      "EndtCategoryDesc": null,
-      "EndtCount": null,
-      "EndtPrevPolicyNo": null,
-      "EndtPrevQuoteNo": null,
-      "EndtStatus": null,
-      "IsFinanceEndt": null,
-      "OrginalPolicyNo": null,
+      "EndorsementDate": this.endorsementDate,
+      "EndorsementEffectiveDate": this.endorsementEffectiveDate,
+      "EndorsementRemarks": this.endorsementRemarks,
+      "EndorsementType": this.endorsementType,
+      "EndorsementTypeDesc": this.endorsementTypeDesc,
+      "EndtCategoryDesc": this.endtCategoryDesc,
+      "EndtCount": this.endtCount,
+      "EndtPrevPolicyNo": this.endtPrevPolicyNo,
+      "EndtPrevQuoteNo": this.endtPrevQuoteNo,
+      "EndtStatus": this.endtStatus,
+      "IsFinanceEndt": this.isFinanceEndt,
+      "OrginalPolicyNo": this.orginalPolicyNo,
       "Scenarios": {
           "ExchangeRateScenario": {
               "OldAcccessoriesSumInsured": null,
@@ -1443,7 +1472,12 @@ export class VehicleWishListComponent implements OnInit {
               else{
                 let ReqObj = {
                   "ReqChassisNumber": chassisNo,
-                  "ReqRegNumber": regNo
+                  "ReqRegNumber": regNo,
+                  "InsuranceId": this.insuranceId,
+                  "BranchCode": this.branchCode,
+                  "BrokerBranchCode": this.updateComponent.brokerBranchCode,
+                  "ProductId": this.productId,
+                  "CreatedBy": this.loginId
                 }
                 let urlLink = `${this.motorApiUrl}regulatory/showvehicleinfo`;
                 this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(

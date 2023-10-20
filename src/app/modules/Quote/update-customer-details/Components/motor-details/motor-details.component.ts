@@ -388,7 +388,12 @@ onBodyTypeChange(type){
   getVehicleDetails(chassisNo,type){
     let ReqObj = {
       "ReqChassisNumber": chassisNo,
-      "ReqRegNumber": null
+      "ReqRegNumber": null,
+      "InsuranceId": this.insuranceId,
+      "BranchCode": this.branchCode,
+      "BrokerBranchCode": this.updateComponent.brokerBranchCode,
+      "ProductId": this.productId,
+      "CreatedBy": this.loginId
     }
     let urlLink = `${this.motorApiUrl}regulatory/showvehicleinfo`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
