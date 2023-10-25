@@ -274,7 +274,7 @@ onBodyTypeChange(type){
             let chassisNo = sessionStorage.getItem('editVehicleDetails');
             if(chassisNo){
               this.editSection = true;
-              this.getVehicleDetails(chassisNo,'edit');
+              this.getVehicleDetails('',chassisNo,'edit');
             }
             else{ this.editSection = false}
         }
@@ -359,7 +359,7 @@ onBodyTypeChange(type){
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         if(data.Result){
-              this.getVehicleDetails(this.chassisNo,'save');
+              this.getVehicleDetails(this.regNo,this.chassisNo,'save');
 
         }
         else  if(data.ErrorMessage.length!=0){
@@ -385,10 +385,10 @@ onBodyTypeChange(type){
       (err) => { },
     );
   }
-  getVehicleDetails(chassisNo,type){
+  getVehicleDetails(regNo,chassisNo,type){
     let ReqObj = {
       "ReqChassisNumber": chassisNo,
-      "ReqRegNumber": null,
+      "ReqRegNumber": regNo,
       "InsuranceId": this.insuranceId,
       "BranchCode": this.branchCode,
       "BrokerBranchCode": this.branchCode,
@@ -398,26 +398,17 @@ onBodyTypeChange(type){
     let urlLink = `${this.motorApiUrl}regulatory/showvehicleinfo`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
-      console.log(data);
         if(data.Result){
           let vehicleDetails:any = data?.Result;
           vehicleDetails['Vehicleid'] = sessionStorage.getItem('vehicleLength');
           vehicleDetails['Active'] = false;
           sessionStorage.removeItem('vehicleLength')
           let vehicles = JSON.parse(sessionStorage.getItem('vehicleDetailsList'));
-
-          console.log('VECHHHH',vehicles);
-          console.log('Vechile Details', vehicleDetails)
-          //console.log('update',this.updateComponent.CurrencyCode);
-          //console.log('updateaa',this.updateComponent.HavePromoCode);
-
           if(vehicles){
             vehicles.push(vehicleDetails);
             sessionStorage.setItem('vehicleDetailsList',JSON.stringify(vehicles));
-            //console.log('VECHHHHCCCCC',vehicles);
          }
           else{ 
-            console.log("vehicle details",vehicleDetails)
             vehicleDetails['Currency'] = this.updateComponent.CurrencyCode;
             vehicleDetails['ExchangeRate'] = this.updateComponent.exchangeRate;
             if(this.updateComponent.policyStartDate){
