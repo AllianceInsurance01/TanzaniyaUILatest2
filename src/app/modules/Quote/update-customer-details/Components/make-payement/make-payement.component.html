@@ -567,7 +567,7 @@
                             <div class="text-center mt-1">
                                 <button class="btn btn-danger" *ngIf="uploadSection && uploadDocList.length==0" (click)="uploadSection=!uploadSection;uploadDocList=[]">Cancel</button>&nbsp;
                                 <button class="btn btn-info"  *ngIf="!uploadSection && chequeSection && Fourth && uploadedDocList.length==0" (click)="onEnableUploadSection()">Upload Cheque</button>&nbsp;
-                                <button class="custom-btn btn-6 maan-button-data mx-2" [disabled]="uploadedDocList.length==0" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
+                                <button class="custom-btn btn-6 maan-button-data mx-2" [disabled]="chequeSection && uploadedDocList.length==0" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
                             </div>
                         </div>
                     </div>
