@@ -365,9 +365,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-center">
-                                <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple [routerLink]="['/Home/existingQuotes']">Make Payment</button>
-                            </div>
                         </div>
             
                     </div>
@@ -405,9 +402,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="text-center">
-                                <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
                             </div>
                         </div>
                     </div>
@@ -482,7 +476,7 @@
                                         <div>
                                             <div class="center">
                                                 <b class="text-dark" style="font-size:1rem">
-                                                    <i class="far fa-images"></i> Drag or Select a Cheque Leaf File</b>
+                                                    <i class="far fa-images"></i> Drag or Select a Cheque Leaf</b>
                                             </div>
                                         </div>
                                     </div>
@@ -567,7 +561,7 @@
                             <div class="text-center mt-1">
                                 <!-- <button class="btn btn-danger" *ngIf="uploadedDocList.length==0" (click)="uploadSection=!uploadSection;uploadDocList=[]">Cancel</button>&nbsp; -->
                                 <!-- <button class="btn btn-info"  *ngIf="!uploadSection && chequeSection && Fourth && uploadedDocList.length==0" (click)="onEnableUploadSection()">Upload Cheque</button>&nbsp; -->
-                                <button class="custom-btn btn-6 maan-button-data mx-2" [disabled]="chequeSection && uploadedDocList.length==0" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
+                               
                             </div>
                         </div>
                     </div>
@@ -629,9 +623,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-center">
-                                <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple [routerLink]="['/Home/existingQuotes']">Make Payment</button>
-                            </div>
                         </div>
                     </div>
                     <div class="card" *ngIf="Sixth" style="width: 100%;border: 2px solid #eaecf1;border-radius: 0.7rem;outline: none;box-sizing: border-box;transition: all .3s;height: auto;background: rgb(255,255,255);box-shadow: 1px 2px 2px #1f26875e;backdrop-filter: blur(18.5px);">
@@ -668,9 +659,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="text-center">
-                                <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
                             </div>
                         </div>
                     </div> 
@@ -1044,7 +1032,12 @@
 </div>
 <div class="text-center my-2 mt-3" >
     <!-- <button class="custom-btn btn-6 mx-2" matRipple>Download Form</button> -->
-    <button class="custom-btn btn-5 mx-2" *ngIf="(!policySection && !successSection)  || (!policySection && cancelEndorse && (IsChargeOrRefund=='REFUND' || IsChargeOrRefund=='CHARGE'))" matRipple (click)="ongetBack()" ><<&nbsp;Back</button>
+    <button class="custom-btn btn-5 mx-2" *ngIf="(!policySection && !successSection)  || (!policySection && cancelEndorse && (IsChargeOrRefund=='REFUND' || IsChargeOrRefund=='CHARGE'))" matRipple (click)="ongetBack()" ><<&nbsp;Back</button>&nbsp;
+    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="second && !policySection" style="width: 8rem;" matRipple [routerLink]="['/Home/existingQuotes']">Make Payment</button>
+    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="Third && !policySection" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>&nbsp;
+    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="Fourth && !policySection" [disabled]="chequeSection && uploadedDocList.length==0" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
+    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="Fifth && !policySection" style="width: 8rem;" matRipple [routerLink]="['/Home/existingQuotes']">Make Payment</button>
+    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="Sixth && !policySection" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
     <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="endorsementSection && (cancelEndorse && IsChargeOrRefund!='REFUND' && IsChargeOrRefund!='CHARGE')" matRipple [routerLink]="['/Home/policies/Endorsements']" routerLinkActive="router-link-active">Proceed</button>
     <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="checkRefundMandatories()" matRipple (click)="onCashPayment()">Submit</button>
 </div>

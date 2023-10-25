@@ -256,7 +256,7 @@ export class MakePayementComponent implements OnInit {
       (data: any) => {
           if(data?.Result){
             if(data?.Result?.CommmonDocument){
-              this.uploadedDocList = data?.Result?.CommmonDocument;
+              this.uploadedDocList = data?.Result?.CommmonDocument.filter(ele=>ele.DocumentId=='23');
             }
             
           }
