@@ -177,7 +177,7 @@ export class MakePayementComponent implements OnInit {
           imageUrl = res.target.result;
           this.imageUrl = imageUrl;
           this.uploadDocList.push({ 'url': element,'DocTypeId':'23','filename':element.name, 'JsonString': {} });
-
+          this.onFileUploadCommonList();
         }
 
     }
