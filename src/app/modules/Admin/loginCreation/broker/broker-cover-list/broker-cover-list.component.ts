@@ -12,7 +12,7 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 })
 export class BrokerCoverListComponent implements OnInit {
 
-  activeMenu:any="Branch";brokerId:any;
+  activeMenu:any="Cover";brokerId:any;
   branchValue:any; coverList:any[]=[];
   insuranceId:any;brokerLoginId:any;sectionValue:any="";
   public AppConfig: any = (Mydatas as any).default;
@@ -601,5 +601,6 @@ this.router.navigate(['/Admin/brokersList/newBrokerDetails/newBrokerCoverDetails
     if(this.activeMenu=='Branch') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerBranchList']);
     if(value=='Product') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerProductList']);
     if(value=='Cover') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerCoverList']);
+    if(value=='Deposit') this.router.navigate(['/Admin/brokersList/newBrokerDetails/depositMasterList']);
   }
 }

@@ -3,18 +3,18 @@ import { Router } from '@angular/router';
 import { SharedService } from '../../../../../shared/shared.service';
 import * as Mydatas from '../../../../../app-config.json';
 @Component({
-  selector: 'app-broker-branch-list',
-  templateUrl: './broker-branch-list.component.html',
-  styleUrls: ['./broker-branch-list.component.scss']
+  selector: 'app-depositmaster',
+  templateUrl: './depositmaster.component.html',
+  styleUrls: ['./depositmaster.component.scss']
 })
-export class BrokerBranchListComponent implements OnInit {
+export class DepositMasterComponent implements OnInit {
 
-  activeMenu:any="Branch";brokerId:any;
+  activeMenu:any="Deposit";brokerId:any;
   insuranceId:any;brokerLoginId:any;brokerCompanyYN:any;
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
-  branchData: any[]=[];branchHeader:any[]=[];agencyCode:any;
+  branchData: any[]=[];branchHeader:any[]=[];agencyCode:any;branchsHeader:any[]=[];branchDatas:any[]=[];
   constructor(private router:Router,private sharedService: SharedService,) {
     let brokerObj = JSON.parse(sessionStorage.getItem('brokerConfigureDetails'));
     if(brokerObj){
@@ -25,38 +25,41 @@ export class BrokerBranchListComponent implements OnInit {
       if(brokerObj.brokerCompanyYN) this.brokerCompanyYN = brokerObj.brokerCompanyYN;
     }
     this.brokerId = this.brokerLoginId;
-    this.getBrokerBranchList();
+    
    }
 
   ngOnInit(): void {
+    
+    this.branchsHeader = [
+                    { key: 'CbcNo', display: 'CBC NO' },
+                    { key: 'BrokerName', display: 'Broker' },
+                    { key: 'DepositAmount', display: 'Deposit Amount' },
+                    { key: 'DepositUtilised', display: 'Utilised Amount' },
+                    { key: 'RefundAmt', display: 'Refund Amount' },
+                    { key: 'Status', display: 'Status' },
+                    {
+                      key: 'actions',
+                      display: 'Action',
+                      config: {
+                        isEdit: true,
+                      },
+                    },
+            
+                  ];
+   this.getBrokersBranchList();
   }
   getBackPage(){
     this.router.navigate(['/Admin/brokersList/newBrokerDetails']);
   }
-  getBrokerBranchList(){
-    let ReqObj = {
-      "LoginId": this.brokerLoginId
-    }
-    let urlLink = `${this.CommonApiUrl}admin/getallbrokercompanybranch`;
-    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+  getBrokersBranchList(){
+    this.branchDatas=[];
+    let urlLink = `${this.CommonApiUrl}deposit/get/CbcbyBrokerId/${this.brokerLoginId}`;
+    this.sharedService.onGetMethodSync(urlLink).subscribe(
       (data: any) => {
         console.log(data);
-        if(data.Result){
-          this.branchHeader = [
-            { key: 'BrokerBranchName', display: 'Branch Name' },
-            { key: 'EffectiveDateStart', display: 'Effective Date' },
-            { key: 'Mobile', display: 'Mobile No' },
-            { key: 'Status', display: 'Status' },
-            {
-              key: 'actions',
-              display: 'Action',
-              config: {
-                isEdit: true,
-              },
-            },
-
-          ];
-          this.branchData = data?.Result;
+        if(data.Message!='FAILED'){
+          this.branchDatas = data?.Result;
+          console.log('HHHHHHHHHHHHHHHHH',this.branchDatas);
         }
       },
       (err) => { },
@@ -75,23 +78,21 @@ export class BrokerBranchListComponent implements OnInit {
     sessionStorage.removeItem('editBranchId');
     this.router.navigate(['/Admin/brokersList/newBrokerDetails/newBrokerBranchDetails']);
   }
-  onEditBranch(rowData){
+  onEditData(rowData){
     let ReqObj ={
       "loginId": this.brokerLoginId,
-      "brokerId": this.agencyCode,
-      "insuranceId": this.insuranceId,
-      "brokerCompanyYN": this.brokerCompanyYN,
-      "BranchCode": rowData.BrokerBranchCode
+      'CbcNo':rowData.CbcNo,
+      'BrokerName':rowData.BrokerName,
     }
-    sessionStorage.setItem('brokerConfigureDetails',JSON.stringify(ReqObj));
-    sessionStorage.setItem('editBranchId',rowData.BranchCode);
-    this.router.navigate(['/Admin/brokersList/newBrokerDetails/newBrokerBranchDetails']);
+    sessionStorage.setItem('CbcDetails',JSON.stringify(ReqObj));
+    this.router.navigate(['/Admin/brokersList/newBrokerDetails/depositdetails'])
+    //sessionStorage.setItem('editBranchId',rowData.BranchCode);
+   
   }
   onRedirect(value){
     this.activeMenu = value;
     if(this.activeMenu=='Branch') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerBranchList']);
     if(value=='Product') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerProductList']);
     if(value=='Cover') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerCoverList']);
-    if(value=='Deposit') this.router.navigate(['/Admin/brokersList/newBrokerDetails/depositMasterList']);
   }
 }

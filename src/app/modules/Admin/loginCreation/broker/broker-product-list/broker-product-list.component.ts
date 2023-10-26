@@ -321,7 +321,7 @@ export class BrokerProductListComponent implements OnInit {
     if(this.activeMenu=='Branch') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerBranchList']);
     if(value=='Product') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerProductList']);
     if(value=='Cover') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerCoverList']);
-    if(value=='Deposit') this.router.navigate(['/Admin/depositMaster']);
+    if(value=='Deposit') this.router.navigate(['/Admin/brokersList/newBrokerDetails/depositMasterList']);
   }
   onEditProduct(rowData:any){
     let ReqObj = {

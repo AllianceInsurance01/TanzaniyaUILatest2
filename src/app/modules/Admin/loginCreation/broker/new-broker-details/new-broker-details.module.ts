@@ -24,6 +24,10 @@ import { NewBrokercoverDetailsComponent } from '../new-brokercover-details/new-b
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { EndrosementBrokerComponent } from '../endrosementbroker/endrosementbroker.component';
 import { HttpInterceptorService } from 'src/app/HttpInterceptors/http-interceptor.service';
+import { DepositMasterComponent } from '../DepositMaster/depositmaster.component';
+import { DepositAddNewComponent } from '../depositaddnew/depositaddnew.component';
+// import { DepositDetailsComponent } from '../DepositDetails/depositdetails.component';
+
 //import { HttpInterceptorService } from '../../../../../HttpInterceptors/http-interceptor.service';
 
 
@@ -40,7 +44,10 @@ import { HttpInterceptorService } from 'src/app/HttpInterceptors/http-intercepto
     BrokerProductListComponent,
     BrokerCoverListComponent,
     BrokerdetailsConfigureComponent,
-    EndrosementBrokerComponent
+    EndrosementBrokerComponent,
+    DepositMasterComponent,
+    DepositAddNewComponent
+    // DepositDetailsComponent,
   ],
   imports: [
     CommonModule,
