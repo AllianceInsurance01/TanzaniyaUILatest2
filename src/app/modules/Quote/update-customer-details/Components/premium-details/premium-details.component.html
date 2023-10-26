@@ -1037,8 +1037,8 @@
                             </div>
                         </div>
                         <ng-container *ngIf="uploadListDoc.length !=0">
-                            <table class="table table-border-1ed" id="capture_table" style="position: relative;
-                            top: 2rem;width:auto !important">
+                            <table class="table table-border-1ed tableclasses" id="capture_table" style="position: relative;
+                            top: 2rem;"><!--width:auto !important-->
                                 <thead style="display:none;">
                                     <tr>
                                         <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
@@ -1057,7 +1057,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let document of uploadListDoc;let i=index" class="tableclass" style="display:flex;flex-direction: column;"><!--width:250px;-->
+                                    <tr *ngFor="let document of uploadListDoc;let i=index" class="tableclasses" style="display:flex;flex-direction: column;"><!--width:250px;-->
                                         <div class="row">
                                             <div class="col-6">
                                                 S.No

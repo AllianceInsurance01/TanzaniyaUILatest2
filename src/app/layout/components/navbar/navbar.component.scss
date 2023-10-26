@@ -206,6 +206,9 @@ min-height: 100%;
   position: relative;
   right: 3rem;
 }
+.dropclass{
+  padding-bottom: 0px !important;
+}
 .responsive{
   display: none;
 }
@@ -236,10 +239,15 @@ display: block;
   }
   .btn-header{
       position: relative !important;
-      right: 21.7rem !important;
+      right:0px !important;
       top: 0.7rem !important;
-      width: 75px !important;
-      height: 24px !important;
+      width:max-content !important;
+      height:28px !important;
+      //width: 130px !important;
+      //height: 24px !important;
+  }
+  .dropclass{
+    padding-bottom:15px !important;
   }
   .fa{
       padding: 3px!important;
@@ -889,6 +897,9 @@ and (max-device-width : 1024px) {
         }
         .display4{
           display:block !important;
+              }
+              ::ng-deep .navbar-expand-sm .navbar-nav{
+                flex-wrap: wrap !important;
               }
         
 }

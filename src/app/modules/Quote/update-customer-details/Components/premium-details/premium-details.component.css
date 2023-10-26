@@ -114,12 +114,19 @@ width:auto !important;
     #capture_table{
         text-align: center !important;
     }
+    .tableclasses{
+        width:270px !important;
+    }
   
   }
 
   @media screen and (min-width: 280px) and (max-width: 380px) {
+    .tableclasses{
+        width:250px !important;
+    }
     .tableclass{
-        width:auto !important;
+        width:250px !important;
+        /*width:calc(100% - 50px) !important;*/
         /*220px*/
     }
     #capture_table{
@@ -156,6 +163,9 @@ width:auto !important;
     .tableclass{
     width:calc(100% - 65px)!important;
     }
+    .tableclasses{
+        width:auto !important;
+    }
    }
    @media only screen 
    and (min-device-width : 862px) 
@@ -168,6 +178,9 @@ width:auto !important;
     }
     .tableclass{
         width:calc(100% - 65px)!important;
+        }
+        .tableclasses{
+            width:auto !important;
         }
    }
 
