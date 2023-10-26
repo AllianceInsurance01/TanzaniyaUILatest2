@@ -33,7 +33,8 @@ export class ReportComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   public motorApiUrl:any = this.AppConfig.MotorApiUrl;
-  Currency:any;
+  Currency:any;brokerList:any[]=[];
+  brokerCode: any;
   // @Output('Currency') Currency:any='TZS';
 
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe) {
@@ -49,12 +50,14 @@ export class ReportComponent implements OnInit {
     this.PackageYn= this.userDetails.Result.PackageYn
     this.insuranceId = this.userDetails.Result.InsuranceId;
     this.loginType = this.userDetails.Result.LoginType;
+    if(this.userType!='Issuer')this.brokerCode = this.loginId;
    }
 
   ngOnInit(): void {
 
     if(this.insuranceId!=null){
       this.getBranchList();
+      
     }
     this.quoteData =  [
       { key: 'PolicyNo', display: 'Policy No' },
@@ -116,6 +119,7 @@ export class ReportComponent implements OnInit {
         this.branchList = data?.Result;
         if(!this.branchValue){ this.branchValue = "";
          }
+
       }
     },
     (err) => { },
@@ -158,6 +162,23 @@ getsearch(){
 }
  
 getQuotes(){
+  let brokertype;let brokertypes;let brokerCode;
+  if(this.brokerCode){
+    if(this.brokerCode =='99999'){
+      brokertype = "99999";
+      brokerCode = "";
+    }
+    else{
+      brokertypes=this.brokerList.filter(ele => ele.Code == this.brokerCode)
+      if(brokertypes){
+      brokertype = brokertypes[0].Type;
+      console.log('brokerrs',brokertypes,brokertype)
+    }
+    brokerCode=this.brokerCode;
+    }
+  }
+  
+  
   this.customerData=[];
   let startdate=this.datePipe.transform(this.startdate, "dd/MM/yyyy");
   let enddate=this.datePipe.transform(this.enddate, "dd/MM/yyyy");
@@ -167,6 +188,8 @@ getQuotes(){
     "LoginId": this.loginId,
     "StartDate": startdate,
     "ProductId": this.productId,
+    "Code":brokerCode,
+    "UserType":brokertype
   }
   let urlLink = `${this.CommonApiUrl}pdf/getPremiumReportDetails`;
 this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -178,5 +201,48 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
   },
   (err) => { },
 );
+}
+getBrokerList(){
+  let appId = "1",loginId="",brokerbranchCode="";
+  if(this.userType!='Issuer'){
+    appId = "1"; loginId = this.brokerCode;
+    brokerbranchCode = this.brokerbranchCode;
+  }
+  else{
+    appId = this.loginId;
+    loginId=this.brokerCode;
+    brokerbranchCode = '';
+  }
+  let ReqObj = {
+    "ProductId": this.productId,
+    "InsuranceId": this.insuranceId,
+    "LoginId": loginId,
+    "ApplicationId":appId,
+    "UserType":this.userType,
+    "BranchCode": this.branchValue,
+    "Status": "Y",
+  }
+  let urlLink = `${this.CommonApiUrl}api/portfoliobrokerdropdown`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      if(data.Result){
+        let defaultObj = [{"Code":"99999",CodeDesc:"ALL",Type:"99999"}];
+        this.brokerList = defaultObj.concat(data.Result);
+        if(this.brokerList.length==0){this.brokerCode = ''; this.brokerList = []}
+        else this.brokerCode = this.loginId;
+        if(this.brokerCode!=null && this.brokerCode!=''){
+          if(!this.brokerList.some(ele=>ele.Code==this.brokerCode)) this.brokerCode = this.brokerList[0].Code;
+          this.getQuotes();
+        }
+        else{
+          this.brokerCode = this.brokerList[0].Code;
+          this.getQuotes();
+        }
+      }
+      
+    },
+    (err) => { },
+  );
+
 } 
 }
