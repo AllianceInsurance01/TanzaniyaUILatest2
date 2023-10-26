@@ -1475,7 +1475,7 @@ export class VehicleWishListComponent implements OnInit {
                   "ReqRegNumber": regNo,
                   "InsuranceId": this.insuranceId,
                   "BranchCode": this.branchCode,
-                  "BrokerBranchCode": this.updateComponent.brokerBranchCode,
+                  "BrokerBranchCode": this.brokerBranchCode,
                   "ProductId": this.productId,
                   "CreatedBy": this.loginId
                 }

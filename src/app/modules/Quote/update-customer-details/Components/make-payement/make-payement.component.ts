@@ -5,6 +5,8 @@ import { UpdateCustomerDetailsComponent } from '../../update-customer-details.co
 import { DatePipe } from '@angular/common';
 import * as Mydatas from '../../../../../app-config.json';
 import { CookieService } from 'ngx-cookie-service';
+import { ViewDocumnetDetailsComponent } from 'src/app/shared/view-documnet-details/view-documnet-details.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-make-payement',
@@ -72,7 +74,13 @@ export class MakePayementComponent implements OnInit {
   quoteUsertype: any;
   quoteBranchCode: any;
   loginType: any;
-  constructor(private router:Router,private sharedService: SharedService,private cookieService: CookieService,
+  imageUrl: any;
+  uploadDocList: any[]=[];
+  uploadSection: boolean=false;
+  commonDocTypeList: any[]=[];
+  chequeSection: boolean;
+  uploadedDocList: any[]=[];
+  constructor(private router:Router,public dialogService: MatDialog,private sharedService: SharedService,private cookieService: CookieService,
     private updateComponent:UpdateCustomerDetailsComponent,private route:ActivatedRoute,
    private datePipe:DatePipe) {
     this.minDate = new Date();
@@ -147,6 +155,211 @@ export class MakePayementComponent implements OnInit {
     sessionStorage.clear();
     this.cookieService.delete('XSRF-TOKEN',"/","domain name",true,"None")
     this.router.navigate(['/b2clogin'])
+  }
+  onEnableUploadSection(){
+    this.uploadDocList = [];
+    this.uploadSection = true;
+  }
+  onUploadDocuments(target:any,fileType:any,type:any,uploadType:any){
+    console.log("Event ",target);
+    let event:any=null;
+    if(uploadType=='drag') event = target
+    else event = target.target.files;
+    let fileList = event;
+    for (let index = 0; index < fileList.length; index++) {
+      const element = fileList[index];
+      var reader:any = new FileReader();
+      reader.readAsDataURL(element);
+        var filename = element.name;
+
+        let imageUrl: any;
+        reader.onload = (res: { target: { result: any; }; }) => {
+          imageUrl = res.target.result;
+          this.imageUrl = imageUrl;
+          this.uploadDocList.push({ 'url': element,'DocTypeId':'23','filename':element.name, 'JsonString': {} });
+          this.onFileUploadCommonList();
+        }
+
+    }
+    console.log("Final File List",this.uploadDocList)
+  }
+  onFileUploadCommonList(){
+
+    let docList = this.uploadDocList;
+    if(docList.length!=0){
+      let i=0;
+      for(let doc of docList){
+        let ReqObj={
+          "QuoteNo":this.quoteNo,
+          "Id":"99999",
+          "IdType":"Common" ,
+          "SectionId":"99999" ,
+          "InsuranceId": this.insuranceId,
+          "DocumentId":doc.DocTypeId,
+          "RiskId":"99999",
+          "LocationId":"99999",
+          "LocationName":"Common" ,
+          "ProductId":this.productId,
+          "FileName":doc.filename,
+          "OriginalFileName":doc.filename,
+          "UploadedBy":this.loginId
+        }
+        // if(this.endorsementSection && this.enableDocumentDetails){
+        //   ReqObj['EndtStatus'] = this.quoteDetails?.EndtStatus;
+        //   ReqObj['EndorsementTypeDesc'] = this.quoteDetails?.EndtTypeDesc;
+        //   ReqObj['EndorsementType'] = this.quoteDetails?.EndtTypeId;
+        //   ReqObj['EndtCategoryDesc'] = this.quoteDetails?.Endtcategdesc;
+        //   ReqObj['EndtCount'] = this.quoteDetails?.Endtcount;
+        //   ReqObj['EndtPrevPolicyNo'] = this.quoteDetails?.Endtprevpolicyno;
+        //   ReqObj['EndtPrevQuoteNo'] = this.quoteDetails?.Endtprevquoteno;
+        // }
+        let urlLink = `${this.CommonApiUrl}document/upload`;
+        this.sharedService.onPostDocumentMethodSync(urlLink, ReqObj,doc.url).subscribe(
+          (data: any) => {
+            if(data.ErrorMessage){
+              for(let entry of data.ErrorMessage){
+                // let type: NbComponentStatus = 'danger';
+                // const config = {
+                //   status: type,
+                //   destroyByClick: true,
+                //   duration: 4000,
+                //   hasIcon: true,
+                //   position: NbGlobalPhysicalPosition.TOP_RIGHT,
+                //   preventDuplicates: false,
+                // };
+                // this.toastrService.show(
+                //   entry.Field,
+                //   entry.Message,
+                //   config);
+              }
+            }
+            else if(data?.Result){
+                i+=1;
+                if(i==docList.length){
+                  this.uploadDocList = [];
+                  this.uploadSection = false;
+                  this.getUploadedDocList(null,-1);
+                }
+              }
+            },
+            (err) => { },
+          );
+      }
+    }
+  }
+  getUploadedDocList(vehicleData:any,index:any){
+    let ReqObj = {
+      "QuoteNo":  this.quoteNo
+    }
+    let urlLink = `${this.CommonApiUrl}document/getdoclist`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+          if(data?.Result){
+            if(data?.Result?.CommmonDocument){
+              this.uploadedDocList = data?.Result?.CommmonDocument.filter(ele=>ele.DocumentId=='23');
+            }
+            
+          }
+        },
+        (err) => { },
+      );
+  }
+  onViewCommonDocument(index)
+  {
+    let entry = this.uploadedDocList[index];
+    let ReqObj = {
+      "Id": entry.Id,
+      "QuoteNo": this.quoteNo,
+      "UniqueId": entry.UniqueId
+  }
+  let urlLink = `${this.CommonApiUrl}document/getcompressedimage`;
+  this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+    (data:any) => {
+      console.log(data);
+      const dialogRef = this.dialogService.open(ViewDocumnetDetailsComponent,{
+        data: {
+          title: data.Result.OrginalFileName,
+               imageUrl: data.Result.ImgUrl
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+    },
+    (err) => { },
+  );
+  }
+  onDeleteCommonDocument(index){
+    let ReqObj = {
+      "Id": this.uploadedDocList[index].Id,
+      "QuoteNo": this.quoteNo,
+      "UniqueId": this.uploadedDocList[index].UniqueId
+    }
+    let urlLink = `${this.CommonApiUrl}document/delete`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+            if(data.ErrorMessage.length!=0){
+              for(let entry of data.ErrorMessage){
+                // let type: NbComponentStatus = 'danger';
+                // const config = {
+                //   status: type,
+                //   destroyByClick: true,
+                //   duration: 4000,
+                //   hasIcon: true,
+                //   position: NbGlobalPhysicalPosition.TOP_RIGHT,
+                //   preventDuplicates: false,
+                // };
+                // this.toastrService.show(
+                //   entry.Field,
+                //   entry.Message,
+                //   config);
+              }
+            }
+            else if(data?.Result){
+              // let type: NbComponentStatus = 'success';
+              //   const config = {
+              //     status: type,
+              //     destroyByClick: true,
+              //     duration: 4000,
+              //     hasIcon: true,
+              //     position: NbGlobalPhysicalPosition.TOP_RIGHT,
+              //     preventDuplicates: false,
+              //   };
+              // this.toastrService.show(
+              //   "Delete",
+              //   "Document Deleted Successfully",
+              //   config);
+                this.getUploadedDocList(null,-1);
+            }
+          },
+          (err) => { },
+        );
+  }
+  onCommonDocumentDownload(index){
+    let entry = this.uploadedDocList[index];
+    let ReqObj = {
+      "Id": entry.Id,
+      "QuoteNo": this.quoteNo,
+      "UniqueId": entry.UniqueId
+    }
+    let urlLink = `${this.CommonApiUrl}document/getoriginalimage`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', data?.Result?.ImgUrl);
+        link.setAttribute('download', data?.Result?.OriginalFileName);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    },
+      (err) => { },
+    );
+  }
+  onDeleteDocument(index:any) {
+          this.uploadDocList.splice(index,1);
   }
   getEditQuoteDetails(){
     let ReqObj = {
@@ -406,6 +619,8 @@ export class MakePayementComponent implements OnInit {
         this.activeMenu = this.Menu;
         this.onCashPayment();
     }
+    this.payAmount = this.totalPremium;
+    this.CommaFormatted();
   }
   getPaymentTypeList(){
     let ReqObj = {
@@ -421,10 +636,33 @@ export class MakePayementComponent implements OnInit {
         console.log(data);
         if(data.Result){
           this.paymentTypeList = data.Result;
+          if(this.paymentTypeList.some(ele=>ele.Code=='2')){
+            this.getCommonDocTypeList();
+            this.getUploadedDocList(null,-1);
+          }
         } 
       },
       (err) => { },
       );
+  }
+  getCommonDocTypeList(){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId,
+      "ProductId":this.productId,
+      "SectionId":"99999"
+    }
+    let urlLink = `${this.CommonApiUrl}document/dropdown/doctypes`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+           this.commonDocTypeList = data.Result;
+          if(this.commonDocTypeList.some(ele=>ele.Code=='23')){this.chequeSection=true;}
+           
+        }
+      },
+      (err) => { },
+    );
+
   }
   onCashPayment(){
     let chequeDate = "";let amount=this.totalPremium;

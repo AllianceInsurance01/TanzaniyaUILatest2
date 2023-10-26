@@ -365,9 +365,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-center">
-                                <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple [routerLink]="['/Home/existingQuotes']">Make Payment</button>
-                            </div>
                         </div>
             
                     </div>
@@ -406,9 +403,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-center">
-                                <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
-                            </div>
                         </div>
                     </div>
                     <div class="card" *ngIf="Fourth" style="width: 100%;border: 2px solid #eaecf1;border-radius: 0.7rem;outline: none;box-sizing: border-box;transition: all .3s;height: auto;background: rgb(255,255,255);box-shadow: 1px 2px 2px #1f26875e;backdrop-filter: blur(18.5px);">
@@ -424,21 +418,23 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-12 spancommon span_font_size" style="color: #0056b3!important;">
+                                <div class="col-8 spancommon span_font_size" style="color: #0056b3!important;">
                                     <b>Payment Using Cheque Transaction</b>
                                 </div>
+                                
                             </div>
+                            
                             <div class="row">
                                 <div class="col-md-6 col-lg-6 col-xl-6">
                                     <div class="input-control-container">
-                                        <label class="input-form-label">Bank Name</label>
+                                        <label class="input-form-label">Bank Name<span class="text-danger">*</span></label>
                                         <ng-select class="input-form-select" appendTo="body" [items]="bankList"  [(ngModel)]="bankName" bindValue="Code" bindLabel="CodeDesc">
                                         </ng-select>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-xl-6">
                                     <div class="input-control-container">
-                                        <label class="input-form-label">MICR No</label>
+                                        <label class="input-form-label">MICR No<span class="text-danger">*</span></label>
                                         <div class="input-form-box">
                                             <input type="text" [(ngModel)]="micrNo"  maxlength="100" class="input-form-control without-icon">
                                         </div>
@@ -446,7 +442,7 @@
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-xl-6">
                                     <div class="input-control-container">
-                                        <label class="input-form-label">Cheque No</label>
+                                        <label class="input-form-label">Cheque No<span class="text-danger">*</span></label>
                                         <div class="input-form-box">
                                             <input type="text" [(ngModel)]="chequeNo" maxlength="20" class="input-form-control without-icon">
                                         </div>
@@ -454,7 +450,7 @@
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-xl-6">
                                     <div class="input-control-container">
-                                        <label class="input-form-label">Cheque Date</label>
+                                        <label class="input-form-label">Cheque Date<span class="text-danger">*</span></label>
                                         <mat-form-field appearance="fill">
                                             <!-- <mat-label>Departure Date<span class="text-danger">*</span></mat-label> -->
                                             <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="chequeDate" [ngModelOptions]="{standalone: true}">
@@ -465,15 +461,107 @@
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-xl-6">
                                     <div class="input-control-container">
-                                        <label class="input-form-label">Amount</label>
+                                        <label class="input-form-label">Amount<span class="text-danger">*</span></label>
                                         <div class="input-form-box">
-                                            <input type="text" [(ngModel)]="payAmount"  maxlength="50" class="input-form-control without-icon">
+                                            <input type="text" [(ngModel)]="payAmount" (keydown)="onAmountChange($event)" (keyup)="CommaFormatted()"  maxlength="50" class="input-form-control without-icon">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="row" *ngIf="uploadedDocList.length==0">
+                                <div class="col-12 col-md-6 col-lg-6 offset-md-3 offset-lg-3">
+                                    <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct','select')" #doc>
+                                    <div class="imag-card my-3" style="width:400px !important;" appDragDropFileUpload (fileDropped)="onUploadDocuments($event,null,'direct','drag')" (click)="doc.click()">
+                                        <div>
+                                            <div class="center">
+                                                <b class="text-dark" style="font-size:1rem">
+                                                    <i class="far fa-images"></i> Drag or Select a Cheque Leaf</b>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-center">
-                                <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
+                            <ng-container *ngIf="uploadDocList.length !=0">
+                                <table class="table" id="capture_table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                            <th scope="col"><span class="spancommon">FileName</span></th>
+                                            <!-- <th scope="col"><span class="spancommon">Document Type</span></th> -->
+                                            <th scope="col"><span class="spancommon">Delete</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let document of uploadDocList;let i=index">
+                                            <th scope="row">{{i+1}}</th>
+                                            <td><span class="spancommon">{{document.filename}}</span></td>
+                                            <!-- <td>
+                                                <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.DocTypeId" [items]="commonDocTypeList" bindValue="Code" bindLabel="CodeDesc">
+                                                </ng-select>
+                                            </td> -->
+                                            <td>
+                                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteDocument(i)"><i
+                                                        class="fa fa-trash"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <!-- <div class="text-center mb-2 mt-1">
+                                    <button class=" btn btn-success" (click)="onFileUploadCommonList()"><span style="position:relative;bottom:0.22rem">Upload</span></button>
+                                </div> -->
+                            </ng-container>
+                            <ng-container *ngIf="uploadedDocList.length !=0">
+                                <div class="maan-grid-item-title">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <span class="mx-1">
+                                                <i class="fas fa-book mx-1"></i>
+                                            </span>
+                                            <span class="spancommon span_font_size">Uploaded Cheque</span>
+                                        </div>
+                                        <div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="table" id="capture_table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                            <th scope="col"><span class="spancommon">FileName</span></th>
+                                            <!-- <th scope="col"><span class="spancommon">Document Type</span></th> -->
+                                            <th scope="col"><span class="spancommon">View</span></th>
+                                            <th scope="col" *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)"><span class="spancommon" >Delete</span></th>
+                                            <th scope="col"><span class="spancommon">Download</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let document of uploadedDocList;let i=index">
+                                            <th scope="row"><span class="spancommon span_font_size">{{i+1}}</span></th>
+                                            <td><span class="spancommon span_font_size">{{document.OriginalFileName}}</span></td>
+                                            <!-- <td>
+                                                <ng-select class="input-form-select" appendTo="body" disabled [(ngModel)]="document.DocumentId" [items]="commonDocTypeList" bindValue="Code" bindLabel="CodeDesc">
+                                                </ng-select>
+                                            </td> -->
+                                            <td>
+                                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewCommonDocument(i)"><i class="fa fa-eye"></i></a>
+                                            </td>
+                                            <td>
+                                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete" (click)="onDeleteCommonDocument(i)"><i
+                                                        class="fa fa-trash"></i></a>
+                                            </td>
+                                            <td>
+                                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onCommonDocumentDownload(i)"><i
+                                                        class="fa fa-download"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </ng-container>
+                            <div class="text-center mt-1">
+                                <!-- <button class="btn btn-danger" *ngIf="uploadedDocList.length==0" (click)="uploadSection=!uploadSection;uploadDocList=[]">Cancel</button>&nbsp; -->
+                                <!-- <button class="btn btn-info"  *ngIf="!uploadSection && chequeSection && Fourth && uploadedDocList.length==0" (click)="onEnableUploadSection()">Upload Cheque</button>&nbsp; -->
+                               
                             </div>
                         </div>
                     </div>
@@ -535,9 +623,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-center">
-                                <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple [routerLink]="['/Home/existingQuotes']">Make Payment</button>
-                            </div>
                         </div>
                     </div>
                     <div class="card" *ngIf="Sixth" style="width: 100%;border: 2px solid #eaecf1;border-radius: 0.7rem;outline: none;box-sizing: border-box;transition: all .3s;height: auto;background: rgb(255,255,255);box-shadow: 1px 2px 2px #1f26875e;backdrop-filter: blur(18.5px);">
@@ -574,9 +659,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="text-center">
-                                <button class="custom-btn btn-6 maan-button-data mx-2" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
                             </div>
                         </div>
                     </div> 
@@ -950,7 +1032,12 @@
 </div>
 <div class="text-center my-2 mt-3" >
     <!-- <button class="custom-btn btn-6 mx-2" matRipple>Download Form</button> -->
-    <button class="custom-btn btn-5 mx-2" *ngIf="(!policySection && !successSection)  || (!policySection && cancelEndorse && (IsChargeOrRefund=='REFUND' || IsChargeOrRefund=='CHARGE'))" matRipple (click)="ongetBack()" ><<&nbsp;Back</button>
+    <button class="custom-btn btn-5 mx-2" *ngIf="(!policySection && !successSection)  || (!policySection && cancelEndorse && (IsChargeOrRefund=='REFUND' || IsChargeOrRefund=='CHARGE'))" matRipple (click)="ongetBack()" ><<&nbsp;Back</button>&nbsp;
+    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="second && !policySection" style="width: 8rem;" matRipple [routerLink]="['/Home/existingQuotes']">Make Payment</button>
+    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="Third && !policySection" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>&nbsp;
+    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="Fourth && !policySection" [disabled]="chequeSection && uploadedDocList.length==0" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
+    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="Fifth && !policySection" style="width: 8rem;" matRipple [routerLink]="['/Home/existingQuotes']">Make Payment</button>
+    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="Sixth && !policySection" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
     <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="endorsementSection && (cancelEndorse && IsChargeOrRefund!='REFUND' && IsChargeOrRefund!='CHARGE')" matRipple [routerLink]="['/Home/policies/Endorsements']" routerLinkActive="router-link-active">Proceed</button>
     <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="checkRefundMandatories()" matRipple (click)="onCashPayment()">Submit</button>
 </div>

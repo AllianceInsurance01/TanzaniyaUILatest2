@@ -336,6 +336,7 @@ export class PremiumDetailsComponent implements OnInit {
       (data: any) => {
         if(data.Result){
            this.commonDocTypeList = data.Result;
+           this.commonDocTypeList = this.commonDocTypeList.filter(ele=>ele.Code!='23');
           //  this.commonDocTypeList = [
           //    {"Code":"1","CodeDesc":"License"},
           //    {"Code":"2","CodeDesc":"Aadhar Card"}
@@ -666,6 +667,7 @@ export class PremiumDetailsComponent implements OnInit {
       (data: any) => {
           if(data?.Result){
             this.uploadedDocList = data?.Result?.CommmonDocument;
+            this.uploadedDocList = this.uploadedDocList.filter(ele=>ele.DocumentId!='23');
             this.uploadedIndividualList = data?.Result?.InduvidualDocument;
             console.log('Indivjual documents',this.uploadedIndividualList);
           }
