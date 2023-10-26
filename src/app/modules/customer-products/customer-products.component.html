@@ -1,161 +1,164 @@
-<header id="header" class="fixed-top header-scrolled">
-    <div class="container d-flex align-items-center">
-        <h1 class="logo me-auto"><img src="./assets/images/logo-2.png"></h1>
-        <nav id="navbar" class="navbar">
-            <ul>
-                <li class="dropdown">
-                    <button class="btn btn-primary" style="cursor: not-allowed;">UAT Environment</button>
-                    <ng-container >
-                          &nbsp;&nbsp;&nbsp;&nbsp;
-                    </ng-container>
-                </li>
-                <li class="dropdown" [hidden]="loginType=='B2CFlow' && loginId=='guest'" (click)="onLog('Log out')"><a style="cursor:pointer" ><i class="fa fa-power-off"></i>&nbsp;Logout</a></li>
-               <!-- <li><button class="custom-btn btn-3 ml-4" (click)="onPress()"><span>Login</span></button></li> -->
-            </ul>
-            <i class="bi bi-list mobile-nav-toggle"></i>
-        </nav>
-        <!-- navbar -->
-    </div>
-</header>
-<section id="products" class="services section-bg" style="padding-bottom: 0px !important;">
-    <div class="container mt-5" data-aos="fade-up">
-
-        <div class="section-title" style="padding-bottom: 0px !important;">
-            <h2>Products</h2>
+<div style="overflow-y: scroll !important;max-height:100vh !important;">
+    <header id="header" class="fixed-top header-scrolled">
+        <div class="container d-flex align-items-center">
+            <h1 class="logo me-auto"><img src="./assets/images/logo-2.png"></h1>
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li class="dropdown">
+                        <button class="btn btn-primary" style="cursor: not-allowed;">Live Environment</button>
+                        <ng-container >
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                        </ng-container>
+                    </li>
+                    <li class="dropdown" [hidden]="loginType=='B2CFlow' && loginId=='guest'" (click)="onLog('Log out')"><a style="cursor:pointer" ><i class="fa fa-power-off"></i>&nbsp;Logout</a></li>
+                <!-- <li><button class="custom-btn btn-3 ml-4" (click)="onPress()"><span>Login</span></button></li> -->
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+            <!-- navbar -->
         </div>
-        <div class="row p-3" >
-            <ng-container *ngFor="let item of productList">
-                <div class="group  box-1 padd0 InsuranceType AllTabShow col-12 col-md-12 col-lg-2 col-xl-2 col-sm-12 col-xs-12" *ngIf="item.ProductId!='5'">
-                    <div (click)="onSelectProduct(item)">
-                        <div class="topIco">
-                            <div class="InsuranceIcon InsuranceIcon1 domesticIcon" matTooltip="Domestic" *ngIf="item.ProductId=='3'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 motorIcon"  matTooltip="Motor" *ngIf="item.ProductId=='5'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 fireAlliedIcon" matTooltip="Fire And Allied Perills" *ngIf="item.ProductId=='6'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 travelIcon" matTooltip="Travel" *ngIf="item.ProductId=='4'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 burglaryIcon"  matTooltip="Buglary" *ngIf="item.ProductId=='1'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 employersIcon"  matTooltip="Employer's Liablity" *ngIf="item.ProductId=='14'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 personalIcon" *ngIf="item.ProductId=='13'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 workmenIcon" matTooltip="WorkMen" *ngIf="item.ProductId=='15'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 allRiskIcon" *ngIf="item.ProductId=='2'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 smeIcon" *ngIf="item.ProductId=='19'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 fidelityIcon"  matTooltip="Fidelity" *ngIf="item.ProductId=='32'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 machineryIcon"  matTooltip="Machinery Breakdown" *ngIf="item.ProductId=='39'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 cyberIcon"  matTooltip="CyberInsurance"  *ngIf="item.ProductId=='42'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 medicalIcon" *ngIf="item.ProductId=='43'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 moneyInsuranceIcon" matTooltip="Money" *ngIf="item.ProductId=='16'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 BusinessAllRisk" matTooltip="Business AllRisk" *ngIf="item.ProductId=='26'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 plantallrisk" matTooltip="Plant AllRisk" *ngIf="item.ProductId=='21'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 electronicequipment" matTooltip="Electronic Equipment" *ngIf="item.ProductId=='25'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 publicliability" matTooltip="Public Liability" *ngIf="item.ProductId=='27'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 lifeInsurance" *ngIf="item.ProductId=='45'"></div>
-                            <div class="InsuranceIcon InsuranceIcon1 shortTermIcon" *ngIf="item.ProductId=='46'"></div>
-                        </div>
-                        <div class="InsuranceName">{{item?.ProductName}}</div>
-                    </div>
-                    <!-- <div *ngIf="item.ProductId=='45'">
-                        <div class="topIco lifeBox">
-                            <div class="InsuranceIcon InsuranceIcon1 lifeInsurance" *ngIf="item.ProductId=='45'"></div>
-                            <div class="InsuranceName" style="line-height: 5px ; padding-bottom: 0px;margin-bottom: 0px;min-height: 10px;">{{item?.ProductName}}</div>
-                            <div class="text-center customBtn mb-1 mt-1">
-                                <button class="btn btn-info p-1" (click)="onLicRedirect('Illustrate',item)">
-                                    Illustrate
-                                </button>&nbsp;
-                                <button class="btn btn-success p-1" (click)="onLicRedirect('BuyPolicy',item)">
-                                    Buy Now
-                                </button>
+    </header>
+
+    <section id="products" class="services section-bg" style="margin-top:60px !important;padding-bottom: 0px !important;">
+        <div class="container mt-5" data-aos="fade-up">
+    
+            <div class="section-title" style="padding-bottom: 0px !important;">
+                <h2>Products</h2>
+            </div>
+            <div class="row p-3" >
+                <ng-container *ngFor="let item of productList">
+                    <div class="group  box-1 padd0 InsuranceType AllTabShow col-12 col-md-12 col-lg-2 col-xl-2 col-sm-12 col-xs-12">
+                        <div (click)="onSelectProduct(item)">
+                            <div class="topIco">
+                                <div class="InsuranceIcon InsuranceIcon1 domesticIcon" matTooltip="Domestic" *ngIf="item.ProductId=='3'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 motorIcon"  matTooltip="Motor" *ngIf="item.ProductId=='5'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 fireAlliedIcon" matTooltip="Fire And Allied Perills" *ngIf="item.ProductId=='6'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 travelIcon" matTooltip="Travel" *ngIf="item.ProductId=='4'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 burglaryIcon"  matTooltip="Buglary" *ngIf="item.ProductId=='1'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 employersIcon"  matTooltip="Employer's Liablity" *ngIf="item.ProductId=='14'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 personalIcon" *ngIf="item.ProductId=='13'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 workmenIcon" matTooltip="WorkMen" *ngIf="item.ProductId=='15'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 allRiskIcon" *ngIf="item.ProductId=='2'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 smeIcon" *ngIf="item.ProductId=='19'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 fidelityIcon"  matTooltip="Fidelity" *ngIf="item.ProductId=='32'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 machineryIcon"  matTooltip="Machinery Breakdown" *ngIf="item.ProductId=='39'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 cyberIcon"  matTooltip="CyberInsurance"  *ngIf="item.ProductId=='42'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 medicalIcon" *ngIf="item.ProductId=='43'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 moneyInsuranceIcon" matTooltip="Money" *ngIf="item.ProductId=='16'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 BusinessAllRisk" matTooltip="Business AllRisk" *ngIf="item.ProductId=='26'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 plantallrisk" matTooltip="Plant AllRisk" *ngIf="item.ProductId=='21'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 electronicequipment" matTooltip="Electronic Equipment" *ngIf="item.ProductId=='25'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 publicliability" matTooltip="Public Liability" *ngIf="item.ProductId=='27'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 lifeInsurance" *ngIf="item.ProductId=='45'"></div>
+                                <div class="InsuranceIcon InsuranceIcon1 shortTermIcon" *ngIf="item.ProductId=='46'"></div>
                             </div>
+                            <div class="InsuranceName">{{item?.ProductName}}</div>
                         </div>
-                    </div> -->
-                </div>
-            </ng-container>
+                        <!-- <div *ngIf="item.ProductId=='45'">
+                            <div class="topIco lifeBox">
+                                <div class="InsuranceIcon InsuranceIcon1 lifeInsurance" *ngIf="item.ProductId=='45'"></div>
+                                <div class="InsuranceName" style="line-height: 5px ; padding-bottom: 0px;margin-bottom: 0px;min-height: 10px;">{{item?.ProductName}}</div>
+                                <div class="text-center customBtn mb-1 mt-1">
+                                    <button class="btn btn-info p-1" (click)="onLicRedirect('Illustrate',item)">
+                                        Illustrate
+                                    </button>&nbsp;
+                                    <button class="btn btn-success p-1" (click)="onLicRedirect('BuyPolicy',item)">
+                                        Buy Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </ng-container>
+                
+            </div> 
+        </div>
+    </section>
+    <!-- <section id="hero" class="d-flex align-items-center" style="padding-bottom: 0px !important;">
+        <div class="container">
             
-        </div> 
-    </div>
-</section>
-<section id="hero" class="d-flex align-items-center">
-    <div class="container">
-        
-        <div class="row">
-            <div class="col-lg-12 d-flex flex-column justify-content-center text-center pt-4 pt-lg-0 order-2 order-lg-1"
-                data-aos="fade-up" data-aos-delay="200">
-                <h1>Better Solutions For Your Business</h1>
-                <h2>Broker | Bancasurance | Agent <br>Get Enrolled For Online Portals</h2>
-            </div>
-        </div>
-    </div>
-</section>
-<section id="about" class="section-aboutus" style="padding: 40px 0;">
-    <div class="container aboutcontainer" data-aos="fade-up">
-        <div class="section-title">
-            <h2>About Us</h2>
-        </div>
-        <div class="content-section">
-            <div class="content">
-                <p>Alliance Insurance Corporation is one of the most dynamic insurance companies setting benchmarks
-                    in the Insurance sector of Tanzania. Whether it is corporate governance and transparency or
-                    taking a leadership stance in promoting the insurance sector into the hinterlands of the
-                    country; Alliance Insurance is proud to be leading from the front.</p>
-                <p>Alliance Insurance is among the top companies in the insurance sector in Tanzania in terms of
-                    various parameters under which insurance companies are rated and ranked such as premium income,
-                    financial strength & claims paying ability. Alliance has booked a Gross Written Premium of Tshs
-                    72.4 bn in 2017 and has been performing consistently in its 20 years of operations.
-                </p>
-            </div>
-        </div>
-        <div class="image-section">
-            <img src="https://alliance.co.tz/images/about-image-1.jpg" alt="">
-        </div>
-    </div>
-</section>
-<section id="services" class="services section-bg">
-    <div class="container" data-aos="fade-up">
-
-        <div class="section-title">
-            <h2>Services</h2>
-            <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Magnam dolores commodi suscipit.
-                Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-                consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
-                fugiat sit
-                in iste officiis commodi quidem hic quas.</p>
-        </div>
-
-        <div class="row">
-            <div class="col-xl-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-                <div class="icon-box">
-                    <div class="icon"><i class="bx bxl-dribbble"></i></div>
-                    <h4><a href="">Policy Endorsemnet</a></h4>
-                    <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Voluptatum deleniti
-                        atque corrupti quos dolores et quas molestias excepturi</p>
-                    <button class="custom-btn btn-3"
-                        style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 5rem;"><span>Read
-                            More</span></button>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in"
-                data-aos-delay="200">
-                <div class="icon-box">
-                    <div class="icon"><i class="bx bx-file"></i></div>
-                    <h4><a href="">Claim Intimation</a></h4>
-                    <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Duis aute irure dolor in
-                        reprehenderit in voluptate velit esse cillum dolore</p>
-                    <button class="custom-btn btn-3"
-                        style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 5rem;"><span>Read
-                            More</span></button>
-                </div>
-            </div>
-
-            <div class="col-xl-4 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in"
-                data-aos-delay="300">
-                <div class="icon-box">
-                    <div class="icon"><i class="bx bx-tachometer"></i></div>
-                    <h4><a href="">Claim Status</a></h4>
-                    <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Excepteur sint occaecat
-                        cupidatat non proident, sunt in culpa qui officia</p>
-                    <button class="custom-btn btn-3"
-                        style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 5rem;"><span>Read
-                            More</span></button>
+            <div class="row">
+                <div class="col-lg-12 d-flex flex-column justify-content-center text-center pt-4 pt-lg-0 order-2 order-lg-1"
+                    data-aos="fade-up" data-aos-delay="200">
+                    <h1>Better Solutions For Your Business</h1>
+                    <h2>Broker | Bancasurance | Agent <br>Get Enrolled For Online Portals</h2>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+    <section id="about" class="section-aboutus" style="padding: 40px 0;" style="padding-bottom: 0px !important;">
+        <div class="container aboutcontainer" data-aos="fade-up">
+            <div class="section-title">
+                <h2>About Us</h2>
+            </div>
+            <div class="content-section">
+                <div class="content">
+                    <p>Alliance Insurance Corporation is one of the most dynamic insurance companies setting benchmarks
+                        in the Insurance sector of Tanzania. Whether it is corporate governance and transparency or
+                        taking a leadership stance in promoting the insurance sector into the hinterlands of the
+                        country; Alliance Insurance is proud to be leading from the front.</p>
+                    <p>Alliance Insurance is among the top companies in the insurance sector in Tanzania in terms of
+                        various parameters under which insurance companies are rated and ranked such as premium income,
+                        financial strength & claims paying ability. Alliance has booked a Gross Written Premium of Tshs
+                        72.4 bn in 2017 and has been performing consistently in its 20 years of operations.
+                    </p>
+                </div>
+            </div>
+            <div class="image-section">
+                <img src="https://alliance.co.tz/images/about-image-1.jpg" alt="">
+            </div>
+        </div>
+    </section>
+    <section id="services" class="services section-bg" style="padding-bottom: 0px !important;">
+        <div class="container" data-aos="fade-up">
+    
+            <div class="section-title">
+                <h2>Services</h2>
+                <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Magnam dolores commodi suscipit.
+                    Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
+                    consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia
+                    fugiat sit
+                    in iste officiis commodi quidem hic quas.</p>
+            </div>
+    
+            <div class="row">
+                <div class="col-xl-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="icon-box">
+                        <div class="icon"><i class="bx bxl-dribbble"></i></div>
+                        <h4><a href="">Policy Endorsemnet</a></h4>
+                        <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Voluptatum deleniti
+                            atque corrupti quos dolores et quas molestias excepturi</p>
+                        <button class="custom-btn btn-3"
+                            style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 5rem;"><span>Read
+                                More</span></button>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in"
+                    data-aos-delay="200">
+                    <div class="icon-box">
+                        <div class="icon"><i class="bx bx-file"></i></div>
+                        <h4><a href="">Claim Intimation</a></h4>
+                        <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Duis aute irure dolor in
+                            reprehenderit in voluptate velit esse cillum dolore</p>
+                        <button class="custom-btn btn-3"
+                            style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 5rem;"><span>Read
+                                More</span></button>
+                    </div>
+                </div>
+    
+                <div class="col-xl-4 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in"
+                    data-aos-delay="300">
+                    <div class="icon-box">
+                        <div class="icon"><i class="bx bx-tachometer"></i></div>
+                        <h4><a href="">Claim Status</a></h4>
+                        <p style="color: #444444;font-size: 1.2rem;font-weight: 400!important;">Excepteur sint occaecat
+                            cupidatat non proident, sunt in culpa qui officia</p>
+                        <button class="custom-btn btn-3"
+                            style="width:107px;height: 33px;line-height: 34px;position: relative;top: 1.7rem;left: 5rem;"><span>Read
+                                More</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+</div>

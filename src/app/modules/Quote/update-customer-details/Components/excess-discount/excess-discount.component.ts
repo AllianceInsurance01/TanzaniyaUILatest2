@@ -3837,8 +3837,6 @@ getMotorUsageList(vehicleValue){
       }
       else if(this.productId=='5' || this.productId=='46'){
         this.coverlist=[];let i=0;
-        console.log('TTTTTTTTTT', this.vehicleDetailsList);
-        console.log('NNNNNNNNNNNN', this.newcoverlist);
         for(let vehicle of this.newcoverlist){
           let vehEntry = vehicle.Covers;
           console.log('VVVVVVVVV',vehEntry);

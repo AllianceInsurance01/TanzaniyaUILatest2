@@ -434,6 +434,81 @@ export class MakePayementComponent implements OnInit {
     );
 
   }
+  onDebitdownload(rowData){
+    console.log('KKKKKKKKKKK',rowData.QuoteNo);
+    let urlLink = `${this.CommonApiUrl}pdf/taxInvoice?quoteNo=${rowData.QuoteNo}`
+
+    this.sharedService.onGetMethodSync(urlLink).subscribe(
+      (data: any) => {
+        console.log(data);
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', data?.Result.PdfOutFile);
+        link.setAttribute('download','DebitPdf');
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    },
+      (err) => { },
+    );
+  }
+  onCreditdownload(rowData){
+    console.log('KKKKKKKKKKK',rowData.QuoteNo);
+    let urlLink = `${this.CommonApiUrl}pdf/creditNote?quoteNo=${rowData.QuoteNo}`
+
+    this.sharedService.onGetMethodSync(urlLink).subscribe(
+      (data: any) => {
+        console.log(data);
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', data?.Result.PdfOutFile);
+        link.setAttribute('download','Creditpdf');
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    },
+      (err) => { },
+    );
+  }
+  onGetSchedule(rowData){
+    let ReqObj = {
+      "QuoteNo":rowData.QuoteNo
+    }
+    let urlLink = `${this.CommonApiUrl}pdf/policyform`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data?.Result?.PdfOutFile){
+            this.downloadMyFile(data.Result.PdfOutFile);
+        }
+        else{
+          Swal.fire({
+            title: '<strong>Schedule Pdf</strong>',
+            icon: 'error',
+            html:
+              `No Pdf Generated For this Policy`,
+            //showCloseButton: true,
+            //focusConfirm: false,
+            showCancelButton: false,
+
+            //confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Cancel',
+          })
+        }
+      },
+      (err) => { },
+    );
+  }
+  downloadMyFile(data) {
+    const link = document.createElement('a');
+    link.setAttribute('target', '_blank');
+    link.setAttribute('href', data);
+    link.setAttribute('download', 'Schedule');
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
   alphaNumberOnly (e) {  // Accept only alpha numerics, not special characters 
     var regex = new RegExp("^[a-zA-Z0-9 ]+$");
     var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
