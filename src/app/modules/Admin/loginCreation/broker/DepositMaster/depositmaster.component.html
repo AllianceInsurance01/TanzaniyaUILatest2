@@ -20,19 +20,19 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
                             <div>
-                                Existing Branches
+                                Existing Deposit Details
                             </div>
                             <div>
-                                <button class="btn btn-warning" (click)="onAddNewBranch()">Add New</button>
+                                <!-- <button class="btn btn-warning" (click)="onAddNewBranch()">Add New</button> -->
                             </div>
                         </div>
                       </div>
                     <div>
-                        <ng-container *ngIf="branchData.length!=0">
-                            <app-grid-table [cols]="branchHeader" [data]="branchData" [filterValue]="filterValue" (onEdit)="onEditBranch($event)">
+                        <ng-container *ngIf="branchDatas.length!=0">
+                            <app-grid-table [cols]="branchsHeader" [data]="branchDatas" [filterValue]="filterValue" (onEdit)="onEditData($event)">
                             </app-grid-table>
                         </ng-container>
-                        <ng-container *ngIf="branchData.length==0">
+                        <ng-container *ngIf="branchDatas.length==0">
                             <div class="text-center">
                                 No Data Available
                             </div>

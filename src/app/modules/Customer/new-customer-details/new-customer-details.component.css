@@ -197,12 +197,12 @@
 }
 
 
-@media screen and (min-width: 850px) and (max-width: 20000px) {
+@media screen and (min-width:1272px) and (max-width: 20000px) {
     .display2{
         display:none;
     }
   }
   
-  @media screen and (min-width: 280px) and (max-width: 849px) {
+  @media screen and (min-width: 280px) and (max-width: 1271px) {
     .display1{ display: none; } 
   }

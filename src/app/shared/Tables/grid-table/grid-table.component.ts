@@ -37,6 +37,7 @@ export class GridTableComponent implements OnInit, OnChanges, AfterViewInit {
   @Output('onSchedule') onSchedule = new EventEmitter();
   @Output('onAddNew') onAddNew = new EventEmitter();
   @Output('onDeleteNew') onDeleteNew = new EventEmitter();
+  @Output('onInfo') onInfo = new EventEmitter();
 
   public dataSource: any;
   @ViewChild(MatSort) sort!: MatSort;

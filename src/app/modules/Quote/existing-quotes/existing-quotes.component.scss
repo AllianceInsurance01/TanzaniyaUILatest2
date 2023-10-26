@@ -57,3 +57,47 @@
   padding: 0px !important;
   transition: .25s;
 }
+
+@media screen and (min-width: 280px) and (max-width: 700px) {
+  ::ng-deep .modal-content {
+    width: 100% !important;
+}
+.classlabel{
+  left: 1rem !important;
+}
+}
+@media screen and (min-width:1024px) and (max-width: 20000px) {
+  ::ng-deep .modal-content {
+    width: 120% !important;
+}
+.classlabel{
+  left: 17rem !important;
+}
+}
+
+ /* iPads (portrait and landscape) ----------- */
+ @media only screen 
+ and (min-device-width : 701px) 
+ and (max-device-width : 1024px) {
+  ::ng-deep .modal-content {
+    width: 100% !important;
+}
+.classlabel{
+  left: 1rem !important;
+}
+ }
+ 
+ /* iPads (landscape) ----------- */
+ @media only screen 
+ and (min-device-width : 768px) 
+ and (max-device-width : 1024px) 
+ and (orientation : landscape) {
+     /* Styles */
+     ::ng-deep .modal-content {
+      width: 100% !important;
+  }
+  .classlabel{
+    left: 1rem !important;
+  }
+    
+ }

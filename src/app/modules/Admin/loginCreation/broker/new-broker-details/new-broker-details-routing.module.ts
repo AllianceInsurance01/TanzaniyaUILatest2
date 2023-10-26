@@ -11,6 +11,10 @@ import { BrokerCoverListComponent } from '../broker-cover-list/broker-cover-list
 import { NewBrokercoverDetailsComponent } from '../new-brokercover-details/new-brokercover-details.component';
 import { NewProductDetailsComponent } from '../new-product-details/new-product-details.component';
 import { EndrosementBrokerComponent } from '../endrosementbroker/endrosementbroker.component';
+import { DepositMasterComponent } from '../DepositMaster/depositmaster.component';
+import { DepositAddNewComponent } from '../depositaddnew/depositaddnew.component';
+
+// import { DepositDetailsComponent } from '../DepositDetails/depositdetails.component';
 
 const routes: Routes = [
   {
@@ -24,6 +28,24 @@ const routes: Routes = [
       preload: true,
       title: "Existing Branch",
       breadcrumb:  "Existing Branch",
+    },
+  },
+  {
+    path: 'depositMasterList',
+    component: DepositMasterComponent,
+    data: {
+      preload: true,
+      title: "Deposit List",
+      breadcrumb:  "Deposit List",
+    },
+  },
+  {
+    path: 'depositdetails',
+    component: DepositAddNewComponent,
+    data: {
+      preload: true,
+      title: "Deposit Details",
+      breadcrumb:  "Deposit Details",
     },
   },
   {

@@ -298,12 +298,14 @@ onPreviousData(element){
   this.onCustomerSearch();
 }
 onCustomerSearch(){
-let app
+let app; let login;
   if(this.userType == 'Issuer'){
-    app=this.loginId
+    app=this.loginId;
+    login="";
   }
   else{
-    app="1"
+    app="1";
+    login=this.loginId;
   }
   /*if(this.search=='EntryDate'){
 
@@ -316,7 +318,7 @@ let app
     let ReqObj = {
   "SearchKey":this.search,
   "SearchValue": this.searchValue,
-  "LoginId": this.loginId,
+  "LoginId":login,
   "InsuranceId":this.insuranceId,
   "BranchCode": this.branchCode,
   "ProductId":this.productId,
@@ -382,7 +384,12 @@ let app
         "QuoteNo":row.QuoteNo,
         "RequestReferenceNo":row.RequestReferenceNo,
         "ProductId":this.productId,
-        "pageFrom": 'search'
+        "pageFrom": 'search',
+        "CustomerReferenceNo": row.CustomerReferenceNo,
+        "CustomerName": row.CustomerName,
+        "ProductName":row.ProductName,
+        "Currency":row.Currency,
+        "PolicyNo":row.PolicyNo,
       }
       sessionStorage.setItem('editCustomer',JSON.stringify(ReqObj));
    this.router.navigate(['/Home/MotorDocument']);

@@ -218,7 +218,43 @@ tbody:first-child tr:first-child td:last-child {
         .smallclass{
             padding-left: 70px !important;padding-right: 40px !important;
             }
+          
+           
     }
+
+
+    @media screen and (min-width: 280px) and (max-width: 700px) {
+        .small{
+            margin-left: 0px !important;
+        }
+      }
+      @media screen and (min-width:1024px) and (max-width: 20000px) {
+        .small{
+            margin-left: 30px !important;
+        }
+      }
+      
+       /* iPads (portrait and landscape) ----------- */
+       @media only screen 
+       and (min-device-width : 701px) 
+       and (max-device-width : 1024px) {
+        .small{
+            margin-left: 0px !important;
+        }
+       }
+       
+       /* iPads (landscape) ----------- */
+       @media only screen 
+       and (min-device-width : 768px) 
+       and (max-device-width : 1024px) 
+       and (orientation : landscape) {
+        .small{
+            margin-left: 0px !important;
+        }
+          
+       }
+
+   
 
     @media screen and (min-width: 280px) and (max-width: 750px) {
     .display1{

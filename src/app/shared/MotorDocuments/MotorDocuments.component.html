@@ -19,7 +19,7 @@
             </div> -->
             <div class="mt-2">
                 <div class="row">
-                    <div class="col-6 col-md-3 mt-2" *ngIf="pageFrom!='Existing'">
+                    <div class="col-12 col-md-3 mt-2" *ngIf="pageFrom!='Existing'">
                         <div>
                             <h3 style="font-weight:200px;color: gray;font-size:16px;font-family: 'Inter', sans-serif !important;"><span>PolicyNo</span></h3>
                         </div>
@@ -28,7 +28,7 @@
                            
                         </div>
                     </div>
-                    <div class="col-6 col-md-3 mt-2">
+                    <div class="col-12 col-md-3 mt-2">
                         <div>
                             <h3 style="font-weight:bold;color: gray;font-size:18px;font-family: 'Inter', sans-serif !important;"><span>Customer Name</span></h3>
                         </div>
@@ -39,7 +39,7 @@
                         </div>
                        
                     </div>
-                    <div class="col-6 col-md-3 mt-2">
+                    <div class="col-12 col-md-3 mt-2">
                         <div>
                             <h3 style="font-weight:200px;color: gray;font-size:16px;font-family: 'Inter', sans-serif !important;"><span>Product Name</span></h3>
                         </div>
@@ -47,7 +47,7 @@
                             <h3 style="font-weight:200px;color: gray;font-size:16px;font-family: 'Inter', sans-serif !important;"><span>{{ProductName}}</span></h3>
                         </div>
                     </div>
-                    <div class="col-6 col-md-3 mt-2">
+                    <div class="col-12 col-md-3 mt-2">
                         <div>
                             <h3 style="font-weight:200px;color: gray;font-size:16px;font-family: 'Inter', sans-serif !important;"><span>Quote No</span></h3>
                         </div>
@@ -113,6 +113,18 @@
                                      <div class="col-6 col-md-4 mt-2">
                                         <div class="heading1">WhatsApp No</div>
                                         <div class="heading2">{{Cus.WhatsappNo}}</div>
+                                     </div>
+                                     <div class="col-6 col-md-4 mt-2">
+                                        <div class="heading1">IdTypeDesc</div>
+                                        <div class="heading2">{{Cus.IdNumber}}</div>
+                                     </div>
+                                     <div class="col-6 col-md-4 mt-2">
+                                        <div class="heading1">Prefered Notification</div>
+                                        <div class="heading2">{{Cus.PreferredNotification}}</div>
+                                     </div>
+                                     <div class="col-6 col-md-4 mt-2">
+                                        <div class="heading1">Policy HolderType</div>
+                                        <div class="heading2">{{Cus.PolicyHolderTypeDesc}}</div>
                                      </div>
                                     </div>
                               
@@ -940,29 +952,29 @@
                 <div class="card">
                 <div class="container">
                     <div class="row p-5 ml-4 mr-4" *ngFor="let pay of PaymentInfo"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
-                        <div class="col-6">
+                        <div class="col-12 col-md-6 col-lg-6">
                             <div>
                                 <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">Payment Details</h1></div>
                                 <div class="Personal Details mt-2 pl-5 pr-5">
                                     <div class="row mt-2">
                                       
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2">
                                             <div class="heading1">Payment Mode</div>
                                             <div class="heading2">{{pay.PaymentTypedesc}}&nbsp;</div>
                                         </div>
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2">
                                             <div class="heading1">Net Premium &nbsp; ({{Currency}})</div>
                                             <div class="heading2">{{pay.Premium}}&nbsp;</div>
                                         </div>
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2">
                                             <div class="heading1">Payment Status</div>
                                             <div class="heading2">{{pay.PaymentStatus}}</div>
                                         </div>
-                                        <div class="col-4 mt-2">
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2">
                                             <div class="heading1">Merchant RefNo</div>
                                             <div class="heading2">{{pay.MerchantReference}}</div>
                                         </div>
-                                        <div class="col-4 mt-2">
+                                        <div class="col-12 col-md-6 col-lg-4 mt-2">
                                             <div class="heading1">Date And Time</div>
                                             <div class="heading2">{{pay.EntryDate}}</div>
                                         </div>
@@ -971,15 +983,15 @@
                                     <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">Bank Details</h1></div>
                                     <div class="row mt-2">
                                            
-                                            <div class="col-4 mt-2">
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
                                                 <div class="heading1">Payment Id</div>
                                                 <div class="heading2">{{pay.PaymentId}}</div>
                                              </div>
-                                             <div class="col-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cash'">
+                                             <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cash'">
                                                 <div class="heading1">Payee name</div>
                                                 <div class="heading2">{{pay.PayeeName}}</div><!--{{pay.ChequeNo}}-->
                                             </div>
-                                            <div class="col-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cash'">
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cash'">
                                                 <div class="heading1">Amount</div>
                                                 <div class="heading2">{{pay.PremiumLc|commaseparator}}</div><!--{{pay.ChequeNo}}-->
                                             </div>
@@ -987,31 +999,31 @@
                                     </div>
                                     <div class="row mt-2">
                                       
-                                        <div class="col-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cheque'">
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cheque'">
                                             <div class="heading1">ChequeNo</div>
                                             <div class="heading2">{{pay.ChequeNo}}</div><!--{{pay.ChequeNo}}-->
                                         </div>
-                                        <div class="col-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cheque'">
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cheque'">
                                             <div class="heading1">BankName</div>
                                             <div class="heading2">{{pay.BankName}}</div><!--{{pay.BankName}}-->
                                         </div>
-                                        <div class="col-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cheque'">
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cheque'">
                                             <div class="heading1">ChequeDate</div>
                                             <div class="heading2">{{pay.ChequeDate}}</div>
                                          </div>
-                                         <div class="col-4 mt-2" *ngIf="pay.PaymentTypedesc=='CreditCard'">
+                                         <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='CreditCard'">
                                             <div class="heading1">Transaction Ref No</div>
                                             <div class="heading2">{{pay.AuthTransRefNo}}</div><!--{{pay.ChequeNo}}-->
                                         </div>
-                                        <div class="col-4 mt-2" *ngIf="pay.PaymentTypedesc=='CreditCard'">
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='CreditCard'">
                                             <div class="heading1">Transaction Date</div>
                                             <div class="heading2">04-08-2023</div>{{pay.TransactionDate}}
                                          </div>
-                                         <div class="col-4 mt-2" *ngIf="pay.PaymentTypedesc=='CreditCard'">
+                                         <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='CreditCard'">
                                             <div class="heading1">Transaction Time</div>
                                             <div class="heading2">{{pay.AuthTransRefNo}}</div><!--{{pay.ChequeNo}}-->
                                         </div>
-                                        <div class="col-4 mt-2" *ngIf="pay.PaymentTypedesc=='CreditCard'">
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='CreditCard'">
                                             <div class="heading1">Status</div>
                                             <div class="heading2">04-08-2023</div>{{pay.TransactionDate}}
                                          </div>
@@ -1027,22 +1039,22 @@
                         </div>
                             
                         <div class="line-in-middle"></div>
-                        <div class="col-5">
+                        <div class="col-12 col-md-5 col-lg-5">
                                     <div>
                                         <div class="Personal Details">
                                             <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">EMI Installment Info</h1></div>
                                            </div>
                                            <div class="row mt-2">
-                                            <div class="col-4 mt-2">
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
         
                                                <div class="heading1">EMI Installment</div>
                                                <div class="heading2">{{pay.EmiYn}}</div>
                                             </div>
-                                            <div class="col-4 mt-2">
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
                                                 <div class="heading1">InstallmentPeriod</div>
                                                 <div class="heading2">{{pay.InstallmentPeriod}}</div>
                                             </div>
-                                            <div class="col-4 mt-2">
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
                                                 <div class="heading1">InstallmentMonth</div>
                                                 <div class="heading2">{{pay.InstallmentMonth}}</div>
                                             </div>
@@ -1527,16 +1539,16 @@
             <div class="container">
                 <ul class="nav nav-tabs">
                     <li class="nav-item" *ngIf="productId=='5'">
-                      <a class="nav-link active" data-bs-toggle="tab" href="#msg">Driver Details</a>
+                      <a class="nav-link active" data-bs-toggle="tab" style="color: tomato !important;" href="#msg">Driver Details</a>
                     </li>
                     <li class="nav-item" *ngIf="productId=='5'">
-                      <a class="nav-link" data-bs-toggle="tab" href="#set">Additional Information</a>
+                      <a class="nav-link" data-bs-toggle="tab" style="color: tomato !important;"  href="#set">Additional Information</a>
                     </li>
                     <li class="nav-item" *ngIf="productId!='5'">
-                        <a class="nav-link active" data-bs-toggle="tab" href="#set">Additional Information</a>
+                        <a class="nav-link active" data-bs-toggle="tab" style="color: tomato !important;" href="#set">Additional Information</a>
                       </li>
                     <li class="nav-item" *ngIf="productId=='5'">
-                        <a class="nav-link" data-bs-toggle="tab" href="#collatral">Collateral Details</a>
+                        <a class="nav-link" data-bs-toggle="tab" style="color: tomato !important;"  href="#collatral">Collateral Details</a>
                       </li>
                   </ul>
                      
@@ -1548,19 +1560,19 @@
                                     <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">Driver Details</h1></div>
                                     <div class="Personal Details mt-2 pl-5 pr-5" *ngFor="let driver of DriverInfo;let i=index;">
                                         <div class="row mt-2">
-                                            <div class="col-3 mt-2">
+                                            <div class="col-12 col-md-6 col-lg-3 mt-2">
                                                 <div class="heading1">Driver Name</div>
                                                 <div class="heading2">{{driver.DriverName}}&nbsp;</div>
                                             </div>
-                                            <div class="col-3 mt-2">
+                                            <div class="col-12 col-md-6 col-lg-3 mt-2">
                                                 <div class="heading1">Driver Dob</div>
                                                 <div class="heading2">{{driver.DriverDob}}&nbsp;</div>
                                             </div>
-                                            <div class="col-3 mt-2">
+                                            <div class="col-12 col-md-6 col-lg-3 mt-2">
                                                 <div class="heading1">Driver Type</div>
                                                 <div class="heading2">{{getDriverName(driver.DriverType)}}</div>
                                             </div>
-                                            <div class="col-3 mt-2">
+                                            <div class="col-12 col-md-6 col-lg-3 mt-2">
                                                 <div class="heading1">License No</div>
                                                 <div class="heading2">{{driver.LicenseNo}}</div>
                                             </div>
@@ -1645,28 +1657,28 @@
                                 <div>
                                     <ul class="nav nav-tabs">
                                         <li class="nav-item">
-                                          <a class="nav-link active" data-bs-toggle="tab" href="#Building">Location Details</a>
+                                          <a class="nav-link active" data-bs-toggle="tab" href="#Building" style="color: tomato !important;" >Location Details</a>
                                         </li>
                                         <li class="nav-item" *ngIf="productId=='3'">
-                                          <a class="nav-link" data-bs-toggle="tab" href="#Content">Content Risk</a>
+                                          <a class="nav-link" data-bs-toggle="tab" href="#Content" style="color: tomato !important;" >Content Risk</a>
                                         </li>
                                         <li class="nav-item" *ngIf="productId=='3'">
-                                            <a class="nav-link" data-bs-toggle="tab" href="#PersonalAccident">Personal Accident</a>
+                                            <a class="nav-link" data-bs-toggle="tab" href="#PersonalAccident" style="color: tomato !important;" >Personal Accident</a>
                                           </li>
                                         <li class="nav-item" *ngIf="productId=='3'">
-                                            <a class="nav-link" data-bs-toggle="tab" href="#PersonalIndemenity">Personal Indemenity</a>
+                                            <a class="nav-link" data-bs-toggle="tab" href="#PersonalIndemenity" style="color: tomato !important;" >Personal Indemenity</a>
                                           </li>
                                           <li class="nav-item" *ngIf="productId=='14'">
-                                            <a class="nav-link" data-bs-toggle="tab" href="#EmployersLiability">Employers Liability</a>
+                                            <a class="nav-link" data-bs-toggle="tab" href="#EmployersLiability" style="color: tomato !important;" >Employers Liability</a>
                                           </li>
                                           <li class="nav-item" *ngIf="productId=='3'">
-                                            <a class="nav-link" data-bs-toggle="tab" href="#AllRisk">All Risk</a>
+                                            <a class="nav-link" data-bs-toggle="tab" href="#AllRisk" style="color: tomato !important;" >All Risk</a>
                                           </li>
                                           <li class="nav-item" *ngIf="productId=='42'">
-                                            <a class="nav-link" data-bs-toggle="tab" href="#Cyber">Device Details</a>
+                                            <a class="nav-link" data-bs-toggle="tab" href="#Cyber" style="color: tomato !important;" >Device Details</a>
                                           </li>
                                           <li class="nav-item" *ngIf="productId=='39'">
-                                            <a class="nav-link" data-bs-toggle="tab" href="#machinery">Machinery</a>
+                                            <a class="nav-link" data-bs-toggle="tab" href="#machinery" style="color: tomato !important;" >Machinery</a>
                                           </li>
                                       </ul>
                                       <div class="tab-content mt-2 ml-4">

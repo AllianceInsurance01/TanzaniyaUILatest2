@@ -1,0 +1,281 @@
+<div class="card">
+    <div class="card-header">Broker Configuration</div>
+    <div class="card p-1">
+        <div class="vision-grid vision-grid-column-2">
+            <div class="vision-grid-item">
+                <div class="radio-toolbar menu-bar">
+                    <input type="radio" id="menu1" name="menu" value="Branch" (click)="onRedirect('Branch')" [(ngModel)]="activeMenu">
+                    <label for="menu1">Branch</label>
+                    <input id="menu7" type="radio" name="menu" value="Product" [(ngModel)]="activeMenu" (click)="onRedirect('Product')">
+                    <label for="menu7">Product</label>
+
+                    <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+                    <label for="menu2">Cover</label>
+                    <input type="radio" id="menu8" name="menu" value="Deposit" (click)="onRedirect('Deposit')" [(ngModel)]="activeMenu">
+                    <label for="menu8">Deposit</label>
+                </div>
+            </div>
+            <div class="vision-grid-item">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                Existing Payment Details
+                            </div>
+                            <div>
+                                <button class="btn btn-warning" (click)="onAddNewBranch()">Add New</button>
+                            </div>
+                        </div>
+                      </div>
+                    <div>
+                        <ng-container *ngIf="CbcDatas.length!=0 && !show">
+                            <app-grid-table [cols]="CBCHeader" [data]="CbcDatas" [filterValue]="filterValue" (onViews)="onViews($event,mymodal)" (onEdit)="onEditBranch($event)" (onInfo)="onInfo($event,modals)">
+                            </app-grid-table>
+                        </ng-container>
+                        <ng-container *ngIf="CbcDatas.length==0 && !show">
+                            <div class="text-center">
+                                No Data Available
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="show">
+                            <div class="vision-grid-item">
+                                <div>                 
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-12 col-md-6 col-lg-4 input-control-container">
+                                                <label class="input-form-label">Payment Type</label><span class="text-danger">*</span>
+                                                    <ng-select class="input-form-select" appendTo="body" [items]="PaymentList"  [(ngModel)]="paymentid" bindValue="Code" bindLabel="CodeDesc">
+                                                    </ng-select>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4 col-xl-4" *ngIf="paymentid=='1'">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">PayeeName</label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="payeeName" maxlength="100" class="input-form-control without-icon">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <!-- <div class="col-md-6 col-lg-4 col-xl-4" *ngIf="paymentid=='1'">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">VatAmount</label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="VatAmount" maxlength="100" class="input-form-control without-icon">
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            <div class="col-12 col-md-6 col-lg-4">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Deposit Type<span class="text-required">*</span></label>
+                                                    <div class="input-form-radio-box">
+                                                        <div class="radio-toolbar">
+                                                            <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse1" [(ngModel)]="deposiType" value="C">
+                                                            <label for="orginwarehouse_Yes">Cash</label>
+                                                            <input type="radio" id="orginwarehouse_No" name="originatingWarehouse1" [(ngModel)]="deposiType" value="R">
+                                                            <label for="orginwarehouse_No">Refund</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4 col-xl-4" *ngIf="deposiType=='C'">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">DepositAmount</label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="Premium" maxlength="100" class="input-form-control without-icon">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4 col-xl-4" *ngIf="deposiType=='R'">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Refund Amount</label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="Premium" maxlength="100" class="input-form-control without-icon">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-lg-4 col-xl-4" *ngIf="paymentid=='2'">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Account No</label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="accountNo" maxlength="100" class="input-form-control without-icon">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4 col-xl-4" *ngIf="paymentid=='2'">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Balance Amount</label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="bamount" maxlength="100" class="input-form-control without-icon">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4 col-xl-4" *ngIf="paymentid=='2'">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">ChargableType</label>
+                                                    <ng-select class="input-form-select" appendTo="body" [items]="ChargableList"  [(ngModel)]="chargabletype" bindValue="Code" bindLabel="CodeDesc">
+                                                    </ng-select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4 col-xl-4" *ngIf="paymentid=='2'">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Cheque Date</label>
+                                                    <mat-form-field appearance="fill">
+                                                        <!-- <mat-label>Departure Date<span class="text-danger">*</span></mat-label> -->
+                                                        <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="chequeDate" [ngModelOptions]="{standalone: true}">
+                                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                        <mat-datepicker #picker></mat-datepicker>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4 col-xl-4" *ngIf="paymentid=='2'">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Cheque No</label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="chequeno" maxlength="100" class="input-form-control without-icon">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4 col-xl-4" *ngIf="paymentid=='2'">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">MICR No</label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="micrno" maxlength="100" class="input-form-control without-icon">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4 col-xl-4" *ngIf="paymentid=='2'">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Reference No</label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="referenceno" maxlength="100" class="input-form-control without-icon">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="col-md-6 col-lg-4 col-xl-4">
+                                                <div class="input-control-container">
+                                                    <label class="input-form-label">Amount</label>
+                                                    <div class="input-form-box">
+                                                        <input type="text" [(ngModel)]="Premium" maxlength="100" class="input-form-control without-icon">
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                  
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <div class="text-center mt-2">
+                            <button class="btn btn-danger" (click)="getBackPage()">Back</button>
+                            <button style="margin-left:10px;" *ngIf="show" class="btn btn-success" (click)="getSave()">Save</button>
+                        </div>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <ng-template #mymodal let-modal>
+        <div class="modal-header" style="height: 48px;">
+            <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Payment Details</span></h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="input-control-container">
+                      <label class="input-form-label">Deposit No:</label>
+                      <div> {{viewData?.DepositNo}}</div>
+                          
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="input-control-container">
+                      <label class="input-form-label">Payment Type:</label>
+                           <div>{{viewData?.PaymentTypeDesc}}</div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="input-control-container">
+                      <label class="input-form-label">Payee Name</label>
+                           <div>{{viewData?.PayeeName}}</div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="input-control-container">
+                      <label class="input-form-label">Premium</label>
+                           <div>{{viewData?.Premium}}</div>
+                  </div>
+                </div>
+            </div>
+           
+        </div>
+        <div class="modal-footer">
+            <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" (click)="modal.dismiss('Cross click')">Close</button>
+        </div>
+      </ng-template>
+
+      <ng-template #modals let-modal>
+        <div class="modal-header" style="height: 48px;">
+            <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Payment Details</span></h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+                                <table class="table table-headerRow styled-table">
+                                    <tr>
+                                        <th class="tbl-header">Broker Name</th>
+                                        <th class="tbl-header">Deposit No</th>
+                                        <th class="tbl-header">Premium</th>
+                                        <!-- <th class="tbl-header">Request ReferenceNo</th> -->
+                                        
+                                        <th class="tbl-header">EntryDate</th>
+                                    </tr>
+                                    <tr *ngFor="let row of viewDatas;let i = index"><!--|paginate:{itemsPerPage: 5, currentPage:p,id: 'p'}-->
+
+                                        <td class="tbl-content">
+                                            <div class="input-control-container">
+                                                <div class="input-form-box">
+                                                    {{row.BrokerName}}
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="tbl-content">
+                                            <div class="input-control-container">
+                                                <div class="input-form-box">
+                                                    {{row.DepositNo}}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="tbl-content">
+                                            <div class="input-control-container">
+                                                <div class="input-form-box">
+                                                    {{row.Premium}}
+                                                </div>
+                                            </div>
+                                        </td>
+                
+                                        <td class="tbl-content">
+                                            <div class="input-control-container">
+                                                <div class="input-form-box">
+                                                    {{row.EntryDate}}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                                </table>
+           
+        </div>
+        <div class="modal-footer">
+            <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" (click)="modal.dismiss('Cross click')">Close</button>
+        </div>
+      </ng-template>
