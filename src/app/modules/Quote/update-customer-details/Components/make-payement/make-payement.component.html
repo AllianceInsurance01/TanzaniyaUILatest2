@@ -858,7 +858,7 @@
     </div>     
 </div>
 <div class="row"  *ngIf="policySection">
-    <div class="col-12 col-md-6 col-lg-6 offset-md-3 offset-lg-3 spancommon span_font_size">
+    <div class="col-12 col-md-12 col-lg-10 offset-lg-1 spancommon span_font_size">
         <div class="card mt-4">
             <div class="card-body">
                 <!-- <div class="row">
@@ -867,7 +867,7 @@
                     </div>
                 </div> -->
                 <div class="row ">
-                    <div class="col-md-7 col-lg-7 col-xl-7 col-12 offset-md-3 offset-lg-3 offset-xl-3 boxForm p-4">
+                    <div class="col-md-10 col-lg-10 col-xl-10 col-12 offset-md-1 offset-lg-1 offset-xl-1 boxForm p-4">
                     <div class="row">
                         <div class="col-10 offset-1 spancommon span_font_size">
                             <h4 class="spancommon span_font_size" style="font-weight: 600;text-align: center;"><ng-container *ngIf="endorsementSection">Endorsement&nbsp;</ng-container>Policy Generated Successfully</h4>
@@ -894,7 +894,7 @@
                           <span class="spancommon span_font_size">Policy No</span>&nbsp;&nbsp;
                         </div>
                         <div class="mx-0 mt-1 slider-main">
-                          <span class="spancommon span_font_size" style="font-weight:600;color: darkblue;">{{paymentDetails?.PolicyNo}}</span>
+                          <span class="spancommon span_font_size" style="font-weight:600;color: darkblue;word-wrap: break-word !important;">{{paymentDetails?.PolicyNo}}</span>
                         </div>
                       </div><hr class="m-1">
                       <div class="d-flex justify-content-between" style="margin: 0px !important;top:0rem;bottom: 0rem !important;" *ngIf="paymentDetails?.DebitNoteNo">
@@ -922,16 +922,16 @@
                           <span class="spancommon span_font_size" style="font-weight:600;color: darkblue;">{{paymentDetails?.MerchantReference}}</span>
                         </div>
                       </div><hr *ngIf="paymentDetails?.MerchantReference" class="m-1">
-                      <div class="d-flex justify-content-around mt-2">
-                          <div>
+                      <div class="sclass mt-2">
+                          <div class="mt-2">
                             <button class="btn btn-warning" *ngIf="paymentDetails?.DebitNoteNo" (click)="onDebitdownload(paymentDetails)">Debit Note Pdf &nbsp;<i class="fa fa-download"
                             aria-hidden="true"></i></button>
                           </div>
-                          <div>
+                          <div class="mt-2">
                             <button class="btn btn-info" *ngIf="paymentDetails?.CreditNoteNo" (click)="onCreditdownload(paymentDetails)">Credit Note Pdf &nbsp;<i class="fa fa-download"
                             aria-hidden="true"></i></button>
                           </div>
-                          <div>
+                          <div class="mt-2">
                             <button class="btn btn-success" *ngIf="paymentDetails?.PolicyNo" (click)="onGetSchedule(paymentDetails)">Schedule Pdf &nbsp;<i class="fa fa-download"
                             aria-hidden="true"></i></button>
                           </div>
