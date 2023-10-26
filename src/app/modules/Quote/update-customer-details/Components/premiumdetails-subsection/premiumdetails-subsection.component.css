@@ -6,13 +6,22 @@
 .customPadding{
     margin-left: 15px;
 }
-@media screen and (min-width:700px) and (max-width: 20000px) {
+@media screen and (min-width:1024px) and (max-width: 20000px) {
     .display2{
-       display:none;
+       display:none !important;
         }
         .smallclass{
             padding-left: 70px !important;
             padding-right: 40px !important;
+        }
+        .mobilelabel{
+            display:none !important;
+        }
+        .classlables{
+            text-align: right !important;
+        }
+        .classlables1{
+            text-align: left !important;
         }
     }
 
@@ -27,4 +36,90 @@
             padding-left: 5px;
             padding-right:none !important;
         }
+        .customTemplatess {
+            min-width: auto !important;  
+        }
+        ::ng-deep .modal-content {
+            width: 100% !important;
+        }
+        ::ng-deep .table tr{
+            display:flex !important;
+            flex-direction: column !important;
+        }
+        ::ng-deep .table tr th{
+           display: none !important;
+        }
+        .mobilelabel{
+            display:inline-block !important;
+        }
+        .classlables{
+            text-align: center !important;
+        }
+        .classlables1{
+            text-align: center !important;
+        }
+        
+
  }
+
+   /* iPads (portrait and landscape) ----------- */
+   @media only screen 
+   and (min-device-width : 768px) 
+   and (max-device-width : 1024px) {
+       /* Styles */
+     .display1{
+       display:none !important;
+           }
+           .display2{
+            display:block !important;
+           }
+           .customTemplatess {
+               min-width: auto !important;  
+           }
+           .mobilelabel{
+            display:none !important;
+        }
+        .classlables{
+            text-align: right !important;
+        }
+        .classlables1{
+            text-align: left !important;
+        }
+   }
+   
+   /* iPads (landscape) ----------- */
+   @media only screen 
+   and (min-device-width : 768px) 
+   and (max-device-width : 1024px) 
+   and (orientation : landscape) {
+       /* Styles */
+       .display1{
+        display:none !important;
+            }
+            .display2{
+             display:block !important;
+            }
+            .customTemplatess {
+                min-width: auto !important;  
+            }
+            .mobilelabel{
+                display:none !important;
+            }
+            .classlables{
+                text-align: right !important;
+            }
+            .classlables1{
+                text-align: left !important;
+            }
+   }
+
+   /* @media only screen 
+   and (min-device-width : 768px)  {
+
+       .display1{
+        display:none !important;
+            }
+            .display2{
+             display:block !important;
+            }
+   } */

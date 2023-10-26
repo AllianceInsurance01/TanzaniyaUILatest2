@@ -421,7 +421,8 @@ th.mat-header-cell {
   }
   .customImage{
     min-height:60vh !important;
-    background: url('../../../../../../assets/images/authenticate.webp') no-repeat !important;
+    background: url('../../../../../../assets/otp.webp') no-repeat !important;
+    /* background: url('../../../../../../assets/images/authenticate.webp') no-repeat !important; */
       background-position: center center !important;
       background-size: 100% 75% !important;
   

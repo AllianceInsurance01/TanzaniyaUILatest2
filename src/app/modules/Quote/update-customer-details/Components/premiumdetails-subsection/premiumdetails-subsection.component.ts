@@ -6,6 +6,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./premiumdetails-subsection.component.css']
 })
 export class PremiumdetailsSubsectionComponent {
+  panelOpenState = false;
   @Input('cols') columnHeader: any = [];
   @Input('cols1') columnriskdetails: any = [];
   @Input('cols2') customerDetails: any = [];

@@ -288,7 +288,7 @@ display: block;
     min-height: 81vh !important;
 }
 .content {
-  min-height: 97% !important;
+  min-height: 100% !important;
   //border-radius: 10px;
   //padding: 10px !important;
   margin: 9px 10px 5px 15px;
@@ -887,6 +887,9 @@ and (max-device-width : 1024px) {
   .display3{
     display:none !important;
         }
+        .display4{
+          display:block !important;
+              }
         
 }
 
@@ -896,9 +899,12 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px) 
 and (orientation : landscape) {
 	/* Styles */
-  .display4{
+  .display3{
     display:none !important;
         }
+        .display4{
+          display:block !important;
+              }
 }
 
 /* iPads (portrait) ----------- */

@@ -15,7 +15,7 @@
         </span>
     </div> -->
     <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" class="ux-table-v" matSort [matSortActive]="sortProperty" [matSortDirection]="sortDirection" matSortDisableClear>
+    <table mat-table [dataSource]="dataSource" class="col-12 col-md-12 ux-table-v" matSort [matSortActive]="sortProperty" [matSortDirection]="sortDirection" matSortDisableClear>
         <ng-container *ngFor="let col of columnHeader; let i = index;" [matColumnDef]="col.key" [sticky]="i===0" [stickyEnd]="i === 10">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header mat-header-cell">
                 <ng-container *ngIf="columnHeader[i]['display']=='Premium' || columnHeader[i]['display']=='Endorsement Premium'">
@@ -215,6 +215,11 @@
                           <i class="fas fa-eye"></i>
                         </button>&nbsp;
                     </ng-container>
+                    <ng-container *ngIf="col.config.isinfos">
+                        <button class="btn btn-primary btn-sm" (click)="onInfo.emit(element)">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        </button>&nbsp;
+                    </ng-container>
                     <ng-container *ngIf="col.config.isOpenGridAction">
                         <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                 <i class="fas fa-ellipsis-v"></i>
@@ -262,7 +267,8 @@
         <tr mat-header-row *matHeaderRowDef="keys"></tr>
         <tr mat-row *matRowDef="let row; columns: keys" [ngClass]="{'my_class': dataValues=='value', 'my_class2' : dataValues!='value' }"></tr>
     </table>
-    <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Select page of periodic elements">
+
+    <mat-paginator #paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Select page of periodic elements">
     </mat-paginator>
    </div>
     <ng-container *ngIf="!dataSource.data.length">
@@ -280,7 +286,7 @@
 
 <div class="example-containers mt-2">
     <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort [matSortActive]="sortProperty" style="white-space: normal !important;" [matSortDirection]="sortDirection" matSortDisableClear>
+    <table mat-table class="col-12 col-md-12" [dataSource]="dataSource" matSort [matSortActive]="sortProperty" style="white-space: normal !important;" [matSortDirection]="sortDirection" matSortDisableClear>
         <ng-container *ngFor="let col of columnHeader; let i = index;" [matColumnDef]="col.key" [sticky]="i===0" [stickyEnd]="i === 10">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header mat-header-cell" style="text-wrap: wrap !important;">
                 <ng-container *ngIf="columnHeader[i]['display']=='Premium' && columnHeader[i]['display']!='Endorsement Premium'">
@@ -396,13 +402,13 @@
                         </div>
                     </ng-container>
                     <ng-container *ngIf="col.config.isEdit">
-                        <div class="d-flex justify-content-between">
-                            <div>
+                        <div class="row">
+                            <div class="col-6">
                                 <span class="mobile-label"> 
                                     {{ columnHeader[i]["display"] }}
                             </span>
                             </div>
-                            <div>
+                            <div class="col-6">
                                 <button class="btn btn-primary btn-sm" (click)="onEdit.emit(element)">
                                     <i class="fas fa-marker"></i>
                                   </button>&nbsp;
@@ -464,13 +470,13 @@
                       </button>
                     </ng-container>
                     <ng-container *ngIf="col.config.isRemove">
-                        <div class="d-flex justify-content-between">
-                            <div>
+                        <div class="row">
+                            <div class="col-6">
                                 <span class="mobile-label"> 
                                     {{ columnHeader[i]["display"] }}
                             </span>
                             </div>
-                            <div>
+                            <div class="col-6">
                                 <button class="btn btn-danger btn-sm" (click)="onDelete.emit(element)">
                                     <i class="fas fa-trash"></i>
                                   </button>
@@ -532,13 +538,13 @@
             </td>
         </ng-container>
                 <tr mat-header-row *matHeaderRowDef="keys"></tr>
-        <tr mat-row *matRowDef="let row; columns: keys" style="height: 100%;width:100%;overflow: scroll;display: flex !important;flex-direction: column; border-top:1px solid navy; border-bottom:1px solid navy;font-size:14px;"></tr>
+        <tr mat-row *matRowDef="let row; columns: keys" style="height: 100%;width:100%;display: flex !important;flex-direction: column; border-top:1px solid navy; border-bottom:1px solid navy;font-size:14px;"></tr>
         <!--style="height: 100%;width:100%;overflow: scroll;display: flex !important;flex-direction: column; border-top:1px solid navy; border-bottom:1px solid navy;font-size:14px;"-->
 
         <!-- <tr mat-header-row *matHeaderRowDef="keys"></tr>
         <tr mat-row *matRowDef="let row; columns: keys" style="height: unset;width:100%;overflow: scroll;display: flex !important;flex-direction: column; border-top:1px solid navy; border-bottom:1px solid navy;font-size:14px;" class="mt-2"></tr> -->
     </table>
-    <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Select page of periodic elements">
+    <mat-paginator #paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Select page of periodic elements">
     </mat-paginator>
     </div>
     <ng-container *ngIf="!dataSource.data.length">

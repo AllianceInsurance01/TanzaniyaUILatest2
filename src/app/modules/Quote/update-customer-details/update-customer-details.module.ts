@@ -63,6 +63,8 @@ import { RadioList } from './radioList';
 import { NgSelect } from './ngselect';
 import { TablesTypeComponent } from './formlytable';
 import { DisplayLabels } from './displayformly';
+import {CdkAccordionModule} from '@angular/cdk/accordion';
+import {MatExpansionModule} from '@angular/material/expansion';
 //import { CommaSeparatorsInput } from './Commaseperatorin';
 
 export function maxlengthValidationMessage(err, field) {
@@ -107,7 +109,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     TablesTypeComponent,
     CustomerModelComponent,
     RadioList,
-    NgSelect
+    NgSelect,
     //NewViewDetailsComponent
 
     ],
@@ -127,6 +129,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     DigitOnlyModule,
     NgbModule,
     MatTabsModule,
+    CdkAccordionModule,
+    MatExpansionModule,
     NgxMaskModule.forRoot(options),
     FormlyModule.forRoot({
       validationMessages: [{ name: 'required', message: 'This field is required' },

@@ -41,8 +41,8 @@
 <ng-template #mymodal let-modal>
   <div class="modal-header" style="height: 48px;">
       <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Reject Quote</span></h4>
-      <h4 class="modal-title" *ngIf="quotes" id="modal-basic-title"><span class="spancommon span_font_size" style="position: relative;left: 17rem;">Quote No : {{quote}}</span></h4>
-      <h4 class="modal-title" *ngIf="!quotes" id="modal-basic-title"><span class="spancommon span_font_size" style="position: relative;left: 17rem;">Reference No : {{Reference}}</span></h4>
+      <h4 class="modal-title" *ngIf="quotes" id="modal-basic-title"><span class="spancommon span_font_size" style="position: relative;">Quote No : {{quote}}</span></h4>
+      <h4 class="modal-title" *ngIf="!quotes" id="modal-basic-title"><span class="spancommon span_font_size" style="position: relative;">Reference No : {{Reference}}</span></h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
           <span aria-hidden="true">×</span>
       </button>

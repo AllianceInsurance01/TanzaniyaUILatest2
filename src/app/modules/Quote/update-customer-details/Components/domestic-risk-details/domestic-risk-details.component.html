@@ -1492,7 +1492,7 @@
                 </mat-tab>
                 <mat-tab label="Fidelity Details" [disabled]="!fourth" *ngIf="eight">
                     <div class="row mt-2" *ngIf="!enableFidelityEditSection">
-                        <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                        <div class="col-md-8 col-12 col-lg-8 col-xl-8 offset-lg-2">
                             <div class="boxForm">
                                 <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
                                     <div class="headcommon" *ngIf="!enableFidelityUploadSection">
@@ -1714,9 +1714,9 @@
                         </div>
                     </div>
                     <div class="row" *ngIf="enableFidelityEditSection">
-                        <div class="col-md-8 col-lg-8 col-xl-8 offset-2">
+                        <div class="col-md-12 col-12 col-lg-8 col-xl-8 offset-lg-2">
                             <div class="boxForm">
-                                <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                <div class="mobileheading justify-content-between maan-grid-item maan-grid-item-title">
                                     <div class="headcommon">
                                         <span><i class="fas fa-home mx-1 mt-3"></i></span>
                                         <span class="spancommon span_font_size" style="font-weight:600">Fidelity Details</span>
@@ -1838,18 +1838,18 @@
                                     <span><u> Sum Insured </u></span>
                                 </div>
                                 <div class="row" >
-                                    <div class="col-6 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="col-12 col-md-6 col-lg-6 col-xl-6">
                                         <div class="ml-3">
                                             <b style="white-space: nowrap;">Total</b>
                                         </div>
                                     </div>
-                                    <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalFidelityIntSI==0 || totalFidelityIntSI=='0' || totalFidelityIntSI==null">
+                                    <div class="col-12 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalFidelityIntSI==0 || totalFidelityIntSI=='0' || totalFidelityIntSI==null">
                                         <b style="white-space: nowrap;float: right !important;">0</b>
                                     </div>
-                                    <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalFidelityIntSI!=0 && totalFidelityIntSI!='0' && totalFidelityIntSI!=null">
+                                    <div class="col-12 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalFidelityIntSI!=0 && totalFidelityIntSI!='0' && totalFidelityIntSI!=null">
                                         <b style="white-space: nowrap;float: right !important;">{{totalFidelityIntSI | commaseparator }} &nbsp;({{currencyValue}})</b>
                                     </div>
-                                    <div class="col-6 col-md-6 col-lg-6 col-xl-6 ml-3">
+                                    <div class="col-12 col-md-6 col-lg-6 col-xl-6 ml-3">
                                         <b style="white-space: nowrap;">Actual</b>
                                     </div>
                                     <div class="col-6 col-md-6 col-lg-6 col-xl-6">
@@ -2027,9 +2027,9 @@
                         <!-- <div class="row mt-1">
                         </div> table_expand-->
                         <div class="row mt-2" *ngIf="!enableAccessoriesEditSection">
-                            <div class="col-md-8 col-lg-8 col-xl-8 offset-lg-2 offset-md-2">
+                            <div class="col-md-12 col-lg-8 col-xl-8 col-12 offset-lg-2">
                                 <div class="boxForm">
-                                    <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title display1">
+                                    <div class="mobileheading justify-content-between maan-grid-item maan-grid-item-title display1">
                                         <div class="headcommon">
                                             <span><i class="fas fa-home mx-1 mt-3"></i></span>
                                             <span class="spancommon span_font_size" style="font-weight:600">Accessories Details</span>
@@ -2095,7 +2095,7 @@
                                                 
                                             </div>
                                         </div>  
-                                        <div  class="d-flex maan-grid-item display2" style="flex-direction: column;">
+                                        <div  class="small maan-grid-item display2" style="flex-direction: column;">
                                             <div class="totalProsession">
                                                 <span ><b>Sum Insured</b></span>
                                             </div>
@@ -2121,7 +2121,7 @@
                             </div>
                         </div>
                         <div class="row" *ngIf="enableAccessoriesEditSection">
-                            <div class="col-md-8 col-lg-8 col-xl-8 offset-lg-2 offset-md-2">
+                            <div class="col-md-12 col-lg-8 col-xl-8 col-12 offset-lg-2 offset-lg-2">
                                 <div class="boxForm" >
                                         <span><u>Accessories Risk Details </u></span>
                                     <div class="row">
@@ -2187,16 +2187,16 @@
                                                 <b style="white-space: nowrap;">Total</b>
                                             </div>
                                         </div>
-                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalAccessoriesSI==0 || totalAccessoriesSI=='0' || totalAccessoriesSI==null">
+                                        <div class="col-12 col-md-12 col-lg-6 col-xl-6"  *ngIf="totalAccessoriesSI==0 || totalAccessoriesSI=='0' || totalAccessoriesSI==null">
                                             <b style="white-space: nowrap;float: right !important;">0</b>
                                         </div>
-                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalAccessoriesSI!=0 && totalAccessoriesSI!='0' && totalAccessoriesSI!=null">
+                                        <div class="col-12 col-md-12 col-lg-6 col-xl-6"  *ngIf="totalAccessoriesSI!=0 && totalAccessoriesSI!='0' && totalAccessoriesSI!=null">
                                             <b style="white-space: nowrap;float: right !important;">{{totalAccessoriesSI | commaseparator }} &nbsp;({{currencyValue}})</b>
                                         </div>
-                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6 ml-3">
+                                        <div class="col-12 col-md-12 col-lg-6 col-xl-6 ml-3">
                                             <b style="white-space: nowrap;">Actual</b>
                                         </div>
-                                        <div class="col-6 col-md-6 col-lg-6 col-xl-6">
+                                        <div class="col-12 col-md-12 col-lg-6 col-xl-6">
                                             <b style="white-space: nowrap;float: right !important;">{{actualAssSI | commaseparator }} &nbsp;({{currencyValue}})</b>
                                         </div>
                                         

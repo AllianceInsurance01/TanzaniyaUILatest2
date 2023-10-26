@@ -66,7 +66,7 @@ width:300px !important;
         display:none !important;
     } */
     .tableclass{
-        width:auto !important;
+        width:100% !important;
     }
 }
 @media only screen and (min-width: 1024px) and (max-width: 200000px) 
@@ -82,12 +82,13 @@ width:auto !important;
     display:none !important;
 } */
 .tableclass{
-    width:400px !important;
+    width:calc(100% - 65px)!important;
+    /* width:400px !important; */
 }
 }
 
 
-  @media screen and (min-width: 280px) and (max-width: 750px) {
+  @media screen and (min-width: 381px) and (max-width: 750px) {
     /* .display3{ display: none !important; }  */
     .mobile-label {
       display: inline-block;
@@ -108,124 +109,70 @@ width:auto !important;
        width:200px;
     }
     .tableclass{
-        width:250px !important;
+        width:auto !important;
+    }
+    #capture_table{
+        text-align: center !important;
     }
   
   }
 
+  @media screen and (min-width: 280px) and (max-width: 380px) {
+    .tableclass{
+        width:auto !important;
+        /*220px*/
+    }
+    #capture_table{
+        text-align: center !important;
+    }
+  }
+  
+@media screen and (min-width: 280px) and (max-width: 700px) {
+  .display3{
+    display:none !important;
+  }
+  #capture_table{
+    text-align: center !important;
+}
+  
+  }
+  @media screen and (min-width:1025px) and (max-width: 20000px) {
+    .display4{
+        display:none !important;
+      }
+   
+  }
+  
+   /* iPads (portrait and landscape) ----------- */
+   @media only screen 
+   and (min-device-width : 701px) 
+   and (max-device-width : 861px) {
+    .display3{
+        display:none !important;
+      }
+      #capture_table{
+        text-align: center !important;
+    }
+    .tableclass{
+    width:calc(100% - 65px)!important;
+    }
+   }
+   @media only screen 
+   and (min-device-width : 862px) 
+   and (max-device-width : 1024px) {
+    .display3{
+        display:none !important;
+      }
+      #capture_table{
+        text-align: center !important;
+    }
+    .tableclass{
+        width:calc(100% - 65px)!important;
+        }
+   }
 
   
 
   /* */
   
-  @media only screen 
-  and (min-device-width : 320px) 
-  and (max-device-width : 480px) {
-      /* Styles */
-    .display3{
-      display:none !important;
-          }
-  }
-  
-  /* Smartphones (landscape) ----------- */
-  @media only screen 
-  and (min-width : 321px) {
-      /* Styles */
-    .display3{
-      display:none !important;
-          }
-  }
-  
-  /* Smartphones (portrait) ----------- */
-  @media only screen 
-  and (max-width : 320px) {
-      /* Styles */
-    .display3{
-      display:none !important;
-          }
-  }
-  
-  /* iPads (portrait and landscape) ----------- */
-  @media only screen 
-  and (min-device-width : 768px) 
-  and (max-device-width : 1024px) {
-      /* Styles */
-    .display3{
-      display:none !important;
-          }
-  }
-  
-  /* iPads (landscape) ----------- */
-  @media only screen 
-  and (min-device-width : 768px) 
-  and (max-device-width : 1024px) 
-  and (orientation : landscape) {
-      /* Styles */
-      .display3{
-        display:none !important;
-            }
-            .display4{
-              display: visible !important;
-                  }
-  }
-  
-  /* iPads (portrait) ----------- */
-  @media only screen 
-  and (min-device-width : 768px) 
-  and (max-device-width : 1024px) 
-  and (orientation : portrait) {
-      /* Styles */
-    .display3{
-      display:none !important;
-          }
-          .display4{
-            display: visible !important;
-                }
-  }
-  
-  /* Desktops and laptops ----------- */
-  @media only screen 
-  and (min-width : 1224px) {
-      /* Styles */
-    .display4{
-        visibility: hidden !important;
-        display: none !important;
-    }
-    .display3{
-        visibility: visible !important;
-        display: table !important;
-          }
-  }
-
-  @media screen and (min-width: 1224px) and (max-width: 5464px) {
-    .display4{
-        visibility: hidden !important;
-        display: none !important;
-      }
-      .display3{
-        visibility: visible !important;
-        display: table !important;
-      }
-  
-  }
-  
-  @media only screen 
-and (min-width : 768px) {
-	/* Styles */
-  .display3{
-    display: none;
-        }
-}
-  /* Large screens ----------- */
-  /* @media only screen 
-  and (min-width : 1824px) {
-
-    .display4{
-      display:none !important;
-          }
-          .display3{
-            visibility: visible !important;
-            display: table !important;
-              }
-  }
-   */
+ 

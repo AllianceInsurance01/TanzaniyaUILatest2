@@ -573,7 +573,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-md-12 col-lg-6 offset-lg-1" >
+                            <div class="col-md-6 col-lg-6 offset-lg-1" >
                                 <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct','select')" #doc>
                                 <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadDocuments($event,null,'direct','drag')" (click)="doc.click()">
                                     <div>
@@ -672,7 +672,7 @@
                 </div>
                   <!--Common documnents Mobile View-->
                   <div class="display4">
-                    <div class="maan-grid-item-body" style="display:flex;flex-direction: column;">
+                    <div class="maan-grid-item-body" style="display:flex;flex-direction: column;padding-left:15px !important;">
                         <div class="row" *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
                             <div class="product_Section col-12 col-md-6 col-lg-4" *ngIf="commonDocTypeList.length!=0" style="margin-left:10px;">
                                 <div class="text-center">
@@ -689,7 +689,7 @@
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct','select')" #doc>
-                                <div class="imag-card my-3" style="width:200px !important;" appDragDropFileUpload (fileDropped)="onUploadDocuments($event,null,'direct','drag')" (click)="doc.click()">
+                                <div class="imag-card my-3" style="width:250px !important;height:60px !important;" appDragDropFileUpload (fileDropped)="onUploadDocuments($event,null,'direct','drag')" (click)="doc.click()">
                                     <div>
                                         <div class="center">
                                             <b class="text-dark" style="font-size:1rem">
@@ -767,7 +767,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <table class="table tableclass" id="capture_table"><!--style="width:250px !important"-->
+                            <table class="table tableclass"><!--style="width:250px !important"-->
                                 <thead style="display:none;">
                                     <tr>
                                         <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
@@ -779,7 +779,8 @@
                                     </tr>
                                 </thead>
                                 <tbody style="width:100%">
-                                    <tr *ngFor="let document of uploadedDocList;let i=index" class="tableclass" style="display:flex;flex-direction: column;"><!--width:250px;-->
+                                    <tr *ngFor="let document of uploadedDocList;let i=index" class="tableclass mt-2" style="display:flex;flex-direction: column;" id="capture_table"><!--width:250px;-->
+                                        <td>
                                         <div class="row">
                                             <div class="col-6">
                                                 S.No
@@ -788,6 +789,7 @@
                                                 <span >{{i+1}}</span>
                                             </div>
                                         </div>
+                                       </td>
                                         <td>
                                             <div class="row">
                                                 <div class="col-6">
@@ -799,24 +801,42 @@
                                                 </div>
                                                 </div>
                                             </td>
-                                        <td class="row">
+                                        <td>
+                                            <div class="row">
                                             <div class="col-6">
                                                 Document Type
                                             </div>
-                                            <div class="col-12">
-                                            <ng-select class="input-form-select" appendTo="body" disabled [(ngModel)]="document.DocumentId" [items]="commonDocTypeList" bindValue="Code" bindLabel="CodeDesc">
-                                            </ng-select>
+                                            <div class="col-6">
+                                                <span>{{document?.DocumentDesc}}</span>
+                                            <!-- <ng-select class="input-form-select" appendTo="body" disabled [(ngModel)]="document.DocumentId" [items]="commonDocTypeList" bindValue="Code" bindLabel="CodeDesc">
+                                            </ng-select> -->
                                            </div>
+                                        </div>
                                         </td>
-                                        <td class="row">
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewCommonDocument(i)"><i class="fa fa-eye"></i></a>
+                                                </div>
+                                                <div class="col-4" *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
+                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete" (click)="onDeleteCommonDocument(i)"><i
+                                                        class="fa fa-trash"></i></a>
+                                                </div>
+                                                <div class="col-4">
+                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onCommonDocumentDownload(i)"><i
+                                                        class="fa fa-download"></i></a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <!-- <td class="row">
                                             <div class="col-6">
                                                 View
                                             </div>
                                             <div class="col-6">
                                                 <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewCommonDocument(i)"><i class="fa fa-eye"></i></a>
                                             </div>
-                                        </td>
-                                        <td *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)" class="row">
+                                        </td> -->
+                                        <!-- <td *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)" class="row">
                                             <div class="col-6">
                                                 Delete
                                             </div>
@@ -825,8 +845,8 @@
                                                     class="fa fa-trash"></i></a>
                                             </div>
                                           
-                                        </td>
-                                        <td class="row">
+                                        </td> -->
+                                        <!-- <td class="row">
                                             <div class="col-6">
                                                 Download
                                             </div>
@@ -835,7 +855,7 @@
                                                     class="fa fa-download"></i></a>
                                             </div>
                                            
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 </tbody>
                             </table>
@@ -867,7 +887,7 @@
                 <div class="display3">
                     <div class="maan-grid-item-body " style="padding-left: 25px !important;padding-right: 40px !important;">
                         <div class="row customFlow">
-                            <div class="col-md-6 col-lg-6 offset-3"  *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
+                            <div class="col-md-6 col-lg-6 offset-lg-3"  *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
                                 <input style="display: none;" type="file" (change)="onUploadListDocuments($event,null,'direct',j,'select')" #doc>
                                 <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadListDocuments($event,null,'direct',j,'drag')" (click)="doc.click()">
                                     <div>
@@ -1006,7 +1026,7 @@
                         <div class="row customFlow">
                             <div class="col-12 col-md-6 col-lg-6" *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
                                 <input style="display: none;" type="file" (change)="onUploadListDocuments($event,null,'direct',j,'select')" #doc>
-                                <div class="imag-card my-3" style="width:250px;" appDragDropFileUpload (fileDropped)="onUploadListDocuments($event,null,'direct',j,'drag')" (click)="doc.click()">
+                                <div class="imag-card my-3" style="width:250px;height:60px !important;" appDragDropFileUpload (fileDropped)="onUploadListDocuments($event,null,'direct',j,'drag')" (click)="doc.click()">
                                     <div>
                                         <div class="center">
                                             <b class="text-dark" style="font-size:1rem">
@@ -1018,7 +1038,7 @@
                         </div>
                         <ng-container *ngIf="uploadListDoc.length !=0">
                             <table class="table table-border-1ed" id="capture_table" style="position: relative;
-                            top: 2rem;width:100% !important">
+                            top: 2rem;width:auto !important">
                                 <thead style="display:none;">
                                     <tr>
                                         <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
@@ -1047,15 +1067,18 @@
                                             </div>
                                         </div>
                                         
-                                        <td class="row">
+                                        <td>
+                                            <div class="row">
                                             <div class="col-6">FileName
                                         </div>
                                         <div class="col-6">
                                             <span class="spancommon span_font_size">{{document.filename}}</span>
                                         </div>
+                                    </div>
                                     </td>
                                       
-                                        <td *ngIf="productId!='5' && productId!='4'" class="row">
+                                        <td *ngIf="productId!='5' && productId!='4'">
+                                            <div class="row">
                                             <div class="col-6">
                                                 Location
                                             </div>
@@ -1063,15 +1086,19 @@
                                                 <ng-select class="input-form-select" [disabled]="document.locationList.length==1" appendTo="body" (change)="onChangeLocationType(document,i)" [(ngModel)]="document.locationId" [items]="document.locationList" bindValue="LocationId" bindLabel="LocationName">
                                                 </ng-select>
                                             </div>
+                                        </div>
                                         </td>
-                                        <td class="row">
+                                        <td>
+                                            <div class="row">
                                             <div class="col-6">Section</div>
                                             <div class="col-12">
                                                 <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.sectionId" (change)="onChangeSectionType(document,i)" [items]="document.sectionList" bindValue="SectionId" bindLabel="SectionName">
                                                 </ng-select>
                                             </div>
+                                        </div>
                                         </td>
-                                        <td class="row">
+                                        <td>
+                                            <div class="row">
                                             <div class="col-6">
                                                 <ng-container *ngIf="productId=='5'">Chassis Number</ng-container>
                                                 <ng-container *ngIf="productId=='4'">Passpport No</ng-container>
@@ -1081,8 +1108,10 @@
                                             <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.Id" (change)="onChangeIdType(document)"  [items]="document.typeList" bindValue="Id" bindLabel="Id">
                                             </ng-select>
                                            </div>
+                                        </div>
                                         </td>
-                                        <td class="row">
+                                        <td>
+                                            <div class="row">
                                             <div class="col-6">
                                                 Document Type
                                             </div>
@@ -1090,6 +1119,7 @@
                                                 <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.DocTypeId" [items]="document.docTypeList" bindValue="Code" bindLabel="CodeDesc">
                                                 </ng-select>
                                               </div>
+                                            </div>
                                         </td>
                                         <td class="row">
                                             <div class="col-6">Delete</div>
@@ -1117,7 +1147,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <table class="table" id="capture_table" style="width:100% !important">
+                            <table class="table" style="width:auto !important">
                                 <thead style="display:none !important">
                                     <tr>
                                         <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
@@ -1138,7 +1168,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let document of uploadedIndividualList;let i=index" class="tableclass" style="display:flex;flex-direction: column;">
+                                    <tr *ngFor="let document of uploadedIndividualList;let i=index" class="tableclass mt-2" id="capture_table"  style="display:flex;flex-direction: column;">
+                                        
+                                        <td>
                                         <div class="row">
                                             <div class="col-6">
                                                 S.No
@@ -1147,58 +1179,81 @@
                                                 <span class="spancommon span_font_size">{{i+1}}</span>
                                             </div>
                                         </div>
+                                    </td>
                                         
-                                        <td class="row">
+                                        <td>
+                                            <div class="row">
                                             <div class="col-6">
                                                 FileName
                                             </div>
                                             <div class="col-6">
                                                 <span class="spancommon span_font_size">{{document.OriginalFileName}}</span>
                                             </div>
+                                        </div>
                                            
                                         </td>
-                                        <td *ngIf="productId!='5' && productId!='4'" class="row">
+                                        <td *ngIf="productId!='5' && productId!='4'">
+                                            <div class="row">
                                             <div class="col-6">Location</div>
                                             <div class="col-6"> <span class="spancommon span_font_size">{{document.LocationName}}</span></div>
+                                        </div>
                                            
                                         </td>
-                                        <td class="row">
-                                            <div class="col-6">Section</div>
-                                            <div class="col-6"><span class="spancommon span_font_size">{{document.SectionName}}</span></div>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-6">Section</div>
+                                                <div class="col-6"><span class="spancommon span_font_size">{{document.SectionName}}</span></div>
+                                            </div>
                                         </td>
-                                        <td class="row">
+                                        <td>
+                                            <div class="row">
                                             <div class="col-6">
                                                 <ng-container *ngIf="productId=='5'">Chassis Number</ng-container>
                                                 <ng-container *ngIf="productId=='4'">Passpport No</ng-container>
                                                 <ng-container *ngIf="productId!='4' && productId!='5'">ID</ng-container>
                                             </div>
                                             <div class="col-6"> <span class="spancommon span_font_size">{{document.Id}}</span></div>
+                                        </div>
                                            
                                         </td>
-                                        <td class="row">
+                                        <td>
+                                            <div class="row">
                                             <div class="col-6">Document Type</div>
                                             <div class="col-6"> <span class="spancommon span_font_size">{{document.DocumentDesc}}</span></div>
+                                            </div>
                                            
                                         </td>
-                                        <td class="row">
+                                        <td>
+                                            <div class="row">
+                                            <div class="col-4"> <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewListDocument(j,document)"><i
+                                                class="fa fa-eye"></i></a></div>
+                                                <div class="col-4" *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
+                                                    <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete" (click)="onDeleteListDocument(j,document)"><i
+                                                        class="fa fa-trash"></i></a>
+                                                </div>
+                                                <div class="col-4"><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onListDocumentDownload(j,document)"><i
+                                                    class="fa fa-download"></i></a></div>
+                                                </div>
+                                        </td>
+                                        <!-- <td class="row">
                                             <div class="col-6">View</div>
                                             <div class="col-6"> <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewListDocument(j,document)"><i
                                                 class="fa fa-eye"></i></a></div>
-                                        </td>
-                                        <td *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)" class="row">
+                                        </td> -->
+                                        <!-- <td *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)" class="row">
                                             <div class="col-6">Delete</div>
                                             <div class="col-6">
                                                 <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete" (click)="onDeleteListDocument(j,document)"><i
                                                     class="fa fa-trash"></i></a>
                                             </div>
                                            
-                                        </td>
-                                        <td class="row">
+                                        </td> -->
+                                        <!-- <td class="row">
                                             <div class="col-6">Download</div>
                                             <div class="col-6"><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onListDocumentDownload(j,document)"><i
                                                 class="fa fa-download"></i></a></div>
                                             
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 </tbody>
                             </table>
