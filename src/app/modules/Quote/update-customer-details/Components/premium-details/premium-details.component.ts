@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { ViewDocumnetDetailsComponent } from 'src/app/shared/view-documnet-details/view-documnet-details.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-premium-details',
@@ -676,6 +677,27 @@ export class PremiumDetailsComponent implements OnInit {
       );
   }
 onDeleteListDocument(vehIndex,rowData){
+  Swal.fire({
+    title: '<strong>Delete!</strong>',
+    icon: 'info',
+    html:
+      `<ul class="list-group errorlist">
+       <li>Do You Want to Delete this Document?</li>
+   </ul>`,
+    showCloseButton: false,
+    //focusConfirm: false,
+    showCancelButton:true,
+   //confirmButtonColor: '#3085d6',
+   cancelButtonColor: '#d33',
+   confirmButtonText: 'YES',
+   cancelButtonText: 'NO',
+  }).then((result) => {
+    if (result.isConfirmed) {
+        this.onDeleteListDocProceed(vehIndex,rowData);
+    }
+  });
+}
+onDeleteListDocProceed(vehIndex,rowData){
   let entry = this.vehicleList[vehIndex];
   let ReqObj = {
       "Id": rowData.Id,
@@ -1387,6 +1409,27 @@ toggle(index: number) {
     //this.modalService.open(this.content, { size: 'md', backdrop: 'static' });
   }
   onDeleteCommonDocument(index){
+    Swal.fire({
+      title: '<strong>Delete!</strong>',
+      icon: 'info',
+      html:
+        `<ul class="list-group errorlist">
+         <li>Do You Want to Delete this Document?</li>
+     </ul>`,
+      showCloseButton: false,
+      //focusConfirm: false,
+      showCancelButton:true,
+     //confirmButtonColor: '#3085d6',
+     cancelButtonColor: '#d33',
+     confirmButtonText: 'YES',
+     cancelButtonText: 'NO',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.onCommonDocumentDeleteProceed(index);
+      }
+    });
+  }
+  onCommonDocumentDeleteProceed(index){
     let ReqObj = {
       "Id": this.uploadedDocList[index].Id,
       "QuoteNo": this.quoteNo,

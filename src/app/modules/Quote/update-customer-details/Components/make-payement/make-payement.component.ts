@@ -7,6 +7,7 @@ import * as Mydatas from '../../../../../app-config.json';
 import { CookieService } from 'ngx-cookie-service';
 import { ViewDocumnetDetailsComponent } from 'src/app/shared/view-documnet-details/view-documnet-details.component';
 import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-make-payement',
@@ -291,6 +292,27 @@ export class MakePayementComponent implements OnInit {
   );
   }
   onDeleteCommonDocument(index){
+    Swal.fire({
+      title: '<strong>Delete!</strong>',
+      icon: 'info',
+      html:
+        `<ul class="list-group errorlist">
+         <li>Do You Want to Delete this Document?</li>
+     </ul>`,
+      showCloseButton: false,
+      //focusConfirm: false,
+      showCancelButton:true,
+     //confirmButtonColor: '#3085d6',
+     cancelButtonColor: '#d33',
+     confirmButtonText: 'YES',
+     cancelButtonText: 'NO',
+    }).then((result) => {
+      if (result.isConfirmed) {
+          this.onCommonDocumentDeleteProceed(index);
+      }
+    })
+  }
+  onCommonDocumentDeleteProceed(index){
     let ReqObj = {
       "Id": this.uploadedDocList[index].Id,
       "QuoteNo": this.quoteNo,

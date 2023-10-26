@@ -467,12 +467,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                
-                            </div>
-                            <div class="row" *ngIf="uploadedDocList.length==0">
-                                <div class="col-12 col-md-6 col-lg-6 offset-md-3 offset-lg-3">
+                                <div class="col-12 col-md-6 col-lg-6" *ngIf="chequeSection && uploadedDocList.length==0">
                                     <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct','select')" #doc>
-                                    <div class="imag-card my-3" style="width:400px !important;" appDragDropFileUpload (fileDropped)="onUploadDocuments($event,null,'direct','drag')" (click)="doc.click()">
+                                    <div class="imag-card my-3" style="max-width:300px !important;" appDragDropFileUpload (fileDropped)="onUploadDocuments($event,null,'direct','drag')" (click)="doc.click()">
                                         <div>
                                             <div class="center">
                                                 <b class="text-dark" style="font-size:1rem">
@@ -481,14 +478,47 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-12 col-md-6 col-lg-6" *ngIf="chequeSection && uploadedDocList.length !=0">
+                                    <div class="maan-grid-item">
+                                        <div class="maan-grid-item-title">
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    <span class="mx-1">
+                                                        <i class="fas fa-book mx-1"></i>
+                                                    </span>
+                                                    <span class="spancommon span_font_size">Uploaded Cheque</span>
+                                                </div>
+                                                <div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="maan-grid-item-body">
+                                            <ng-container *ngFor="let item of uploadedDocList;let i=index">
+                                                <div class="row">
+                                                    <div class="text-center">
+                                                        <b>{{item.OriginalFileName}}</b>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-center">
+                                                    <div> <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewCommonDocument(i)"><i class="fa fa-eye"></i></a></div>
+                                                    <div> <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete" (click)="onDeleteCommonDocument(i)"><i
+                                                        class="fa fa-trash"></i></a></div>
+                                                    <div><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onCommonDocumentDownload(i)"><i
+                                                        class="fa fa-download"></i></a></div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
                             </div>
-                            <ng-container *ngIf="uploadDocList.length !=0">
+                            <!-- <ng-container *ngIf="uploadDocList.length !=0">
                                 <table class="table" id="capture_table">
                                     <thead>
                                         <tr>
                                             <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
                                             <th scope="col"><span class="spancommon">FileName</span></th>
-                                            <!-- <th scope="col"><span class="spancommon">Document Type</span></th> -->
+                                            
                                             <th scope="col"><span class="spancommon">Delete</span></th>
                                         </tr>
                                     </thead>
@@ -496,10 +526,6 @@
                                         <tr *ngFor="let document of uploadDocList;let i=index">
                                             <th scope="row">{{i+1}}</th>
                                             <td><span class="spancommon">{{document.filename}}</span></td>
-                                            <!-- <td>
-                                                <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.DocTypeId" [items]="commonDocTypeList" bindValue="Code" bindLabel="CodeDesc">
-                                                </ng-select>
-                                            </td> -->
                                             <td>
                                                 <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onDeleteDocument(i)"><i
                                                         class="fa fa-trash"></i></a>
@@ -507,11 +533,8 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <!-- <div class="text-center mb-2 mt-1">
-                                    <button class=" btn btn-success" (click)="onFileUploadCommonList()"><span style="position:relative;bottom:0.22rem">Upload</span></button>
-                                </div> -->
-                            </ng-container>
-                            <ng-container *ngIf="uploadedDocList.length !=0">
+                            </ng-container> -->
+                            <!-- <ng-container *ngIf="uploadedDocList.length !=0">
                                 <div class="maan-grid-item-title">
                                     <div class="d-flex justify-content-between">
                                         <div>
@@ -524,45 +547,21 @@
                                         </div>
                                     </div>
                                 </div>
-                                <table class="table" id="capture_table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
-                                            <th scope="col"><span class="spancommon">FileName</span></th>
-                                            <!-- <th scope="col"><span class="spancommon">Document Type</span></th> -->
-                                            <th scope="col"><span class="spancommon">View</span></th>
-                                            <th scope="col" *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)"><span class="spancommon" >Delete</span></th>
-                                            <th scope="col"><span class="spancommon">Download</span></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let document of uploadedDocList;let i=index">
-                                            <th scope="row"><span class="spancommon span_font_size">{{i+1}}</span></th>
-                                            <td><span class="spancommon span_font_size">{{document.OriginalFileName}}</span></td>
-                                            <!-- <td>
-                                                <ng-select class="input-form-select" appendTo="body" disabled [(ngModel)]="document.DocumentId" [items]="commonDocTypeList" bindValue="Code" bindLabel="CodeDesc">
-                                                </ng-select>
-                                            </td> -->
-                                            <td>
-                                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewCommonDocument(i)"><i class="fa fa-eye"></i></a>
-                                            </td>
-                                            <td>
-                                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete" (click)="onDeleteCommonDocument(i)"><i
-                                                        class="fa fa-trash"></i></a>
-                                            </td>
-                                            <td>
-                                                <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onCommonDocumentDownload(i)"><i
-                                                        class="fa fa-download"></i></a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </ng-container>
-                            <div class="text-center mt-1">
-                                <!-- <button class="btn btn-danger" *ngIf="uploadedDocList.length==0" (click)="uploadSection=!uploadSection;uploadDocList=[]">Cancel</button>&nbsp; -->
-                                <!-- <button class="btn btn-info"  *ngIf="!uploadSection && chequeSection && Fourth && uploadedDocList.length==0" (click)="onEnableUploadSection()">Upload Cheque</button>&nbsp; -->
-                               
-                            </div>
+                                <ng-container *ngFor="let item of uploadedDocList;let i=index">
+                                    <div class="row">
+                                        <div class="text-center">
+                                            <b>{{item.OriginalFileName}}</b>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <div> <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onViewCommonDocument(i)"><i class="fa fa-eye"></i></a></div>
+                                        <div> <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Delete" (click)="onDeleteCommonDocument(i)"><i
+                                            class="fa fa-trash"></i></a></div>
+                                        <div><a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onCommonDocumentDownload(i)"><i
+                                            class="fa fa-download"></i></a></div>
+                                    </div>
+                                </ng-container>
+                            </ng-container>   -->
                         </div>
                     </div>
                     <div class="card" *ngIf="Fifth" style="width: 100%;border: 2px solid #eaecf1;border-radius: 0.7rem;outline: none;box-sizing: border-box;transition: all .3s;height: auto;background: rgb(255,255,255);box-shadow: 1px 2px 2px #1f26875e;backdrop-filter: blur(18.5px);">
@@ -1033,11 +1032,11 @@
 <div class="text-center my-2 mt-3" >
     <!-- <button class="custom-btn btn-6 mx-2" matRipple>Download Form</button> -->
     <button class="custom-btn btn-5 mx-2" *ngIf="(!policySection && !successSection)  || (!policySection && cancelEndorse && (IsChargeOrRefund=='REFUND' || IsChargeOrRefund=='CHARGE'))" matRipple (click)="ongetBack()" ><<&nbsp;Back</button>&nbsp;
-    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="second && !policySection" style="width: 8rem;" matRipple [routerLink]="['/Home/existingQuotes']">Make Payment</button>
-    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="Third && !policySection" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>&nbsp;
-    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="Fourth && !policySection" [disabled]="chequeSection && uploadedDocList.length==0" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
-    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="Fifth && !policySection" style="width: 8rem;" matRipple [routerLink]="['/Home/existingQuotes']">Make Payment</button>
-    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="Sixth && !policySection" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment</button>
+    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="second && !policySection" style="width: 8rem;" matRipple [routerLink]="['/Home/existingQuotes']">Make Payment&nbsp;</button>
+    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="Third && !policySection" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment&nbsp;</button>
+    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="Fourth && !policySection" [disabled]="chequeSection && uploadedDocList.length==0" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment&nbsp;</button>
+    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="Fifth && !policySection" style="width: 8rem;" matRipple [routerLink]="['/Home/existingQuotes']">Make Payment&nbsp;</button>
+    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="Sixth && !policySection" style="width: 8rem;" matRipple (click)="onCashPayment()">Make Payment&nbsp;</button>
     <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="endorsementSection && (cancelEndorse && IsChargeOrRefund!='REFUND' && IsChargeOrRefund!='CHARGE')" matRipple [routerLink]="['/Home/policies/Endorsements']" routerLinkActive="router-link-active">Proceed</button>
     <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="checkRefundMandatories()" matRipple (click)="onCashPayment()">Submit</button>
 </div>
