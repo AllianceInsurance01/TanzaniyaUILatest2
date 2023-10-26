@@ -861,25 +861,93 @@
     <div class="col-12 col-md-6 col-lg-6 offset-md-3 offset-lg-3 spancommon span_font_size">
         <div class="card mt-4">
             <div class="card-body">
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-10 offset-1 spancommon span_font_size">
                         <h4 class="spancommon span_font_size" style="font-weight: 600;text-align: center;"><ng-container *ngIf="endorsementSection">Endorsement&nbsp;</ng-container>Policy Generated Successfully</h4>
                     </div>
-                </div>
-                
-                        <ul class="list-group">
+                </div> -->
+                <div class="row ">
+                    <div class="col-md-7 col-lg-7 col-xl-7 col-12 offset-md-3 offset-lg-3 offset-xl-3 boxForm p-4">
+                    <div class="row">
+                        <div class="col-10 offset-1 spancommon span_font_size">
+                            <h4 class="spancommon span_font_size" style="font-weight: 600;text-align: center;"><ng-container *ngIf="endorsementSection">Endorsement&nbsp;</ng-container>Policy Generated Successfully</h4>
+                        </div>
+                    </div><hr class="m-1">
+                      <div class="d-flex justify-content-between" style="margin: 0px !important;top:0rem;bottom: 0rem !important;" *ngIf="requestReferenceNo">
+                        <div class="mx-0 mt-1 slider-main" >
+                          <span class="spancommon span_font_size">Reference No</span>&nbsp;&nbsp;
+                        </div>
+                        <div class="mx-0 mt-1 slider-main">
+                          <span class="spancommon span_font_size" style="font-weight:600;color: darkblue;">{{requestReferenceNo}}</span>
+                        </div>
+                      </div><hr class="m-1" *ngIf="requestReferenceNo">
+                      <div class="d-flex justify-content-between" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
+                        <div class="mx-0 mt-1 slider-main">
+                          <span class="spancommon span_font_size">Quote No</span>&nbsp;&nbsp;
+                        </div>
+                        <div class="mx-0 mt-1 slider-main">
+                          <span class="spancommon span_font_size" style="font-weight:600;color: darkblue;">{{paymentDetails?.QuoteNo}}</span>
+                        </div>
+                      </div><hr class="m-1">
+                      <div class="d-flex justify-content-between" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
+                        <div class="mx-0 mt-1 slider-main">
+                          <span class="spancommon span_font_size">Policy No</span>&nbsp;&nbsp;
+                        </div>
+                        <div class="mx-0 mt-1 slider-main">
+                          <span class="spancommon span_font_size" style="font-weight:600;color: darkblue;">{{paymentDetails?.PolicyNo}}</span>
+                        </div>
+                      </div><hr class="m-1">
+                      <div class="d-flex justify-content-between" style="margin: 0px !important;top:0rem;bottom: 0rem !important;" *ngIf="paymentDetails?.DebitNoteNo">
+                        <div class="mx-0 mt-1 slider-main">
+                          <span class="spancommon span_font_size">Debit Note No</span>&nbsp;&nbsp;
+                        </div>
+                        <div class="mx-0 mt-1 slider-main">
+                          <span class="spancommon span_font_size" style="font-weight:600;color: darkblue;">{{paymentDetails?.DebitNoteNo}}</span>
+                        </div>
+                      </div><hr *ngIf="paymentDetails?.DebitNoteNo" class="m-1">
+                      <div class="d-flex justify-content-between" style="margin: 0px !important;top:0rem;bottom: 0rem !important;" *ngIf="paymentDetails?.CreditNoteNo">
+                        <div class="mx-0 mt-1 slider-main">
+                          <span class="spancommon span_font_size">Credit Note No</span>&nbsp;&nbsp;
+                        </div>
+                        <div class="mx-0 mt-1 slider-main">
+                          <span class="spancommon span_font_size" style="font-weight:600;color: darkblue;">{{paymentDetails?.CreditNoteNo}}</span>
+                        </div>
+                      </div><hr *ngIf="paymentDetails?.CreditNoteNo" class="m-1">
+                      <div class="d-flex justify-content-between" style="margin: 0px !important;top:0rem;bottom: 0rem !important;" *ngIf="paymentDetails?.MerchantReference">
+                        <div class="mx-0 mt-1 slider-main">
+                          <span class="spancommon span_font_size">Merchant Reference No</span>&nbsp;&nbsp;
+                          
+                        </div>
+                        <div class="mx-0 mt-1 slider-main">
+                          <span class="spancommon span_font_size" style="font-weight:600;color: darkblue;">{{paymentDetails?.MerchantReference}}</span>
+                        </div>
+                      </div><hr *ngIf="paymentDetails?.MerchantReference" class="m-1">
+                      <div class="d-flex justify-content-around mt-2">
+                          <div>
+                            <button class="btn btn-warning" *ngIf="paymentDetails?.DebitNoteNo" (click)="onDebitdownload(paymentDetails)">Debit Note Pdf &nbsp;<i class="fa fa-download"
+                            aria-hidden="true"></i></button>
+                          </div>
+                          <div>
+                            <button class="btn btn-info" *ngIf="paymentDetails?.CreditNoteNo" (click)="onCreditdownload(paymentDetails)">Credit Note Pdf &nbsp;<i class="fa fa-download"
+                            aria-hidden="true"></i></button>
+                          </div>
+                          <div>
+                            <button class="btn btn-success" *ngIf="paymentDetails?.PolicyNo" (click)="onGetSchedule(paymentDetails)">Schedule Pdf &nbsp;<i class="fa fa-download"
+                            aria-hidden="true"></i></button>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                        <!-- <ul class="list-group">
                             <li class="list-group-item list-seperate">
-                                <!-- <div class="d-flex justify-content-between"> -->
                                 <div>
                                     <span class="spancommon span_font_size">Quote Number</span>
                                 </div>
                                 <div>
                                     <span class="spancommon span_font_size">{{paymentDetails?.QuoteNo}}</span>
                                 </div>
-                                <!-- </div> -->
                             </li>
                             <li class="list-group-item list-seperate">
-                                <!-- <div class="d-flex justify-content-between"> -->
                                 <div>
                                     <span class="spancommon span_font_size">Policy Number</span>
                                 </div>
@@ -887,59 +955,48 @@
                                 word-break: break-word !important">
                                     <span class="spancommon span_font_size">{{paymentDetails?.PolicyNo}}</span>
                                 </div>
-                                <!-- </div> -->
                             </li>
                             <li class="list-group-item list-seperate" *ngIf="endorsementSection">
-                                <!-- <div class="d-flex justify-content-between"> -->
                                 <div>
                                     <span class="spancommon span_font_size">Original Policy Number</span>
                                 </div>
                                 <div>
                                     <span class="spancommon span_font_size">{{orgPolicyNo}}</span>
                                 </div>
-                                <!-- </div> -->
                             </li>
                            <li class="list-group-item list-seperate" *ngIf="CoverNoteNo">
-                                <!-- <div class="d-flex justify-content-between"> -->
                                 <div>
                                     <span class="spancommon span_font_size">Cover Note Number</span>
                                 </div>
                                 <div>
                                     <span class="spancommon span_font_size">{{CoverNoteNo}}</span>
                                 </div>
-                                <!-- </div> -->
                             </li>
                             <li class="list-group-item list-seperate" *ngIf="stickerNo">
-                                <!-- <div class="d-flex justify-content-between"> -->
                                 <div>
                                     <span class="spancommon span_font_size">Sticker Number</span>
                                 </div>
                                 <div>
                                     <span class="spancommon span_font_size">{{stickerNo}}</span>
                                 </div>
-                                <!-- </div> -->
                             </li>
                             <li class="list-group-item list-seperate" *ngIf="paymentDetails?.DebitNoteNo">
-                                <!-- <div class="d-flex justify-content-between"> -->
                                 <div>
                                     <span class="spancommon span_font_size">Debit Note Number</span>
                                 </div>
                                 <div>
                                     <span class="spancommon span_font_size">{{paymentDetails?.DebitNoteNo}}</span>
                                 </div>
-                                <!-- </div> -->
                             </li>
                             <li class="list-group-item list-seperate" *ngIf="paymentDetails?.MerchantReference">
-                                <!-- <div class="d-flex justify-content-between"> -->
                                 <div>
                                     <span class="spancommon span_font_size">Merchant Reference Number</span>
                                 </div>
                                 <div>
                                     <span class="spancommon span_font_size">{{paymentDetails?.MerchantReference}}</span>
                                 </div>
-                                <!-- </div> -->
                             </li>
-                        </ul>
+                        </ul> -->
             </div>
             <div class="text-center my-2 mt-3">
                 <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="!endorsementSection && loginType!='B2CFlow'" matRipple [routerLink]="['/Home/policies']">Proceed</button>

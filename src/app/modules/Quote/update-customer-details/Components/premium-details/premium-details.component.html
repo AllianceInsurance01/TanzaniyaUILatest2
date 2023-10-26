@@ -875,10 +875,10 @@
                             <span class="mx-1">
                                 <i class="fas fa-book mx-1"></i>
                             </span>
-                            <ng-container *ngIf="productId!='5' && productId!='4' && productId!='3'"><span class="spancommon span_font_size">Individual Documents</span></ng-container>
+                            <ng-container *ngIf="productId!='5' && productId!='4' && productId!='3' && productId!='46'"><span class="spancommon span_font_size">Individual Documents</span></ng-container>
                             <ng-container *ngIf="productId=='5'"><span class="spancommon span_font_size">Vehicle Documents</span></ng-container>
                             <ng-container *ngIf="productId=='4'"><span class="spancommon span_font_size">Passenger Documents</span></ng-container>
-                            <ng-container *ngIf="productId=='3'"><span class="spancommon span_font_size">Location Documents</span></ng-container>
+                            <ng-container *ngIf="productId=='3' || productId=='46'"><span class="spancommon span_font_size">Location Documents</span></ng-container>
                         </div>
                         <div>
                         </div>
@@ -887,7 +887,7 @@
                 <div class="display3">
                     <div class="maan-grid-item-body " style="padding-left: 25px !important;padding-right: 40px !important;">
                         <div class="row customFlow">
-                            <div class="col-md-6 col-lg-6 offset-lg-3"  *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
+                            <div class="col-md-6 col-lg-6 offset-lg-4"  *ngIf="!endorsementSection || (endorsementSection && enableDocumentDetails)">
                                 <input style="display: none;" type="file" (change)="onUploadListDocuments($event,null,'direct',j,'select')" #doc>
                                 <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadListDocuments($event,null,'direct',j,'drag')" (click)="doc.click()">
                                     <div>
@@ -907,15 +907,15 @@
                                         <tr>
                                             <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
                                             <th scope="col"><span class="spancommon">FileName</span></th>
-                                            <th scope="col" *ngIf="productId!='5' && productId!='4' && productId!='43'"><span class="spancommon">Location</span></th>
+                                            <th scope="col" *ngIf="productId!='5' && productId!='4' && productId!='43' && productId!='46'"><span class="spancommon">Location</span></th>
                                             <th scope="col" *ngIf="productId!='43'"><span class="spancommon">Section</span></th>
                                             <th scope="col">
                                                 <span class="spancommon">
-                                                    <ng-container *ngIf="productId=='5'">Registration Number</ng-container>
+                                                    <ng-container *ngIf="productId=='5' || productId=='46'">Registration Number</ng-container>
                                                     <ng-container *ngIf="productId=='4'">Passpport No</ng-container>
                                                     <ng-container *ngIf="productId=='42'">Serial No</ng-container>
                                                     <ng-container *ngIf="productId=='43'">Employer Name</ng-container>
-                                                    <ng-container *ngIf="productId!='4' && productId!='5' && productId!='42' && productId!='43'">ID</ng-container>
+                                                    <ng-container *ngIf="productId!='4' && productId!='5' && productId!='42' && productId!='43' && productId!='46'">ID</ng-container>
                                                 </span>
                                             </th>
                                             <th scope="col"><span class="spancommon">Document Type</span></th>
@@ -926,7 +926,7 @@
                                         <tr *ngFor="let document of uploadListDoc;let i=index">
                                             <th scope="row"><span class="spancommon span_font_size">{{i+1}}</span></th>
                                             <td><span class="spancommon span_font_size">{{document.filename}}</span></td>
-                                            <td *ngIf="productId!='5' && productId!='4' && productId!='43'">
+                                            <td *ngIf="productId!='5' && productId!='4' && productId!='43' && productId!='46'">
                                                 <ng-select class="input-form-select" [disabled]="document.locationList.length==1" appendTo="body" (change)="onChangeLocationType(document,i)" [(ngModel)]="document.locationId" [items]="document.locationList" bindValue="LocationId" bindLabel="LocationName">
                                                 </ng-select>
                                             </td>
@@ -972,13 +972,13 @@
                                     <tr>
                                         <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
                                         <th scope="col"><span class="spancommon">FileName</span></th>
-                                        <th scope="col" *ngIf="productId!='5' && productId!='4'"><span class="spancommon">Location</span></th>
+                                        <th scope="col" *ngIf="productId!='5' && productId!='4' && productId!='46' "><span class="spancommon">Location</span></th>
                                         <th scope="col" ><span class="spancommon">Section</span></th>
                                         <th scope="col">
                                             <span class="spancommon">
-                                                <ng-container *ngIf="productId=='5'">Registration Number</ng-container>
-                                                <ng-container *ngIf="productId=='4'">Passpport No</ng-container>
-                                                <ng-container *ngIf="productId!='4' && productId!='5'">ID</ng-container>
+                                                <ng-container *ngIf="productId=='5' || productId=='46'">Registration Number</ng-container>
+                                                <ng-container *ngIf="productId=='4'">Passport No</ng-container>
+                                                <ng-container *ngIf="productId!='4' && productId!='5' && productId!='46' ">ID</ng-container>
                                             </span>
                                         </th>
                                         <th scope="col"><span class="spancommon">Document Type</span></th>
@@ -991,7 +991,7 @@
                                     <tr *ngFor="let document of uploadedIndividualList;let i=index">
                                         <th scope="row"><span class="spancommon span_font_size">{{i+1}}</span></th>
                                         <td><span class="spancommon span_font_size">{{document.OriginalFileName}}</span></td>
-                                        <td *ngIf="productId!='5' && productId!='4'">
+                                        <td *ngIf="productId!='5' && productId!='4' && productId!='46'">
                                             <span class="spancommon span_font_size">{{document.LocationName}}</span>
                                         </td>
                                         <td >
@@ -1043,13 +1043,13 @@
                                     <tr>
                                         <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
                                         <th scope="col"><span class="spancommon">FileName</span></th>
-                                        <th scope="col" *ngIf="productId!='5' && productId!='4'"><span class="spancommon">Location</span></th>
+                                        <th scope="col" *ngIf="productId!='5' && productId!='4' && productId!='46'"><span class="spancommon">Location</span></th>
                                         <th scope="col" ><span class="spancommon">Section</span></th>
                                         <th scope="col">
                                             <span class="spancommon">
-                                                <ng-container *ngIf="productId=='5'">Chassis Number</ng-container>
+                                                <ng-container *ngIf="productId=='5' || productId=='46'">Registration Number</ng-container>
                                                 <ng-container *ngIf="productId=='4'">Passpport No</ng-container>
-                                                <ng-container *ngIf="productId!='4' && productId!='5'">ID</ng-container>
+                                                <ng-container *ngIf="productId!='4' && productId!='5' && productId!='46'">ID</ng-container>
                                             </span>
                                         </th>
                                         <th scope="col"><span class="spancommon">Document Type</span></th>
@@ -1077,7 +1077,7 @@
                                     </div>
                                     </td>
                                       
-                                        <td *ngIf="productId!='5' && productId!='4'">
+                                        <td *ngIf="productId!='5' && productId!='4' && productId!='46'">
                                             <div class="row">
                                             <div class="col-6">
                                                 Location
@@ -1100,9 +1100,9 @@
                                         <td>
                                             <div class="row">
                                             <div class="col-6">
-                                                <ng-container *ngIf="productId=='5'">Chassis Number</ng-container>
+                                                <ng-container *ngIf="productId=='5' || productId=='46'">Registration Number</ng-container>
                                                 <ng-container *ngIf="productId=='4'">Passpport No</ng-container>
-                                                <ng-container *ngIf="productId!='4' && productId!='5'">ID</ng-container>
+                                                <ng-container *ngIf="productId!='4' && productId!='5' && productId!='46'">ID</ng-container>
                                             </div>
                                            <div class="col-12">
                                             <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.Id" (change)="onChangeIdType(document)"  [items]="document.typeList" bindValue="Id" bindLabel="Id">
@@ -1152,13 +1152,13 @@
                                     <tr>
                                         <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
                                         <th scope="col"><span class="spancommon">FileName</span></th>
-                                        <th scope="col" *ngIf="productId!='5' && productId!='4'"><span class="spancommon">Location</span></th>
+                                        <th scope="col" *ngIf="productId!='5' && productId!='4' && productId!='46'"><span class="spancommon">Location</span></th>
                                         <th scope="col" ><span class="spancommon">Section</span></th>
                                         <th scope="col">
                                             <span class="spancommon">
-                                                <ng-container *ngIf="productId=='5'">Chassis Number</ng-container>
+                                                <ng-container *ngIf="productId=='5' || productId=='46'">Registration Number</ng-container>
                                                 <ng-container *ngIf="productId=='4'">Passpport No</ng-container>
-                                                <ng-container *ngIf="productId!='4' && productId!='5'">ID</ng-container>
+                                                <ng-container *ngIf="productId!='4' && productId!='5' && productId!='46'">ID</ng-container>
                                             </span>
                                         </th>
                                         <th scope="col"><span class="spancommon">Document Type</span></th>
@@ -1192,7 +1192,7 @@
                                         </div>
                                            
                                         </td>
-                                        <td *ngIf="productId!='5' && productId!='4'">
+                                        <td *ngIf="productId!='5' && productId!='4' && productId!='46'">
                                             <div class="row">
                                             <div class="col-6">Location</div>
                                             <div class="col-6"> <span class="spancommon span_font_size">{{document.LocationName}}</span></div>
@@ -1208,9 +1208,9 @@
                                         <td>
                                             <div class="row">
                                             <div class="col-6">
-                                                <ng-container *ngIf="productId=='5'">Chassis Number</ng-container>
+                                                <ng-container *ngIf="productId=='5' || productId=='46'">Registration Number</ng-container>
                                                 <ng-container *ngIf="productId=='4'">Passpport No</ng-container>
-                                                <ng-container *ngIf="productId!='4' && productId!='5'">ID</ng-container>
+                                                <ng-container *ngIf="productId!='4' && productId!='5' && productId!='46'">ID</ng-container>
                                             </div>
                                             <div class="col-6"> <span class="spancommon span_font_size">{{document.Id}}</span></div>
                                         </div>
