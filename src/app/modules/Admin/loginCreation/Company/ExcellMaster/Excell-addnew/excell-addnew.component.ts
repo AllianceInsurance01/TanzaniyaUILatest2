@@ -190,8 +190,10 @@ export class ExcellAddNewComponent implements OnInit {
     if(value=='Benefit') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/productbenefit']);
     if(value=='PlanType') this.router.navigate(['/Admin/companyList/companyConfigure/productDetails/planTypeBenefits'])
   }
-  deleteRow(row,rowid,i){
-    if(row!=null){
+  deleteRow(row,rowid,i,rows){
+    console.log('NNNNNNNN',i);
+   
+    if(rowid!=null && row!=null){
       let ReqObj = {
         "CompanyId":this.insuranceId,
         "ProductId":this.productId,
@@ -218,7 +220,11 @@ export class ExcellAddNewComponent implements OnInit {
     else{
       var delBtn = confirm("Do you want to delete ?");
       if ( delBtn == true ) {
-        this.NewList.splice(i, 1 );
+        const index = this.NewList.indexOf(rows);
+        console.log('TT',index);
+        this.NewList.splice(index,1);
+        //this.NewList.splice(i, 1);
+        //this.getFactorTypeList();
       }
     }  
   }
