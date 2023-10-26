@@ -232,6 +232,11 @@ tbody:first-child tr:first-child td:last-child {
         .small{
             margin-left: 30px !important;
         }
+        .sclass{
+            display: flex !important;
+             flex-direction: row !important;
+            justify-content: space-around !important;
+        }
       }
       
        /* iPads (portrait and landscape) ----------- */
