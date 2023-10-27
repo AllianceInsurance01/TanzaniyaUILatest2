@@ -5,7 +5,7 @@
             <nav id="navbar" class="navbar">
                 <ul>
                     <li class="dropdown">
-                        <button class="btn btn-primary" style="cursor: not-allowed;">Live Environment</button>
+                        <button class="btn btn-primary" style="cursor: not-allowed;">UAT Environment</button>
                         <ng-container >
                             &nbsp;&nbsp;&nbsp;&nbsp;
                         </ng-container>
@@ -27,7 +27,7 @@
             </div>
             <div class="row p-3" >
                 <ng-container *ngFor="let item of productList">
-                    <div class="group  box-1 padd0 InsuranceType AllTabShow col-12 col-md-12 col-lg-2 col-xl-2 col-sm-12 col-xs-12">
+                    <div class="group  box-1 padd0 InsuranceType AllTabShow col-12 col-md-12 col-lg-2 col-xl-2 col-sm-12 col-xs-12" *ngIf="item.ProductId!='5'">
                         <div (click)="onSelectProduct(item)">
                             <div class="topIco">
                                 <div class="InsuranceIcon InsuranceIcon1 domesticIcon" matTooltip="Domestic" *ngIf="item.ProductId=='3'"></div>
