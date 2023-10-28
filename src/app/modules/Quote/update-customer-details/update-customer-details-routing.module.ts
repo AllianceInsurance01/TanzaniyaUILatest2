@@ -20,13 +20,14 @@ import { VieQuoteDetailsComponent } from '../viewquote-details/viewquote-details
 import { SectionModificationComponent } from './Components/section-modification/section-modification.component';
 import { CustomerModelComponent } from '../../Customer/customer-model/customer-model.component';
 
+
 const routes: Routes = [
   {
     path: '',
     component: UpdateCustomerDetailsComponent,
     children: [
       { path: '', redirectTo: 'customer-details', pathMatch: 'full' },
-
+      
       {
         path: 'customer-details',
         component: CustomerDetailsComponent,

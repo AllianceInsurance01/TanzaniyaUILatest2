@@ -89,9 +89,11 @@ export class NewCustomerDetailsComponent {
 			this.customerReferenceNo = refNo;
 		}
 		else {
+			
 			this.customerReferenceNo = null;
 			this.productItem = new ProductData()
 			this.productItem.IdType=1;
+			
 			
 		}
 		this.getTitleList();
@@ -349,6 +351,12 @@ export class NewCustomerDetailsComponent {
 								this.productItem.BusinessType='';
 								this.productItem.Title='';
                 				this.getPolicyIdTypeList('change');
+								if(sessionStorage.getItem('VechileDetails')){
+									let motorDetails = JSON.parse(sessionStorage.getItem('VechileDetails'));
+									this.productItem.ClientName = motorDetails.ResOwnerName;
+									this.productItem.Title = '1';
+									this.onTitleChange();
+								}
 							}
 							// this.getGenderList();
 					/*let brokerId = sessionStorage.getItem('editBroker');
@@ -584,6 +592,10 @@ export class NewCustomerDetailsComponent {
 					if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2' && quoteNo!=undefined && quoteNo!=null)){
 						this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
 					}
+					else if(sessionStorage.getItem('VechileDetails')){
+						sessionStorage.setItem('customerReferenceNo',data.Result.SuccessId);
+						this.router.navigate(['Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+					}
 					else this.router.navigate(['/Home/customer/'])
 				}
 			},
@@ -596,10 +608,13 @@ export class NewCustomerDetailsComponent {
 		if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2' && quoteNo!=undefined && quoteNo!=null)){
 			this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
 		}
+		else if(sessionStorage.getItem('VechileDetails')){
+			sessionStorage.removeItem('customerReferenceNo');
+			this.router.navigate(['/Home/tira-vehicle-search']);
+		}
 		else{
 			sessionStorage.removeItem('customerReferenceNo');
 			this.router.navigate(['/Home/customer/'])
 		}
-		
 	}
 }

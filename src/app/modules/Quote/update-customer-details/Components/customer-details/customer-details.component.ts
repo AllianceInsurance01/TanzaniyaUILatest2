@@ -277,12 +277,25 @@ export class CustomerDetailsComponent implements OnInit {
              if(this.productId!='5' && this.productId!='4' && this.productId!='46') this.getExistingBuildingList();
             }
             else{
+              let loadType = sessionStorage.getItem('firstLoad');
+              if(this.productId=='5' && loadType){
+                  let quoteStatus = sessionStorage.getItem('QuoteStatus');
+                  if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
+                    this.adminSection = true;this.issuerSection = false;
+                  }
+                  else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
+                  else this.issuerSection = false
+                 let motorDetails = JSON.parse(sessionStorage.getItem('VechileDetails'));
+                  this.setTiraVehicleValues(motorDetails);
+              }
+              else{
+                this.quoteRefNo=null;
+                this.currencyCode = this.userDetails.Result.CurrencyId;
+                this.onCurrencyChange('direct');
+                this.searchSection = true;
+                this.commonSection = true;
+              }
               
-              this.quoteRefNo=null;
-              this.currencyCode = this.userDetails.Result.CurrencyId;
-              this.onCurrencyChange('direct');
-              this.searchSection = true;
-              this.commonSection = true;
               
             }
           }
@@ -296,24 +309,31 @@ export class CustomerDetailsComponent implements OnInit {
            if(this.productId!='5' && this.productId!='4' && this.productId!='46') this.getExistingBuildingList();
           }
           else{
-            this.quoteRefNo=null;
-            this.branchValue = this.userDetails.Result.BranchCode;
-            this.updateComponent.branchValue = this.branchValue;
-            this.currencyCode = this.userDetails.Result.CurrencyId;
-            this.onCurrencyChange('direct');
-              var d= new Date();
-              var year = d.getFullYear();
-              var month = d.getMonth();
-              var day = d.getDate();
-              if(this.productId=='5' || this.productId=='46'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
-              this.searchSection = true;
-            this.commonSection = true;
-            let quoteStatus = sessionStorage.getItem('QuoteStatus');
-            if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
-              this.adminSection = true;this.issuerSection = false;
-            }
-            else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
-            else this.issuerSection = false;
+            let loadType = sessionStorage.getItem('firstLoad');
+              if(this.productId=='5' && loadType){
+                 let motorDetails = JSON.parse(sessionStorage.getItem('VechileDetails'));
+                 //this.setCommonValues(motorDetails);
+              }
+              else{
+                  this.quoteRefNo=null;
+                  this.branchValue = this.userDetails.Result.BranchCode;
+                  this.updateComponent.branchValue = this.branchValue;
+                  this.currencyCode = this.userDetails.Result.CurrencyId;
+                  this.onCurrencyChange('direct');
+                    var d= new Date();
+                    var year = d.getFullYear();
+                    var month = d.getMonth();
+                    var day = d.getDate();
+                    if(this.productId=='5' || this.productId=='46'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
+                    this.searchSection = true;
+                  this.commonSection = true;
+                  let quoteStatus = sessionStorage.getItem('QuoteStatus');
+                  if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
+                    this.adminSection = true;this.issuerSection = false;
+                  }
+                  else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
+                  else this.issuerSection = false;
+              }
           }
         }
       }
@@ -695,6 +715,7 @@ export class CustomerDetailsComponent implements OnInit {
           this.clientName = customerDetails?.ClientName
           this.idNumber = customerDetails?.IdNumber;
           if(customerDetails){
+            this.productItem = new ProductData();
             this.productItem.Title = customerDetails?.Title;
             this.productItem.ClientName = customerDetails?.ClientName;
             this.productItem.MobileCode = customerDetails?.MobileCode1;
@@ -780,11 +801,18 @@ export class CustomerDetailsComponent implements OnInit {
            if(this.productId!='5' && this.productId!='4' && this.productId!='46') this.getExistingBuildingList();
           }
           else{
-            this.quoteRefNo=null;
-            this.currencyCode = this.userDetails.Result.CurrencyId;
-            this.onCurrencyChange('direct');
-            this.searchSection = true;
-            this.commonSection = true;
+            let loadType = sessionStorage.getItem('firstLoad');
+            if(this.productId=='5' && loadType){
+              let motorDetails = JSON.parse(sessionStorage.getItem('VechileDetails'));
+              //this.setCommonValues(motorDetails);
+              }
+              else{
+                this.quoteRefNo=null;
+                this.currencyCode = this.userDetails.Result.CurrencyId;
+                this.onCurrencyChange('direct');
+                this.searchSection = true;
+                this.commonSection = true;
+              }
           }
         }
 
@@ -797,24 +825,38 @@ export class CustomerDetailsComponent implements OnInit {
          if(this.productId!='5' && this.productId!='4' && this.productId!='46') this.getExistingBuildingList();
         }
         else{
-          this.quoteRefNo=null;
-          this.branchValue = this.userDetails.Result.BranchCode;
-          this.updateComponent.branchValue = this.branchValue;
-          this.currencyCode = this.userDetails.Result.CurrencyId;
-          this.onCurrencyChange('direct');
-            var d= new Date();
-            var year = d.getFullYear();
-            var month = d.getMonth();
-            var day = d.getDate();
-            if(this.productId=='5' || this.productId=='46'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
-          this.searchSection = true;
-          this.commonSection = true;
-          let quoteStatus = sessionStorage.getItem('QuoteStatus');
-          if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
-            this.adminSection = true;this.issuerSection = false;
-          }
-          else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
-          else this.issuerSection = false;
+          let loadType = sessionStorage.getItem('firstLoad');
+            if(this.productId=='5' && loadType){
+              let quoteStatus = sessionStorage.getItem('QuoteStatus');
+              if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
+                this.adminSection = true;this.issuerSection = false;
+              }
+              else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
+              else this.issuerSection = false
+              let motorDetails = JSON.parse(sessionStorage.getItem('VechileDetails'));
+              this.setTiraVehicleValues(motorDetails);
+              //this.setCommonValues(motorDetails);
+            }
+            else{
+                this.quoteRefNo=null;
+                this.branchValue = this.userDetails.Result.BranchCode;
+                this.updateComponent.branchValue = this.branchValue;
+                this.currencyCode = this.userDetails.Result.CurrencyId;
+                this.onCurrencyChange('direct');
+                  var d= new Date();
+                  var year = d.getFullYear();
+                  var month = d.getMonth();
+                  var day = d.getDate();
+                  if(this.productId=='5' || this.productId=='46'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
+                this.searchSection = true;
+                this.commonSection = true;
+                let quoteStatus = sessionStorage.getItem('QuoteStatus');
+                if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
+                  this.adminSection = true;this.issuerSection = false;
+                }
+                else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
+                else this.issuerSection = false;
+            }
         }
       }
     }
@@ -964,7 +1006,6 @@ export class CustomerDetailsComponent implements OnInit {
             this.brokerLoginId = entry?.LoginId;
             this.customerCode = entry.CustomerCode;
             this.onSourceTypeChange('direct');
-            
             this.currencyCode = entry?.Currency;
             this.exchangeRate = entry?.ExchangeRate;
             this.onCurrencyChange('direct');
@@ -1294,6 +1335,101 @@ export class CustomerDetailsComponent implements OnInit {
     
       if((this.productId=='5' || this.productId=='46') && type=='change'){this.updateComponent.modifiedYN = 'Y'}
   }
+  setTiraVehicleValues(entry){
+    console.log("Entry Values",entry);
+    if(entry?.PolicyStartDate != null ){
+      var dateParts = entry.PolicyEndDate.split("/");
+      var dateParts2 = entry.PolicyStartDate.split('/');
+      var startDate = dateParts2[2]+'-'+dateParts2[1]+'-'+dateParts2[0];
+      var endDate = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
+      var d = new Date();
+      var year = d.getFullYear();
+      var month = d.getMonth();
+      var day = d.getDate();
+      if((new Date(startDate)).setHours(0,0,0,0) >= (new Date()).setHours(0,0,0,0)){
+        var dateParts = entry?.PolicyStartDate.split("/");
+        this.policyStartDate = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
+        this.updateComponent.policyStartDate = this.policyStartDate;
+        this.updateComponent.idNumber = this.idNumber;
+        var dateParts2 = entry?.PolicyEndDate.split("/");
+        this.policyEndDate = dateParts2[2]+'-'+dateParts2[1]+'-'+dateParts2[0];
+        this.updateComponent.policyEndDate = this.policyEndDate;
+        this.onChangeEndDate('direct');
+      }
+      else{
+        let startDate1 = this.datePipe.transform(new Date(year, month, day+1), "dd/MM/yyyy");
+        let EndDate1 = this.datePipe.transform(new Date(year+1, month, day), "dd/MM/yyyy");
+        var dateParts:any = startDate1.split("/");
+        var dateParts2:any = EndDate1.split('/');
+        var endDate = dateParts2[2]+'-'+dateParts2[1]+'-'+dateParts2[0];
+        var startDate = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
+        this.policyStartDate = startDate;
+        this.policyEndDate = endDate;
+        this.updateComponent.policyStartDate = this.policyStartDate;
+        this.updateComponent.policyEndDate = this.policyEndDate;
+        this.onChangeEndDate('direct');
+          
+      }
+    }
+    else{
+      var d = new Date();
+      var year = d.getFullYear();
+      var month = d.getMonth();
+      var day = d.getDate();
+      let startDate1 = this.datePipe.transform(new Date(year, month, day+1), "dd/MM/yyyy");
+        let EndDate1 = this.datePipe.transform(new Date(year+1, month, day), "dd/MM/yyyy");
+        var dateParts:any = startDate1.split("/");
+        var dateParts2:any = EndDate1.split('/');
+        var endDate = dateParts2[2]+'-'+dateParts2[1]+'-'+dateParts2[0];
+        var startDate = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
+        this.policyStartDate = startDate;
+        this.policyEndDate = endDate;
+        this.updateComponent.policyStartDate = this.policyStartDate;
+        this.updateComponent.policyEndDate = this.policyEndDate;
+        this.onChangeEndDate('direct');
+    }
+    // if(entry?.PolicyEndDate != null ){
+    //   var dateParts = entry?.PolicyEndDate.split("/");
+    //     // month is 0-based, that's why we need dataParts[1] - 1
+    //     this.policyEndDate = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
+    //     this.updateComponent.policyEndDate = this.policyEndDate;
+    //     this.onChangeEndDate('direct');
+    //   }
+    if(this.issuerSection){
+      this.Code = entry.SourceType;
+      
+      if(this.Code=='Premia Agent' || this.Code=='Premia Broker' || this.Code=='Premia Direct'){
+        this.customerCode = entry.CustomerCode;
+        this.customerName = entry.CustomerName;
+      }
+      else{
+        this.brokerCode = entry.BrokerCode;
+        this.brokerBranchCode = entry.BrokerBranchCode;
+      }
+      this.onSourceTypeChange('direct');
+    }
+    if(entry.CURRENCY_CODE!=null)  this.currencyCode = entry?.CURRENCY_CODE;
+    else this.currencyCode = this.userDetails.Result.CurrencyId;
+    this.onCurrencyChange('direct');
+      this.HavePromoCode = entry?.HavePromoCode;
+      this.PromoCode = entry?.PromoCode;
+      if(entry.SourceType!=null) this.Code = entry?.SourceType;
+      this.customerCode = entry?.CustomerCode;
+      this.branchValue = entry.BranchCode;
+      this.brokerCode = entry.BrokerCode;
+      this.brokerBranchCode = entry.BrokerBranchCode;
+      this.updateComponent.sourceType = this.Code;
+      this.updateComponent.brokerCode = this.brokerCode;
+      this.updateComponent.brokerBranchCode = this.brokerBranchCode;
+      this.executiveValue = entry?.AcExecutiveId;
+      this.HavePromoCode = 'N';
+      this.PromoCode = null;
+      this.updateComponent.HavePromoCode = this.HavePromoCode;
+      this.updateComponent.PromoCode = this.PromoCode;
+      console.log("Final Values",this.brokerList,this.brokerCode)
+      this.onSourceTypeChange('direct');
+      this.commonSection = true;
+  }
   setCommonValues(entry){
     console.log("Entry Values",entry);
     if(entry?.PolicyStartDate != null ){
@@ -1463,7 +1599,6 @@ export class CustomerDetailsComponent implements OnInit {
       this.maxCurrencyRate = currencyData?.MaxRate;
       this.updateComponent.CurrencyCode = this.currencyCode;
       this.updateComponent.exchangeRate = this.exchangeRate;
-
     }
     console.log('CCCCCCCC',this.currencyCode)
 
@@ -3365,6 +3500,9 @@ export class CustomerDetailsComponent implements OnInit {
     }
     else if(this.endorsementSection){
       this.router.navigate(['/Home/policies/Endorsements/endorsementTypes']);
+    }
+    else if(sessionStorage.getItem('VechileDetails')){
+      this.router.navigate(['/Home/customer/ClientDetails']);
     }
     else{
       this.router.navigate(['/Home/existingQuotes']);

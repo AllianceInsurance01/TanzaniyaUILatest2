@@ -48,8 +48,7 @@ import { FooterComponent } from './layout/components/footer/footer.component';
 import { CustomerProductsComponent } from './modules/customer-products/customer-products.component';
 import { NgApexchartsModule } from 'ng-apexcharts'
 import { HttpXsrfInterceptor } from './HttpInterceptors/http-xsrf-interceptor.service'
-import { CookieService } from 'ngx-cookie-service'
-
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
 	declarations: [

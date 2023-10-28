@@ -3584,14 +3584,14 @@ getMotorUsageList(vehicleValue){
         }
         this.newcoverlist=coverList;
         console.log('in else',this.newcoverlist)
-        if(this.subuserType=='B2C' && this.loginId=='guest'){
-            sessionStorage.setItem('buyPolicyDetails',JSON.stringify(ReqObj));
-            this.router.navigate(['./Home/existingQuotes/customerSelection/customerDetails/userDetails'])
-        }
+        // if(this.subuserType=='B2C' && this.loginId=='guest'){
+        //     sessionStorage.setItem('buyPolicyDetails',JSON.stringify(ReqObj));
+        //     this.router.navigate(['./Home/existingQuotes/customerSelection/customerDetails/userDetails'])
+        // }
         
-        else{
+        // else{
           this.finalFormSubmit(ReqObj);
-        }
+        //}
         
       }
     }

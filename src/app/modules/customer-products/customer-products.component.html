@@ -4,12 +4,12 @@
             <h1 class="logo me-auto"><img src="./assets/images/logo-2.png"></h1>
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li class="dropdown">
-                        <button class="btn btn-primary" style="cursor: not-allowed;">Live Environment</button>
+                    <!-- <li class="dropdown">
+                        <button class="btn btn-primary" style="cursor: not-allowed;">UAT Environment</button>
                         <ng-container >
                             &nbsp;&nbsp;&nbsp;&nbsp;
                         </ng-container>
-                    </li>
+                    </li> -->
                     <li class="dropdown" [hidden]="loginType=='B2CFlow' && loginId=='guest'" (click)="onLog('Log out')"><a style="cursor:pointer" ><i class="fa fa-power-off"></i>&nbsp;Logout</a></li>
                 <!-- <li><button class="custom-btn btn-3 ml-4" (click)="onPress()"><span>Login</span></button></li> -->
                 </ul>
@@ -27,7 +27,7 @@
             </div>
             <div class="row p-3" >
                 <ng-container *ngFor="let item of productList">
-                    <div class="group  box-1 padd0 InsuranceType AllTabShow col-12 col-md-12 col-lg-2 col-xl-2 col-sm-12 col-xs-12">
+                    <div class="group  box-1 padd0 InsuranceType AllTabShow col-12 col-md-12 col-lg-2 col-xl-2 col-sm-12 col-xs-12" *ngIf="item.ProductId!='5'">
                         <div (click)="onSelectProduct(item)">
                             <div class="topIco">
                                 <div class="InsuranceIcon InsuranceIcon1 domesticIcon" matTooltip="Domestic" *ngIf="item.ProductId=='3'"></div>

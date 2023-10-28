@@ -1,0 +1,173 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div class="mt-1">
+                <span class="spancommon span_font_size">TIRA Vehicle Search</span>
+            </div>
+            <div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection">
+               <div class="input-control-container">
+                   <label class="input-form-label">Division</label><span class="text-danger">*</span>
+                   <ng-select class="input-form-select" appendTo="body" [(ngModel)]="branchValue"  [items]="branchList"  bindValue="BranchCode" bindLabel="BranchName">
+                   </ng-select>
+                   <div class="input-form-error" *ngIf="branchValueError">
+                       <div class="error-text text-danger">
+                           Please Select Division
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection">
+               <div class="input-control-container">
+                   <label class="input-form-label">Source</label><span class="text-danger">*</span>
+                   <ng-select class="input-form-select" appendTo="body" [(ngModel)]="Code"  [items]="productList"  bindValue="Code" bindLabel="CodeDesc" (change)="onSourceTypeChange('change')">
+                   </ng-select>
+                   <div class="input-form-error" *ngIf="sourceCodeError">
+                       <div class="error-text text-danger">
+                           Please Select Source
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection && (Code=='Premia Agent' || Code=='Premia Broker' || Code=='Premia Direct')">
+               <div class="input-control-container">
+                   <label class="input-form-label">Source Code</label><span class="text-danger">*</span>
+                   <div class="input-form-box">
+                       <input id="CustomerInput" class="input-form-control without-icon"  [(ngModel)]="customerCode" type="text" (keyup)="onGetCustomerList('change',$event.target.value)" autocomplete="off" placeholder="Search here" data-toggle="dropdown" /><br>
+                       <ul class="dropdown-menu dropdown-list-style CustomerInput" appendTo="body"   [ngClass]="{dropdownDisplay: showCustomerList, dropdownNotDisplay: !showCustomerList}">
+                           <li *ngFor="let item of customerList" (click)="setCustomerValue(item.Code, item.Name,'change')">
+                               {{item.Code}} - {{ item.Name }}
+                           </li>
+                           <div class="text-center" *ngIf="customerList.length == 0">
+                               <p>Enter any code to Search...</p>
+                           </div>
+                       </ul>
+                   </div>
+               </div>
+               
+           </div>
+           <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection && (Code=='Premia Agent' || Code=='Premia Broker' || Code=='Premia Direct')">
+               <div class="input-control-container">
+                   <label class="input-form-label">Source Name</label><span class="text-danger">*</span>
+                   <div class="input-form-box">
+                       <input id="CustomerInput" disabled class="input-form-control without-icon"  [(ngModel)]="customerName" type="text" /><br>
+                   </div>
+               </div>
+           </div>
+           <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection && (Code=='agent' || Code=='broker' || Code=='direct' || Code=='bank' || Code=='Broker' || Code=='whatsapp')">
+               <div class="input-control-container">
+                   <label class="input-form-label">Source Code</label><span class="text-danger">*</span>
+                   <ng-container *ngIf="Code!='broker' && Code!='Broker'">
+                       <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerCode"   [items]="brokerList" (change)="onBrokerChange()" bindValue="Code" bindLabel="Name">
+                       </ng-select>
+                   </ng-container>
+                   <ng-container *ngIf="Code=='broker' || Code=='Broker'">
+                       <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerCode"   (change)="onBrokerChange()">
+                           <ng-option *ngFor="let item of brokerList" [value]="item.Code">{{item.Name}}</ng-option>
+                       </ng-select>
+                   </ng-container>
+                   <div class="input-form-error" *ngIf="brokerCodeError">
+                       <div class="error-text text-danger">
+                           Please Select Source Code
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection && brokerCode && (Code=='agent' || Code=='broker' || Code=='direct' || Code=='bank' || Code=='Broker' || Code=='whatsapp')">
+               <div class="input-control-container">
+                   <label class="input-form-label">Broker Branch</label><span class="text-danger">*</span>
+                   <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerBranchCode"   [items]="brokerBranchList" (change)="onBrokerBranchChange()" bindValue="Code" bindLabel="CodeDesc">
+                   </ng-select>
+               </div>
+               <div class="input-form-error" *ngIf="brokerBranchCodeError">
+                   <div class="error-text text-danger">
+                       Please Select BrokerBranchCode
+                   </div>
+               </div>
+           </div>
+           <!-- <div class="col-12 col-md-3 col-lg-3">
+               <div class="input-control-container">
+                   <label class="input-form-label">Customer Code</label><span class="text-danger">*</span>
+                   <div class="input-form-box">
+                       <input id="CustomerInput" class="input-form-control without-icon"  disabled [(ngModel)]="customerCode" type="text" (keyup)="onGetCustomerList('change',$event.target.value)" autocomplete="off" placeholder="Search here" data-toggle="dropdown" /><br>
+                       
+                   </div>
+                   <div class="input-form-error" *ngIf="customerCodeError">
+                       <div class="error-text text-danger">
+                           Please Select Valid Customer Code
+                       </div>
+                   </div>
+
+               </div>
+
+           </div>
+           <div class="col-12 col-md-3 col-lg-3">
+               <div class="input-control-container">
+                   <label class="input-form-label">Customer Name</label><span class="text-danger">*</span>
+                   <div class="input-form-box">
+                       <input id="CustomerInput" disabled class="input-form-control without-icon"  [(ngModel)]="customerName" type="text" /><br>
+                   </div>
+               </div>
+           </div> -->
+       </div>
+       <div class="text-center" *ngIf="customerCodeError">
+        <div class="input-form-error" >
+          <div class="error-text text-danger">
+              Please Select Valid Customer Code
+          </div>
+      </div>
+       </div>
+        <div class="row mt-1">
+          <div class="col-6 col-lg-6 col-md-6 mb-5 offset-3">
+            <div class="banner_content">
+              <div class="bannertextjm">
+                <div class="tjm">
+                  <!-- <span class="save_upto" style="font-size: 28px !important;">Car Insurance </span> -->
+                  <!-- <span class="abc">Cover for Damages &amp;</span> -->
+                </div></div>
+                <!-- <ul class="nav nav-tabs PG-nav d-flex justify-content-center" style="list-style-type: none; background-color: #d2d1d0;border-radius: 10px;">
+                  <li>
+                    <a title="Search By Registration Number" class="nav-link active" data-bs-toggle="tab" (click)="setSearchType('reg')" style="text-decoration: none !important;cursor: pointer;">Search By Registration Number</a>
+                  </li>
+                  <li><a title="Search By Chassis Number" class="nav-link" data-bs-toggle="tab"  (click)="setSearchType('chassis')" style="text-decoration: none !important;cursor: pointer;">Search By Chassis Number</a>
+                  </li>
+                </ul> -->
+                <div class="transjm mt-1">
+                  <!-- <form action="" id="form"> -->
+                    <div class="innerjoin">
+                          <div class="form-box error">
+                          <label class="new" style="font-size:14px !important;">ENTER REGISTRATION NUMBER</label> <br>
+                          <input type="text" id="registration_vehicle" class="form-box" maxlength="15" [(ngModel)]="ChassisNo" placeholder="(eg. SHA)">
+                          <!-- <small id="registration_vehicle_error">Please enter valid Chassis number</small>  -->
+                          </div>
+                          <div class="input-group-btn">
+                              <button id="banner-get-quote getQuoteCI" title="Get a Quote" class="btn btn-jm" (click)="checkMandatories(ChassisNo)">GET A QUOTE </button>
+                          </div>
+                      </div>
+                      
+                  <!-- </form> -->
+                </div>
+                <div class="text-center text-danger" *ngIf="policyPeriodExceed">
+                      <b>Sorry! Policy Period ({{motorDetails?.PolicyStartDate}} &nbsp; - &nbsp;{{motorDetails?.PolicyEndDate}}) for this Vehicle Details Will be Valid till More than 30 Days, Can't Proceed Now</b>
+                  </div>
+                  <!-- <div class="banner_button">
+                    <div class="banner_btn">
+                      <button id="proceed-without-number-button" title="Proceed Without Car Number" class="custjm continue-txt" value="">Proceed Without Car Number <span class="abc">
+                        <img loading="lazy" src="https://www.hdfcergo.com/images/default-source/car-lob/icons/right-arrow.svg" alt="arrow" width="9" height="9"></span></button></div><div class="banner_btn">
+              <button id="renew-existing-hdfc-ergo-policy-button" title="Renew Existing HDFC ERGO POLICY" class="custjm" value="">Renew Existing HDFC ERGO POLICY <span class="abc">
+                <img loading="lazy" src="https://www.hdfcergo.com/images/default-source/car-lob/icons/right-arrow.svg" alt="arrow" width="9" height="9"></span>
+              </button>
+            </div>
+          </div> -->
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
