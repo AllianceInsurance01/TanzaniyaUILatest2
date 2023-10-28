@@ -70,6 +70,7 @@
     position: relative;
     display: block;
     cursor: pointer;
+    counter-reset: tableCount;
 }
 
 .order-tracking .is-complete {
@@ -338,3 +339,92 @@
 
     border-right: none !important;
 }
+
+
+
+@media only screen and (min-width: 751px) and (max-width: 1024px) 
+{
+    .smaldevicestepperss{
+      display:none !important;
+    }
+    .smalldevices{
+        display: inline-block !important;
+    }
+    /* .smaldevicestepperss{
+       display: inline-block !important;
+    } */
+}
+@media only screen and (min-width: 1024px) and (max-width: 200000px) 
+{
+    .smaldevicestepperss{
+        display:none !important;
+      }
+      .smalldevices{
+          display: inline-block !important;
+      }
+      /* .smaldevicestepperss{
+         display: inline-block !important;
+    } */
+}
+
+
+@media screen and (min-width: 381px) and (max-width: 750px) {
+    .smalldevices{
+        display:none !important;
+    }
+    .smaldevicestepper{
+        border-radius: 50% !important;
+        width: auto !important;
+        /* height: 50px !important; */
+        color: #fff !important;
+        background-color:darkblue !important;
+        text-align: center !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        padding: 10px 0!important;
+        /* padding-top: 15px !important; */
+    }
+
+    .smaldevicestepperss{
+        border-radius: 50% !important;
+        /* width: auto !important; */
+        width:20px !important;
+        height: 20px !important;
+        color: #fff !important;
+        background-color:darkblue !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        display:inline-block !important;
+    }
+}
+
+@media screen and (min-width: 280px) and (max-width: 380px) {
+    .smalldevices{
+        display:none !important;
+    }
+    .smaldevicestepper{
+        border-radius: 50% !important;
+        width: auto !important;
+        /* height: 50px !important; */
+        color: #fff !important;
+        background-color:darkblue !important;
+        text-align: center !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        padding: 10px 0!important;
+    }
+    .smaldevicestepperss{
+        border-radius: 50% !important;
+        /* width: auto !important; */
+        width:20px !important;
+        height: 20px !important;
+        color: #fff !important;
+        background-color:darkblue !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        display:inline-block !important;
+    }
+}
+
+
+

@@ -178,61 +178,74 @@
                 <div class="row justify-content-between" *ngIf="subUserType!='B2C'">
                     <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='Customer-stepper'}" (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/customer-details')">
                         <span class="is-complete"></span>
-                        <p>Customer Details</p>
+                        <!-- <p class="smalldevices">Risk Details</p>
+                        <p class="smaldevicestepper"> 2 </p> -->
+                        <p class="smalldevices">Customer Details</p>
+                        <p class="smaldevicestepperss"> 1 </p>
                     </div>
                     <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" *ngIf="vehicleDetailSection" [ngClass]="{completed: activeStep !='Motor-stepper' && activeStep !='Customer-stepper'}"
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/motor-details')">
                         <span class="is-complete"></span>
-                        <p>Motor Details</p>
+                        <p class="smalldevices">Motor Details</p><!--class="smalldevices"-->
+                        <p class="smaldevicestepperss"> 8 </p>
                     </div>
-                    <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='Domestic-stepper' && activeStep !='Motor-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Customer-stepper'}"
+                    <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='Domestic-stepper' && activeStep !='PersonalAccident-stepper' && activeStep !='RiskSelection-Stepper' && activeStep !='Motor-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Customer-stepper'}"
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/vehicle-details')">
                         <span class="is-complete"></span>
-                        <p>Risk Details</p>
+                        <p class="smalldevices">Risk Details</p>
+                        <p class="smaldevicestepperss"> 2 </p>
                     </div>
-                    <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='Motor-stepper' && activeStep !='Excess-stepper' && activeStep !='Customer-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Domestic-stepper' }"
+                    <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='PersonalAccident-stepper' && activeStep !='Motor-stepper' && activeStep !='RiskSelection-Stepper' && activeStep !='Excess-stepper' && activeStep !='Customer-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Domestic-stepper' }"
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/excess-discount')">
                         <span class="is-complete"></span>
-                        <p>Cover Details</p>
+                        <p class="smalldevices">Cover Details</p>
+                        <p class="smaldevicestepperss"> 3 </p>
                     </div>
-                    <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='Motor-stepper' && activeStep !='Premium-stepper' && activeStep !='Customer-stepper' && activeStep !='Excess-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Domestic-stepper'}"
+                    <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='Motor-stepper' && activeStep !='PersonalAccident-stepper' && activeStep !='RiskSelection-Stepper'  && activeStep !='Premium-stepper' && activeStep !='Customer-stepper' && activeStep !='Excess-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Domestic-stepper'}"
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/premium-details')">
                         <span class="is-complete"></span>
-                        <p>Document Details</p>
+                        <p class="smalldevices">Document Details</p>
+                        <p class="smaldevicestepperss"> 4 </p>
                     </div>
-                    <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='Motor-stepper' && activeStep !='Payment-stepper' && activeStep !='Premium-stepper' && activeStep !='Customer-stepper' && activeStep !='Excess-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Domestic-stepper'}"
+                    <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='PersonalAccident-stepper' && activeStep !='Motor-stepper' && activeStep !='RiskSelection-Stepper' && activeStep !='Payment-stepper' && activeStep !='Premium-stepper' && activeStep !='Customer-stepper' && activeStep !='Excess-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Domestic-stepper'}"
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/make-payment')">
                         <span class="is-complete"></span>
-                        <p>Make Payment</p>
+                        <p class="smalldevices">Make Payment</p>
+                        <p class="smaldevicestepperss"> 5 </p>
                     </div>
                 </div>
                 <div class="row justify-content-between" *ngIf="subUserType=='B2C'">
                     <div class="order-tracking" [class.tracking-b2c-width-alt]="additionalSection || customerSection" [class.tracking-b2c-width]="!additionalSection && !customerSection" [ngClass]="{completed: activeStep !='Customer-stepper'}" (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/customer-details')">
                         <span class="is-complete"></span>
-                        <p>Policy Details</p>
+                        <p class="smalldevices">Policy Details</p>
+                        <p class="smaldevicestepperss"> 1 </p>
                     </div>
                     <div class="order-tracking" [class.tracking-b2c-width-alt]="additionalSection || customerSection" [class.tracking-b2c-width]="!additionalSection && !customerSection" [ngClass]="{completed: activeStep !='Domestic-stepper' && activeStep !='Motor-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Customer-stepper'}"
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/vehicle-details')">
                         <span class="is-complete"></span>
-                        <p>Risk Details</p>
+                        <p class="smalldevices">Risk Details</p>
+                        <p class="smaldevicestepperss"> 2 </p>
                     </div>
                     <div class="order-tracking" [class.tracking-b2c-width-alt]="additionalSection || customerSection" [class.tracking-b2c-width]="!additionalSection && !customerSection" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='Motor-stepper' && activeStep !='Excess-stepper'  && activeStep !='Customer-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Domestic-stepper' }"
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/excess-discount')">
                         <span class="is-complete"></span>
-                        <p>Cover Details</p>
+                        <p class="smalldevices">Cover Details</p>
+                        <p class="smaldevicestepperss"> 3 </p>
                     </div>
                     <ng-container *ngIf="customerSection">
                         <div class="order-tracking tracking-b2c-width-alt" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='Motor-stepper'  && activeStep !='UserDetails-stepper' && activeStep !='Excess-stepper' && activeStep !='Customer-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Domestic-stepper' }"
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/userDetails')">
                         <span class="is-complete"></span>
-                        <p>Customer Details</p>
+                        <p class="smalldevices">Customer Details</p>
+                        <p class="smaldevicestepperss"> 4 </p>
                     </div>
                     </ng-container>
                     <ng-container *ngIf="!customerSection && additionalSection">
                         <div class="order-tracking tracking-b2c-width-alt" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='Motor-stepper'  && activeStep !='UserDetails-stepper' && activeStep !='Customer-stepper' && activeStep !='Excess-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Domestic-stepper'}"
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/premium-details')">
                         <span class="is-complete"></span>
-                        <p>Additional Details</p>
+                        <p class="smalldevices">Additional Details</p>
+                        <p class="smaldevicestepperss"> 5 </p>
                     </div>
                     </ng-container>
                    
@@ -240,12 +253,14 @@
                     <div class="order-tracking" [class.tracking-b2c-width-alt]="additionalSection || customerSection" [class.tracking-b2c-width]="!additionalSection && !customerSection" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='Motor-stepper'  && activeStep !='UserDetails-stepper' && activeStep !='Premium-stepper' && activeStep !='Customer-stepper' && activeStep !='Excess-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Domestic-stepper' && activeStep !='DomesticRisk-stepper'}"
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/premium-details')">
                         <span class="is-complete"></span>
-                        <p>Document Details</p>
+                        <p class="smalldevices">Document Details</p>
+                        <p class="smaldevicestepperss"> 4 </p>
                     </div>
                     <div class="order-tracking" [class.tracking-b2c-width-alt]="additionalSection || customerSection" [class.tracking-b2c-width]="!additionalSection && !customerSection" [ngClass]="{completed: false}"
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/make-payment')">
                         <span class="is-complete"></span>
-                        <p>Make Payment</p>
+                        <p class="smalldevices">Make Payment</p>
+                        <p class="smaldevicestepperss"> 5 </p>
                     </div>
                     
                 </div>
@@ -254,7 +269,8 @@
                 <div class="row justify-content-between">
                     <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='Customer-stepper'}" (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/customer-details')">
                         <span class="is-complete"></span>
-                        <p>Risk Details</p>
+                        <p class="smalldevices">Risk Details</p>
+                        <p class="smaldevicestepperss"> 1 </p>
                     </div>
                     <!-- <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" *ngIf="vehicleDetailSection" [ngClass]="{completed: activeStep !='Motor-stepper' && activeStep !='Customer-stepper'}"
                     (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/motor-details')">
@@ -264,23 +280,27 @@
                     <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='Motor-stepper' && activeStep !='Excess-stepper' && activeStep !='Customer-stepper' }"
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/excess-discount')">
                         <span class="is-complete"></span>
-                        <p>Cover Details</p>
+                        <p class="smalldevices">Cover Details</p>
+                        <p class="smaldevicestepper"> 2 </p>
                     </div>
                      <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='Motor-stepper'  && activeStep !='Excess-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Customer-stepper' && activeStep !='Travel-stepper'}"
                         (click)="ontap('/Travel/customerDetails/premium-details')">
                         <span class="is-complete"></span>
-                        <p>Passenger Details</p>
+                        <p class="smalldevices">Passenger Details</p>
+                        <p class="smaldevicestepper"> 3 </p>
                     </div>
 
                     <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='Motor-stepper' && activeStep !='Premium-stepper' && activeStep !='Customer-stepper' && activeStep !='Excess-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Travel-stepper'}"
                         (click)="ontap('/Travel/customerDetails/premium-details')">
                         <span class="is-complete"></span>
-                        <p>Document Details</p>
+                        <p class="smalldevices">Document Details</p>
+                        <p class="smaldevicestepper"> 4 </p>
                     </div>
                     <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='Motor-stepper' && activeStep !='Payment-stepper' && activeStep !='Premium-stepper' && activeStep !='Customer-stepper' && activeStep !='Excess-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Travel-stepper'}"
                         (click)="ontap('/Travel/customerDetails/make-payment')">
                         <span class="is-complete"></span>
-                        <p>Make Payment</p>
+                        <p class="smalldevices">Make Payment</p>
+                        <p class="smaldevicestepper"> 5 </p>
                     </div>
                 </div>
             </div>
@@ -289,12 +309,14 @@
                 <div class="row justify-content-between">
                     <div class="order-tracking domesticrisk" [ngClass]="{completed: checkRouting('customerDetails')}" (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/customer-details')">
                         <span class="is-complete"></span>
-                        <p>Customer Details</p>
+                        <p class="smalldevices">Customer Details</p><!--class="smalldevices"-->
+                        <p class="smaldevicestepperss"> 1 </p>
                     </div>
                     <div class="order-tracking domesticrisk" [ngClass]="{completed: checkRouting('riskDetails')}"
                      (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/domestic-quote-details')">
                         <span class="is-complete"></span>
-                        <p>Risk Details</p>
+                        <p class="smalldevices">Risk Details</p><!--class="smalldevices"-->
+                        <p class="smaldevicestepperss"> 2 </p>
                     </div>
                     <!--<div class="order-tracking domesticrisk" [ngClass]="{completed: activeStep !='UW-stepper' && activeStep !='Motor-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Customer-stepper' && activeStep !='Domestic-stepper'}"
                       (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/underwriter-details')">
@@ -304,22 +326,26 @@
                     <div class="order-tracking domesticrisk" [ngClass]="{completed: checkRouting('coverDetails')}"
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/excess-discount')">
                         <span class="is-complete"></span>
-                        <p>Cover Details</p>
+                        <p class="smalldevices">Cover Details</p><!--class="smalldevices"-->
+                        <p class="smaldevicestepperss"> 3 </p>
                     </div>
                     <div class="order-tracking domesticrisk" [ngClass]="{completed: checkRouting('additionalDetails')}" 
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details')">
                         <span class="is-complete"></span>
-                        <p>Policy Details</p>
+                        <p class="smalldevices">Policy Details</p><!--class="smalldevices"-->
+                        <p class="smaldevicestepperss"> 4 </p>
                     </div>
                     <div class="order-tracking domesticrisk" [ngClass]="{completed: checkRouting('premiumDetails')}"  
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/premium-details')">
                         <span class="is-complete"></span>
-                        <p>Document Details</p>
+                        <p class="smalldevices">Document Details</p><!--class="smalldevices"-->
+                        <p class="smaldevicestepperss"> 5 </p>
                     </div>
                     <div class="order-tracking domesticrisk" [ngClass]="{completed: checkRouting('paymentDetails')}" 
                         (click)="ontap(null,'/Home/existingQuotes/customerSelection/customerDetails/make-payment')">
                         <span class="is-complete"></span>
-                        <p>Make Payment</p>
+                        <p class="smalldevices">Make Payment</p><!--class="smalldevices"-->
+                        <p class="smaldevicestepperss"> 6 </p>
                     </div>
                 </div>
             </div>

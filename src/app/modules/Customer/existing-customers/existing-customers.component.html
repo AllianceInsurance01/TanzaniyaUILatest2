@@ -11,8 +11,8 @@
         </div>
     </div>
     <div class="card-body">
-        <div class="row" style="position: absolute; width: 75rem;left: 0.5rem;">
-            <div class="col-12 col-md-4 mb-2">
+        <div class="row" ><!--style="position: absolute; width: 75rem;left: 0.5rem;"-->
+            <div class="col-12 col-md-6 col-lg-4 col-xl-6">
                 <div class="input-control-container">
                     <div class="input-form-box">
                         <input type="text" class="input-form-control with-icon" [(ngModel)]="searchValue" placeholder="Search By Customer Name / VR TIN No">
@@ -22,23 +22,23 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-2" *ngIf="searchValue.length > 2 ? '...' : ''">
-                <button class="custom-btn btn-6 maan-button-data" matRipple style="margin: 0.7rem 0;" (click)="onCustomerSearch()"><i class="fas fa-search" style="position: relative!important;top: 0.1rem!important;right: 0.2rem;"></i>&nbsp;Search </button>
-            </div>
-            <div class="col-12 col-md-2">
-
+            <div class="col-6 col-md-6 col-lg-2 col-xl-2 noneclass" *ngIf="searchValue.length > 2 ? '...' : ''" style="margin-top: 3px !important;"><!--style="margin: 0.7rem 0;"-->
+                <button class="custom-btn btn-6 maan-button-data" matRipple (click)="onCustomerSearch()"><i class="fas fa-search" style="position: relative!important;top: 0.1rem!important;right: 0.2rem;"></i>&nbsp;Search </button>
             </div>
         </div>
-        <ng-container *ngIf="customerData.length!=0">
-            <app-grid-table [cols]="customerHeader" [data]="customerData" [filterValue]="filterValue" (onEdit)="onEditCovers($event)">
-            </app-grid-table>
-        </ng-container>
-        <ng-container *ngIf="customerData.length==0">
-            <div class="text-center">
-                No Customer Available
-            </div>
-        </ng-container>
-        <div class="text-center mb-2">
+        <div class="mt-1">
+            <ng-container *ngIf="customerData.length!=0">
+                <app-grid-table [cols]="customerHeader" [data]="customerData" [filterValue]="filterValue" (onEdit)="onEditCovers($event)">
+                </app-grid-table>
+            </ng-container>
+            <ng-container *ngIf="customerData.length==0">
+                <div class="text-center">
+                    No Customer Available
+                </div>
+            </ng-container>
+        </div>
+    
+        <div class="text-center mb-2 mt-1">
             <button class="maan-btn btn-warning maan-btn-clearsearch" *ngIf="clearSearchSection" matRipple (click)="getCustomersList()"><i class="fas fa-close"></i>&nbsp;Clear Search &nbsp;</button>
         </div>
     </div>

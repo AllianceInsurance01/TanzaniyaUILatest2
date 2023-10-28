@@ -246,6 +246,11 @@ tbody:first-child tr:first-child td:last-child {
         .small{
             margin-left: 0px !important;
         }
+        .sclass{
+            display: flex !important;
+             flex-direction: row !important;
+            justify-content: space-around !important;
+        }
        }
        
        /* iPads (landscape) ----------- */
@@ -280,6 +285,7 @@ tbody:first-child tr:first-child td:last-child {
         .sclass{
             display: flex;
              flex-direction: column;
+             text-align: center !important;
             /* d-flex justify-content-around */
         }
     }

@@ -36,6 +36,9 @@ import { PersonalLiability } from '../models/PersonalLiability';
 import { PersonalAccident } from '../models/PersonalAccident';
 import { MatStepper } from '@angular/material/stepper';
 import { ShortTermVehicle } from '../models/ShortTermVehicle';
+import { Buildingss } from '../newmodels/Building';
+import { HouseHoldContentsss } from '../newmodels/HouseHoldContents';
+import { AllRiskss } from '../newmodels/AllRisk';
 export class ForceLengthValidators {
   static maxLength(maxLength: number) {
     return (control: FormControl): ValidationErrors => {
@@ -121,7 +124,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
   endorseEffectiveDate: any; employeeCountList: any[] = [];
   dobDate: any; industryTypeList: any[] = [];
   wallMaterialList: any[] = []; audientTypeList: any[] = [];
-  roofMaterialList: any[] = [];proceedSection:boolean = false;
+  roofMaterialList: any[] = [];proceedSection:boolean = false;TypeOfPropertyss:any[]=[];
   sumInsuredList: any[] = [];
   natureTradeList: any[] = [];
   insuranceForList: any[] = [];
@@ -197,7 +200,8 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       this.commonDetails = commonDetails;
       this.currencyCode = this.commonDetails[0].Currency
       if(this.commonDetails[0].IndustryName) this.industryName = this.commonDetails[0].IndustryName;
-       this.updateComponent.showStepperSection = false;
+      //  this.updateComponent.showStepperSection = false;
+      this.updateComponent.showStepperSection = true;
       if (this.productId != '3' && this.productId != '19' && this.productId != '46' && this.productId != '42' && this.productId != '43' && this.productId!='39' && this.productId!='16' && this.productId!='1' && this.productId!='25' && this.productId!='21' && this.productId!='26' && this.productId!='27') {
         this.getOccupationList(null);
       }
@@ -1386,33 +1390,55 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       //this.updateComponent.setTabCountSection(0);
       this.showSection = true;
      
-      if(sections.some(ele=>ele=='47')){
-       
+      if(sections.some(ele=>ele=='47' && this.insuranceId!='100004')){
         let contentData = new HouseHoldContents();
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields]);
         // alert(this.fields[0].fieldGroup.concat([contentData?.fields]));
       }
       if(sections.some(ele=>ele=='3')){
-        let contentData = new AllRisk();
+        //alert(sections)
+        let contentData 
+        if(this.insuranceId=='100004'){
+          contentData = new AllRiskss();
+        }
+        else {
+          contentData = new AllRisk();
+        }
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields])
       }
       if(sections.some(ele=>ele=='36')){
+        //alert(sections)
         let contentData = new PersonalLiability();
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields])
       }
       if(sections.some(ele=>ele=='35')){
+        //alert(sections)
         let contentData = new PersonalAccident();
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields])
       }
       if(sections.some(ele=>ele=='1')){
-        let contentData = new Building();
+        //alert(sections)
+        let contentData 
+        if(this.insuranceId=='100004'){
+          contentData = new Buildingss();
+        }
+        else{
+          contentData = new Building();
+        }
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields]);
         this.getWallMaterialList();
         this.getRoofMaterialList();
         this.getbuildingpurposeList();
+        if(this.insuranceId =='100004'){
+          this.getTypeOfProperty();
+        }
+        
       }
-     
-    
+      if(sections.some(ele=>ele=='47' && this.insuranceId=='100004')){
+         let contentData = new HouseHoldContentsss();
+        this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields]);
+        // alert(this.fields[0].fieldGroup.concat([contentData?.fields]));
+      }
       if(sections.some(ele=>ele=='40')){
         // alert('Fire');
         let fireData = new FireAlliedPerils();
@@ -1980,6 +2006,13 @@ getContentDetails(sections){
       console.log(data);
       if (data.Result) {
             this.productItem.ContentSuminsured = data?.Result?.ContentSuminsured;
+            if(this.insuranceId=='100004'){
+              this.productItem.CarpetsSi = data?.Result?.CarpetsSi;
+              this.productItem.JewellerySi= data?.Result?.JewellerySi;
+              this.productItem.PaitingsSi = data?.Result?.PaitingsSi;
+              this.productItem.EquipmentSis= data?.Result?.EquipmentSi;
+              
+            }
             let entry = data?.Result;
             if(entry.EndorsementDate){
               this.endorsementDate = entry?.EndorsementDate;
@@ -2100,6 +2133,12 @@ getBuildingDetails(sections){
             else this.productItem.BuildingUsageId = '';
             if(data?.Result?.WallType) this.productItem.WallType = data.Result.WallType;
             if(data?.Result?.RoofType) this.productItem.RoofType = data.Result.RoofType;
+            if(this.insuranceId =='100004'){
+              if(data?.Result?.TypeOfProperty) this.productItem.TypeOfProperty = data.Result.TypeOfProperty;
+              if(data?.Result?.WaterTankSi) this.productItem.WaterTankSi = data.Result.WaterTankSi;
+              if(data?.Result?.ArchitectsSi) this.productItem.ArchitectsSi = data.Result.ArchitectsSi;
+              if(data?.Result?.LossOfRentSi) this.productItem.LossOfRentSi = data.Result.LossOfRentSi;
+            }
             let entry = data?.Result;
             if(entry.EndorsementDate){
               this.endorsementDate = entry?.EndorsementDate;
@@ -2704,6 +2743,40 @@ console.log('INSURANCE IDDDDDDD',this.insuranceId);
                 expressions: {
                   disabled: this.checkDisable('BuildingSuminsured'),
                 },
+              },
+              {
+                className: 'col-6',
+                type: 'select',
+                key: 'TypeOfProperty',
+                props: {
+                  label: 'Type Of Property',
+                  
+                  disabled: this.checkDisable('TypeOfProperty'),
+                  required: true,
+                  options: [
+                  ],
+                },
+                expressions: {
+
+                },
+              },
+              {
+                className: 'col-6',
+                type: 'commaSeparator',
+                key: 'WaterTankSi',
+                templateOptions: {
+                  label: `WaterTank SumInsured`,
+
+                },
+                validators: {
+                },
+                hooks: {
+
+                },
+
+                expressions: {
+                  disabled: this.checkDisable('BuildingSuminsured'),
+                },
               }
 
             ]
@@ -2744,7 +2817,7 @@ console.log('INSURANCE IDDDDDDD',this.insuranceId);
     ]
     this.fields[0].fieldGroup = entry.concat(this.fields[0].fieldGroup)
   }
-  if (this.coversRequired == 'B') {
+  if (this.coversRequired == 'B' && this.insuranceId!='100004') {
     this.productItem.ContentSuminsured = '0';
     let entry = [
       {
@@ -2896,11 +2969,190 @@ console.log('INSURANCE IDDDDDDD',this.insuranceId);
     ]
     this.fields[0].fieldGroup = entry.concat(this.fields[0].fieldGroup)
   }
+  if (this.coversRequired == 'B' && this.insuranceId=='100004') {
+    this.productItem.ContentSuminsured = '0';
+    let entry = [
+      {
+        props: { label: 'Building Risk' },
+
+        fieldGroup: [
+          {
+            fieldGroupClassName: 'row',
+            fieldGroup: [
+              {
+                className: 'col-6',
+                type: 'select',
+                key: 'BuildingUsageId',
+                props: {
+                  label: 'Building Usage',
+                  //hideExpression: "model.BuildingOwnerYn =='N'",
+                  disabled: this.checkDisable('BuildingUsageId'),
+                  required: true,
+                  options: [
+                  ],
+                },
+                expressions: {
+
+                },
+              },
+              {
+                className: 'col-6',
+                type: 'input',
+                key: 'BuildingBuildYear',
+                props: {
+                  label: 'Built Year',
+                  placeholder: "YYYY",
+                  required: false,
+                  maxLength: 4,
+                  pattern: /[0-9]+/gm,
+                  disabled: this.checkDisable('BuildingBuildYear'),
+                  options: [
+                  ],
+                },
+                validation: {
+                  messages: {
+                    pattern: (error: any, field: FormlyFieldConfig) => field.formControl.setValue(field.formControl.value.replace(/[^0-9]+/gm, ''))
+                  },
+                },
+                expressions: {
+
+                },
+              },
+              {
+                className: 'col-6',
+                type: 'select',
+                key: 'WallType',
+                props: {
+                  label: 'Used Contruction Materials (Wall)',
+                  disabled: this.checkDisable('WallType'),
+                  required: false,
+                  options: [
+                  ],
+                },
+                expressions: {
+
+                },
+              },
+              {
+                className: 'col-6',
+                type: 'select',
+                key: 'RoofType',
+                props: {
+                  label: 'Used Contruction Materials (Roof)',
+                  disabled: this.checkDisable('RoofType'),
+                  required: false,
+                  options: [
+                  ],
+                },
+                expressions: {
+
+                },
+              },
+              {
+                className: 'col-6',
+                type: 'commaSeparator',
+                key: 'BuildingSuminsured',
+                templateOptions: {
+                  label: `Building Sum Insured (${this.commonDetails[0].Currency})`,
+
+                },
+                validators: {
+                },
+                hooks: {
+
+                },
+
+                expressions: {
+                  disabled: this.checkDisable('BuildingSuminsured'),
+                },
+              },
+              {
+                className: 'col-6',
+                type: 'select',
+                key: 'TypeOfProperty',
+                props: {
+                  label: 'Type Of Property',
+                  
+                  disabled: this.checkDisable('TypeOfProperty'),
+                  required: true,
+                  options: [
+                  ],
+                },
+                expressions: {
+
+                },
+              },
+              {
+                className: 'col-6',
+                type: 'commaSeparator',
+                key: 'WaterTankSi',
+                templateOptions: {
+                  label: `WaterTank SumInsured`,
+
+                },
+                validators: {
+                },
+                hooks: {
+
+                },
+
+                expressions: {
+                  disabled: this.checkDisable('BuildingSuminsured'),
+                },
+              },
+              {
+                className: 'col-6',
+                type: 'commaSeparator',
+                key: 'LossOfRentSi',
+                templateOptions: {
+                  label: `Loss Of Rent SumInsured`,
+
+                },
+                validators: {
+                },
+                hooks: {
+
+                },
+
+                expressions: {
+                  disabled: this.checkDisable('LossOfRentSi'),
+                },
+              },
+              {
+                className: 'col-6',
+                type: 'commaSeparator',
+                key: 'ArchitectsSi',
+                templateOptions: {
+                  label: `Architects SumInsured`,
+
+                },
+                validators: {
+                },
+                hooks: {
+
+                },
+
+                expressions: {
+                  disabled: this.checkDisable('ArchitectsSi'),
+                },
+              }
+
+            ]
+          }
+        ]
+      }
+    ]
+    this.fields[0].fieldGroup = entry.concat(this.fields[0].fieldGroup)
+  }
+
   if (this.productId == '3') {
     this.getOccupationList(null);
     if(this.coversRequired=='BC' || this.coversRequired=='B'){
       this.getWallMaterialList();
       this.getRoofMaterialList();
+    }
+    if(this.insuranceId=='100004'){
+      this.getTypeOfProperty();
     }
     
     this.getbuildingpurposeList();
@@ -2988,6 +3240,49 @@ getRoofMaterialList() {
                   }
                   else if(field.props.label=='Building Risk'){
                     field.fieldGroup[0].fieldGroup[3].props.options = defaultObj.concat(this.roofMaterialList);
+                  }
+                }
+              } 
+            }
+          }
+        }
+      }
+    },
+    (err) => { },
+  );
+}
+getTypeOfProperty() {
+  console.log('Types of Propertyss');
+  let ReqObj = {
+    "InsuranceId": this.insuranceId,
+    "BranchCode": this.branchCode
+  }
+  let urlLink = `${this.commonApiUrl}dropdown/buildingpropertytypes`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      let res: any = data.Result;
+      if (res.length != 0) {
+        if (res.length != 0) {
+          let defaultObj = [{ 'label': '-Select-', 'value': '' }]
+          this.TypeOfPropertyss = data.Result;
+          for (let i = 0; i < this.TypeOfPropertyss.length; i++) {
+            this.TypeOfPropertyss[i].label = this.TypeOfPropertyss[i]['CodeDesc'];
+            this.TypeOfPropertyss[i].value = this.TypeOfPropertyss[i]['Code'];
+            delete this.TypeOfPropertyss[i].CodeDesc;
+            if (i == this.TypeOfPropertyss.length - 1) {
+              if (this.productId == '1') {
+                this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[7].props.options = defaultObj.concat(this.roofMaterialList);
+              }
+              else if(this.productId!='19' && this.productId!='3'){} 
+              //this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[3].props.options = defaultObj.concat(this.roofMaterialList);
+              else{
+                let fields = this.fields[0].fieldGroup;
+                for(let field of fields){
+                  if(field.props.label=='Burglary'){
+                      //field.fieldGroup[0].fieldGroup[0].fieldGroup[0].fieldGroup[7].props.options = defaultObj.concat(this.roofMaterialList);
+                  }
+                  else if(field.props.label=='Building Risk'){
+                    field.fieldGroup[0].fieldGroup[4].props.options = defaultObj.concat(this.TypeOfPropertyss);
                   }
                 }
               } 
@@ -5245,6 +5540,10 @@ onSaveBuildingDetails(type,formType){
     "BuildingOwnerYn": this.productItem.BuildingOwnerYn,
     "BuildingSumInsured": this.productItem.BuildingSuminsured,
     "BuildingUsageId": this.productItem.BuildingUsageId,
+    "WaterTankSi": this.productItem?.WaterTankSi,
+    "ArchitectsSi": this.productItem?.ArchitectsSi,
+    "LossOfRentSi":this.productItem?.LossOfRentSi,
+    "TypeOfProperty":this.productItem?.TypeOfProperty,
     "EndorsementDate": this.endorsementDate,
     "EndorsementEffectiveDate": this.endorsementEffectiveDate,
     "EndorsementRemarks": this.endorsementRemarks,
@@ -6016,6 +6315,10 @@ onSaveContentRiskDetails(type,formType){
     "IsFinanceEndt": this.isFinanceEndt,
     "OrginalPolicyNo": this.orginalPolicyNo,
     "PolicyNo": this.endorsePolicyNo,
+    "JewellerySi": this.productItem?.JewellerySi,
+    "PaitingsSi": this.productItem?.PaitingsSi,
+    "CarpetsSi": this.productItem?.CarpetsSi,
+    "EquipmentSi":  this.productItem?.EquipmentSis,
   }
   if (this.endorsementSection) {
     if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {

@@ -189,6 +189,15 @@ font-size:.75rem !important;
     margin-left:13px !important;
     margin-right: 10px !important;
 }
+// :host ::ng-deep .form-label{
+//     top:0.2rem !important;
+// }
+:host ::ng-deep .customInput{
+    top:0.4rem !important;
+}
+:host ::ng-deep .form-control{
+    margin:7px 3px !important;
+}
 .splitCardHeaders{
     //display: block !important; 
     // padding-left: 3px;

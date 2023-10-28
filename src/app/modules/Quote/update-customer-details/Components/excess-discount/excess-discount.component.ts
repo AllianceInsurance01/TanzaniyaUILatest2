@@ -2819,6 +2819,7 @@ getMotorUsageList(vehicleValue){
         }
 
     }
+    this.onEmiYNChange();
     console.log("Final Covers",this.vehicleDetailsList,this.selectedCoverList)
   }
   checkCoverSelection(vehicleData,coverData){
@@ -2983,7 +2984,7 @@ getMotorUsageList(vehicleValue){
   EmiInstallment(){
     if(this.localCurrency==undefined) this.localCurrency = 'TZS'
     let ReqObj = {
-    "PremiumWithTax":this.localPremiumCost,
+    "PremiumWithTax":this.totalPremium,
      "InsuranceId":this.insuranceId,
      "ProductId":this.productId,
      "Currency": this.localCurrency,
