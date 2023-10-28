@@ -715,6 +715,7 @@ export class CustomerDetailsComponent implements OnInit {
           this.clientName = customerDetails?.ClientName
           this.idNumber = customerDetails?.IdNumber;
           if(customerDetails){
+            this.productItem = new ProductData();
             this.productItem.Title = customerDetails?.Title;
             this.productItem.ClientName = customerDetails?.ClientName;
             this.productItem.MobileCode = customerDetails?.MobileCode1;
@@ -1370,6 +1371,23 @@ export class CustomerDetailsComponent implements OnInit {
           
       }
     }
+    else{
+      var d = new Date();
+      var year = d.getFullYear();
+      var month = d.getMonth();
+      var day = d.getDate();
+      let startDate1 = this.datePipe.transform(new Date(year, month, day+1), "dd/MM/yyyy");
+        let EndDate1 = this.datePipe.transform(new Date(year+1, month, day), "dd/MM/yyyy");
+        var dateParts:any = startDate1.split("/");
+        var dateParts2:any = EndDate1.split('/');
+        var endDate = dateParts2[2]+'-'+dateParts2[1]+'-'+dateParts2[0];
+        var startDate = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
+        this.policyStartDate = startDate;
+        this.policyEndDate = endDate;
+        this.updateComponent.policyStartDate = this.policyStartDate;
+        this.updateComponent.policyEndDate = this.policyEndDate;
+        this.onChangeEndDate('direct');
+    }
     // if(entry?.PolicyEndDate != null ){
     //   var dateParts = entry?.PolicyEndDate.split("/");
     //     // month is 0-based, that's why we need dataParts[1] - 1
@@ -1390,8 +1408,8 @@ export class CustomerDetailsComponent implements OnInit {
       }
       this.onSourceTypeChange('direct');
     }
-    
-    this.currencyCode = entry?.CURRENCY_CODE;
+    if(entry.CURRENCY_CODE!=null)  this.currencyCode = entry?.CURRENCY_CODE;
+    else this.currencyCode = this.currencyList[1]?.Code;
     this.onCurrencyChange('direct');
       this.HavePromoCode = entry?.HavePromoCode;
       this.PromoCode = entry?.PromoCode;
@@ -1408,7 +1426,6 @@ export class CustomerDetailsComponent implements OnInit {
       this.PromoCode = null;
       this.updateComponent.HavePromoCode = this.HavePromoCode;
       this.updateComponent.PromoCode = this.PromoCode;
-      
       console.log("Final Values",this.brokerList,this.brokerCode)
       this.onSourceTypeChange('direct');
       this.commonSection = true;
