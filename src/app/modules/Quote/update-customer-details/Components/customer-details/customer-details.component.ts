@@ -1599,7 +1599,6 @@ export class CustomerDetailsComponent implements OnInit {
       this.maxCurrencyRate = currencyData?.MaxRate;
       this.updateComponent.CurrencyCode = this.currencyCode;
       this.updateComponent.exchangeRate = this.exchangeRate;
-
     }
     console.log('CCCCCCCC',this.currencyCode)
 
