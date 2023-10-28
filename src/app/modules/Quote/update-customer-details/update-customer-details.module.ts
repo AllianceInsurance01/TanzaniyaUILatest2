@@ -109,7 +109,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     TablesTypeComponent,
     CustomerModelComponent,
     RadioList,
-    NgSelect,
+    NgSelect
     //NewViewDetailsComponent
 
     ],

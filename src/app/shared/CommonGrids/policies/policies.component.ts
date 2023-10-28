@@ -44,6 +44,8 @@ export class PoliciesComponent implements OnInit {
     this.insuranceId = this.userDetails.Result.InsuranceId;
     if(this.userType!='Issuer')this.brokerCode = this.loginId;
     sessionStorage.removeItem('loadingType');
+    sessionStorage.removeItem('firstLoad');
+    sessionStorage.removeItem('VechileDetails');
    }
 
   ngOnInit(): void {

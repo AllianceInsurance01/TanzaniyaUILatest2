@@ -30,7 +30,15 @@ const routes: Routes = [
       breadcrumb: 'Existing Customers',
     }
   },
-
+  {
+    path: 'tira-vehicle-search',
+    loadChildren: () => import('../Quote/vehicle-search-details/vehicle-search-details.module').then(m => m.VehicleSearchDetailsModule),
+    data: {
+      preload: true,
+      title: "TiraVehicleSearch",
+      breadcrumb: 'TiraVehicleSearch',
+    }
+  },
   {
     path: 'existingQuotes',
     loadChildren: () => import('../Quote/existing-quotes/existing-quotes.module').then(m => m.ExistingQuotesModule),

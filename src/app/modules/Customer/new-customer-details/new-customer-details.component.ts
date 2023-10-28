@@ -584,6 +584,10 @@ export class NewCustomerDetailsComponent {
 					if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2' && quoteNo!=undefined && quoteNo!=null)){
 						this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
 					}
+					else if(sessionStorage.getItem('VechileDetails')){
+						sessionStorage.setItem('customerReferenceNo',data.Result.SuccessId);
+						this.router.navigate(['Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+					}
 					else this.router.navigate(['/Home/customer/'])
 				}
 			},
@@ -596,10 +600,13 @@ export class NewCustomerDetailsComponent {
 		if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2' && quoteNo!=undefined && quoteNo!=null)){
 			this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
 		}
+		else if(sessionStorage.getItem('VechileDetails')){
+			sessionStorage.removeItem('customerReferenceNo');
+			this.router.navigate(['/Home/tira-vehicle-search']);
+		}
 		else{
 			sessionStorage.removeItem('customerReferenceNo');
 			this.router.navigate(['/Home/customer/'])
 		}
-		
 	}
 }

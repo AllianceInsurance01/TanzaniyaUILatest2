@@ -209,20 +209,46 @@ export class VehicleWishListComponent implements OnInit {
       this.getExistingVehiclesList();
     }
     else{
-      if(this.updateComponent.vehicleWishList.length!=0){
-        this.updateComponent.CurrencyCode = this.updateComponent.vehicleWishList[0].Currency;
-        this.currencyCode = this.updateComponent.vehicleWishList[0].Currency;
-        this.exchangeRate = this.updateComponent.vehicleWishList[0].ExchangeRate;
-        this.policyStartDate = this.updateComponent.vehicleWishList[0].PolicyStartDate;
-        this.policyEndDate = this.updateComponent.vehicleWishList[0].PolicyEndDate;
-        this.HavePromoCode = this.updateComponent.vehicleWishList[0].HavePromoCode;
-        this.PromoCode = this.updateComponent.vehicleWishList[0].PromoCode;
-        this.acExecutiveId = this.updateComponent.vehicleWishList[0].AcExecutiveId;
-        this.commissionType = this.updateComponent.vehicleWishList[0].CommissionType;
-      }
-      this.vehicleWishList = this.updateComponent.vehicleWishList;
-       this.searchSection = true;
+      let loadType = sessionStorage.getItem('firstLoad');
+      if(this.productId=='5' && loadType){
+        let motorDetails = JSON.parse(sessionStorage.getItem('VechileDetails'));
+        motorDetails['PolicyStartDate'] = this.datePipe.transform(new Date(this.updateComponent?.policyStartDate), "dd/MM/yyyy");
+        motorDetails['PolicyEndDate'] = this.datePipe.transform(new Date(this.updateComponent?.policyEndDate), "dd/MM/yyyy");
+        motorDetails['LoginId'] = this.loginId;
+        this.sourceType = motorDetails.SourceType;
+        if(this.Code=='Premia Agent' || this.Code=='Premia Broker' || this.Code=='Premia Direct'){
+          this.customerCode = motorDetails.CustomerCode;
+          this.customerName = motorDetails.CustomerName;
+        }
+        else{
+          this.brokerCode = motorDetails.BrokerCode;
+          this.brokerBranchCode = motorDetails.BrokerBranchCode;
+        }
+        
+        this.currencyCode = this.updateComponent.CurrencyCode;
+        this.exchangeRate = this.updateComponent.exchangeRate;
+        this.vehicleDetails = motorDetails;
+        this.searchSection = true;
         this.wishSection = true;
+        this.onSaveSearchVehicles();
+      }
+      else{
+        if(this.updateComponent.vehicleWishList.length!=0){
+          this.updateComponent.CurrencyCode = this.updateComponent.vehicleWishList[0].Currency;
+          this.currencyCode = this.updateComponent.vehicleWishList[0].Currency;
+          this.exchangeRate = this.updateComponent.vehicleWishList[0].ExchangeRate;
+          this.policyStartDate = this.updateComponent.vehicleWishList[0].PolicyStartDate;
+          this.policyEndDate = this.updateComponent.vehicleWishList[0].PolicyEndDate;
+          this.HavePromoCode = this.updateComponent.vehicleWishList[0].HavePromoCode;
+          this.PromoCode = this.updateComponent.vehicleWishList[0].PromoCode;
+          this.acExecutiveId = this.updateComponent.vehicleWishList[0].AcExecutiveId;
+          this.commissionType = this.updateComponent.vehicleWishList[0].CommissionType;
+        }
+        this.vehicleWishList = this.updateComponent.vehicleWishList;
+          this.searchSection = true;
+          this.wishSection = true;
+      }
+      
     }
     if(sessionStorage.getItem('endorsePolicyNo')){
       this.endorsementSection = true;
@@ -486,6 +512,8 @@ export class VehicleWishListComponent implements OnInit {
           this.endtPrevPolicyNo = details?.EndtPrevPolicyNo;this.isFinanceEndt = details?.IsFinanceEndt;
         }
       }
+      let sumInsured = null;
+      if(this.vehicleDetails?.SUM_INSURED) sumInsured = this.vehicleDetails?.SUM_INSURED;
     let ReqObj = {
       "BrokerBranchCode": brokerbranchCode,
       "AcExecutiveId": null,

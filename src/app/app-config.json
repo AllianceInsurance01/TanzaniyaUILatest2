@@ -1,8 +1,8 @@
 {
-       "ApiUrl1": "http://192.168.1.49:8080/EwayAdminApi/",
-       "MotorApiUrl": "http://192.168.1.49:8080/EwayMotorApi/",
-       "CommonApiUrl": "http://192.168.1.49:8080/EwayCommonApi/",
-       "CustomCommonApiUrl": "http://192.168.1.49:8080/EwayCommonApi/",
-       "ExcelUrl": "http://192.168.1.49:8080/EwayAdminApi/",
-       "PreExceptionUrl":"http://192.168.1.49:8080/WhatsAppChatApi/"
+       "ApiUrl1": "https://apps.alliance.co.tz/EwayAdminApi/",
+       "MotorApiUrl": "https://apps.alliance.co.tz/EwayMotorApi/",
+       "CommonApiUrl": "https://apps.alliance.co.tz/EwayCommonApi/",
+       "CustomCommonApiUrl": "https://apps.alliance.co.tz/EwayCommonApi/",
+       "ExcelUrl": "https://apps.alliance.co.tz/EwayAdminApi/",
+       "PreExceptionUrl":"https://apps.alliance.co.tz/WhatsAppChatApi/"
 }

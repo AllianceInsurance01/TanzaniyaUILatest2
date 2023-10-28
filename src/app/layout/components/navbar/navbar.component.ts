@@ -300,7 +300,9 @@ export class NavbarComponent implements OnInit {
     let ReqObj = {
       "LoginId": this.loginId,
       "UserType": this.userType,
-      "SubUserType": this.typeValue
+      "SubUserType": this.typeValue,
+      "InsuranceId": this.insuranceid,
+      "ProductId": this.productId
     }
     this.loginService.onPostMethodBearerSync(urlLink, ReqObj).subscribe(
       (data: any) => {
@@ -497,6 +499,8 @@ export class NavbarComponent implements OnInit {
     sessionStorage.removeItem('quoteNo');
     sessionStorage.removeItem('updatebar');
     sessionStorage.removeItem('endorseTypeId')
+    sessionStorage.removeItem('firstLoad');
+    sessionStorage.removeItem('VechileDetails');
     // if(rowData.label=='New Quote'){
 
     // }

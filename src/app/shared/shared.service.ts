@@ -172,7 +172,7 @@ export class SharedService {
     if ((redirectStatus == undefined && this.router != undefined)) {
       // tslint:disable-next-line: triple-equals
       console.log('Clear Time Out1');
-      if (this.router.url != '/' && this.router.url != '/Login/Home' && this.router.url != '/Login/sessionRedirect' && this.router.url != '/Login/Officer' && this.router.url != '/Login/Assessor' && this.router.url != '/Login/Garage' ) {
+      if (this.router.url != '/' && this.router.url != '/Login/Home' && this.router.url != '/login' && this.router.url != '/Login/sessionRedirect' && this.router.url != '/Login/Officer' && this.router.url != '/Login/Assessor' && this.router.url != '/Login/Garage' ) {
         window.clearTimeout(this.timeoutHandle);
         console.log('Clear Time Out2');
         this.setTimeOutSection();
