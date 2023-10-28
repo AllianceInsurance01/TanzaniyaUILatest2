@@ -222,6 +222,14 @@ export class VehicleSearchDetailsComponent {
     }
     
   }
+  onBrokerChange(){
+    //if(this.Code=='Broker' || this.Code=='Agent'){
+      let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
+      if(entry){
+        this.brokerLoginId = entry.Name; 
+      }
+      this.getBrokerBranchList('change');
+    }
   setCustomerValue(code,name,type){
     this.showCustomerList = false;
       this.customerCode = code;
@@ -278,6 +286,7 @@ export class VehicleSearchDetailsComponent {
         this.motorDetails['BrokerBranchCode'] = this.brokerBranchCode;
         this.motorDetails['BrokerCode'] = this.brokerCode;
         this.motorDetails['BranchCode'] = this.branchValue;
+        this.motorDetails['BrokerLoginId'] = this.brokerLoginId;
         sessionStorage.setItem('VechileDetails', JSON.stringify(this.motorDetails));
         sessionStorage.setItem('customerReferenceNo',this.motorDetails.PolicyHolderInfo.CustomerReferenceNo);
         sessionStorage.setItem('firstLoad','yes');
@@ -290,6 +299,7 @@ export class VehicleSearchDetailsComponent {
         this.motorDetails['BrokerBranchCode'] = this.brokerBranchCode;
         this.motorDetails['BrokerCode'] = this.brokerCode;
         this.motorDetails['BranchCode'] = this.branchValue;
+        this.motorDetails['BrokerLoginId'] = this.brokerLoginId;
         sessionStorage.setItem('VechileDetails', JSON.stringify(this.motorDetails));
         this.getPolicyHolderDetails(ReqObj);
       }

@@ -89,9 +89,11 @@ export class NewCustomerDetailsComponent {
 			this.customerReferenceNo = refNo;
 		}
 		else {
+			
 			this.customerReferenceNo = null;
 			this.productItem = new ProductData()
 			this.productItem.IdType=1;
+			
 			
 		}
 		this.getTitleList();
@@ -349,6 +351,12 @@ export class NewCustomerDetailsComponent {
 								this.productItem.BusinessType='';
 								this.productItem.Title='';
                 				this.getPolicyIdTypeList('change');
+								if(sessionStorage.getItem('VechileDetails')){
+									let motorDetails = JSON.parse(sessionStorage.getItem('VechileDetails'));
+									this.productItem.ClientName = motorDetails.ResOwnerName;
+									this.productItem.Title = '1';
+									this.onTitleChange();
+								}
 							}
 							// this.getGenderList();
 					/*let brokerId = sessionStorage.getItem('editBroker');

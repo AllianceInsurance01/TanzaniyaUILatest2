@@ -215,6 +215,7 @@ export class VehicleWishListComponent implements OnInit {
         motorDetails['PolicyStartDate'] = this.datePipe.transform(new Date(this.updateComponent?.policyStartDate), "dd/MM/yyyy");
         motorDetails['PolicyEndDate'] = this.datePipe.transform(new Date(this.updateComponent?.policyEndDate), "dd/MM/yyyy");
         motorDetails['LoginId'] = this.loginId;
+        this.updateComponent.brokerLoginId = motorDetails?.BrokerLoginId;
         this.sourceType = motorDetails.SourceType;
         if(this.Code=='Premia Agent' || this.Code=='Premia Broker' || this.Code=='Premia Direct'){
           this.customerCode = motorDetails.CustomerCode;

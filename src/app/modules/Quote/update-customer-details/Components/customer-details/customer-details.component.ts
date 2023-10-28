@@ -279,6 +279,12 @@ export class CustomerDetailsComponent implements OnInit {
             else{
               let loadType = sessionStorage.getItem('firstLoad');
               if(this.productId=='5' && loadType){
+                  let quoteStatus = sessionStorage.getItem('QuoteStatus');
+                  if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
+                    this.adminSection = true;this.issuerSection = false;
+                  }
+                  else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
+                  else this.issuerSection = false
                  let motorDetails = JSON.parse(sessionStorage.getItem('VechileDetails'));
                   this.setTiraVehicleValues(motorDetails);
               }
@@ -309,7 +315,6 @@ export class CustomerDetailsComponent implements OnInit {
                  //this.setCommonValues(motorDetails);
               }
               else{
-                alert('Entered Here')
                   this.quoteRefNo=null;
                   this.branchValue = this.userDetails.Result.BranchCode;
                   this.updateComponent.branchValue = this.branchValue;
@@ -801,7 +806,6 @@ export class CustomerDetailsComponent implements OnInit {
               //this.setCommonValues(motorDetails);
               }
               else{
-                alert('Entered Here')
                 this.quoteRefNo=null;
                 this.currencyCode = this.userDetails.Result.CurrencyId;
                 this.onCurrencyChange('direct');
@@ -822,6 +826,12 @@ export class CustomerDetailsComponent implements OnInit {
         else{
           let loadType = sessionStorage.getItem('firstLoad');
             if(this.productId=='5' && loadType){
+              let quoteStatus = sessionStorage.getItem('QuoteStatus');
+              if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
+                this.adminSection = true;this.issuerSection = false;
+              }
+              else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
+              else this.issuerSection = false
               let motorDetails = JSON.parse(sessionStorage.getItem('VechileDetails'));
               this.setTiraVehicleValues(motorDetails);
               //this.setCommonValues(motorDetails);
