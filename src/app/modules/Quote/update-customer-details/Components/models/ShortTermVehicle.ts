@@ -142,8 +142,15 @@ export class ShortTermVehicle{
                           disabled: this.checkDisable('ChassisNo'),
                           required: true,
                         },
+                        parsers: [
+                          value => {
+                              return (value = value.toUpperCase());
+                          }
+                      ],
                         validators: {
                           validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                        },
+                        hooks: {
                         },
                     },
                     // {
@@ -168,8 +175,15 @@ export class ShortTermVehicle{
                           disabled: this.checkDisable('EngineNo'),
                           required: true,
                         },
+                        parsers: [
+                          value => {
+                              return (value = value.toUpperCase());
+                          }
+                       ],
                         validators: {
                           validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                        },
+                        hooks: {
                         },
                     },
                     {
