@@ -1409,7 +1409,7 @@ export class CustomerDetailsComponent implements OnInit {
       this.onSourceTypeChange('direct');
     }
     if(entry.CURRENCY_CODE!=null)  this.currencyCode = entry?.CURRENCY_CODE;
-    else this.currencyCode = this.currencyList[1]?.Code;
+    else this.currencyCode = this.userDetails.Result.CurrencyId;
     this.onCurrencyChange('direct');
       this.HavePromoCode = entry?.HavePromoCode;
       this.PromoCode = entry?.PromoCode;
