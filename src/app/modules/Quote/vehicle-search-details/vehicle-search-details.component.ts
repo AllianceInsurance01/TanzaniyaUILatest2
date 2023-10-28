@@ -60,6 +60,8 @@ export class VehicleSearchDetailsComponent {
     sessionStorage.removeItem('customerReferenceNo');
     sessionStorage.removeItem('firstLoad');
     sessionStorage.removeItem('VechileDetails');
+    sessionStorage.removeItem('quoteNo');
+    sessionStorage.removeItem('quoteReferenceNo');
   }
 
   ngOnInit(): void {
