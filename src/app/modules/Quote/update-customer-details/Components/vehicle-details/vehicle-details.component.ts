@@ -806,7 +806,8 @@ export class VehicleDetailsComponent implements OnInit {
       this.TppdCommaFormatted();
       this.accessoriesSI = String(this.vehicleDetails?.AcccessoriesSumInsured);
       this.accessoriesCommaFormatted();
-      this.getVehicleDetails(this.vehicleDetails?.Registrationnumber,this.vehicleDetails?.SavedFrom);
+      this.motorDetails = this.vehicleDetails;
+      //this.getVehicleDetails(this.vehicleDetails?.Registrationnumber,this.vehicleDetails?.SavedFrom);
     }
     
 
