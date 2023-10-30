@@ -72,7 +72,6 @@ export class NewSectionDetailsComponent implements OnInit {
       let urlLink = `${this.ApiUrl1}master/getbyproductsectionid`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
-        console.log(data);
         let res:any = data;
         if(res.Result){
           this.sectionDetails = res.Result;
@@ -89,7 +88,6 @@ export class NewSectionDetailsComponent implements OnInit {
             }
           }
         }
-        console.log("Final Modal Class",this.sectionDetails);
       },
       (err) => { },
     );
