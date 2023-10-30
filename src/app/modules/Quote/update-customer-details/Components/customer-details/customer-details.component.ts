@@ -1755,6 +1755,7 @@ export class CustomerDetailsComponent implements OnInit {
   redirectCreateVehicle(event){
       this.vehicleWishList = event.vehicleWishList;
       this.customerData = event.customerData;
+     
       console.log("Edit Customer Final 2",this.customerData)
       this.onCreateVehicle();
   }
@@ -1784,6 +1785,7 @@ export class CustomerDetailsComponent implements OnInit {
                         sessionStorage.setItem('vehicleType','new');
                         sessionStorage.removeItem('vehicleDetails');
                         this.updateComponent.resetVehicleTab();
+                        sessionStorage.setItem('vehicleDetailsList',JSON.stringify(this.customerData))
                         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/motor-details'])
                       }
                     }
@@ -1798,6 +1800,7 @@ export class CustomerDetailsComponent implements OnInit {
                         sessionStorage.setItem('vehicleType','new');
                         sessionStorage.removeItem('vehicleDetails');
                         this.updateComponent.resetVehicleTab();
+                        sessionStorage.setItem('vehicleDetailsList',JSON.stringify(this.customerData))
                         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/motor-details'])
                       }
                     }

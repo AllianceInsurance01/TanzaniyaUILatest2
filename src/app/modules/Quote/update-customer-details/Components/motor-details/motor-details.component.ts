@@ -63,6 +63,7 @@ export class MotorDetailsComponent implements OnInit {
   customerName: any;
   endorsementSection: boolean=false;
   quoteRefNo: any;
+  vehicleDetailsList: any[]=[];
   constructor(private sharedService: SharedService,private datePipe:DatePipe,
     private router:Router, private updateComponent:UpdateCustomerDetailsComponent,) {
       this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -78,7 +79,7 @@ export class MotorDetailsComponent implements OnInit {
       this.productId = this.userDetails.Result.ProductId;
       this.insuranceId = this.userDetails.Result.InsuranceId;
       let vehicleDetails = JSON.parse(sessionStorage.getItem('vehicleDetailsList'));
-      if(vehicleDetails)
+      if(vehicleDetails) this.vehicleDetailsList = vehicleDetails;
       console.log("Vehicle Details List",vehicleDetails);
       this.getOwnerCategoryList();
    }
@@ -323,7 +324,11 @@ omit_special_char(event)
                 this.vehicleDetails.PolicyStartDate = this.datePipe.transform(this.updateComponent.policyStartDate, "dd/MM/yyyy");
                 this.vehicleDetails.PolicyEndDate = this.datePipe.transform(this.updateComponent.policyEndDate, "dd/MM/yyyy");
                 sessionStorage.removeItem('loadingType');
-                this.onSaveSearchVehicles();
+                if(this.vehicleDetailsList.length!=0){
+
+                  //  let entry = this.vehicleDetailsList.some(ele=>ele.)
+                }
+                else this.onSaveSearchVehicles();
               }
               else if(data.ErrorMessage!=null){
                 if(data.ErrorMessage.length!=0){
@@ -426,7 +431,7 @@ omit_special_char(event)
       "CubicCapacity": this.vehicleDetails?.Grossweight,
       "CreatedBy": createdBy,
       "DrivenByDesc": 'D',
-      "EngineNumber": this.vehicleDetails?.EngineNumber,
+      "EngineNumber": this.vehicleDetails?.EngineNumber?.toUpperCase(),
       "FuelType": this.vehicleDetails?.FuelType,
       "Gpstrackinginstalled": null,
       "Grossweight": this.vehicleDetails?.Grossweight,
@@ -591,10 +596,10 @@ omit_special_char(event)
       "Insuranceid": this.insuranceId,
       "BranchCode": this.branchCode,
       "AxelDistance": this.axelDistance,
-      "Chassisnumber": this.chassisNo,
+      "Chassisnumber": this.chassisNo?.toUpperCase(),
       "Color": this.colorValue,
-      "CreatedBy": "broker7",
-      "EngineNumber": this.engineNo,
+      "CreatedBy": this.loginId,
+      "EngineNumber": this.engineNo?.toUpperCase(),
       "FuelType": this.fuelType,
       "Grossweight": this.grossWeight,
       "ManufactureYear": this.manufactureYear,
@@ -602,7 +607,7 @@ omit_special_char(event)
       "Motorusage": this.usageValue,
       "NumberOfAxels": this.noOfAxels,
       "OwnerCategory": this.ownerCategory,
-      "Registrationnumber": this.regNo,
+      "Registrationnumber": this.regNo?.toUpperCase(),
       "ResEngineCapacity": this.engineCapacity,
       "ResOwnerName": this.ownerName,
       "ResStatusCode": "Y",
