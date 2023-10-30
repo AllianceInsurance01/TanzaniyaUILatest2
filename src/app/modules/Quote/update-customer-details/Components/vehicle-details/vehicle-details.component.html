@@ -266,7 +266,11 @@
                             </div>
                         </li>
                     </ul>
-               
+                    <ng-container *ngIf="showTiraUpdateSection">
+                        <div class="text-center text-primary mt-2">
+                                Registration Number Already Available, Motor Details Pulled From Tira 
+                        </div>
+                    </ng-container>
                 </div>
             </div>
             <div class="maan-grid-item" id="slider_0">
@@ -279,6 +283,7 @@
                     </div>
                     <div>
                         <div class="maan-grid-item-body smallclass">
+                            
                             <!--style="padding-left: 40px !important;padding-right: 40px !important;"-->
                             <div class="row">
                                 <div class="col-12 col-md-4">

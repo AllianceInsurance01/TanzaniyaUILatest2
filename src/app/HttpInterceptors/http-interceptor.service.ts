@@ -115,8 +115,49 @@ export class HttpInterceptorService implements HttpInterceptor {
         }
       });
 
-      }
+        }
+        else if([500].includes(err.status)){
+          let ulList=`<li class="list-group-item">
+          <div style="color: red;"><b>Internal Server Error</b></div>
+         </li>`
+          Swal.fire({
+            title: '<strong>Error</strong>',
+            icon: 'info',
+            html:
+              `<ul class="list-group errorlist">
+               ${ulList}
+              </ul>`,
+                //showCloseButton: true,
+                //focusConfirm: false,
+                showCancelButton:false,
 
+              //confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              //confirmButtonText: 'Proceed Login!',
+              cancelButtonText: 'Okay!',
+            })
+        }
+        else if([400].includes(err.status)){
+          let ulList=`<li class="list-group-item">
+          <div style="color: red;"><b>Bad Request Error</b></div>
+         </li>`
+          Swal.fire({
+            title: '<strong>Error</strong>',
+            icon: 'info',
+            html:
+              `<ul class="list-group errorlist">
+               ${ulList}
+              </ul>`,
+                //showCloseButton: true,
+                //focusConfirm: false,
+                showCancelButton:false,
+
+              //confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              //confirmButtonText: 'Proceed Login!',
+              cancelButtonText: 'Okay!',
+            })
+        }
       else if (err instanceof HttpErrorResponse) {
           const errorList: any[] = err.error.ErrorMessage;
           if (errorList.length > 0) {

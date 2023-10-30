@@ -81,12 +81,17 @@
                                     class="text-danger">*</span>&nbsp;<span
                                     class="text-success" *ngIf="validSection"><i class="fa fa-circle-check"></i></span>
                                 <div class="input-form-box">
-                                    <input type="text" [(ngModel)]="regNo" [disabled]="editSection" maxlength="25" (change)="onRegistrationSearch()"
+                                    <input type="text" [(ngModel)]="regNo" maxlength="25" (change)="onRegistrationSearch()"
                                         class="input-form-control without-icon new" (keypress)="omit_special_char($event)">
                                 </div>
-                                <div class="input-form-error" *ngIf="editSection">
+                                <div class="input-form-error" *ngIf="editSection && !duplicateSection">
                                     <div class="text-primary" style="font-size: 12px;">
                                         Validating Registration Number..Please Wait
+                                    </div>
+                                </div>
+                                <div class="input-form-error" *ngIf="duplicateSection">
+                                    <div class="text-danger" style="font-size: 12px;">
+                                        Registration Number Already Exist in this Quote...
                                     </div>
                                 </div>
                             </div>

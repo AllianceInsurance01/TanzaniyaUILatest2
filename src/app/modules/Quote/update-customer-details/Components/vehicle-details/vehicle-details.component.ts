@@ -99,6 +99,7 @@ export class VehicleDetailsComponent implements OnInit {
   endorseCoverModification: any=null;
   customerName: any;
   enableRemoveVehicle: boolean = false;
+  showTiraUpdateSection: boolean;
   constructor(private router:Router,private sharedService: SharedService,
     private updateComponent:UpdateCustomerDetailsComponent,
    private datePipe:DatePipe) {
@@ -232,7 +233,11 @@ export class VehicleDetailsComponent implements OnInit {
 
 
     ];
-    
+    let vehExist = sessionStorage.getItem('vehicleExist');
+    if(vehExist){
+      this.showTiraUpdateSection = true;
+      setTimeout(() => {this.showTiraUpdateSection = false;sessionStorage.removeItem('vehicleExist')},6000);
+    }
   }
   onChangeEndDate(){
     const oneday = 24 * 60 * 60 * 1000;

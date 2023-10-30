@@ -64,6 +64,7 @@ export class MotorDetailsComponent implements OnInit {
   endorsementSection: boolean=false;
   quoteRefNo: any;
   vehicleDetailsList: any[]=[];
+  duplicateSection: boolean=false;
   constructor(private sharedService: SharedService,private datePipe:DatePipe,
     private router:Router, private updateComponent:UpdateCustomerDetailsComponent,) {
       this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -301,6 +302,7 @@ omit_special_char(event)
     );
   }
   onRegistrationSearch(){
+      this.duplicateSection=false;this.editSection=false;this.validSection=false;
         if(this.regNo!=null && this.regNo!='' && this.regNo!=undefined){
           this.regNo = this.regNo.toUpperCase();
           this.editSection = true;
@@ -325,13 +327,19 @@ omit_special_char(event)
                 this.vehicleDetails.PolicyEndDate = this.datePipe.transform(this.updateComponent.policyEndDate, "dd/MM/yyyy");
                 sessionStorage.removeItem('loadingType');
                 if(this.vehicleDetailsList.length!=0){
-
-                  //  let entry = this.vehicleDetailsList.some(ele=>ele.)
+                    let entry = this.vehicleDetailsList.some(ele=>ele.Registrationnumber==this.regNo);
+                    if(entry){
+                        this.duplicateSection = true;
+                        this.validSection = false;
+                    }
+                    else this.onSaveSearchVehicles();
                 }
                 else this.onSaveSearchVehicles();
               }
               else if(data.ErrorMessage!=null){
                 if(data.ErrorMessage.length!=0){
+                  sessionStorage.removeItem('loadingType');
+                  this.duplicateSection = false;
                   this.editSection = false;
                   this.validSection = true;
                 }
@@ -344,6 +352,8 @@ omit_special_char(event)
         }
   }
   onSaveSearchVehicles(){
+    sessionStorage.removeItem('loadingType');
+    this.duplicateSection = false;
     this.subuserType = sessionStorage.getItem('typeValue');
     let appId = "1",loginId="",brokerbranchCode="",createdBy="";
     let quoteStatus = sessionStorage.getItem('QuoteStatus');
@@ -538,7 +548,8 @@ omit_special_char(event)
             this.quoteRefNo = data?.Result?.RequestReferenceNo;
               sessionStorage.setItem('quoteReferenceNo',data?.Result?.RequestReferenceNo);
               this.vehicleDetails = null;
-              
+              sessionStorage.setItem('vehicleExist','true');
+              sessionStorage.removeItem('vehicleDetailsList');
               this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
 
           }
