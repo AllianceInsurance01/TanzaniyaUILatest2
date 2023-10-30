@@ -1490,14 +1490,14 @@
                                                             <span *ngIf="element[col.key]=='Y'">Active</span>
                                                             <span *ngIf="element[col.key]!='Y'">DeActive</span>
                                                         </ng-container>
-                                                        <div class="d-flex justify-content-between">
+                                                        <div class="row"><!--class="d-flex justify-content-between"-->
 
 
-                                                            <div>
+                                                            <div class="col-6">
                                                                 <span class="mobile-label"> {{
                                                                     columnHeader[i]["display"] }}</span>
                                                             </div>
-                                                            <div>
+                                                            <div class="col-6" style="text-align: left !important;">
                                                                 <ng-container *ngIf="col.key=='PremiumAfterDiscount'">
 
                                                                     <div class="d-flex justify-content-between">

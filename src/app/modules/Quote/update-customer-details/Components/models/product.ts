@@ -121,7 +121,11 @@ MoneyMajorLoss:any='0';
 	EngineCapacity: any
 	SeatingCapacity: any
   	ModelDesc: any=null;
-  OtherModelDesc: any=null;
+  OtherModelDesc: any=null;WaterTankSi:any='0';ArchitectsSi:any='0';LossOfRentSi:any='0';TypeOfProperty:any='0';
+  JewellerySi:any='0';
+  PaitingsSi:any ='0';
+  CarpetsSi:any='0';
+  EquipmentSis:any='0';
 	constructor(data?) {
 		this.id = data?.id ?? ''
 		this.CustomerName = data?.CustomerName ?? '';

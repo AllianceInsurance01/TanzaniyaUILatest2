@@ -889,14 +889,26 @@
                           <span class="spancommon span_font_size" style="font-weight:600;color: darkblue;">{{paymentDetails?.QuoteNo}}</span>
                         </div>
                       </div><hr class="m-1">
-                      <div class="d-flex justify-content-between" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
+                      <!-- <div class="d-flex justify-content-between" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
                         <div class="mx-0 mt-1 slider-main">
                           <span class="spancommon span_font_size">Policy No</span>&nbsp;&nbsp;
                         </div>
                         <div class="mx-0 mt-1 slider-main">
                           <span class="spancommon span_font_size" style="font-weight:600;color: darkblue;word-wrap: break-word !important;">{{paymentDetails?.PolicyNo}}</span>
                         </div>
-                      </div><hr class="m-1">
+                      </div>-->
+                      <div class="d-flex justify-content-between" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
+                        <div class="mx-0 mt-1 slider-main">
+                          <span class="spancommon span_font_size">Policy No</span>&nbsp;&nbsp;
+                          
+                        </div>
+                        <div class="mx-0 mt-1 slider-main">
+                          <span class="spancommon span_font_size" style="font-weight:600;color: darkblue;text-wrap: wrap !important;
+                          text-overflow: ellipsis !important;
+                          word-break: break-word !important;">{{paymentDetails?.PolicyNo}}</span>
+                        </div>
+                      </div>
+                      <hr class="m-1">
                       <div class="d-flex justify-content-between" style="margin: 0px !important;top:0rem;bottom: 0rem !important;" *ngIf="paymentDetails?.DebitNoteNo">
                         <div class="mx-0 mt-1 slider-main">
                           <span class="spancommon span_font_size">Debit Note No</span>&nbsp;&nbsp;

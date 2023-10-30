@@ -35,3 +35,15 @@
 .list-group .list-group-item div:first-child {
     width: calc(100% - 100px);
 }
+
+@media screen and (min-width: 280px) and (max-width: 750px) {
+    .noneclass{
+        text-align: center !important;
+    }
+}
+
+@media screen and (min-width: 750px) and (max-width: 5464px){
+    .noneclass{
+        text-align: left;
+    }
+}
