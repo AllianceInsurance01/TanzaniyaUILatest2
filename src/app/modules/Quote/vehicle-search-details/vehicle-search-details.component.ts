@@ -266,11 +266,12 @@ export class VehicleSearchDetailsComponent {
     let ReqObj = {
       "ReqChassisNumber":chassisNo,
       "ReqRegNumber":regNo,
-      "InsuranceId":"100002",
-      "BranchCode":"01",
-      "BrokerBranchCode":"01",
-      "ProductId":"5",
-      "CreatedBy": this.loginId
+      "InsuranceId":this.insuranceId,
+      "BranchCode": this.branchCode,
+      "BrokerBranchCode": this.brokerBranchCode,
+      "ProductId": this.productId,
+      "CreatedBy": this.loginId,
+      "SavedFrom": 'WEB'
     }
     let urlLink = `${this.motorApiUrl}regulatory/showvehicleinfo`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(

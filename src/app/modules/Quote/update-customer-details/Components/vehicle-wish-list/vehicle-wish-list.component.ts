@@ -194,9 +194,9 @@ export class VehicleWishListComponent implements OnInit {
       ];
       this.searchList = [
         { "Code":"","CodeDesc":"---Select---"},
-        { "Code":"02","CodeDesc":"Register Number"},
-        { "Code":"01","CodeDesc":"Chassis Number"},
+        { "Code":"02","CodeDesc":"Register Number"}
       ];
+      this.searchBy = '02';
      }
 
   ngOnInit(): void {
@@ -427,7 +427,7 @@ export class VehicleWishListComponent implements OnInit {
         else{
           this.vehicleDetails['EndorsementYn'] = 'N';
         }
-        if(this.vehicleDetails?.PolicyStartDate==null || this.vehicleDetails?.PolicyStartDate==undefined){
+        if((this.vehicleDetails?.PolicyStartDate==null || this.vehicleDetails?.PolicyStartDate==undefined)){
           if(this.endorsementSection && this.enableAddVehicle){
             this.vehicleDetails.PolicyStartDate = this.endorseEffectiveDate;
             this.vehicleDetails.PolicyEndDate = this.datePipe.transform(this.updateComponent.policyEndDate, "dd/MM/yyyy");
@@ -607,7 +607,7 @@ export class VehicleWishListComponent implements OnInit {
       "NoOfVehicles": this.vehicleDetails?.NoOfVehicles,
       "NoOfComprehensives": null,
       "ClaimRatio": null,
-      "SavedFrom": "Customer",
+      "SavedFrom": this.vehicleDetails?.SavedFrom,
       "UserType": this.userType,
       "TiraCoverNoteNo": this.vehicleDetails?.TiraCoverNoteNo,
       "EndorsementYn": this.vehicleDetails.EndorsementYn,
@@ -1516,7 +1516,8 @@ export class VehicleWishListComponent implements OnInit {
                   "BranchCode": this.branchCode,
                   "BrokerBranchCode": this.brokerBranchCode,
                   "ProductId": this.productId,
-                  "CreatedBy": this.loginId
+                  "CreatedBy": this.loginId,
+                  "SavedFrom": 'API'
                 }
                 let urlLink = `${this.motorApiUrl}regulatory/showvehicleinfo`;
                 this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -1525,6 +1526,8 @@ export class VehicleWishListComponent implements OnInit {
                       let searchData = [data.Result];
                       if(searchData.length!=0){
                         this.vehicleDetails = searchData[0];
+                        this.vehicleDetails['PolicyStartDate'] = null;
+                        this.vehicleDetails['PolicyEndDate'] = null;
                         this.onAddVehicleWishList();
                       }
                         // this.customerData2 = [data?.Result];

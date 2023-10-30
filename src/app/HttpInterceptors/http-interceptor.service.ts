@@ -279,16 +279,14 @@ onBranchProceed(){
   openResponse(res: any,req:any) {
     console.log(res);
     //console.log(ErrorMessage);
-
-    if (res?.ErrorMessage && res?.ErrorMessage.length > 0) {
+    let loadingType = sessionStorage.getItem('loadingType');
+    if (res?.ErrorMessage && res?.ErrorMessage.length > 0 && loadingType!='motorSearch') {
       const errorList: any[] = res.ErrorMessage || res?.Result?.ErrorMessage;
       console.log("ERRRRRRRR",errorList);
       let ulList:any='';
 
       for (let index = 0; index < errorList.length; index++) {
         const element = errorList[index];
-        console.log('ERRRRRRRRRRR',element);
-
          ulList +=`<li class="list-group-login-field">
          <div style="color: darkgreen;">Field<span class="mx-2">:</span>${element?.Field}</div>
          <div style="color: red;">Message<span class="mx-2">:</span>${element?.Message}</div>

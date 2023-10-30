@@ -98,6 +98,7 @@ export class VehicleDetailsComponent implements OnInit {
   enableCollateralDetails: boolean=false;
   endorseCoverModification: any=null;
   customerName: any;
+  enableRemoveVehicle: boolean = false;
   constructor(private router:Router,private sharedService: SharedService,
     private updateComponent:UpdateCustomerDetailsComponent,
    private datePipe:DatePipe) {
@@ -158,6 +159,7 @@ export class VehicleDetailsComponent implements OnInit {
             this.enableWindshieldSI = this.enableFieldsList.some(ele=>ele=='WindshieldSI');
             this.enableTppdSI = this.enableFieldsList.some(ele=>ele=='TppdSI');
             this.enableAddVehicle = this.enableFieldsList.some(ele=>ele=='addVehicle');
+            this.enableRemoveVehicle = this.enableFieldsList.some(ele=>ele=='removeVehicle');
             this.enableCollateralDetails = this.enableFieldsList.some(ele=>ele=='CollateralDetails');
             console.log("Final Endorse",this.enableVehicleSI,this.enableAccessoriesSI)
         }
@@ -799,7 +801,7 @@ export class VehicleDetailsComponent implements OnInit {
       this.TppdCommaFormatted();
       this.accessoriesSI = String(this.vehicleDetails?.AcccessoriesSumInsured);
       this.accessoriesCommaFormatted();
-      this.getVehicleDetails(this.vehicleDetails?.Chassisnumber);
+      this.getVehicleDetails(this.vehicleDetails?.Registrationnumber,this.vehicleDetails?.SavedFrom);
     }
     
 
@@ -856,15 +858,21 @@ export class VehicleDetailsComponent implements OnInit {
     );
     }
   }
-  getVehicleDetails(chassisNo){
+  getVehicleDetails(regno,type){
+    let savedFrom=null;
+    if(type=='Tira' || type=='API'){
+      savedFrom = 'API'
+    }
+    else savedFrom = 'WEB'
     let ReqObj = {
-      "ReqChassisNumber": chassisNo,
-      "ReqRegNumber": null,
+      "ReqChassisNumber": '',
+      "ReqRegNumber": regno,
       "InsuranceId": this.insuranceId,
       "BranchCode": this.branchCode,
       "BrokerBranchCode": this.brokerbranchCode,
       "ProductId": this.productId,
-      "CreatedBy": this.loginId
+      "CreatedBy": this.loginId,
+      "SavedFrom": savedFrom
     }
     let urlLink = `${this.motorApiUrl}regulatory/showvehicleinfo`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -1561,7 +1569,7 @@ export class VehicleDetailsComponent implements OnInit {
               }
               else if(type=='proceedSave'){
                 
-                this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
+                this.onFinalProceed();
               }
               else if(type=='finalProceed'){
                 if(index==this.vehicleDetailsList.length) this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
@@ -1767,7 +1775,7 @@ export class VehicleDetailsComponent implements OnInit {
       }
       j+=1;
       if(j==this.vehicleDetailsList.length){
-        console.log("Final I",i)
+        console.log("Final I",i,this.vehicleDetailsList)
         if(i==0){
           sessionStorage.setItem('vehicleDetailsList',JSON.stringify(this.vehicleDetailsList));
           // if(this.uwQuestionList.length!=0){
@@ -1848,7 +1856,7 @@ export class VehicleDetailsComponent implements OnInit {
     let i = 0;
     for(let veh of this.vehicleDetailsList){
       let refNo = veh?.MSRefNo;
-      if(refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection || this.changeUwSection)){
+      if((refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection || this.changeUwSection)) || this.enableAddVehicle || this.enableRemoveVehicle){
         let reqRefNo = veh?.RequestReferenceNo;
         if(reqRefNo == undefined){
           reqRefNo = null;
