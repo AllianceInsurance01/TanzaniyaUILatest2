@@ -779,4 +779,8 @@ omit_special_char(event)
       this.modelValue = this.modelValue = vehDetails?.Vehcilemodel;
     }
   }
+  getBack(){
+    sessionStorage.removeItem('vehicleDetailsList');
+    this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details'])
+  }
 }

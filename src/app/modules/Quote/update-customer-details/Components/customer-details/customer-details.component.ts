@@ -290,10 +290,23 @@ export class CustomerDetailsComponent implements OnInit {
               }
               else{
                 this.quoteRefNo=null;
-                this.currencyCode = this.userDetails.Result.CurrencyId;
-                this.onCurrencyChange('direct');
-                this.searchSection = true;
-                this.commonSection = true;
+                  this.branchValue = this.userDetails.Result.BranchCode;
+                  this.updateComponent.branchValue = this.branchValue;
+                  this.currencyCode = this.userDetails.Result.CurrencyId;
+                  this.onCurrencyChange('direct');
+                    var d= new Date();
+                    var year = d.getFullYear();
+                    var month = d.getMonth();
+                    var day = d.getDate();
+                    if(this.productId=='5' || this.productId=='46'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
+                    this.searchSection = true;
+                  this.commonSection = true;
+                  let quoteStatus = sessionStorage.getItem('QuoteStatus');
+                  if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
+                    this.adminSection = true;this.issuerSection = false;
+                  }
+                  else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
+                  else this.issuerSection = false;
               }
               
               

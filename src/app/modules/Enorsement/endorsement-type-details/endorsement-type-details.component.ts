@@ -460,7 +460,7 @@ export class EndorsementTypeDetailsComponent {
           }
           this.endorsePolicyNo = res?.policyNo
           sessionStorage.setItem('endorseTypeId',JSON.stringify(obj));
-          if(this.selectedEndorsement.EndorsementCategory==2){
+          if(this.selectedEndorsement.EndorsementCategory==2 || EndtType==853){
             sessionStorage.removeItem('quoteNo');
             sessionStorage.setItem('customerReferenceNo',res?.customerReferenceNo)
             if(this.quoteNo) sessionStorage.setItem('quoteNo',this.quoteNo);

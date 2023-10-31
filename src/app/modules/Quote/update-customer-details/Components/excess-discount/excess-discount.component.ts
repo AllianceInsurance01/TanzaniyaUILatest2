@@ -282,7 +282,7 @@ emiyn="N";
         console.log("Enable Obj",this.enableFieldsList)
         if(this.endorsementId!=42){
           this.endorseCovers = this.enableFieldsList.some(ele=>ele=='Covers' && this.endorsementId==852);
-          this.endorseSIModification = this.enableFieldsList.some(ele=>ele=='Covers' && this.endorsementId==850);
+          this.endorseSIModification = this.enableFieldsList.some(ele=>(ele=='Covers' && this.endorsementId==850));
           this.endorseAddOnCovers = this.enableFieldsList.some(ele=>ele=='AddOnCovers' || ele=='AddCovers');
           this.enableAddVehicle = this.enableFieldsList.some(ele=>ele=='addVehicle');
           this.enableRemoveVehicle = this.enableFieldsList.some(ele=>ele=='removeVehicle');
@@ -2162,7 +2162,7 @@ getMotorUsageList(vehicleValue){
           }
       }
       else{
-        if(this.endorsementSection && this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='RemoveSection') && !this.endorseSIModification){
+        if(this.endorsementSection && this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='RemoveSection') && !this.endorseSIModification && this.endorsementId!=853){
           this.router.navigate(['/Home/policies/Endorsements/endorsementTypes']);
         }
         else{
