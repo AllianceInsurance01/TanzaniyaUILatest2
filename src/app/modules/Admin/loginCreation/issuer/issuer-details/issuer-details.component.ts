@@ -31,6 +31,7 @@ export class IssuerDetailsComponent implements OnInit {
   userDetails: any;EndList:any[]=[];
   EndrosementType: any;
   issuerId: string;
+  changePasswordYN: any='N';
   constructor(private router:Router,private sharedService:SharedService,
     private datePipe:DatePipe) {
     this.minDate = new Date();
@@ -280,7 +281,7 @@ export class IssuerDetailsComponent implements OnInit {
     this.router.navigate(['/Admin/issuerList'])
   }
   onProceed(){
-    if(this.editSection){
+    if(this.editSection && this.changePasswordYN=='N'){
       this.onSubmit();
     }else{
         if(this.password==null || this.password=="" || this.password==undefined){
@@ -345,8 +346,6 @@ export class IssuerDetailsComponent implements OnInit {
            }
            else{             
              this.onSubmit();    
-             console.log('gggggggg',)
-            
            }
            }       
           

@@ -96,6 +96,13 @@ export class BrokerListComponent implements OnInit {
         console.log(data);
         if (data.Result) {
           this.channelList = data.Result;
+          if(this.channelList.length!=0){
+            if(this.channelList.some(ele=>ele.Code=='broker')){
+              this.channelId='broker';
+            }
+            else{this.channelId = this.channelList[0].Code;}
+            if(this.insuranceId)this.getBrokerList();
+          }
         }
       },
       (err) => { },
@@ -190,7 +197,10 @@ export class BrokerListComponent implements OnInit {
         console.log(data);
         if(data.Result){
             this.companyList = data.Result;
-            
+            if(this.companyList.length!=0){
+              this.insuranceId = this.companyList[0].Code;
+              if(this.channelId) this.getBrokerList();
+            }
         }
       },
       (err) => { },

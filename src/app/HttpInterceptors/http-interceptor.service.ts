@@ -61,7 +61,7 @@ export class HttpInterceptorService implements HttpInterceptor {
     return next.handle(req).pipe(
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
-          console.log("error",this.router.url);
+          console.log("error",this.router.url,req);
           if(this.router.url=='/login'){
            this.loginResponse(event.body,req)
           }
@@ -118,6 +118,7 @@ export class HttpInterceptorService implements HttpInterceptor {
         }
         else if([500].includes(err.status)){
           let ulList=`<li class="list-group-item">
+          <div style="color: primary;">Url:&nbsp;<b>{{req.url}}</b></div>
           <div style="color: red;"><b>Internal Server Error</b></div>
          </li>`
           Swal.fire({
@@ -139,6 +140,7 @@ export class HttpInterceptorService implements HttpInterceptor {
         }
         else if([400].includes(err.status)){
           let ulList=`<li class="list-group-item">
+          <div style="color: primary;">Url:&nbsp;<b>{{req.url}}</b></div>
           <div style="color: red;"><b>Bad Request Error</b></div>
          </li>`
           Swal.fire({

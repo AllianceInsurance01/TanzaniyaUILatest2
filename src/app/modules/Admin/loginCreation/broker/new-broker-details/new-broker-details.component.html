@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-header">Broker Details</div>
     <div class="card-body">
-        <div class="card-header p-0">
+        <div class="card-header p-1">
             Personal Information
         </div>
         <div class="row mt-2">
@@ -403,11 +403,12 @@
             </div>
         </div> -->
         <hr>
-        <div class="card-header p-0">
-            <div class="row headerClass">
-                <div class="col-md-12 col-lg-12 col-xl-12">
+        <div class="card-header p-1">
+            <div class="d-flex justify-content-between headerClass">
+                <div>
                     Login Information
                 </div>
+                
             </div>
         </div>
         <div class="row mt-2">
@@ -416,6 +417,17 @@
                     <label class="input-form-label">Login Id<span class="text-danger">*</span></label>
                     <div class="input-form-box">
                         <input type="text" [disabled]="editSection" [(ngModel)]="brokerLoginId" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4" *ngIf="editSection">
+                <label class="input-form-label">Do You Like to Change Password?<span class="text-danger">*</span></label>
+                <div class="input-form-radio-box">
+                    <div class="radio-toolbar">
+                        <input id="changePasswrd_Yes" type="radio" name="changePassYN" [(ngModel)]="changePasswordYN" value="Y">
+                        <label for="changePasswrd_Yes" >Yes</label>
+                        <input id="changePasswrd_No" type="radio" name="changePassYN" [(ngModel)]="changePasswordYN" value="N">
+                        <label for="changePasswrd_No">No</label>
                     </div>
                 </div>
             </div>
@@ -435,6 +447,26 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-4" *ngIf="changePasswordYN=='Y'">
+                <div class="input-control-container">
+                    <label class="input-form-label">New Password<span class="text-danger">*</span></label>
+                    <div class="input-form-box">
+                        <input type="password" [(ngModel)]="password" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4" *ngIf="changePasswordYN=='Y'">
+                <div class="input-control-container">
+                    <label class="input-form-label">Re-Enter New Password<span class="text-danger">*</span></label>
+                    <div class="input-form-box">
+                        <input type="password" [(ngModel)]="repassword" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
                     <label class="input-form-label">Effective Date<span class="text-danger">*</span></label>
@@ -469,6 +501,7 @@
                 </div>
             </div>
         </div>
+        
         <!-- <div class="row">
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">

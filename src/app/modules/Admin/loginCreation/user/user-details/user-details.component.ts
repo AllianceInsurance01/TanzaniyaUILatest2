@@ -38,7 +38,7 @@ export class UserDetailsComponent implements OnInit {
   brokerValue: any;
   stateCode:any;typeValue:any;
   stateList:any[]=[];
-  customerList: any[]=[];
+  customerList: any[]=[];changePasswordYN:any='N';
   showCustomerList: boolean=false;
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe) {
@@ -437,7 +437,7 @@ export class UserDetailsComponent implements OnInit {
     this.router.navigate(['/Admin/userList'])
   }
   onProceed(){
-    if(this.editSection){
+    if(this.editSection && this.changePasswordYN=='N'){
       this.onSubmit();
     }else{
       console.log('gggggggg',this.password);
