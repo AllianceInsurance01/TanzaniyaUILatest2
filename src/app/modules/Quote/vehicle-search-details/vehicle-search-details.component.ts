@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import * as Mydatas from '../../../app-config.json';
 import { Router } from '@angular/router';
 import { SharedService } from 'src/app/shared/shared.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-vehicle-search-details',
@@ -38,6 +39,15 @@ export class VehicleSearchDetailsComponent {
   customerCodeError: boolean;
   brokerCodeError: boolean;
   brokerBranchCodeError: boolean;
+  sampleResponse: any;
+  totalQuoteRecords: any;
+  pageCount: number;
+  quotePageNo: number;
+  quoteData: any[]=[];
+  startIndex: number;
+  endIndex: number;
+  limit: any='0';
+  quoteHeader: any[]=[];
   constructor(private router:Router,private sharedService: SharedService) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -65,7 +75,34 @@ export class VehicleSearchDetailsComponent {
   }
 
   ngOnInit(): void {
+    this.quoteHeader =  [
+      { key: 'RegisterNumber', display: 'Registration No' },
+      { key: 'RequestReferenceNo', display: 'Reference No' },
+      { key: 'QuoteNo', display: 'Quote No' },
+      { key: 'ClientName', display: 'Customer Name' },
+      { key: 'PolicyStartDate', display: 'Start Date' },
+      { key: 'PolicyEndDate', display: 'End Date' },
+      { key: 'OverallPremiumLc', display: 'Premium' },
+      {
+        key: 'actions',
+        display: 'Edit',
+        config: {
+          //isView:true,
+          isEdit: true,
+          // isReject: true,
+        },
+      },
+      // {
+      //   key: 'mail',
+      //   display: 'Mail / Followup / Sms',
+      //   config: {
+      //     isMail:true,
+      //     isFollowup: true,
+      //     isSms: true,
+      //   },
+      // },
 
+    ];
     if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.getSourceList()}
     else this.issuerSection = false
     
@@ -224,6 +261,18 @@ export class VehicleSearchDetailsComponent {
     }
     
   }
+  onNextData(element){
+    this.limit = String(Number(this.limit)+1);
+    this.quotePageNo = this.quotePageNo+1;
+    this.startIndex = element.startCount;
+    this.endIndex = element.endCount
+    this.getExistingQuoteList(this.ChassisNo,element,'direct');
+  }
+  onPreviousData(element){
+    this.limit = String(Number(this.limit)-1);
+      this.quotePageNo = this.quotePageNo-1;
+    this.getExistingQuoteList(this.ChassisNo,element,'direct');
+  }
   onBrokerChange(){
     //if(this.Code=='Broker' || this.Code=='Agent'){
       let entry = this.brokerList.find(ele=>String(ele.Code)==this.brokerCode);
@@ -248,22 +297,79 @@ export class VehicleSearchDetailsComponent {
           if(this.branchValue=='' || this.branchValue==null || this.branchValue==undefined){this.branchValueError=true;i+=1;}
           if(this.Code=='' || this.Code==null || this.Code==undefined){this.sourceCodeError=true;i+=1;}
           if(this.Code=='Premia Agent' || this.Code=='Premia Broker' || this.Code=='Premia Direct'){
-            
             if(this.customerCode=='' || this.customerCode==null || this.customerCode==undefined){alert('Error');this.customerCodeError=true;i+=1;}
           }
           else if(this.Code=='agent' || this.Code=='broker' || this.Code=='direct' || this.Code=='bank' || this.Code=='Broker' || this.Code=='whatsapp'){
             if(this.brokerCode=='' || this.brokerCode==null || this.brokerCode==undefined){this.brokerCodeError=true;i+=1;}
             if(this.brokerBranchCode=='' || this.brokerBranchCode==null || this.brokerBranchCode==undefined){this.brokerBranchCodeError=true;i+=1;}
           }
-          if(i==0){this.getVehicleDetails(value)}
+          if(i==0){ this.getExistingQuoteList(value,null,'change')}
     }
-    else{ this.getVehicleDetails(value) }
+    else{ this.brokerBranchCode= this.brokerbranchCode;this.getExistingQuoteList(value,null,'change') }
+  }
+  getExistingQuoteList(value,element,entryType){
+    this.policyPeriodExceed = false;
+    let regNo = null,chassisNo = '';
+     regNo=String(value).toUpperCase();
+     let ReqObj = {
+      "BranchCode":this.branchCode,
+      "BrokerBranchCode":this.brokerBranchCode,
+      "InsuranceId": this.insuranceId,
+      "ProductId":this.productId,
+      "CreatedBy": this.loginId,
+      "Limit":this.limit,
+      "Offset":60,
+      "RegisterNumber": regNo
+    }
+    let urlLink = `${this.CommonApiUrl}api/regnumberquotes`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+            if (data.Result?.RegisterNumberQuotes) {
+              if (data.Result?.RegisterNumberQuotes.length != 0) {
+                this.totalQuoteRecords = data.Result?.TotalCount;
+                this.pageCount = 10;
+                if (entryType == 'change') {
+                  this.quotePageNo = 1;
+                  let startCount = 1, endCount = this.pageCount;
+                  startCount = endCount + 1;
+                    let quoteData = data.Result?.RegisterNumberQuotes;
+                    this.quoteData = data.Result?.RegisterNumberQuotes;
+                    if (quoteData.length <= this.pageCount) {
+                      endCount = quoteData.length
+                    }
+                    else endCount = this.pageCount;
+                  
+                  this.startIndex = startCount; this.endIndex = endCount;
+                  console.log("QuoteData",this.quoteData)
+                }
+                else {
+  
+                  let startCount = element.startCount, endCount = element.endCount;
+                  this.pageCount = element.n;
+                  startCount = endCount + 1;
+                    let quoteData = data.Result?.RegisterNumberQuotes;
+                    this.quoteData = this.quoteData.concat(data.Result?.RegisterNumberQuotes);
+                  if (this.totalQuoteRecords <= endCount + (element.n)) {
+                    endCount = this.totalQuoteRecords
+                  }
+                  else endCount = endCount + (element.n);
+                  this.startIndex = startCount; this.endIndex = endCount;
+                }
+              }
+              else {
+                this.quoteData = []; 
+                this.getVehicleDetails(value);
+              }
+            }
+    },
+    (err) => { },
+    );
   }
   getVehicleDetails(value){
     this.policyPeriodExceed = false;
     let regNo = null,chassisNo = '';
      regNo=String(value).toUpperCase();
-    let ReqObj = {
+     let ReqObj = {
       "ReqChassisNumber":chassisNo,
       "ReqRegNumber":regNo,
       "InsuranceId":this.insuranceId,
@@ -331,5 +437,96 @@ export class VehicleSearchDetailsComponent {
         (err) => { },
       );
   }
-  
+  onEditQuotes(rowData){
+    sessionStorage.removeItem('vehicleDetailsList');
+    sessionStorage.removeItem('QuoteStatus');
+    sessionStorage.removeItem('QuoteStatus');
+    sessionStorage.removeItem('endorsePolicyNo');
+    sessionStorage.removeItem('homeCommonDetails');
+    if(this.productId){
+      
+      if(rowData.QuoteNo!='' && rowData.QuoteNo!=undefined && rowData.QuoteNo!=null){
+        this.checkStatus(rowData);
+      }
+      else{
+        sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+        if(rowData.QuoteNo!=null && rowData.QuoteNo!='' && rowData.QuoteNo!=undefined) sessionStorage.setItem('quoteNo',rowData.QuoteNo);
+        sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
+        sessionStorage.setItem('TravelQuoteRefNo',rowData.RequestReferenceNo);
+        sessionStorage.removeItem('quoteNo');
+        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails']);
+      }
+      // if((rowData.QuoteNo!=null && rowData.QuoteNo!='' && rowData.QuoteNo!=undefined) && date2>=date1){
+      
+      //     sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+      //     sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
+      //     sessionStorage.setItem('quoteNo',rowData.QuoteNo);
+      //     sessionStorage.setItem('updatebar',rowData.QuoteNo);
+      //     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
+        
+
+      // }
+      // else{
+      //   sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+      //   if(rowData.QuoteNo!=null && rowData.QuoteNo!='' && rowData.QuoteNo!=undefined) sessionStorage.setItem('quoteNo',rowData.QuoteNo);
+      //   sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
+      //   sessionStorage.setItem('TravelQuoteRefNo',rowData.RequestReferenceNo);
+      //   sessionStorage.removeItem('quoteNo');
+      //   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails']);
+      // }
+    }
+    // if(this.productId=='4'){
+    //   sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+    //   sessionStorage.setItem('TravelQuoteRefNo',rowData.RequestReferenceNo);
+    //   sessionStorage.setItem('quoteNo',rowData.QuoteNo);
+    //   this.router.navigate(['/Travel/customerDetails']);
+    // }
+
+
+  }
+  checkStatus(rowData){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId
+    }
+    let urlLink = `${this.CommonApiUrl}selcom/v1/checkout/order-status/${rowData.QuoteNo}`;
+    
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.result=='FAIL'){
+          let date = rowData.PolicyStartDate;
+          var d = new Date();
+          var year = d.getFullYear();
+          var month = d.getMonth();
+          var day = d.getDate();
+          let date1 = formatDate(new Date(),'yyyy-MM-dd','en_US');
+          let date2 = null;
+          if(date!='' && date !=null){
+            if(date.split('/').length>1){
+              let dates = date.split('/')
+              date2 = dates[2]+'-'+dates[1]+'-'+dates[0]
+            }
+          } 
+          if((rowData.QuoteNo!=null && rowData.QuoteNo!='' && rowData.QuoteNo!=undefined) && date2>=date1){
+              sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+              sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
+              sessionStorage.setItem('quoteNo',rowData.QuoteNo);
+              sessionStorage.setItem('updatebar',rowData.QuoteNo);
+              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
+          }
+          else{
+            sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+            if(rowData.QuoteNo!=null && rowData.QuoteNo!='' && rowData.QuoteNo!=undefined) sessionStorage.setItem('quoteNo',rowData.QuoteNo);
+            sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
+            sessionStorage.setItem('TravelQuoteRefNo',rowData.RequestReferenceNo);
+            sessionStorage.removeItem('quoteNo');
+            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails']);
+          }
+        }
+        else{
+            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
+        }
+      })
+
+  }
 }

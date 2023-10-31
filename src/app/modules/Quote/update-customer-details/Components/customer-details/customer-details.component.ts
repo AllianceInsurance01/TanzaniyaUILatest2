@@ -1182,7 +1182,7 @@ export class CustomerDetailsComponent implements OnInit {
                   this.updateComponent.CustomerName = null;
                 }
                 this.getBrokerBranchList('direct');
-                
+                this.commonSection = true;
               }
               else this.onGetCustomerList('direct',this.customerCode);
             // }
@@ -1327,6 +1327,7 @@ export class CustomerDetailsComponent implements OnInit {
       this.customerCode = this.userDetails.Result.CustomerCode;
         this.customerName = this.userDetails.Result.UserName;
         this.updateComponent.CustomerCode = this.userDetails.Result.CustomerCode;
+        this.commonSection = true;
     }
     
   }
@@ -1335,6 +1336,7 @@ export class CustomerDetailsComponent implements OnInit {
       this.customerCode = code;
       this.customerName = name;
       this.updateComponent.CustomerName = name;
+      this.updateComponent.CustomerCode = code;
       if(this.issuerSection){
         this.brokerCode = null;
           this.brokerBranchCode = null;
@@ -1342,10 +1344,8 @@ export class CustomerDetailsComponent implements OnInit {
           this.updateComponent.brokerCode = null;
           this.updateComponent.brokerBranchCode =null;
           this.updateComponent.brokerLoginId = null;
+          this.commonSection = true;
       }
-      
-      this.updateComponent.CustomerCode = code;
-    
       if((this.productId=='5' || this.productId=='46') && type=='change'){this.updateComponent.modifiedYN = 'Y'}
   }
   setTiraVehicleValues(entry){
@@ -1441,7 +1441,7 @@ export class CustomerDetailsComponent implements OnInit {
       this.updateComponent.PromoCode = this.PromoCode;
       console.log("Final Values",this.brokerList,this.brokerCode)
       this.onSourceTypeChange('direct');
-      this.commonSection = true;
+      
   }
   setCommonValues(entry){
     console.log("Entry Values",entry);
