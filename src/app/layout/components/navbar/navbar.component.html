@@ -324,7 +324,7 @@
                           &nbsp;&nbsp;&nbsp;&nbsp;
                     </ng-container>
                 </li> -->
-                <li class="dropdown"><a  style="cursor:pointer" [hidden]="(loginType=='B2CFlow')">
+                <li class="dropdown"><a  style="cursor:pointer" [hidden]="(loginType=='B2CFlow' || userType!='Issuer') ">
                     <span>SubUserType - {{typeName}}</span> <i  class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li *ngFor="let type of typeList" (click)="finaliseTypeValue(type,'change')" [value]="type.CodeDesc"><a  style="cursor:pointer">{{type.DisplayName}}</a></li>

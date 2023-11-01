@@ -99,6 +99,7 @@ export class VehicleDetailsComponent implements OnInit {
   endorseCoverModification: any=null;
   customerName: any;
   enableRemoveVehicle: boolean = false;
+  showTiraUpdateSection: boolean;
   constructor(private router:Router,private sharedService: SharedService,
     private updateComponent:UpdateCustomerDetailsComponent,
    private datePipe:DatePipe) {
@@ -204,14 +205,14 @@ export class VehicleDetailsComponent implements OnInit {
     }
     else{
       this.customerHeader =  [
-        { key: 'Chassisnumber', display: 'Chassis Number' },
         { key: 'Registrationnumber', display: 'Registration No' },
         { key: 'PolicyStartDate', display: 'Start Date'},
         { key: 'PolicyEndDate', display: 'End Date'},
         { key: 'PolicyTypeDesc', display: 'Policy Type' },
        { key: 'Vehiclemake', display: 'Make' },
         { key: 'Vehcilemodel', display: 'Model' },
-        { key: 'OverallPremiumFc', display: 'Premium' }
+        { key: 'OverallPremiumFc', display: 'Premium' },
+        { key: 'Status', display: 'Status' },
       ];
     }
     this.customerHeader2 =  [
@@ -232,7 +233,11 @@ export class VehicleDetailsComponent implements OnInit {
 
 
     ];
-    
+    let vehExist = sessionStorage.getItem('vehicleExist');
+    if(vehExist){
+      this.showTiraUpdateSection = true;
+      setTimeout(() => {this.showTiraUpdateSection = false;sessionStorage.removeItem('vehicleExist')},6000);
+    }
   }
   onChangeEndDate(){
     const oneday = 24 * 60 * 60 * 1000;
@@ -801,7 +806,8 @@ export class VehicleDetailsComponent implements OnInit {
       this.TppdCommaFormatted();
       this.accessoriesSI = String(this.vehicleDetails?.AcccessoriesSumInsured);
       this.accessoriesCommaFormatted();
-      this.getVehicleDetails(this.vehicleDetails?.Registrationnumber,this.vehicleDetails?.SavedFrom);
+      this.motorDetails = this.vehicleDetails;
+      //this.getVehicleDetails(this.vehicleDetails?.Registrationnumber,this.vehicleDetails?.SavedFrom);
     }
     
 

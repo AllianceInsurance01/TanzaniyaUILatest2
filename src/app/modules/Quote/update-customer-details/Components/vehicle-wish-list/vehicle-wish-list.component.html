@@ -272,7 +272,7 @@
                 <div class="input-control-container">
                     <label class="input-form-label">Search Value</label>
                     <div class="input-form-box">
-                        <input type="text" [(ngModel)]="searchValue" class="input-form-control without-icon">
+                        <input type="text" [(ngModel)]="searchValue" class="input-form-control without-icon new">
                     </div>
                 </div>
             </div>
@@ -282,7 +282,7 @@
                 <button class="custom-btn btn-5  mr-2" *ngIf="vehicleWishList.length==0 && loginType!='B2CFlow'" (click)="ongetBack()" matRipple style="position: relative;left: 0.5rem;"><<&nbsp;Back</button>&nbsp;
             </div>
             <div class="text-center" *ngIf="wishDuplicateError">
-                <h4 class="text-danger w3-animate-left">Chassis Number / Registration Number Already Available</h4>
+                <h4 class="text-danger w3-animate-left"> Registration Number Already Available</h4>
             </div>
         </div>
         

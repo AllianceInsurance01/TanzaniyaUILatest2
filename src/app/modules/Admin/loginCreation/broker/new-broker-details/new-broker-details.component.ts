@@ -35,7 +35,7 @@ export class NewBrokerDetailsComponent implements OnInit {
   editsSection = false;taxExcemptedCode:any=null;
   editValue: boolean = false;taxExcemptedYN:any='N';
   regulatoryCode: any=null;customerCode:any=null;
-  customerList: any[]=[];
+  customerList: any[]=[];changePasswordYN:any='N';
   showCustomerList: boolean=false;
   constructor(private router: Router, private sharedService: SharedService,
     private datePipe: DatePipe) {
@@ -344,7 +344,7 @@ export class NewBrokerDetailsComponent implements OnInit {
   }
   onProceed() {
 
-    if (this.editSection) {
+    if (this.editSection && this.changePasswordYN=='N') {
       console.log('broker', this.brokerLoginId)
       this.onSubmit();
     }

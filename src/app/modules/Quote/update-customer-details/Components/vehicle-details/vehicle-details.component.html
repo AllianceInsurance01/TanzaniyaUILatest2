@@ -176,7 +176,7 @@
                                     <div class="input-control-container">
                                         <label class="input-form-label">Body Type</label>
                                         <div class="input-form-radio-box">
-                                            <span class="spancommon span_font_size">{{motorDetails?.VehicleType}}</span>
+                                            <span class="spancommon span_font_size">{{motorDetails?.VehicleTypeDesc}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -184,7 +184,7 @@
                                     <div class="input-control-container">
                                         <label class="input-form-label">Vehicle Usage</label>
                                         <div class="input-form-radio-box">
-                                            <span class="spancommon span_font_size">{{motorDetails?.Motorusage}}</span>
+                                            <span class="spancommon span_font_size">{{motorDetails?.MotorUsageDesc}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -196,7 +196,7 @@
                                     <div class="input-control-container">
                                         <label class="input-form-label">Motor Category</label>
                                         <div class="input-form-radio-box">
-                                            <span class="spancommon span_font_size">{{motorDetails?.MotorCategory}}</span>
+                                            <span class="spancommon span_font_size">{{motorDetails?.MotorCategoryDesc}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -213,7 +213,7 @@
                                     <div class="input-control-container">
                                         <label class="input-form-label">Engine Capacity</label>
                                         <div class="input-form-radio-box">
-                                            <span class="spancommon span_font_size">{{motorDetails?.ResEngineCapacity}}</span>
+                                            <span class="spancommon span_font_size">{{motorDetails?.EngineCapacity}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -266,7 +266,11 @@
                             </div>
                         </li>
                     </ul>
-               
+                    <ng-container *ngIf="showTiraUpdateSection">
+                        <div class="text-center text-primary mt-2">
+                                Registration Number Already Available, Motor Details Pulled From Tira 
+                        </div>
+                    </ng-container>
                 </div>
             </div>
             <div class="maan-grid-item" id="slider_0">
@@ -279,6 +283,7 @@
                     </div>
                     <div>
                         <div class="maan-grid-item-body smallclass">
+                            
                             <!--style="padding-left: 40px !important;padding-right: 40px !important;"-->
                             <div class="row">
                                 <div class="col-12 col-md-4">

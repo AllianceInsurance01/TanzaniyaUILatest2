@@ -282,7 +282,7 @@ emiyn="N";
         console.log("Enable Obj",this.enableFieldsList)
         if(this.endorsementId!=42){
           this.endorseCovers = this.enableFieldsList.some(ele=>ele=='Covers' && this.endorsementId==852);
-          this.endorseSIModification = this.enableFieldsList.some(ele=>ele=='Covers' && this.endorsementId==850);
+          this.endorseSIModification = this.enableFieldsList.some(ele=>(ele=='Covers' && this.endorsementId==850));
           this.endorseAddOnCovers = this.enableFieldsList.some(ele=>ele=='AddOnCovers' || ele=='AddCovers');
           this.enableAddVehicle = this.enableFieldsList.some(ele=>ele=='addVehicle');
           this.enableRemoveVehicle = this.enableFieldsList.some(ele=>ele=='removeVehicle');
@@ -1930,7 +1930,7 @@ getMotorUsageList(vehicleValue){
         for(let cover of coverList){
           cover['ExcessDesc'] = 'None';
           let fieldList = [];
-          if(cover.Endorsements!=null){
+          if(cover.Endorsements!=null && veh.Status!='D'){
             
             cover['DifferenceYN']= 'Y';
             if(veh?.EndtTypeMaster?.Endtdependantfields){
@@ -2032,7 +2032,7 @@ getMotorUsageList(vehicleValue){
                               console.log("Opted Sections",SectionEntry[0],covers)
                               covers[0]['selected']= true;
                               this.onSelectCover(covers[0],true,SectionEntry[0].Vehicleid,SectionEntry[0],'coverList','change');
-                              covers[0]['DifferenceYN'] = 'Y';
+                               covers[0]['DifferenceYN'] = 'Y';
                             }
                           }
                           
@@ -2162,7 +2162,7 @@ getMotorUsageList(vehicleValue){
           }
       }
       else{
-        if(this.endorsementSection && this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='RemoveSection') && !this.endorseSIModification){
+        if(this.endorsementSection && this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='RemoveSection') && !this.endorseSIModification && this.endorsementId!=853){
           this.router.navigate(['/Home/policies/Endorsements/endorsementTypes']);
         }
         else{
@@ -2344,7 +2344,8 @@ getMotorUsageList(vehicleValue){
         if(event){
           rowData['selected']= true;
           if(rowData.DifferenceYN==undefined && this.coverModificationYN=='Y'){
-            rowData['DifferenceYN'] = 'Y'
+            if(vehicle.Status=='D') rowData['DifferenceYN'] = 'N';
+            else rowData['DifferenceYN'] = 'Y'
           }
           if(this.selectedCoverList.length!=0){
             let entry = this.selectedCoverList.filter(ele=>ele.Id==vehicleId);
@@ -2403,7 +2404,7 @@ getMotorUsageList(vehicleValue){
                   rowData['ModifiedYN'] = 'N';
                 }
                 if(rowData.Endorsements!=null && rowData.Endorsements!=undefined){
-                  if(this.coverModificationYN!='Y' || this.endorseSIModification){
+                  if(this.coverModificationYN!='Y' || this.endorseSIModification || vehicle.Status=='D'){
                     vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxFC;
                     vehicle['totalPremium'] =  vehicle['totalPremium']+rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTax;
                   }
@@ -2423,7 +2424,7 @@ getMotorUsageList(vehicleValue){
                 }
                 if(rowData.Endorsements!=null && rowData.Endorsements!=undefined){
                  
-                  if(this.coverModificationYN!='Y' || this.endorseSIModification){
+                  if(this.coverModificationYN!='Y' || this.endorseSIModification || vehicle.Status=='D'){
                     if(!vehicle?.totalLcPremium) {vehicle['totalLcPremium'] = 0;}
                     if(!vehicle?.totalPremium){ vehicle['totalPremium'] = 0;}
                     vehicle['totalLcPremium'] = vehicle['totalLcPremium'] + rowData.Endorsements[rowData.Endorsements.length-1].PremiumIncludedTaxFC;

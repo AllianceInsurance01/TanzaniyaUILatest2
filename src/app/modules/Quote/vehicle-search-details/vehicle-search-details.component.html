@@ -156,6 +156,8 @@
                 <div class="text-center text-danger" *ngIf="policyPeriodExceed">
                       <b>Sorry! Policy Period ({{motorDetails?.PolicyStartDate}} &nbsp; - &nbsp;{{motorDetails?.PolicyEndDate}}) for this Vehicle Details Will be Valid till More than 30 Days, Can't Proceed Now</b>
                   </div>
+
+                
                   <!-- <div class="banner_button">
                     <div class="banner_btn">
                       <button id="proceed-without-number-button" title="Proceed Without Car Number" class="custjm continue-txt" value="">Proceed Without Car Number <span class="abc">
@@ -167,6 +169,24 @@
           </div> -->
         </div>
           </div>
+        </div>
+        <div class="row mt-1" *ngIf="quoteData.length!=0">
+            <div class="text-start"><h1 class="headings" style="font-size: 1.5rem !important;"><u>Existing Quote</u></h1></div>
+            <div class="col-12 col-md-12 col-lg-12">
+                <ng-container *ngIf="quoteData.length!=0">
+                    <app-commodity-table [cols]="quoteHeader" [data]="quoteData" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousData($event)" (onLoadNextData)="onNextData($event)" (onEdit)="onEditQuotes($event)" (onAdd)="onInnerData($event)" (onView)="onViews($event)" (onReject)="onRejects($event,mymodal)" (onMail)="onMail($event,mymail)"
+                     >
+                    </app-commodity-table>
+                </ng-container>
+                <ng-container *ngIf="quoteData.length==0">
+                    <div class="text-center">
+                        No Quote Available
+                    </div>
+                </ng-container>
+            </div>
+            <div class="text-center mt-2">
+                    <button class="btn btn-primary" (click)="getVehicleDetails(ChassisNo)">Get New Quote</button>
+            </div>
         </div>
       </div>
     </div>

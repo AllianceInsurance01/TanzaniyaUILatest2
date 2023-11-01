@@ -63,6 +63,8 @@ export class MotorDetailsComponent implements OnInit {
   customerName: any;
   endorsementSection: boolean=false;
   quoteRefNo: any;
+  vehicleDetailsList: any[]=[];
+  duplicateSection: boolean=false;
   constructor(private sharedService: SharedService,private datePipe:DatePipe,
     private router:Router, private updateComponent:UpdateCustomerDetailsComponent,) {
       this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -78,7 +80,7 @@ export class MotorDetailsComponent implements OnInit {
       this.productId = this.userDetails.Result.ProductId;
       this.insuranceId = this.userDetails.Result.InsuranceId;
       let vehicleDetails = JSON.parse(sessionStorage.getItem('vehicleDetailsList'));
-      if(vehicleDetails)
+      if(vehicleDetails) this.vehicleDetailsList = vehicleDetails;
       console.log("Vehicle Details List",vehicleDetails);
       this.getOwnerCategoryList();
    }
@@ -300,6 +302,7 @@ omit_special_char(event)
     );
   }
   onRegistrationSearch(){
+      this.duplicateSection=false;this.editSection=false;this.validSection=false;
         if(this.regNo!=null && this.regNo!='' && this.regNo!=undefined){
           this.regNo = this.regNo.toUpperCase();
           this.editSection = true;
@@ -323,10 +326,20 @@ omit_special_char(event)
                 this.vehicleDetails.PolicyStartDate = this.datePipe.transform(this.updateComponent.policyStartDate, "dd/MM/yyyy");
                 this.vehicleDetails.PolicyEndDate = this.datePipe.transform(this.updateComponent.policyEndDate, "dd/MM/yyyy");
                 sessionStorage.removeItem('loadingType');
-                this.onSaveSearchVehicles();
+                if(this.vehicleDetailsList.length!=0){
+                    let entry = this.vehicleDetailsList.some(ele=>ele.Registrationnumber==this.regNo);
+                    if(entry){
+                        this.duplicateSection = true;
+                        this.validSection = false;
+                    }
+                    else this.onSaveSearchVehicles();
+                }
+                else this.onSaveSearchVehicles();
               }
               else if(data.ErrorMessage!=null){
                 if(data.ErrorMessage.length!=0){
+                  sessionStorage.removeItem('loadingType');
+                  this.duplicateSection = false;
                   this.editSection = false;
                   this.validSection = true;
                 }
@@ -339,6 +352,8 @@ omit_special_char(event)
         }
   }
   onSaveSearchVehicles(){
+    sessionStorage.removeItem('loadingType');
+    this.duplicateSection = false;
     this.subuserType = sessionStorage.getItem('typeValue');
     let appId = "1",loginId="",brokerbranchCode="",createdBy="";
     let quoteStatus = sessionStorage.getItem('QuoteStatus');
@@ -426,7 +441,7 @@ omit_special_char(event)
       "CubicCapacity": this.vehicleDetails?.Grossweight,
       "CreatedBy": createdBy,
       "DrivenByDesc": 'D',
-      "EngineNumber": this.vehicleDetails?.EngineNumber,
+      "EngineNumber": this.vehicleDetails?.EngineNumber?.toUpperCase(),
       "FuelType": this.vehicleDetails?.FuelType,
       "Gpstrackinginstalled": null,
       "Grossweight": this.vehicleDetails?.Grossweight,
@@ -533,7 +548,8 @@ omit_special_char(event)
             this.quoteRefNo = data?.Result?.RequestReferenceNo;
               sessionStorage.setItem('quoteReferenceNo',data?.Result?.RequestReferenceNo);
               this.vehicleDetails = null;
-              
+              sessionStorage.setItem('vehicleExist','true');
+              sessionStorage.removeItem('vehicleDetailsList');
               this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details'])
 
           }
@@ -591,10 +607,10 @@ omit_special_char(event)
       "Insuranceid": this.insuranceId,
       "BranchCode": this.branchCode,
       "AxelDistance": this.axelDistance,
-      "Chassisnumber": this.chassisNo,
+      "Chassisnumber": this.chassisNo?.toUpperCase(),
       "Color": this.colorValue,
-      "CreatedBy": "broker7",
-      "EngineNumber": this.engineNo,
+      "CreatedBy": this.loginId,
+      "EngineNumber": this.engineNo?.toUpperCase(),
       "FuelType": this.fuelType,
       "Grossweight": this.grossWeight,
       "ManufactureYear": this.manufactureYear,
@@ -602,7 +618,7 @@ omit_special_char(event)
       "Motorusage": this.usageValue,
       "NumberOfAxels": this.noOfAxels,
       "OwnerCategory": this.ownerCategory,
-      "Registrationnumber": this.regNo,
+      "Registrationnumber": this.regNo?.toUpperCase(),
       "ResEngineCapacity": this.engineCapacity,
       "ResOwnerName": this.ownerName,
       "ResStatusCode": "Y",
@@ -664,6 +680,21 @@ omit_special_char(event)
           sessionStorage.removeItem('vehicleLength')
           let vehicles = JSON.parse(sessionStorage.getItem('vehicleDetailsList'));
           if(vehicles){
+            vehicleDetails['Currency'] = this.updateComponent.CurrencyCode;
+            vehicleDetails['ExchangeRate'] = this.updateComponent.exchangeRate;
+            if(this.updateComponent.policyStartDate){
+              vehicleDetails['PolicyStartDate'] =this.datePipe.transform(this.updateComponent.policyStartDate, "dd/MM/yyyy");
+              vehicleDetails['PolicyEndDate'] = this.datePipe.transform(this.updateComponent.policyEndDate, "dd/MM/yyyy");
+            }
+            vehicleDetails['modifiedYN'] = 'Y';
+            vehicleDetails['SourceType'] = this.updateComponent.sourceType;
+            vehicleDetails['BrokerCode'] = this.updateComponent.brokerCode;
+            vehicleDetails['BranchCode'] = this.updateComponent.branchValue;
+            vehicleDetails['BrokerBranchCode'] = this.updateComponent.brokerBranchCode;
+            vehicleDetails['CustomerCode'] = this.updateComponent.CustomerCode;
+            vehicleDetails['CustomerName'] = this.updateComponent.CustomerName;
+            vehicleDetails['HavePromoCode'] = this.updateComponent.HavePromoCode;
+            vehicleDetails['PromoCode'] = this.updateComponent.PromoCode;
             vehicles.push(vehicleDetails);
             sessionStorage.setItem('vehicleDetailsList',JSON.stringify(vehicles));
          }
@@ -762,5 +793,9 @@ omit_special_char(event)
       this.onMakeChange();
       this.modelValue = this.modelValue = vehDetails?.Vehcilemodel;
     }
+  }
+  getBack(){
+    sessionStorage.removeItem('vehicleDetailsList');
+    this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details'])
   }
 }

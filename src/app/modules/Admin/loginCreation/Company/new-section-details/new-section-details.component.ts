@@ -72,12 +72,14 @@ export class NewSectionDetailsComponent implements OnInit {
       let urlLink = `${this.ApiUrl1}master/getbyproductsectionid`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
-        console.log(data);
         let res:any = data;
         if(res.Result){
           this.sectionDetails = res.Result;
           this.Motoryn=res?.Result?.MotorYn;
           if(this.sectionDetails){
+            if(this.sectionDetails.MinimumPremium!=null){
+              this.CommaFormatted();
+            }
             if(this.sectionDetails?.EffectiveDateStart!=null){
               this.sectionDetails.EffectiveDateStart = this.onDateFormatInEdit(this.sectionDetails?.EffectiveDateStart)
             }
@@ -86,12 +88,29 @@ export class NewSectionDetailsComponent implements OnInit {
             }
           }
         }
-        console.log("Final Modal Class",this.sectionDetails);
       },
       (err) => { },
     );
   }
+  onPremiumChange(args) {
+    if (args.key === 'e' || args.key === '+' || args.key === '-') {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  CommaFormatted() {
+    // format number
+    if (this.sectionDetails.MinimumPremium) {
+      this.sectionDetails.MinimumPremium = this.sectionDetails.MinimumPremium.replace(/[^0-9.]|(?<=\..*)\./g, "")
+       .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+  }
   onSaveSection(){
+    let premium=null;
+    if(this.sectionDetails.MinimumPremium==undefined) premium = null;
+    else if(this.sectionDetails.MinimumPremium.includes(',')){ premium = this.sectionDetails.MinimumPremium.replace(/,/g, '') }
+    else premium = this.sectionDetails.MinimumPremium;
     let ReqObj = {
       "ProductId": this.productId,
      "SectionId": this.sectionDetails.SectionId,
@@ -102,6 +121,7 @@ export class NewSectionDetailsComponent implements OnInit {
     "CreatedBy": this.loginId,
     "CoreAppCode":this.sectionDetails.CoreAppCode,
     "InsuranceId":this.insuranceId,
+    "MinimumPremium": premium,
     "BranchCode":"99999",
     "EffectiveDateStart": this.sectionDetails.EffectiveDateStart,
     "MotorYn": this.Motoryn,

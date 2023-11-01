@@ -290,10 +290,23 @@ export class CustomerDetailsComponent implements OnInit {
               }
               else{
                 this.quoteRefNo=null;
-                this.currencyCode = this.userDetails.Result.CurrencyId;
-                this.onCurrencyChange('direct');
-                this.searchSection = true;
-                this.commonSection = true;
+                  this.branchValue = this.userDetails.Result.BranchCode;
+                  this.updateComponent.branchValue = this.branchValue;
+                  this.currencyCode = this.userDetails.Result.CurrencyId;
+                  this.onCurrencyChange('direct');
+                    var d= new Date();
+                    var year = d.getFullYear();
+                    var month = d.getMonth();
+                    var day = d.getDate();
+                    if(this.productId=='5' || this.productId=='46'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
+                    this.searchSection = true;
+                  this.commonSection = true;
+                  let quoteStatus = sessionStorage.getItem('QuoteStatus');
+                  if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
+                    this.adminSection = true;this.issuerSection = false;
+                  }
+                  else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
+                  else this.issuerSection = false;
               }
               
               
@@ -1169,7 +1182,7 @@ export class CustomerDetailsComponent implements OnInit {
                   this.updateComponent.CustomerName = null;
                 }
                 this.getBrokerBranchList('direct');
-                
+                this.commonSection = true;
               }
               else this.onGetCustomerList('direct',this.customerCode);
             // }
@@ -1314,6 +1327,7 @@ export class CustomerDetailsComponent implements OnInit {
       this.customerCode = this.userDetails.Result.CustomerCode;
         this.customerName = this.userDetails.Result.UserName;
         this.updateComponent.CustomerCode = this.userDetails.Result.CustomerCode;
+        this.commonSection = true;
     }
     
   }
@@ -1322,6 +1336,7 @@ export class CustomerDetailsComponent implements OnInit {
       this.customerCode = code;
       this.customerName = name;
       this.updateComponent.CustomerName = name;
+      this.updateComponent.CustomerCode = code;
       if(this.issuerSection){
         this.brokerCode = null;
           this.brokerBranchCode = null;
@@ -1329,10 +1344,8 @@ export class CustomerDetailsComponent implements OnInit {
           this.updateComponent.brokerCode = null;
           this.updateComponent.brokerBranchCode =null;
           this.updateComponent.brokerLoginId = null;
+          this.commonSection = true;
       }
-      
-      this.updateComponent.CustomerCode = code;
-    
       if((this.productId=='5' || this.productId=='46') && type=='change'){this.updateComponent.modifiedYN = 'Y'}
   }
   setTiraVehicleValues(entry){
@@ -1428,7 +1441,7 @@ export class CustomerDetailsComponent implements OnInit {
       this.updateComponent.PromoCode = this.PromoCode;
       console.log("Final Values",this.brokerList,this.brokerCode)
       this.onSourceTypeChange('direct');
-      this.commonSection = true;
+      
   }
   setCommonValues(entry){
     console.log("Entry Values",entry);
@@ -1755,6 +1768,7 @@ export class CustomerDetailsComponent implements OnInit {
   redirectCreateVehicle(event){
       this.vehicleWishList = event.vehicleWishList;
       this.customerData = event.customerData;
+     
       console.log("Edit Customer Final 2",this.customerData)
       this.onCreateVehicle();
   }
@@ -1784,6 +1798,7 @@ export class CustomerDetailsComponent implements OnInit {
                         sessionStorage.setItem('vehicleType','new');
                         sessionStorage.removeItem('vehicleDetails');
                         this.updateComponent.resetVehicleTab();
+                        sessionStorage.setItem('vehicleDetailsList',JSON.stringify(this.customerData))
                         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/motor-details'])
                       }
                     }
@@ -1798,6 +1813,7 @@ export class CustomerDetailsComponent implements OnInit {
                         sessionStorage.setItem('vehicleType','new');
                         sessionStorage.removeItem('vehicleDetails');
                         this.updateComponent.resetVehicleTab();
+                        sessionStorage.setItem('vehicleDetailsList',JSON.stringify(this.customerData))
                         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/motor-details'])
                       }
                     }

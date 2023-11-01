@@ -2887,7 +2887,6 @@ p {
     border-radius: 0.7rem!important;
     margin: 0!important;
     outline: none!important;
-    padding: 8px!important;
     box-sizing: border-box!important;
     transition: all .3s!important;
     height: 35px!important;
@@ -2895,7 +2894,9 @@ p {
     box-shadow: 1px 1px 1px #1f26875e;
     backdrop-filter: blur(18.5px)!important;
 }
-
+.mat-calendar-controls .mat-mdc-icon-button.mat-mdc-button-base {
+        padding: 20px !important;
+}
 .custom-btn {
     width: 100px;
     height: 40px;

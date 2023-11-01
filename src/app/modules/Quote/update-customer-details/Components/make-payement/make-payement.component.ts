@@ -716,8 +716,7 @@ export class MakePayementComponent implements OnInit {
         this.activeMenu = this.Menu;
         this.onCashPayment();
     }
-    this.payAmount = this.totalPremium;
-    this.CommaFormatted();
+    if(this.totalPremium!=null && this.totalPremium!=undefined){this.payAmount = String(this.totalPremium);this.CommaFormatted();}
   }
   getPaymentTypeList(){
     let ReqObj = {
@@ -770,7 +769,7 @@ export class MakePayementComponent implements OnInit {
     }
     else{this.iBanNo = null;this.accNo=null;
       if(this.payAmount==undefined) amount = null;
-      else if(this.payAmount.includes(',')){ amount = this.payAmount.replace(/,/g, '') }
+      else if(String(this.payAmount).includes(',')){ amount = this.payAmount.replace(/,/g, '') }
       else amount = this.payAmount;
     }
     if(this.IsChargeOrRefund!='REFUND' && this.Menu=='2'){
@@ -856,8 +855,8 @@ export class MakePayementComponent implements OnInit {
   CommaFormatted() {
 
     // format number
-    if (this.payAmount) {
-     this.payAmount = this.payAmount.replace(/[^0-9.]|(?<=\..*)\./g, "")
+    if (this.payAmount!='' && this.payAmount!=null && this.payAmount!=undefined) {
+     this.payAmount = String(this.payAmount).replace(/[^0-9.]|(?<=\..*)\./g, "")
        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   }

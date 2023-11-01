@@ -23,7 +23,7 @@ export class VehicleWishListComponent implements OnInit {
   addSection:boolean = false;customerData2:any[]=[];customerHeader2:any[]=[];
   title: any;clientName: any;dateOfBirth: any;productValue:any;j:any=1;
   emailId: any;mobileNo: any;idNumber: any;productList:any[]=[];
-  searchValue: string= "";vehicleWishList:any[]=[];minDate:Date;
+  searchValue: any= "";vehicleWishList:any[]=[];minDate:Date;
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
@@ -121,7 +121,7 @@ export class VehicleWishListComponent implements OnInit {
       }
       if(this.adminSection && (quoteStatus=='AdminRP' || quoteStatus == 'AdminRA')){
         this.customerHeader =  [
-          { key: 'Chassisnumber', display: 'Chassis Number' },
+          { key: 'Registrationnumber', display: 'Registration Number' },
           { key: 'PolicyTypeDesc', display: 'Policy Type' },
           { key: 'PolicyStartDate', display: 'Start Date'},
           { key: 'PolicyEndDate', display: 'End Date'},
@@ -140,7 +140,7 @@ export class VehicleWishListComponent implements OnInit {
       }
       else {
         this.customerHeader =  [
-          { key: 'Chassisnumber', display: 'Chassis Number' },
+          { key: 'Registrationnumber', display: 'Registration Number' },
           { key: 'PolicyTypeDesc', display: 'Policy Type' },
           { key: 'PolicyStartDate', display: 'Start Date'},
           { key: 'PolicyEndDate', display: 'End Date'},
@@ -176,7 +176,6 @@ export class VehicleWishListComponent implements OnInit {
 
       ];
       this.customerHeader3 =  [
-        { key: 'ReqChassisNumber', display: 'Chassis Number' },
         { key: 'Registrationnumber', display: 'Registration No' },
         { key: 'PolicyStartDate', display: 'Start Date'},
         { key: 'PolicyEndDate', display: 'End Date'},
@@ -1497,7 +1496,10 @@ export class VehicleWishListComponent implements OnInit {
                 chassisNo = this.searchValue
               }
               else{
-                regNo = this.searchValue;
+                if(this.searchValue!='' && this.searchValue!=null){
+                  regNo = this.searchValue.toUpperCase();
+                }
+                
               }
 
               if(this.searchValue=='' || this.searchValue==undefined || this.searchValue==null){
@@ -1506,7 +1508,7 @@ export class VehicleWishListComponent implements OnInit {
                 }
                 else if(this.searchBy=='02'){
                   //this.toastrService.show('SearchValue','Please Enter RegistrationNumber',config);
-                  }
+                }
               }
               else{
                 let ReqObj = {
