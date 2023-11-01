@@ -205,14 +205,14 @@ export class VehicleDetailsComponent implements OnInit {
     }
     else{
       this.customerHeader =  [
-        { key: 'Chassisnumber', display: 'Chassis Number' },
         { key: 'Registrationnumber', display: 'Registration No' },
         { key: 'PolicyStartDate', display: 'Start Date'},
         { key: 'PolicyEndDate', display: 'End Date'},
         { key: 'PolicyTypeDesc', display: 'Policy Type' },
        { key: 'Vehiclemake', display: 'Make' },
         { key: 'Vehcilemodel', display: 'Model' },
-        { key: 'OverallPremiumFc', display: 'Premium' }
+        { key: 'OverallPremiumFc', display: 'Premium' },
+        { key: 'Status', display: 'Status' },
       ];
     }
     this.customerHeader2 =  [

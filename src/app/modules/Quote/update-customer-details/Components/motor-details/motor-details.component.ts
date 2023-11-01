@@ -680,6 +680,21 @@ omit_special_char(event)
           sessionStorage.removeItem('vehicleLength')
           let vehicles = JSON.parse(sessionStorage.getItem('vehicleDetailsList'));
           if(vehicles){
+            vehicleDetails['Currency'] = this.updateComponent.CurrencyCode;
+            vehicleDetails['ExchangeRate'] = this.updateComponent.exchangeRate;
+            if(this.updateComponent.policyStartDate){
+              vehicleDetails['PolicyStartDate'] =this.datePipe.transform(this.updateComponent.policyStartDate, "dd/MM/yyyy");
+              vehicleDetails['PolicyEndDate'] = this.datePipe.transform(this.updateComponent.policyEndDate, "dd/MM/yyyy");
+            }
+            vehicleDetails['modifiedYN'] = 'Y';
+            vehicleDetails['SourceType'] = this.updateComponent.sourceType;
+            vehicleDetails['BrokerCode'] = this.updateComponent.brokerCode;
+            vehicleDetails['BranchCode'] = this.updateComponent.branchValue;
+            vehicleDetails['BrokerBranchCode'] = this.updateComponent.brokerBranchCode;
+            vehicleDetails['CustomerCode'] = this.updateComponent.CustomerCode;
+            vehicleDetails['CustomerName'] = this.updateComponent.CustomerName;
+            vehicleDetails['HavePromoCode'] = this.updateComponent.HavePromoCode;
+            vehicleDetails['PromoCode'] = this.updateComponent.PromoCode;
             vehicles.push(vehicleDetails);
             sessionStorage.setItem('vehicleDetailsList',JSON.stringify(vehicles));
          }

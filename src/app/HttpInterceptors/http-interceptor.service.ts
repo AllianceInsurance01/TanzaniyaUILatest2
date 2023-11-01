@@ -118,8 +118,8 @@ export class HttpInterceptorService implements HttpInterceptor {
         }
         else if([500].includes(err.status)){
           let ulList=`<li class="list-group-item">
-          <div style="color: primary;">Url:&nbsp;<b>{{req.url}}</b></div>
-          <div style="color: red;"><b>Internal Server Error</b></div>
+          <div style="color: primary;font-size:10px">Url:&nbsp;<b>${req.url}</b></div>
+          <div style="color: red;font-size:12px;"><b>Internal Server Error</b></div>
          </li>`
           Swal.fire({
             title: '<strong>Error</strong>',
@@ -139,9 +139,10 @@ export class HttpInterceptorService implements HttpInterceptor {
             })
         }
         else if([400].includes(err.status)){
+          console.log("Request",req.url)
           let ulList=`<li class="list-group-item">
-          <div style="color: primary;">Url:&nbsp;<b>{{req.url}}</b></div>
-          <div style="color: red;"><b>Bad Request Error</b></div>
+          <div style="color: primary;font-size:10px">Url:&nbsp;<b>${req.url}</b></div>
+          <div style="color: red;font-size:12px;"><b>Bad Request Error</b></div>
          </li>`
           Swal.fire({
             title: '<strong>Error</strong>',
