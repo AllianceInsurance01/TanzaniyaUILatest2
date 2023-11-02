@@ -1324,9 +1324,9 @@ getMotorUsageList(vehicleValue){
                       "Remarks":quoteDetails.Remarks,
                       "Category": quoteDetails.Endttypecategory,
                       "EndtName": quoteDetails.Endttype,
-                      "PolicyNo": quoteDetails?.policyNo
+                      "PolicyNo": quoteDetails?.PolicyNo
                     }
-                    sessionStorage.setItem('endorsePolicyNo',quoteDetails?.OriginalPolicyNo);
+                    sessionStorage.setItem('endorsePolicyNo',this.vehicleData[0].OriginalPolicyNo);
                     //sessionStorage.setItem('endorsePolicyNo',)
                     sessionStorage.setItem('endorseTypeId',JSON.stringify(obj));
                     this.endorsementSection = true;
@@ -2860,9 +2860,15 @@ getMotorUsageList(vehicleValue){
     if(rowData.Endorsements){
         this.discountEndtSection = true;
         this.sumInsured = rowData.SumInsured;
+        //this.sumInsured = rowData.Endorsements[rowData.Endorsements.length-1].EndorsementSumInsured;
+        this.calcType = rowData.Endorsements[rowData.Endorsements.length-1].EndorsementCalcType;
+        this.excessPercent = rowData.Endorsements[rowData.Endorsements.length-1].ExcessPercent;
+        this.ratePercent = rowData.Endorsements[rowData.Endorsements.length-1].EndorsementRate;
+        this.excessAmount = rowData.Endorsements[rowData.Endorsements.length-1].ExcessAmount;
         this.differenceSI = rowData.Endorsements[rowData.Endorsements.length-1].EndorsementSumInsured;
         this.differencePremium = rowData.Endorsements[rowData.Endorsements.length-1].PremiumAfterDiscount
-        this.beforeDiscount = rowData.Endorsements[rowData.Endorsements.length-1].PremiumBeforeDiscount
+        this.beforeDiscount = rowData.Endorsements[rowData.Endorsements.length-1].PremiumBeforeDiscount;
+        this.selectedSectionId = vehData.SectionId;
     }
     else{
       this.discountEndtSection = false;
@@ -2888,18 +2894,30 @@ getMotorUsageList(vehicleValue){
       }
     }
     else this.finalSaveLoading(modal)
-    
   }
   finalSaveLoading(modal){
     let vehData = this.vehicleDetailsList.filter(ele=>ele.VehicleId==this.selectedVehId);
     let secData = vehData.filter(ele=>ele.SectionId==this.selectedSectionId);
+    console.log("Final Sellec",vehData,secData,this.selectedSectionId)
     let coverData = secData[0].CoverList.filter(ele=>ele.CoverId==this.selectedCoverId);
-    coverData[0].PremiumAfterDiscount = this.afterDiscount;
-    coverData[0].Discounts = this.discountList;
-    coverData[0].ratePercent = this.ratePercent;
-    coverData[0].ExcessPercent = this.excessPercent;
-    coverData[0].ExcessAmount = this.excessAmount;
-    coverData[0].Rate = this.ratePercent;
+    if(coverData[0]?.Endorsements){
+      coverData[0].Endorsements[coverData[0].Endorsements.length-1].PremiumBeforeDiscount = this.beforeDiscount;
+      coverData[0].Endorsements[coverData[0].Endorsements.length-1].PremiumAfterDiscount = this.differencePremium;
+      coverData[0].Endorsements[coverData[0].Endorsements.length-1].EndorsementCalcType = this.calcType;
+      coverData[0].Endorsements[coverData[0].Endorsements.length-1].ExcessPercent = this.excessPercent;
+      coverData[0].Endorsements[coverData[0].Endorsements.length-1].ExcessAmount = this.excessAmount;
+      coverData[0].Endorsements[coverData[0].Endorsements.length-1].EndorsementRate = this.ratePercent;
+
+    }
+    else{
+      coverData[0].PremiumAfterDiscount = this.afterDiscount;
+      coverData[0].Discounts = this.discountList;
+      coverData[0].ratePercent = this.ratePercent;
+      coverData[0].ExcessPercent = this.excessPercent;
+      coverData[0].ExcessAmount = this.excessAmount;
+      coverData[0].Rate = this.ratePercent;
+    }
+    
     this.selectedVehId = null;this.excessPercent = null;
     this.selectedCoverId = null;this.excessAmount=null;
     this.selectedSectionId = null;this.ratePercent = null;
@@ -4109,7 +4127,6 @@ getMotorUsageList(vehicleValue){
                         if(k==veh.Covers.length){
                           j+=1;
                           if(j==entry.length){
-  
                               let ReqObj = {
                                 "RequestReferenceNo": this.quoteRefNo,
                                 "VehicleId": veh.Id,

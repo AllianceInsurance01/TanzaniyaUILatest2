@@ -48,7 +48,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-md-3" *ngIf="dateOfBirth">
                     <div class="input-control-container" style="text-wrap: nowrap !important">
                         <label class="input-form-label">D.O.B / RegDate</label>
                         <div class="input-form-radio-box">
@@ -2156,7 +2156,7 @@
                                                                     <ng-container *ngIf="!adminSection">
                                                                         {{ element[col.key]}}
                                                                     </ng-container>
-                                                                    <ng-container *ngIf="(adminSection )">
+                                                                    <ng-container *ngIf="(adminSection)">
                                                                         <input type="text" [id]="'Rate'+i"
                                                                             style="width: 70px;"
                                                                             [(ngModel)]="element[col.key]">
@@ -2739,7 +2739,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-center">
+                <div class="text-center mb-2">
                     <button class="custom-btn btn-6 maan-button-data  mx-2" matRipple *ngIf="adminSection"
                     (click)="onUpdateFactor('calculate')">Calculate</button>
                 </div>
@@ -3575,9 +3575,9 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" (click)="modal.dismiss('Cross click')"
+        <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" *ngIf="!adminSection"  (click)="modal.dismiss('Cross click')"
             style="margin-left:10px;">Close</button>
-        <button class="custom-btn btn-6 maan-button-data  mx-2" (click)="SaveLoadingDetails(modal)">Submit
+        <button class="custom-btn btn-6 maan-button-data  mx-2" *ngIf="adminSection" (click)="SaveLoadingDetails(modal)">Submit
         </button>
 
     </div>
@@ -3882,11 +3882,10 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" (click)="modal.dismiss('Cross click')"
+        <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" *ngIf="!adminSection" (click)="modal.dismiss('Cross click')"
             style="margin-left:10px;">Close</button>
-        <button class="custom-btn btn-6 maan-button-data  mx-2" (click)="SaveLoadingDetails(modal)">Submit
+        <button class="custom-btn btn-6 maan-button-data  mx-2" *ngIf="adminSection" (click)="SaveLoadingDetails(modal)">Submit
         </button>
-
     </div>
 </ng-template>
 <ng-template #myView let-modal>
