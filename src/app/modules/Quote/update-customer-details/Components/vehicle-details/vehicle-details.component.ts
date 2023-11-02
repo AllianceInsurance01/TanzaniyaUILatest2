@@ -1199,7 +1199,7 @@ export class VehicleDetailsComponent implements OnInit {
       }
       ReqObj['FleetOwnerYn'] = "N";
       if(this.endorsementSection){
-        if(this.vehicleDetails?.Status == undefined || this.vehicleDetails?.Status == null || this.vehicleDetails?.Status == 'Y'){
+        if(this.vehicleDetails?.Status == undefined || this.vehicleDetails?.Status == null || this.vehicleDetails?.Status == 'Y' || (this.vehicleDetails?.Status =='RP' && !this.adminSection)){
           ReqObj['Status'] = 'E';
         }
         else{
@@ -2101,11 +2101,11 @@ export class VehicleDetailsComponent implements OnInit {
                 }
               }
               if(this.endorsementSection){
-                if(vehicleDetails?.Status == undefined || vehicleDetails?.Status == null || vehicleDetails?.Status == 'Y'){
+                if(this.vehicleDetails?.Status == undefined || this.vehicleDetails?.Status == null || this.vehicleDetails?.Status == 'Y' || (this.vehicleDetails?.Status =='RP' && !this.adminSection)){
                   ReqObj['Status'] = 'E';
                 }
                 else{
-                  ReqObj['Status'] = vehicleDetails?.Status;
+                  ReqObj['Status'] = this.vehicleDetails?.Status;
                 }
                 ReqObj['PolicyNo'] = this.endorsePolicyNo
               }

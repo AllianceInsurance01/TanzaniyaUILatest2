@@ -3553,9 +3553,7 @@ getMotorUsageList(vehicleValue){
             //   config);
           }
       }
-      else{
-        this.isMannualReferal = 'N';
-      }
+      
       let ReqObj:any ={},createdBy = "";
       let quoteStatus = sessionStorage.getItem('QuoteStatus');
         if(quoteStatus=='AdminRP'){
