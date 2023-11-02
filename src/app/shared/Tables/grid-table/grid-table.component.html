@@ -147,8 +147,8 @@
                     </button>
                 </ng-container> -->
                     <ng-container *ngIf="col.config.isEndorseEdit">
-                        <ng-container *ngIf="element?.endorsementStatus">
-                            <ng-container *ngIf="element?.endorsementStatus=='C'">
+                        <ng-container *ngIf="element?.endorsementStatus || element?.endorsementCategoryDesc==null">
+                            <ng-container *ngIf="element?.endorsementStatus=='C' || element?.endorsementStatus==''">
                                 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                                     <i class="fas fa-ellipsis-v"></i>
                                 </button>
@@ -156,9 +156,15 @@
                                     <!-- <button mat-menu-item (click)="onOpenCoverAction.emit({data:element,name:'Certificate'})">
                                         <span>Certificate</span>
                                     </button> -->
+                                    <!-- <button mat-menu-item (click)="onGetSchedules.emit({data:element,name:'Schedules'})">
+                                        <i class="fas fa-file"></i>&nbsp;Schedule
+                                    </button> -->
                                     <button mat-menu-item (click)="onGetSchedule.emit({data:element,name:'Schedule'})">
-                                        <span>Schedule</span>
+                                        <i class="fas fa-file"></i>&nbsp; Schedule
                                     </button>
+                                    <button mat-menu-item (click)="onCredit.emit(element)"><i class="fas fa-file"></i>&nbsp;Credit Note</button>
+                                    <button mat-menu-item (click)="onDebit.emit(element)"><i class="fas fa-file"></i>&nbsp;Debit Note</button>
+                                    <button mat-menu-item (click)="onView.emit(element)"><i class="fas fa-eye"></i>&nbsp;View Quote Details</button>
                                     <!-- <button mat-menu-item>
                                         <span>Policy Wording</span>
                                     </button> -->
@@ -167,7 +173,7 @@
                             <ng-container *ngIf="element.endorsementStatus==null">
                                         N/A
                             </ng-container>
-                            <ng-container *ngIf="element.endorsementStatus!='C' && element.endorsementStatus!=null">
+                            <ng-container *ngIf="element.endorsementStatus!='C' && element.endorsementStatus!=null && element.endorsementStatus!=''">
                                 <button class="btn btn-primary btn-sm" (click)="onEdit.emit(element)">
                                     <i class="fas fa-marker"></i>
                                   </button>

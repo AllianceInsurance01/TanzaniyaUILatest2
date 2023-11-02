@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">
                 <ng-container *ngIf="quoteData.length!=0 && currencyCode">
-                    <app-grid-table [cols]="quoteHeader" [data]="quoteData" (onGetSchedule)="onGetSchedule($event)" [Currency]="currencyCode" [filterValue]="filterValue" (onCredit)="onCreditdownload($event)" (onDebit)="onDebitdownload($event)" (onView)="onViews($event)" (onEdit)="onEditCovers($event)">
+                    <app-grid-table [cols]="quoteHeader" [data]="quoteData" (onGetSchedule)="onGetSchedule($event)"  [Currency]="currencyCode" [filterValue]="filterValue" (onCredit)="onCreditdownload($event)" (onDebit)="onDebitdownload($event)" (onView)="onViews($event)" (onEdit)="onEditCovers($event)">
                     </app-grid-table>
                 </ng-container>
                 <ng-container *ngIf="quoteData.length==0">

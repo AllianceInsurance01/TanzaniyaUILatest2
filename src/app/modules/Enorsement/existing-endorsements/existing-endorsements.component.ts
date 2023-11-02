@@ -116,6 +116,38 @@ export class ExistingEndorsementsComponent {
       (err) => { },
     );
   }
+  // onGetSchedules(rowData){
+  //   console.log("Received Entry22",rowData);
+  //   let entry = rowData.data;
+  //   let ReqObj = {
+  //     "QuoteNo":entry.quoteNo
+  //   }
+  //   let urlLink = `${this.CommonApiUrl}pdf/policyform`;
+  //   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+  //     (data: any) => {
+  //       console.log(data);
+  //       if(data?.Result?.PdfOutFile){
+  //           this.downloadMyFile(data.Result.PdfOutFile);
+  //       }
+  //       else{
+  //         Swal.fire({
+  //           title: '<strong>Schedule Pdf</strong>',
+  //           icon: 'error',
+  //           html:
+  //             `No Pdf Generated For this Policy`,
+  //           //showCloseButton: true,
+  //           //focusConfirm: false,
+  //           showCancelButton: false,
+
+  //           //confirmButtonColor: '#3085d6',
+  //           cancelButtonColor: '#d33',
+  //           cancelButtonText: 'Cancel',
+  //         })
+  //       }
+  //     },
+  //     (err) => { },
+  //   );
+  // }
   downloadMyFile(data) {
     const link = document.createElement('a');
     link.setAttribute('target', '_blank');
@@ -159,8 +191,8 @@ export class ExistingEndorsementsComponent {
     }
 }
 onCreditdownload(rowData){
-  console.log('KKKKKKKKKKK',rowData.QuoteNo);
-  let urlLink = `${this.CommonApiUrl}pdf/creditNote?quoteNo=${rowData.QuoteNo}`
+  console.log('KKKKKKKKKKK',rowData.quoteNo);
+  let urlLink = `${this.CommonApiUrl}pdf/creditNote?quoteNo=${rowData.quoteNo}`
 
   this.sharedService.onGetMethodSync(urlLink).subscribe(
     (data: any) => {
@@ -178,8 +210,8 @@ onCreditdownload(rowData){
 }
 
 onDebitdownload(rowData){
-  console.log('KKKKKKKKKKK',rowData.QuoteNo);
-  let urlLink = `${this.CommonApiUrl}pdf/taxInvoice?quoteNo=${rowData.QuoteNo}`
+  console.log('KKKKKKKKKKK',rowData.quoteNo);
+  let urlLink = `${this.CommonApiUrl}pdf/taxInvoice?quoteNo=${rowData.quoteNo}`
 
   this.sharedService.onGetMethodSync(urlLink).subscribe(
     (data: any) => {
