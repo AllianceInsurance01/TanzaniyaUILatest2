@@ -24,7 +24,7 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div *ngIf="!show">
                     <ng-container *ngIf="quoteData.length!=0">
-                        <app-commodity-table [cols]="quoteHeader" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousData($event)" (onLoadNextData)="onNextData($event)" (onSchedule)="onGetSchedule($event)" (onCredit)="onCreditdownload($event)" (onDebit)="onDebitdownload($event)" [data]="quoteData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onGetEndorsements)="onGetEndorsements($event)" (onAdd)="onInnerData($event)"  (onView)="onViews($event)">
+                        <app-commodity-table [cols]="quoteHeader" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousData($event)" (onLoadNextData)="onNextData($event)" (onSchedule)="onGetSchedule($event)" (onCredit)="onCreditdownload($event)" (onDebit)="onDebitdownload($event)" [data]="quoteData" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onGetEndorsements)="onGetEndorsements($event)" (onAdd)="onInnerData($event)"  (onView)="onViews($event)" (onPayEmi)="onPayssEmi($event)">
                         </app-commodity-table>
                     </ng-container>
                     <ng-container *ngIf="quoteData.length==0">

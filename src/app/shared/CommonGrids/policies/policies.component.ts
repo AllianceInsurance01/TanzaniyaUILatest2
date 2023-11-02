@@ -32,6 +32,7 @@ export class PoliciesComponent implements OnInit {
   OthersList:any[]=[];
   searchValue:any[]=[];brokerCode:any='';brokerList:any[]=[];
   customersearch:any;
+  subuserType: string;
   constructor(private router:Router,private sharedService: SharedService) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -49,6 +50,7 @@ export class PoliciesComponent implements OnInit {
    }
 
   ngOnInit(): void {
+
     if(this.productId=='5' || this.productId=='46'){
       this.quoteHeader =  [
         { key: 'OriginalPolicyNo', display: 'Policy No' },
@@ -158,6 +160,49 @@ export class PoliciesComponent implements OnInit {
     //   this.getExistingQuotes(null,'change');
     // }
   }
+  onPayssEmi(element:any){
+    // console.log('NNNNNNNN',element)
+    //         sessionStorage.setItem('quoteReferenceNo',element.RequestReferenceNo);
+    //        sessionStorage.setItem('quoteNo',element.QuoteNo);
+    //        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
+      // if(this.subuserType==null){
+      //   this.subuserType = this.userDetails.Result.SubUserType;
+      //   sessionStorage.setItem('typeValue',this.subuserType)
+      // }
+      this.subuserType = sessionStorage.getItem('typeValue');
+      let amount = null;
+      let ReqObj = {
+        "CreatedBy": this.loginId,
+        "EmiYn": element.EmiYn,
+        "InstallmentMonth":"",
+        "InstallmentPeriod":element.InstallmentPeriod,
+        "InsuranceId": this.insuranceId,
+        "Premium": element.OverallPremiumLc,
+        "QuoteNo": element.QuoteNo,
+        "Remarks": "None",
+        "SubUserType": this.subuserType,
+        "UserType": this.userType
+      }
+      let urlLink = `${this.CommonApiUrl}payment/makepayment`;
+      this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+        (data: any) => {
+          console.log(data);
+          if(data.Result){
+            if((this.productId=='5' || this.productId=='46')){
+              sessionStorage.setItem('quotePaymentId',data.Result.PaymentId);
+              console.log('NNNNNNNN',element)
+              sessionStorage.setItem('quoteReferenceNo',element.RequestReferenceNo);
+             sessionStorage.setItem('quoteNo',element.QuoteNo);
+             this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
+            }
+          }
+        },
+        (err) => { },
+      );
+    
+    
+  }
+
   getBrokerList(){
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
@@ -184,15 +229,22 @@ export class PoliciesComponent implements OnInit {
         if(data.Result){
           let defaultObj = []
           this.brokerList = defaultObj.concat(data.Result);
+          let brokercode=sessionStorage.getItem('brokercodeendorsement');
           if(this.brokerList.length==0){this.brokerCode = ''; this.brokerList = []}
+          else if(brokercode!="" && brokercode!=null){
+              this.brokerCode=brokercode;
+              console.log('HHHHHHHHHH',this.brokerCode)
+          }
           else this.brokerCode = this.loginId;
           if(this.brokerCode!=null && this.brokerCode!=''){
             if(!this.brokerList.some(ele=>ele.Code==this.brokerCode)) this.brokerCode = this.brokerList[0].Code;
-            this.getExistingQuotes(null,'change')
+            this.getExistingQuotes(null,'change');
+            sessionStorage.removeItem('brokercodeendorsement');
           }
           else{
             this.brokerCode = this.brokerList[0].Code;
-            this.getExistingQuotes(null,'change')
+            this.getExistingQuotes(null,'change');
+            sessionStorage.removeItem('brokercodeendorsement');
           }
         }
         
@@ -408,6 +460,7 @@ export class PoliciesComponent implements OnInit {
     sessionStorage.setItem('quoteNo',rowData.QuoteNo);
     sessionStorage.setItem('endorsePolicyNo',rowData.OriginalPolicyNo);
     sessionStorage.setItem('Pagefrom','endorsement');
+    sessionStorage.setItem('brokercodeendorsement',this.brokerCode);
     this.router.navigate(['Home/policies/Endorsements']);
   }
 ongetEndorsement(rowData){

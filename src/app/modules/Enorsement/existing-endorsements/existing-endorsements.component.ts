@@ -145,12 +145,72 @@ export class ExistingEndorsementsComponent {
     sessionStorage.removeItem('endorseStartDate');
     if(page=='Otherendorsement'){
       sessionStorage.setItem('otherpolicy',this.policyNo);
-      sessionStorage.setItem('otherpolicysearch','otherpolicysearch')
+      sessionStorage.setItem('otherpolicysearch','otherpolicysearch');
+      this.router.navigate(['/Home/policies']);
     }
     else if(page=='endorsement'){
       sessionStorage.setItem('otherpolicy',null);
-      sessionStorage.setItem('otherpolicysearch','policysearch')
+      sessionStorage.setItem('otherpolicysearch','policysearch');
+      sessionStorage.getItem('brokercodeendorsement');
+      this.router.navigate(['/Home/policies']);
     }
-  this.router.navigate(['/Home/policies'])
+    else{
+      this.router.navigate(['/Home']);
+    }
+}
+onCreditdownload(rowData){
+  console.log('KKKKKKKKKKK',rowData.QuoteNo);
+  let urlLink = `${this.CommonApiUrl}pdf/creditNote?quoteNo=${rowData.QuoteNo}`
+
+  this.sharedService.onGetMethodSync(urlLink).subscribe(
+    (data: any) => {
+      console.log(data);
+      const link = document.createElement('a');
+      link.setAttribute('target', '_blank');
+      link.setAttribute('href', data?.Result.PdfOutFile);
+      link.setAttribute('download','Creditpdf');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+  },
+    (err) => { },
+  );
+}
+
+onDebitdownload(rowData){
+  console.log('KKKKKKKKKKK',rowData.QuoteNo);
+  let urlLink = `${this.CommonApiUrl}pdf/taxInvoice?quoteNo=${rowData.QuoteNo}`
+
+  this.sharedService.onGetMethodSync(urlLink).subscribe(
+    (data: any) => {
+      console.log(data);
+      const link = document.createElement('a');
+      link.setAttribute('target', '_blank');
+      link.setAttribute('href', data?.Result.PdfOutFile);
+      link.setAttribute('download','DebitPdf');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+  },
+    (err) => { },
+  );
+}
+
+onViews(rowData){
+  console.log('NNNNNNNNNNN',rowData)
+  let ReqObj={
+    "Search":"",
+    "SearchValue":rowData.quoteNo,
+    "QuoteNo":rowData.quoteNo,
+    "RequestReferenceNo":rowData.requestReferenceNo,
+    "ProductId":this.productId,
+    "pageFrom": 'Endorsement',
+    "CustomerName": rowData.clientName,
+    "ProductName":rowData.productName,
+    "PolicyNo":rowData.policyNo,
+    "Currency":rowData.currency
+  }
+  sessionStorage.setItem('editCustomer',JSON.stringify(ReqObj));
+this.router.navigate(['/Home/MotorDocument']);
 }
 }
