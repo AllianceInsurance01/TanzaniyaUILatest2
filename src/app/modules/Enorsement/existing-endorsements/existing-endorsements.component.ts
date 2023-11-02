@@ -89,7 +89,7 @@ export class ExistingEndorsementsComponent {
     let entry = rowData.data;
     let ReqObj = {
       "QuoteNo":entry.quoteNo,
-      "EndorsementType":"S"
+      "EndorsementType":"E"
     }
     let urlLink = `${this.CommonApiUrl}pdf/policyform`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -122,7 +122,7 @@ export class ExistingEndorsementsComponent {
     let entry = rowData.data;
     let ReqObj = {
       "QuoteNo":entry.quoteNo,
-      "EndorsementType":"E"
+      "EndorsementType":"S"
     }
     let urlLink = `${this.CommonApiUrl}pdf/policyform`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
