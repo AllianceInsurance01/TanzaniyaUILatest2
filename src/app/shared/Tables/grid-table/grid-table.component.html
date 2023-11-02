@@ -162,8 +162,8 @@
                                     <button mat-menu-item (click)="onGetSchedule.emit({data:element,name:'Schedule'})">
                                         <i class="fas fa-file"></i>&nbsp;Endorsement Schedule
                                     </button>
-                                    <button mat-menu-item (click)="onCredit.emit(element)"><i class="fas fa-file"></i>&nbsp;Credit Note</button>
-                                    <button mat-menu-item (click)="onDebit.emit(element)"><i class="fas fa-file"></i>&nbsp;Debit Note</button>
+                                    <button mat-menu-item (click)="onCredit.emit(element)" *ngIf="element.creditNo!=null && element.creditNo!=''"><i class="fas fa-file"></i>&nbsp;Credit Note</button>
+                                    <button mat-menu-item (click)="onDebit.emit(element)" *ngIf="element.debitNoteNo!=null && element.debitNoteNo!=''"><i class="fas fa-file"></i>&nbsp;Debit Note</button>
                                     <button mat-menu-item (click)="onView.emit(element)"><i class="fas fa-eye"></i>&nbsp;View Quote Details</button>
                                     <!-- <button mat-menu-item>
                                         <span>Policy Wording</span>
