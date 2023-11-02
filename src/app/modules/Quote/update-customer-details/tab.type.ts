@@ -63,7 +63,6 @@ export class FormlyFieldTabs extends FieldType implements OnInit {
       console.log("Previous Called",this.selectedIndex)
         if (this.selectedIndex != 0) {
           this.selectedIndex = this.selectedIndex - 1;
-          alert("Reduced")
         }
     }
   isValid(field: FormlyFieldConfig): boolean {

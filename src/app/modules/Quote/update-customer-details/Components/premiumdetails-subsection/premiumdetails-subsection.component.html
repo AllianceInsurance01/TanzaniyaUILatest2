@@ -9,7 +9,7 @@
                         </span>
                         <span class="spancommon span_font_size">Customer & Product Details</span>
                     </div>
-                    <div class="mr-3"> 
+                    <div class="mr-3" *ngIf="columnHeader?.Endorsementeffdate==null"> 
                         <button class="maan-btn maan-btn-blue maan-button-data" (click)="openmodel(mymodal)" style="bottom:0.2rem"><span>Cover Details</span></button></div>
                 </div>
                 </div>
@@ -22,7 +22,7 @@
                 <span class="spancommon span_font_size">Customer & Product Details</span>
             </span>
             </div>
-            <div class="mt-2">
+            <div class="mt-2" *ngIf="columnHeader?.Endorsementeffdate==null">
                 <button class="maan-btn maan-btn-blue maan-button-data" (click)="openmodel(mymodal)" style="bottom:0.2rem"><span>Cover Details</span></button>
             </div>
         </div>
@@ -64,7 +64,6 @@
                         <label class="input-form-label">Mobile Number</label>
                         <div class="input-form-radio-box">
                             <span class="spancommon span_font_size">{{customerDetails?.MobileCodeDesc}}&nbsp;{{customerDetails?.MobileNo1}}</span>
-
                         </div>
                     </div>
                 </div>

@@ -716,7 +716,7 @@ export class MakePayementComponent implements OnInit {
         this.activeMenu = this.Menu;
         this.onCashPayment();
     }
-    if(this.totalPremium!=null && this.totalPremium!=undefined){this.payAmount = String(this.totalPremium);this.CommaFormatted();}
+    //if(this.totalPremium!=null && this.totalPremium!=undefined){this.payAmount = String(this.totalPremium);this.CommaFormatted();}
   }
   getPaymentTypeList(){
     let ReqObj = {
