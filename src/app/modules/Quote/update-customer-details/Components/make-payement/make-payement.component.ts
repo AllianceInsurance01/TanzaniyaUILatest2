@@ -40,6 +40,7 @@ export class MakePayementComponent implements OnInit {
   insuranceId: any;
   subuserType: string;
   paymentTypeList: any[]=[];
+  selectedvalues:boolean=false;
   title: any;
   clientName: any;
   dateOfBirth: any;
@@ -49,6 +50,7 @@ export class MakePayementComponent implements OnInit {
   vehicleList: any[]=[];totalPremium:any;chequeDate:any;
   policySection: boolean = false;yearlySection=false;nineMonthSection:boolean=false;
   sixMonthSection:boolean = false;threeMonthSection:boolean = false;endorsementId:any;
+  fiveMonthSection:boolean = false;eightMonthSection:boolean = false;
   policyNo: any;EmiYn:any="N";emiPeriod:any=null;emiMonth=null;endorsementSection:boolean = false;
   customerType: string;Emilist1:any[]=[];emiSection:boolean = false;
   endorsePolicyNo: string;cancelEndorse:boolean =false;
@@ -80,7 +82,7 @@ export class MakePayementComponent implements OnInit {
   uploadSection: boolean=false;
   commonDocTypeList: any[]=[];
   chequeSection: boolean;
-  uploadedDocList: any[]=[];
+  uploadedDocList: any[]=[];totallistselected:any[]=[];
   constructor(private router:Router,public dialogService: MatDialog,private sharedService: SharedService,private cookieService: CookieService,
     private updateComponent:UpdateCustomerDetailsComponent,private route:ActivatedRoute,
    private datePipe:DatePipe) {
@@ -134,6 +136,7 @@ export class MakePayementComponent implements OnInit {
       if(quoteNo){
         this.quoteNo = quoteNo;
         this.updateComponent.quoteNo = this.quoteNo;
+        console.log('NNNNNNNNNNNNNN')
         if(type!='cancel') this.successSection = true;
       }
     })
@@ -471,8 +474,17 @@ export class MakePayementComponent implements OnInit {
     );
   }
   onGetSchedule(rowData){
-    let ReqObj = {
-      "QuoteNo":rowData.QuoteNo
+    let schedule:any;let ReqObj
+    if(this.endorsementSection){
+      ReqObj = {
+        "QuoteNo":rowData.QuoteNo,
+        "EndorsementType":"S"
+      }
+    }
+    else{
+      ReqObj = {
+        "QuoteNo":rowData.QuoteNo,
+      }
     }
     let urlLink = `${this.CommonApiUrl}pdf/policyform`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -492,6 +504,34 @@ export class MakePayementComponent implements OnInit {
             showCancelButton: false,
 
             //confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Cancel',
+          })
+        }
+      },
+      (err) => { },
+    );
+  }
+
+  onGetSchedules(rowData){
+    let ReqObj = {
+      "QuoteNo":rowData.QuoteNo,
+      "EndorsementType":"E"
+    }
+    let urlLink = `${this.CommonApiUrl}pdf/policyform`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data?.Result?.PdfOutFile){
+            this.downloadMyFile(data.Result.PdfOutFile);
+        }
+        else{
+          Swal.fire({
+            title: '<strong>Schedule Pdf</strong>',
+            icon: 'error',
+            html:
+              `No Pdf Generated For this Policy`,
+            showCancelButton: false,
             cancelButtonColor: '#d33',
             cancelButtonText: 'Cancel',
           })
@@ -591,7 +631,7 @@ export class MakePayementComponent implements OnInit {
           if(data?.Result){
               let emiList = data.Result;
               if(emiList.length!=0){
-                    let i=0,yearlyList=[],nineList=[],sixList=[],threeList=[];
+                    let i=0,yearlyList=[],nineList=[],sixList=[],threeList=[],fiveList=[],eightList=[];
                     if(emiList.length==13){
                       this.yearlySection = true;
                       yearlyList = emiList;
@@ -608,7 +648,15 @@ export class MakePayementComponent implements OnInit {
                       threeList = emiList;
                       this.threeMonthSection = true;
                     }
-                    this.setEmiTableValues(yearlyList,nineList,sixList,threeList);
+                    else if(emiList.length==6){
+                      fiveList = emiList;
+                      this.fiveMonthSection = true;
+                    }
+                    else if(emiList.length==9){
+                      eightList = emiList;
+                      this.eightMonthSection = true;
+                    }
+                    this.setEmiTableValues(yearlyList,nineList,sixList,threeList,fiveList,eightList);
                 // this.Emilist1=data?.Result[0]?.EmiPremium
                 // this.Emilist2=data?.Result[1]?.EmiPremium;
                 // this.EmiDetails=data.Result[0].EmiDetails;
@@ -620,7 +668,7 @@ export class MakePayementComponent implements OnInit {
         (err) => { },
       );
   }
-  setEmiTableValues(yearlyList,nineList,sixList,threeList){
+  setEmiTableValues(yearlyList,nineList,sixList,threeList,fiveList,eightList){
     if(this.yearlySection){
        let i=0;this.Emilist1=[];
        for(let entry of yearlyList){
@@ -633,6 +681,10 @@ export class MakePayementComponent implements OnInit {
             else{data['sixAmount']=null}
             if(threeList[i]){data['threeAmount']=threeList[i].InstallmentAmount}
             else{data['threeAmount']=null}
+            if(fiveList[i]){data['fiveAmount']=fiveList[i].InstallmentAmount}
+            else{data['fiveAmount']=null}
+            if(eightList[i]){data['eightAmount']=eightList[i].InstallmentAmount}
+            else{data['eightAmount']=null}
             this.Emilist1.push(entry);
             i+=1;
             if(i==yearlyList.length){this.emiSection=true}
@@ -650,6 +702,10 @@ export class MakePayementComponent implements OnInit {
            else{data['sixAmount']=null}
            if(threeList[i]){data['threeAmount']=threeList[i].InstallmentAmount}
            else{data['threeAmount']=null}
+           if(fiveList[i]){data['fiveAmount']=fiveList[i].InstallmentAmount}
+            else{data['fiveAmount']=null}
+            if(eightList[i]){data['eightAmount']=eightList[i].InstallmentAmount}
+            else{data['eightAmount']=null}
            this.Emilist1.push(entry);
            i+=1;
            if(i==nineList.length){this.emiSection=true}
@@ -667,6 +723,10 @@ export class MakePayementComponent implements OnInit {
            else{data['sixAmount']=null}
            if(threeList[i]){data['threeAmount']=threeList[i].InstallmentAmount}
            else{data['threeAmount']=null}
+           if(fiveList[i]){data['fiveAmount']=fiveList[i].InstallmentAmount}
+            else{data['fiveAmount']=null}
+            if(eightList[i]){data['eightAmount']=eightList[i].InstallmentAmount}
+            else{data['eightAmount']=null}
            this.Emilist1.push(entry);
            i+=1;
            if(i==sixList.length){this.emiSection=true}
@@ -685,11 +745,162 @@ export class MakePayementComponent implements OnInit {
            else{data['sixAmount']=null}
            if(threeList[i]){data['threeAmount']=threeList[i].InstallmentAmount}
            else{data['threeAmount']=null}
+           if(fiveList[i]){data['fiveAmount']=fiveList[i].InstallmentAmount}
+            else{data['fiveAmount']=null}
+            if(eightList[i]){data['eightAmount']=eightList[i].InstallmentAmount}
+            else{data['eightAmount']=null}
            this.Emilist1.push(entry);
            i+=1;
            if(i==threeList.length){this.emiSection=true}
       }
    }
+   else if(this.fiveMonthSection){
+    let i=0;this.Emilist1=[];
+    for(let entry of fiveList){
+         let data = entry;
+         if(yearlyList[i]){data['yearlyAmount']=yearlyList[i].InstallmentAmount}
+         else{data['yearlyAmount']=null}
+         if(nineList[i]){data['nineAmount']=nineList[i].InstallmentAmount}
+         else{data['nineAmount']=null}
+         if(sixList[i]){data['sixAmount']=sixList[i].InstallmentAmount}
+         else{data['sixAmount']=null}
+         if(threeList[i]){data['threeAmount']=threeList[i].InstallmentAmount}
+         else{data['threeAmount']=null}
+         if(fiveList[i]){data['fiveAmount']=fiveList[i].InstallmentAmount}
+          else{data['fiveAmount']=null}
+          if(eightList[i]){data['eightAmount']=eightList[i].InstallmentAmount}
+          else{data['eightAmount']=null}
+         this.Emilist1.push(entry);
+         i+=1;
+         if(i==fiveList.length){this.emiSection=true}
+    }
+ }
+ else if(this.eightMonthSection){
+  let i=0;this.Emilist1=[];
+  for(let entry of eightList){
+       let data = entry;
+       if(yearlyList[i]){data['yearlyAmount']=yearlyList[i].InstallmentAmount}
+       else{data['yearlyAmount']=null}
+       if(nineList[i]){data['nineAmount']=nineList[i].InstallmentAmount}
+       else{data['nineAmount']=null}
+       if(sixList[i]){data['sixAmount']=sixList[i].InstallmentAmount}
+       else{data['sixAmount']=null}
+       if(threeList[i]){data['threeAmount']=threeList[i].InstallmentAmount}
+       else{data['threeAmount']=null}
+       if(fiveList[i]){data['fiveAmount']=fiveList[i].InstallmentAmount}
+        else{data['fiveAmount']=null}
+        if(eightList[i]){data['eightAmount']=eightList[i].InstallmentAmount}
+        else{data['eightAmount']=null}
+       this.Emilist1.push(entry);
+       i+=1;
+       if(i==eightList.length){this.emiSection=true}
+  }
+}
+  }
+
+  onSelectPolicyTypeRow(event,index){
+    let totalamount:any=0;
+    console.log('Eventsss',event,index);
+    let entry = this.Emilist1[index];
+    console.log('Entryyys',entry); console.log('TotalLists',this.totallistselected);
+    if(event){
+      this.selectedvalues=true;
+      this.totallistselected.push({"DueAmount":entry.DueAmount,"NoOfInstallment":entry.NoOfInstallment,"InstallmentPeriod":entry.InstallmentPeriod});
+      entry.SelectYn = 'Y';
+      for(let i=0;i<this.totallistselected.length;i++){
+        console.log('ToLists',index,i,this.totallistselected.length);
+        totalamount=Number(this.totallistselected[i].DueAmount)+Number(totalamount);
+      }
+      //this.payAmount=totalamount;
+      this.numberWithCommas(totalamount);
+      //this.CommaFormatted();
+      console.log('Due Amounts',totalamount);
+        }
+    else{
+      console.log('llllllllllll',this.payAmount)
+      const withoutCommas = this.payAmount.replaceAll(',', '');
+      console.log('entry new amounts',this.payAmount,entry.DueAmount)
+      totalamount=withoutCommas - entry.DueAmount;
+      this.numberWithCommas(totalamount);
+      let tot=this.totallistselected.find(ele => ele.NoOfInstallment == entry.NoOfInstallment);
+      let ind:any;
+      if(tot){
+        console.log('find result',tot)
+        ind =this.totallistselected.indexOf(tot);
+        console.log('IIIIIIII',ind)
+        this.totallistselected.splice(ind,1)
+      }
+      //this.totallistselected.splice(index,1);
+      console.log('Not entryss',this.totallistselected,index,this.payAmount);
+    } 
+        //let total=this.totallistselected.filter(ele => ele.NoOfInstallment == entry.NoOfInstallment)
+        // console.log('Totallls',total);
+        // if(total){
+        //   totalamount=total[i].DueAmount+Number(totalamount);
+        // }
+  }
+   numberWithCommas(x) {
+    this.payAmount= x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+  updateinstallemnet(){
+   let i=0,totallist:any[]=[];let menu
+   let type=this.paymentTypeList.filter(ele => ele.Code == this.activeMenu)
+     if(type){
+       menu = type[0].CodeDesc
+      console.log('MMMMMMMMMMMM',menu);
+     }
+     if(this.totallistselected.length!=0){
+    for(let n of this.totallistselected){
+        totallist.push({
+          "QuoteNo":this.quoteNo,
+       "NoOfInstallment":n.NoOfInstallment,
+     "InsuranceId":this.insuranceId,
+     "ProductId":this.productId,
+     "InstallmentPeriod":n.InstallmentPeriod,
+     "CreatedBy":this.loginId,
+     "PaymentStatus":"Paid",
+     "Remarks":"",
+     "PaymentDetails":menu
+        })
+        i+=1; 
+        // var sorted = this.totallistselected.sort();
+        // console.log('NNNNNNNNNNNN',sorted)
+      if(i==this.totallistselected.length) {
+        let sorted = totallist.sort((a, b) => a.NoOfInstallment - b.NoOfInstallment); 
+        console.log('NNNNNNNNNNNN',sorted);
+        console.log('Paymentsss',this.totallistselected.length); this.makepayments(totallist);
+      }
+    }
+    }
+    else{
+      totallist.push({
+        "QuoteNo":this.quoteNo,
+     "NoOfInstallment":"",
+   "InsuranceId":this.insuranceId,
+   "ProductId":this.productId,
+   "InstallmentPeriod":"",
+   "CreatedBy":this.loginId,
+   "PaymentStatus":"Paid",
+   "Remarks":"",
+   "PaymentDetails":menu
+      });
+      this.makepayments(totallist);
+    }
+  }
+
+  makepayments(totallist){
+    let urlLink = `${this.CommonApiUrl}api/updateemitransactiondetails`;
+    this.sharedService.onPostMethodSync(urlLink,totallist).subscribe(
+     (data: any) => {
+       console.log(data);
+       if(data.Result){
+      console.log('NNNNNNNNNNNNN',data.Result);
+      this.onCashPayment();
+       } 
+     },
+     (err) => { },
+     );
   }
   getTotalVehiclesCost(){
     let totalCost=0,i=0;
@@ -711,12 +922,19 @@ export class MakePayementComponent implements OnInit {
     else if(this.Menu == '2'){ this.Fourth = true;}
     else if(this.Menu == 'Bank'){ this.Fifth = true;}
     else if(this.Menu == '4'){
+      if(this.EmiYn=='N'){
         this.payAmount = this.totalPremium;
+      }
         this.payeeName = this.clientName;
         this.activeMenu = this.Menu;
         this.onCashPayment();
     }
     //if(this.totalPremium!=null && this.totalPremium!=undefined){this.payAmount = String(this.totalPremium);this.CommaFormatted();}
+
+    if(this.EmiYn=='N'){
+      if(this.totalPremium!=null && this.totalPremium!=undefined){this.payAmount = String(this.totalPremium);this.CommaFormatted();}
+    }
+
   }
   getPaymentTypeList(){
     let ReqObj = {
@@ -760,6 +978,14 @@ export class MakePayementComponent implements OnInit {
     );
 
   }
+  onproceed(){
+    if(this.EmiYn!='Y'){
+      this.onCashPayment();  
+    }
+    else{
+      this.updateinstallemnet();
+    }
+  }
   onCashPayment(){
     let chequeDate = "";let amount=this.totalPremium;
     if(this.IsChargeOrRefund=='REFUND'){
@@ -783,7 +1009,7 @@ export class MakePayementComponent implements OnInit {
     let ReqObj = {
       "CreatedBy": this.loginId,
       "InsuranceId": this.insuranceId,
-      "EmiYn":"N",
+      "EmiYn":this.EmiYn,
       "Premium": amount,
       "QuoteNo": this.quoteNo,
       "Remarks": "None",
@@ -805,8 +1031,9 @@ export class MakePayementComponent implements OnInit {
      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         if(data.Result){
-
-          
+          // if(this.EmiYn=='Y'){
+          //   this.updateinstallemnet();
+          // }
           if(data.Result.paymentUrl){
             this.redirectUrl = data.Result.paymentUrl;
             console.log("Url",atob(this.redirectUrl))

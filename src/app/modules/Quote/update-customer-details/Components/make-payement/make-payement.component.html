@@ -149,7 +149,7 @@
                     </ng-container>
                 </div>
             </div>
-            <div class="d-flex justify-content-between display2">
+            <!-- <div class="d-flex justify-content-between display2">
                 <div>
                     <span class="mx-1">
                         <i class="fas fa-user mx-1"></i>
@@ -157,13 +157,13 @@
                 </div>
                 <div>
                     <ng-container>
-                        <!-- RefNo - {{customerDetails?.CustomerReferenceNo}} -->
+                        RefNo - {{customerDetails?.CustomerReferenceNo}}
                     </ng-container>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="maan-grid-item-body" style="padding-left: 70px !important;padding-right: 40px !important;">
-            <div class="col-md-12 col-lg-12" *ngIf="Emilist1.length!=0 && EmiYn=='Y'">
+            <div class="col-md-12 col-lg-12" *ngIf="Emilist1.length!=0 && EmiYn=='Y' && !policySection && !endorsementSection">
                 <table class="firstclass" style="width:100%;">
                     <thead>
                         <!-- <tr>
@@ -172,16 +172,19 @@
                             <th colspan="4" class="text-center" id="9">9Months</th>
                         </tr> -->
                         <tr class="firstclass">
-                            <th scope="col" colspan="3"></th>
+                            <th scope="col" colspan="4"></th>
                             <th scope="col" colspan="2" style="text-align:center;">Installment Amount ({{currencyCode}})</th>
                         </tr>
                         <tr class="firstclass">
+                            <th scope="col" class="title text-center">Select</th>
                             <th scope="col" class="title text-center">EMI Month</th>
                             <th scope="col" class="title text-center">Installment Type</th>
                             <th scope="col" class="title text-center">Due Date</th>
                             <th scope="col" *ngIf="yearlySection" id="second" class="text-center">12 Months</th>
                             <th scope="col" *ngIf="nineMonthSection" id="third" class="title text-center">9 Months</th>
+                            <th scope="col" *ngIf="eightMonthSection" id="seven" class="text-center">8 Months</th>
                             <th scope="col" *ngIf="sixMonthSection" id="fourth" class="text-center">6 Months</th>
+                            <th scope="col" *ngIf="fiveMonthSection" id="six" class="text-center"> 5 Months</th>
                             <th scope="col" *ngIf="threeMonthSection" id="fifth" class="text-center"> 3 Months</th>
                             <th scope="col" class="title text-center">EMI Status</th>
                         </tr>
@@ -190,12 +193,25 @@
                     <tbody>
                         <ng-container>
                             <tr *ngFor="let list of Emilist1;let i=index" class="firstclass">
+                                <td class="tbl-content">
+                                    <ng-container *ngIf="list.SelectYn=='Y'">
+                                        <mat-checkbox class="example-margin text-center" (change)="onSelectPolicyTypeRow($event.checked,i)" [checked]="list.PaymentStatus=='Paid'"><!--[checked]="list.SelectYn=='Y'"-->
+                                        </mat-checkbox>
+                                    </ng-container>
+                                    <ng-container *ngIf="list.SelectYn=='N'">
+                                        <mat-checkbox class="example-margin text-center" (change)="onSelectPolicyTypeRow($event.checked,i)" disabled>
+                                        </mat-checkbox>
+                                    </ng-container>
+                                </td>
+                    
                                 <td class="title">{{list.NoOfInstallment}}</td>
                                 <td class="title">{{list.InstallmentDesc}}</td>
                                 <td class="title"> {{list.DueDate}}</td>
                                 <td *ngIf="yearlySection" class="premiumText" id="second">{{list.DueAmount|commaseparator}}</td>
                                 <td *ngIf="nineMonthSection" class="premiumText" id="third">{{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="eightMonthSection" class="premiumText" id="seven"> {{list.DueAmount|commaseparator}}</td>
                                 <td *ngIf="sixMonthSection" class="premiumText" id="fourth"> {{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="fiveMonthSection" class="premiumText" id="six"> {{list.DueAmount|commaseparator}}</td>
                                 <td *ngIf="threeMonthSection" class="premiumText" id="fifth">{{list.DueAmount|commaseparator}}</td>
                                 <td class="title p-2" *ngIf="list.PaymentStatus=='Pending'">
                                     <span class="realistic-marker-highlight p-1">{{list.PaymentStatus}}</span>
@@ -934,19 +950,24 @@
                           <span class="spancommon span_font_size" style="font-weight:600;color: darkblue;">{{paymentDetails?.MerchantReference}}</span>
                         </div>
                       </div><hr *ngIf="paymentDetails?.MerchantReference" class="m-1">
-                      <div class="sclass mt-2">
-                          <div class="mt-2">
-                            <button class="btn btn-warning" *ngIf="paymentDetails?.DebitNoteNo" (click)="onDebitdownload(paymentDetails)">Debit Note Pdf &nbsp;<i class="fa fa-download"
+                      <div class="row mt-2">
+                          <div class="mt-2 col-12 col-md-4 col-lg-3 col-xl-3">
+                            <button class="btn btn-warning" style="font-size:0.85rem !important;" *ngIf="paymentDetails?.DebitNoteNo" (click)="onDebitdownload(paymentDetails)">Debit Note Pdf &nbsp;<i class="fa fa-download"
                             aria-hidden="true"></i></button>
                           </div>
-                          <div class="mt-2">
-                            <button class="btn btn-info" *ngIf="paymentDetails?.CreditNoteNo" (click)="onCreditdownload(paymentDetails)">Credit Note Pdf &nbsp;<i class="fa fa-download"
+                          <div class="mt-2 col-12 col-md-4 col-lg-3 col-xl-3">
+                            <button class="btn btn-info" style="font-size:0.85rem !important;" *ngIf="paymentDetails?.CreditNoteNo" (click)="onCreditdownload(paymentDetails)">Credit Note Pdf &nbsp;<i class="fa fa-download"
                             aria-hidden="true"></i></button>
                           </div>
-                          <div class="mt-2">
-                            <button class="btn btn-success" *ngIf="paymentDetails?.PolicyNo" (click)="onGetSchedule(paymentDetails)">Schedule Pdf &nbsp;<i class="fa fa-download"
+                          <div class="mt-2 col-12 col-md-4 col-lg-3 col-xl-3">
+                            <button class="btn btn-success" style="font-size:0.85rem !important;" *ngIf="paymentDetails?.PolicyNo" (click)="onGetSchedule(paymentDetails)">Schedule Pdf &nbsp;<i class="fa fa-download"
                             aria-hidden="true"></i></button>
                           </div>
+                          <div class="mt-2 col-12 col-md-4 col-lg-3 col-xl-3">
+                            <button class="btn btn-success" style="font-size:0.75rem !important;" *ngIf="endorsementSection && paymentDetails?.PolicyNo" (click)="onGetSchedules(paymentDetails)">Endorsement Pdf &nbsp;<i class="fa fa-download"
+                            aria-hidden="true"></i></button>
+                          </div>
+                          
                       </div>
                     </div>
                   </div>
