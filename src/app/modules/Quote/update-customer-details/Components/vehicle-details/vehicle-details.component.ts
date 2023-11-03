@@ -1776,7 +1776,8 @@ export class VehicleDetailsComponent implements OnInit {
     let i=0,j=0;
     for(let veh of this.vehicleDetailsList){
       let refNo = veh?.MSRefNo;
-      if(refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection || this.changeUwSection || (this.endorsementSection && (this.enableAddVehicle && this.endorsementYn=='Y')))){
+      if(refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection || this.changeUwSection)){
+        
         i+=1;
       }
       j+=1;
@@ -1860,9 +1861,10 @@ export class VehicleDetailsComponent implements OnInit {
   }
   saveExistData(){
     let i = 0;
+    console.log("Received VehicleDetails",this.vehicleDetailsList)
     for(let veh of this.vehicleDetailsList){
       let refNo = veh?.MSRefNo;
-      if((refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection || this.changeUwSection)) || this.enableAddVehicle || this.enableRemoveVehicle){
+      if((refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection || this.changeUwSection))){
         let reqRefNo = veh?.RequestReferenceNo;
         if(reqRefNo == undefined){
           reqRefNo = null;
@@ -2105,7 +2107,7 @@ export class VehicleDetailsComponent implements OnInit {
                   ReqObj['Status'] = 'E';
                 }
                 else{
-                  ReqObj['Status'] = this.vehicleDetails?.Status;
+                  ReqObj['Status'] = vehicleDetails?.Status;
                 }
                 ReqObj['PolicyNo'] = this.endorsePolicyNo
               }
