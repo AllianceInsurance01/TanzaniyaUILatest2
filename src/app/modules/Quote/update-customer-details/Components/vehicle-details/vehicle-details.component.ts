@@ -1528,7 +1528,7 @@ export class VehicleDetailsComponent implements OnInit {
           let endDate:any = null;
           if(this.policyEndDate){
             if(this.endorsementSection && vehicleDetails.Status=='D'){
-              coverModificationYN = 'Y';
+              //coverModificationYN = 'Y';
               endDate = this.endorseEffectiveDate;
             }
             else{
