@@ -282,7 +282,7 @@ export class VehicleWishListComponent implements OnInit {
     }
     if(this.endorsementSection && this.enableRemoveVehicle){
       this.customerHeader =  [
-        { key: 'Chassisnumber', display: 'Chassis Number' },
+        { key: 'Registrationnumber', display: 'Registration Number' },
         { key: 'PolicyTypeDesc', display: 'Policy Type' },
         
         { key: 'OverallPremiumFc', display: 'Premium' },

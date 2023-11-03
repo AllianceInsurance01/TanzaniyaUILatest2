@@ -1219,7 +1219,17 @@ export class VehicleDetailsComponent implements OnInit {
             }
           }
           else{
-            
+            let entry = this.vehicleDetailsList[this.currentIndex-1];
+            entry['PolicyEndDate'] = endDate;
+            entry['PolicyStartDate'] = startDate;
+  
+            entry['InsuranceType'] = data?.Result?.SectionId;
+            entry['MSRefNo'] = data?.Result?.MSRefNo;
+            entry['VdRefNo'] = data?.Result?.VdRefNo;
+            entry['CdRefNo'] = data?.Result?.CdRefNo;
+            entry['RequestReferenceNo'] = data?.Result?.RequestReferenceNo;
+            entry['Active'] = true;
+            entry['VehicleId'] = data.Result?.VehicleId;
             if(this.currentIndex<this.totalCount){
               this.collateralYN = "N";
               sessionStorage.setItem('loadingType','load');
@@ -1266,17 +1276,7 @@ export class VehicleDetailsComponent implements OnInit {
             }
             this.requestReferenceNo = data?.Result?.RequestReferenceNo;
              sessionStorage.setItem('quoteReferenceNo',data?.Result?.RequestReferenceNo);
-            let entry = this.vehicleDetailsList[this.currentIndex-1];
-            entry['PolicyEndDate'] = endDate;
-            entry['PolicyStartDate'] = startDate;
-  
-            entry['InsuranceType'] = data?.Result?.SectionId;
-            entry['MSRefNo'] = data?.Result?.MSRefNo;
-            entry['VdRefNo'] = data?.Result?.VdRefNo;
-            entry['CdRefNo'] = data?.Result?.CdRefNo;
-            entry['RequestReferenceNo'] = data?.Result?.RequestReferenceNo;
-            entry['Active'] = true;
-            entry['VehicleId'] = data.Result?.VehicleId;
+            
             if(type=='proceedSave'){
              
               if(this.uwQuestionList.length!=0 && this.changeUwSection){
@@ -1509,6 +1509,7 @@ export class VehicleDetailsComponent implements OnInit {
     this.windShieldSI = event;
   }
   getCalculationDetails(vehicleDetails,type,index,returnType){
+    console.log("Calc",vehicleDetails)
     let createdBy="";
           let coverModificationYN = 'N';
           if(this.endorsementSection){
@@ -1527,9 +1528,13 @@ export class VehicleDetailsComponent implements OnInit {
          
           let endDate:any = null;
           if(this.policyEndDate){
-            if(this.endorsementSection && vehicleDetails.Status=='D'){
-              //coverModificationYN = 'Y';
+            if(this.endorsementSection && this.enableRemoveVehicle && vehicleDetails.Status=='D'){
+              alert('Entered 2')
+              coverModificationYN = 'Y';
               endDate = this.endorseEffectiveDate;
+            }
+            else if(this.endorsementSection && this.enableRemoveVehicle && vehicleDetails.Status!='D'){
+              coverModificationYN = 'N';
             }
             else{
               if(this.policyEndDate.includes('/')) endDate = this.policyEndDate;
@@ -1865,6 +1870,7 @@ export class VehicleDetailsComponent implements OnInit {
     for(let veh of this.vehicleDetailsList){
       let refNo = veh?.MSRefNo;
       if((refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection || this.changeUwSection))){
+        alert('Entered')
         let reqRefNo = veh?.RequestReferenceNo;
         if(reqRefNo == undefined){
           reqRefNo = null;
