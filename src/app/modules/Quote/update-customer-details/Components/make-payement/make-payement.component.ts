@@ -931,9 +931,9 @@ export class MakePayementComponent implements OnInit {
     }
     //if(this.totalPremium!=null && this.totalPremium!=undefined){this.payAmount = String(this.totalPremium);this.CommaFormatted();}
 
-    if(this.EmiYn=='N'){
-      if(this.totalPremium!=null && this.totalPremium!=undefined){this.payAmount = String(this.totalPremium);this.CommaFormatted();}
-    }
+    // if(this.EmiYn=='N'){
+    //   if(this.totalPremium!=null && this.totalPremium!=undefined){this.payAmount = String(this.totalPremium);this.CommaFormatted();}
+    // }
 
   }
   getPaymentTypeList(){
