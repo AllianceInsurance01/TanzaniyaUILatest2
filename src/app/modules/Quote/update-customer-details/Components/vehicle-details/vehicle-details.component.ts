@@ -1529,7 +1529,6 @@ export class VehicleDetailsComponent implements OnInit {
           let endDate:any = null;
           if(this.policyEndDate){
             if(this.endorsementSection && this.enableRemoveVehicle && vehicleDetails.Status=='D'){
-              alert('Entered 2')
               coverModificationYN = 'Y';
               endDate = this.endorseEffectiveDate;
             }
@@ -1870,7 +1869,6 @@ export class VehicleDetailsComponent implements OnInit {
     for(let veh of this.vehicleDetailsList){
       let refNo = veh?.MSRefNo;
       if((refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection || this.changeUwSection))){
-        alert('Entered')
         let reqRefNo = veh?.RequestReferenceNo;
         if(reqRefNo == undefined){
           reqRefNo = null;

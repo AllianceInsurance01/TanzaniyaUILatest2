@@ -239,6 +239,7 @@ emiyn="N";
   otpValue: string;
   sampleloginId: any;
   loginType: any;
+  endorsementCategory: any;
   constructor(public sharedService: SharedService,private authService: AuthService,private router:Router,private modalService: NgbModal,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe,public dialog: MatDialog) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -273,6 +274,7 @@ emiyn="N";
       if(endorseObj){
         this.endorsementSection = true;
         console.log("Endorse obj",endorseObj)
+        this.endorsementCategory = endorseObj.Category;
         this.endorsementId = endorseObj.EndtTypeId;
         this.endorseEffectiveDate = endorseObj?.EffectiveDate;
         this.enableFieldsList = endorseObj.FieldsAllowed;
