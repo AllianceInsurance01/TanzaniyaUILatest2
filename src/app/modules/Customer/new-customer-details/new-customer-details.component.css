@@ -164,7 +164,9 @@
     font-weight: 500;
     line-height: 20px;
 }
-
+.disabled{
+    cursor: not-allowed !important;
+}
 ::ng-deep .mat-mdc-icon-button.mat-mdc-button-base {
     width: 48px;
     height: 35px !important;

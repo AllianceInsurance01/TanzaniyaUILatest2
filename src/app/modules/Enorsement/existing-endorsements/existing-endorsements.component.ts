@@ -88,8 +88,7 @@ export class ExistingEndorsementsComponent {
     console.log("Received Entry",rowData)
     let entry = rowData.data;
     let ReqObj = {
-      "QuoteNo":entry.quoteNo,
-      "EndorsementType":"E"
+      "QuoteNo":entry.quoteNo
     }
     let urlLink = `${this.CommonApiUrl}pdf/policyform`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -117,39 +116,38 @@ export class ExistingEndorsementsComponent {
       (err) => { },
     );
   }
-  onGetSchedules(rowData){
-    console.log("Received Entry22",rowData);
-    let entry = rowData.data;
-    let ReqObj = {
-      "QuoteNo":entry.quoteNo,
-      "EndorsementType":"S"
-    }
-    let urlLink = `${this.CommonApiUrl}pdf/policyform`;
-    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-      (data: any) => {
-        console.log(data);
-        if(data?.Result?.PdfOutFile){
-            this.downloadMyFile(data.Result.PdfOutFile);
-        }
-        else{
-          Swal.fire({
-            title: '<strong>Schedule Pdf</strong>',
-            icon: 'error',
-            html:
-              `No Pdf Generated For this Policy`,
-            //showCloseButton: true,
-            //focusConfirm: false,
-            showCancelButton: false,
+  // onGetSchedules(rowData){
+  //   console.log("Received Entry22",rowData);
+  //   let entry = rowData.data;
+  //   let ReqObj = {
+  //     "QuoteNo":entry.quoteNo
+  //   }
+  //   let urlLink = `${this.CommonApiUrl}pdf/policyform`;
+  //   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+  //     (data: any) => {
+  //       console.log(data);
+  //       if(data?.Result?.PdfOutFile){
+  //           this.downloadMyFile(data.Result.PdfOutFile);
+  //       }
+  //       else{
+  //         Swal.fire({
+  //           title: '<strong>Schedule Pdf</strong>',
+  //           icon: 'error',
+  //           html:
+  //             `No Pdf Generated For this Policy`,
+  //           //showCloseButton: true,
+  //           //focusConfirm: false,
+  //           showCancelButton: false,
 
-            //confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            cancelButtonText: 'Cancel',
-          })
-        }
-      },
-      (err) => { },
-    );
-  }
+  //           //confirmButtonColor: '#3085d6',
+  //           cancelButtonColor: '#d33',
+  //           cancelButtonText: 'Cancel',
+  //         })
+  //       }
+  //     },
+  //     (err) => { },
+  //   );
+  // }
   downloadMyFile(data) {
     const link = document.createElement('a');
     link.setAttribute('target', '_blank');
