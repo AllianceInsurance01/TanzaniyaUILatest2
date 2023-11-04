@@ -1405,7 +1405,7 @@ getMotorUsageList(vehicleValue){
                     veh.CoverList = baseCovers.concat(otherCovers)
                     if(i==0){
                       veh['Collapse'] = true;
-                      this.remarks = veh.AdminRemarks;
+                      //this.remarks = veh.AdminRemarks;
                       vehicleList.push(veh);
                     }
                     else{
@@ -2213,7 +2213,8 @@ getMotorUsageList(vehicleValue){
     let i=0;
     for(let veh of this.vehicleDetailsList){
       if(veh.VehicleId) veh['Vehicleid'] = veh.VehicleId
-        if(i ==0 ){ this.remarks = veh.AdminRemarks; this.rejectedReason = veh.RejectReason}
+        if(i ==0 ){ //this.remarks = veh.AdminRemarks;
+           this.rejectedReason = veh.RejectReason}
         let covers = veh.CoverList;
         let j=0;
         for(let cover of covers){

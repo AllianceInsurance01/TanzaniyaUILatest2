@@ -181,7 +181,7 @@ export class SharedService {
     return true;
   }
   setTimeOutSection() {
-    this.timeoutHandle = setTimeout(() => this.showAlert(this.redirectSection,this.router),(20 * 60 * 1000));
+    this.timeoutHandle = setTimeout(() => this.showAlert(this.redirectSection,this.router),(45 * 60 * 1000));
     this.redirectRouting();
     //(30 * 1000)
     //this.redirectRouting();
@@ -275,7 +275,7 @@ export class SharedService {
     // tslint:disable-next-line: triple-equals
     if (this.router != undefined) {
       this.timer = new IdleTimeoutManager({
-        timeout: (30 * 60 * 1000),
+        timeout: (50 * 60 * 1000),
         onExpired: () => {
           if (this.router.url != '/' && this.router.url != '/Login/Home' && this.router.url != '/Login/sessionRedirect' && this.router.url != '/Login/Officer' && this.router.url != '/Login/Assessor' && this.router.url != '/Login/Garage' ) {
               sessionStorage.clear();

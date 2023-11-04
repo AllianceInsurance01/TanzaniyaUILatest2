@@ -299,6 +299,25 @@ export class VehicleWishListComponent implements OnInit {
 
       ];
     }
+    else if(this.endorsementSection){
+      this.customerHeader =  [
+        { key: 'Registrationnumber', display: 'Registration Number' },
+        { key: 'PolicyTypeDesc', display: 'Policy Type' },
+        
+        { key: 'OverallPremiumFc', display: 'Premium' },
+        { key: 'Vehiclemake', display: 'Make' },
+        { key: 'Vehcilemodel', display: 'Model' },
+        { key: 'Status', display: 'Status' },
+        {
+          key: 'actions',
+          display: 'Action',
+          config: {
+            isEdit: true,
+          },
+        },
+
+      ];
+    }
   }
   onDelete(rowData){
       if(rowData.Active){
