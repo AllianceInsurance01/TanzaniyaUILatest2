@@ -1528,13 +1528,13 @@ export class VehicleDetailsComponent implements OnInit {
          
           let endDate:any = null;
           if(this.policyEndDate){
-            if(this.endorsementSection && this.enableRemoveVehicle && vehicleDetails.Status=='D'){
+            if(this.endorsementSection && this.enableRemoveVehicle){
               coverModificationYN = 'Y';
               endDate = this.endorseEffectiveDate;
             }
-            else if(this.endorsementSection && this.enableRemoveVehicle && vehicleDetails.Status!='D'){
-              coverModificationYN = 'N';
-            }
+            // else if(this.endorsementSection && this.enableRemoveVehicle && vehicleDetails.Status!='D'){
+            //   coverModificationYN = 'N';
+            // }
             else{
               if(this.policyEndDate.includes('/')) endDate = this.policyEndDate;
               else endDate = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
