@@ -1199,7 +1199,7 @@ export class VehicleDetailsComponent implements OnInit {
       }
       ReqObj['FleetOwnerYn'] = "N";
       if(this.endorsementSection){
-        if(this.vehicleDetails?.Status == undefined || this.vehicleDetails?.Status == null || this.vehicleDetails?.Status == 'Y'){
+        if(this.vehicleDetails?.Status == undefined || this.vehicleDetails?.Status == null || this.vehicleDetails?.Status == 'Y' || (this.vehicleDetails?.Status =='RP' && !this.adminSection)){
           ReqObj['Status'] = 'E';
         }
         else{
@@ -1219,7 +1219,17 @@ export class VehicleDetailsComponent implements OnInit {
             }
           }
           else{
-            
+            let entry = this.vehicleDetailsList[this.currentIndex-1];
+            entry['PolicyEndDate'] = endDate;
+            entry['PolicyStartDate'] = startDate;
+  
+            entry['InsuranceType'] = data?.Result?.SectionId;
+            entry['MSRefNo'] = data?.Result?.MSRefNo;
+            entry['VdRefNo'] = data?.Result?.VdRefNo;
+            entry['CdRefNo'] = data?.Result?.CdRefNo;
+            entry['RequestReferenceNo'] = data?.Result?.RequestReferenceNo;
+            entry['Active'] = true;
+            entry['VehicleId'] = data.Result?.VehicleId;
             if(this.currentIndex<this.totalCount){
               this.collateralYN = "N";
               sessionStorage.setItem('loadingType','load');
@@ -1266,17 +1276,7 @@ export class VehicleDetailsComponent implements OnInit {
             }
             this.requestReferenceNo = data?.Result?.RequestReferenceNo;
              sessionStorage.setItem('quoteReferenceNo',data?.Result?.RequestReferenceNo);
-            let entry = this.vehicleDetailsList[this.currentIndex-1];
-            entry['PolicyEndDate'] = endDate;
-            entry['PolicyStartDate'] = startDate;
-  
-            entry['InsuranceType'] = data?.Result?.SectionId;
-            entry['MSRefNo'] = data?.Result?.MSRefNo;
-            entry['VdRefNo'] = data?.Result?.VdRefNo;
-            entry['CdRefNo'] = data?.Result?.CdRefNo;
-            entry['RequestReferenceNo'] = data?.Result?.RequestReferenceNo;
-            entry['Active'] = true;
-            entry['VehicleId'] = data.Result?.VehicleId;
+            
             if(type=='proceedSave'){
              
               if(this.uwQuestionList.length!=0 && this.changeUwSection){
@@ -1509,6 +1509,7 @@ export class VehicleDetailsComponent implements OnInit {
     this.windShieldSI = event;
   }
   getCalculationDetails(vehicleDetails,type,index,returnType){
+    console.log("Calc",vehicleDetails)
     let createdBy="";
           let coverModificationYN = 'N';
           if(this.endorsementSection){
@@ -1527,10 +1528,13 @@ export class VehicleDetailsComponent implements OnInit {
          
           let endDate:any = null;
           if(this.policyEndDate){
-            if(this.endorsementSection && vehicleDetails.Status=='D'){
+            if(this.endorsementSection && this.enableRemoveVehicle){
               coverModificationYN = 'Y';
               endDate = this.endorseEffectiveDate;
             }
+            // else if(this.endorsementSection && this.enableRemoveVehicle && vehicleDetails.Status!='D'){
+            //   coverModificationYN = 'N';
+            // }
             else{
               if(this.policyEndDate.includes('/')) endDate = this.policyEndDate;
               else endDate = this.datePipe.transform(this.policyEndDate, "dd/MM/yyyy");
@@ -1776,7 +1780,8 @@ export class VehicleDetailsComponent implements OnInit {
     let i=0,j=0;
     for(let veh of this.vehicleDetailsList){
       let refNo = veh?.MSRefNo;
-      if(refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection || this.changeUwSection || (this.endorsementSection && (this.enableAddVehicle && this.endorsementYn=='Y')))){
+      if(refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection || this.changeUwSection)){
+        
         i+=1;
       }
       j+=1;
@@ -1860,9 +1865,10 @@ export class VehicleDetailsComponent implements OnInit {
   }
   saveExistData(){
     let i = 0;
+    console.log("Received VehicleDetails",this.vehicleDetailsList)
     for(let veh of this.vehicleDetailsList){
       let refNo = veh?.MSRefNo;
-      if((refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection || this.changeUwSection)) || this.enableAddVehicle || this.enableRemoveVehicle){
+      if((refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection || this.changeUwSection))){
         let reqRefNo = veh?.RequestReferenceNo;
         if(reqRefNo == undefined){
           reqRefNo = null;
@@ -2101,7 +2107,7 @@ export class VehicleDetailsComponent implements OnInit {
                 }
               }
               if(this.endorsementSection){
-                if(vehicleDetails?.Status == undefined || vehicleDetails?.Status == null || vehicleDetails?.Status == 'Y'){
+                if(this.vehicleDetails?.Status == undefined || this.vehicleDetails?.Status == null || this.vehicleDetails?.Status == 'Y' || (this.vehicleDetails?.Status =='RP' && !this.adminSection)){
                   ReqObj['Status'] = 'E';
                 }
                 else{

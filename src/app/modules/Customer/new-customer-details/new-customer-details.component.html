@@ -11,17 +11,17 @@
             
             </div>
             <div class="col-3 col-md-3 col-lg-3 col-xl-3 d-flex">
-            <div class="main-he5" (click)="setPolicyType(1)" *ngIf="productItem.IdType == 2">
+            <div class="main-he5" [class.disabled]="checkDisableFields('IdType')" (click)="setPolicyType(1)" *ngIf="productItem.IdType == 2">
                 <div class="commontext" style="color: #000;">Individual</div> 
             </div>
             <div class="main-he4" *ngIf="productItem.IdType == 1">
-                <div class="commontext" style="color: #fff;">Individual</div> 
+                <div class="commontext" [class.disabled]="checkDisableFields('IdType')" style="color: #fff;">Individual</div> 
             </div>
-            <div class="main-he5" (click)="setPolicyType(2)" *ngIf="productItem.IdType == 1">
+            <div class="main-he5" [class.disabled]="checkDisableFields('IdType')" (click)="setPolicyType(2)" *ngIf="productItem.IdType == 1">
                 <div class="commontext" style="color: #000">Corporate</div> 
             </div>
             <div class="main-he4" *ngIf="productItem.IdType == 2">
-                <div class="commontext" style="color: #fff">Corporate</div> 
+                <div class="commontext" [class.disabled]="checkDisableFields('IdType')" style="color: #fff">Corporate</div> 
             </div>
             </div>
         </div>
@@ -30,24 +30,21 @@
             <div class="col-12 col-md-12 col-lg-12 col-xl-12 main-header">
             <div class="cuslabel"> Customer Details
             </div>
-            
-            
-            
             </div>
             <div class="col-12 col-md-12 col-lg-12 col-xl-12 d-flex">
                 <div class="main-header2 mt-2">Account type :</div><br>
-            <div class="main-he5" (click)="setPolicyType(1)" *ngIf="productItem.IdType == 2">
-                <div class="commontext" style="color: #fff;">Individual</div> 
-            </div>
-            <div class="main-he4" *ngIf="productItem.IdType == 1">
-                <div class="commontext" style="color: #000;" >Individual</div> 
-            </div>
-            <div class="main-he5" (click)="setPolicyType(2)" *ngIf="productItem.IdType == 1">
-                <div class="commontext" style="color: #fff">Corporate</div> 
-            </div>
-            <div class="main-he4" *ngIf="productItem.IdType == 2">
-                <div class="commontext" style="color: #000" >Corporate</div> 
-            </div>
+                <div class="main-he5" [class.disabled]="checkDisableFields('IdType')" (click)="setPolicyType(1)" *ngIf="productItem.IdType == 2">
+                    <div class="commontext" style="color: #000;">Individual</div> 
+                </div>
+                <div class="main-he4" *ngIf="productItem.IdType == 1">
+                    <div class="commontext" [class.disabled]="checkDisableFields('IdType')" style="color: #fff;">Individual</div> 
+                </div>
+                <div class="main-he5" [class.disabled]="checkDisableFields('IdType')" (click)="setPolicyType(2)" *ngIf="productItem.IdType == 1">
+                    <div class="commontext" style="color: #000">Corporate</div> 
+                </div>
+                <div class="main-he4" *ngIf="productItem.IdType == 2">
+                    <div class="commontext" [class.disabled]="checkDisableFields('IdType')" style="color: #fff">Corporate</div> 
+                </div>
             </div>
         </div>
     </div>
@@ -60,20 +57,20 @@
         <div style="max-width: 130px;min-width: 130px;">
             <div class="headinglbels">Title <span class="star">*</span></div> 
             <div class="mt-1">
-            <ng-select class="custom" appendTo="body"  [items]="titleList" (change)="onTitleChange()" [(ngModel)]="productItem.Title" bindValue="Code" bindLabel="CodeDesc">
+            <ng-select class="custom" appendTo="body" [disabled]="checkDisableFields('Title')" [items]="titleList" (change)="onTitleChange()" [(ngModel)]="productItem.Title" bindValue="Code" bindLabel="CodeDesc">
             </ng-select>
             </div>
         </div>
         <div style="max-width: 230px;min-width: 230px;">
             <div class="headinglbels">Customer Name<span class="star">*</span></div> 
             <div class="mt-1">
-            <input type="text" maxlength="150" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.ClientName">
+            <input type="text" maxlength="150" [disabled]="checkDisableFields('CustomerName')" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.ClientName">
             </div>
         </div>
         <div style="max-width: 200px;min-width: 200px;">
             <div class="headinglbels">Occupation<span class="star">*</span></div> 
             <div class="mt-1">
-                <ng-select class="custom" appendTo="body" [items]="occupationList"  [(ngModel)]="productItem.Occupation" bindValue="Code" bindLabel="CodeDesc">
+                <ng-select class="custom" appendTo="body" [items]="occupationList"  [disabled]="checkDisableFields('OccupationType')" [(ngModel)]="productItem.Occupation" bindValue="Code" bindLabel="CodeDesc">
                 </ng-select>
             </div>
         </div>
@@ -82,21 +79,21 @@
                 <div style="max-width: 130px;min-width: 130px;" *ngIf="productItem.IdType != 2"> 
                     <div class="headinglbels">Gender <span class="star">*</span></div> 
                     <div class="mt-1">
-                        <ng-select class="custom" appendTo="body"  [items]="genderList"  [(ngModel)]="productItem.Gender" bindValue="Code" bindLabel="CodeDesc">
+                        <ng-select class="custom" appendTo="body"  [items]="genderList"  [disabled]="checkDisableFields('Gender')"  [(ngModel)]="productItem.Gender" bindValue="Code" bindLabel="CodeDesc">
                         </ng-select>
                     </div>
                 </div>
                 <div [ngClass]="productItem.IdType != 2 ? 'customFieldWidth2':'customFieldWidth'">
                     <div class="headinglbels">Identity Type<span class="star">*</span></div> 
                     <div class="mt-1">
-                    <ng-select class="custom" appendTo="body" [items]="policyHolderTypeList"  [(ngModel)]="productItem.PolicyHolderTypeid" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="custom" appendTo="body" [items]="policyHolderTypeList" [disabled]="checkDisableFields('IdType')" [(ngModel)]="productItem.PolicyHolderTypeid" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                     </div>
                 </div>
                 <div style="max-width: 200px;min-width: 200px;">
                     <div class="headinglbels">ID Number<span class="star">*</span></div> 
                     <div class="mt-1">
-                    <input type="text" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.IdNumber" maxlength="20">
+                    <input type="text" (keypress)="omit_special_char($event)" class="layout"  [disabled]="checkDisableFields('IdNumber')"  [(ngModel)]="productItem.IdNumber" maxlength="20">
                     </div>
                 </div>
             </div>
@@ -104,20 +101,20 @@
                 <div style="max-width: 130px;min-width: 130px;">
                     <div class="headinglbels">Country Code <span class="star">*</span></div> 
                     <div class="mt-1">
-                    <ng-select class="custom" appendTo="body"  [items]="mobileCodeList"  [(ngModel)]="productItem.MobileCode" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="custom" appendTo="body"  [items]="mobileCodeList"  [disabled]="checkDisableFields('Country')"  [(ngModel)]="productItem.MobileCode" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                     </div>
                 </div>
                 <div style="max-width: 230px;min-width: 230px;">
                     <div class="headinglbels">Mobile No<span class="star">*</span></div> 
                     <div class="mt-1">
-                        <input type="text" maxlength="10" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.MobileNo">
+                        <input type="text" maxlength="10" (keypress)="omit_special_char($event)" class="layout"  [disabled]="checkDisableFields('MobileNo')"  [(ngModel)]="productItem.MobileNo">
                     </div>
                 </div>
                 <div style="max-width: 200px;min-width: 200px;">
                     <div class="headinglbels">Email ID</div> 
                     <div class="mt-1">
-                        <input type="text" class="layout" email [(ngModel)]="productItem.EmailId" #prmEmail="ngModel">
+                        <input type="text" class="layout" email [(ngModel)]="productItem.EmailId"  [disabled]="checkDisableFields('Email')" #prmEmail="ngModel">
                     </div>
                     <div *ngIf="prmEmail.errors?.email" class="text-danger"> 
                         Please Enter Valid Email Id
@@ -135,7 +132,7 @@
            <ng-container *ngIf="productItem.IdType != 2">
                 <mat-form-field appearance="fill">
                     <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
-                    <input matInput [matDatepicker]="picker1" [max]="maxDobDate" [(ngModel)]="productItem.dobOrRegDate">
+                    <input matInput [matDatepicker]="picker1" [max]="maxDobDate"  [disabled]="checkDisableFields('DateOfBirth')" [(ngModel)]="productItem.dobOrRegDate">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                 </mat-form-field>
@@ -143,7 +140,7 @@
             <ng-container *ngIf="productItem.IdType == 2">
                 <mat-form-field appearance="fill">
                     <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
-                    <input matInput [matDatepicker]="picker3" [max]="maxDate" [(ngModel)]="productItem.dobOrRegDate">
+                    <input matInput [matDatepicker]="picker3" [max]="maxDate"  [disabled]="checkDisableFields('RegistrationDate')" [(ngModel)]="productItem.dobOrRegDate">
                     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                     <mat-datepicker #picker3></mat-datepicker>
                 </mat-form-field>
@@ -152,34 +149,34 @@
          <div class="col-6" *ngIf="productItem.IdType!='1'">
            <div class="headinglbels">VRN/GST Number<span class="star">*</span></div> 
            <div class="mt-1">
-             <input type="text" class="layout" style="width:130% !important;" (keypress)="omit_special_char($event)" placeholder="ex:7654321888"  [(ngModel)]="productItem.vrngst" maxlength="20">
+             <input type="text" class="layout" style="width:130% !important;" (keypress)="omit_special_char($event)" [disabled]="checkDisableFields('VrnGstNo')" placeholder="ex:7654321888"  [(ngModel)]="productItem.vrngst" maxlength="20">
            </div>
          </div>
          <div class="col-6">
             <div class="headinglbels">Prefered Notification <span class="star">*</span></div> 
             <div class="mt-1">
-              <ng-select class="auto-grow" style="font-size: 14px !important;width:100% !important;" appendTo="body" bindValue="Code" [items]="notificationList"  [(ngModel)]="productItem.PreferredNotification" bindLabel="CodeDesc">
+              <ng-select class="auto-grow" style="font-size: 14px !important;width:100% !important;" appendTo="body" bindValue="Code" [items]="notificationList" [disabled]="checkDisableFields('PreferredNotification')" [(ngModel)]="productItem.PreferredNotification" bindLabel="CodeDesc">
               </ng-select>
             </div>
           </div>
           <div class="col-6" *ngIf="productItem.IdType!='1'">
             <div class="headinglbels">Business Type<span class="star">*</span></div> 
             <div class="mt-1">
-              <ng-select class="custom" appendTo="body" style="width:130% !important;" [items]="businessTypeList" [(ngModel)]="productItem.BusinessType" bindValue="Code" bindLabel="CodeDesc">
+              <ng-select class="custom" appendTo="body" style="width:130% !important;" [items]="businessTypeList" [disabled]="checkDisableFields('BusinessType')" [(ngModel)]="productItem.BusinessType" bindValue="Code" bindLabel="CodeDesc">
              </ng-select>
             </div>
           </div>
           <div class="col-6 mt-2">
             <div class="headinglbels">Tax Exempted<span class="star">*</span></div> 
             <div class="mt-1">
-              <ng-select class="custom"  appendTo="body" [items]="taxExcemptedList"  [(ngModel)]="productItem.isTaxExempted" bindValue="Code" bindLabel="CodeDesc">
+              <ng-select class="custom"  appendTo="body" [items]="taxExcemptedList"  [(ngModel)]="productItem.isTaxExempted" [disabled]="checkDisableFields('TaxExempted')" bindValue="Code" bindLabel="CodeDesc">
               </ng-select>
             </div>
           </div>
           <div class="col-6 mt-2" *ngIf="productItem.isTaxExempted=='Y'">
             <div class="headinglbels">Tax Exempted No<span class="star">*</span></div> 
             <div class="mt-1">
-              <input type="text" class="layout" style="width:130% !important;" [(ngModel)]="productItem.TaxExemptedId"  maxlength="20" (keypress)="omit_special_char($event)">
+              <input type="text" class="layout" style="width:130% !important;" [(ngModel)]="productItem.TaxExemptedId" [disabled]="checkDisableFields('TaxEmemptedId')"  maxlength="20" (keypress)="omit_special_char($event)">
             </div>
           </div>
        </div>
@@ -193,60 +190,60 @@
                 <div class="col-6">
                     <div class="headinglbels">Title <span class="star">*</span></div> 
                     <div class="mt-1">
-                    <ng-select class="custom" appendTo="body"  [items]="titleList" (change)="onTitleChange()" [(ngModel)]="productItem.Title" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="custom" appendTo="body"  [items]="titleList" (change)="onTitleChange()" [disabled]="checkDisableFields('Title')"   [(ngModel)]="productItem.Title" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="headinglbels">Customer Name<span class="star">*</span></div> 
                     <div class="mt-1">
-                    <input type="text" maxlength="150" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.ClientName">
+                    <input type="text" maxlength="150" (keypress)="omit_special_char($event)" class="layout" [disabled]="checkDisableFields('CustomerName')"    [(ngModel)]="productItem.ClientName">
                     </div>
                 </div>
                 <div class="col-12 mt-1">
                     <div class="headinglbels">Occupation<span class="star">*</span></div> 
                     <div class="mt-1">
-                        <ng-select class="custom" appendTo="body" [items]="occupationList"  [(ngModel)]="productItem.Occupation" bindValue="Code" bindLabel="CodeDesc">
+                        <ng-select class="custom" appendTo="body" [items]="occupationList"  [(ngModel)]="productItem.Occupation" [disabled]="checkDisableFields('Type')"   bindValue="Code" bindLabel="CodeDesc">
                         </ng-select>
                     </div>
                 </div>
                 <div class="col-12 mt-1" *ngIf="productItem.IdType != 2"> 
                     <div class="headinglbels">Gender <span class="star">*</span></div> 
                     <div class="mt-1">
-                    <ng-select class="custom" appendTo="body"  [items]="genderList"  [(ngModel)]="productItem.Gender" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="custom" appendTo="body"  [items]="genderList"  [(ngModel)]="productItem.Gender" [disabled]="checkDisableFields('Gender')"   bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                     </div>
                 </div>
                 <div class="col-12 mt-1">
                     <div class="headinglbels">Identity Type<span class="star">*</span></div> 
                     <div class="mt-1">
-                        <ng-select class="custom" appendTo="body" [items]="policyHolderTypeList"  [(ngModel)]="productItem.PolicyHolderTypeid" bindValue="Code" bindLabel="CodeDesc">
+                        <ng-select class="custom" appendTo="body" [items]="policyHolderTypeList"  [(ngModel)]="productItem.PolicyHolderTypeid" [disabled]="checkDisableFields('IdType')"   bindValue="Code" bindLabel="CodeDesc">
                         </ng-select>
                     </div>
                 </div>
                 <div class="col-12 mt-1">
                     <div class="headinglbels">ID Number<span class="star">*</span></div> 
                     <div class="mt-1">
-                        <input type="text" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.IdNumber" maxlength="20">
+                        <input type="text" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.IdNumber" [disabled]="checkDisableFields('IdNumber')"   maxlength="20">
                     </div>
                 </div>
                 <div class="col-12 mt-1">
                     <div class="headinglbels">Country Code <span class="star">*</span></div> 
                     <div class="mt-1">
-                    <ng-select class="custom" appendTo="body"  [items]="mobileCodeList"  [(ngModel)]="productItem.MobileCode" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="custom" appendTo="body"  [items]="mobileCodeList"  [(ngModel)]="productItem.MobileCode" [disabled]="checkDisableFields('MobileCode')"   bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                     </div>
                 </div>
                 <div class="col-12 mt-1">
                     <div class="headinglbels">Mobile No<span class="star">*</span></div> 
                     <div class="mt-1">
-                        <input type="text" maxlength="10" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.MobileNo">
+                        <input type="text" maxlength="10" (keypress)="omit_special_char($event)" class="layout" [disabled]="checkDisableFields('MobileNo')"    [(ngModel)]="productItem.MobileNo">
                     </div>
                 </div>
                 <div class="col-12 mt-1">
                     <div class="headinglbels">Email ID<span class="star">*</span></div> 
                     <div class="mt-1">
-                        <input type="text" class="layout" email [(ngModel)]="productItem.EmailId" #prmEmail="ngModel">
+                        <input type="text" class="layout" email [(ngModel)]="productItem.EmailId" [disabled]="checkDisableFields('Email')"   #prmEmail="ngModel">
                     </div>
                     <div *ngIf="prmEmail.errors?.email" class="text-danger"> 
                         Please Enter Valid Email Id
@@ -263,7 +260,7 @@
                 <ng-container *ngIf="productItem.IdType != 2">
                     <mat-form-field appearance="fill">
                         <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
-                        <input matInput [matDatepicker]="picker2" [max]="maxDobDate" [(ngModel)]="productItem.dobOrRegDate">
+                        <input matInput [matDatepicker]="picker2" [max]="maxDobDate" [(ngModel)]="productItem.dobOrRegDate" [disabled]="checkDisableFields('DateOfBirth')"  >
                         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                         <mat-datepicker #picker2></mat-datepicker>
                     </mat-form-field>
@@ -271,7 +268,7 @@
                 <ng-container *ngIf="productItem.IdType == 2">
                     <mat-form-field appearance="fill">
                         <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
-                        <input matInput [matDatepicker]="picker4" [max]="maxDate" [(ngModel)]="productItem.dobOrRegDate">
+                        <input matInput [matDatepicker]="picker4" [max]="maxDate" [(ngModel)]="productItem.dobOrRegDate" [disabled]="checkDisableFields('RegistrationDate')"  >
                         <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
                         <mat-datepicker #picker4></mat-datepicker>
                     </mat-form-field>
@@ -280,34 +277,34 @@
               <div class="col-12 mt-1" *ngIf="productItem.IdType!='1'">
                 <div class="headinglbels">VRN/GST Number<span class="star">*</span></div> 
                 <div class="mt-1">
-                  <input type="text" class="layout" (keypress)="omit_special_char($event)" placeholder="ex:7654321888"  [(ngModel)]="productItem.vrngst" maxlength="20">
+                  <input type="text" class="layout" (keypress)="omit_special_char($event)" placeholder="ex:7654321888" [disabled]="checkDisableFields('VrnGstNo')"   [(ngModel)]="productItem.vrngst" maxlength="20">
                 </div>
               </div>
               <div class="col-12 mt-1">
                  <div class="headinglbels">Prefered Notification <span class="star">*</span></div> 
                  <div class="mt-1">
-                   <ng-select class="auto-grow" style="font-size: 14px !important;width:100% !important;" appendTo="body" bindValue="Code" [items]="notificationList"  [(ngModel)]="productItem.PreferredNotification" bindLabel="CodeDesc">
+                   <ng-select class="auto-grow" style="font-size: 14px !important;width:100% !important;" appendTo="body" bindValue="Code" [items]="notificationList" [disabled]="checkDisableFields('PreferredNotification')"   [(ngModel)]="productItem.PreferredNotification" bindLabel="CodeDesc">
                    </ng-select>
                  </div>
                </div>
                <div class="col-12 mt-1" *ngIf="productItem.IdType!='1'">
                  <div class="headinglbels">Business Type<span class="star">*</span></div> 
                  <div class="mt-1">
-                   <ng-select class="custom" appendTo="body" [items]="businessTypeList" [(ngModel)]="productItem.BusinessType" bindValue="Code" bindLabel="CodeDesc">
+                   <ng-select class="custom" appendTo="body" [items]="businessTypeList" [(ngModel)]="productItem.BusinessType" bindValue="Code" bindLabel="CodeDesc" [disabled]="checkDisableFields('BusinessType')"  >
                   </ng-select>
                  </div>
                </div>
                <div class="col-12 mt-2">
                  <div class="headinglbels">Tax Exempted<span class="star">*</span></div> 
                  <div class="mt-1">
-                   <ng-select class="custom"  appendTo="body" [items]="taxExcemptedList"  [(ngModel)]="productItem.isTaxExempted" bindValue="Code" bindLabel="CodeDesc">
+                   <ng-select class="custom"  appendTo="body" [items]="taxExcemptedList"  [(ngModel)]="productItem.isTaxExempted" bindValue="Code" bindLabel="CodeDesc" [disabled]="checkDisableFields('TaxEmempted')"  >
                    </ng-select>
                  </div>
                </div>
                <div class="col-6 mt-2" *ngIf="productItem.isTaxExempted=='Y'">
                  <div class="headinglbels">Tax Exempted No<span class="star">*</span></div> 
                  <div class="mt-1">
-                   <input type="text" class="layout" [(ngModel)]="productItem.TaxExemptedId"  maxlength="20" (keypress)="omit_special_char($event)">
+                   <input type="text" class="layout" [(ngModel)]="productItem.TaxExemptedId"  maxlength="20" (keypress)="omit_special_char($event)" [disabled]="checkDisableFields('TaxEmemptedId')"  >
                  </div>
                </div>
             </div>
@@ -320,7 +317,7 @@
             <div class="col-4">
                 <div class="headinglbels">Address<span class="star">*</span></div> 
                 <div class="mt-1">
-                    <textarea id="" class="layout" cols="30" rows="2" maxlength="100" [(ngModel)]="productItem.Address1"></textarea>
+                    <textarea id="" class="layout" cols="30" rows="2" maxlength="100" [(ngModel)]="productItem.Address1" [disabled]="checkDisableFields('Address1')"  ></textarea>
                 </div>
             </div>
               <!-- <div class="col-4">
@@ -332,34 +329,34 @@
               <div class="col-4">
                 <div class="headinglbels">Country<span class="star">*</span></div> 
                 <div class="mt-1">
-                    <ng-select class="custom" appendTo="body" [items]="countryList" (change)="getRegionList('change')" [(ngModel)]="productItem.Country" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="custom" appendTo="body" [items]="countryList" (change)="getRegionList('change')" [disabled]="checkDisableFields('Country')"   [(ngModel)]="productItem.Country" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                 </div>
               </div>
               <div class="col-4 mt-2">
                <div class="headinglbels">Region<span class="star">*</span></div> 
                <div class="mt-1">
-                    <ng-select class="custom" appendTo="body"  [items]="regionList" (change)="getStateList('change')"  [(ngModel)]="productItem.state" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="custom" appendTo="body"  [items]="regionList" (change)="getStateList('change')" [disabled]="checkDisableFields('Region')"    [(ngModel)]="productItem.state" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                </div>
               </div>
               <div class="col-4  mt-2">
                 <div class="headinglbels">District<span class="star">*</span></div> 
                 <div class="mt-1">
-                    <ng-select class="custom" appendTo="body" [items]="stateList" [(ngModel)]="productItem.CityName" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="custom" appendTo="body" [items]="stateList" [(ngModel)]="productItem.CityName" [disabled]="checkDisableFields('District')"   bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                 </div>
              </div>
              <div class="col-4  mt-2">
                 <div class="headinglbels">P.O Box</div> 
                 <div class="mt-1">
-                    <input type="text" maxlength="15" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.PinCode">
+                    <input type="text" maxlength="15" (keypress)="omit_special_char($event)" class="layout" [disabled]="checkDisableFields('PoBox')"    [(ngModel)]="productItem.PinCode">
                 </div>
              </div>
-             <div class="col-4 mt-2" *ngIf="loginType!='B2CFlow' && loginType!='B2CFlow2'">
+             <div class="col-4 mt-2" *ngIf="loginType!='B2CFlow' && loginType!='B2CFlow2' && !this.endorsementSection">
                 <div class="headinglbels">Status<span class="star">*</span></div> 
                 <div class="mt-1">
-                    <ng-select class="auto-grow" appendTo="body" [items]="statusList" [(ngModel)]="productItem.Clientstatus" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="auto-grow" appendTo="body" [items]="statusList" [(ngModel)]="productItem.Clientstatus" [disabled]="checkDisableFields('ClientStatus')"   bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                 </div>
              </div>
@@ -372,46 +369,46 @@
              <div class="col-12">
                  <div class="headinglbels">Address<span class="star">*</span></div> 
                  <div class="mt-1">
-                     <input type="text" maxlength="100" (keypress)="omit_special_char($event)"  class="layout"   [(ngModel)]="productItem.Address1">
+                     <input type="text" maxlength="100" (keypress)="omit_special_char($event)"  class="layout"   [(ngModel)]="productItem.Address1" [disabled]="checkDisableFields('Address1')"  >
                  </div>
              </div>
-               <div class="col-12 mt-2">
+               <!-- <div class="col-12 mt-2">
                  <div class="headinglbels">Street<span class="star">*</span></div> 
                  <div class="mt-1">
-                     <input type="text" maxlength="100" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.Street">
+                     <input type="text" maxlength="100" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.Street" [disabled]="checkDisableFields('TaxEmemptedId')"  >
                  </div>
-               </div>
+               </div> -->
                <div class="col-12 mt-2">
                  <div class="headinglbels">Country<span class="star">*</span></div> 
                  <div class="mt-1">
-                     <ng-select class="custom" appendTo="body" [items]="countryList" (change)="getRegionList('change')" [(ngModel)]="productItem.Country" bindValue="Code" bindLabel="CodeDesc">
+                     <ng-select class="custom" appendTo="body" [items]="countryList" (change)="getRegionList('change')" [(ngModel)]="productItem.Country" [disabled]="checkDisableFields('Country')"   bindValue="Code" bindLabel="CodeDesc">
                      </ng-select>
                  </div>
                </div>
                <div class="col-12 mt-2">
                 <div class="headinglbels">Region<span class="star">*</span></div> 
                 <div class="mt-1">
-                     <ng-select class="custom" appendTo="body"  [items]="regionList" (change)="getStateList('change')"  [(ngModel)]="productItem.state" bindValue="Code" bindLabel="CodeDesc">
+                     <ng-select class="custom" appendTo="body"  [items]="regionList" (change)="getStateList('change')"  [(ngModel)]="productItem.state" [disabled]="checkDisableFields('State')"   bindValue="Code" bindLabel="CodeDesc">
                      </ng-select>
                 </div>
                </div>
                <div class="col-12  mt-2">
                  <div class="headinglbels">District<span class="star">*</span></div> 
                  <div class="mt-1">
-                     <ng-select class="custom" appendTo="body" [items]="stateList" [(ngModel)]="productItem.CityName" bindValue="Code" bindLabel="CodeDesc">
+                     <ng-select class="custom" appendTo="body" [items]="stateList" [(ngModel)]="productItem.CityName" [disabled]="checkDisableFields('City')"   bindValue="Code" bindLabel="CodeDesc">
                      </ng-select>
                  </div>
               </div>
               <div class="col-12  mt-2">
                  <div class="headinglbels">P.O Box</div> 
                  <div class="mt-1">
-                     <input type="text" maxlength="15" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.PinCode">
+                     <input type="text" maxlength="15" (keypress)="omit_special_char($event)" class="layout" [disabled]="checkDisableFields('PoBox')"    [(ngModel)]="productItem.PinCode">
                  </div>
               </div>
-              <div class="col-12 mt-2" *ngIf="loginType!='B2CFlow'">
+              <div class="col-12 mt-2" *ngIf="loginType!='B2CFlow' && !this.endorsementSection">
                  <div class="headinglbels">Status<span class="star">*</span></div> 
                  <div class="mt-1">
-                     <ng-select class="auto-grow" appendTo="body" [items]="statusList" [(ngModel)]="productItem.Clientstatus" bindValue="Code" bindLabel="CodeDesc">
+                     <ng-select class="auto-grow" appendTo="body" [items]="statusList" [(ngModel)]="productItem.Clientstatus" [disabled]="checkDisableFields('ClientStatus')"   bindValue="Code" bindLabel="CodeDesc">
                      </ng-select>
                  </div>
               </div>

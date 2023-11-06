@@ -48,6 +48,19 @@ export class NewCustomerDetailsComponent {
   dob: string;
   mobileCodeList: any[]=[];
 	loginType: any;
+	orgPolicyNo: string;
+	endorsementSection: boolean=false;
+	endorsementDetails: any;
+	endorseCategory: any;
+	endorsementName: any;
+	endorsementId: any;
+	endorsePolicyNo: any;
+	endorseEffectiveDate: any;
+	enableFieldsList: any;
+	endtStatus: any;
+	endtcount: any;
+	endtPrevPolicyNo: any;
+	endtPrevQuoteNo: any;
   constructor(private product: SharedService, private datePipe: DatePipe, private route: ActivatedRoute,
 		private router: Router) {
 		this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -100,7 +113,24 @@ export class NewCustomerDetailsComponent {
 		this.getPolicyHolderList();
   }
   public ngOnInit(): void {
-		
+	if(sessionStorage.getItem('endorsePolicyNo')){
+		this.orgPolicyNo = sessionStorage.getItem('endorsePolicyNo')
+		this.endorsementSection = true;
+		let endorseObj = JSON.parse(sessionStorage.getItem('endorseTypeId'))
+		if(endorseObj){
+		  this.endorsementDetails = endorseObj;
+		  this.endorseCategory = endorseObj.Category;
+		  this.endorsementName = endorseObj?.EndtName;
+		  this.endorsementId = endorseObj.EndtTypeId;
+		  this.endorsePolicyNo = endorseObj.PolicyNo;
+		  this.enableFieldsList = endorseObj.FieldsAllowed;
+		  this.endorseEffectiveDate = endorseObj?.EffectiveDate;
+		  this.endtStatus = endorseObj?.EndtStatus;
+		  this.endtcount = endorseObj?.EndtCount;
+		  this.endtPrevPolicyNo = endorseObj?.EndtPrevPolicyNo;
+		  this.endtPrevQuoteNo = endorseObj?.EndtPrevQuoteNo
+		}
+	  }
 	}
 	omit_special_char(event){   
 		var k;  
@@ -108,11 +138,20 @@ export class NewCustomerDetailsComponent {
 		return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || (k >= 48 && k <= 57)); 
 	}
   setPolicyType(value){
-    this.productItem.IdType = value;
-	if(value==2){
-		this.productItem.Gender = '';
+	if(this.endorsementSection && !this.checkDisableFields('IdType')){
+		this.productItem.IdType = value;
+		if(value==2){
+			this.productItem.Gender = '';
+		}
+		this.getPolicyIdTypeList('change');
 	}
-	this.getPolicyIdTypeList('change');
+	else if(!this.endorsementSection){
+		this.productItem.IdType = value;
+		if(value==2){
+			this.productItem.Gender = '';
+		}
+		this.getPolicyIdTypeList('change');
+	}
   }
 	getTitleList() {
 		let ReqObj = {
@@ -555,6 +594,15 @@ export class NewCustomerDetailsComponent {
 				else ReqObj['QuoteNo'] = null;
 				ReqObj['RequestReferenceNo'] = sessionStorage.getItem('quoteReferenceNo')
 		}
+		if(this.endorsementSection){
+			ReqObj['EndtStatus'] = this.endtStatus;
+			ReqObj['EndorsementTypeDesc'] = this.endorsementName;
+			ReqObj['EndorsementType'] = this.endorsementId;
+			ReqObj['EndtCategoryDesc'] = this.endorseCategory;
+			ReqObj['EndtCount'] = this.endtcount;
+			ReqObj['EndtPrevPolicyNo'] = this.endtPrevPolicyNo;
+			ReqObj['EndtPrevQuoteNo'] = this.endtPrevQuoteNo;
+		  }
 		let urlLink = `${this.CommonApiUrl}api/savecustomerdetails`;
 		this.product.onPostMethodSync(urlLink, ReqObj).subscribe(
 			(data: any) => {
@@ -588,33 +636,50 @@ export class NewCustomerDetailsComponent {
 						}
 				}
 				else {
-					let quoteNo = sessionStorage.getItem('quoteNo');
-					if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2' && quoteNo!=undefined && quoteNo!=null)){
-						this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
+					if(this.endorsementSection){
+						this.router.navigate(['Home/existingQuotes/customerSelection/customerDetails/customer-details']);	
 					}
-					else if(sessionStorage.getItem('VechileDetails')){
-						sessionStorage.setItem('customerReferenceNo',data.Result.SuccessId);
-						this.router.navigate(['Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+					else{
+						let quoteNo = sessionStorage.getItem('quoteNo');
+						if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2' && quoteNo!=undefined && quoteNo!=null)){
+							this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
+						}
+						else if(sessionStorage.getItem('VechileDetails')){
+							sessionStorage.setItem('customerReferenceNo',data.Result.SuccessId);
+							this.router.navigate(['Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+						}
+						else this.router.navigate(['/Home/customer/'])
 					}
-					else this.router.navigate(['/Home/customer/'])
 				}
 			},
 
 			(err: any) => { console.log(err); },
 		);
 	}
-	getBack(){
-		let quoteNo = sessionStorage.getItem('quoteNo');
-		if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2' && quoteNo!=undefined && quoteNo!=null)){
-			this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
+	checkDisableFields(type){
+		if(this.endorsementSection){
+			return !this.enableFieldsList.some(ele=>ele==type)
 		}
-		else if(sessionStorage.getItem('VechileDetails')){
-			sessionStorage.removeItem('customerReferenceNo');
-			this.router.navigate(['/Home/tira-vehicle-search']);
+		else return false;
+	}
+	getBack(){
+		if(this.endorsementSection){
+			this.router.navigate(['/Home/policies/Endorsements/endorsementTypes'])
 		}
 		else{
-			sessionStorage.removeItem('customerReferenceNo');
-			this.router.navigate(['/Home/customer/'])
+			let quoteNo = sessionStorage.getItem('quoteNo');
+			if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2' && quoteNo!=undefined && quoteNo!=null)){
+				this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
+			}
+			else if(sessionStorage.getItem('VechileDetails')){
+				sessionStorage.removeItem('customerReferenceNo');
+				this.router.navigate(['/Home/tira-vehicle-search']);
+			}
+			else{
+				sessionStorage.removeItem('customerReferenceNo');
+				this.router.navigate(['/Home/customer/'])
+			}
 		}
+		
 	}
 }

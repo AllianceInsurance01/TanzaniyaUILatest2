@@ -211,7 +211,7 @@ export class ReferralPendingComponent implements OnInit {
 
   }
   getExistingQuotes(element,entryType){
-    if(element==null) this.quoteData=[];
+    if(element==null){ this.quoteData=[];this.referralData=[];}
     let appId = "1",loginId="",brokerbranchCode="",bdmCode=null;
     if(this.userType!='Issuer'){
       appId = "1"; loginId = this.brokerCode;

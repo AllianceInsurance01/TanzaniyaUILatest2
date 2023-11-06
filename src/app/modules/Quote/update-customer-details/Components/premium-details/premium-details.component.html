@@ -90,7 +90,7 @@
         <div>
             <app-premiumdetails-subsection [cols]="quoteDetails" [cols1]="Riskdetails" [endrose]="endorsementSection" [cols2]="customerDetails"></app-premiumdetails-subsection>
         </div>
-        <div class="maan-grid-item">
+        <!-- <div class="maan-grid-item">
             <div class="maan-grid-item-body">
                 <div class="row mt-1" *ngIf="endorsementSection">
                     <div class="col-12 col-md-2" >
@@ -138,37 +138,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="col-12 col-md-4" >
-                        <div class="input-control-container">
-                            <label class="input-form-label">Address2</label>
-                            <div class="input-form-box">
-                                <input type="text" maxlength="50" class="input-form-control without-icon" [disabled]="endorsementSection && !enableCustomerDetails" [(ngModel)]="address2">
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- <div class="col-12 col-md-4" >
-                        <div class="input-control-container">
-                            <label class="input-form-label">Occupation</label><span class="text-danger">*</span>
-                            <ng-select class="input-form-select" appendTo="body" [items]="occupationList" [disabled]="endorsementSection && !enableCustomerDetails" [(ngModel)]="customerDetails.Occupation" bindValue="Code" bindLabel="CodeDesc">
-                            </ng-select>
-                        </div>
-                    </div> -->
-                    <!-- <div class="col-12 col-md-4" >
-                        <label class="input-form-label">Appointment Date</label><span class="text-danger">*</span>
-                        <mat-form-field appearance="fill">
-                            <input matInput [matDatepicker]="picker1" [min]="currentDate" [disabled]="endorsementSection && !enableCustomerDetails"  [(ngModel)]="appointmentDate">
-                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                            <mat-datepicker #picker1></mat-datepicker>
-                        </mat-form-field>
-                    </div> -->
-                    <!-- <div class="col-12 col-md-4" >
-                        <div class="input-control-container">
-                            <label class="input-form-label">Email Id</label>
-                            <div class="input-form-box">
-                                <input type="text" maxlength="50" class="input-form-control without-icon" [disabled]="endorsementSection && !enableCustomerDetails" [(ngModel)]="emailId">
-                            </div>
-                        </div>
-                    </div> -->
+                    
                     <div class="col-12 col-md-2" >
                         <div class="input-control-container">
                             <label class="input-form-label">Prefered Notification</label><span class="text-danger">*</span>
@@ -187,7 +157,7 @@
                    
                 </div>
             </div>
-        </div>
+        </div> -->
         
         <div class="maan-grid-item" *ngIf="motorDetails">
             <div class="maan-grid-item-title">

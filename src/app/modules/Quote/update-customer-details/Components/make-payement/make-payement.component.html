@@ -875,15 +875,13 @@
 </div>
 <div class="row"  *ngIf="policySection">
     <div class="col-12 col-md-12 col-lg-10 offset-lg-1 spancommon span_font_size">
-        <div class="card mt-4">
-            <div class="card-body">
                 <!-- <div class="row">
                     <div class="col-10 offset-1 spancommon span_font_size">
                         <h4 class="spancommon span_font_size" style="font-weight: 600;text-align: center;"><ng-container *ngIf="endorsementSection">Endorsement&nbsp;</ng-container>Policy Generated Successfully</h4>
                     </div>
                 </div> -->
-                <div class="row ">
-                    <div class="col-md-10 col-lg-10 col-xl-10 col-12 offset-md-1 offset-lg-1 offset-xl-1 boxForm p-4">
+                <div class="row mt-2">
+                    <div class="col-md-10 col-lg-10 col-xl-10 col-12 offset-md-1 offset-lg-1 offset-xl-1 boxForm p-4 card">
                     <div class="row">
                         <div class="col-10 offset-1 spancommon span_font_size">
                             <h4 class="spancommon span_font_size" style="font-weight: 600;text-align: center;"><ng-container *ngIf="endorsementSection">Endorsement&nbsp;</ng-container>Policy Generated Successfully</h4>
@@ -1030,13 +1028,11 @@
                                 </div>
                             </li>
                         </ul> -->
-            </div>
             <div class="text-center my-2 mt-3">
                 <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="!endorsementSection && loginType!='B2CFlow'" matRipple [routerLink]="['/Home/policies']">Proceed</button>
                 <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="!endorsementSection && loginType=='B2CFlow'" matRipple (click)="onB2CRedirect()">Okay!</button>
                 <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="endorsementSection" matRipple [routerLink]="['/Home/policies/Endorsements']" routerLinkActive="router-link-active">Proceed</button>
             </div>
-        </div>
     </div>
 </div>
 <div class="maan-grid customer-grid maan-grid-column-1" *ngIf="endorsementSection && IsChargeOrRefund=='REFUND' && !policySection">

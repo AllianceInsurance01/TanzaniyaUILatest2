@@ -143,8 +143,14 @@ export class NavbarComponent implements OnInit {
     //if(this.loginType=='B2CFlow') {this.openSideNav = false;this.showToggle = 'hide';$('#sidenav').toggle();}
   }
   onRedirect(){
-    if(this.typeValue=='SuperAdmin'){this.router.navigate(['/Admin'])}
-    else{this.router.navigate(['/Home'])}
+    if(this.loginId!='guest'){
+      if(this.typeValue=='SuperAdmin'){this.router.navigate(['/Admin'])}
+      else{this.router.navigate(['/Home'])}
+    }
+    else{
+      sessionStorage.clear();
+      window.location.href='https://apps.alliance.co.tz/';
+    }
   }
   home() {
     if(this.loginType=='B2CFlow'){

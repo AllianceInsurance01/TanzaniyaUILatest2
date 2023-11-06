@@ -8,6 +8,7 @@ import { AuthService } from './Auth/auth.service';
 import { AfterContentChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SharedService } from './shared/Services/shared.service';
+import { NavigationEnd, NavigationStart, Router, RouterEvent } from '@angular/router';
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -37,14 +38,19 @@ export class AppComponent implements OnInit, AfterContentChecked {
     public customLoder: CustomLoadingService,
     private cdr: ChangeDetectorRef,
     public _sharedService: SharedService,
+    public router:Router
 
   ) {
     this.userdetails = JSON.parse(sessionStorage.getItem('Userdetails') || '{}');
     this.authService.login(this.userdetails);
+    router.events.subscribe((event: RouterEvent) => {
+      this._navigationInterceptor(event);
+    });
     console.log(this.userdetails);
   }
 
   ngOnInit(): void {
+    
     // this.analytics.trackPageViews();
     // this.seoService.trackCanonicalChanges();
   }
@@ -52,5 +58,15 @@ export class AppComponent implements OnInit, AfterContentChecked {
   ngAfterContentChecked() {
     this.loading$ = this.customLoder.loader;
     this.cdr.detectChanges();
+  }
+  private _navigationInterceptor(event: RouterEvent): void {
+    if (event instanceof NavigationStart) {
+    }
+    if (event instanceof NavigationEnd) {
+    window.scrollTo({
+     top: 0
+    });
+  // or,  window.scroll(0,0);
+    }
   }
 }

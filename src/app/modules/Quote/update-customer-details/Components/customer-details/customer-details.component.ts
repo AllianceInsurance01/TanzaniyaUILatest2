@@ -3515,7 +3515,8 @@ export class CustomerDetailsComponent implements OnInit {
         }
     }
     else if(this.endorsementSection){
-      this.router.navigate(['/Home/policies/Endorsements/endorsementTypes']);
+      if(this.endorsementId==1){ this.router.navigate(['/Home/customer/ClientDetails']); }
+      else this.router.navigate(['/Home/policies/Endorsements/endorsementTypes']);
     }
     else if(sessionStorage.getItem('VechileDetails')){
       this.router.navigate(['/Home/customer/ClientDetails']);

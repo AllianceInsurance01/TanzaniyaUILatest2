@@ -134,7 +134,10 @@ export class LoginComponent {
         this.pass=false;
       }
   }
-
+  homeRedirect(){
+    sessionStorage.clear();
+    window.location.href='https://apps.alliance.co.tz/';
+  }
   reset() {
     sessionStorage.clear();
     this.authService.logout;

@@ -4946,7 +4946,7 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
   }
   getBack(type){
     if(this.endorsementSection){
-      if(this.endorseCategory=='Financial' && type=='Building'){
+      if(type=='Building'){
         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
       }
       else if(type=='Content Risk'){
@@ -4989,9 +4989,6 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
               else if(type== 'Device Details'){
                 this.selectedTab -=1; 
                 }
-      else if(type == 'Building'){
-        this.router.navigate(['/Home/policies/Endorsements/endorsementTypes'])
-      }
     }
     else if(!this.endorsementSection){
       if(type=='Building'){

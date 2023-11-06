@@ -108,7 +108,6 @@ export class PremiumDetailsComponent implements OnInit {
           this.enableCustomerDetails = this.enableFieldsList.some(ele=>ele=='customerName' || ele=='Title');
           this.enableDocumentDetails = this.enableFieldsList.some(ele=>ele=='documentId');
           this.enableDriverDetails = this.enableFieldsList.some(ele=>ele=='driverName' || ele=='DriverName');
-          
         }
       }
       else{
@@ -1033,21 +1032,53 @@ toggle(index: number) {
 
   }
   getBack(){
-    console.log("Category",this.endorseCategory)
-    if(this.endorseCategory=='Financial' || this.endorsementId=='853'){
-      if(this.productId=='3'){
-        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
-      }
-      else{
-        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
-      }
+    // console.log("Category",this.endorseCategory)
+    // if(this.endorseCategory=='Financial' || this.endorsementId=='853'){
+    //   if(this.productId=='3'){
+    //     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
+    //   }
+    //   else{
+    //     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
+    //   }
      
-    }
-    else if(this.productId=='3'){
+    // }
+    if(this.productId=='3'){
       this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
     }
-    else if(this.productId!='4' && this.productId!='3'){
-      this.router.navigate(['/Home/policies/Endorsements/endorsementTypes'])
+    else if(this.productId=='5' || this.productId=='46'){
+  
+      this.coverlist=[];let i=0;
+      console.log('TTTTTTTTTT',this.Riskdetails);
+      for(let vehicle of this.Riskdetails){
+        let vehEntry = vehicle.SectionDetails;
+        console.log('VVVVVVVVV',vehEntry);
+        if(vehEntry.length!=0){
+          let j=0;
+          for(let s of vehEntry){
+          let covers = s.Covers;
+          console.log('NNNNNNNNN',covers);
+          if(covers.length!=0){
+            let entry = covers.filter(ele=>ele.CoverId == '55');
+            if(entry.length!=0){
+              console.log('RRRRRRR',entry);
+              this.coverlist.push(entry)
+            }
+          }
+          j+=1;
+        }
+        }
+        i+=1;
+      }           
+      console.log('if entry of cover id 55',this.coverlist);
+              if(this.coverlist.length!=0){
+                this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
+               }
+               else{
+                this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
+               }
+      }
+    else{
+      this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
     }
 
   }
@@ -1150,15 +1181,15 @@ toggle(index: number) {
         (data: any) => {
           console.log("Save motor Res",data)
           if(data.Result){
-            if(this.endorsementSection && this.enableCustomerDetails){
-                  this.saveCustomerDetails();
-            }
-            else{
+            // if(this.endorsementSection && this.enableCustomerDetails){
+            //       this.saveCustomerDetails();
+            // }
+            // else{
               if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2')){
                 this.router.navigate(['/Home/customer/ClientDetails']);
               }
               else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
-            }
+            //}
             
           }
           
@@ -1175,9 +1206,9 @@ toggle(index: number) {
           if((this.productId=='5' || this.productId=='46') && this.enableDriverDetails){
             this.onsave();
           }
-          else if(this.enableCustomerDetails){
-              this.saveCustomerDetails();
-          }
+          // else if(this.enableCustomerDetails){
+          //     this.saveCustomerDetails();
+          // }
           else {
             
             if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2')){

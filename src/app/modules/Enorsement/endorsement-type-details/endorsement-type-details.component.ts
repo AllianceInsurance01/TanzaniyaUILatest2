@@ -276,6 +276,7 @@ export class EndorsementTypeDetailsComponent {
     let ReqObj = {
       "CompanyId": this.insuranceId,
       "ProductId": this.productId,
+      "OriginalPolicyNo": sessionStorage.getItem('endorsePolicyNo'),
       "LoginId": this.loginId 
     }
     let urlLink = `${this.CommonApiUrl}endorsment/endorsementTypes`;
@@ -456,7 +457,11 @@ export class EndorsementTypeDetailsComponent {
             "Category": category,
             "CoverModificationYn": this.selectedEndorsement.isCoverEndt,
             "EndtName": this.selectedEndorsement.EndorsementDesc,
-            "PolicyNo": res?.policyNo
+            "PolicyNo": res?.policyNo,
+            "EndtStatus": res?.endtStatus,
+            "EndtCount": res?.endtCount,
+            "EndtPrevPolicyNo": res?.endtPrevPolicyNo,
+            "EndtPrevQuoteNo": res?.endtPrevQuoteNo
           }
           this.endorsePolicyNo = res?.policyNo
           sessionStorage.setItem('endorseTypeId',JSON.stringify(obj));
@@ -492,16 +497,21 @@ export class EndorsementTypeDetailsComponent {
             console.log('Enodorsement Ids',this.selectedEndorsement.EndtType);
             if(this.quoteNo) sessionStorage.setItem('quoteNo',this.quoteNo);
             else sessionStorage.setItem('quoteNo',res.quoteNo);
-            if(this.productId == '3' && this.selectedEndorsement.EndtType == '54'){
-              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
-            }
-            else if((this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14'  || this.productId=='19' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId=='21' || this.productId == '25')){
-              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
+            // if(this.productId == '3' && this.selectedEndorsement.EndtType == '54'){
+            //   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
+            // }
+            // else if((this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14'  || this.productId=='19' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId=='21' || this.productId == '25')){
+            //   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
+            // }
+            // else{
+            //   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
+            // }
+            if(this.selectedEndorsement.EndtType==1){
+              this.router.navigate(['Home/customer/ClientDetails']);
             }
             else{
-              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
+              this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
             }
-           
           }
         }
       },

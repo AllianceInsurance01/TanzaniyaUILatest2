@@ -238,7 +238,9 @@ emiyn="N";
   OtpBtnEnable: boolean;
   otpValue: string;
   sampleloginId: any;
-  loginType: any;
+  loginType: any;modifyCommissionYN:any='N';
+  endorsementCategory: any;commissionPercent:any=null;
+  commissionValue: any=null;
   constructor(public sharedService: SharedService,private authService: AuthService,private router:Router,private modalService: NgbModal,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe,public dialog: MatDialog) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -273,6 +275,7 @@ emiyn="N";
       if(endorseObj){
         this.endorsementSection = true;
         console.log("Endorse obj",endorseObj)
+        this.endorsementCategory = endorseObj.Category;
         this.endorsementId = endorseObj.EndtTypeId;
         this.endorseEffectiveDate = endorseObj?.EffectiveDate;
         this.enableFieldsList = endorseObj.FieldsAllowed;
@@ -1309,6 +1312,8 @@ getMotorUsageList(vehicleValue){
               
               let vehicleList:any[]=[];
               if(this.vehicleData.length!=0){
+                this.commissionValue = this.vehicleData[0].CommissionPercentage;
+                this.commissionPercent = this.vehicleData[0].CommissionPercentage;
                 this.policyStartDate = this.vehicleData[0]?.PolicyStartDate;
                 this.policyEndDate = this.vehicleData[0]?.PolicyEndDate;
                 let referralList = this.vehicleData.filter(ele=>(ele.UWReferral!=null && ele.UWReferral.length!=0) || ele.MasterReferral.length!=0);
@@ -1403,7 +1408,7 @@ getMotorUsageList(vehicleValue){
                     veh.CoverList = baseCovers.concat(otherCovers)
                     if(i==0){
                       veh['Collapse'] = true;
-                      this.remarks = veh.AdminRemarks;
+                      //this.remarks = veh.AdminRemarks;
                       vehicleList.push(veh);
                     }
                     else{
@@ -2211,7 +2216,8 @@ getMotorUsageList(vehicleValue){
     let i=0;
     for(let veh of this.vehicleDetailsList){
       if(veh.VehicleId) veh['Vehicleid'] = veh.VehicleId
-        if(i ==0 ){ this.remarks = veh.AdminRemarks; this.rejectedReason = veh.RejectReason}
+        if(i ==0 ){ //this.remarks = veh.AdminRemarks;
+           this.rejectedReason = veh.RejectReason}
         let covers = veh.CoverList;
         let j=0;
         for(let cover of covers){
@@ -3553,9 +3559,7 @@ getMotorUsageList(vehicleValue){
             //   config);
           }
       }
-      else{
-        this.isMannualReferal = 'N';
-      }
+      
       let ReqObj:any ={},createdBy = "";
       let quoteStatus = sessionStorage.getItem('QuoteStatus');
         if(quoteStatus=='AdminRP'){
@@ -4301,10 +4305,12 @@ getMotorUsageList(vehicleValue){
       let ReqObj = {
         "RequestReferenceNo": this.quoteRefNo,
         "AdminLoginId": this.loginId,
-         "ProductId": this.productId,
-         "Status": this.statusValue,
-         "AdminRemarks": this.remarks,
-         "RejectReason": this.rejectedReason
+        "ProductId": this.productId,
+        "Status": this.statusValue,
+        "AdminRemarks": this.remarks,
+        "RejectReason": this.rejectedReason,
+        "CommissionModifyYn" : this.modifyCommissionYN,
+        "CommissionPercent" : this.commissionPercent
       }
       let urlLink = `${this.CommonApiUrl}quote/update/referalstatus`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
