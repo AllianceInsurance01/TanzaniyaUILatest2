@@ -132,7 +132,7 @@
             </div>
             <div class="maan-grid-item-body" style="min-height: 385px !important;">
                 <div class="row p-0">
-                    <div class="col-md-4 col-lg-4 col-xl-4">
+                    <div class="col-12 col-md-4 col-lg-4 col-xl-4">
                         <div class="input-control-container" *ngIf="vehicleDetailsList.length!=0 && vehicleDetailsList.length!=1">
                             <ng-select class="input-form-select" [searchable]="true" [clearable]="true"
                                 [(ngModel)]="selectedRowData" (change)="onSelectSection($event)">
@@ -197,7 +197,7 @@
                             <ng-container *ngFor="let menu of vehicleDetailsList">
                                 <ng-container *ngIf="productId=='5'">
                                     <span class="spancommon" style="color:navy;font-size: 1rem;font-weight: 600;">
-                                        {{menu.RiskDetails.PolicyTypeDesc}} &nbsp;|&nbsp; {{ menu.RiskDetails.Registrationnumber }} &nbsp;</span>
+                                        {{ menu.RiskDetails.Registrationnumber }} &nbsp;|&nbsp;   {{menu.RiskDetails.PolicyTypeDesc}} &nbsp; </span>
     
                                 </ng-container>
                                 <ng-container *ngIf="productId=='4'">
@@ -247,7 +247,7 @@
                             </ng-container>
                         </div>
                     </div>
-                    <div class="col-md-4 col-lg-4 col-xl-4 mt-3" *ngIf="selectedVehicleList.length!=0">
+                    <div class="col-12 col-md-4 col-lg-4 col-xl-4 mt-3" *ngIf="selectedVehicleList.length!=0">
                         <span class="spancommon text-end"
                             style="color:navy;padding:10px !important;border-radius:10px;font-size: 1rem;background-color: #fd7e14!important;"
                             *ngIf="selectedVehicleList[0].Status=='D' && productId=='5'">Removed Vehicle</span>
@@ -257,6 +257,10 @@
                             Occupation</span>   
                         <span class="spancommon text-end" *ngIf="selectedVehicleList[0].ReferralList.length!=0"
                         style="color:navy;padding:7px !important;border-radius:10px;font-size: 1rem;background-color: #fd7e14!important;">Refferal</span>
+                    </div>
+                    <div class="col-12 col-md-3 col-lg-3 col-xl-3 mt-5 mr-2" *ngIf="commissionValue">
+                        <label class="custom-control-label" style="float: right !important;font-size: 17px !important;"
+                       >Commission&nbsp;(<b>{{commissionValue}} %</b>)</label>&nbsp;&nbsp;
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -279,7 +283,7 @@
                                     </div>
                                     <ng-container>
                                         
-                                       
+                                
                                     </ng-container>
                                 </div>
                                 <div class="display2">
@@ -2885,27 +2889,54 @@
                         </div>
                     </div>
             <div class="maan-grid-item-body p-1" *ngIf="statusValue && adminSection">
-                <div class="col-12 col-md-4 ml-4">
-                    <div class="input-control-container">
-                        <label class="input-form-label">Referral Status</label><span class="text-danger">*</span>
-                        <ng-select class="input-form-select" appendTo="body" [disabled]="!adminSection" [(ngModel)]="statusValue" [items]="statusList" bindValue="Code" bindLabel="CodeDesc">
-                        </ng-select>
-                    </div>
-                </div>
-        
-                <div class="col-12 col-md-6">
-                    <div class="input-control-container">
-                        <label class="input-form-label">Remarks<span class="text-required">*</span></label>
-                        <div class="input-form-box">
-                            <textarea cols="120" rows="2" [(ngModel)]="remarks" [disabled]="!adminSection" class="input-form-control without-icon" maxlength="600"></textarea>
+                <div class="row">
+                    <div class="col-12 col-md-4 col-lg-4 col-xl-4 ml-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Referral Status</label><span class="text-danger">*</span>
+                            <ng-select class="input-form-select" appendTo="body" [disabled]="!adminSection" [(ngModel)]="statusValue" [items]="statusList" bindValue="Code" bindLabel="CodeDesc">
+                            </ng-select>
                         </div>
                     </div>
+                    
+                    <div class="col-12 col-md-4 col-lg-4 col-xl-4" *ngIf="statusValue && adminSection">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Modify Commission (%)</label>
+                            <div class="custom-radio-btn" style="position: relative;top: 1rem;right: 0.3rem;">
+                                <div class="radio-toolbar">
+                                    <input id="commission_Yes" type="radio" [(ngModel)]="modifyCommissionYN" name="commission" value="Y">
+                                    <label for="commission_Yes" class="yes">Yes</label>
+                                    <input type="radio" id="commission_No" [(ngModel)]="modifyCommissionYN" name="commission" value="N">
+                                    <label for="commission_No" class="no">No</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-4 col-xl-4" *ngIf="modifyCommissionYN=='Y'">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Commission (%)<span class="text-required">*</span></label>
+                            <div class="input-form-box">
+                                <input type="text"   class="input-form-control without-icon" [(ngModel)]="commissionPercent" name="commissionPercent" maxlength="5">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
                 </div>
-                <div class="col-12 col-md-4 ml-4" *ngIf="statusValue=='RR'">
-                    <div class="input-control-container">
-                        <label class="input-form-label">Rejected Reason</label>
-                        <div class="input-form-box">
-                            <input type="text" [(ngModel)]="rejectedReason" [disabled]="!adminSection" class="input-form-control without-icon">
+                <div class="row"  >
+                    <div class="col-12 col-md-4 ml-4" *ngIf="statusValue=='RR'">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Rejected Reason</label>
+                            <div class="input-form-box">
+                                <input type="text" [(ngModel)]="rejectedReason" [disabled]="!adminSection" class="input-form-control without-icon">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-4 col-xl-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Remarks<span class="text-required">*</span></label>
+                            <div class="input-form-box">
+                                <textarea cols="120" rows="2" [(ngModel)]="remarks" [disabled]="!adminSection" class="input-form-control without-icon" maxlength="600"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>

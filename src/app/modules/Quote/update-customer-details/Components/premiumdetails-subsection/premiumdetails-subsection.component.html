@@ -9,8 +9,8 @@
                         </span>
                         <span class="spancommon span_font_size">Customer & Product Details</span>
                     </div>
-                    <div class="mr-3" *ngIf="columnHeader?.Endorsementeffdate==null"> 
-                        <button class="maan-btn maan-btn-blue maan-button-data" (click)="openmodel(mymodal)" style="bottom:0.2rem"><span>Cover Details</span></button></div>
+                    <div class="mr-3" > 
+                        <button class="maan-btn maan-btn-blue maan-button-data" *ngIf="columnHeader?.Endorsementeffdate==null" (click)="openmodel(mymodal)" style="bottom:0.2rem"><span>Cover Details</span></button></div>
                 </div>
                 </div>
         </div>
@@ -22,8 +22,8 @@
                 <span class="spancommon span_font_size">Customer & Product Details</span>
             </span>
             </div>
-            <div class="mt-2" *ngIf="columnHeader?.Endorsementeffdate==null">
-                <button class="maan-btn maan-btn-blue maan-button-data" (click)="openmodel(mymodal)" style="bottom:0.2rem"><span>Cover Details</span></button>
+            <div class="mt-2" >
+                <button class="maan-btn maan-btn-blue maan-button-data" *ngIf="columnHeader?.Endorsementeffdate==null" (click)="openmodel(mymodal)" style="bottom:0.2rem"><span>Cover Details</span></button>
             </div>
         </div>
         <div class="maan-grid-item-body smallclass" *ngIf="productId!='4'">
@@ -326,25 +326,103 @@
                                                     </ng-container> 
                                                 </td>
                                                 <td class="classlables">
-                                                    <ng-container *ngIf="Cover.PremiumIncludedTax==null || Cover.PremiumIncludedTax==0">
-                                                       <span><b>0</b></span>
+                                                    
+                                                    <ng-container *ngIf="(Cover?.Endorsements!=null)">
+                                                        <ng-container *ngIf="(Cover?.Endorsements.length!=0)">
+                                                            
+                                                            &nbsp;&nbsp;
+                                                            <ng-container
+                                                                *ngIf="checkEndorseValue(Cover,'empty',menu)">
+                                                                <div class="d-flex justify-content-between">
+                                                                    <div></div>
+                                                                    <div>0</div>
+                                                                </div>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="!checkEndorseValue(Cover,'empty',menu)">
+                                                                <div class="d-flex justify-content-between">
+                                                                    <div></div>
+                                                                    <div>
+                                                                        <ng-container
+                                                                            *ngIf="(coverModificationYN=='Y' && !endorseSIModification )  && Cover?.DifferenceYN=='Y'">
+                                                                            0
+                                                                        </ng-container>
+                                                                        <ng-container
+                                                                            *ngIf="(coverModificationYN=='Y' && !endorseSIModification) && Cover?.Endorsements[Cover?.Endorsements.length-1].PremiumIncludedTax!=null && Cover?.Endorsements[Cover?.Endorsements.length-1].PremiumIncludedTax!=0 && Cover?.DifferenceYN=='N'">
+                                                                           Sample1 {{
+                                                                            Cover?.Endorsements[Cover?.Endorsements.length-1].PremiumIncludedTax
+                                                                            |commaseparator }}
+                                                                        </ng-container>
+                                                                        <ng-container
+                                                                            *ngIf="(coverModificationYN=='N' || endorseSIModification) && !Cover?.Endorsements[Cover?.Endorsements.length-1].PremiumIncludedTax  && (Cover?.Endorsements[Cover?.Endorsements.length-1].PremiumIncludedTax==null || Cover?.Endorsements[Cover?.Endorsements.length-1].PremiumIncludedTax==0)">
+                                                                            0
+                                                                        </ng-container>
+                                                                        <ng-container
+                                                                            *ngIf="(coverModificationYN=='N' || endorseSIModification )  && Cover?.Endorsements[Cover?.Endorsements.length-1].PremiumIncludedTax!=null && Cover?.Endorsements[Cover?.Endorsements.length-1].PremiumIncludedTax!=0 ">
+                                                                            Sample2  {{
+                                                                            Cover?.Endorsements[Cover?.Endorsements.length-1].PremiumIncludedTax
+                                                                            |commaseparator }}
+                                                                        </ng-container>
+                                                                    </div>
+                                                                </div>
+                                                            </ng-container>
+                                                        </ng-container>
                                                     </ng-container>
-                                                    <ng-container *ngIf="Cover.PremiumIncludedTax!=null && Cover.PremiumIncludedTax!=0">
-                                                        <span class="mobilelabel">Premium(Inc Tax):</span><span>{{Cover?.PremiumIncludedTax|commaseparator}}</span>
-                                                    </ng-container></td>
+
+                                                    <ng-container *ngIf="(Cover?.Endorsements==null)">
+                                                        <ng-container
+                                                            *ngIf="Cover['PremiumAfterDiscount']==null || Cover['PremiumAfterDiscount']==0">
+                                                            <div class="d-flex justify-content-between">
+                                                                <div></div>
+                                                                <div>0</div>
+                                                            </div>
+                                                        </ng-container>
+                                                        <ng-container
+                                                            *ngIf="Cover['PremiumAfterDiscount']!=null || Cover['PremiumAfterDiscount']!=0">
+                                                            <ng-container
+                                                                *ngIf="endorsementSection && Cover?.DiffPremiumIncludedTaxFC!=null && Cover?.DiffPremiumIncludedTaxFC!=0">
+                                                                <div class="d-flex justify-content-between">
+                                                                    <div>
+                                                            
+                                                                    </div>
+                                                                    <div>  {{ Cover?.DiffPremiumIncludedTax |
+                                                                        commaseparator }}</div>
+                                                                </div>
+                                                            </ng-container>
+                                                            <ng-container
+                                                                *ngIf="Cover?.DiffPremiumIncludedTax==null || Cover?.DiffPremiumIncludedTax==0 || !endorsementSection">
+                                                                <div class="d-flex justify-content-between">
+                                                                    <div>
+                                                                        
+                                                                    </div>
+                                                                    <div>
+                                                                        {{ Cover['PremiumAfterDiscount']|commaseparator }}
+                                                                    </div>
+                                                                </div>
+                                                            </ng-container>
+
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </td>
                                             </tr>
                                         </ng-container>
                                     </tbody>                   
                                      </table>
                                      <div style="float: right;">
-                                        <span  style="font-weight:600">Total Premium&nbsp;:&nbsp;</span><span style="color: #333b85;font-weight:600">
-                                            <ng-container *ngIf="columnvalue?.totalPremium == '0' || columnvalue?.totalPremium == ''|| columnvalue?.totalPremium == null">
-                                                0
-                                            </ng-container>
-                                            <ng-container *ngIf="columnvalue?.totalPremium != 0 && columnvalue?.totalPremium != null">
-                                                {{columnvalue?.totalPremium|commaseparator}}&nbsp;({{columnHeader?.Currency}})
-                                            </ng-container>
-                                        </span>
+                                        <ng-container *ngIf="columnHeader?.Endorsementeffdate==null">
+                                            <span  style="font-weight:600">Total Premium&nbsp;:&nbsp;</span><span style="color: #333b85;font-weight:600">
+                                                <ng-container *ngIf="columnvalue?.totalPremium == '0' || columnvalue?.totalPremium == ''|| columnvalue?.totalPremium == null">
+                                                    0
+                                                </ng-container>
+                                                <ng-container *ngIf="columnvalue?.totalPremium != 0 && columnvalue?.totalPremium != null">
+                                                    {{columnvalue?.totalPremium|commaseparator}}&nbsp;({{columnHeader?.Currency}})
+                                                </ng-container>
+                                            </span>
+                                        </ng-container>
+                                        <ng-container *ngIf="columnHeader?.Endorsementeffdate!=null">
+
+                                        </ng-container>
+                                        
                                      </div>
                             </mat-step>
                         </ng-container>
