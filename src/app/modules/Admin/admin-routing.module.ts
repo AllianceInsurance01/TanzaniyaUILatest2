@@ -24,6 +24,15 @@ const routes: Routes = [
     }
   },
   {
+    path: 'premiaintegrationgrid',
+    loadChildren: () => import('./othersmenu/premia.module').then(m => m.PremiaIntegrationViewModule),
+    data: {
+      preload: true,
+      title: 'Premia',
+      breadcrumb:  'Premia',
+    }
+  },
+  {
     path: 'brokersList',
     loadChildren: () => import('./loginCreation/broker/broker.module').then(m => m.BrokersModule),
     data: {
@@ -279,6 +288,7 @@ const routes: Routes = [
       breadcrumb:  'Mail Details',
     }
   },
+
   {
     path: 'taxMaster',
     loadChildren: () => import('./Masters/TaxMaster/tax-list/tax-list.module').then(m => m.TaxListsModule),
