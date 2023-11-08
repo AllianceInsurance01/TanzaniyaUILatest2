@@ -146,14 +146,14 @@ export class ProductSelectionComponent implements OnInit {
     this.insuranceId= this.userDetails.Result.InsuranceId;
       sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
     console.log("Products",item,userDetails.Result)
-    //if(this.insuranceId=='100015' || item.ProductId=='13'){
+    if(this.insuranceId=='100015' || item.ProductId=='13'){
       this.router.navigate(['/dashboardView']);
-    // }
-    // else this.router.navigate(['/Home']);
+    }
+    else this.router.navigate(['/Home']);
 
-    // else if(item.ProductId =='4') this.router.navigate(['/Travel']);
-    // //else if(item.ProductId=='7') this.router.navigate(['/HomeIns']);
-    // else if(item.ProductId=='3') this.router.navigate(['/HomeIns']);
+    //else if(item.ProductId =='4') this.router.navigate(['/Travel']);
+    //else if(item.ProductId=='7') this.router.navigate(['/HomeIns']);
+    //else if(item.ProductId=='3') this.router.navigate(['/HomeIns']);
   }
   onLicRedirect(value,item){
     let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
