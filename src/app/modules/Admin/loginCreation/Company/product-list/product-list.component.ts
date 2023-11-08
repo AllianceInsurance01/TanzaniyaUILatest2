@@ -103,6 +103,7 @@ export class ProductListComponent implements OnInit {
     if(value=='Mail') this.router.navigate(['/Admin/mailMaster']);
     if(value=='Sms') this.router.navigate(['/Admin/smsMaster/newSmsDetails']);
     if(value=='tax') this.router.navigate(['/Admin/CompanyTax']);
+    if(value=='CompanyTax') this.router.navigate(['/Admin/CompanyTax']);
     //if(value=='Color') this.router.navigate(['/Admin/companyList/companyConfigure/colorList']);
     //if(value=='Make') this.router.navigate(['/Admin/companyList/companyConfigure/MakeList']);
     //if(value=='Model') this.router.navigate(['/Admin/companyList/companyConfigure/ModelList']);

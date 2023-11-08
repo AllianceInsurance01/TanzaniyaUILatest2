@@ -17,11 +17,17 @@ export class CountryListComponent implements OnInit {
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   public InsuranceId:any;companyYn:any="N";insuranceList:any[]=[];
   userDetails: any;
+  loginId: any;
   constructor(private router:Router,private sharedService:SharedService,) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     const user = this.userDetails?.Result;
-    this.InsuranceId = user.LoginBranchDetails[0].InsuranceId;
-
+    if(user.AttachedCompanies){
+      if(user.AttachedCompanies.length!=0) this.InsuranceId=user.AttachedCompanies[0];
+    }
+    let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+    if(userDetails){
+      this.loginId = userDetails?.Result?.LoginId;
+    }
     this.countryHeader = [
       { key: 'CountryName', display: 'Country Name' },
       { key: 'CountryId', display: 'Country Code' },
@@ -49,8 +55,9 @@ export class CountryListComponent implements OnInit {
   getCompanyList(){
     let ReqObj = {
       "BrokerCompanyYn":"",
-    }
-    let urlLink = `${this.ApiUrl1}master/dropdown/company`;
+      "LoginId": this.loginId
+  }
+  let urlLink = `${this.ApiUrl1}master/dropdown/superadmincompanies`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
@@ -135,8 +142,8 @@ export class CountryListComponent implements OnInit {
         this.getExistingCountry();
       }
       else{
-        this.InsuranceId=null;
-        this.countryData=[];
+        this.InsuranceId='99999';
+        this.getExistingCountry();
       }
     }
     else{

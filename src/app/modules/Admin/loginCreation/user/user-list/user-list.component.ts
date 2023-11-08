@@ -50,7 +50,11 @@ export class UserListComponent implements OnInit {
     if(insurance){
       this.insuranceId = insurance;
     }
-    else this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+    else{
+      if(user.AttachedCompanies){
+        if(user.AttachedCompanies.length!=0) this.insuranceId=user.AttachedCompanies[0];
+      } 
+    }
     this.loginId = user.LoginId;
     this.subUserType = sessionStorage.getItem('typeValue');
     this.getInsuranceList();
@@ -204,9 +208,10 @@ export class UserListComponent implements OnInit {
     );
   }
   getInsuranceList(){
-    let urlLink = `${this.ApiUrl1}master/dropdown/company`;
+    let urlLink = `${this.ApiUrl1}master/dropdown/superadmincompanies`;
     let ReqObj ={
-      "BrokerCompanyYn": "N"
+      "BrokerCompanyYn": "N",
+      "LoginId": this.loginId
     }
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {

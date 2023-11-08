@@ -1,0 +1,183 @@
+<div class="container-fluid" style="overflow-y: scroll !important;max-height:100vh !important;">
+    <div class="product-menubar">
+        <ng-container  *ngIf="insuranceId == '100002' || insuranceId=='100015'">
+            <div class="logo-img" style="background-color: #fff;">
+                <img src="./assets/images/logo-2.png">
+            </div>
+        </ng-container>
+       
+        <ng-container *ngIf="insuranceId == '100004'">
+            <div class="logo-img" style="background-color: #fff;">
+                <img src="./assets/images/mgen-logo.png">
+            </div>
+        </ng-container>
+        
+    
+    
+        <div class="user-container">
+    
+            <div style="margin-right:50px;">
+                <!--<a (click)="onLog(title)" style="color:blue;font-size:16px;font-weight:600;cursor:pointer;display:flex;text-decoration: underline;"> LogIn </a>-->
+                <a class="productsidesection">{{loginId}} <span style="padding-left:10px;"> |</span></a>
+            </div>
+    
+            <!--<img src="assets/images/nick.png">-->
+            <div style="margin-left:-40px;">
+                <a (click)="onLog('Log out')" class="productlogout"> LogOut </a>
+            </div>
+        </div>
+    </div>
+    <div class="page-container">
+        <div class="d-flex justify-content-end">
+            <div>
+                <button class="btn btn-info" style="border-radius: 20px;"><i class="fa fa-search"></i> &nbsp; Search for Policy</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-9 col-lg-9">
+                <div class="grid">
+                    <ng-container >
+                        <div class="item master-cards" (click)="onShowPlanTypeDetails('all')">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6>Total Policy</h6>
+                                    <p></p>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn maan-btn-blue btn-circle2" ><b>23</b></button>
+                                </div>
+                            </div>
+                            <div class="bottom-row">
+                                <div class="bottom-row-item d-flex justify-content-end">
+                                    <div >
+                                        <span><b>13625.00 (TZS)</b></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item master-cards" (click)="onShowPlanTypeDetails('active')">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6>Active Policy</h6>
+                                    <p></p>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn maan-btn-blue btn-circle2" ><b>3</b></button>
+                                </div>
+                            </div>
+                            <div class="bottom-row">
+                                <div class="bottom-row-item d-flex justify-content-end">
+                                    <div >
+                                        <span><b>3150.00 (TZS)</b></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item master-cards" (click)="onShowPlanTypeDetails('expired')">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6>Expired Policy</h6>
+                                    <p></p>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn maan-btn-blue btn-circle2" ><b>20</b></button>
+                                </div>
+                            </div>
+                            <div class="bottom-row">
+                                <div class="bottom-row-item d-flex justify-content-end">
+                                    <div >
+                                        <span><b>3150.00 (TZS)</b></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="item master-cards" (click)="onShowPlanTypeDetails('commission')">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h6>Commission Policy</h6>
+                                    <p></p>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn maan-btn-blue btn-circle2" ><b>1</b></button>
+                                </div>
+                            </div>
+                            <div class="bottom-row">
+                                <div class="bottom-row-item d-flex justify-content-end">
+                                    <div >
+                                        <span><b>2275.00 (TZS)</b></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 col-md-3 col-lg-3 col-xl-3">
+                <div class="input-control-container">
+                    <label class="input-form-label">Search By</label><span class="text-danger">*</span>
+                    <ng-select class="input-form-select" appendTo="body" [items]="searchList" [(ngModel)]="searchBy" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-3 col-md-3 col-lg-3 col-xl-3">
+                <div class="input-control-container">
+                    <label class="input-form-label">Mobile No</label><span class="text-danger">*</span>
+                    <div class="input-form-box">
+                        <input type="text" maxlength="10" (keypress)="omit_special_char($event)" class="input-form-control without-icon" [(ngModel)]="searchValue">
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 col-md-2 col-lg-2 col-xl-2">
+                <label class="input-form-label spancommon span_font_size">Start Date<span class="text-danger">*</span></label>
+                <ng-container >
+                    <mat-form-field appearance="fill">
+                        <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
+                        <input matInput [matDatepicker]="picker" [max]="maxDate" [(ngModel)]="policyStartDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </ng-container>
+            </div>
+            <div class="col-2 col-md-2 col-lg-2 col-xl-2">
+                <label class="input-form-label spancommon span_font_size">End Date<span class="text-danger">*</span></label>
+                <ng-container >
+                    <mat-form-field appearance="fill">
+                        <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
+                        <input matInput [matDatepicker]="picker" [max]="maxDate" [(ngModel)]="policyEndDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </ng-container>
+            </div>
+        </div>
+        <div class="row mt-2" *ngIf="searchSection">
+            <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <ng-container *ngIf="typeValue=='all'">Total Policy Details</ng-container>
+                                <ng-container *ngIf="typeValue=='active'">Active Policy Details</ng-container>
+                                <ng-container *ngIf="typeValue=='expired'">Expired Policy Details</ng-container>
+                            </div>
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                            
+                            <div class="row">
+                                <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                                    <app-grid-table [cols]="planTypeHeader" [data]="planRecordsList" [filterValue]="filterValue">
+                                    </app-grid-table>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+</div>

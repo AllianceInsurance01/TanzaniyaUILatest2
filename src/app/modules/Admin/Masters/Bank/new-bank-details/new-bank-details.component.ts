@@ -39,6 +39,7 @@ export class NewBankDetailsComponent implements OnInit {
       let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if(userDetails){
       this.loginId = userDetails?.Result?.LoginId;
+      
       //this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
     }
 

@@ -27,7 +27,7 @@
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
                     <label class="input-form-label">Menu Type<span class="text-required">*</span></label>
-                    <ng-select class="input-form-select"  appendTo="body" [(ngModel)]="issuerType" [items]="typeList" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="input-form-select"  appendTo="body" (change)="onIssuerTypeChange()" [(ngModel)]="issuerType" [items]="typeList" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                 </div>
             </div>
@@ -83,20 +83,25 @@
         </div>
         <div class="row mt-2">
             <div class="col-12 col-md-4 col-lg-4">
-                <div class="input-control-container">
-                    <label class="input-form-label">Insurance Company<span class="text-required">*</span></label>
-                    <ng-select class="input-form-select" [disabled]="editSection || issuerType!='SuperAdmin'" [(ngModel)]="insuranceId" (change)="onCompanyChange('change',null,null)" [items]="companyList" bindValue="Code" bindLabel="CodeDesc">
+                <div class="input-control-container" *ngIf="issuerType == 'SuperAdmin'">
+                    <label class="input-form-label">Insurance Company<span class="text-required">*</span></label><!--[disabled]="issuerType!='SuperAdmin'"-->
+                    <ng-select class="input-form-select"  [multiple]="true" [(ngModel)]="insuranceIds" (change)="onCompanyChange('change',null,null)" [items]="companyList" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+                <div class="input-control-container" *ngIf="issuerType != 'SuperAdmin'">
+                    <label class="input-form-label">Insurance Company<span class="text-required">*</span></label><!--[disabled]="issuerType!='SuperAdmin'"-->
+                    <ng-select class="input-form-select" [(ngModel)]="insuranceId" (change)="onCompanyChange('change',null,null)" [items]="companyList" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                 </div>
             </div>
-            <div class="col-12 col-md-4 col-lg-4" *ngIf="issuerType == 'SuperAdmin' || issuerType == 'low'"><!--*ngIf="issuerType == 'SuperAdmin'"-->
+            <div class="col-12 col-md-4 col-lg-4" *ngIf="issuerType == 'low'"><!--*ngIf="issuerType == 'SuperAdmin'"-->
                 <div class="input-control-container">
                     <label class="input-form-label">Products<span class="text-required">*</span></label>
                     <ng-select class="input-form-select" appendTo="body" [clearSearchOnAdd]="true" [closeOnSelect]="false" [multiple]="true" [(ngModel)]="productIds" [items]="productList" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                 </div>
             </div>
-            <div class="col-12 col-md-4 col-lg-4">
+            <div class="col-12 col-md-4 col-lg-4" *ngIf="issuerType != 'SuperAdmin'">
                 <div class="input-control-container">
                     <label class="input-form-label">Branches<span class="text-required">*</span></label>
                     <ng-select class="input-form-select" appendTo="body" [clearSearchOnAdd]="true" [closeOnSelect]="false" labelForId="state" [multiple]="true" [(ngModel)]="branchIds" [items]="branchList" bindValue="Code" bindLabel="CodeDesc">
@@ -170,7 +175,7 @@
                 <label class="input-form-label">Mobile No<span class="text-required">*</span></label>
                 <div class="input-group mb-3">
                     <ng-select class="input-form-select" style="min-width: 100px;" [(ngModel)]="mobileCode" [items]="mobileCodeList" bindValue="Code" bindLabel="CodeDesc">
-                    </ng-select>
+                    </ng-select>&nbsp;
                     <div class="input-form-box">
                         <input type="text" [(ngModel)]="userMobileNo" class="input-form-control without-icon" maxlength="10">
                     </div>
@@ -196,7 +201,7 @@
                     <label class="input-form-label">WhatsApp No<span class="text-required">*</span></label>
                     <div class="input-group mb-3">
                         <ng-select class="input-form-select" style="min-width: 100px;" [(ngModel)]="whatsappCode" [items]="mobileCodeList" bindValue="Code" bindLabel="CodeDesc">
-                        </ng-select>
+                        </ng-select>&nbsp;
                         <div class="input-form-box">
                             <input type="text" class="input-form-control without-icon" [(ngModel)]="userWhatsAppNo" maxlength="10">
                         </div>

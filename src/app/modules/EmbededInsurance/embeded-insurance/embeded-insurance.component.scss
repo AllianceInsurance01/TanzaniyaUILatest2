@@ -1,0 +1,291 @@
+.grid .master-cards {
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  background-color: #fff;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.module-info-icon {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.page-container {
+  padding: 2rem;
+}
+.grid.master-cards .d-flex {
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+.btn-circle2 {
+  width: 30px;
+  height: 30px;
+  padding: 3px 0px;
+  border-radius: 15px;
+  text-align: center;
+  color: #fff;
+  background-color: #333b85;
+  font-size: 12px;
+  line-height: 1.42857;
+}
+::ng-deep {
+    .module-info-icon {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+  
+      svg.admin-icon1 {
+        width: 70px;
+        fill: var(--first-color);
+      }
+  
+      svg {
+        width: 50px;
+        fill: var(--first-color);
+      }
+  
+      svg.user-icon {
+        width: 60px;
+      }
+    }
+  
+  }
+  
+  .grid {
+    display: grid;
+    gap: 1rem;
+    grid-auto-rows: auto;
+    grid-template-columns: 1fr 1fr;
+    margin: 1rem 0;
+  
+  
+    .item {
+      border-radius: 10px;
+      cursor: pointer;
+      
+    }
+  
+    .master-cards {
+      box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+      background-color: #fff;
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+      min-width: 400px !important;
+      min-height: 125px !important;
+  
+      .d-flex {
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+  
+        h6 {
+          font-weight: bold;
+        }
+      }
+  
+      .bottom-row {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+  
+        .bottom-row-item {
+          display: flex;
+          justify-content: space-between;
+          padding: 1rem;
+          color: #084298;
+          background-color: #cfe2ff;
+  
+          i {
+  
+            font-size: 1.2rem;
+  
+          }
+        }
+      }
+    }
+  
+    .components-card {
+      background-color: #e1e8eb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 0.9rem;
+  
+      &:hover {
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+        transition: all;
+      }
+  
+      .arrow-icons {
+        i {
+  
+          font-size: 1.2rem;
+  
+        }
+      }
+    }
+  
+    .rewards-cards {
+      box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+      padding: 1rem;
+      grid-column: 1/3;
+      // grid-row: 3/3;
+  
+      .d-flex {
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+  
+        h6 {
+          font-weight: bold;
+        }
+      }
+    }
+  
+    .three-cards {
+      // padding: 1rem;
+      grid-column: 3/5;
+      // grid-row: 3/3;
+  
+      // box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+  
+      .performance-cards {
+        grid-column: 1/3;
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+        padding: 1rem;
+  
+        background-color: white;
+  
+      }
+    }
+  
+  
+    .first {
+      grid-column: 1/3;
+      grid-row: 1/3;
+    }
+  
+    @media (min-width:600px) {
+      grid-template-columns: auto auto auto auto;
+  
+      .first {
+        grid-column: 1/3;
+        grid-row: 1/3;
+      }
+  
+    }
+  
+    @media (min-width:800px) {
+      grid-template-columns: auto auto auto auto;
+  
+      .first {
+        grid-column: 1/3;
+        grid-row: 1/3;
+      }
+  
+    }
+  }
+  
+  .end-box {
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    margin: 1rem;
+    border-radius: 10px;
+    overflow: hidden;
+  
+    .end-header {
+      padding: 1rem;
+      color: #084298;
+      background-color: #cfe2ff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+  
+    }
+    .end-body{
+      padding: 1rem;
+    }
+  }
+  
+  ::ng-deep button.example-custom-date-class {
+    background: orange;
+    border-radius: 100%;
+  }
+  
+  .event-list {
+    .list-group-item {
+      margin: 0.5rem 0;
+      border: 0;
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  
+    }
+  }
+  
+  .rewards-list {
+    padding: 1.5rem;
+  
+    .list-group-item {
+      display: flex;
+      gap: 0.7rem;
+  
+      .icon-item {
+        img {
+          width: 40px;
+        }
+      }
+  
+      .about-rewards {
+        h6 {
+          margin: 0;
+        }
+      }
+    }
+  }
+  
+  .payslip-download {
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    text-align: center;
+    background-color: #f1f3f4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 0.9rem;
+    margin: 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+  
+    ::ng-deep .download-icon {
+      width: 30px;
+      fill: #084298;
+    }
+  
+  }
+  
+  .leave-info {
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 1rem;
+    background-color: white;
+    overflow: hidden;
+  
+    .leave-info-title {
+      background-color: #22C55E;
+      color: white;
+      padding: 1rem;
+    }
+  
+    .list-group-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: transparent;
+    }
+  }

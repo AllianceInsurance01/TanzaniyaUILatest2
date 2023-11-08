@@ -34,6 +34,7 @@ export class ProductSelectionComponent implements OnInit {
   branchName: any;
   insuranceid: any;
   lifeInsuraceSubSection:boolean=false;
+  insuranceId: string;
   constructor(private router: Router,
     private authService: AuthService,
     private loginService:LoginService,
@@ -142,9 +143,13 @@ export class ProductSelectionComponent implements OnInit {
     console.log('PPPPPNNNNNNN',item.ProductName)
 
     userDetails.Result['PackageYn'] = item.PackageYn;
+    this.insuranceId= this.userDetails.Result.InsuranceId;
       sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
     console.log("Products",item,userDetails.Result)
-    this.router.navigate(['/Home']);
+    //if(this.insuranceId=='100015' || item.ProductId=='13'){
+      this.router.navigate(['/dashboardView']);
+    // }
+    // else this.router.navigate(['/Home']);
 
     // else if(item.ProductId =='4') this.router.navigate(['/Travel']);
     // //else if(item.ProductId=='7') this.router.navigate(['/HomeIns']);
@@ -160,6 +165,7 @@ export class ProductSelectionComponent implements OnInit {
     userDetails.Result['PackageYn'] = item.PackageYn;
     console.log("Products",item,userDetails.Result)
     userDetails.Result['PageType'] = value;
+    
     sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
     if(value=='Illustrate'){
           this.router.navigate(['/Home/life-risk-details']);

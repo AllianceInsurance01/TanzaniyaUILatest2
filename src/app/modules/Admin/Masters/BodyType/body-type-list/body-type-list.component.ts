@@ -19,11 +19,12 @@ export class BodyTypeListComponent implements OnInit {
   public ApiUrl1:any = this.AppConfig.ApiUrl1
   public BodyTypeId:any;
   public insuranceId:any;
-  public BodyTypeData:any;SectionId:any;
+  public BodyTypeData:any[]=[];SectionId:any;
   public branchList:any;branchValue:any;
   userDetails: any;
   insuranceList: any[]=[];
   insuranceTypeList: any[]=[];
+  loginId: any;searchSection:boolean=false;
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe) {
       this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
@@ -31,7 +32,11 @@ export class BodyTypeListComponent implements OnInit {
       this.BodyTypeId = sessionStorage.getItem('BodyId');
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       const user = this.userDetails?.Result;
-      this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+      this.loginId = user?.LoginId;
+      if(user.AttachedCompanies){
+        if(user.AttachedCompanies.length!=0) this.insuranceId=user.AttachedCompanies[0];
+      }
+      //this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
      }
 
   ngOnInit(): void {
@@ -61,8 +66,9 @@ export class BodyTypeListComponent implements OnInit {
 getCompanyList(){
   let ReqObj = {
     "BrokerCompanyYn":"",
+    "LoginId": this.loginId
   }
-  let urlLink = `${this.ApiUrl1}master/dropdown/company`;
+  let urlLink = `${this.ApiUrl1}master/dropdown/superadmincompanies`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
       console.log(data);
@@ -70,6 +76,7 @@ getCompanyList(){
         let defaultObj = [{"Code":"99999","CodeDesc":"ALL"}]
         this.insuranceList = defaultObj.concat(data.Result);
         if(this.insuranceId){this.getBranchList('direct');}
+        else{this.insuranceId='99999';this.getBranchList('direct')}
       }
 
     },
@@ -128,6 +135,7 @@ getExistingBodyType(){
         console.log(data);
         if(data.Result){
             this.BodyTypeData = data?.Result;
+            this.searchSection = true;
         }
       },
       (err) => { },

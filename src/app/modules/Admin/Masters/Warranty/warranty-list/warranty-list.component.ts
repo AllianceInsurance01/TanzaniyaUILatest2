@@ -22,13 +22,14 @@ export class WarrantyListComponent implements OnInit {
   public insuranceId: any;
   BranchDetails: any = {}; WarrantyDetails: any;
   public branchList: any; branchValue: any;
-  public WarrantyData: any;
+  public WarrantyData: any[]=[];
   productList: any;
   productId: any; sectionYn: any = "N";
   productValue: any;
   userDetails: any; sectionValue:any;
   sectionList: any[];
   insuranceList: { Code: string; CodeDesc: string; }[];
+  loginId: any;
   constructor(private router: Router, private sharedService: SharedService) {
     let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if (userDetails) {
@@ -36,6 +37,7 @@ export class WarrantyListComponent implements OnInit {
       // this.insuranceId = userDetails?.Result?.InsuranceId;
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       const user = this.userDetails?.Result;
+      this.loginId = user?.LoginId;
       // this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
     }
   }
@@ -102,8 +104,9 @@ export class WarrantyListComponent implements OnInit {
   getCompanyList(){
     let ReqObj = {
       "BrokerCompanyYn":"",
+      "LoginId": this.loginId
     }
-    let urlLink = `${this.ApiUrl1}master/dropdown/company`;
+    let urlLink = `${this.ApiUrl1}master/dropdown/superadmincompanies`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
@@ -111,6 +114,7 @@ export class WarrantyListComponent implements OnInit {
           let defaultObj = [{"Code":"99999","CodeDesc":"ALL"}]
           this.insuranceList = defaultObj.concat(data.Result);
           if(this.insuranceId){this.getBranchList('direct'); this.getCompanyProductList('direct');}
+          else{this.insuranceId='99999';this.getBranchList('direct'); this.getCompanyProductList('direct');}
         }
   
       },
@@ -137,7 +141,7 @@ export class WarrantyListComponent implements OnInit {
             this.productValue = docObj?.ProductId;
             console.log('LLLLLLLLLL',this.sectionValue);
             this.getSectionList(); this.getExistingWarranty() }
-          else{ this.productValue=''; this.getSectionList(); this.getExistingWarranty() }
+          
 
 
           /*if (!this.productValue) { this.productValue = "5";

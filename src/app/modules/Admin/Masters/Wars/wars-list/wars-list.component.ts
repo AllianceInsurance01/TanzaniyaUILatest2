@@ -35,7 +35,9 @@ export class WarsListComponent implements OnInit {
     this.WarRateId =  sessionStorage.removeItem('BankCode');
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     const user = this.userDetails?.Result;
-    this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+    if(user.AttachedCompanies){
+        if(user.AttachedCompanies.length!=0) this.insuranceId=user.AttachedCompanies[0];
+      }
      }
 
   ngOnInit(): void {

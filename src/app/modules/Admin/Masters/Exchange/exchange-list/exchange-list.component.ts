@@ -24,6 +24,7 @@ export class ExchangeListComponent implements OnInit {
   public CommonApiUrl1: any = this.AppConfig.CommonApiUrl;
   userDetails: any;
   insuranceList: any[]=[];
+  loginId: any;
   constructor(public dialogService: MatDialog,private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,) {
       // this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
@@ -32,7 +33,12 @@ export class ExchangeListComponent implements OnInit {
       this.ExchangeId = sessionStorage.getItem('ExchangeId');
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       const user = this.userDetails?.Result;
-      if(this.insuranceId==undefined)this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+      this.loginId = user?.LoginId;
+      if(this.insuranceId==undefined){
+        if(user.AttachedCompanies){
+          if(user.AttachedCompanies.length!=0) this.insuranceId=user.AttachedCompanies[0];
+        }
+      }
      }
 
   ngOnInit(): void {
@@ -60,8 +66,9 @@ export class ExchangeListComponent implements OnInit {
 getCompanyList(){
   let ReqObj = {
     "BrokerCompanyYn":"",
+    "LoginId": this.loginId
   }
-  let urlLink = `${this.ApiUrl1}master/dropdown/company`;
+  let urlLink = `${this.ApiUrl1}master/dropdown/superadmincompanies`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
       console.log(data);

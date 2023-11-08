@@ -24,12 +24,13 @@ export class TaxListComponent implements OnInit {
 
   public branchList:any;branchValue:any;BranchCode:any;insuranceId:any;
   userDetails: any;
+  loginId: any;
 
   constructor(private router:Router ,private sharedService:SharedService,) {
     this.insuranceName = sessionStorage.getItem('insuranceName');
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     const user = this.userDetails?.Result;
-
+    this.loginId = user?.LoginId;
    }
 
   ngOnInit(): void {
@@ -55,9 +56,9 @@ export class TaxListComponent implements OnInit {
   getCompanyList(){
     let ReqObj = {
       "BrokerCompanyYn":"",
-  
+      "LoginId": this.loginId
     }
-    let urlLink = `${this.ApiUrl1}master/dropdown/company`;
+    let urlLink = `${this.ApiUrl1}master/dropdown/superadmincompanies`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
@@ -71,7 +72,8 @@ export class TaxListComponent implements OnInit {
             this.getList('direct');
          }
           else{
-            this.insuranceId=null;
+            this.insuranceId='99999';
+            this.getList('direct');
           }
           
         }

@@ -27,13 +27,17 @@ export class ExclusionListComponent implements OnInit {
   public productValue: any;
   public productList: any;
   insuranceList: { Code: string; CodeDesc: string; }[];
+  loginId: any;
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe) {
       //this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
       // this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       const user = this.userDetails?.Result;
-      this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+      this.loginId = user?.LoginId;
+      if(user.AttachedCompanies){
+        if(user.AttachedCompanies.length!=0) this.insuranceId=user.AttachedCompanies[0];
+      }
 
      }
 
@@ -73,8 +77,9 @@ export class ExclusionListComponent implements OnInit {
   getCompanyList(){
     let ReqObj = {
       "BrokerCompanyYn":"",
+      "LoginId": this.loginId
     }
-    let urlLink = `${this.ApiUrl1}master/dropdown/company`;
+    let urlLink = `${this.ApiUrl1}master/dropdown/superadmincompanies`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
@@ -82,6 +87,7 @@ export class ExclusionListComponent implements OnInit {
           let defaultObj = [{"Code":"99999","CodeDesc":"ALL"}]
           this.insuranceList = defaultObj.concat(data.Result);
           if(this.insuranceId){this.getBranchList('direct'); this.getCompanyProductList('direct');}
+          else{this.insuranceId='99999';this.getBranchList('direct'); this.getCompanyProductList('direct');}
         }
   
       },

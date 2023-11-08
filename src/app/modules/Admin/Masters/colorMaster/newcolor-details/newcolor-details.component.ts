@@ -36,7 +36,9 @@ export class NewcolorDetailsComponent implements OnInit {
       let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if(userDetails){
       this.loginId = userDetails?.Result?.LoginId;
-      this.insuranceId = userDetails?.Result?.LoginBranchDetails[0].InsuranceId;
+      if(userDetails?.Result.AttachedCompanies){
+        if(userDetails?.Result.AttachedCompanies.length!=0) this.insuranceId=userDetails?.Result.AttachedCompanies[0];
+      }
     }
     let Obj = JSON.parse(sessionStorage.getItem('editColorDetails'));
     if(Obj){

@@ -24,6 +24,7 @@ export class BankListComponent implements OnInit {
   userDetails:any;
   companyId: any=null;
   insuranceList: { Code: string; CodeDesc: string; }[];
+  loginId: any;
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,/*private toastrService:NbToastrService,*/) {
       this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
@@ -31,7 +32,11 @@ export class BankListComponent implements OnInit {
 
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       const user = this.userDetails?.Result;
-      this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+      this.loginId = user?.LoginId;
+      if(user.AttachedCompanies){
+        if(user.AttachedCompanies.length!=0) this.insuranceId=user.AttachedCompanies[0];
+      }
+      //this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
      }
 
   ngOnInit(): void {
@@ -74,11 +79,11 @@ get homeUrl(): string {
 getCompanyList(){
   let ReqObj = {
     "BrokerCompanyYn":"",
+    "LoginId": this.loginId
   }
-  let urlLink = `${this.ApiUrl1}master/dropdown/company`;
+  let urlLink = `${this.ApiUrl1}master/dropdown/superadmincompanies`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
-      console.log(data);
       if(data.Result){
         let defaultObj = [{"Code":"99999","CodeDesc":"ALL"}]
         this.insuranceList = defaultObj.concat(data.Result);

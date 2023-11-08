@@ -27,23 +27,47 @@ export class PremiaIntegrationViewComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   productId: string;show:boolean=false;productList:any[]=[];
+  loginId: any;
+  insuranceList: any[]=[];
   constructor(private router:Router,private sharedService:SharedService,private datePipe:DatePipe) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     const user = this.userDetails?.Result;
+    this.loginId = user?.LoginId;
     let insurance = sessionStorage.getItem('issuerInsuranceId');
     if(insurance){
       this.insuranceId = insurance;
     }
-    else this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+    else{
+      if(user.AttachedCompanies){
+        if(user.AttachedCompanies.length!=0) this.insuranceId=user.AttachedCompanies[0];
+      }
+    }
     // this.productId =  sessionStorage.getItem('companyProductId');
     this.subUserType = sessionStorage.getItem('typeValue');
   }
 
   ngOnInit(): void {
-    this.getProductList();
+    this.getCompanyList();
   }
 
- 
+  getCompanyList(){
+    let ReqObj = {
+      "BrokerCompanyYn":"",
+      "LoginId": this.loginId
+    }
+    let urlLink = `${this.ApiUrl1}master/dropdown/superadmincompanies`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+          let defaultObj = []
+          this.insuranceList = defaultObj.concat(data.Result);
+          if(this.insuranceId) this.getProductList();
+        }
+  
+      },
+      (err) => { },
+    );
+  }
   onCustomerSearch(){
     let startdate=this.datePipe.transform(this.startdate, "dd/MM/yyyy");
     let enddate=this.datePipe.transform(this.enddate, "dd/MM/yyyy");

@@ -33,7 +33,7 @@
                         </div>
 
 
-                        <ng-container *ngIf="MakeData">
+                        <ng-container *ngIf="MakeData.length!=0">
                             <app-grid-table [cols]="columnHeader" changeStatus="true" (OnStatus)="EditStatus($event)" [data]="MakeData" [filterValue]="filterValue" (onEdit)="onEditMake($event)">
                             </app-grid-table>
                         </ng-container>

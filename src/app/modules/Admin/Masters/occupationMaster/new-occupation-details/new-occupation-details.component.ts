@@ -30,7 +30,9 @@ export class NewOccupationDetailsComponent implements OnInit {
     //this.productId =  sessionStorage.getItem('companyProductId');
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     const user = this.userDetails?.Result;
-    this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+    if(user.AttachedCompanies){
+      if(user.AttachedCompanies.length!=0) this.insuranceId=user.AttachedCompanies[0];
+    }
     this.loginId = this.userDetails?.Result?.LoginId;
 
     this.paramList = [

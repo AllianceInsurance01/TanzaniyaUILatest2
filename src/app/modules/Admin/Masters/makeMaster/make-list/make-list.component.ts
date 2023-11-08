@@ -18,7 +18,7 @@ export class MakeListComponent implements OnInit {
   activeMenu:any='Make';insuranceName:any;insuranceId:any;
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
-  MakeData: any;
+  MakeData: any[]=[];
   BranchCode: any;
   title:string|any;
   MakeId:any;
@@ -28,13 +28,17 @@ export class MakeListComponent implements OnInit {
   branchList:any[]=[];
   branchValue: any;
   insuranceList: any[]=[];
+  loginId: any;
 
   constructor(private router:Router,private sharedService: SharedService/*, private dialogService: NbDialogService,private toastrService:NbToastrService */)
  {  this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
  this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
  this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       const user = this.userDetails?.Result;
-      this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+      this.loginId = user?.LoginId;
+      if(user.AttachedCompanies){
+        if(user.AttachedCompanies.length!=0) this.insuranceId=user.AttachedCompanies[0];
+      }
 
 }
 
@@ -79,8 +83,9 @@ export class MakeListComponent implements OnInit {
   getCompanyList(){
     let ReqObj = {
       "BrokerCompanyYn":"",
+      "LoginId": this.loginId
     }
-    let urlLink = `${this.ApiUrl1}master/dropdown/company`;
+    let urlLink = `${this.ApiUrl1}master/dropdown/superadmincompanies`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
@@ -88,6 +93,7 @@ export class MakeListComponent implements OnInit {
           let defaultObj = [{"Code":"99999","CodeDesc":"ALL"}]
           this.insuranceList = defaultObj.concat(data.Result);
           if(this.insuranceId){this.getBranchList('direct');}
+          else{this.insuranceId='99999';this.getBranchList('direct');}
         }
   
       },

@@ -28,8 +28,11 @@ export class NewExchangeDetailsComponent implements OnInit {
     if(userDetails){
       this.loginId = userDetails?.Result?.LoginId;
     }
-    if(this.insuranceId==undefined) this.insuranceId = userDetails?.Result?.LoginBranchDetails[0].InsuranceId;
-    //this.insuranceId = userDetails.LoginBranchDetails[0].InsuranceId;
+    if(this.insuranceId==undefined){
+    if(userDetails?.Result?.AttachedCompanies){
+      if(userDetails?.Result?.AttachedCompanies.length!=0) this.insuranceId=userDetails?.Result?.AttachedCompanies[0];
+    }
+    }
 
     this.exchangeDetails = new Exchange();
     
