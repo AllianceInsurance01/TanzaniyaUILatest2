@@ -280,7 +280,7 @@ export class MotorDocumentsComponent implements OnInit {
 
        console.log('sssssssssss',this.search)
             
-           if(this.quoteNo){
+           if(this.quoteNo || this.ReferenceNo){
             this.onPremium();
             this.VechileTira();
             this.payment();
@@ -295,7 +295,8 @@ export class MotorDocumentsComponent implements OnInit {
             this.getmachinerydetails();
            }
 
-           if(this.productId =='5' && this.quoteNo){
+           // && this.quoteNo || this.ReferenceNo 
+           if(this.productId =='5'){
             this.onRisk();
             this.getDriverDetails();
             this.getAccessories();
@@ -401,6 +402,7 @@ export class MotorDocumentsComponent implements OnInit {
       else if(this.pageFrom =='Portfolio') { this.router.navigate(['Home/NewDetails']);
     sessionStorage.setItem('Dates','new')}
     else if(this.pageFrom == 'dashboard') { this.router.navigate(['/Home'])}
+    else if(this.pageFrom == 'Endorsement') { this.router.navigate(['/Home/policies/Endorsements'])}
     }
     getCyberDetails(){
       let urlLink = `${this.motorApiUrl}api/getallcontentrisk`;
@@ -569,7 +571,7 @@ this.passengerName=type;
         "InsuranceId": this.insuranceId,
         "LoginId": null,
         "MotorCategory": null,
-        "RequestReferenceNo": null,
+        "RequestReferenceNo": this.ReferenceNo,
         "SearchKey": null,
         "SearchValue": null,
         "UserType": null,
@@ -651,9 +653,9 @@ this.passengerName=type;
             "CustomerCode": null,
             "InsuranceId": this.insuranceId,
             "MotorCategory": null,
-            "RequestReferenceNo": null,
-            "SearchKey": null,
-            "SearchValue": null,
+            "RequestReferenceNo":this.ReferenceNo,
+            "SearchKey":this.search,
+            "SearchValue": this.searchValue,
             "UserType": null,
             "VehicleMake": null,
             "VehicleModel": null,
@@ -983,7 +985,8 @@ this.passengerName=type;
     
         let ReqObj={
           "QuoteNo":this.quoteNo,
-           "ProductId":this.productId
+           "ProductId":this.productId,
+           "RequestReferenceNo": this.ReferenceNo,
         }
         let urlLink = `${this.CommonApiUrl}api/adminviewropvehicledetails`;
        
@@ -1122,7 +1125,8 @@ Documentview(){
  
   let ReqObj={
     "QuoteNo": this.quoteNo,
-    "ProductId":this.productId
+    "ProductId":this.productId,
+    "RequestReferenceNo":this.ReferenceNo,
   }
   let urlLink = `${this.CommonApiUrl}api/viewdocumentdetails`;
   //http://192.168.1.91:8086/dropdown/viewdocumentdetails
@@ -1250,5 +1254,6 @@ onListDocumentDownload(vehicleIndex,doc){
     (err) => { },
   );
 }
+
 
 }
