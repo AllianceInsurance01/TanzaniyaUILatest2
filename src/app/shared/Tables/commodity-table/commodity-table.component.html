@@ -93,7 +93,15 @@
                 </button>
                         </ng-container>
     
-                        
+                        <ng-container *ngIf="col.config.isSearchConfig">
+                            <button mat-button [matMenuTriggerFor]="menu">
+                                <i class="fas fa-cog"></i>
+                            </button>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item *ngIf="element.Status=='RA' || element.Status=='RR' || element.Status=='R' || element.Status=='P'" (click)="onView.emit(element)"><i class="fas fa-eye"></i>&nbsp;View</button>
+                                <button mat-menu-item *ngIf="element.Status=='Y' || element.Status=='RP'" (click)="onEdit.emit(element)"><i class="fas fa-marker"></i>&nbsp;Edit</button>
+                            </mat-menu>
+                        </ng-container>
                         <ng-container *ngIf="col.config.isPolicyConfig">
                             <button mat-button [matMenuTriggerFor]="menu">
                                 <i class="fas fa-cog"></i>
@@ -104,7 +112,7 @@
                                 <button mat-menu-item (click)="onDebit.emit(element)" *ngIf="element.DebitNoteNo!=null && element.DebitNoteNo!=''"><i class="fas fa-file"></i>&nbsp;Debit Note</button>
                                 <button mat-menu-item (click)="onGetEndorsements.emit(element)"><i class="fas fa-address-card"></i>&nbsp;Endorsement</button>
                                 <button mat-menu-item (click)="onView.emit(element)"><i class="fas fa-eye"></i>&nbsp;View Quote Details</button>
-                                <button mat-menu-item><i class="fas fa-credit-card"></i>&nbsp;Pay EMI</button>
+                                <button mat-menu-item (click)="onPayEmi.emit(element)" *ngIf="element.EmiYn!='N'"><i class="fas fa-credit-card"></i>&nbsp;Pay EMI</button>
                             </mat-menu>
                         </ng-container>
                         <ng-container *ngIf="col.config.isPolicyConfigss">
@@ -369,7 +377,7 @@
                                 <button mat-menu-item (click)="onDebit.emit(element)" *ngIf="element.DebitNoteNo!=null && element.DebitNoteNo!=''"><i class="fas fa-file"></i>&nbsp;Debit Note</button>
                                     <button mat-menu-item (click)="onGetEndorsements.emit(element)"><i class="fas fa-address-card"></i>&nbsp;Endorsement</button>
                                     <button mat-menu-item (click)="onView.emit(element)"><i class="fas fa-eye"></i>&nbsp;View Quote Details</button>
-                                    <button mat-menu-item><i class="fas fa-credit-card"></i>&nbsp;Pay EMI</button>
+                                    <button mat-menu-item (click)="onPayEmi.emit(element)" *ngIf="element.EmiYn!='N'"><i class="fas fa-credit-card"></i>&nbsp;Pay EMI</button>
                                 </mat-menu>
                             </ng-container>
                             <ng-container *ngIf="col.config.ismailConfig">
@@ -437,7 +445,7 @@
       display: flex !important;
       flex-direction: column; border-top:1px solid navy; border-bottom:1px solid navy;font-size:14px;"></mat-row>
       <!--overflow:scroll;-->
-    
+     
        <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>
     </mat-table>
 

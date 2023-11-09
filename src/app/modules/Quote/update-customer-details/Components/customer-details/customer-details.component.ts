@@ -3522,7 +3522,13 @@ export class CustomerDetailsComponent implements OnInit {
       this.router.navigate(['/Home/customer/ClientDetails']);
     }
     else{
-      this.router.navigate(['/Home/existingQuotes']);
+      let session=sessionStorage.getItem('Pagefrom');
+      if(session == "Search"){
+        this.router.navigate(['/Home/search']);
+      }
+      else{
+        this.router.navigate(['/Home/existingQuotes']);
+      }
     }
     // if(this.customerData.length==0){
     //   this.router.navigate(['/Home/existingQuotes/customerSelection']);
