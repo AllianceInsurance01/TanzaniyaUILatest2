@@ -29,7 +29,11 @@ export class PremiaDetailsViewComponent implements OnInit {
     if(insurance){
       this.insuranceId = insurance;
     }
-    else this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+    else{
+      if(user.AttachedCompanies){
+        if(user.AttachedCompanies.length!=0) this.insuranceId=user.AttachedCompanies[0];
+      }
+    }
     this.productId =  sessionStorage.getItem('companyProductId');
     this.subUserType = sessionStorage.getItem('typeValue');
   }

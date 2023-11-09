@@ -43,6 +43,8 @@ export class UnderWriterComponent implements OnInit {
   limit: any='0';
   innerColumnHeader: any[]=[];
   quoteHeader: any[]=[];
+  loginId: any;
+  insuranceList: { Code: string; CodeDesc: string; }[];
   constructor(private router:Router,private sharedService:SharedService,private modalService: NgbModal) {
     // let userObj = JSON.parse(sessionStorage.getItem('userEditDetails'));
     // if(userObj){
@@ -56,11 +58,12 @@ export class UnderWriterComponent implements OnInit {
     this.userId = this.userLoginId;
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     const user = this.userDetails?.Result;
-    this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+      this.loginId = user?.LoginId;
+      if(user.AttachedCompanies){
+        if(user.AttachedCompanies.length!=0) this.insuranceId=user.AttachedCompanies[0];
+      }
     sessionStorage.removeItem('loadingType');
-    if(this.insuranceId){
-      this.getProductList();
-    }
+    this.getCompanyList();
     //this.getUserProductList();
   }
 
@@ -197,6 +200,24 @@ export class UnderWriterComponent implements OnInit {
         },
       ];
     }
+  }
+  getCompanyList(){
+    let ReqObj = {
+      "BrokerCompanyYn":"",
+      "LoginId": this.loginId
+    }
+    let urlLink = `${this.ApiUrl1}master/dropdown/superadmincompanies`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+          let defaultObj = []
+          this.insuranceList = defaultObj.concat(data.Result);
+          if(this.insuranceId) this.getProductList();
+        }
+  
+      },
+      (err) => { },
+    );
   }
   getProductList(){
     console.log('KKKKKKKKKKKK',this.insuranceId);

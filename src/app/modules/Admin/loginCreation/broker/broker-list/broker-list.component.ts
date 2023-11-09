@@ -188,13 +188,12 @@ export class BrokerListComponent implements OnInit {
     this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerBranchList'])
   }
   getCompanyList(){
-    let urlLink = `${this.ApiUrl1}master/dropdown/company`;
+    let urlLink = `${this.ApiUrl1}master/dropdown/superadmincompanies`;
     let ReqObj ={
-      "BrokerCompanyYn": "N"
+      "LoginId": this.loginId
     }
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
-        console.log(data);
         if(data.Result){
             this.companyList = data.Result;
             if(this.companyList.length!=0){

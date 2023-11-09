@@ -73,245 +73,245 @@ export class SumInsuredConfigurationComponent {
 
     { key: 'EffectiveDateStart', display: 'EffectiveDate Start' }
     ];
-    this.endorsementData = [
-      {
-          "EndtTypeId": "846",
-          "EndtType": "Add New Vehicle Detail",
-          "EndtTypeDesc": "Add New Vehicle Detail",
-          "Status": "Y",
-          "Priority": "1",
-          "EndtDependantFields": [
-              "addVehicle"
-          ],
-          "EndtDependantIds": [
-              "1"
-          ],
-          "EndtFeeYn": "Y",
-          "EndtFeePercent": "2",
-          "Remarks": null,
-          "EntryDate": "28/03/2023",
-          "EffectiveDateStart": "28/03/2023",
-          "EffectiveDateEnd": "30/12/2050",
-          "CreatedBy": null,
-          "UpdatedBy": null,
-          "RegulatoryCode": null,
-          "UpdatedDate": null,
-          "AmendId": "0",
-          "CalcTypeId": "P",
-          "CoreAppCode": "20"
-      },
-      {
-          "EndtTypeId": "849",
-          "EndtType": "Change of Currency Type",
-          "EndtTypeDesc": "Change of Currency Type",
-          "Status": "Y",
-          "Priority": "1",
-          "EndtDependantFields": [
-              "Currency"
-          ],
-          "EndtDependantIds": [
-              "30"
-          ],
-          "EndtFeeYn": "Y",
-          "EndtFeePercent": "2",
-          "Remarks": "Change of Currency Type",
-          "EntryDate": "26/04/2023",
-          "EffectiveDateStart": "26/04/2023",
-          "EffectiveDateEnd": "30/12/2050",
-          "CreatedBy": "prakash_admin",
-          "UpdatedBy": "prakash_admin",
-          "RegulatoryCode": "99999",
-          "UpdatedDate": "26/04/2023",
-          "AmendId": "0",
-          "CalcTypeId": "P",
-          "CoreAppCode": "99999"
-      },
-      {
-          "EndtTypeId": "844",
-          "EndtType": "Cover Modification",
-          "EndtTypeDesc": "Cover Modification",
-          "Status": "Y",
-          "Priority": "2",
-          "EndtDependantFields": [
-              "Covers"
-          ],
-          "EndtDependantIds": [
-              "24"
-          ],
-          "EndtFeeYn": "N",
-          "EndtFeePercent": "",
-          "Remarks": "None",
-          "EntryDate": "04/04/2023",
-          "EffectiveDateStart": "04/04/2023",
-          "EffectiveDateEnd": "30/12/2050",
-          "CreatedBy": "leoAdmin",
-          "UpdatedBy": "leoAdmin",
-          "RegulatoryCode": "99999",
-          "UpdatedDate": "04/04/2023",
-          "AmendId": "0",
-          "CalcTypeId": "",
-          "CoreAppCode": "99999"
-      },
-      {
-          "EndtTypeId": "843",
-          "EndtType": "Modification Of Policy Period",
-          "EndtTypeDesc": "None",
-          "Status": "Y",
-          "Priority": "1",
-          "EndtDependantFields": [
-              "PolicyStartDate",
-              "PolicyEndDate"
-          ],
-          "EndtDependantIds": [
-              "25",
-              "26"
-          ],
-          "EndtFeeYn": "N",
-          "EndtFeePercent": "",
-          "Remarks": "None",
-          "EntryDate": "04/04/2023",
-          "EffectiveDateStart": "04/04/2023",
-          "EffectiveDateEnd": "30/12/2050",
-          "CreatedBy": "leoAdmin",
-          "UpdatedBy": "leoAdmin",
-          "RegulatoryCode": "99999",
-          "UpdatedDate": "04/04/2023",
-          "AmendId": "0",
-          "CalcTypeId": "",
-          "CoreAppCode": "99999"
-      },
-      {
-          "EndtTypeId": "845",
-          "EndtType": "Modification of Policy Period",
-          "EndtTypeDesc": "Modification of Policy Period",
-          "Status": "Y",
-          "Priority": "3",
-          "EndtDependantFields": [
-              "policyStartDate",
-              "policyEndDate"
-          ],
-          "EndtDependantIds": [
-              "1"
-          ],
-          "EndtFeeYn": "Y",
-          "EndtFeePercent": "2",
-          "Remarks": null,
-          "EntryDate": "24/03/2023",
-          "EffectiveDateStart": "24/03/2023",
-          "EffectiveDateEnd": "30/12/2050",
-          "CreatedBy": null,
-          "UpdatedBy": null,
-          "RegulatoryCode": null,
-          "UpdatedDate": null,
-          "AmendId": "0",
-          "CalcTypeId": "P",
-          "CoreAppCode": "20"
-      },
-      {
-          "EndtTypeId": "848",
-          "EndtType": "Name",
-          "EndtTypeDesc": "None",
-          "Status": "N",
-          "Priority": "2",
-          "EndtDependantFields": [
-              "testing"
-          ],
-          "EndtDependantIds": [
-              "3"
-          ],
-          "EndtFeeYn": "N",
-          "EndtFeePercent": "",
-          "Remarks": "jjhghgf",
-          "EntryDate": "25/04/2023",
-          "EffectiveDateStart": "26/04/2023",
-          "EffectiveDateEnd": "30/12/2050",
-          "CreatedBy": "prakash_admin",
-          "UpdatedBy": "prakash_admin",
-          "RegulatoryCode": "8547",
-          "UpdatedDate": "25/04/2023",
-          "AmendId": "1",
-          "CalcTypeId": "",
-          "CoreAppCode": "9965"
-      },
-      {
-          "EndtTypeId": "842",
-          "EndtType": "Policy Cancellation",
-          "EndtTypeDesc": "Policy Cancellation",
-          "Status": "Y",
-          "Priority": "42",
-          "EndtDependantFields": [
-              "test"
-          ],
-          "EndtDependantIds": [
-              "1"
-          ],
-          "EndtFeeYn": "N",
-          "EndtFeePercent": "",
-          "Remarks": "None",
-          "EntryDate": "01/04/2023",
-          "EffectiveDateStart": "01/04/2023",
-          "EffectiveDateEnd": "30/12/2050",
-          "CreatedBy": "prakashadmin",
-          "UpdatedBy": "prakashadmin",
-          "RegulatoryCode": "20",
-          "UpdatedDate": "01/04/2023",
-          "AmendId": "0",
-          "CalcTypeId": "",
-          "CoreAppCode": "20"
-      },
-      {
-          "EndtTypeId": "847",
-          "EndtType": "Remove Existing Vehicle Details",
-          "EndtTypeDesc": "Remove Existing Vehicle Details",
-          "Status": "Y",
-          "Priority": "1",
-          "EndtDependantFields": [
-              "removeVehicle"
-          ],
-          "EndtDependantIds": [
-              "1"
-          ],
-          "EndtFeeYn": "Y",
-          "EndtFeePercent": "2",
-          "Remarks": null,
-          "EntryDate": "28/03/2023",
-          "EffectiveDateStart": "28/03/2023",
-          "EffectiveDateEnd": "30/12/2050",
-          "CreatedBy": null,
-          "UpdatedBy": null,
-          "RegulatoryCode": null,
-          "UpdatedDate": null,
-          "AmendId": "0",
-          "CalcTypeId": "P",
-          "CoreAppCode": "20"
-      },
-      {
-          "EndtTypeId": "811",
-          "EndtType": "policy cancellation",
-          "EndtTypeDesc": "none",
-          "Status": "Y",
-          "Priority": "1",
-          "EndtDependantFields": [
-              "non financial"
-          ],
-          "EndtDependantIds": [
-              "2"
-          ],
-          "EndtFeeYn": "Y",
-          "EndtFeePercent": "2",
-          "Remarks": "Change of Currency Type",
-          "EntryDate": "26/04/2023",
-          "EffectiveDateStart": null,
-          "EffectiveDateEnd": "30/12/2050",
-          "CreatedBy": "prakash_admin",
-          "UpdatedBy": "prakash_admin",
-          "RegulatoryCode": "99999",
-          "UpdatedDate": "26/04/2023",
-          "AmendId": "1",
-          "CalcTypeId": "P",
-          "CoreAppCode": "99999"
-      }
-    ];
+    // this.endorsementData = [
+    //   {
+    //       "EndtTypeId": "846",
+    //       "EndtType": "Add New Vehicle Detail",
+    //       "EndtTypeDesc": "Add New Vehicle Detail",
+    //       "Status": "Y",
+    //       "Priority": "1",
+    //       "EndtDependantFields": [
+    //           "addVehicle"
+    //       ],
+    //       "EndtDependantIds": [
+    //           "1"
+    //       ],
+    //       "EndtFeeYn": "Y",
+    //       "EndtFeePercent": "2",
+    //       "Remarks": null,
+    //       "EntryDate": "28/03/2023",
+    //       "EffectiveDateStart": "28/03/2023",
+    //       "EffectiveDateEnd": "30/12/2050",
+    //       "CreatedBy": null,
+    //       "UpdatedBy": null,
+    //       "RegulatoryCode": null,
+    //       "UpdatedDate": null,
+    //       "AmendId": "0",
+    //       "CalcTypeId": "P",
+    //       "CoreAppCode": "20"
+    //   },
+    //   {
+    //       "EndtTypeId": "849",
+    //       "EndtType": "Change of Currency Type",
+    //       "EndtTypeDesc": "Change of Currency Type",
+    //       "Status": "Y",
+    //       "Priority": "1",
+    //       "EndtDependantFields": [
+    //           "Currency"
+    //       ],
+    //       "EndtDependantIds": [
+    //           "30"
+    //       ],
+    //       "EndtFeeYn": "Y",
+    //       "EndtFeePercent": "2",
+    //       "Remarks": "Change of Currency Type",
+    //       "EntryDate": "26/04/2023",
+    //       "EffectiveDateStart": "26/04/2023",
+    //       "EffectiveDateEnd": "30/12/2050",
+    //       "CreatedBy": "prakash_admin",
+    //       "UpdatedBy": "prakash_admin",
+    //       "RegulatoryCode": "99999",
+    //       "UpdatedDate": "26/04/2023",
+    //       "AmendId": "0",
+    //       "CalcTypeId": "P",
+    //       "CoreAppCode": "99999"
+    //   },
+    //   {
+    //       "EndtTypeId": "844",
+    //       "EndtType": "Cover Modification",
+    //       "EndtTypeDesc": "Cover Modification",
+    //       "Status": "Y",
+    //       "Priority": "2",
+    //       "EndtDependantFields": [
+    //           "Covers"
+    //       ],
+    //       "EndtDependantIds": [
+    //           "24"
+    //       ],
+    //       "EndtFeeYn": "N",
+    //       "EndtFeePercent": "",
+    //       "Remarks": "None",
+    //       "EntryDate": "04/04/2023",
+    //       "EffectiveDateStart": "04/04/2023",
+    //       "EffectiveDateEnd": "30/12/2050",
+    //       "CreatedBy": "leoAdmin",
+    //       "UpdatedBy": "leoAdmin",
+    //       "RegulatoryCode": "99999",
+    //       "UpdatedDate": "04/04/2023",
+    //       "AmendId": "0",
+    //       "CalcTypeId": "",
+    //       "CoreAppCode": "99999"
+    //   },
+    //   {
+    //       "EndtTypeId": "843",
+    //       "EndtType": "Modification Of Policy Period",
+    //       "EndtTypeDesc": "None",
+    //       "Status": "Y",
+    //       "Priority": "1",
+    //       "EndtDependantFields": [
+    //           "PolicyStartDate",
+    //           "PolicyEndDate"
+    //       ],
+    //       "EndtDependantIds": [
+    //           "25",
+    //           "26"
+    //       ],
+    //       "EndtFeeYn": "N",
+    //       "EndtFeePercent": "",
+    //       "Remarks": "None",
+    //       "EntryDate": "04/04/2023",
+    //       "EffectiveDateStart": "04/04/2023",
+    //       "EffectiveDateEnd": "30/12/2050",
+    //       "CreatedBy": "leoAdmin",
+    //       "UpdatedBy": "leoAdmin",
+    //       "RegulatoryCode": "99999",
+    //       "UpdatedDate": "04/04/2023",
+    //       "AmendId": "0",
+    //       "CalcTypeId": "",
+    //       "CoreAppCode": "99999"
+    //   },
+    //   {
+    //       "EndtTypeId": "845",
+    //       "EndtType": "Modification of Policy Period",
+    //       "EndtTypeDesc": "Modification of Policy Period",
+    //       "Status": "Y",
+    //       "Priority": "3",
+    //       "EndtDependantFields": [
+    //           "policyStartDate",
+    //           "policyEndDate"
+    //       ],
+    //       "EndtDependantIds": [
+    //           "1"
+    //       ],
+    //       "EndtFeeYn": "Y",
+    //       "EndtFeePercent": "2",
+    //       "Remarks": null,
+    //       "EntryDate": "24/03/2023",
+    //       "EffectiveDateStart": "24/03/2023",
+    //       "EffectiveDateEnd": "30/12/2050",
+    //       "CreatedBy": null,
+    //       "UpdatedBy": null,
+    //       "RegulatoryCode": null,
+    //       "UpdatedDate": null,
+    //       "AmendId": "0",
+    //       "CalcTypeId": "P",
+    //       "CoreAppCode": "20"
+    //   },
+    //   {
+    //       "EndtTypeId": "848",
+    //       "EndtType": "Name",
+    //       "EndtTypeDesc": "None",
+    //       "Status": "N",
+    //       "Priority": "2",
+    //       "EndtDependantFields": [
+    //           "testing"
+    //       ],
+    //       "EndtDependantIds": [
+    //           "3"
+    //       ],
+    //       "EndtFeeYn": "N",
+    //       "EndtFeePercent": "",
+    //       "Remarks": "jjhghgf",
+    //       "EntryDate": "25/04/2023",
+    //       "EffectiveDateStart": "26/04/2023",
+    //       "EffectiveDateEnd": "30/12/2050",
+    //       "CreatedBy": "prakash_admin",
+    //       "UpdatedBy": "prakash_admin",
+    //       "RegulatoryCode": "8547",
+    //       "UpdatedDate": "25/04/2023",
+    //       "AmendId": "1",
+    //       "CalcTypeId": "",
+    //       "CoreAppCode": "9965"
+    //   },
+    //   {
+    //       "EndtTypeId": "842",
+    //       "EndtType": "Policy Cancellation",
+    //       "EndtTypeDesc": "Policy Cancellation",
+    //       "Status": "Y",
+    //       "Priority": "42",
+    //       "EndtDependantFields": [
+    //           "test"
+    //       ],
+    //       "EndtDependantIds": [
+    //           "1"
+    //       ],
+    //       "EndtFeeYn": "N",
+    //       "EndtFeePercent": "",
+    //       "Remarks": "None",
+    //       "EntryDate": "01/04/2023",
+    //       "EffectiveDateStart": "01/04/2023",
+    //       "EffectiveDateEnd": "30/12/2050",
+    //       "CreatedBy": "prakashadmin",
+    //       "UpdatedBy": "prakashadmin",
+    //       "RegulatoryCode": "20",
+    //       "UpdatedDate": "01/04/2023",
+    //       "AmendId": "0",
+    //       "CalcTypeId": "",
+    //       "CoreAppCode": "20"
+    //   },
+    //   {
+    //       "EndtTypeId": "847",
+    //       "EndtType": "Remove Existing Vehicle Details",
+    //       "EndtTypeDesc": "Remove Existing Vehicle Details",
+    //       "Status": "Y",
+    //       "Priority": "1",
+    //       "EndtDependantFields": [
+    //           "removeVehicle"
+    //       ],
+    //       "EndtDependantIds": [
+    //           "1"
+    //       ],
+    //       "EndtFeeYn": "Y",
+    //       "EndtFeePercent": "2",
+    //       "Remarks": null,
+    //       "EntryDate": "28/03/2023",
+    //       "EffectiveDateStart": "28/03/2023",
+    //       "EffectiveDateEnd": "30/12/2050",
+    //       "CreatedBy": null,
+    //       "UpdatedBy": null,
+    //       "RegulatoryCode": null,
+    //       "UpdatedDate": null,
+    //       "AmendId": "0",
+    //       "CalcTypeId": "P",
+    //       "CoreAppCode": "20"
+    //   },
+    //   {
+    //       "EndtTypeId": "811",
+    //       "EndtType": "policy cancellation",
+    //       "EndtTypeDesc": "none",
+    //       "Status": "Y",
+    //       "Priority": "1",
+    //       "EndtDependantFields": [
+    //           "non financial"
+    //       ],
+    //       "EndtDependantIds": [
+    //           "2"
+    //       ],
+    //       "EndtFeeYn": "Y",
+    //       "EndtFeePercent": "2",
+    //       "Remarks": "Change of Currency Type",
+    //       "EntryDate": "26/04/2023",
+    //       "EffectiveDateStart": null,
+    //       "EffectiveDateEnd": "30/12/2050",
+    //       "CreatedBy": "prakash_admin",
+    //       "UpdatedBy": "prakash_admin",
+    //       "RegulatoryCode": "99999",
+    //       "UpdatedDate": "26/04/2023",
+    //       "AmendId": "1",
+    //       "CalcTypeId": "P",
+    //       "CoreAppCode": "99999"
+    //   }
+    // ];
     this.getTableList();
   }
 
@@ -435,8 +435,9 @@ export class SumInsuredConfigurationComponent {
     this.productSection = false;
     this.referralSection = false;
     this.endorseSection = true;
-    this.categoryId="";
+    this.categoryId="1";
     this.productIds=row.ProductId;
+    this.getEndorsementList();
     this.onProceed('endorse');
  
     if(this.productIds){

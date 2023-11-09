@@ -17,9 +17,14 @@ export class CompanyListComponent implements OnInit {
   brokerYn:any;
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
+  userDetails: any;
+  loginId: any;
   constructor(private router:Router,private sharedService: SharedService) {
     sessionStorage.removeItem('insuranceConfigureId')
     this.brokerYn = "N";
+    this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+    const user = this.userDetails?.Result;
+    this.loginId = user?.LoginId;
         this.getCompanyList();
   }
 
@@ -28,6 +33,7 @@ export class CompanyListComponent implements OnInit {
   getCompanyList(){
     let ReqObj = {
       "BrokerCompanyYn":this.brokerYn,
+      "LoginId": this.loginId,
       "Limit":"0",
       "Offset":""
     }

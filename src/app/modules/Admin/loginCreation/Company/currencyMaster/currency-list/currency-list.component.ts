@@ -23,8 +23,13 @@ export class CurrencyListComponent implements OnInit {
   public CommonApiUrl1: any = this.AppConfig.CommonApiUrl;
   dialogService: any;
   insuranceList: { Code: string; CodeDesc: string; }[];
+  loginId: any;
   constructor(private router:Router, private sharedService: SharedService) {
     this.activeMenu = "Currency";
+    let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+    if(userDetails){
+      this.loginId = userDetails?.Result?.LoginId;
+    }
     this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
     // this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
     this.CurrencyId =  sessionStorage.getItem('CurrencyId');
@@ -148,8 +153,9 @@ export class CurrencyListComponent implements OnInit {
   getCompanyList(){
     let ReqObj = {
       "BrokerCompanyYn":"",
-    }
-    let urlLink = `${this.ApiUrl1}master/dropdown/company`;
+      "LoginId": this.loginId
+  }
+  let urlLink = `${this.ApiUrl1}master/dropdown/superadmincompanies`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
@@ -157,6 +163,7 @@ export class CurrencyListComponent implements OnInit {
           let defaultObj = [{"Code":"99999","CodeDesc":"ALL"}]
           this.insuranceList = defaultObj.concat(data.Result);
           if(this.insuranceId) {this.getExistingCurrency('direct')}
+          else{this.insuranceId='99999';this.getExistingCurrency('direct')}
            //{this.getBranchList('direct'); this.getCompanyProductList('direct');}
         }
   

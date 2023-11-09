@@ -49,8 +49,10 @@ export class NewWarsDetailsComponent implements OnInit {
       this.insuranceId = userDetails?.Result?.InsuranceId;
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       const user = this.userDetails?.Result;
-      this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
-      this.loginId = userDetails?.Result?.LoginId;
+      this.loginId = user?.LoginId;
+      if(user.AttachedCompanies){
+        if(user.AttachedCompanies.length!=0) this.insuranceId=user.AttachedCompanies[0];
+      }
     }
     this.WarsDetails = new Wars();
     let docObj = JSON.parse(sessionStorage.getItem('WarRateId'))

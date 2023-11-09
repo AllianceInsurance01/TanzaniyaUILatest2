@@ -22,6 +22,7 @@ export class ExistingOccupationsComponent implements OnInit {
   branchList: any[]=[];branchValue:any;userDetails:any;
   pro: any;
   insuranceList: { Code: string; CodeDesc: string; }[];
+  loginId: any;
   constructor(private router:Router,private sharedService: SharedService) {
 
      //this.productId =  sessionStorage.getItem('companyProductId');
@@ -32,7 +33,10 @@ export class ExistingOccupationsComponent implements OnInit {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
 
     const user = this.userDetails?.Result;
-    this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+    this.loginId = user?.LoginId;
+    if(user.AttachedCompanies){
+      if(user.AttachedCompanies.length!=0) this.insuranceId=user.AttachedCompanies[0];
+    }
     console.log('PPPPPPPPPPPP',this.productId);
     let docObj = JSON.parse(sessionStorage.getItem('addDetails'))
     if(docObj){ this.branchValue = docObj?.branch;this.insuranceId=docObj?.InsuranceId}
@@ -94,8 +98,9 @@ export class ExistingOccupationsComponent implements OnInit {
   getCompanyList(){
     let ReqObj = {
       "BrokerCompanyYn":"",
+      "LoginId": this.loginId
     }
-    let urlLink = `${this.ApiUrl1}master/dropdown/company`;
+    let urlLink = `${this.ApiUrl1}master/dropdown/superadmincompanies`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);

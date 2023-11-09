@@ -31,6 +31,11 @@
                     <app-grid-table [cols]="dropdownHeader" changeStatus="true" (OnStatus)="EditStatus($event)" [data]="TaxData" [filterValue]="filterValue" (onEdit)="onEditDrop($event)">
                     </app-grid-table>
                 </ng-container>
+                <ng-container *ngIf="TaxData.length==0">
+                        <div class="text-center">
+                                No Data Available
+                        </div>
+                </ng-container>
 
             </div>
         </div>

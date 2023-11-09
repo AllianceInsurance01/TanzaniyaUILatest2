@@ -36,9 +36,14 @@
                 </div>
             </div>
             
-            <ng-container *ngIf="BodyTypeData">
+            <ng-container *ngIf="BodyTypeData.length!=0">
                 <app-grid-table [cols]="columnHeader" changeStatus="true" (OnStatus)="EditStatus($event)" [data]="BodyTypeData" [filterValue]="filterValue" (onEdit)="onEditBody($event)">
                 </app-grid-table>
+            </ng-container>
+            <ng-container *ngIf="BodyTypeData.length==0 && searchSection">
+                    <div class="text-center">
+                        No Data Available
+                    </div>
             </ng-container>
         </div>
     </div>

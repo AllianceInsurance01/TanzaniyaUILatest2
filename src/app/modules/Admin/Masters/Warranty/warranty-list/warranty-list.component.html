@@ -68,10 +68,14 @@
             </div>
         </div>
         <div >
-            <ng-container *ngIf="WarrantyData">
-                <app-grid-table [cols]="columnHeader" changeStatus="true" (OnStatus)="EditStatus($event)"
-                    [data]="WarrantyData" [filterValue]="filterValue" (onEdit)="onEditSection($event)">
-                </app-grid-table>
+            <ng-container *ngIf="WarrantyData.length!=0">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                        <app-grid-table [cols]="columnHeader" changeStatus="true" (OnStatus)="EditStatus($event)"
+                            [data]="WarrantyData" [filterValue]="filterValue" (onEdit)="onEditSection($event)">
+                        </app-grid-table>
+                    </div>
+                </div>
             </ng-container>
         </div>
     </div>

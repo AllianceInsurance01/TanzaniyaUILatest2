@@ -241,6 +241,7 @@ emiyn="N";
   loginType: any;modifyCommissionYN:any='N';
   endorsementCategory: any;commissionPercent:any=null;
   commissionValue: any=null;
+  SourceType: any;
   constructor(public sharedService: SharedService,private authService: AuthService,private router:Router,private modalService: NgbModal,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe,public dialog: MatDialog) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -1312,6 +1313,7 @@ getMotorUsageList(vehicleValue){
               
               let vehicleList:any[]=[];
               if(this.vehicleData.length!=0){
+                this.SourceType = this.vehicleData[0].SourceType;
                 this.commissionValue = this.vehicleData[0].CommissionPercentage;
                 this.commissionPercent = this.vehicleData[0].CommissionPercentage;
                 this.policyStartDate = this.vehicleData[0]?.PolicyStartDate;

@@ -1,370 +1,360 @@
 <div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div>
+                Model Details
+            </div>
 
-            <div class="vision-grid-item">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                Model Deatails
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Make Name <span class="text-required">*</span></label>
-                                    <ng-select class="input-form-select" appendTo="body" disabled [items]="ModelList" [(ngModel)]="MakeId" bindValue="Code" bindLabel="CodeDesc">
-                                    </ng-select>
-                                    <!--<div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.MakeNameEn">
-                                    </div>-->
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Regulatory Code<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.RegulatoryCode">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Batch Id<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="ModelDetails.BatchId" maxlength="100">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Branch Code<span class="text-required">*</span></label>
-                                    <ng-select class="input-form-select" disabled appendTo="body" [items]="branchList" bindValue="Code" [(ngModel)]="branchValue" bindLabel="CodeDesc">
-                                    </ng-select>
-                                    <!--<div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="branchValue">
-                                    </div>-->
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Body Name En<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.BodyNameEn">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Core Make Id<span class="text-required" >*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="ModelDetails.CoreMakeId" maxlength="100">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Core Model Id<span class="text-required" >*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" [(ngModel)]="ModelDetails.CoreModelId" maxlength="100">
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Model Name<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.ModelNameEn">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Body Id<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.BodyId">
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Net Rate<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.NetRate">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Other Body Id1<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.OtherBodyId1">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Other Body Id2<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.OtherBodyId2">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Other Make Id1<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.OtherMakeId1">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Other Make Id2<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.OtherMakeId2">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Other Model Id1<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.OtherModelId1">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Other Model Id2<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.OtherModelId2">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Prima Code<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.PrimaCode">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Core BodyId<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.CoreBodyId">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Core Ref No<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.CoreRefNo">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Ref No<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.RefNo">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.CoreAppCode">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Rop Body Id<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.RopBodyId">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Tpl Rate<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.TplRate">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Uploaded By<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.UploadedBy">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">VehCc<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.VehCc">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Veh Class<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.VehClass">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Veh Class En<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.VehClassEn">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Veh Fuel type<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.VehFueltype">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Veh Manf Country<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.VehManfCountry">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Veh Manf CountryEn<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.VehManfCountryEn">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Veh Manf Region<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.VehManfRegion">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Veh Manf Region En<span class="text-required">*</span></label>
-                                    <div class="input-form-box">
-                                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.VehManfRegionEn">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- <div class="col-12 col-md-4 col-lg-4">
-                              <div class="input-control-container">
-                                  <label class="input-form-label">Core App Code<span class="text-required" >*</span></label>
-                                  <div class="input-form-box">
-                                      <input type="text" class="input-form-control without-icon" [(ngModel)]="sectionDetails.CoreAppCode" maxlength="20">
-                                  </div>
-                              </div>
-                          </div> -->
-                            <!--<div class="col-12 col-md-4 col-lg-4">
-                              <div class="input-control-container">
-                                  <label class="input-form-label">Status<span class="text-required">*</span></label>
-                                  <div class="input-form-radio-box">
-                                      <div class="radio-toolbar">
-                                          <input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="sectionDetails.Status" value="P">
-                                          <label for="orginwarehouse_Pending">Pending</label>
-                                          <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="sectionDetails.Status" value="Y">
-                                          <label for="orginwarehouse_Yes">Active</label>
-                                          <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="sectionDetails.Status" value="N">
-                                          <label for="orginwarehouse_No">DeActive</label>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>-->
-                        </div>
-                        <div class="row">
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
-                                <mat-form-field appearance="fill">
-                                    <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="onDateFormatInEdit" [(ngModel)]="ModelDetails.EffectiveDateStart">
-                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
-                                </mat-form-field>
-                                <!-- <div class="input-control-container">
-                                  <label class="input-form-label">Effective Date Start<span class="text-required">*</span></label>
-                                  <div class="input-form-box">
-                                      <input matInput [matDatepicker]="picker" [(ngModel)]="productDetails.EffectiveDateStart">
-                                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                      <mat-datepicker #picker></mat-datepicker>
-                                  </div>
-                              </div> -->
-                            </div>
-                            <!-- <div class="col-12 col-md-4 col-lg-4">
-                              <div class="input-control-container">
-                                  <mat-form-field appearance="fill">
-                                      <mat-label>End Date</mat-label>
-                                      <input matInput [matDatepicker]="picker1" [min]="sectionDetails.EffectiveDateStart" [(ngModel)]="sectionDetails.EffectiveDateEnd">
-                                      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                      <mat-datepicker #picker1></mat-datepicker>
-                                  </mat-form-field>
-                              </div>
-                          </div> -->
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Remarks<span class="text-required" >*</span></label>
-                                    <div class="input-form-box">
-                                        <textarea cols="60" ros="3" class="input-form-select" [(ngModel)]="ModelDetails.Remarks"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-md-4 col-lg-4">
-                                <div class="input-control-container">
-                                    <label class="input-form-label">Base Rate<span class="text-required" >*</span></label>
-                                    <div class="input-form-box">
-                                        <textarea cols="60" ros="3" class="input-form-select" [(ngModel)]="ModelDetails.BaseRate"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                        <div class="row">
-
-                        </div>
-                    </div>
-                    <div>
-                        <div class="d-flex justify-content-end">
-                            <div>
-
-                            </div>
-                            <div>
-                                <button class="btn btn-danger" (click)="dismiss()">Cancel</button>
-                                <button  class="ml-2 btn btn-success" (click)="onSaveModel()">Save</button>
-                            </div>
-                        </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Make Name <span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" appendTo="body" disabled [items]="ModelList" [(ngModel)]="MakeId" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                    <!--<div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.MakeNameEn">
+                    </div>-->
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Regulatory Code<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.RegulatoryCode">
                     </div>
                 </div>
             </div>
+
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Batch Id<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="ModelDetails.BatchId" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Branch Code<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" disabled appendTo="body" [items]="branchList" bindValue="Code" [(ngModel)]="branchValue" bindLabel="CodeDesc">
+                    </ng-select>
+                    <!--<div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="branchValue">
+                    </div>-->
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Body Name En<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.BodyNameEn">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Core Make Id<span class="text-required" >*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="ModelDetails.CoreMakeId" maxlength="100">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Core Model Id<span class="text-required" >*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" [(ngModel)]="ModelDetails.CoreModelId" maxlength="100">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Model Name<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.ModelNameEn">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Body Id<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.BodyId">
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Net Rate<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.NetRate">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Other Body Id1<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.OtherBodyId1">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Other Body Id2<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.OtherBodyId2">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Other Make Id1<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.OtherMakeId1">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Other Make Id2<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.OtherMakeId2">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Other Model Id1<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.OtherModelId1">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Other Model Id2<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.OtherModelId2">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Prima Code<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.PrimaCode">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Core BodyId<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.CoreBodyId">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Core Ref No<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.CoreRefNo">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Ref No<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.RefNo">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Core App Code<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.CoreAppCode">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Rop Body Id<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.RopBodyId">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Tpl Rate<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.TplRate">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Uploaded By<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.UploadedBy">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">VehCc<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.VehCc">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Veh Class<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.VehClass">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Veh Class En<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.VehClassEn">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Veh Fuel type<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.VehFueltype">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Veh Manf Country<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.VehManfCountry">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Veh Manf CountryEn<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.VehManfCountryEn">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Veh Manf Region<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.VehManfRegion">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Veh Manf Region En<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.VehManfRegionEn">
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-12 col-md-4 col-lg-4">
+              <div class="input-control-container">
+                  <label class="input-form-label">Core App Code<span class="text-required" >*</span></label>
+                  <div class="input-form-box">
+                      <input type="text" class="input-form-control without-icon" [(ngModel)]="sectionDetails.CoreAppCode" maxlength="20">
+                  </div>
+              </div>
+          </div> -->
+            <!--<div class="col-12 col-md-4 col-lg-4">
+              <div class="input-control-container">
+                  <label class="input-form-label">Status<span class="text-required">*</span></label>
+                  <div class="input-form-radio-box">
+                      <div class="radio-toolbar">
+                          <input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="sectionDetails.Status" value="P">
+                          <label for="orginwarehouse_Pending">Pending</label>
+                          <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="sectionDetails.Status" value="Y">
+                          <label for="orginwarehouse_Yes">Active</label>
+                          <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="sectionDetails.Status" value="N">
+                          <label for="orginwarehouse_No">DeActive</label>
+                      </div>
+                  </div>
+              </div>
+          </div>-->
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-4">
+                <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="onDateFormatInEdit" [(ngModel)]="ModelDetails.EffectiveDateStart">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <!-- <div class="input-control-container">
+                  <label class="input-form-label">Effective Date Start<span class="text-required">*</span></label>
+                  <div class="input-form-box">
+                      <input matInput [matDatepicker]="picker" [(ngModel)]="productDetails.EffectiveDateStart">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                  </div>
+              </div> -->
+            </div>
+            <!-- <div class="col-12 col-md-4 col-lg-4">
+              <div class="input-control-container">
+                  <mat-form-field appearance="fill">
+                      <mat-label>End Date</mat-label>
+                      <input matInput [matDatepicker]="picker1" [min]="sectionDetails.EffectiveDateStart" [(ngModel)]="sectionDetails.EffectiveDateEnd">
+                      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                      <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+              </div>
+          </div> -->
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Remarks<span class="text-required" >*</span></label>
+                    <div class="input-form-box">
+                        <textarea cols="60" ros="3" class="input-form-select" [(ngModel)]="ModelDetails.Remarks"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="input-control-container">
+                    <label class="input-form-label">Base Rate<span class="text-required" >*</span></label>
+                    <div class="input-form-box">
+                        <textarea cols="60" ros="3" class="input-form-select" [(ngModel)]="ModelDetails.BaseRate"></textarea>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+
+        </div>
+    </div>
+    <div>
+        <div class="text-center">
+            <button class="btn btn-danger" (click)="dismiss()">Cancel</button>&nbsp;
+                <button  class="ml-2 btn btn-success" (click)="onSaveModel()">Save</button>
+        </div>
+    </div>
 </div>

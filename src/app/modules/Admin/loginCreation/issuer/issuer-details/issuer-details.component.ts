@@ -32,6 +32,7 @@ export class IssuerDetailsComponent implements OnInit {
   EndrosementType: any;
   issuerId: string;
   changePasswordYN: any='N';
+  insuranceIds: any[]=[];
   constructor(private router:Router,private sharedService:SharedService,
     private datePipe:DatePipe) {
     this.minDate = new Date();
@@ -42,10 +43,15 @@ export class IssuerDetailsComponent implements OnInit {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     const user = this.userDetails?.Result;
     let insurance = sessionStorage.getItem('issuerInsuranceId');
-    if(insurance){
-      this.insuranceId = insurance;
-    }
-    else this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
+      if(insurance){
+        this.insuranceId = insurance;
+      }
+      else{
+        if(user.AttachedCompanies){
+          if(user.AttachedCompanies.length!=0) this.insuranceId=user.AttachedCompanies[0];
+        }
+      }
+      this.onCompanyChange('change',null,null);
     this.loginId = userDetails?.Result?.LoginId;
     this.typeList = [
       { "Code":"SuperAdmin","CodeDesc":"SuperAdmin" },
@@ -62,7 +68,11 @@ export class IssuerDetailsComponent implements OnInit {
     {"Code":'None',"CodeDesc":'None',  multiple: false},
   ]*/
    }
-
+   onIssuerTypeChange(){
+    if(this.issuerType!='low'){
+          this.productIds = [];
+    }
+   }
    Endrosement(value){
 
     if(this.EndrosementType){
@@ -75,9 +85,10 @@ export class IssuerDetailsComponent implements OnInit {
 
   }
    getInsuranceList(type,value){
-    let urlLink = `${this.ApiUrl1}master/dropdown/company`;
+    let urlLink = `${this.ApiUrl1}master/dropdown/superadmincompanies`;
     let ReqObj ={
-      "BrokerCompanyYn": "N"
+      "BrokerCompanyYn": "N",
+      "LoginId": this.loginId
     }
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
@@ -126,9 +137,8 @@ export class IssuerDetailsComponent implements OnInit {
       this.getEditIssuerDetails(this.issuerId);
     }
     else{
-
-      this.insuranceId = sessionStorage.getItem('issuerInsuranceId');
-      this.onCompanyChange('change',null,null);
+      
+      
       this.editSection = false;
     }
 
@@ -148,7 +158,7 @@ export class IssuerDetailsComponent implements OnInit {
               if(loginInformation?.EffectiveDateStart!=null){
                 this.effectiveDate = this.onDateFormatInEdit(loginInformation?.EffectiveDateStart)
               }
-            this.insuranceId = loginInformation?.InsuranceId;
+            //this.insuranceId = loginInformation?.InsuranceId;
             this.onCompanyChange('direct',loginInformation?.AttachedBranches,loginInformation?.ProductIds)
 
             let n=sessionStorage.getItem('ReferralId')
@@ -159,11 +169,17 @@ export class IssuerDetailsComponent implements OnInit {
             this.userName = personalInfo?.UserName;
             this.userMobileNo = personalInfo?.UserMobile;
             this.userEmail = personalInfo?.UserMail;
-
+           
             this.agencyCode = loginInformation?.AgencyCode;
             this.issuerLoginId = loginInformation?.LoginId;
             this.statusValue = loginInformation?.Status;
             this.issuerType = loginInformation?.SubUserType;
+            if(loginInformation?.AttachedCompanies){
+              if(loginInformation?.AttachedCompanies.length!=0){
+                if(this.issuerType=='SuperAdmin') this.insuranceIds = loginInformation?.AttachedCompanies;
+                else this.insuranceId = loginInformation?.AttachedCompanies[0];
+              }
+            }
             this.address1 = personalInfo?.Address1;
             this.address2 = personalInfo?.Address2;
             this.CountryCode = personalInfo?.CountryCode;
@@ -239,7 +255,10 @@ export class IssuerDetailsComponent implements OnInit {
     // );
   }
   onCompanyChange(type,branches,products){
-    if(this.insuranceId!='' && this.insuranceId!= undefined){
+    if(this.issuerType=='SuperAdmin'){
+        this.branchIds = [];
+    }
+    else if(this.insuranceId!='' && this.insuranceId!= undefined){
       let urlLink = `${this.ApiUrl1}master/dropdown/companyproducts`;
       let ReqObj ={
         "InsuranceId": this.insuranceId
@@ -379,6 +398,11 @@ export class IssuerDetailsComponent implements OnInit {
     else{
       referral="";
     }
+    if(this.issuerType!='SuperAdmin' && this.insuranceId!=null && this.insuranceId!=undefined){
+      this.insuranceIds=[];
+      this.insuranceIds.push(this.insuranceId);
+    }
+    else this.insuranceId = null;
     let ReqObj = {
       "LoginInformation": {
         "LoginId": this.issuerLoginId,
@@ -390,6 +414,7 @@ export class IssuerDetailsComponent implements OnInit {
         "Password": this.password,
         "Status": this.statusValue,
          "AttachedBranches": this.branchIds,
+         "AttachedCompanies" : this.insuranceIds ,
         "ProductIds": this.productIds,
         "InsuranceId": this.insuranceId,
         "EffectiveDateStart": this.effectiveDate,

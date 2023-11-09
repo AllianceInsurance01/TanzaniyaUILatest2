@@ -31,5 +31,7 @@ export class MailListComponent implements OnInit {
     // if(value=='Sms') this.router.navigate(['/Admin/companyList/companyConfigure/SmsList']);
     if(value=='Mail') this.router.navigate(['/Admin/mailMaster']);
     if(value=='Sms') this.router.navigate(['/Admin/smsMaster/newSmsDetails']);
+    if(value=='tax') this.router.navigate(['/Admin/CompanyTax']);
+    if(value=='CompanyTax') this.router.navigate(['/Admin/CompanyTax']);
   }
 }

@@ -30,12 +30,14 @@ export class ClausesListComponent implements OnInit {
   sectionValue: any;
   sectionList: any[];
   insuranceList: { Code: string; CodeDesc: string; }[];
+  loginId: any;
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe) {
       this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
       // this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       const user = this.userDetails?.Result;
+      this.loginId = user?.LoginId;
       // this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
 
      }
@@ -169,8 +171,9 @@ export class ClausesListComponent implements OnInit {
   getCompanyList(){
     let ReqObj = {
       "BrokerCompanyYn":"",
+      "LoginId": this.loginId
     }
-    let urlLink = `${this.ApiUrl1}master/dropdown/company`;
+    let urlLink = `${this.ApiUrl1}master/dropdown/superadmincompanies`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
@@ -178,6 +181,7 @@ export class ClausesListComponent implements OnInit {
           let defaultObj = [{"Code":"99999","CodeDesc":"ALL"}]
           this.insuranceList = defaultObj.concat(data.Result);
           if(this.insuranceId){this.getBranchList('direct'); this.getCompanyProductList('direct');}
+          else{this.insuranceId='99999';this.getBranchList('direct'); this.getCompanyProductList('direct');}
         }
   
       },

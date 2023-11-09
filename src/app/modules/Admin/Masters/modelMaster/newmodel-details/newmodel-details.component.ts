@@ -42,7 +42,7 @@ export class NewmodelDetailsComponent implements OnInit {
       let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if(userDetails){
       this.loginId = userDetails?.Result?.LoginId;
-      this.insuranceId = userDetails?.Result?.LoginBranchDetails[0].InsuranceId;
+      this.insuranceId = userDetails?.Result?.AttachedCompanies[0].InsuranceId;
     }
     this.ModelDetails = new Model();
     let modelObj = JSON.parse(sessionStorage.getItem('editModelId'));

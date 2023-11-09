@@ -17,9 +17,11 @@ export class IssuerListComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   productId: string;
+  loginId: any;
   constructor(private router:Router,private sharedService:SharedService,) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     const user = this.userDetails?.Result;
+    this.loginId = user.LoginId;
     let insurance = sessionStorage.getItem('issuerInsuranceId');
     if(insurance){
       this.insuranceId = insurance;
@@ -35,9 +37,10 @@ export class IssuerListComponent implements OnInit {
   ngOnInit(): void {
   }
   getInsuranceList(){
-    let urlLink = `${this.ApiUrl1}master/dropdown/company`;
+    let urlLink = `${this.ApiUrl1}master/dropdown/superadmincompanies`;
     let ReqObj ={
-      "BrokerCompanyYn": "N"
+      "BrokerCompanyYn": "N",
+      "LoginId": this.loginId
     }
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {

@@ -23,11 +23,16 @@ export class ExisitingDropdownsComponent implements OnInit {
 
   public branchList:any;branchValue:any;BranchCode:any;insuranceId:any;
   userDetails: any;
+  loginId: any;
 
   constructor(private router:Router ,private sharedService:SharedService,) {
     this.insuranceName = sessionStorage.getItem('insuranceName');
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     const user = this.userDetails?.Result;
+    this.loginId = user?.LoginId;
+    if(user.AttachedCompanies){
+      if(user.AttachedCompanies.length!=0) this.insuranceId=user.AttachedCompanies[0];
+    }
     // this.insuranceId = user.LoginBranchDetails[0].InsuranceId;
 // this.getBranchList()
    }
@@ -101,9 +106,9 @@ export class ExisitingDropdownsComponent implements OnInit {
   getCompanyList(){
     let ReqObj = {
       "BrokerCompanyYn":"",
-  
+      "LoginId": this.loginId
     }
-    let urlLink = `${this.ApiUrl1}master/dropdown/company`;
+    let urlLink = `${this.ApiUrl1}master/dropdown/superadmincompanies`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
@@ -111,6 +116,7 @@ export class ExisitingDropdownsComponent implements OnInit {
           let defaultObj = [{"Code":"99999","CodeDesc":"ALL"}]
           this.insuranceList = defaultObj.concat(data.Result);
           if(this.insuranceId){this.getList('direct');}
+          else{this.insuranceId='99999';this.getList('direct');}
         }
   
       },

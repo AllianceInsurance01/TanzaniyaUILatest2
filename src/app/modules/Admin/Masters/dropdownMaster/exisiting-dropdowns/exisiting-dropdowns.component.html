@@ -89,7 +89,7 @@
                     </div> -->
 
 
-                <ng-container *ngIf="dropdownData">
+                <ng-container *ngIf="dropdownData.length!=0">
                     <app-grid-table [cols]="dropdownHeader" changeStatus="true" (OnStatus)="EditStatus($event)" [data]="dropdownData" [filterValue]="filterValue" (onEdit)="onEditDrop($event)">
                     </app-grid-table>
                 </ng-container>
