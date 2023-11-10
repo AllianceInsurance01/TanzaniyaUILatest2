@@ -44,7 +44,15 @@
                             {{ element[col.key] }}
                         </ng-container>
                     </ng-container>
-                   
+                    <ng-container *ngIf="col.key=='TotalPolicy'">
+                        <button type="button" class="btn maan-btn-blue btn-circle2" ><b>{{element[col.key]}}</b></button>
+                    </ng-container>
+                    <ng-container *ngIf="col.key=='CommissionAmt'">
+                            {{element[col.key]}} 
+                            <ng-container *ngIf="element[col.key]!=null">
+                                        &nbsp;&nbsp;({{element['CommissionPercentage']}} &nbsp;%)
+                            </ng-container>
+                    </ng-container>
                     <ng-container *ngIf="columnHeader[i]['display']=='CoverBased Endt'">
                         <ng-container *ngIf="element[col.key]=='Y'">Yes</ng-container>
                         <ng-container *ngIf="element[col.key]!='Y'">No</ng-container>
@@ -84,7 +92,7 @@
                             <span *ngIf="element[col.key]=='C' && element?.endorsementTypeId==842">Cancelled</span>
                             <span *ngIf="endorsementSection && element[col.key]==null">Base policy</span>
                     </ng-container>
-                    <ng-container *ngIf="col.key!='Status' && columnHeader[i]['display']!='QuestionType' && columnHeader[i]['display']!='CoverBased Endt'  && columnHeader[i]['display']!='EndorsementStatus' && columnHeader[i]['display']!='BrokerConfigProductName' && columnHeader[i]['display']!='Cover Type' && columnHeader[i]['display']!='Endorsements Premium' && columnHeader[i]['display']!='Endorsement Premium'">
+                    <ng-container *ngIf="col.key!='Status' && col.key!='TotalPolicy' && col.key!='CommissionAmt' && columnHeader[i]['display']!='QuestionType' && columnHeader[i]['display']!='CoverBased Endt'  && columnHeader[i]['display']!='EndorsementStatus' && columnHeader[i]['display']!='BrokerConfigProductName' && columnHeader[i]['display']!='Cover Type' && columnHeader[i]['display']!='Endorsements Premium' && columnHeader[i]['display']!='Endorsement Premium'">
                         <ng-container *ngIf="columnHeader[i]['display']=='Commision Amt' || columnHeader[i]['display']=='Sum Inured' || columnHeader[i]['display']=='Premium'">
                             <div style="text-align:right !important;">
                                
@@ -121,9 +129,11 @@
                           </button>&nbsp;
                     </ng-container>
                     <ng-container *ngIf="col.config.isDownload">
-                        <button class="btn btn-info btn-sm" (click)="onEdit.emit(element)">
+                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onEdit.emit(element)"><i
+                            class="fa fa-download"></i></a>
+                        <!-- <button class="btn btn-info btn-sm" (click)="onEdit.emit(element)">
                              <i class="fas fa-download"></i>
-                           </button>&nbsp;
+                           </button>&nbsp; -->
                      </ng-container>
                     <ng-container *ngIf="col.config.isAddNew">
                         <button class="btn btn-primary btn-sm" (click)="onAddNew.emit(element)">

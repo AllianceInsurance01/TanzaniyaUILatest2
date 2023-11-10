@@ -25,7 +25,11 @@ export class EmbededInsuranceComponent {
   searchSection: boolean=false;searchValue='';
   maxDate:Date;policyStartDate:any=null;
   policyEndDate: Date;searchList:any[]=[];
-  searchBy:any=null;
+  searchBy:any='';
+  searchBySection: boolean;
+  searchedList: any[]=[];
+  searchedDataSection: boolean = false;
+  searchedHeader: any[]=[];
   constructor(private router: Router,
     private authService: AuthService,
     private loginService:LoginService,
@@ -54,28 +58,49 @@ export class EmbededInsuranceComponent {
         {"Code":"02","CodeDesc":"User Name"},
         {"Code":"03","CodeDesc":"Email Id"},
         {"Code":"04","CodeDesc":"Plan Type"},
+      ];
+      this.planTypeHeader = [
+        { key: 'PlanName', display: 'Plan Name' },
+        { key: 'LoginId', display: 'UserName' },
+        { key: 'TotalPolicy', display: 'Total Policy' },
+        { key: 'OverAllPremium', display: 'OverAll Premium' },
+        { key: 'OverAllComiPremium', display: 'Comission Premium' },
+        { key: 'ActivePremium', display: 'Active Premium' },
+        // {
+        //   key: 'actions',
+        //   display: 'Schedule',
+        //   config: {
+        //     isDownload: true,
+        //   },
+        // },
+      ];
+      this.searchedHeader = [
+        { key: 'PlanName', display: 'Plan Name' },
+        { key: 'LoginId', display: 'UserName' },
+        { key: 'OverAllPremium', display: 'Total' },
+        { key: 'CommissionAmt', display: 'Commission' },
+        { key: 'TaxPremium', display: 'Tax' },
+        { key: 'AmountPaid', display: 'Amount Paid' },
+        {
+          key: 'actions',
+          display: 'Schedule',
+          config: {
+            isDownload: true,
+          },
+        },
       ]
   }
   onShowPlanTypeDetails(type){
     this.searchSection = true;
+    this.searchBySection = false;
     this.typeValue = type;
+    var d= new Date();
+    var year = d.getFullYear();
+    var month = d.getMonth();
+    var day = d.getDate();
+    this.policyStartDate = new Date(year,month-1, day );
     this.policyEndDate = new Date();
-    this.policyStartDate = new Date();
-    this.planTypeHeader = [
-      { key: 'PlanName', display: 'Plan Name' },
-      { key: 'LoginId', display: 'UserName' },
-      { key: 'TotalPolicy', display: 'Total Policy' },
-      { key: 'OverAllPremium', display: 'OverAll Premium' },
-      { key: 'OverAllComiPremium', display: 'Comission Premium' },
-      { key: 'ActivePremium', display: 'Active Premium' },
-      {
-        key: 'actions',
-        display: 'Schedule',
-        config: {
-          isDownload: true,
-        },
-      },
-    ]
+    
     this.planRecordsList = [
       {
         "LoginId": "Inalipa",
@@ -120,6 +145,47 @@ export class EmbededInsuranceComponent {
 		k = event.charCode;  //         k = event.keyCode;  (Both can be used)
 		return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || (k >= 48 && k <= 57)); 
 		}
+  onSearchPolicy(){
+    this.searchSection = false;
+    this.searchBySection = true;
+    var d= new Date();
+    var year = d.getFullYear();
+    var month = d.getMonth();
+    var day = d.getDate();
+    this.policyStartDate = new Date(year,month-1, day );
+    this.policyEndDate = new Date();
+  }
+  onSearchPolicyData(){
+    this.searchSection = false;
+    this.searchBySection = true;
+    this.searchedDataSection = true;
+    this.searchedList = [
+      {
+        "CompanyId": "100015",
+        "ProductId": "13",
+        "TransactionNo": "RXRVG10001002",
+        "NidaNo": "",
+        "LoginId": "Inalipa",
+        "CustomerName": "Shanish Kumar",
+        "MobileNo": "25402000",
+        "PolicyNo": "P11/2023/100/1002/10/01677",
+        "RequestReferenceNo": "INALIPA-1690799238137",
+        "PolicyStartDate": "06/09/2023",
+        "PolicyEndDate": "18/11/2023",
+        "Premium": "2000.00000",
+        "OverAllPremium": "2100.00000",
+        "TaxPremium": "100.00000",
+        "AmountPaid": "6000.00000",
+        "PlanType": "7 Days",
+        "FilePath": "www.maansarovor.com",
+        "ResponsePeriod": "2023-07-31 15:57:18.137",
+        "CommissionPercentage": "17.50",
+        "CommissionAmt": "350.00000",
+        "TaxPercentage": "5.00",
+        "MobileCode": "255"
+      }
+    ]
+  }
   onLog(title)
   {
     if (title === 'Log out') {

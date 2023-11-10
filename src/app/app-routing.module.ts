@@ -54,6 +54,11 @@ const routes: Routes = [
 		component: ProductSelectionComponent,
 	},
 	{
+		path: 'dashboardView',
+		loadChildren: () => import('./modules/EmbededInsurance/embeded-insurance/embeded-insurance.module').then(m => m.EmbededInsuranceModule),
+		canActivate: [AuthGuard]
+	},
+	{
 		path: '',
 		component: HomeLayoutComponent,
 		canActivate: [AuthGuard],
