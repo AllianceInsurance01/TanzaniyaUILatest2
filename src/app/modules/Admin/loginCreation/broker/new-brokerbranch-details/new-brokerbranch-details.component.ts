@@ -16,7 +16,7 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
   insuranceId:any;brokerLoginId:any;statusValue:any="Y";
   branchList:any[]=[];branchType:any="Main";subBranchId:any;
   public AppConfig: any = (Mydatas as any).default;subBranchList:any[]=[];
-  subSourceId:any;
+  subSourceId:any;SalePointCode:any;
    sourceList:any[]=[];
    CustomerNo:any;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
@@ -77,6 +77,7 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
             this.remarks = branchDetails?.Remarks;
             this.subSourceId = branchDetails?.SourceType;
             this.CustomerNo = branchDetails?.CustomerCode;
+            this.SalePointCode = branchDetails?.SalePointCode;
             this.DepartmentCode="11";
             this.onBranchChange();
             //this.customerCode = branchDetails.CustomerCode;
@@ -201,7 +202,8 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
       "Remarks": this.remarks,
       "Status": this.statusValue,
       "SourceType":this.subSourceId,
-      "DepartmentCode":this.DepartmentCode
+      "DepartmentCode":this.DepartmentCode,
+      "SalePointCode":this.SalePointCode
     }
     if (ReqObj.EffectiveDateStart != '' && ReqObj.EffectiveDateStart != null && ReqObj.EffectiveDateStart != undefined) {
       ReqObj['EffectiveDateStart'] =  this.datePipe.transform(ReqObj.EffectiveDateStart, "dd/MM/yyyy")
