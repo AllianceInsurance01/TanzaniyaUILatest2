@@ -35,7 +35,8 @@
         <div class="row  ml-5">
             <div class="col-12 col-md-12 col-lg-12">
                 <ng-container *ngIf="customerData.length!=0">
-                    <app-commodity-table [cols]="quoteHeader" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousData($event)" (onLoadNextData)="onNextData($event)" [data]="customerData" [innerCols]="innerColumnHeader" [Currency]="Currency" (onView)="searchout($event)" (onAdd)="onInnerData($event)">
+                    <app-commodity-table [cols]="quoteHeader" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousData($event)" (onLoadNextData)="onNextData($event)" [data]="customerData" [innerCols]="innerColumnHeader" [Currency]="Currency" (onView)="searchout($event)" (onAdd)="onInnerData($event)"
+                    (onSchedule)="onGetSchedule($event)" (onCredit)="onCreditdownload($event)" (onEdit)="onEditQuotes($event)" (onDebit)="onDebitdownload($event)" (onGetEndorsements)="onGetEndorsements($event)">
                     </app-commodity-table>
                 </ng-container>
                 <ng-container *ngIf="customerData.length==0 && searchValue.length!=0 && searchValue!=undefined && searchValue!=null">

@@ -48,6 +48,7 @@ export class CommodityTableComponent implements OnInit {
   @Output('onSchedule') onSchedule = new EventEmitter();
   @Output('onCredit') onCredit = new EventEmitter();
   @Output('onDebit') onDebit = new EventEmitter();
+  @Output('onPayEmi') onPayEmi = new EventEmitter();
   @Output('onEdit') onEdit = new EventEmitter();
   @Output('onActive')onActive= new EventEmitter();
   @Output('isActionBtn') isActionBtn = new EventEmitter();
@@ -258,7 +259,6 @@ export class CommodityTableComponent implements OnInit {
     }
     
   }
-
 
 
   toggleExpandableSymbol(symbol: null): void {

@@ -29,6 +29,7 @@ export class AddBranchDetailsComponent implements OnInit {
   branchIds: any;
   branchDetails: Branch;
   brokerBranchCode: any;
+  SalePointCode: any;
   constructor(private router:Router,private sharedService:SharedService,private datePipe:DatePipe,) {
     let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     if(userDetails){
@@ -81,6 +82,7 @@ export class AddBranchDetailsComponent implements OnInit {
             this.branchCode = branchDetails?.BrokerBranchCode;
             this.branchName = branchDetails?.BrokerBranchName;
             this.remarks = branchDetails?.Remarks;
+            this.SalePointCode = branchDetails?.SalePointCode;
             this.onBranchChange();
             //this.branchName = branchDetails?.BranchName;
             if(branchDetails.EffectiveDateStart!=null){
@@ -184,7 +186,8 @@ export class AddBranchDetailsComponent implements OnInit {
       "LoginId": this.userLoginId,
       "Mobile": this.mobileNo,
       "Remarks": this.remarks,
-      "Status": this.statusValue
+      "Status": this.statusValue,
+      "SalePointCode":this.SalePointCode
     }
     if (ReqObj.EffectiveDateStart != '' && ReqObj.EffectiveDateStart != null && ReqObj.EffectiveDateStart != undefined) {
       ReqObj['EffectiveDateStart'] =  this.datePipe.transform(ReqObj.EffectiveDateStart, "dd/MM/yyyy")

@@ -462,6 +462,7 @@ export class ExistingQuotesComponent implements OnInit {
     sessionStorage.removeItem('QuoteStatus');
     sessionStorage.removeItem('endorsePolicyNo');
     sessionStorage.removeItem('homeCommonDetails');
+    sessionStorage.setItem('Pagefrom',"Existing");
     if(this.productId){
       
       if(rowData.QuoteNo!='' && rowData.QuoteNo!=undefined && rowData.QuoteNo!=null){
