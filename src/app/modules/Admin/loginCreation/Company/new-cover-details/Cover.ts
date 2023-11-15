@@ -35,5 +35,5 @@ export class Cover{
     "ProductId":null;
     "SectionId":null;
     "MultiSelectYN":"N";
-    "ProRataYn":"N"
+    "ProRataYn":""
 }

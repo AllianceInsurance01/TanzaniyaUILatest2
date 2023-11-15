@@ -20,6 +20,7 @@ export class SubCover{
     "MinimumPremium": null;
     "SumInsuredStart": null;
     "SumInsuredEnd": null;
+    "ProRataYn":'N';
     "Remarks":null;
     "Status": 'Y';
     "RegulatoryCode": null;

@@ -1,0 +1,173 @@
+<div class="card">
+    <div class="card-header">Broker Configuration</div>
+    <div class="card p-1">
+        <div class="vision-grid vision-grid-column-2">
+            <div class="vision-grid-item">
+                <div class="radio-toolbar menu-bar">
+                    <input type="radio" id="menu1" name="menu" value="Branch" (click)="onRedirect('Branch')" [(ngModel)]="activeMenu">
+                    <label for="menu1">Branch</label>
+                    <input id="menu7" type="radio" name="menu" value="Product" [(ngModel)]="activeMenu" (click)="onRedirect('Product')">
+                    <label for="menu7">Product</label>
+
+                    <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
+                    <label for="menu2">Cover</label>
+                    <input type="radio" id="menu8" name="menu" value="Deposit" (click)="onRedirect('Deposit')" [(ngModel)]="activeMenu">
+                    <label for="menu8">Deposit</label>
+                    <input type="radio" id="menu9" name="menu" value="paymentTypes" (click)="onRedirect('paymentTypes')" [(ngModel)]="activeMenu">
+                    <label for="menu9">PaymentTypes</label>
+                </div>
+            </div>
+            <div class="vision-grid-item">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                               <ng-container *ngIf="!editSection">Existing Payment Types</ng-container> 
+                               <ng-container *ngIf="editSection">Payment Type Details</ng-container> 
+                            </div>
+                            <div>
+                                <!-- <button class="btn btn-warning" (click)="onModifyPaymentType()">Add / Remove</button> -->
+                            </div>
+                        </div>
+                      </div>
+                    
+                    <div class="card-body">
+                        <ng-container *ngIf="!editSection">
+                            <div class="row">
+                                <div class="col-md-4 col-lg-4 col-xl-4 ml-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Product<span class="text-required">*</span></label>
+                                        <ng-select class="input-form-select" appendTo="body" [items]="productData" [(ngModel)]="productId" bindValue="ProductId" bindLabel="ProductName" (change)="getExistingPayment()">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-xl-4 ml-3">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Branch<span class="text-required">*</span></label>
+                                        <ng-select class="input-form-select" appendTo="body" [items]="branchList" [(ngModel)]="branchValue" bindValue="Code" bindLabel="CodeDesc" (change)="getExistingPayment()">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-container *ngIf="paymentData.length!=0">
+                                <app-grid-table [cols]="columnHeader" changeStatus="true" (onStatus)="EditStatus($event)"[data]="paymentData" [filterValue]="filterValue" (onEdit)="onEditSection($event)" (onConfigure)="onConfigure($event)">
+                                </app-grid-table>
+                            </ng-container>
+                            <ng-container *ngIf="paymentData.length==0 && branchValue!=null && productId!=null">
+                                    <div class="text-center">
+                                        No Data Available
+                                    </div>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="editSection">
+                            <div class="row mt-2">
+                                <!-- <div class="col-12 col-lg-4 col-xl-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Branch<span class="text-required">*</span></label>
+                                        <ng-select class="input-form-select" appendTo="body" disabled [items]="branchList" [(ngModel)]="branchValue" bindValue="Code" bindLabel="CodeDesc" >
+                                        </ng-select>
+                                    </div>
+                                </div> -->
+                                <!-- <div class="col-12 col-lg-4 col-xl-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">User Type<span class="text-required">*</span></label>
+                                        <ng-select class="input-form-select" appendTo="body" [items]="paymentUsertype" [(ngModel)]="paymentdetalis.UserType" (change)="getsubusertype('change')" bindValue="ItemValue" bindLabel="ItemValue">
+                                        </ng-select>
+                                    </div>
+                                </div> -->
+                                <!-- <div class="col-12 col-lg-4 col-xl-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Sub User Type<span class="text-required">*</span></label>
+                                        <ng-select class="input-form-select" appendTo="body" [items]="SubUserType" [(ngModel)]="paymentdetalis.SubUserType" bindValue="ItemValue" bindLabel="ItemValue">
+                                        </ng-select>
+                                    </div>
+                                </div> -->
+    
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Cash<span class="text-required">*</span></label>
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar">
+                                                <input id="CashYn_Yes" type="radio" name="CashYn" [(ngModel)]="paymentdetalis.CashYn" value="Y">
+                                                <label for="CashYn_Yes">Yes</label>
+                                                <input type="radio" id="CashYn_No" name="CashYn" [(ngModel)]="paymentdetalis.CashYn" value="N">
+                                                <label for="CashYn_No">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Credit<span class="text-required">*</span></label>
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar">
+                                                <input id="CreditYn_Yes" type="radio" name="CreditYn" [(ngModel)]="paymentdetalis.CreditYn" value="Y">
+                                                <label for="CreditYn_Yes">Yes</label>
+                                                <input type="radio" id="CreditYn_No" name="CreditYn" [(ngModel)]="paymentdetalis.CreditYn" value="N">
+                                                <label for="CreditYn_No">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">Cheque<span class="text-required">*</span></label>
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar">
+                                                <input id="ChequeYn_Yes" type="radio" name="ChequeYn" [(ngModel)]="paymentdetalis.ChequeYn" value="Y">
+                                                <label for="ChequeYn_Yes">Yes</label>
+                                                <input type="radio" id="ChequeYn_No" name="ChequeYn" [(ngModel)]="paymentdetalis.ChequeYn" value="N">
+                                                <label for="ChequeYn_No">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container">
+                                        <label class="input-form-label">OnlineYn<span class="text-required">*</span></label>
+                                        <div class="input-form-radio-box">
+                                            <div class="radio-toolbar">
+                                                <input id="OnlineYn_Yes" type="radio" name="OnlineYn" [(ngModel)]="paymentdetalis.OnlineYn" value="Y">
+                                                <label for="OnlineYn_Yes">Yes</label>
+                                                <input type="radio" id="OnlineYn_No" name="OnlineYn" [(ngModel)]="paymentdetalis.OnlineYn" value="N">
+                                                <label for="OnlineYn_No">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Status<span class="text-required">*</span></label>
+                                    <div class="input-form-radio-box">
+                                        <div class="radio-toolbar">
+                                            <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="paymentdetalis.Status" value="Y">
+                                            <label for="orginwarehouse_Yes">Active</label>
+                                            <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="paymentdetalis.Status" value="N">
+                                            <label for="orginwarehouse_No">DeActive</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
+                                    <mat-form-field appearance="fill">
+                                        <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="paymentdetalis.EffectiveDateStart">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="text-center mt-2">
+                                <button class="btn btn-danger" (click)="editSection=!editSection">Back</button>&nbsp;
+                                <button style="margin-left:10px;" class="btn btn-success" (click)="onProceed()">Save</button>
+                            </div>
+                        </ng-container>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>

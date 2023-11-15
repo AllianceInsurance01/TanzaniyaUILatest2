@@ -32,6 +32,8 @@ export class DepositAddNewComponent implements OnInit {
     referenceno: any;
     p:Number=1;
     policyinsu: any;viewData:any;ChargableList:any[]=[];chequeDate:any;viewDatas:any[]=[];
+  userType: any;
+  subUserType: any;
   constructor(private router:Router,private sharedService: SharedService,private modalService: NgbModal,private datePipe:DatePipe) {
     let brokerObj = JSON.parse(sessionStorage.getItem('brokerConfigureDetails'));
     if(brokerObj){
@@ -40,6 +42,8 @@ export class DepositAddNewComponent implements OnInit {
       if(brokerObj.brokerId) this.agencyCode = brokerObj.brokerId;
       //if(brokerObj.) this.brokerCompanyYN = brokerObj.brokerCompanyYN;
       if(brokerObj.brokerCompanyYN) this.brokerCompanyYN = brokerObj.brokerCompanyYN;
+      if(brokerObj.UserType) this.userType = brokerObj.UserType;
+      if(brokerObj.SubUserType) this.subUserType = brokerObj.SubUserType;
     }
     this.brokerId = this.brokerLoginId;
     this.PaymentList = [{"Code":"1","CodeDesc":"Cash"},{"Code":"2","CodeDesc":"Cheque"}];
@@ -124,7 +128,9 @@ export class DepositAddNewComponent implements OnInit {
       "brokerId": this.agencyCode,
       "insuranceId": this.insuranceId,
       "brokerCompanyYN": this.brokerCompanyYN,
-      "BranchCode": rowData.BrokerBranchCode
+      "BranchCode": rowData.BrokerBranchCode,
+      "UserType": this.userType,
+      "SubUserType": this.subUserType
     }
     sessionStorage.setItem('brokerConfigureDetails',JSON.stringify(ReqObj));
     sessionStorage.setItem('editBranchId',rowData.BranchCode);
@@ -135,6 +141,8 @@ export class DepositAddNewComponent implements OnInit {
     if(this.activeMenu=='Branch') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerBranchList']);
     if(value=='Product') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerProductList']);
     if(value=='Cover') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerCoverList']);
+    if(value=='Deposit') this.router.navigate(['/Admin/brokersList/newBrokerDetails/depositMasterList']);
+    if(value=='paymentTypes') this.router.navigate(['/Admin/brokersList/newBrokerDetails/paymentTypesList']);
   }
   getSave(){
     let chequeDate

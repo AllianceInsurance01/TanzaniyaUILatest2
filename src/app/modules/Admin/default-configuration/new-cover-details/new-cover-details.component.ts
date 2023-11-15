@@ -27,7 +27,7 @@ export class NewCoverDetailsComponent implements OnInit {
   coverDetails: any;subCoversHeader:any[]=[];
   coverageTypeValue: any;subCoversData:any[]=[];
   excessValue: any;basedOnColumnValue:any;
-  coverageLimit: any;
+  coverageLimit: any;proRataList:any[]=[];
   uploadOption: string;
   baseRate: any;
   minPremium: any;
@@ -145,6 +145,7 @@ export class NewCoverDetailsComponent implements OnInit {
     }
     else{
       this.coverDetails = new Cover();
+      if(this.coverDetails?.ProRataYn == null) this.coverDetails.ProRataYn = '';
       if(this.coverDetails?.Status == null) this.coverDetails.Status = 'Y';
       if(this.coverDetails?.SubCoverYn == null) this.coverDetails.SubCoverYn = 'N';
       if(this.coverDetails?.DependentCoverYn == null) this.coverDetails.DependentCoverYn = 'N';
@@ -152,6 +153,7 @@ export class NewCoverDetailsComponent implements OnInit {
     }
     this.getTaxTypeList();
     this.getcoverList();
+    this.getProRataList();
   }
   nav(n) {
     switch (n) {
@@ -189,6 +191,24 @@ export class NewCoverDetailsComponent implements OnInit {
         if(data.Result){
           //this.holderTypeValue = null;
            this.CoverList = data.Result;
+        }
+      },
+      (err) => { },
+    );
+  }
+getProRataList(){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId,
+      "BranchCode": "99999"
+    }
+    let urlLink = `${this.CommonApiUrl}dropdown/proratatype`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          //this.holderTypeValue = null;
+          let defaultObj = [{Code:"",CodeDesc:"---Select---"}]
+           this.proRataList = defaultObj.concat(data.Result);
         }
       },
       (err) => { },
@@ -311,7 +331,7 @@ export class NewCoverDetailsComponent implements OnInit {
 
             //}
           }
-
+          if(this.coverDetails.ProRataYn==null) this.coverDetails.ProRataYn = '';
         }
 
       },
@@ -726,6 +746,7 @@ export class NewCoverDetailsComponent implements OnInit {
       "RegulatoryCode": this.subCoverData.RegulatoryCode,
       "ToolTip": this.subCoverData.ToolTip,
       "IsTaxExcempted":this.subCoverData.IsTaxExcempted,
+      "ProRataYn": this.subCoverData.ProRataYn,
       "TaxAmount": "0",
       "TaxCode": "Vat",
       "TaxExcemptionReference":this.subCoverData.TaxExcemptionReference,

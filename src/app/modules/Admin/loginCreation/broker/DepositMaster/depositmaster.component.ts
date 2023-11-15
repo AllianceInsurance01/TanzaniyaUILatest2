@@ -15,6 +15,8 @@ export class DepositMasterComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   branchData: any[]=[];branchHeader:any[]=[];agencyCode:any;branchsHeader:any[]=[];branchDatas:any[]=[];
+  userType: any;
+  subUserType: any;
   constructor(private router:Router,private sharedService: SharedService,) {
     let brokerObj = JSON.parse(sessionStorage.getItem('brokerConfigureDetails'));
     if(brokerObj){
@@ -23,6 +25,8 @@ export class DepositMasterComponent implements OnInit {
       if(brokerObj.brokerId) this.agencyCode = brokerObj.brokerId;
       //if(brokerObj.) this.brokerCompanyYN = brokerObj.brokerCompanyYN;
       if(brokerObj.brokerCompanyYN) this.brokerCompanyYN = brokerObj.brokerCompanyYN;
+      if(brokerObj.UserType) this.userType = brokerObj.UserType;
+      if(brokerObj.SubUserType) this.subUserType = brokerObj.SubUserType;
     }
     this.brokerId = this.brokerLoginId;
     
@@ -72,7 +76,9 @@ export class DepositMasterComponent implements OnInit {
       "brokerId": this.agencyCode,
       "insuranceId": this.insuranceId,
       "brokerCompanyYN": this.brokerCompanyYN,
-      "BranchCode": null
+      "BranchCode": null,
+      "UserType": this.userType,
+      "SubUserType": this.subUserType
     }
     sessionStorage.setItem('brokerConfigureDetails',JSON.stringify(ReqObj));
     sessionStorage.removeItem('editBranchId');
@@ -94,5 +100,7 @@ export class DepositMasterComponent implements OnInit {
     if(this.activeMenu=='Branch') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerBranchList']);
     if(value=='Product') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerProductList']);
     if(value=='Cover') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerCoverList']);
+    if(value=='Deposit') this.router.navigate(['/Admin/brokersList/newBrokerDetails/depositMasterList']);
+    if(value=='paymentTypes') this.router.navigate(['/Admin/brokersList/newBrokerDetails/paymentTypesList']);
   }
 }

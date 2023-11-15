@@ -28,6 +28,8 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
   branchName: any;loginId:any;agencyCode:any;
   DepartmentCode: any; customerName: any;
   customerList:any[]=[];showCustomerList:boolean = false;customerCode:any;
+  userType: any;
+  subUserType: any;
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,) {
     this.minDate = new Date();
@@ -43,6 +45,8 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
       if(brokerObj.BranchCode!=null) this.branchCode = brokerObj.BranchCode;
       else this.branchCode = null;
       if(brokerObj.brokerCompanyYN) this.brokerCompanyYN = brokerObj.brokerCompanyYN;
+      if(brokerObj.UserType) this.userType = brokerObj.UserType;
+      if(brokerObj.SubUserType) this.subUserType = brokerObj.SubUserType;
     }
     this.brokerId = this.brokerLoginId;
     this.getMainBranchList();
@@ -259,6 +263,8 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
     if(this.activeMenu=='Branch') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerBranchList']);
     if(value=='Product') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerProductList']);
     if(value=='Cover') this.router.navigate(['/Admin/globalConfigure/existingSections']);
+    if(value=='Deposit') this.router.navigate(['/Admin/brokersList/newBrokerDetails/depositMasterList']);
+    if(value=='paymentTypes') this.router.navigate(['/Admin/brokersList/newBrokerDetails/paymentTypesList']);
   }
 
   onGetCustomerList(type,code){

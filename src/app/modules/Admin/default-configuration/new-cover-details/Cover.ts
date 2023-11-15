@@ -24,6 +24,7 @@ export class Cover{
     "FactorTypeId": null;
     "SubCoverYn": "N";
     "ProRataYn":"N";
+    "ProRataId":'';
     "AmendId": null;
     "GridDetails": null;
     "IsTaxExcempted":"N";

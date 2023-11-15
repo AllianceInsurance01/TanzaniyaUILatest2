@@ -26,6 +26,7 @@ import { EndrosementBrokerComponent } from '../endrosementbroker/endrosementbrok
 import { HttpInterceptorService } from 'src/app/HttpInterceptors/http-interceptor.service';
 import { DepositMasterComponent } from '../DepositMaster/depositmaster.component';
 import { DepositAddNewComponent } from '../depositaddnew/depositaddnew.component';
+import { PaymentTypesListComponent } from '../PaymentTypesList/paymentTypesList.component';
 // import { DepositDetailsComponent } from '../DepositDetails/depositdetails.component';
 
 //import { HttpInterceptorService } from '../../../../../HttpInterceptors/http-interceptor.service';
@@ -46,7 +47,8 @@ import { DepositAddNewComponent } from '../depositaddnew/depositaddnew.component
     BrokerdetailsConfigureComponent,
     EndrosementBrokerComponent,
     DepositMasterComponent,
-    DepositAddNewComponent
+    DepositAddNewComponent,
+    PaymentTypesListComponent
     // DepositDetailsComponent,
   ],
   imports: [

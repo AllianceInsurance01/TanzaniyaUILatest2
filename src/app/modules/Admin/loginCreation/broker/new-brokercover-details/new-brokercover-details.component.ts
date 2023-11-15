@@ -75,6 +75,8 @@ export class NewBrokercoverDetailsComponent implements OnInit {
   uploadRecordsList: any[]=[];
   CoverList: any;
   minSumInsured: any;
+  userType: any;
+  subUserType: any;proRataList:any[]=[];
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,) {
       this.minDate = new Date();
@@ -83,6 +85,8 @@ export class NewBrokercoverDetailsComponent implements OnInit {
       if(brokerObj.loginId) this.brokerLoginId = brokerObj.loginId;
       if(brokerObj.insuranceId) this.insuranceId = brokerObj.insuranceId;
       if(brokerObj.brokerId) this.brokerId = brokerObj.brokerId;
+      if(brokerObj.UserType) this.userType = brokerObj.UserType;
+      if(brokerObj.SubUserType) this.subUserType = brokerObj.SubUserType;
     }
     this.brokerId = sessionStorage.getItem('editBroker');
       //this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
@@ -201,6 +205,7 @@ export class NewBrokercoverDetailsComponent implements OnInit {
     }
     this.getTaxTypeList();
     this.getcoverList();
+    this.getProRataList();
   }
   dismiss() {
     //this.ref.close();
@@ -217,6 +222,24 @@ export class NewBrokercoverDetailsComponent implements OnInit {
         if(data.Result){
           //this.holderTypeValue = null;
            this.CoverList = data.Result;
+        }
+      },
+      (err) => { },
+    );
+  }
+  getProRataList(){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId,
+      "BranchCode": "99999"
+    }
+    let urlLink = `${this.CommonApiUrl}dropdown/proratatype`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          //this.holderTypeValue = null;
+          let defaultObj = [{Code:"",CodeDesc:"---Select---"}]
+           this.proRataList = defaultObj.concat(data.Result);
         }
       },
       (err) => { },
@@ -1394,5 +1417,7 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     if(this.activeMenu=='Branch') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerBranchList']);
     if(value=='Product') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerProductList']);
     if(value=='Cover') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerCoverList']);
+    if(value=='Deposit') this.router.navigate(['/Admin/brokersList/newBrokerDetails/depositMasterList']);
+    if(value=='paymentTypes') this.router.navigate(['/Admin/brokersList/newBrokerDetails/paymentTypesList']);
   }
 }

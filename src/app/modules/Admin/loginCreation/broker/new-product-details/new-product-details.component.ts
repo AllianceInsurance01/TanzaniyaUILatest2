@@ -27,6 +27,8 @@ export class NewProductDetailsComponent implements OnInit {
   accessoriesSI:any;
   windShieldSI:any;tppdSI:any;
   EndList:any[]=[];
+  userType: any;
+  subUserType: any;
 
   constructor(private router:Router,private sharedService: SharedService,
     private datePipe:DatePipe,) {
@@ -43,6 +45,8 @@ export class NewProductDetailsComponent implements OnInit {
         if(brokerObj.brokerCompanyYN) this.brokerCompanyYN = brokerObj.brokerCompanyYN;
         if(brokerObj.ProductId!=null) this.productId = brokerObj.ProductId;
         else this.productId = null;
+        if(brokerObj.UserType) this.userType = brokerObj.UserType;
+        if(brokerObj.SubUserType) this.subUserType = brokerObj.SubUserType;
       }
       this.brokerId = this.brokerLoginId;
       this.productDetails = new Product();
@@ -93,6 +97,8 @@ export class NewProductDetailsComponent implements OnInit {
     if(this.activeMenu=='Branch') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerBranchList']);
     if(value=='Product') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerProductList']);
     if(value=='Cover') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerCoverList']);
+    if(value=='Deposit') this.router.navigate(['/Admin/brokersList/newBrokerDetails/depositMasterList']);
+    if(value=='paymentTypes') this.router.navigate(['/Admin/brokersList/newBrokerDetails/paymentTypesList']);
   }
   getProductDetails(){
 
