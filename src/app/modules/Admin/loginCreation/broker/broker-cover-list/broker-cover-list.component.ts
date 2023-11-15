@@ -50,7 +50,8 @@ export class BrokerCoverListComponent implements OnInit {
 
     this.Inc=[{
       "Code":"1","CodeDesc":"Included"},
-      {"Code":"2","CodeDesc":"Excluded"}]
+      {"Code":"2","CodeDesc":"Excluded"}
+    ]
    }
 
 
@@ -63,43 +64,6 @@ export class BrokerCoverListComponent implements OnInit {
 
    }*/
   ngOnInit(): void {
-    this.columnHeader = [
-      {
-        key: 'CoverId',
-        display: 'Select',
-        config: {
-          isChecked: true,
-          model:'isChecked'
-        },
-      },
-      { key: 'CoverName', display: 'Cover Name' },
-      { key: 'CoverDesc', display: 'Cover Desc' },
-      { key: 'EffectiveDateStart', display: 'Start Date' },
-      { key: 'EffectiveDateEnd', display: 'End Date' },
-      { key: 'Status', display: 'Status' },
-      {
-        key: 'actions',
-        display: 'Action',
-        config: {
-          isEdit: true,
-        },
-      },
-      {
-        key: 'SubCoverYn',
-        display: 'CoverRating',
-        config: {
-          isCoverRatingEdit:true,
-        },
-      },
-      {
-        key:'SubCover',
-        display:'SubCoverRating',
-        config:
-        {
-          isSubCoverRatingEdit:true,
-        },
-      }
-    ];
     console.log('AAAAAAAAA',this.AgencyCode);
   }
 
@@ -505,6 +469,35 @@ export class BrokerCoverListComponent implements OnInit {
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         if(data.Result){
+          this.columnHeader = [
+            { key: 'CoverName', display: 'Cover Name' },
+            { key: 'CoverDesc', display: 'Cover Desc' },
+            { key: 'EffectiveDateStart', display: 'Start Date' },
+            { key: 'EffectiveDateEnd', display: 'End Date' },
+            { key: 'Status', display: 'Status' },
+            {
+              key: 'actions',
+              display: 'Action',
+              config: {
+                isEdit: true,
+              },
+            },
+            {
+              key: 'SubCoverYn',
+              display: 'CoverRating',
+              config: {
+                isCoverRatingEdit:true,
+              },
+            },
+            {
+              key:'SubCover',
+              display:'SubCoverRating',
+              config:
+              {
+                isSubCoverRatingEdit:true,
+              },
+            }
+          ];
             sessionStorage.setItem('brokerSectionId',this.sectionValue)
             sessionStorage.setItem('BranchCode',this.branchValue);
             sessionStorage.setItem('IncValue',this.IncValue)
@@ -528,9 +521,47 @@ export class BrokerCoverListComponent implements OnInit {
     "AgencyCode":this.AgencyCode
   }
   let urlLink = `${this.ApiUrl1}master/getallsectioncoverbroker`;
+  //master/getallsectioncoverbroker
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
       if(data.Result){
+        this.columnHeader = [
+          {
+            key: 'CoverId',
+            display: 'Select',
+            config: {
+              isChecked: true,
+              model:'isChecked'
+            },
+          },
+          { key: 'CoverName', display: 'Cover Name' },
+          { key: 'CoverDesc', display: 'Cover Desc' },
+          { key: 'EffectiveDateStart', display: 'Start Date' },
+          { key: 'EffectiveDateEnd', display: 'End Date' },
+          { key: 'Status', display: 'Status' },
+          {
+            key: 'actions',
+            display: 'Action',
+            config: {
+              isEdit: true,
+            },
+          },
+          {
+            key: 'SubCoverYn',
+            display: 'CoverRating',
+            config: {
+              isCoverRatingEdit:true,
+            },
+          },
+          {
+            key:'SubCover',
+            display:'SubCoverRating',
+            config:
+            {
+              isSubCoverRatingEdit:true,
+            },
+          }
+        ];
           sessionStorage.setItem('brokerSectionId',this.sectionValue)
           sessionStorage.setItem('BranchCode',this.branchValue)
           sessionStorage.setItem('IncValue',this.IncValue)

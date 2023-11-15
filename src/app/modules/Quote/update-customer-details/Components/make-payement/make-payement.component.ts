@@ -25,6 +25,7 @@ export class MakePayementComponent implements OnInit {
   first:boolean=false;Fifth:boolean=false;
   second:boolean=false;Fourth:boolean=false;
   Third: boolean;currencyCode:any;
+  seven:boolean;
   minDate: Date;
   customerDetails: any;
   vehicleDetails: any;
@@ -83,6 +84,7 @@ export class MakePayementComponent implements OnInit {
   commonDocTypeList: any[]=[];
   chequeSection: boolean;
   uploadedDocList: any[]=[];totallistselected:any[]=[];
+  DueAmount: any;
   constructor(private router:Router,public dialogService: MatDialog,private sharedService: SharedService,private cookieService: CookieService,
     private updateComponent:UpdateCustomerDetailsComponent,private route:ActivatedRoute,
    private datePipe:DatePipe) {
@@ -410,10 +412,7 @@ export class MakePayementComponent implements OnInit {
             this.currencyCode = quoteDetails?.Currency;
             this.IsChargeOrRefund = quoteDetails?.IsChargeOrRefund;
             this.endtPremium = quoteDetails?.TotalEndtPremium;
-            if(this.endorsementSection){
-                this.totalPremium = quoteDetails?.TotalEndtPremium;
-            }
-            else this.totalPremium = quoteDetails?.OverallPremiumFc;
+            this.DueAmount=quoteDetails?.DueAmount;
             console.log("Total",this.totalPremium)
             if(quoteDetails.EmiYn!=null){
               this.EmiYn = quoteDetails.EmiYn;
@@ -426,9 +425,21 @@ export class MakePayementComponent implements OnInit {
               this.emiPeriod = null;
               this.emiMonth = null;
             }
+            if(this.endorsementSection){
+              this.totalPremium = quoteDetails?.TotalEndtPremium;
+          }
+          else {
+            if(this.EmiYn !='Y'){
+              this.totalPremium = quoteDetails?.OverallPremiumFc;
+            }
+            else{
+              this.totalPremium = quoteDetails?.DueAmount;
+            }   
+          }
             this.getBankList();
             let paymentId = sessionStorage.getItem('quotePaymentId');
-            if(paymentId){
+            let makepayment= sessionStorage.getItem('Makepaymentid');
+            if(paymentId || makepayment =='Ids'){
               this.getPaymentTypeList();
             }
           }
@@ -896,6 +907,7 @@ export class MakePayementComponent implements OnInit {
        console.log(data);
        if(data.Result){
       console.log('NNNNNNNNNNNNN',data.Result);
+      sessionStorage.removeItem('Makepaymentid')
       this.onCashPayment();
        } 
      },
@@ -913,21 +925,36 @@ export class MakePayementComponent implements OnInit {
     }
   }
   onRedirect(value:any){
+    console.log('Routing Valuesss',value);
     this.Menu=value;
     this.first = false;this.second = false;this.Third=false;this.Fourth=false;this.Fifth = false;
-    this.bankName = null;this.chequeDate=null;this.chequeNo = null;this.Sixth=false;
+    this.bankName = null;this.chequeDate=null;this.chequeNo = null;this.Sixth=false;this.seven=false;
     if(this.Menu=='VisionPay'){ this.first=true;}
     else if(this.Menu=='Pos'){ this.second=true;}
     else if(this.Menu=='1'){ this.Third=true; }
     else if(this.Menu == '2'){ this.Fourth = true;}
     else if(this.Menu == 'Bank'){ this.Fifth = true;}
+    else if(this.Menu == '3'){ this.seven = true;}
     else if(this.Menu == '4'){
+      console.log('Menu Sixth')
       if(this.EmiYn=='N'){
-        this.payAmount = this.totalPremium;
+        //this.payAmount = this.totalPremium;
       }
         this.payeeName = this.clientName;
         this.activeMenu = this.Menu;
         this.onCashPayment();
+        // if(this.EmiYn!='Y'){
+        //   //this.onCashPayment();
+        // } 
+        // else{
+        //   this.onproceed(); 
+        // } 
+    }
+    if(this.EmiYn!='Y'){
+      //this.payAmount=this.totalPremium;
+    }
+    else {
+      //this.payAmount=this.DueAmount;
     }
     //if(this.totalPremium!=null && this.totalPremium!=undefined){this.payAmount = String(this.totalPremium);this.CommaFormatted();}
 
@@ -978,13 +1005,102 @@ export class MakePayementComponent implements OnInit {
     );
 
   }
-  onproceed(){
-    if(this.EmiYn!='Y'){
-      this.onCashPayment();  
+//   onproceed(){
+//     let makepayment= sessionStorage.getItem('Makepaymentid');
+//     if(!this.endorsementSection && makepayment!=='Ids'){
+//       if(this.EmiYn!='Y'){
+//         this.onCashPayment();  
+//       }
+//       else{
+//         this.updateinstallemnet();
+//       }
+//     }
+//     else if(!this.endorsementSection && makepayment=='Ids'){
+//       if(this.EmiYn!='Y'){
+//         this.onCashPayment();  
+//       }
+//       else{
+//         if(this.payAmount!=null){
+//           this.onMakePayment();
+//         }
+//         else{
+// this.popup();
+//         }
+        
+//       }
+//     }
+//     else{
+//       this.onCashPayment();  
+//     }
+//   }
+
+  popup(){
+    Swal.fire({
+      title: '<strong>Error</strong>',
+      icon: 'info',
+      html:
+        `<ul class="list-group errorlist">
+         <li>Plese Choose EMI</li>
+     </ul>`,
+      showCloseButton: false,
+     cancelButtonColor: '#d33',
+     cancelButtonText: 'Ok',
+    })
+  }
+  onMakePayment(){
+    if(this.subuserType==null){
+      this.subuserType = this.userDetails.Result.SubUserType;
+      sessionStorage.setItem('typeValue',this.subuserType)
+    }
+    let amount = null;
+    if(this.payAmount!=null){
+      if(this.payAmount==undefined) amount = null;
+      else if(String(this.payAmount).includes(',')){ amount = this.payAmount.replace(/,/g, '') }
+      else amount = this.payAmount;
+    }
+   let emimonth:any;
+    if(this.totallistselected[0]?.NoOfInstallment!=null){
+      emimonth=this.totallistselected[0]?.NoOfInstallment
     }
     else{
-      this.updateinstallemnet();
+      emimonth=this.emiMonth;
     }
+    // if(this.EmiYn=='Y'){
+    //   amount = this.dueAmount;
+    // }
+    // else{
+    //   amount = this.localPremiumCost;
+    // }
+    let ReqObj = {
+      "CreatedBy": this.loginId,
+      "EmiYn": this.EmiYn,
+      "InstallmentMonth":emimonth,
+      "InstallmentPeriod":this.emiPeriod,
+      "InsuranceId": this.loginId,
+      "Premium": amount,
+      "QuoteNo": this.quoteNo,
+      "Remarks": "None",
+      "SubUserType": this.subuserType,
+      "UserType": this.userType
+    }
+    let urlLink = `${this.CommonApiUrl}payment/makepayment`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+            sessionStorage.setItem('quotePaymentId',data.Result.PaymentId);
+            this.updateinstallemnet();
+          // else if(data.Result.PaymentId){
+          //   sessionStorage.setItem('quotePaymentId',data.Result.PaymentId);
+          //   if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2')){
+          //     this.router.navigate(['/Home/customer/ClientDetails']);
+          //   }
+          //   else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
+          // }
+        }
+      },
+      (err) => { },
+    );
   }
   onCashPayment(){
     let chequeDate = "";let amount=this.totalPremium;
@@ -1040,12 +1156,35 @@ export class MakePayementComponent implements OnInit {
             window.location.href =  atob(this.redirectUrl)
           }
           else {
-           
+            if(!this.seven){
               this.paymentDetails = data.Result;
               this.policyNo = data?.Result?.PolicyNo;
               this.policySection = true;
             this.updateTiraDetails();
-            
+            }
+            else{
+              if(data.Result?.DepositResponse!='Y'){
+                let Result = data.Result?.DepositResponse;
+                console.log('HHHHHHHHHH',Result);
+                Swal.fire({
+                  title: '<strong>Error</strong>',
+                  icon: 'info',
+                  html: `<ul class="list-group errorlist">
+                     <li>${Result}</li>
+                 </ul>`,
+                  showCloseButton: false,
+                 cancelButtonColor: '#d33',
+                 cancelButtonText: 'Ok',
+                })
+              }
+              else{
+                this.paymentDetails = data.Result;
+                this.policyNo = data?.Result?.PolicyNo;
+                this.policySection = true;
+              this.updateTiraDetails();
+              }
+             
+            }
           }
         } 
       },
@@ -1095,14 +1234,25 @@ export class MakePayementComponent implements OnInit {
     }
   }
   ongetBack(){
+    let makepayment= sessionStorage.getItem('Makepaymentid');
     if(this.endorsementSection && this.cancelEndorse){
       this.router.navigate(['Home/policies/Endorsements/endorsementTypes'])
     }
     else if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2')){
       this.router.navigate(['/Home/customer/ClientDetails']);
     }
+    else if(!this.endorsementSection && makepayment=='Ids'){
+     
+      this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/Emi-Details'])
+    }
     else{
-      this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
+      if(this.EmiYn!='Y'){
+        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
+      }
+      else{
+        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/Emi-Details'])
+      }
+      
     }
   }
   onOnlinePayment(){

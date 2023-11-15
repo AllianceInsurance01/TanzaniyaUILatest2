@@ -37,6 +37,7 @@ export class NewBrokerDetailsComponent implements OnInit {
   regulatoryCode: any=null;customerCode:any=null;
   customerList: any[]=[];changePasswordYN:any='N';
   showCustomerList: boolean=false;
+  cbcno: any=null;
   constructor(private router: Router, private sharedService: SharedService,
     private datePipe: DatePipe) {
     this.minDate = new Date();
@@ -226,6 +227,7 @@ export class NewBrokerDetailsComponent implements OnInit {
           this.editsSection = true;
           let loginInformation = data.Result.LoginInformation;
           let PersonalInformation = data.Result.PersonalInformation;
+          let CbcDeposit= data.Result.DepositCbc;
           if (loginInformation) {
             if (loginInformation?.Status == null) loginInformation.Status = 'N';
             if (loginInformation?.EffectiveDateStart != null) {
@@ -236,6 +238,12 @@ export class NewBrokerDetailsComponent implements OnInit {
           this.agencyCode = loginInformation?.AgencyCode;
           //this.loginId = loginInformation?.LoginId;
           this.oaCode = loginInformation?.OaCode;
+          if(CbcDeposit.length!=0){
+            this.cbcno = CbcDeposit[0]?.CbcNo;
+          }
+          else{
+            this.cbcno = null;
+          }
           this.statusValue = loginInformation?.Status;
           this.subUserType = loginInformation?.SubUserType;
           this.brokerCompanyYn = loginInformation?.BrokerCompanyYn;
@@ -473,7 +481,8 @@ export class NewBrokerDetailsComponent implements OnInit {
         "Password": this.password,
         "Status": this.statusValue,
         "SubUserType": this.subUserType,
-        "UserType": "Broker"
+        "UserType": "Broker",
+        "CbcNo":this.cbcno
       },
       "PersonalInformation": {
         "AcExecutiveId": "5",

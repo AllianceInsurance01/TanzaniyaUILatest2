@@ -73,7 +73,7 @@ export class ExcessDiscountComponent implements OnInit {
   innerDisplayedColumns = ['Id', 'Username', 'City', 'Country'];
   displayedColumns: string[] = ['CoverName', 'PremiumAfterDiscount'];
   vehicleId: string;quoteRefNo: string;isMannualReferal:any="N";
-  emiPeriod:any="N";
+  emiPeriod:any="0";
   beforeDiscount: any;afterDiscount: any;havePromoCode:any;
   premiumExcluedTax: any; premiumIncluedTax: any;promoCode:any;
   selectedCoverList: any[]=[];totalPremium: any=0;
@@ -134,7 +134,9 @@ export class ExcessDiscountComponent implements OnInit {
   nineMonthSection: boolean;
   sixMonthSection: boolean;
   threeMonthSection: boolean;
+  fiveMonthSection:boolean;eightMonthSection:boolean;
   emiSection: boolean;
+  FiveMonthSection:boolean;
 EmiYn:boolean;
 emiyn="N";
   minDate: Date;
@@ -242,6 +244,8 @@ emiyn="N";
   endorsementCategory: any;commissionPercent:any=null;
   commissionValue: any=null;
   SourceType: any;
+  emistatus: any;
+
   constructor(public sharedService: SharedService,private authService: AuthService,private router:Router,private modalService: NgbModal,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe,public dialog: MatDialog) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -2987,6 +2991,7 @@ getMotorUsageList(vehicleValue){
       console.log('Total4 premium',this.totalPremium );
         if(this.vehicleData[0].EmiYn!=null && this.vehicleData[0].EmiYn!=undefined && this.vehicleData[0].EmiYn!=''){
         this.emiYN = this.vehicleData[0].EmiYn;
+        console.log('EMI YNSS',this.emiYN);
         this.emiPeriod = this.vehicleData[0].InstallmentPeriod;
         }
         else{
@@ -3028,7 +3033,7 @@ getMotorUsageList(vehicleValue){
               this.gridshow=true;
               if(emiList.length!=0){
 
-                let i=0,yearlyList=[],nineList=[],sixList=[],threeList=[];
+                let i=0,yearlyList=[],nineList=[],sixList=[],threeList=[],fiveList=[],eightList=[];
                 for(let entry of emiList){
                     let emiDetails = entry.EmiPremium;
                     if(emiDetails.length==13){
@@ -3047,9 +3052,17 @@ getMotorUsageList(vehicleValue){
                       threeList = entry.EmiPremium;
                       this.threeMonthSection = true;
                     }
+                    else if(emiDetails.length==6){
+                      fiveList = entry.EmiPremium;
+                      this.fiveMonthSection = true;
+                    }
+                    else if(emiDetails.length==9){
+                      eightList = entry.EmiPremium;
+                      this.eightMonthSection = true;
+                    }
                     i+=1;
                     if(i==emiList.length){
-                        this.setEmiTableValues(yearlyList,nineList,sixList,threeList);
+                        this.setEmiTableValues(yearlyList,nineList,sixList,threeList,fiveList,eightList);
                     }
                 }
                 console.log('tttt',this.totalPremium);
@@ -3081,7 +3094,7 @@ getMotorUsageList(vehicleValue){
       (err) => { },
     );
   }
-  setEmiTableValues(yearlyList,nineList,sixList,threeList){
+  setEmiTableValues(yearlyList,nineList,sixList,threeList,fiveList,eightList){
     if(this.yearlySection){
        let i=0;this.Emilist1=[];
        for(let entry of yearlyList){
@@ -3094,6 +3107,10 @@ getMotorUsageList(vehicleValue){
             else{data['sixAmount']=null}
             if(threeList[i]){data['threeAmount']=threeList[i].InstallmentAmount}
             else{data['threeAmount']=null}
+            if(fiveList[i]){data['fiveAmount']=fiveList[i].InstallmentAmount}
+            else{data['fiveAmount']=null}
+            if(eightList[i]){data['eightAmount']=eightList[i].InstallmentAmount}
+            else{data['eightAmount']=null}
             this.Emilist1.push(entry);
             i+=1;
             if(i==yearlyList.length){this.emiSection=true}
@@ -3111,6 +3128,10 @@ getMotorUsageList(vehicleValue){
            else{data['sixAmount']=null}
            if(threeList[i]){data['threeAmount']=threeList[i].InstallmentAmount}
            else{data['threeAmount']=null}
+           if(fiveList[i]){data['fiveAmount']=fiveList[i].InstallmentAmount}
+           else{data['fiveAmount']=null}
+           if(eightList[i]){data['eightAmount']=eightList[i].InstallmentAmount}
+           else{data['eightAmount']=null}
            this.Emilist1.push(entry);
            i+=1;
            if(i==nineList.length){this.emiSection=true}
@@ -3128,6 +3149,8 @@ getMotorUsageList(vehicleValue){
            else{data['sixAmount']=null}
            if(threeList[i]){data['threeAmount']=threeList[i].InstallmentAmount}
            else{data['threeAmount']=null}
+           if(eightList[i]){data['eightAmount']=eightList[i].InstallmentAmount}
+           else{data['eightAmount']=null}
            this.Emilist1.push(entry);
            i+=1;
            if(i==sixList.length){this.emiSection=true}
@@ -3146,11 +3169,55 @@ getMotorUsageList(vehicleValue){
            else{data['sixAmount']=null}
            if(threeList[i]){data['threeAmount']=threeList[i].InstallmentAmount}
            else{data['threeAmount']=null}
+           if(eightList[i]){data['eightAmount']=eightList[i].InstallmentAmount}
+           else{data['eightAmount']=null}
            this.Emilist1.push(entry);
            i+=1;
            if(i==threeList.length){this.emiSection=true}
       }
    }
+   else if(this.FiveMonthSection){
+    let i=0;this.Emilist1=[];
+    for(let entry of fiveList){
+         let data = entry;
+         if(yearlyList[i]){data['yearlyAmount']=yearlyList[i].InstallmentAmount}
+         else{data['yearlyAmount']=null}
+         if(nineList[i]){data['nineAmount']=nineList[i].InstallmentAmount}
+         else{data['nineAmount']=null}
+         if(sixList[i]){data['sixAmount']=sixList[i].InstallmentAmount}
+         else{data['sixAmount']=null}
+         if(threeList[i]){data['threeAmount']=threeList[i].InstallmentAmount}
+         else{data['threeAmount']=null}
+         if(threeList[i]){data['fiveAmount']=fiveList[i].InstallmentAmount}
+         else{data['fiveAmount']=null}
+         if(eightList[i]){data['eightAmount']=eightList[i].InstallmentAmount}
+         else{data['eightAmount']=null}
+         this.Emilist1.push(entry);
+         i+=1;
+         if(i==fiveList.length){this.emiSection=true}
+    }
+ }
+ else if(this.eightMonthSection){
+  let i=0;this.Emilist1=[];
+  for(let entry of fiveList){
+       let data = entry;
+       if(yearlyList[i]){data['yearlyAmount']=yearlyList[i].InstallmentAmount}
+       else{data['yearlyAmount']=null}
+       if(nineList[i]){data['nineAmount']=nineList[i].InstallmentAmount}
+       else{data['nineAmount']=null}
+       if(sixList[i]){data['sixAmount']=sixList[i].InstallmentAmount}
+       else{data['sixAmount']=null}
+       if(threeList[i]){data['threeAmount']=threeList[i].InstallmentAmount}
+       else{data['threeAmount']=null}
+       if(threeList[i]){data['fiveAmount']=fiveList[i].InstallmentAmount}
+       else{data['fiveAmount']=null}
+       if(eightList[i]){data['eightAmount']=eightList[i].InstallmentAmount}
+       else{data['eightAmount']=null}
+       this.Emilist1.push(entry);
+       i+=1;
+       if(i==eightList.length){this.emiSection=true}
+  }
+}
    console.log("Final Emi List",this.EmiDetails1)
   }
   ongetTaxDetails(rowData){
@@ -3817,9 +3884,25 @@ getMotorUsageList(vehicleValue){
     });
   }
   onFinalProceed(){
-    
-    if(this.emiYN=='Y' && this.emiPeriod!='N'){
-      this.insertEMIDetails();
+    //this.emiYN=='Y' && this.emiPeriod!='N'
+    if(this.emiYN!=null){
+      // this.insertEMIDetails();
+      // console.log('this emi',this.emiYN);
+      if(this.emiYN=='N'){
+        this.emistatus='N';
+        this.emiPeriod='0';
+        this.insertEMIDetails();
+      }
+      else if(this.emiYN=='Y'){
+        if(this.emiPeriod!='0'){
+          this.emistatus='Y';
+          this.insertEMIDetails();
+        }
+        else{
+          this.emistatus='N';
+          this.insertEMIDetails();
+        }
+      }
     }
     else{
       if(this.productId=='3'){
@@ -3974,9 +4057,9 @@ getMotorUsageList(vehicleValue){
         "ProductId":this.productId,
         "PolicyType":"1",
         "InstallmentPeriod":this.emiPeriod,
-        "PremiumWithTax":this.localPremiumCost,
+        "PremiumWithTax":this.totalPremium,//this.localPremiumCost
         "PaymentDetails":"Debit Card",
-        "Status":"Y",
+        "Status":this.emistatus,
         "CreatedBy":this.loginId,
         "Remarks":"None"
       }
