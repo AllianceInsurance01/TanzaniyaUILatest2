@@ -138,14 +138,10 @@ export class ProductSelectionComponent implements OnInit {
   onSelectProduct(item: any) {
     let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     userDetails.Result['ProductId'] = item.ProductId;
-    console.log('ppppppp',item.ProductId)
     userDetails.Result['ProductName'] = item.ProductName;
-    console.log('PPPPPNNNNNNN',item.ProductName)
-
     userDetails.Result['PackageYn'] = item.PackageYn;
     this.insuranceId= this.userDetails.Result.InsuranceId;
-      sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
-    console.log("Products",item,userDetails.Result)
+    sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
     if(this.insuranceId=='100015' || item.ProductId=='13'){
       this.router.navigate(['/dashboardView']);
     }
@@ -158,17 +154,12 @@ export class ProductSelectionComponent implements OnInit {
   onLicRedirect(value,item){
     let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     userDetails.Result['ProductId'] = item.ProductId;
-    console.log('ppppppp',item.ProductId)
     userDetails.Result['ProductName'] = item.ProductName;
-    console.log('PPPPPNNNNNNN',item.ProductName)
-
     userDetails.Result['PackageYn'] = item.PackageYn;
-    console.log("Products",item,userDetails.Result)
     userDetails.Result['PageType'] = value;
-    
     sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
     if(value=='Illustrate'){
-          this.router.navigate(['/Home/life-risk-details']);
+      this.router.navigate(['/Home/life-risk-details']);
     }
     else this.router.navigate(['/Home']);
   }

@@ -166,26 +166,26 @@ export class ShortTermVehicle{
                     //       validation: [ForceLengthValidators.maxLength(100), ForceLengthValidators.min(1)]
                     //     },
                     // },
-                    {
-                        className: 'col-12 col-lg-4 col-md-6',
-                        type: 'input',
-                        key: 'EngineNo',
-                        templateOptions: {
-                          label: 'Engine Number',
-                          disabled: this.checkDisable('EngineNo'),
-                          required: true,
-                        },
-                        parsers: [
-                          value => {
-                              return (value = value.toUpperCase());
-                          }
-                       ],
-                        validators: {
-                          validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                        },
-                        hooks: {
-                        },
-                    },
+                    // {
+                    //     className: 'col-12 col-lg-4 col-md-6',
+                    //     type: 'input',
+                    //     key: 'EngineNo',
+                    //     templateOptions: {
+                    //       label: 'Engine Number',
+                    //       disabled: this.checkDisable('EngineNo'),
+                    //       required: true,
+                    //     },
+                    //     parsers: [
+                    //       value => {
+                    //           return (value = value.toUpperCase());
+                    //       }
+                    //    ],
+                    //     validators: {
+                    //       validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                    //     },
+                    //     hooks: {
+                    //     },
+                    // },
                     {
                         className: 'col-12 col-lg-4 col-md-6',
                         type: 'input',
@@ -262,7 +262,7 @@ export class ShortTermVehicle{
                         props: {
                           label: `Vehicle Color`,
                           disabled: this.checkDisable('Color'),
-                          required: false,
+                          required: true,
                           options: [
           
                           ],

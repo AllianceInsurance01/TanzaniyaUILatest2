@@ -298,7 +298,8 @@ export class CustomerDetailsComponent implements OnInit {
                     var year = d.getFullYear();
                     var month = d.getMonth();
                     var day = d.getDate();
-                    if(this.productId=='5' || this.productId=='46'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
+                    if(this.productId=='5'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
+                    else if(this.productId=='46'){this.policyStartDate = new Date(year,month, day ); this.onStartDateChange('direct')}
                     this.searchSection = true;
                   this.commonSection = true;
                   let quoteStatus = sessionStorage.getItem('QuoteStatus');
@@ -337,7 +338,8 @@ export class CustomerDetailsComponent implements OnInit {
                     var year = d.getFullYear();
                     var month = d.getMonth();
                     var day = d.getDate();
-                    if(this.productId=='5' || this.productId=='46'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
+                    if(this.productId=='5'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
+                    else if(this.productId=='46'){this.policyStartDate = new Date(year,month, day ); this.onStartDateChange('direct')}
                     this.searchSection = true;
                   this.commonSection = true;
                   let quoteStatus = sessionStorage.getItem('QuoteStatus');
@@ -860,7 +862,8 @@ export class CustomerDetailsComponent implements OnInit {
                   var year = d.getFullYear();
                   var month = d.getMonth();
                   var day = d.getDate();
-                  if(this.productId=='5' || this.productId=='46'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
+                  if(this.productId=='5'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
+                  else if(this.productId=='46'){this.policyStartDate = new Date(year,month, day ); this.onStartDateChange('direct')}
                 this.searchSection = true;
                 this.commonSection = true;
                 let quoteStatus = sessionStorage.getItem('QuoteStatus');
