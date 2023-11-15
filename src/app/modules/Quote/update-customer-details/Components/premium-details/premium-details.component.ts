@@ -1188,7 +1188,16 @@ toggle(index: number) {
               if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2')){
                 this.router.navigate(['/Home/customer/ClientDetails']);
               }
-              else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
+              else {
+                if(this.EmiYn!='Y'){
+                  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
+                }
+                else{
+                  sessionStorage.removeItem('Makepaymentid');
+                  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/Emi-Details']);
+                }
+                
+              }
             //}
             
           }

@@ -65,6 +65,7 @@ import { TablesTypeComponent } from './formlytable';
 import { DisplayLabels } from './displayformly';
 import {CdkAccordionModule} from '@angular/cdk/accordion';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { EmiDetailsNewComponent } from './Components/Emi-Details/emi-details.component';
 //import { CommaSeparatorsInput } from './Commaseperatorin';
 
 export function maxlengthValidationMessage(err, field) {
@@ -107,6 +108,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     RepeatTypeComponent,
     TableTypeComponent,
     TablesTypeComponent,
+    EmiDetailsNewComponent,
     CustomerModelComponent,
     RadioList,
     NgSelect

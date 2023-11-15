@@ -50,109 +50,218 @@ export class PoliciesComponent implements OnInit {
    }
 
   ngOnInit(): void {
-
-    if(this.productId=='5' || this.productId=='46'){
-      this.quoteHeader =  [
-        { key: 'OriginalPolicyNo', display: 'Policy No' },
-        { key: 'QuoteNo', display: 'Quote No' },
-        { key: 'ClientName', display: 'Customer Name' },
-        // { key: 'RequestReferenceNo', display: 'Reference No' },
-        { key: 'Currency', display: 'Currency' },
-        { key: 'OverallPremiumLc', display: 'Premium' },
-        { key: 'PolicyStartDate', display: 'Start Date' },
-        { key: 'PolicyEndDate', display: 'End Date' },
-        
-        //{ key: 'ClientName', display: 'Customer Name' },
-        // { key: 'CreditNo', display: 'Credit Note No' },
-        // { key: 'DebitNoteNo', display: 'Debit Note No' },
-        {
-          key: 'actions',
-          display: 'Action',
-          config: {
-            isPolicyConfig: true,
+    
+    if(this.userType!='Issuer'){
+      console.log('User Types',this.userType);
+      if(this.productId=='5' || this.productId=='46'){
+        this.quoteHeader =  [
+          { key: 'OriginalPolicyNo', display: 'Policy No' },
+          { key: 'QuoteNo', display: 'Quote No' },
+          { key: 'ClientName', display: 'Customer Name' },
+          // { key: 'RequestReferenceNo', display: 'Reference No' },
+          { key: 'Currency', display: 'Currency' },
+          { key: 'OverallPremiumLc', display: 'Premium' },
+          { key: 'PolicyStartDate', display: 'Start Date' },
+          { key: 'PolicyEndDate', display: 'End Date' },
+          
+          //{ key: 'ClientName', display: 'Customer Name' },
+          // { key: 'CreditNo', display: 'Credit Note No' },
+          // { key: 'DebitNoteNo', display: 'Debit Note No' },
+          {
+            key: 'actions',
+            display: 'Action',
+            config: {
+              isPolicyConfig: true,
+            },
           },
-        },
-        {
-          key: 'edit',
-          display: 'Vehicle Details',
-          sticky: false,
-          config: {
-            isCollapse: true,
-            isCollapseName:'Vehicles'
+          {
+            key: 'edit',
+            display: 'Vehicle Details',
+            sticky: false,
+            config: {
+              isCollapse: true,
+              isCollapseName:'Vehicles'
+            },
           },
-        },
-
-      ];
-      this.innerColumnHeader =  [
-        { key: 'Vehicleid', display: 'VehicleID' },
-        { key: 'Registrationnumber', display: 'Registration No' },
-        { key: 'Chassisnumber', display: 'Chassis No' },
-        { key: 'Vehiclemake', display: 'Make' },
-        { key: 'Vehcilemodel', display: 'Model' },
-        { key: 'PolicyTypeDesc', display: 'Policy Type' },
-        { key: 'OverallPremiumFc', display: 'Premium' },
-
-        // {
-        //   key: 'actions',
-        //   display: 'Schedule',
-        //   config: {
-        //     isSchedule: true,
-        //   },
-        // },
-
-      ];
-
-      let endorsement =  sessionStorage.getItem('otherpolicysearch');
-      let policyno =  sessionStorage.getItem('otherpolicy');
-
-      if(endorsement == 'otherpolicysearch'){
-        console.log('NNNNNNNNNNNN',policyno);
-        this.customersearch =true;
-        this.show=true;
-        this.eventothers('direct',policyno,'change');
-        sessionStorage.removeItem('otherpolicy');
-        sessionStorage.removeItem('otherpolicysearch')
+  
+        ];
+        this.innerColumnHeader =  [
+          { key: 'Vehicleid', display: 'VehicleID' },
+          { key: 'Registrationnumber', display: 'Registration No' },
+          { key: 'Chassisnumber', display: 'Chassis No' },
+          { key: 'Vehiclemake', display: 'Make' },
+          { key: 'Vehcilemodel', display: 'Model' },
+          { key: 'PolicyTypeDesc', display: 'Policy Type' },
+          { key: 'OverallPremiumFc', display: 'Premium' },
+  
+          // {
+          //   key: 'actions',
+          //   display: 'Schedule',
+          //   config: {
+          //     isSchedule: true,
+          //   },
+          // },
+  
+        ];
+  
+        let endorsement =  sessionStorage.getItem('otherpolicysearch');
+        let policyno =  sessionStorage.getItem('otherpolicy');
+  
+        if(endorsement == 'otherpolicysearch'){
+          console.log('NNNNNNNNNNNN',policyno);
+          this.customersearch =true;
+          this.show=true;
+          this.eventothers('direct',policyno,'change');
+          sessionStorage.removeItem('otherpolicy');
+          sessionStorage.removeItem('otherpolicysearch')
+        }
+        else{
+          this.show=false;
+          this.customersearch=false;
+          sessionStorage.removeItem('otherpolicy');
+          sessionStorage.removeItem('otherpolicysearch');
+        }
+  
+       
       }
       else{
-        this.show=false;
-        this.customersearch=false;
-        sessionStorage.removeItem('otherpolicy');
-        sessionStorage.removeItem('otherpolicysearch');
-      }
-
-     
-    }
-    else{
-      this.quoteHeader =  [
-        { key: 'OriginalPolicyNo', display: 'Policy No' },
-        { key: 'QuoteNo', display: 'Quote No' },
-        { key: 'RequestReferenceNo', display: 'Reference No' },
-        { key: 'ClientName', display: 'Insured Name' },
-        { key: 'PolicyStartDate', display: 'Policy Start Date' },
-        { key: 'PolicyEndDate', display: 'Policy End Date' },
-
-        // { key: 'CreditNo', display: 'Credit Note No' },
-        // { key: 'DebitNoteNo', display: 'Debit Note No' },
-        {
-          key: 'actions',
-          display: 'Action',
-          config: {
-            isPolicyConfig: true,
+        this.quoteHeader =  [
+          { key: 'OriginalPolicyNo', display: 'Policy No' },
+          { key: 'QuoteNo', display: 'Quote No' },
+          { key: 'RequestReferenceNo', display: 'Reference No' },
+          { key: 'ClientName', display: 'Insured Name' },
+          { key: 'PolicyStartDate', display: 'Policy Start Date' },
+          { key: 'PolicyEndDate', display: 'Policy End Date' },
+  
+          // { key: 'CreditNo', display: 'Credit Note No' },
+          // { key: 'DebitNoteNo', display: 'Debit Note No' },
+          {
+            key: 'actions',
+            display: 'Action',
+            config: {
+              isPolicyConfig: true,
+            },
           },
-        },
-        // {
-        //   key: 'edit',
-        //   display: 'Vehicle Details',
-        //   sticky: false,
-        //   config: {
-        //     isCollapse: true,
-        //     isCollapseName:'Vehicles'
-        //   },
-        // },
-
-      ];
-     
+          // {
+          //   key: 'edit',
+          //   display: 'Vehicle Details',
+          //   sticky: false,
+          //   config: {
+          //     isCollapse: true,
+          //     isCollapseName:'Vehicles'
+          //   },
+          // },
+  
+        ];
+       
+      }
     }
+    if(this.userType =='Issuer'){
+      console.log('User Types',this.userType);
+      if(this.productId=='5' || this.productId=='46'){
+        this.quoteHeader =  [
+          { key: 'PolicyNo', display: 'Policy No' },
+          { key: 'QuoteNo', display: 'Quote No' },
+          { key: 'ClientName', display: 'Customer Name' },
+          // { key: 'RequestReferenceNo', display: 'Reference No' },
+          { key: 'Currency', display: 'Currency' },
+          { key: 'OverallPremiumLc', display: 'Premium' },
+          { key: 'PolicyStartDate', display: 'Start Date' },
+          { key: 'PolicyEndDate', display: 'End Date' },
+          
+          //{ key: 'ClientName', display: 'Customer Name' },
+          // { key: 'CreditNo', display: 'Credit Note No' },
+          // { key: 'DebitNoteNo', display: 'Debit Note No' },
+          {
+            key: 'actions',
+            display: 'Action',
+            config: {
+              isPolicyConfig: true,
+            },
+          },
+          {
+            key: 'edit',
+            display: 'Vehicle Details',
+            sticky: false,
+            config: {
+              isCollapse: true,
+              isCollapseName:'Vehicles'
+            },
+          },
+  
+        ];
+        this.innerColumnHeader =  [
+          { key: 'Vehicleid', display: 'VehicleID' },
+          { key: 'Registrationnumber', display: 'Registration No' },
+          { key: 'Chassisnumber', display: 'Chassis No' },
+          { key: 'Vehiclemake', display: 'Make' },
+          { key: 'Vehcilemodel', display: 'Model' },
+          { key: 'PolicyTypeDesc', display: 'Policy Type' },
+          { key: 'OverallPremiumFc', display: 'Premium' },
+  
+          // {
+          //   key: 'actions',
+          //   display: 'Schedule',
+          //   config: {
+          //     isSchedule: true,
+          //   },
+          // },
+  
+        ];
+  
+        let endorsement =  sessionStorage.getItem('otherpolicysearch');
+        let policyno =  sessionStorage.getItem('otherpolicy');
+  
+        if(endorsement == 'otherpolicysearch'){
+          console.log('NNNNNNNNNNNN',policyno);
+          this.customersearch =true;
+          this.show=true;
+          this.eventothers('direct',policyno,'change');
+          sessionStorage.removeItem('otherpolicy');
+          sessionStorage.removeItem('otherpolicysearch')
+        }
+        else{
+          this.show=false;
+          this.customersearch=false;
+          sessionStorage.removeItem('otherpolicy');
+          sessionStorage.removeItem('otherpolicysearch');
+        }
+  
+       
+      }
+      else{
+        this.quoteHeader =  [
+          { key: 'PolicyNo', display: 'Policy No' },
+          { key: 'QuoteNo', display: 'Quote No' },
+          { key: 'RequestReferenceNo', display: 'Reference No' },
+          { key: 'ClientName', display: 'Insured Name' },
+          { key: 'PolicyStartDate', display: 'Policy Start Date' },
+          { key: 'PolicyEndDate', display: 'Policy End Date' },
+  
+          // { key: 'CreditNo', display: 'Credit Note No' },
+          // { key: 'DebitNoteNo', display: 'Debit Note No' },
+          {
+            key: 'actions',
+            display: 'Action',
+            config: {
+              isPolicyConfig: true,
+            },
+          },
+          // {
+          //   key: 'edit',
+          //   display: 'Vehicle Details',
+          //   sticky: false,
+          //   config: {
+          //     isCollapse: true,
+          //     isCollapseName:'Vehicles'
+          //   },
+          // },
+  
+        ];
+       
+      }
+    }
+   
     //if(this.userType=='Issuer'){
       this.getBrokerList();
     // }
@@ -161,44 +270,57 @@ export class PoliciesComponent implements OnInit {
     // }
   }
   onPayssEmi(element:any){
-    // console.log('NNNNNNNN',element)
-    //         sessionStorage.setItem('quoteReferenceNo',element.RequestReferenceNo);
-    //        sessionStorage.setItem('quoteNo',element.QuoteNo);
-    //        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
+    console.log('NNNNNNNN',element)
+            sessionStorage.setItem('quoteReferenceNo',element.RequestReferenceNo);
+           sessionStorage.setItem('quoteNo',element.QuoteNo);
+           sessionStorage.setItem('Makepaymentid','Ids');
+           let ReqObj={
+           TitleDesc:"",
+           ClientName:element.ClientName,
+           DobOrRegDate:"",
+           Email1:"",
+           MobileNo1:element.MobileNo,
+           IdNumber:element.IdNumber,
+           PolicyHolderType:"",
+           ProductName:element.ProductName
+           }
+          sessionStorage.setItem('customerDetails',JSON.stringify(ReqObj));
+          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/Emi-Details']);
+           //this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
       // if(this.subuserType==null){
       //   this.subuserType = this.userDetails.Result.SubUserType;
       //   sessionStorage.setItem('typeValue',this.subuserType)
       // }
-      this.subuserType = sessionStorage.getItem('typeValue');
-      let amount = null;
-      let ReqObj = {
-        "CreatedBy": this.loginId,
-        "EmiYn": element.EmiYn,
-        "InstallmentMonth":"",
-        "InstallmentPeriod":element.InstallmentPeriod,
-        "InsuranceId": this.insuranceId,
-        "Premium": element.OverallPremiumLc,
-        "QuoteNo": element.QuoteNo,
-        "Remarks": "None",
-        "SubUserType": this.subuserType,
-        "UserType": this.userType
-      }
-      let urlLink = `${this.CommonApiUrl}payment/makepayment`;
-      this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
-        (data: any) => {
-          console.log(data);
-          if(data.Result){
-            if((this.productId=='5' || this.productId=='46')){
-              sessionStorage.setItem('quotePaymentId',data.Result.PaymentId);
-              console.log('NNNNNNNN',element)
-              sessionStorage.setItem('quoteReferenceNo',element.RequestReferenceNo);
-             sessionStorage.setItem('quoteNo',element.QuoteNo);
-             this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
-            }
-          }
-        },
-        (err) => { },
-      );
+      // this.subuserType = sessionStorage.getItem('typeValue');
+      // let amount = null;
+      // let ReqObj = {
+      //   "CreatedBy": this.loginId,
+      //   "EmiYn": element.EmiYn,
+      //   "InstallmentMonth":element.NoOfInstallment,
+      //   "InstallmentPeriod":element.InstallmentPeriod,
+      //   "InsuranceId": this.insuranceId,
+      //   "Premium": element.OverallPremiumLc,
+      //   "QuoteNo": element.QuoteNo,
+      //   "Remarks": "None",
+      //   "SubUserType": this.subuserType,
+      //   "UserType": this.userType
+      // }
+      // let urlLink = `${this.CommonApiUrl}payment/makepayment`;
+      // this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      //   (data: any) => {
+      //     console.log(data);
+      //     if(data.Result){
+      //       if((this.productId=='5' || this.productId=='46')){
+      //         sessionStorage.setItem('quotePaymentId',data.Result.PaymentId);
+      //         console.log('NNNNNNNN',element)
+      //         sessionStorage.setItem('quoteReferenceNo',element.RequestReferenceNo);
+      //        sessionStorage.setItem('quoteNo',element.QuoteNo);
+      //        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
+      //       }
+      //     }
+      //   },
+      //   (err) => { },
+      // );
     
     
   }

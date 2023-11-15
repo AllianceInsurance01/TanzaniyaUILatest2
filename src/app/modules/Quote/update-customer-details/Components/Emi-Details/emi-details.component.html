@@ -1,0 +1,325 @@
+   <div class="maan-grid-item" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
+        <div class="maan-grid-item-title">
+            <div class="d-flex justify-content-between display1">
+                <div>
+                    <span class="mx-1">
+                        <i class="fas fa-user mx-1"></i>
+                    </span> EMI Details
+                </div>
+                <!-- <div>
+                  <div><b>Total : </b><span *ngIf="payamount!=null">{{payamount | commaseparator}}</span>
+                    <span *ngIf="payamount==0">{{0}}</span>
+                </div>
+                </div> -->
+            </div>
+         
+        </div>
+        <div class="maan-grid-item-body" style="padding-left: 70px !important;padding-right: 40px !important;">
+
+            <div class="d-flex justify-content-between mt-2" *ngIf="paidshow">
+                <div style="font-size:14px !important; color:black"> <b>Paid Amount</b></div>
+             </div>
+            <div class="col-md-12 col-lg-12" *ngIf="Emilist1.length!=0 && paidshow">
+                <table class="firstclass" style="width:100%;">
+                    <thead>
+                
+                        <!-- <tr class="firstclass">
+                            <th scope="col" colspan="4"></th>
+                            <th scope="col" colspan="2" style="text-align:center;">Installment Amount ({{currencyCode}})</th>
+                        </tr> -->
+                        <tr class="firstclass">
+                            <!-- <th scope="col" class="title text-center">Select</th> -->
+                            <th scope="col" class="title text-center" style="width:10px !important">Installment Period</th>
+                            <th scope="col" class="title text-center">Due Amount</th>
+                            <th scope="col" class="title text-center">Due Date</th>
+                            <th scope="col" class="title text-center">Paid Date</th>
+                            <th scope="col" class="title text-center">Payment Mode</th>
+                            <th scope="col" class="title text-center">Payment Id</th>
+
+                            <!-- <th scope="col" *ngIf="yearlySection" id="second" class="text-center">12 Months</th>
+                            <th scope="col" *ngIf="nineMonthSection" id="third" class="title text-center">9 Months</th>
+                            <th scope="col" *ngIf="eightMonthSection" id="seven" class="text-center">8 Months</th>
+                            <th scope="col" *ngIf="sixMonthSection" id="fourth" class="text-center">6 Months</th>
+                            <th scope="col" *ngIf="fiveMonthSection" id="six" class="text-center"> 5 Months</th>
+                            <th scope="col" *ngIf="threeMonthSection" id="fifth" class="text-center"> 3 Months</th>
+                            <th scope="col" class="title text-center">EMI Status</th> -->
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <ng-container>
+                            <tr *ngFor="let list of Emilist1;let i=index" class="firstclass">
+                                <ng-container *ngIf="list.SelectYn!='Y' && list.PaymentStatus=='Paid'">
+                                <td class="title" style="width:10px !important">{{list.NoOfInstallment}}</td>
+                                <td *ngIf="yearlySection"  style="width:130px !important" class="premiumText" id="second">{{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="nineMonthSection" style="width:130px !important" class="premiumText" id="third">{{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="eightMonthSection"  style="width:130px !important" class="premiumText" id="seven"> {{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="sixMonthSection" style="width:130px !important" class="premiumText" id="fourth"> {{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="fiveMonthSection" style="width:130px !important" class="premiumText" id="six"> {{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="threeMonthSection" style="width:130px !important" class="premiumText" id="fifth">{{list.DueAmount|commaseparator}}</td>
+                                <!-- <td class="title">{{list.InstallmentDesc}}</td> -->
+                                <td class="title" style="width:100px;"> {{list.DueDate}}</td>
+                                <td class="title" style="width:100px;"> {{list.PaymentDate}}</td>
+                                <td class="title" style="width:250px;"> 
+                                   {{list.PaymentDetails}}
+                                    <button type="button" class="btn" *ngIf="list.PaymentDetails!='Cash'" [ngbPopover]="taxCard" placement="top"><!--style="margin-right:7px !important;"-->
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <!-- <div class="row">
+                                        <div class="col-4"><span><b>MICR No:</b></span><span>1452633</span></div>
+                                        <div class="col-4"><span><b>Cheque No:</b></span><span>1236540789</span></div>
+                                        <div class="col-4"><span><b>Cheque Date:</b></span><span>08/11/2023</span></div>
+                                    </div> -->
+                                </td>
+                                <td class="title">{{list.PaymentId}}</td>
+                              
+                                <!-- <td class="title p-2" *ngIf="list.PaymentStatus=='Pending'">
+                                    <span class="realistic-marker-highlight p-1">{{list.PaymentStatus}}</span>
+                                </td>
+                                <td class="title" *ngIf="list.PaymentStatus!='Pending'">
+                                    {{list.PaymentStatus}}
+                                </td> -->
+                            </ng-container>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-flex justify-content-between mt-2">
+                
+                <div style="font-size:14px !important; color:black"> <b>Need TO Pay Amount</b></div>
+                 <div>
+                  <div><b>Total : </b><span>{{payamount | commaseparator}}</span>
+                </div>
+                </div>
+             </div>
+            <div class="col-md-12 col-lg-12" *ngIf="Emilist1.length!=0">
+                <table class="firstclass" style="width:100%;">
+                    <thead>
+                
+                        <!-- <tr class="firstclass">
+                            <th scope="col" colspan="4"></th>
+                            <th scope="col" colspan="2" style="text-align:center;">Installment Amount ({{currencyCode}})</th>
+                        </tr> -->
+                        <tr class="firstclass">
+                            <th scope="col" class="title text-center">Select</th>
+                            <th scope="col" class="title text-center">Installment Month</th>
+                            <!-- <th scope="col" class="title text-center">Installment Type</th> -->
+                            <th scope="col" class="title text-center">Due Date</th>
+                            <th scope="col" *ngIf="yearlySection" id="second" class="text-center"> Due Amount</th>
+                            <th scope="col" *ngIf="nineMonthSection" id="third" class="title text-center">Due Amount</th>
+                            <th scope="col" *ngIf="eightMonthSection" id="seven" class="text-center"> Amount</th>
+                            <th scope="col" *ngIf="sixMonthSection" id="fourth" class="text-center">Amount</th>
+                            <th scope="col" *ngIf="fiveMonthSection" id="six" class="text-center"> Due Amount</th>
+                            <th scope="col" *ngIf="threeMonthSection" id="fifth" class="text-center"> Due Amount</th>
+                            <th scope="col" class="title text-center">EMI Status</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <ng-container>
+                            <tr *ngFor="let list of Emilist1;let i=index" class="firstclass">
+                                <ng-container *ngIf="list.SelectYn!='N' && list.PaymentStatus=='Pending'">
+                                <td class="tbl-content">
+                                    <ng-container *ngIf="list.SelectYn=='Y'">
+                                        <mat-checkbox class="example-margin text-center" (change)="onSelectPolicyTypeRow($event.checked,i)"><!--[checked]="list.SelectYn=='Y'"-->
+                                        </mat-checkbox>
+                                    </ng-container>
+                                </td>
+                            
+                                <!-- <td class="title" style="width:130px;"> 
+                                    Cheque
+                                    <button type="button" class="btn" [ngbPopover]="taxCard" placement="top" style="margin-right:7px !important;">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                 
+                                </td> -->
+                              
+                                <td class="title">{{list.NoOfInstallment}}</td>
+                                <!-- <td class="title">{{list.InstallmentDesc}}</td> -->
+                                <td class="title"> {{list.DueDate}}</td>
+                                <td *ngIf="yearlySection" class="premiumText" id="second">{{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="nineMonthSection" class="premiumText" id="third">{{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="eightMonthSection" class="premiumText" id="seven"> {{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="sixMonthSection" class="premiumText" id="fourth"> {{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="fiveMonthSection" class="premiumText" id="six"> {{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="threeMonthSection" class="premiumText" id="fifth">{{list.DueAmount|commaseparator}}</td>
+                                <td class="title p-2" *ngIf="list.PaymentStatus=='Pending'">
+                                    <span class="realistic-marker-highlight p-1">{{list.PaymentStatus}}</span>
+                                </td>
+                                <td class="title" *ngIf="list.PaymentStatus!='Pending'">
+                                    {{list.PaymentStatus}}
+                                </td> 
+                            </ng-container>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+
+
+             <div class="d-flex justify-content-between mt-2">
+                <div style="font-size:14px !important;"> <b>Balance EMI TO Pay </b></div>
+             </div>
+            <div class="col-md-12 col-lg-12 mt-2" *ngIf="Emilist1.length!=0">
+                <table class="firstclass" style="width:100%;">
+                    <thead>
+                
+                        <tr class="firstclass">
+                            <th scope="col" colspan="4"></th>
+                            <th scope="col" colspan="2" style="text-align:center;">Installment Amount ({{currencyCode}})</th>
+                        </tr>
+                        <tr class="firstclass">
+                            <th scope="col" class="title text-center">Select</th>
+                            <th scope="col" class="title text-center">EMI Month</th>
+                            <th scope="col" class="title text-center">Installment Type</th>
+                            <th scope="col" class="title text-center">Due Date</th>
+                            <th scope="col" *ngIf="yearlySection" id="second" class="text-center">Due Amount</th><!--12 Months-->
+                            <th scope="col" *ngIf="nineMonthSection" id="third" class="title text-center">Due Amount</th><!--9 Months-->
+                            <th scope="col" *ngIf="eightMonthSection" id="seven" class="text-center">Due Amount</th><!--8 Months-->
+                            <th scope="col" *ngIf="sixMonthSection" id="fourth" class="text-center">Due Amount</th><!--6 Months-->
+                            <th scope="col" *ngIf="fiveMonthSection" id="six" class="text-center">Due Amount</th><!--5 Months-->
+                            <th scope="col" *ngIf="threeMonthSection" id="fifth" class="text-center">Due Amount</th><!--3 Months-->
+                            <th scope="col" class="title text-center">EMI Status</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        <ng-container>
+                            <tr *ngFor="let list of Emilist1;let i=index" class="firstclass">
+                                <ng-container *ngIf="list.SelectYn!='Y' && list.PaymentStatus=='Pending'">
+                                <!-- <td class="tbl-content" *ngIf="list.SelectYn=='N' && list.isChecked">
+                                    <ng-container>
+                                        <mat-checkbox class="example-margin text-center" (change)="onSelectPolicyTypeRow($event.checked,i)" [checked]="list.PaymentStatus=='Paid'">
+                                        </mat-checkbox>
+                                    </ng-container>
+                                </td> -->
+                                <td *ngIf="list.SelectYn=='N'">
+                                    <ng-container>
+                                        <mat-checkbox class="example-margin text-center" (change)="onSelectPolicyTypeRow($event.checked,i)" [checked]="list.Status=='Y'" [disabled]="!list.isChecked">
+                                        </mat-checkbox>
+                                    </ng-container>
+                                </td>
+                                <td class="title">{{list.NoOfInstallment}}</td>
+                                <td class="title">{{list.InstallmentDesc}}</td>
+                                <td class="title"> {{list.DueDate}}</td>
+                                <td *ngIf="yearlySection" class="premiumText" id="second">{{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="nineMonthSection" class="premiumText" id="third">{{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="eightMonthSection" class="premiumText" id="seven"> {{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="sixMonthSection" class="premiumText" id="fourth"> {{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="fiveMonthSection" class="premiumText" id="six"> {{list.DueAmount|commaseparator}}</td>
+                                <td *ngIf="threeMonthSection" class="premiumText" id="fifth">{{list.DueAmount|commaseparator}}</td>
+                                <td class="title p-2" *ngIf="list.PaymentStatus=='Pending'">
+                                    <span class="realistic-marker-highlight p-1">{{list.PaymentStatus}}</span>
+                                </td>
+                                <td class="title" *ngIf="list.PaymentStatus!='Pending'">
+                                    {{list.PaymentStatus}}
+                                </td>
+                            </ng-container>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+        <div class="text-center my-2 mt-3" >
+            <button class="custom-btn btn-5 mx-2" (click)="ongetBack()" ><<&nbsp;Back</button>&nbsp;
+          
+            <button class="custom-btn btn-6 maan-button-data mx-2"  matRipple (click)="updatelists()">Proceed</button>
+        </div>
+    </div>
+
+
+
+    <div class="d-flex justify-content-between">
+        <div>
+            <ng-container>
+                <ng-template #taxCard>
+                    <div
+                        class="popover-card customTemplate shawdowcustom">
+                        <div class="card-header"
+                            status="warning">
+                            Addtional Details!
+                        </div>
+                        <div class="card-body p-0">
+                            <ul class="list-group" *ngFor="let list of Emilist1;">
+                                <li
+                                class="list-group-item list-seperate" *ngIf="list.PaymentDetails=='Online'">
+                                <div>
+                                    <span
+                                        class="spancommon span_font_size">Iban Number
+                                    </span>
+                                </div>
+                                <div>
+                                    <span
+                                        class="spancommon span_font_size">{{list.IbanNumber}}</span>
+                                </div>
+                            </li>
+                                <li
+                                    class="list-group-item list-seperate" *ngIf="list.PaymentDetails=='Cheque'">
+                                    <div>
+                                        <span
+                                            class="spancommon span_font_size">MerchantReference No
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span
+                                            class="spancommon span_font_size">{{list.MerchantReference}}</span>
+                                    </div>
+                                </li>
+                                <li
+                                class="list-group-item list-seperate" *ngIf="list.PaymentDetails=='Cheque'">
+                                <div>
+                                    <span
+                                        class="spancommon span_font_size">Micr No</span>
+                                </div>
+                                <div>
+                                    <span
+                                        class="spancommon span_font_size">{{list.MicrNo}}</span>
+                                </div>
+                            </li>
+                            <li
+                            class="list-group-item list-seperate" *ngIf="list.PaymentDetails=='Cheque'">
+                            <div>
+                                <span
+                                    class="spancommon span_font_size">BankName</span>
+                            </div>
+                            <div>
+                                <span
+                                    class="spancommon span_font_size">{{list.BankName}}</span>
+                            </div>
+                        </li>
+                                <li
+                                    class="list-group-item list-seperate" *ngIf="list.PaymentDetails=='Cheque'">
+                                    <div>
+                                        <span
+                                            class="spancommon span_font_size">Cheque No</span>
+                                    </div>
+                                    <div>
+                                        <span
+                                            class="spancommon span_font_size">{{list.ChequeNo}}</span>
+                                    </div>
+                                </li>
+                                <li
+                                class="list-group-item list-seperate" *ngIf="list.PaymentDetails=='Cheque'">
+                                <div>
+                                    <span
+                                        class="spancommon span_font_size">Cheque Date</span>
+                                </div>
+                                <div>
+                                    <span
+                                        class="spancommon span_font_size">{{list.ChequeDate}}</span>
+                                </div>
+                            </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </ng-template>
+                &nbsp;&nbsp;
+            </ng-container>
+        </div>
+    </div>
