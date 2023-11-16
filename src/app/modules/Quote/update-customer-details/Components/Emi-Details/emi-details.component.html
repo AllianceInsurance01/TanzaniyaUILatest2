@@ -49,7 +49,7 @@
                     <tbody>
                         <ng-container>
                             <tr *ngFor="let list of Emilist1;let i=index" class="firstclass">
-                                <ng-container *ngIf="list.SelectYn!='Y' && list.PaymentStatus=='Paid'">
+                                <ng-container *ngIf="list.PaymentStatus=='Paid'">
                                 <td class="title" style="width:10px !important">{{list.NoOfInstallment}}</td>
                                 <td *ngIf="yearlySection"  style="width:130px !important" class="premiumText" id="second">{{list.DueAmount|commaseparator}}</td>
                                 <td *ngIf="nineMonthSection" style="width:130px !important" class="premiumText" id="third">{{list.DueAmount|commaseparator}}</td>

@@ -34,6 +34,9 @@ export class EmiListComponent implements OnInit {
     this.columnHeader = [
       { key: 'PremiumStart', display: 'Premium Start' },
       { key: 'PremiumEnd', display: 'Premium End' },
+      { key: 'PolicyTypeDesc', display: '"PolicyType Desc' },
+      { key: 'InterestPercent', display: 'Interest Percent' },
+      { key: 'AdvancePercent', display: 'Advance Percent' },
       { key: 'InstallmentPeriod', display: 'Installment Period' },
       { key: 'EffectiveDateStart', display: 'Effective Date' },
 
