@@ -245,6 +245,7 @@ emiyn="N";
   commissionValue: any=null;
   SourceType: any;
   emistatus: any;
+  emipolicytype: any;
 
   constructor(public sharedService: SharedService,private authService: AuthService,private router:Router,private modalService: NgbModal,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe,public dialog: MatDialog) {
@@ -1308,12 +1309,37 @@ getMotorUsageList(vehicleValue){
           if(data.Result){
 
               this.vehicleData = data.Result;
-              
+    
+              // this.emipolicytype=this.vehicleData[0]?.RiskDetails?.InsuranceClass;
+              //     console.log('KKKKKKKKKKKK',this.emipolicytype);
              
               // let refRemarks = this.vehicleData[0].ReferalRemarks;
               // if(refRemarks){
               //   this.referralRemarks = refRemarks.split('~');
               // }
+              if(this.productId=='5'){
+                let j=0;let datass:any=[]
+                if(this.vehicleData.length>1){
+                  if(this.vehicleData[0]?.RiskDetails?.InsuranceClass == this.vehicleData[1]?.RiskDetails?.InsuranceClass){
+                    this.emipolicytype=this.vehicleData[0]?.RiskDetails?.InsuranceClass;
+                    console.log('Secondsse',this.emipolicytype)
+                  }
+                  else{
+                    this.emipolicytype='99999';
+                    console.log('Firsteee',this.emipolicytype)
+                  }
+                 
+                }
+                else{
+                 this.emipolicytype=this.vehicleData[0]?.RiskDetails?.InsuranceClass;
+                console.log('KKKKKKKKKKKK',this.emipolicytype);
+                }
+                // this.emipolicytype=this.vehicleData[0]?.RiskDetails?.InsuranceClass;
+                // console.log('KKKKKKKKKKKK',this.emipolicytype);
+               }
+               else{
+                this.emipolicytype='99999';
+               }
               
               let vehicleList:any[]=[];
               if(this.vehicleData.length!=0){
@@ -1437,6 +1463,9 @@ getMotorUsageList(vehicleValue){
                       }
 
                     }
+
+                   
+                  
                 }
               }
           }
@@ -3020,7 +3049,7 @@ getMotorUsageList(vehicleValue){
      "InsuranceId":this.insuranceId,
      "ProductId":this.productId,
      "Currency": this.localCurrency,
-     "PolicyType":"1"
+     "PolicyType":this.emipolicytype
     }
     let urlLink = `${this.CommonApiUrl}api/viewemi`;
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
@@ -4055,7 +4084,7 @@ getMotorUsageList(vehicleValue){
         "QuoteNo":this.quoteNo,
         "InsuranceId": this.insuranceId,
         "ProductId":this.productId,
-        "PolicyType":"1",
+        "PolicyType":this.emipolicytype,
         "InstallmentPeriod":this.emiPeriod,
         "PremiumWithTax":this.totalPremium,//this.localPremiumCost
         "PaymentDetails":"Debit Card",
