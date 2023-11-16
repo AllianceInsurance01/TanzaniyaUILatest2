@@ -28,46 +28,56 @@
             <div class="col-3 col-md-3 col-lg-3 col-xl-3">
                 <div class="input-control-container" *ngIf="searchBySection">
                     <label class="input-form-label">Search By</label><span class="text-danger">*</span>
-                    <ng-select class="input-form-select" appendTo="body" [items]="searchList" [(ngModel)]="searchBy" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="input-form-select" appendTo="body" [items]="searchList" [(ngModel)]="searchBy" bindValue="Code" bindLabel="Description">
                     </ng-select>
+                </div>
+                <div class="input-form-error" *ngIf="searchByError">
+                    <div class="error-text  text-danger">
+                        <span class="spancommon span_font_size">Please Select Search By</span>
+                    </div>
                 </div>
             </div>
             <div class="col-3 col-md-3 col-lg-3 col-xl-3">
                 <div class="input-control-container" *ngIf="searchBySection">
                     <label class="input-form-label">Search Value</label><span class="text-danger">*</span>
                     <div class="input-form-box">
-                        <input type="text" maxlength="10" (keypress)="omit_special_char($event)" class="input-form-control without-icon" [(ngModel)]="searchValue">
+                        <input type="text" maxlength="100" (keypress)="omit_special_char($event)" class="input-form-control without-icon" [(ngModel)]="searchValue">
+                    </div>
+                </div>
+                <div class="input-form-error" *ngIf="searchValueError">
+                    <div class="error-text  text-danger">
+                        <span class="spancommon span_font_size">Please Enter Search Value</span>
                     </div>
                 </div>
             </div>
-            <div class="col-2 col-md-2 col-lg-2 col-xl-2" *ngIf="searchSection">
+            <div class="col-2 col-md-2 col-lg-2 col-xl-2" *ngIf="!searchBySection">
                 <label class="input-form-label spancommon span_font_size">Start Date<span class="text-danger">*</span></label>
                 <ng-container >
                     <mat-form-field appearance="fill">
-                        <input matInput [matDatepicker]="picker" [max]="maxDate" [(ngModel)]="policyStartDate">
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="policyStartDate" (dateChange)="getProductDashboard()">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
                 </ng-container>
             </div>
-            <div class="col-2 col-md-2 col-lg-2 col-xl-2" *ngIf="searchSection">
+            <div class="col-2 col-md-2 col-lg-2 col-xl-2" *ngIf="!searchBySection">
                 <label class="input-form-label spancommon span_font_size">End Date<span class="text-danger">*</span></label>
                 <ng-container >
                     <mat-form-field appearance="fill">
-                        <input matInput [matDatepicker]="picker" [max]="maxDate" [(ngModel)]="policyEndDate">
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="policyEndDate" (dateChange)="getProductDashboard()">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
                 </ng-container>
             </div>
-            <div class="col-2 col-md-2 col-lg-2 col-xl-2 mt-4" *ngIf="searchBySection">
+            <div class="col-3 col-md-3 col-lg-3 col-xl-3 mt-4" *ngIf="searchBySection">
                 <div class="text-center">
                     <button class="btn btn-secondary" (click)="onSearchPolicyData()"><i class="fa fa-search"></i>&nbsp;Search</button>&nbsp;&nbsp;
                     <button class="btn btn-danger" (click)="onCancelSearch()"><i class="fa fa-close"></i>&nbsp;Cancel</button>
                 </div>
                 
             </div>
-            <div class="col-2 col-md-2 col-lg-2 col-xl-2 mt-4 offset-10" *ngIf="!searchBySection">
+            <div class="col-2 col-md-2 col-lg-2 col-xl-2 mt-4" *ngIf="!searchBySection">
                 <button class="btn btn-info" style="border-radius: 20px;" (click)="onSearchPolicy()"><i class="fa fa-search"></i> &nbsp; Search for Policy</button>
             </div>
         </div>
@@ -75,7 +85,7 @@
             <div class="col-12 col-md-9 col-lg-9">
                 <div class="grid">
                     <ng-container >
-                        <div class="item master-cards" (click)="onShowPlanTypeDetails('all')" *ngIf="">
+                        <div class="item master-cards" (click)="onShowPlanTypeDetails('OVERALL')" *ngIf="totalPolicy">
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <h6>Total Policy</h6>
@@ -93,7 +103,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="item master-cards" (click)="onShowPlanTypeDetails('active')" *ngIf="activeCount">
+                        <div class="item master-cards" (click)="onShowPlanTypeDetails('ACTIVE')" *ngIf="activeCount">
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <h6>Active Policy</h6>
@@ -111,7 +121,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="item master-cards" (click)="onShowPlanTypeDetails('expired')" *ngIf="expiryCount">
+                        <div class="item master-cards" (click)="onShowPlanTypeDetails('EXPIRED')" *ngIf="expiryCount">
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <h6>Expired Policy</h6>
@@ -148,6 +158,11 @@
                             </div>
                         </div> -->
                     </ng-container>
+                    <ng-container *ngIf="totalPolicy==null && activeCount==null && expiryCount==null && policyStartDate!=null">
+                            <div class="text-center">
+                                <b>No Data Available</b>
+                            </div>
+                    </ng-container>
                 </div>
             </div>
         </div>
@@ -158,9 +173,9 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
                             <div>
-                                <ng-container *ngIf="typeValue=='all'">Total Policy Details</ng-container>
-                                <ng-container *ngIf="typeValue=='active'">Active Policy Details</ng-container>
-                                <ng-container *ngIf="typeValue=='expired'">Expired Policy Details</ng-container>
+                                <ng-container *ngIf="typeValue=='OVERALL'">Total Policy Details</ng-container>
+                                <ng-container *ngIf="typeValue=='ACTIVE'">Active Policy Details</ng-container>
+                                <ng-container *ngIf="typeValue=='EXPIRED'">Expired Policy Details</ng-container>
                             </div>
                             <div>
                             </div>
@@ -168,9 +183,24 @@
                     </div>
                     <div class="card-body">
                             
-                            <div class="row">
+                            <div class="row" *ngIf="planRecordsList.length!=0">
                                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                                    <app-grid-table [cols]="planTypeHeader" [data]="planRecordsList" [filterValue]="filterValue">
+                                    <app-grid-table [cols]="planTypeHeader" [Currency]="currencyCode" [data]="planRecordsList" [filterValue]="filterValue" (countBasedPolicy)="getCountBasedPolicyList($event)">
+                                    </app-grid-table>
+                                </div>
+                            </div>
+                            <div class="card-header mt-2" *ngIf="countBasedRecords.length!=0">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        Count Based Details
+                                    </div>
+                                    <div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="countBasedRecords.length!=0">
+                                <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                                    <app-grid-table [cols]="countHeader" [Currency]="currencyCode" [data]="countBasedRecords" [filterValue]="filterValue">
                                     </app-grid-table>
                                 </div>
                             </div>

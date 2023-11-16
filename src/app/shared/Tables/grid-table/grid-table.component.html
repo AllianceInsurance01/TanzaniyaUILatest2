@@ -30,7 +30,13 @@
                 <ng-container *ngIf="columnHeader[i]['display']=='BrokerConfigProductName'">
                     Product Name
                 </ng-container>
-                <ng-container *ngIf="columnHeader[i]['display']!='Premium' && columnHeader[i]['display']!='BrokerConfigProductName' && columnHeader[i]['display']!='Endorsements Premium' && columnHeader[i]['display']!='Endorsement Premium' && columnHeader[i]['display']!='EndorsementStatus'">
+                <ng-container *ngIf="columnHeader[i]['display']=='Embedded Premium'">
+                    Premium&nbsp; ({{Currency}})
+                </ng-container>
+                <ng-container *ngIf="columnHeader[i]['display']=='Embedded Premium Included'">
+                    Premium Included Tax&nbsp; ({{Currency}})
+                </ng-container>
+                <ng-container *ngIf="columnHeader[i]['display']!='Premium' && columnHeader[i]['display']!='BrokerConfigProductName' && columnHeader[i]['display']!='Endorsements Premium' && columnHeader[i]['display']!='Endorsement Premium' && columnHeader[i]['display']!='EndorsementStatus' && columnHeader[i]['display']!='Embedded Premium' && columnHeader[i]['display']!='Embedded Premium Included'">
                     {{ columnHeader[i]["display"] }}
                 </ng-container>
             </th>
@@ -45,7 +51,7 @@
                         </ng-container>
                     </ng-container>
                     <ng-container *ngIf="col.key=='TotalPolicy'">
-                        <button type="button" class="btn maan-btn-blue btn-circle2" ><b>{{element[col.key]}}</b></button>
+                        <button type="button" class="btn maan-btn-blue btn-circle2" (click)="countBasedPolicy.emit(element)"><b>{{element[col.key]}}</b></button>
                     </ng-container>
                     <ng-container *ngIf="col.key=='CommissionAmt'">
                             {{element[col.key]}} 

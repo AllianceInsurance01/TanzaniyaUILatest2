@@ -3967,7 +3967,6 @@ getMotorUsageList(vehicleValue){
               window.location.reload();
         }
         else if(this.coverlist.length!=0){
-        
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
          }
          else {
@@ -4127,8 +4126,36 @@ getMotorUsageList(vehicleValue){
                 //   this.getExistingEserviceDetails();
                 // }
               }
+              else if(this.productId=='5' || this.productId=='46'){
+                this.coverlist=[];let i=0;
+                for(let vehicle of this.newcoverlist){
+                  let vehEntry = vehicle.Covers;
+                  console.log('VVVVVVVVV',vehEntry);
+                  if(vehEntry.length!=0){
+                    let entry = vehEntry.filter(ele=>ele.CoverId == '55');
+                    if(entry.length!=0){
+                      console.log('RRRRRRR',entry);
+                      this.coverlist.push(entry)
+                    }
+                  }
+                  i+=1;
+                }           
+                console.log('if entry of cover id 55',this.coverlist);
+                if(sessionStorage.getItem('resetLoginDetails')){
+                  if(this.coverlist.length!=0){
+                      sessionStorage.setItem('riskSection','additional')
+                  }
+                  else sessionStorage.setItem('riskSection','normal')
+                      window.location.reload();
+                }
+                else if(this.coverlist.length!=0){
+                  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
+                 }
+                 else {
+                  this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+                 }
+              }
               else{
-                
                   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
               }
             }
