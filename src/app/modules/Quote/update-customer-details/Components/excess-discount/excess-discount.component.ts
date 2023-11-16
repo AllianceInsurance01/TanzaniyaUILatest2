@@ -511,9 +511,10 @@ emiyn="N";
               
                     ]
               
+     
                    
                   //}
-                  this.EmiInstallment();
+                  //this.EmiInstallment();
               }
             }
           }
@@ -603,6 +604,7 @@ emiyn="N";
           $("#exampleModal").modal("hide");
       });
   });
+
 
 }
 getCustomerDetails(referenceNo){
@@ -1340,7 +1342,7 @@ getMotorUsageList(vehicleValue){
                else{
                 this.emipolicytype='99999';
                }
-              
+
               let vehicleList:any[]=[];
               if(this.vehicleData.length!=0){
                 this.SourceType = this.vehicleData[0].SourceType;
@@ -1468,6 +1470,7 @@ getMotorUsageList(vehicleValue){
                   
                 }
               }
+            
           }
         },
         (err) => { },
@@ -2341,9 +2344,9 @@ getMotorUsageList(vehicleValue){
       
            
           //}
-          if(!this.endorsementSection){
-            this.EmiInstallment();
-          }
+          // if(!this.endorsementSection){
+          //   this.EmiInstallment();
+          // }
           
           console.log("Final Vehicle Listaaaa",this.vehicleDetailsList,this.selectedCoverList)
         }
@@ -2861,7 +2864,7 @@ getMotorUsageList(vehicleValue){
         }
 
     }
-    this.onEmiYNChange();
+    //this.onEmiYNChange();
     console.log("Final Covers",this.vehicleDetailsList,this.selectedCoverList)
   }
   checkCoverSelection(vehicleData,coverData){
@@ -3022,6 +3025,9 @@ getMotorUsageList(vehicleValue){
         this.emiYN = this.vehicleData[0].EmiYn;
         console.log('EMI YNSS',this.emiYN);
         this.emiPeriod = this.vehicleData[0].InstallmentPeriod;
+        if(!this.endorsementSection){
+        this.EmiInstallment();
+        }
         }
         else{
           this.emiYN = "N";
