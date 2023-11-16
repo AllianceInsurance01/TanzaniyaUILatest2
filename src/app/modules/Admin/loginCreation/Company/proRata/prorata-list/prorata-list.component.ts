@@ -49,14 +49,14 @@ export class ProRataListComponent implements OnInit {
   }
   getSectionList(){
     let ReqObj = {
-      "InsuranceId":this.insuranceId,
-    "ProductId":this.productId
+      "InsuranceId": this.insuranceId,
+      "ProductId": this.productId,
+      "LoginId":this.loginId
     }
-    let urlLink = `${this.ApiUrl1}master/dropdown/productsection`;
-    //let urlLink = `${this.CommonApiUrl}`;
-  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-    (data: any) => {
-      if(data.Result){
+    let urlLink = `${this.ApiUrl1}master/dropdown/policytype`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
         let defaultObj = [{Code:"99999",CodeDesc:"ALL"}]
            this.sectionList = defaultObj.concat(data.Result);
 
