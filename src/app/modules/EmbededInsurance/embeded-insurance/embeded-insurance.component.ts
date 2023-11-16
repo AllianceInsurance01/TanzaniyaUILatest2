@@ -38,6 +38,10 @@ export class EmbededInsuranceComponent {
   expiryPremium: any=null;
   activePremium: any=null;
   activeCount: any=null;
+  countBasedRecords: any[]=[];
+  countHeader: any[]=[];
+  searchByError: boolean=false;
+  searchValueError: boolean=false;
   constructor(private router: Router,
     private authService: AuthService,
     private loginService:LoginService,private datePipe:DatePipe,
@@ -67,6 +71,7 @@ export class EmbededInsuranceComponent {
     var day = d.getDate();
     this.policyStartDate = new Date(year,month-1, day );
     this.policyEndDate = new Date();
+    this.getSearchByList();
     this.getProductDashboard();
       this.searchList = [
         {"Code":"","CodeDesc":"--Select--"},
@@ -76,12 +81,11 @@ export class EmbededInsuranceComponent {
         {"Code":"04","CodeDesc":"Plan Type"},
       ];
       this.planTypeHeader = [
-        { key: 'PlanName', display: 'Plan Name' },
+        { key: 'PlanType', display: 'Plan Name' },
         { key: 'LoginId', display: 'UserName' },
         { key: 'TotalPolicy', display: 'Total Policy' },
-        { key: 'OverAllPremium', display: 'OverAll Premium' },
         { key: 'OverAllComiPremium', display: 'Comission Premium' },
-        { key: 'ActivePremium', display: 'Active Premium' },
+        { key: 'Premium', display: 'Embedded Premium' },
       ];
       this.searchedHeader = [
         { key: 'PlanName', display: 'Plan Name' },
@@ -99,7 +103,20 @@ export class EmbededInsuranceComponent {
         },
       ]
   }
+  getSearchByList(){
+    let urlLink = `${this.ApiUrl1}eway/embedded/getSearchType`;
+    this.SharedService.onGetMethodSync(urlLink).subscribe(
+      (data: any) => {
+        if (data.Result) {
+          let defaultObj = [{"Code":"","Description":"--Select--"}]
+            this.searchList = defaultObj.concat(data.Result);
+        }
+      },
+      (err) => {}
+    );
+  }
   getProductDashboard(){
+    this.planRecordsList=[];this.countBasedRecords=[];this.searchSection=false;
     let startDate = this.datePipe.transform(this.policyStartDate,'dd/MM/yyyy');
     let endDate = this.datePipe.transform(this.policyEndDate,'dd/MM/yyyy');
     let ReqObj = {
@@ -113,60 +130,86 @@ export class EmbededInsuranceComponent {
       (data: any) => {
         if (data.Result) {
           if(data.Result.OverAllPremium!='' && data.Result.OverAllPremium!=null) this.OverAllPremium = data.Result.OverAllPremium;
+          else this.OverAllPremium = null;
           if(data.Result.TotalPolicy!='' && data.Result.TotalPolicy!=null) this.totalPolicy = data.Result.TotalPolicy;
+          else this.totalPolicy = null;
           if(data.Result.ExpiryPolicyCount!='' && data.Result.ExpiryPolicyCount!=null) this.expiryCount = data.Result.ExpiryPolicyCount;
+          else this.expiryCount = null;
           if(data.Result.ExpiryPolicyPremium!='' && data.Result.ExpiryPolicyPremium!=null) this.expiryPremium = data.Result.ExpiryPolicyPremium;
+          else this.expiryPremium = null;
           if(data.Result.ActivePremium!='' && data.Result.ActivePremium!=null) this.activePremium = data.Result.ActivePremium;
+          else this.activePremium = null;
           if(data.Result.ActivePolicyCount!='' && data.Result.ActivePolicyCount!=null) this.activeCount = data.Result.ActivePolicyCount;
+          else this.activeCount = null
         }
       },
       (err) => {}
     );
   }
   onShowPlanTypeDetails(type){
-    this.searchSection = true;
-    this.searchBySection = false;
+    this.planRecordsList=[];this.countBasedRecords=[];
+   
     this.typeValue = type;
-    
-    
-    this.planRecordsList = [
-      {
-        "LoginId": "Inalipa",
-        "CompanyId": "100015",
-        "ProductId": "13",
-        "TotalPolicy": "10",
-        "OverAllPremium": "6825.00000",
-        "OverAllTaxPremium": "325.00000",
-        "OverAllComiPremium": "1137.50000",
-        "ActivePremium": "2625.00000",
-        "PlanName": "7 Days",
-        "PlanOpted": "97"
+    let startDate = this.datePipe.transform(this.policyStartDate,'dd/MM/yyyy');
+    let endDate = this.datePipe.transform(this.policyEndDate,'dd/MM/yyyy');
+    let ReqObj = {
+      "CompanyId": this.insuranceId,
+      "PreimumType": this.typeValue,
+      "EndDate": endDate,
+      "ProductId": this.productId,
+      "StartDate": startDate
+    }
+    let urlLink = `${this.ApiUrl1}eway/embedded/getProductPlanTypeDashBoard`;
+    this.SharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if (data.Result) {
+            this.searchSection = true;
+            this.searchBySection = false;
+            this.planRecordsList = data.Result;
+        }
       },
-      {
-        "LoginId": "Inalipa",
-        "CompanyId": "100015",
-        "ProductId": "13",
-        "TotalPolicy": "8",
-        "OverAllPremium": "4200.00000",
-        "OverAllTaxPremium": "200.00000",
-        "OverAllComiPremium": "700.00000",
-        "ActivePremium": "525.00000",
-        "PlanName": "14 Days",
-        "PlanOpted": "98"
+      (err) => {}
+    );
+  }
+  getCountBasedPolicyList(rowData){
+    let startDate = this.datePipe.transform(this.policyStartDate,'dd/MM/yyyy');
+    let endDate = this.datePipe.transform(this.policyEndDate,'dd/MM/yyyy');
+    let ReqObj = {
+      "CompanyId": this.insuranceId,
+      "EndDate": endDate,
+      "ProductId": this.productId,
+      "StartDate": startDate,
+      "PlanId": rowData.PlanId,
+      "LoginId": rowData.LoginId
+    }
+    let urlLink = null;
+    if(this.typeValue=='OVERALL') urlLink=`${this.ApiUrl1}eway/embedded/getAllPolicy`;
+    if(this.typeValue=='ACTIVE') urlLink=`${this.ApiUrl1}eway/embedded/getActivePolicy`;
+    if(this.typeValue=='EXPIRED') urlLink=`${this.ApiUrl1}eway/embedded/getExpiredPolicy`;
+    this.SharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if (data.Result) {
+            this.countBasedRecords = data.Result;
+            this.countHeader = [
+              { key: 'customerName', display: 'Customer Name' },
+              { key: 'loginId', display: 'UserName' },
+              { key: 'amountPaid', display: 'Amount Paid' },
+              { key: 'commissionAmount', display: 'Comission' },
+              { key: 'premium', display: 'Embedded Premium' },
+              { key: 'taxPremium', display: 'Tax' },
+              { key: 'overAllPremium', display: 'Embedded Premium Included' },
+              {
+                key: 'actions',
+                display: 'Schedule',
+                config: {
+                  isDownload: true,
+                },
+              },
+            ]
+        }
       },
-      {
-        "LoginId": "Inalipa",
-        "CompanyId": "100015",
-        "ProductId": "13",
-        "TotalPolicy": "5",
-        "OverAllPremium": "2600.00000",
-        "OverAllTaxPremium": "100.00000",
-        "OverAllComiPremium": "437.50000",
-        "ActivePremium": null,
-        "PlanName": "30 Days",
-        "PlanOpted": "99"
-      }
-    ]
+      (err) => {}
+    );
   }
   omit_special_char(event){   
 		var k;  
@@ -184,38 +227,62 @@ export class EmbededInsuranceComponent {
     this.policyEndDate = new Date();
   }
   onCancelSearch(){
-    this.searchBySection = false;this.searchSection=true;
+    this.searchBySection = false;this.searchSection=false;
   }
   onSearchPolicyData(){
-    this.searchSection = false;
-    this.searchBySection = true;
-    this.searchedDataSection = true;
-    this.searchedList = [
-      {
-        "CompanyId": "100015",
-        "ProductId": "13",
-        "TransactionNo": "RXRVG10001002",
-        "NidaNo": "",
-        "LoginId": "Inalipa",
-        "CustomerName": "Shanish Kumar",
-        "MobileNo": "25402000",
-        "PolicyNo": "P11/2023/100/1002/10/01677",
-        "RequestReferenceNo": "INALIPA-1690799238137",
-        "PolicyStartDate": "06/09/2023",
-        "PolicyEndDate": "18/11/2023",
-        "Premium": "2000.00000",
-        "OverAllPremium": "2100.00000",
-        "TaxPremium": "100.00000",
-        "AmountPaid": "6000.00000",
-        "PlanType": "7 Days",
-        "FilePath": "www.maansarovor.com",
-        "ResponsePeriod": "2023-07-31 15:57:18.137",
-        "CommissionPercentage": "17.50",
-        "CommissionAmt": "350.00000",
-        "TaxPercentage": "5.00",
-        "MobileCode": "255"
+    let i=0;
+      if(this.searchBy=='' || this.searchBy==null || this.searchBy==undefined){i+=1;this.searchByError = true;}
+      else this.searchByError = false;
+      if(this.searchValue=='' || this.searchValue==null || this.searchValue==undefined){i+=1;this.searchValueError = true;}
+      else this.searchValueError = false;
+    if(i==0){
+      let ReqObj = {
+        "CompanyId": this.insuranceId,
+        "ProductId": this.productId,
+        "SearchType": this.searchBy,
+        "SearchValue": this.searchValue,
+        "LoginId": ""
+
       }
-    ]
+      let urlLink = `${this.ApiUrl1}eway/embedded/getEmbeddedDetails`;
+      this.SharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          if (data.Result) {
+
+          }
+        },
+        (err) => {}
+      );
+    }
+    // this.searchSection = false;
+    // this.searchBySection = true;
+    // this.searchedDataSection = true;
+    // this.searchedList = [
+    //   {
+    //     "CompanyId": "100015",
+    //     "ProductId": "13",
+    //     "TransactionNo": "RXRVG10001002",
+    //     "NidaNo": "",
+    //     "LoginId": "Inalipa",
+    //     "CustomerName": "Shanish Kumar",
+    //     "MobileNo": "25402000",
+    //     "PolicyNo": "P11/2023/100/1002/10/01677",
+    //     "RequestReferenceNo": "INALIPA-1690799238137",
+    //     "PolicyStartDate": "06/09/2023",
+    //     "PolicyEndDate": "18/11/2023",
+    //     "Premium": "2000.00000",
+    //     "OverAllPremium": "2100.00000",
+    //     "TaxPremium": "100.00000",
+    //     "AmountPaid": "6000.00000",
+    //     "PlanType": "7 Days",
+    //     "FilePath": "www.maansarovor.com",
+    //     "ResponsePeriod": "2023-07-31 15:57:18.137",
+    //     "CommissionPercentage": "17.50",
+    //     "CommissionAmt": "350.00000",
+    //     "TaxPercentage": "5.00",
+    //     "MobileCode": "255"
+    //   }
+    // ]
   }
   onLog(title)
   {
@@ -237,9 +304,6 @@ export class EmbededInsuranceComponent {
             sessionStorage.clear();
             this.authService.logout();
             this.router.navigate(['/login']);
-
-            console.log('You are logged out');
-
           }
             //
         },
