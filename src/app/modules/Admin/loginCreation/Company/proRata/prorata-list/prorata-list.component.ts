@@ -26,7 +26,8 @@ export class ProRataListComponent implements OnInit {
   public loginId: any; Remarks: any; Status: any; Percent: any;
   public Endto: any; Startfrom: any; Sno: any;
   public insuranceName: string; insuranceId: string; productId: string;
-  MotoYn: string;
+  MotoYn: string;sectionValue:any='99999';
+  sectionList: any[]=[];
   constructor(private router: Router, private sharedService: SharedService,
    private datePipe: DatePipe) {
     this.minDate = new Date();
@@ -42,17 +43,35 @@ export class ProRataListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.getSectionList();
     this.getallprorata()
 
   }
+  getSectionList(){
+    let ReqObj = {
+      "InsuranceId":this.insuranceId,
+    "ProductId":this.productId
+    }
+    let urlLink = `${this.ApiUrl1}master/dropdown/productsection`;
+    //let urlLink = `${this.CommonApiUrl}`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      if(data.Result){
+        let defaultObj = [{Code:"99999",CodeDesc:"ALL"}]
+           this.sectionList = defaultObj.concat(data.Result);
 
+      }
+    },
+    (err) => { },
+  );
+  }
   onSaveProrataDetails() {
     let ReqObj = {
       "CreatedBy": this.loginId,
       "EffectiveDateStart": this.effectiveDateStart,
       "InsuranceId": this.insuranceId,
       "ProductId": this.productId,
+      "PolicyTypeId":this.sectionValue,
       "ProrataDetails": this.ProrataList
     }
     let urlLink = `${this.ApiUrl1}master/insertcompanyprorata`;
@@ -170,8 +189,8 @@ export class ProRataListComponent implements OnInit {
   getallprorata(){
     let ReqObj={
       "InsuranceId":this.insuranceId,
-      "ProductId": this.productId
-
+      "ProductId": this.productId,
+      "PolicyTypeId": this.sectionValue
     }
 let urlLink = `${this.ApiUrl1}master/getbycompanyprorataid`;
 
@@ -189,7 +208,7 @@ let urlLink = `${this.ApiUrl1}master/getbycompanyprorataid`;
               this.ProrataList = [
                 {
                   "Sno": null,
-                  "Status": "",
+                  "Status": "Y",
                   "EndTo":null,
                   "StartFrom": null,
                   "Percent": null,

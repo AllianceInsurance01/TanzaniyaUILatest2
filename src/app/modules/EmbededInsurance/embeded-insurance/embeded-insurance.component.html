@@ -40,7 +40,7 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-2 col-md-2 col-lg-2 col-xl-2" *ngIf="searchSection || searchBySection">
+            <div class="col-2 col-md-2 col-lg-2 col-xl-2" *ngIf="searchSection">
                 <label class="input-form-label spancommon span_font_size">Start Date<span class="text-danger">*</span></label>
                 <ng-container >
                     <mat-form-field appearance="fill">
@@ -50,7 +50,7 @@
                     </mat-form-field>
                 </ng-container>
             </div>
-            <div class="col-2 col-md-2 col-lg-2 col-xl-2" *ngIf="searchSection || searchBySection">
+            <div class="col-2 col-md-2 col-lg-2 col-xl-2" *ngIf="searchSection">
                 <label class="input-form-label spancommon span_font_size">End Date<span class="text-danger">*</span></label>
                 <ng-container >
                     <mat-form-field appearance="fill">
@@ -59,7 +59,7 @@
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
                 </ng-container>
-            </div> -->
+            </div>
             <div class="col-2 col-md-2 col-lg-2 col-xl-2 mt-4" *ngIf="searchBySection">
                 <div class="text-center">
                     <button class="btn btn-secondary" (click)="onSearchPolicyData()"><i class="fa fa-search"></i>&nbsp;Search</button>&nbsp;&nbsp;
@@ -75,56 +75,56 @@
             <div class="col-12 col-md-9 col-lg-9">
                 <div class="grid">
                     <ng-container >
-                        <div class="item master-cards" (click)="onShowPlanTypeDetails('all')">
+                        <div class="item master-cards" (click)="onShowPlanTypeDetails('all')" *ngIf="">
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <h6>Total Policy</h6>
                                     <p></p>
                                 </div>
                                 <div>
-                                    <button type="button" class="btn maan-btn-blue btn-circle2" ><b>23</b></button>
+                                    <button type="button" class="btn maan-btn-blue btn-circle2" ><b>{{totalPolicy}}</b></button>
                                 </div>
                             </div>
                             <div class="bottom-row">
                                 <div class="bottom-row-item d-flex justify-content-end">
                                     <div >
-                                        <span><b>13625.00 (TZS)</b></span>
+                                        <span><b>{{OverAllPremium}}&nbsp;({{currencyCode}})</b></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="item master-cards" (click)="onShowPlanTypeDetails('active')">
+                        <div class="item master-cards" (click)="onShowPlanTypeDetails('active')" *ngIf="activeCount">
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <h6>Active Policy</h6>
                                     <p></p>
                                 </div>
                                 <div>
-                                    <button type="button" class="btn maan-btn-blue btn-circle2" ><b>3</b></button>
+                                    <button type="button" class="btn maan-btn-blue btn-circle2" ><b>{{activeCount}}</b></button>
                                 </div>
                             </div>
                             <div class="bottom-row">
                                 <div class="bottom-row-item d-flex justify-content-end">
                                     <div >
-                                        <span><b>3150.00 (TZS)</b></span>
+                                        <span><b>{{activePremium}}&nbsp;({{currencyCode}})</b></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="item master-cards" (click)="onShowPlanTypeDetails('expired')">
+                        <div class="item master-cards" (click)="onShowPlanTypeDetails('expired')" *ngIf="expiryCount">
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <h6>Expired Policy</h6>
                                     <p></p>
                                 </div>
                                 <div>
-                                    <button type="button" class="btn maan-btn-blue btn-circle2" ><b>20</b></button>
+                                    <button type="button" class="btn maan-btn-blue btn-circle2" ><b>{{expiryCount}}</b></button>
                                 </div>
                             </div>
                             <div class="bottom-row">
                                 <div class="bottom-row-item d-flex justify-content-end">
                                     <div >
-                                        <span><b>3150.00 (TZS)</b></span>
+                                        <span><b>{{expiryPremium}}&nbsp;({{currencyCode}})</b></span>
                                     </div>
                                 </div>
                             </div>
@@ -178,7 +178,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-2" *ngIf="searchedDataSection">
+        <div class="row mt-2" *ngIf="searchedDataSection && !searchSection">
             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="card">
                     <div class="card-header">

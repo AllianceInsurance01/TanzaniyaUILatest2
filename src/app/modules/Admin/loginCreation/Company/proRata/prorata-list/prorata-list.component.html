@@ -117,7 +117,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mt-1 ml-2">
+                <div class="row mt-1" style="margin-left: 10px;">
 
 
 
@@ -141,7 +141,7 @@
                 </mat-form-field>
             </div>-->
 
-                    <div class="col-12 col-md-4 col-lg-4">
+                    <div class="col-12 col-md-4 col-lg-4 ml-2">
                         <label class="input-form-label">Effective Date</label>
                         <mat-form-field appearance="fill">
                             <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="effectiveDateStart">
@@ -149,7 +149,13 @@
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
                       </div>
-
+                      <div class="col-md-4 col-lg-4 col-xl-4">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Section</label>
+                            <ng-select class="input-form-select" appendTo="body" [items]="sectionList" [(ngModel)]="sectionValue" bindValue="Code" bindLabel="CodeDesc" (change)="getallprorata()">
+                            </ng-select>
+                        </div>
+                    </div>
                         <!-- <div class="input-control-container">
                                 <label class="input-form-label">Effective Date Start<span class="text-required">*</span></label>
                                 <div class="input-form-box">
@@ -176,7 +182,7 @@
                     </div>
                 </div>
                 <div class="row table-responsive">
-                    <div class="col-md-10 col-lg-10 col-xl-10 ml-1">
+                    <div class="col-md-12 col-lg-12 col-xl-12 ml-1 p-2">
                         <table class="table table-headerRow">
                             <tr>
                                 <th class="tbl-header" style="font-family: var(--our-font-family-new) !important;">Sno</th>
@@ -200,22 +206,22 @@
                                 </td>
                                 <td class="tbl-content">
                                     <div class="input-control-container">
-                                        <input type="text" style="width: 120px;" maxlength="30" [(ngModel)]="row.StartFrom">
+                                        <input type="text" style="width: 100px;" maxlength="30" [(ngModel)]="row.StartFrom">
                                     </div>
                                 </td>
                                 <td class="tbl-content">
                                     <div class="input-control-container">
-                                        <input type="text" style="width: 120px;" maxlength="10" [(ngModel)]="row.EndTo">
+                                        <input type="text" style="width: 100px;" maxlength="10" [(ngModel)]="row.EndTo">
                                     </div>
                                 </td>
                                 <td class="tbl-content">
                                     <div class="input-control-container">
-                                        <input type="text" style="width: 120px;" maxlength="10" [(ngModel)]="row.Percent">
+                                        <input type="text" style="width: 100px;" maxlength="10" [(ngModel)]="row.Percent">
                                     </div>
                                 </td>
                                 <td class="tbl-content">
                                   <div class="input-control-container">
-                                      <input type="text" style="width: 120px;" maxlength="30" [(ngModel)]="row.Remarks">
+                                      <input type="text" style="width: 100px;" maxlength="30" [(ngModel)]="row.Remarks">
                                   </div>
                               </td>
                                 <td class="tbl-content">
