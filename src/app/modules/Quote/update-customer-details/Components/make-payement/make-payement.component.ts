@@ -969,7 +969,8 @@ export class MakePayementComponent implements OnInit {
       "InsuranceId": this.insuranceId,
       "UserType": this.quoteUsertype,
       "SubUserType": this.quoteSubUsertype,
-      "ProductId": this.productId
+      "ProductId": this.productId,
+      "CreatedBy": this.loginId
     }
     let urlLink = `${this.CommonApiUrl}master/dropdown/paymenttypes`;
      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(

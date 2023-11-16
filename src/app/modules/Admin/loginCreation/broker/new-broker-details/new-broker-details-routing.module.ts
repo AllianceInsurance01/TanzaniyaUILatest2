@@ -13,6 +13,7 @@ import { NewProductDetailsComponent } from '../new-product-details/new-product-d
 import { EndrosementBrokerComponent } from '../endrosementbroker/endrosementbroker.component';
 import { DepositMasterComponent } from '../DepositMaster/depositmaster.component';
 import { DepositAddNewComponent } from '../depositaddnew/depositaddnew.component';
+import { PaymentTypesListComponent } from '../PaymentTypesList/paymentTypesList.component';
 
 // import { DepositDetailsComponent } from '../DepositDetails/depositdetails.component';
 
@@ -28,6 +29,15 @@ const routes: Routes = [
       preload: true,
       title: "Existing Branch",
       breadcrumb:  "Existing Branch",
+    },
+  },
+  {
+    path: 'paymentTypesList',
+    component: PaymentTypesListComponent,
+    data: {
+      preload: true,
+      title: "PaymentTypes List",
+      breadcrumb:  "PaymentTypes List",
     },
   },
   {

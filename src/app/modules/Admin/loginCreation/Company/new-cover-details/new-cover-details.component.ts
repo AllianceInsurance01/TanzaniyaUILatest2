@@ -66,7 +66,7 @@ export class NewCoverDetailsComponent implements OnInit {
   subDiscreteFirstName: any;subDiscreteSecondName: any;
   subDiscreteThirdName: any;subDiscreteFourthName: any;selectSubCoverSection:boolean = false;
   minDate: Date;selectedSubCoverList:any[]=[];imageUrl:any;
-  editSection:any;
+  editSection:any;proRataList:any[]=[];
   config: any;
   p: Number = 1;
 count: Number = 20;
@@ -201,6 +201,7 @@ count: Number = 20;
     }
     else{
       this.coverDetails = new Cover();
+      if(this.coverDetails?.ProRataYn==null) this.coverDetails.ProRataYn = '';
       if(this.coverDetails?.Status == null) this.coverDetails.Status = 'Y';
       if(this.coverDetails?.SubCoverYn == null) this.coverDetails.SubCoverYn = 'N';
       if(this.coverDetails?.IsSelectedYn == null) this.coverDetails.IsSelectedYn = 'N';
@@ -210,6 +211,7 @@ count: Number = 20;
     }
     this.getTaxTypeList();
     this.getcoverList();
+    this.getProRataList();
     this.setPagination(this.factorTypeList);
 
   }
@@ -281,7 +283,7 @@ count: Number = 20;
                 this.onGetSubCoverList('direct')
               }
           }
-
+          if(this.coverDetails?.ProRataYn==null) this.coverDetails.ProRataYn = '';
         }
 
       },
@@ -315,6 +317,7 @@ count: Number = 20;
             }
             this.addSubCoverSection = true;
           }
+          if(this.subCoverData?.ProRataYn==null) this.subCoverData.ProRataYn = '';
         }
         },
         (err) => { },
@@ -440,6 +443,24 @@ count: Number = 20;
         if(data.Result){
           //this.holderTypeValue = null;
            this.CoverList = data.Result;
+        }
+      },
+      (err) => { },
+    );
+  }
+  getProRataList(){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId,
+      "BranchCode": "99999"
+    }
+    let urlLink = `${this.CommonApiUrl}dropdown/proratatype`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          //this.holderTypeValue = null;
+          let defaultObj = [{Code:"",CodeDesc:"---Select---"}]
+           this.proRataList = defaultObj.concat(data.Result);
         }
       },
       (err) => { },

@@ -36,6 +36,8 @@ export class BrokerProductListComponent implements OnInit {
   newList: any =[];
   newslist: any =[];
   LossList:any;
+  userType: any;
+  subUserType: any;
   constructor(private router:Router,private sharedService: SharedService,private datePipe: DatePipe) {
     this.minDate = new Date();
     let brokerObj = JSON.parse(sessionStorage.getItem('brokerConfigureDetails'));
@@ -44,6 +46,8 @@ export class BrokerProductListComponent implements OnInit {
       if(brokerObj.insuranceId) this.insuranceId = brokerObj.insuranceId;
       if(brokerObj.brokerId) this.brokerId = brokerObj.brokerId;
       if(brokerObj.brokerCompanyYN) this.brokerCompanyYN = brokerObj.brokerCompanyYN;
+      if(brokerObj.UserType) this.userType = brokerObj.UserType;
+      if(brokerObj.SubUserType) this.subUserType = brokerObj.SubUserType;
 
     }
     this.brokerId = this.brokerLoginId;
@@ -311,7 +315,9 @@ export class BrokerProductListComponent implements OnInit {
       "brokerId": this.brokerId,
       "insuranceId": this.insuranceId,
       "brokerCompanyYN": this.brokerCompanyYN,
-      "ProductId": null
+      "ProductId": null,
+      "UserType": this.userType,
+      "SubUserType": this.subUserType
     }
     sessionStorage.setItem('brokerConfigureDetails',JSON.stringify(ReqObj));
     this.router.navigate(['/Admin/brokersList/newBrokerDetails/addBrokerProducts']);
@@ -322,6 +328,7 @@ export class BrokerProductListComponent implements OnInit {
     if(value=='Product') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerProductList']);
     if(value=='Cover') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerCoverList']);
     if(value=='Deposit') this.router.navigate(['/Admin/brokersList/newBrokerDetails/depositMasterList']);
+    if(value=='paymentTypes') this.router.navigate(['/Admin/brokersList/newBrokerDetails/paymentTypesList']);
   }
   onEditProduct(rowData:any){
     let ReqObj = {
@@ -329,7 +336,9 @@ export class BrokerProductListComponent implements OnInit {
       "brokerId": this.brokerId,
       "insuranceId": this.insuranceId,
       "brokerCompanyYN": this.brokerCompanyYN,
-      "ProductId": rowData.ProductId
+      "ProductId": rowData.ProductId,
+      "UserType": this.userType,
+      "SubUserType": this.subUserType
     }
     sessionStorage.setItem('brokerConfigureDetails',JSON.stringify(ReqObj));
     this.router.navigate(['/Admin/brokersList/newBrokerDetails/newProductDetails']);

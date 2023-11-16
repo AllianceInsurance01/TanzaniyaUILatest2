@@ -13,6 +13,7 @@ export class SubCover{
     "Excess": null;
     "FactorTypeId": null;
     "BaseRate": null;
+    "ProRataYn": null;
     "DiscountCoverId":null;
     "MinimumPremium": null;
     "SumInsuredStart": null;

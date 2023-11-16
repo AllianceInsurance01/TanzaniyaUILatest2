@@ -11,6 +11,10 @@
 
                     <input type="radio" id="menu2" name="menu" value="Cover" (click)="onRedirect('Cover')" [(ngModel)]="activeMenu">
                     <label for="menu2">Cover</label>
+                    <input type="radio" id="menu8" name="menu" value="Deposit" (click)="onRedirect('Deposit')" [(ngModel)]="activeMenu">
+                    <label for="menu8">Deposit</label>
+                    <input type="radio" id="menu9" name="menu" value="paymentTypes" (click)="onRedirect('paymentTypes')" [(ngModel)]="activeMenu">
+                    <label for="menu9">PaymentTypes</label>
                 </div>
             </div>
             <div class="vision-grid-item">
@@ -261,7 +265,13 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">ProRata<span class="text-required">*</span></label>
+                                            <ng-select class="input-form-select" appendTo="body" [items]="proRataList" [(ngModel)]="coverDetails.ProRataYn" bindValue="Code" bindLabel="CodeDesc">
+                                            </ng-select>
+                                        </div>
+                                    </div>
                                     <div class="col-md-4 col-lg-4 col-xl-4">
                                         <div class="input-control-container">
                                             <label class="input-form-label">Calculation Type</label>
@@ -676,14 +686,14 @@
                             <div>
                                 <div class="d-flex justify-content-end">
                                     <div>
-                                        <button class="btn btn-danger" *ngIf="!ratingSection" (click)="getBackPage()">Cancel</button>
-                                        <button class="btn btn-danger" *ngIf="ratingSection" (click)="ratingSection=!ratingSection;title='Cover Details'">Back</button>
+                                        <button class="btn btn-danger" *ngIf="!ratingSection" (click)="getBackPage()">Cancel</button>&nbsp;
+                                        <button class="btn btn-danger" *ngIf="ratingSection" (click)="ratingSection=!ratingSection;title='Cover Details'">Back</button>&nbsp;
                                     </div>
                                     <div>
-                                        <button class="btn btn-primary ml-2" *ngIf="!ratingSection && coverDetails.SubCoverYn=='Y'" (click)="onGetSubCoverList('direct')">Proceed To SubCover Details</button>
-                                        <button class="btn btn-success ml-2" *ngIf="(coverDetails.SubCoverYn=='Y' && !ratingSection)" (click)="onSaveCoverForm('saveCover')">SAVE</button>
-                                        <button class="btn btn-success ml-2" *ngIf="(coverDetails.SubCoverYn!='Y' && ratingSection)" (click)="onSaveCoverForm('direct')">Submit</button>
-                                        <button class="btn btn-primary ml-2" *ngIf="!ratingSection && coverDetails.SubCoverYn!='Y'"  (click)="ratingSection=!ratingSection;title='Rating Details'">Proceed To Rating Details</button>
+                                        <button class="btn btn-primary ml-2" *ngIf="!ratingSection && coverDetails.SubCoverYn=='Y'" (click)="onGetSubCoverList('direct')">Proceed To SubCover Details</button>&nbsp;
+                                        <button class="btn btn-success ml-2" *ngIf="(coverDetails.SubCoverYn=='Y' && !ratingSection)" (click)="onSaveCoverForm('saveCover')">SAVE</button>&nbsp;
+                                        <button class="btn btn-success ml-2" *ngIf="(coverDetails.SubCoverYn!='Y' && ratingSection)" (click)="onSaveCoverForm('direct')">Submit</button>&nbsp;
+                                        <button class="btn btn-primary ml-2" *ngIf="!ratingSection && coverDetails.SubCoverYn!='Y'"  (click)="ratingSection=!ratingSection;title='Rating Details'">Proceed To Rating Details</button>&nbsp;
                                     </div>
                                 </div>
                             </div>
@@ -938,7 +948,13 @@
                                                 </ng-select>
                                             </div>
                                         </div>
-
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">ProRata<span class="text-required">*</span></label>
+                                                <ng-select class="input-form-select" appendTo="body" [items]="proRataList" [(ngModel)]="subCoverData.ProRataYn" bindValue="Code" bindLabel="CodeDesc">
+                                                </ng-select>
+                                            </div>
+                                        </div>
                                         <div class="col-12 col-md-4 col-lg-4" *ngIf="subCoverData.CalcType=='F'">
                                             <div class="input-control-container">
                                                 <label class="input-form-label">Factor Type<span class="text-required">*</span></label>

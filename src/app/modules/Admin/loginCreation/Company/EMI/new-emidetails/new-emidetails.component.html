@@ -80,10 +80,8 @@
                 <div class="col-12 col-md-6 col-lg-6">
                     <div class="input-control-container">
                         <label class="input-form-label">Policy Type<span class="text-required">*</span></label>
-                        <div class="input-form-box">
                             <ng-select class="input-form-select" [items]="policylList" appendTo="body" [(ngModel)]="emiDetails.PolicyType"  bindValue="Code" bindLabel="CodeDesc">
                             </ng-select>
-                        </div>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-6">
@@ -160,7 +158,7 @@
             </div>
         </div>
         <div class="text-center mt-2">
-            <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>
+            <button class="btn btn-danger" (click)="ongetBack()">Cancel</button>&nbsp;
             <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button>
         </div>
       </div>

@@ -549,7 +549,9 @@ export class NewBrokerDetailsComponent implements OnInit {
             "loginId": this.brokerLoginId,
             "brokerId": this.agencyCode,
             "insuranceId": this.insuranceId,
-            "brokerCompanyYN": this.brokerCompanyYn
+            "brokerCompanyYN": this.brokerCompanyYn,
+            "UserType": "Broker",
+            "SubUserType": this.subUserType
           }
           sessionStorage.setItem('brokerConfigureDetails', JSON.stringify(entry));
           this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerBranchList']);

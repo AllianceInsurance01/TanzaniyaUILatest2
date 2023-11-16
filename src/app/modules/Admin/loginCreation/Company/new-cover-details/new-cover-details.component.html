@@ -186,7 +186,7 @@
                                             </mat-form-field>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-3 col-lg-3"  >
+                                    <!-- <div class="col-12 col-md-3 col-lg-3"  >
                                         <div class="input-control-container">
                                             <label class="input-form-label">ProRataYN<span class="text-required">*</span></label>
                                             <div class="input-form-radio-box">
@@ -199,7 +199,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-12 col-md-5 col-lg-5">
                                         <div class="input-control-container">
                                             <label class="input-form-label">Status<span class="text-required">*</span></label>
@@ -272,20 +272,14 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="coverageTypeValue!='A'">
+                                    
+                                    <div class="col-12 col-md-4 col-lg-4">
                                         <div class="input-control-container">
-                                            <label class="input-form-label">Is Tax Excempted?<span class="text-required">*</span></label>
-                                            <div class="input-form-radio-box">
-                                                <div class="radio-toolbar">
-                                                    <input id="orginwarehouse1" type="radio" name="originatingWarehouse1" [(ngModel)]="coverDetails.IsTaxExcempted" (change)="onTaxYNChnage()" value="Y">
-                                                    <label for="orginwarehouse1">Yes</label>
-                                                    <input type="radio" id="orginwarehouse2" name="originatingWarehouse1" [(ngModel)]="coverDetails.IsTaxExcempted" (change)="onTaxYNChnage()" value="N">
-                                                    <label for="orginwarehouse2">No</label>
-                                                </div>
-                                            </div>
+                                            <label class="input-form-label">ProRata<span class="text-required">*</span></label>
+                                            <ng-select class="input-form-select" appendTo="body" [items]="proRataList" [(ngModel)]="coverDetails.ProRataYn" bindValue="Code" bindLabel="CodeDesc">
+                                            </ng-select>
                                         </div>
                                     </div>
-
                                     <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="coverageTypeValue!='A'">
                                         <div class="input-control-container">
                                             <label class="input-form-label">Calculation Type</label>
@@ -331,23 +325,7 @@
                                                 </ng-select>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="coverDetails.IsTaxExcempted=='Y'">
-                                        <div class="input-control-container">
-                                            <label class="input-form-label">Tax Excemption Reference<span class="text-required">*</span></label>
-                                            <div class="input-form-box">
-                                                <input type="text" [(ngModel)]="coverDetails.TaxExcemptionReference" class="input-form-control without-icon" maxlength="100">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="coverDetails.IsTaxExcempted=='Y'">
-                                        <div class="input-control-container">
-                                            <div class="input-control-container">
-                                                <label class="input-form-label">Tax Excemption Type</label>
-                                                <ng-select class="input-form-select" [(ngModel)]="coverDetails.TaxExcemptionType" appendTo="body" [items]="taxTypeList" bindValue="Code" bindLabel="CodeDesc">
-                                                </ng-select>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                     <div class="col-12 col-md-4 col-lg-4" *ngIf="coverageTypeValue!='A'">
                                     <div class="input-control-container">
                                         <label class="input-form-label">ExcessPercent<span class="text-required">*</span></label>
@@ -392,7 +370,36 @@
                                             </ng-select>
                                         </div>
                                     </div>
-
+                                    <div class="col-12 col-md-4 col-lg-4" *ngIf="coverageTypeValue!='A'">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Is Tax Excempted?<span class="text-required">*</span></label>
+                                            <div class="input-form-radio-box">
+                                                <div class="radio-toolbar">
+                                                    <input id="orginwarehouse1" type="radio" name="originatingWarehouse1" [(ngModel)]="coverDetails.IsTaxExcempted" (change)="onTaxYNChnage()" value="Y">
+                                                    <label for="orginwarehouse1">Yes</label>
+                                                    <input type="radio" id="orginwarehouse2" name="originatingWarehouse1" [(ngModel)]="coverDetails.IsTaxExcempted" (change)="onTaxYNChnage()" value="N">
+                                                    <label for="orginwarehouse2">No</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="coverDetails.IsTaxExcempted=='Y'">
+                                        <div class="input-control-container">
+                                            <label class="input-form-label">Tax Excemption Reference<span class="text-required">*</span></label>
+                                            <div class="input-form-box">
+                                                <input type="text" [(ngModel)]="coverDetails.TaxExcemptionReference" class="input-form-control without-icon" maxlength="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="coverDetails.IsTaxExcempted=='Y'">
+                                        <div class="input-control-container">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Tax Excemption Type</label>
+                                                <ng-select class="input-form-select" [(ngModel)]="coverDetails.TaxExcemptionType" appendTo="body" [items]="taxTypeList" bindValue="Code" bindLabel="CodeDesc">
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-12 col-md-4 col-lg-4" *ngIf="coverDetails.SubCoverYn=='N'">
                                         <div class="input-control-container">
                                             <label class="input-form-label">Effective Date</label>
@@ -1040,20 +1047,14 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        
                                         <div class="col-12 col-md-4 col-lg-4">
                                             <div class="input-control-container">
-                                                <label class="input-form-label">Is Tax Excempted?<span class="text-required">*</span></label>
-                                                <div class="input-form-radio-box">
-                                                    <div class="radio-toolbar">
-                                                        <input id="subTax1" type="radio" name="subCoverTaxYN" [(ngModel)]="subCoverData.IsTaxExcempted" value="Y">
-                                                        <label for="subTax1">Yes</label>
-                                                        <input type="radio" id="subTax2" name="subCoverTaxYN" [(ngModel)]="subCoverData.IsTaxExcempted" value="N">
-                                                        <label for="subTax2">No</label>
-                                                    </div>
-                                                </div>
+                                                <label class="input-form-label">ProRata<span class="text-required">*</span></label>
+                                                <ng-select class="input-form-select" appendTo="body" [items]="proRataList" [(ngModel)]="subCoverData.ProRataYn" bindValue="Code" bindLabel="CodeDesc">
+                                                </ng-select>
                                             </div>
                                         </div>
-
                                         <div class="col-md-4 col-lg-4 col-xl-4">
                                             <div class="input-control-container">
                                                 <label class="input-form-label">Calculation Type</label>
@@ -1106,6 +1107,19 @@
                                                 <label class="input-form-label">SubCover Based On <span class="text-required">*</span></label>
                                                     <ng-select class="input-form-select" appendTo="body" [items]="basedOnColumnList" [(ngModel)]="subCoverData.CoverBasedOn" bindValue="Code" bindLabel="CodeDesc">
                                                     </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="input-control-container">
+                                                <label class="input-form-label">Is Tax Excempted?<span class="text-required">*</span></label>
+                                                <div class="input-form-radio-box">
+                                                    <div class="radio-toolbar">
+                                                        <input id="subTax1" type="radio" name="subCoverTaxYN" [(ngModel)]="subCoverData.IsTaxExcempted" value="Y">
+                                                        <label for="subTax1">Yes</label>
+                                                        <input type="radio" id="subTax2" name="subCoverTaxYN" [(ngModel)]="subCoverData.IsTaxExcempted" value="N">
+                                                        <label for="subTax2">No</label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4">

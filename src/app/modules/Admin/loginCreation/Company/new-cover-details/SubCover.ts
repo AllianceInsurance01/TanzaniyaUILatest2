@@ -28,6 +28,7 @@ export class SubCover{
     "IsTaxExcempted":null;
     "TaxAmount":null;
     "TaxCode":null;
+    "ProRataYn": '';
     "TaxExcemptionReference":null;
     "TaxExcemptionType":null;
     "GridDetails": []
