@@ -297,6 +297,27 @@ export class ShortTermVehicle{
                         expressions: {
                         },
                     },
+                    {
+                      type: 'ngselect',
+                      key: 'MotorCategory',
+                      defaultValue: '',
+                      className: 'col-12 col-lg-4 col-md-6',
+                      props: {
+                        label: `Motor Category`,
+                        disabled: this.checkDisable('MotorCategory'),
+                        required: true,
+                        options: [
+        
+                        ],
+                      },
+                      validators: {
+                        validation: [ForceLengthValidators.maxLength(5), ForceLengthValidators.min(1)]
+                      },
+                      hooks: {
+                      },
+                      expressions: {
+                      },
+                  },
                 ]
               }
             ]

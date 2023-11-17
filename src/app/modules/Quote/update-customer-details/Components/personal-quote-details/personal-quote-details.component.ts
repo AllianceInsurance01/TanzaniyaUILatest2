@@ -853,6 +853,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
           this.getColorsList();
           this.getBodyTypeList();
           this.getUsageList();
+          this.getMotorCategoryList();
           //this.getMotorCategoryList();
       }
     }
@@ -4067,6 +4068,41 @@ getUsageList(){
     (err) => { },
   );
 }
+getMotorCategoryList(){
+  let ReqObj = {
+    "InsuranceId": this.insuranceId,
+    "BranchCode": this.branchCode
+  }
+  let urlLink = `${this.commonApiUrl}dropdown/motorcategory`;
+  this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+    (data: any) => {
+      console.log(data);
+      if(data.Result){
+          this.motorCategoryList = data.Result;
+          for (let i = 0; i < this.motorCategoryList.length; i++) {
+            this.motorCategoryList[i].label = this.motorCategoryList[i]['CodeDesc'];
+            this.motorCategoryList[i].value = this.motorCategoryList[i]['Code'];
+            delete this.motorCategoryList[i].CodeDesc;
+            if (i == this.motorCategoryList.length - 1) {
+                let defaultObj = [{ 'label': '-Select-', 'value': '' }];
+                let fields = this.fields[0].fieldGroup[0].fieldGroup;
+                for(let field of fields){
+                  console.log("Received Iterate",field)
+                  if(field.key=='MotorCategory'){
+                    field.props.options = defaultObj.concat(this.motorCategoryList);
+                  }
+                }
+                if(this.motorDetails){
+                  this.productItem.MotorCategory = this.motorCategoryList.find(ele=>ele.label==this.motorDetails.MotorCategory || ele.Code ==this.motorDetails.MotorCategory)?.Code;
+                }
+            }
+          } 
+      }
+
+    },
+    (err) => { },
+  );
+}
 // getMotorCategoryList(){
 //   let ReqObj = {
 //     "InsuranceId": this.insuranceId,
@@ -4436,7 +4472,7 @@ onPreviousTab(){
   this.selectedIndex-=1;
 }
 saveMotorRiskDetails(){
-    let make = "",color='',fuel='',usageDesc='',bodyType='';
+    let make = "",color='',fuel='',usageDesc='',bodyType='',motorCategoryDesc='';
     if(this.productItem.Make!='' && this.productItem.Make!=undefined && this.productItem.Make!=null){
       let entry = this.makeList.find(ele=>ele.Code==this.productItem.Make);
       make = entry.label;
@@ -4457,6 +4493,10 @@ saveMotorRiskDetails(){
     if(this.productItem.MotorUsage!='' && this.productItem.MotorUsage!=undefined && this.productItem.MotorUsage!=null){
       let entry = this.usageList.find(ele=>ele.Code==this.productItem.MotorUsage);
       usageDesc = entry.label;
+    }
+    if(this.productItem.MotorCategory!='' && this.productItem.MotorCategory!=undefined && this.productItem.MotorCategory!=null){
+      let entry = this.motorCategoryList.find(ele=>ele.Code==this.productItem.MotorCategory);
+      motorCategoryDesc = entry.label;
     }
     let model=null,modelDesc = null;
     if(this.productItem.BodyType!='' && this.productItem.BodyType!=undefined && this.productItem.BodyType!=null){
@@ -4596,7 +4636,8 @@ saveMotorRiskDetails(){
       "InterestedCompanyDetails": "",
       "ManufactureYear":this.productItem.ManufactureYear,
       "ModelNumber": null,
-      "MotorCategory": "01",
+      "MotorCategory": this.productItem.MotorCategory,
+      "MotorCategoryDesc": motorCategoryDesc,
       "Motorusage": this.productItem.MotorUsage,
       "MotorusageDesc": usageDesc,
       "NcdYn": 'N',
@@ -7114,6 +7155,7 @@ setCommonFormValues(){
               this.getColorsList();
               this.getBodyTypeList();
               this.getUsageList();
+              this.getMotorCategoryList();
               this.getMakeList();
           }
           else{
@@ -7870,6 +7912,13 @@ checkCoverValues() {
       ulList +=`<li class="list-group-login-field">
                   <div style="color: darkgreen;">Field<span class="mx-2">:</span>Vehicle Usage</div>
                   <div style="color: red;">Message<span class="mx-2">:</span>Please Select Vehicle Usage</div>
+                </li>`
+     }
+     if(this.productItem.MotorCategory=='' ||  this.productItem.MotorCategory==null){
+      i+=1;
+      ulList +=`<li class="list-group-login-field">
+                  <div style="color: darkgreen;">Field<span class="mx-2">:</span>Motor Category</div>
+                  <div style="color: red;">Message<span class="mx-2">:</span>Please Select Motor Category</div>
                 </li>`
      }
       if(i!=0){
