@@ -288,7 +288,6 @@
                             <div class="row">
                                 <div class="col-12 col-md-4">
                                     <div class="input-control-container policyfield">
-                                        <!--style="padding-left: 40px !important;padding-right: 20px !important;"-->
                                         <label class="input-form-label">Insurance Type</label><span class="text-danger">*</span>
                                         <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="typeList" [(ngModel)]="typeValue" (change)="getMotorTypeList('change',null,null)" bindValue="Code" bindLabel="CodeDesc">
                                         </ng-select>
@@ -314,7 +313,7 @@
                             <div class="row">
                                 <div class="col-12 col-md-4">
                                     <div class="input-control-container policyfield">
-                                        <!--style="padding-left: 40px !important;padding-right: 20px !important;"-->
+                                        
                                         <label class="input-form-label">Motor Usage</label><span class="text-danger">*</span>
                                         <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="motorUsageList" [(ngModel)]="motorUsageValue" bindValue="Code" bindLabel="CodeDesc">
                                         </ng-select>
@@ -322,7 +321,7 @@
                                 </div>
                                 <div class="col-12 col-md-4 col-lg-4">
                                     <div class="input-control-container policyfield2">
-                                        <!--style="padding-left: 20px !important;padding-right: 20px !important;"-->
+                                        
                                         <label class="input-form-label">Claims YN?</label>
                                         <div class="input-form-radio-box">
                                             <div class="radio-toolbar">
@@ -335,7 +334,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4 col-lg-4 smallclass">
-                                    <!--style="padding-left: 40px !important;padding-right: 40px !important;"-->
+                                    
                                     <div class="input-control-container" *ngIf="typeValue=='10'">
                                         <label class="input-form-label">GPS Tracking Enabled?</label>
                                         <div class="input-form-radio-box">
@@ -350,7 +349,27 @@
                                 </div>
                                 
                             </div>
-    
+                            <!-- <div class="row" *ngIf="insuranceId=='100004'">
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container policyfield">
+                                        <label class="input-form-label">Insurance Class</label><span class="text-danger">*</span>
+                                        <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="classList" [(ngModel)]="classValue" (change)="onChangeClassType()" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="input-control-container policyfield2">
+                                        <label class="input-form-label">Motor Usage</label><span class="text-danger">*</span>
+                                        <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="motorUsageList" [(ngModel)]="motorUsageValue" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="input-control-container smallclass">
+                                        
+                                    </div>
+                                </div>
+                            </div> -->
                             <div class="row">
                                 <div class="col-12 col-md-4" *ngIf="classValue=='1' || classValue=='2'">
                                     <div class="input-control-container policyfield">

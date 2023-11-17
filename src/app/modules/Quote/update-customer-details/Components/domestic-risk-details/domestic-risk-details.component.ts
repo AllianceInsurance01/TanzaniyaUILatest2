@@ -334,9 +334,9 @@ export class DomesticRiskDetailsComponent implements OnInit {
       this.quoteRefNo = referenceNo;
       this.Section = false;
     }
-    if(this.productId=='5'){
+    if(this.productId=='5' || this.productId=='29'){
       this.buildingDetailsSection=false;
-      }
+    }
     else if(this.productId!='43'){
       this.buildingDetailsSection=true;
     
@@ -993,7 +993,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
           if(this.productId=='21' || this.productId=='26'){
             this.getallriskLists();
           }
-          if(this.productId=='5'){
+          if(this.productId=='5' || this.productId=='29'){
             this.getAccesroies();
             this.getchassisAcc();
           }
@@ -1017,7 +1017,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
             // if(this.third) this.pASumInsured = this.sumInsuredDetails.ProductSuminsuredDetails.ContentSuminsured;
             // if(this.fifth) this.pASumInsured = this.sumInsuredDetails.ProductSuminsuredDetails.ContentSuminsured;
             this.currencyValue = this.sumInsuredDetails.ProductSuminsuredDetails.CurrencyId;
-            if(this.productId=='5'){
+            if(this.productId=='5' || this.productId=='29'){
               this.currencyValue = this.sumInsuredDetails.ProductSuminsuredDetails.Currency;
             }
             this.accidentOccupation = this.sumInsuredDetails.ProductSuminsuredDetails.OccupationTypeDesc;
@@ -1086,7 +1086,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
             console.log("SI Rec",this.sumInsuredDetails);
           }
             this.getbuilding();
-            if(this.productId=='5'){
+            if(this.productId=='5' || this.productId=='29'){
               this.getAccessories();
             }
         }
@@ -2435,7 +2435,7 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       }
       urlLink = `${this.motorApiUrl}api/savecontentrisk`;
     }
-    if(type=='EA' && this.productId=='5')
+    if(type=='EA' && (this.productId=='5' || this.productId=='29'))
     {
       console.log('AAAAAAAAA')
       ReqObj = {

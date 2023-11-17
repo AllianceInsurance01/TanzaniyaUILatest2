@@ -171,7 +171,7 @@ export class NewEmidetailsComponent implements OnInit {
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         if(data.Result){
-          if(this.productId=='5'){
+          if(this.productId=='5' || this.productId=='29'){
             let datas=[{"Code":'99999',"CodeDesc":"ALL"}];
             this.policylList=datas.concat(data.Result);
           }

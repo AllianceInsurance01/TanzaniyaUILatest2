@@ -46,7 +46,7 @@ export class ReferralApprovedComponent implements OnInit {
     this.brokerList = []
     sessionStorage.removeItem('customerReferenceNo')
     sessionStorage.removeItem('loadingType');
-    if(this.productId=='5' || this.productId=='46'){
+    if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
       this.quoteHeader =  [
         { key: 'QuoteNo', display: 'Quote No' },
         { key: 'RequestReferenceNo', display: 'Reference No' },

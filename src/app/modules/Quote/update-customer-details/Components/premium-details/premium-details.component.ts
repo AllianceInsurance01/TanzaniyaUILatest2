@@ -265,7 +265,7 @@ export class PremiumDetailsComponent implements OnInit {
             if(data.Result){
               let obj = [{"Code":null,"CodeDesc":"-Select-"}]
               this.mobileCodeList= obj.concat(data.Result);
-              if(this.productId=='5' || this.productId=='46'){
+              if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
                 this.getDriverDetails();
               }
             }
@@ -982,7 +982,7 @@ toggle(index: number) {
   }
 
   getBacks(){
-    if(this.productId=='5' || this.productId=='46'){
+    if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
     //   console.log('JJJJJJJJJJ',this.Riskdetails);
     //   let entry=this.Riskdetails.filter(ele => ele.AcccessoriesSumInsured!=0)
     //   if(entry.length!=0){
@@ -1045,7 +1045,7 @@ toggle(index: number) {
     if(this.productId=='3'){
       this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
     }
-    else if(this.productId=='5' || this.productId=='46'){
+    else if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
   
       this.coverlist=[];let i=0;
       console.log('TTTTTTTTTT',this.Riskdetails);
@@ -1212,7 +1212,7 @@ toggle(index: number) {
         }
         else{
           sessionStorage.removeItem('quotePaymentId');
-          if((this.productId=='5' || this.productId=='46') && this.enableDriverDetails){
+          if((this.productId=='5' || this.productId=='46' || this.productId=='29') && this.enableDriverDetails){
             this.onsave();
           }
           // else if(this.enableCustomerDetails){
@@ -1365,7 +1365,7 @@ toggle(index: number) {
       (data: any) => {
         console.log(data);
         if(data.Result){
-          if((this.productId=='5' || this.productId=='46')&& this.driverDetailsList.length!=0 && (!this.endorsementSection || (this.endorsementSection && this.enableDriverDetails))){
+          if((this.productId=='5' || this.productId=='46' || this.productId=='29')&& this.driverDetailsList.length!=0 && (!this.endorsementSection || (this.endorsementSection && this.enableDriverDetails))){
             sessionStorage.setItem('quotePaymentId',data.Result.PaymentId);
             this.onsave();
           }

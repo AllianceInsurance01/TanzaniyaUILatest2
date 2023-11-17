@@ -146,7 +146,7 @@ export class CustomerSelectionComponent implements OnInit {
     if(this.customerValue!=undefined && this.customerValue!=null){
       sessionStorage.setItem('customerReferenceNo',this.customerValue);
       
-      if(this.productId=='5' || this.productId=='4'){
+      if(this.productId=='5' || this.productId=='4' || this.productId=='29'){
         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails']);
       }
       else if(this.productId=='3'){

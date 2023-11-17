@@ -267,7 +267,7 @@ emiyn="N";
       let sectionType = sessionStorage.getItem('riskSection');
       if(sectionType=='additional' ) this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
       else if(this.productId=='4') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details'])
-      else if(this.productId!='5' && this.productId!='46') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
+      else if(this.productId!='5' && this.productId!='46' && this.productId!='29') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
       else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
     }
    
@@ -452,14 +452,14 @@ emiyn="N";
       if(quoteStatus) this.statusValue = quoteStatus;
       this.adminSection = false;
     }
-      if(this.productId=='5'  || this.productId=='3' || this.productId=='46'){
+      if(this.productId=='5'  || this.productId=='3' || this.productId=='46' || this.productId=='29'){
         //let vehicles = JSON.parse(sessionStorage.getItem('vehicleDetailsList'));
         let vehicles:any;
         if(this.statusValue=='RA'){
           this.getUpdatedVehicleDetails();
         }
         else{
-          if(vehicles && (this.productId=='5' || this.productId=='46')){
+          if(vehicles && (this.productId=='5' || this.productId=='46' || this.productId=='29')){
             let vehicleList=[];
             let i=0;
             for(let veh of vehicles){
@@ -524,7 +524,7 @@ emiyn="N";
           }
         }
       }
-      else if(this.productId!='5' && this.productId!='3' && this.productId!='46'){
+      else if(this.productId!='5' && this.productId!='3' && this.productId!='46' && this.productId!='29'){
         // let coverListObj = JSON.parse(sessionStorage.getItem('travelCoverListObj'));
         // if(coverListObj){
         //   this.getCoverList(coverListObj);
@@ -1319,7 +1319,7 @@ getMotorUsageList(vehicleValue){
               // if(refRemarks){
               //   this.referralRemarks = refRemarks.split('~');
               // }
-              if(this.productId=='5'){
+              if(this.productId=='5' || this.productId=='29'){
                 let j=0;let datass:any=[]
                 if(this.vehicleData.length>1){
                   if(this.vehicleData[0]?.RiskDetails?.InsuranceClass == this.vehicleData[1]?.RiskDetails?.InsuranceClass){
@@ -1454,7 +1454,7 @@ getMotorUsageList(vehicleValue){
                       console.log("Vehiclessss",this.vehicleData,data.Result)
                       console.log("Final Vehicle List",vehicleList)
                       //sessionStorage.setItem('vehicleDetailsList',JSON.stringify(vehicleList));
-                      if(this.productId!='4' && this.productId!='5' && this.productId!='46'){
+                      if(this.productId!='4' && this.productId!='5' && this.productId!='46' && this.productId!='29'){
                         this.vehicleData = vehicleList;
                         this.filterVehicleList();
                       }
@@ -2216,7 +2216,7 @@ getMotorUsageList(vehicleValue){
     //}
   }
   onSetBackPage(){
-    if(this.productId=='5'){
+    if(this.productId=='5' || this.productId=='29'){
       this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details']);
     }
     else if(this.productId=='4') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
@@ -2239,7 +2239,7 @@ getMotorUsageList(vehicleValue){
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/underwriter-details']);
         }
         else{
-          if(this.productId=='5' || this.productId=='46'){
+          if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
             this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details']);
           }
           else if(this.productId=='3'){
@@ -2375,7 +2375,7 @@ getMotorUsageList(vehicleValue){
     
     if(type=='coverList'){
         let vehicle:any;
-        if(this.productId!='4' && this.productId!='5' && this.productId!='46'){
+        if(this.productId!='4' && this.productId!='5' && this.productId!='46' && this.productId!='29'){
           vehicle = this.vehicleDetailsList.find(ele=>(ele.Vehicleid==vehicleId || ele.VehicleId==vehicleId) && (ele.SectionId==rowData.SectionId));
           console.log('Vechiles1',vehicle)
         }
@@ -3920,26 +3920,24 @@ getMotorUsageList(vehicleValue){
   }
   onFinalProceed(){
     //this.emiYN=='Y' && this.emiPeriod!='N'
-    if(this.emiYN!=null){
-      // this.insertEMIDetails();
-      // console.log('this emi',this.emiYN);
-      if(this.emiYN=='N'){
-        this.emistatus='N';
-        this.emiPeriod='0';
-        this.insertEMIDetails();
-      }
-      else if(this.emiYN=='Y'){
-        if(this.emiPeriod!='0'){
-          this.emistatus='Y';
-          this.insertEMIDetails();
-        }
-        else{
-          this.emistatus='N';
-          this.insertEMIDetails();
-        }
-      }
-    }
-    else{
+    // if(this.emiYN!=null && this.emiYN!='N'){
+    //   if(this.emiYN=='N'){
+    //     this.emistatus='N';
+    //     this.emiPeriod='0';
+    //     this.insertEMIDetails();
+    //   }
+    //   else if(this.emiYN=='Y'){
+    //     if(this.emiPeriod!='0'){
+    //       this.emistatus='Y';
+    //       this.insertEMIDetails();
+    //     }
+    //     else{
+    //       this.emistatus='N';
+    //       this.insertEMIDetails();
+    //     }
+    //   }
+    // }
+    // else{
       if(this.productId=='3'){
         let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
         if(homeSession){
@@ -3979,7 +3977,7 @@ getMotorUsageList(vehicleValue){
          // this.getExistingEserviceDetails();
         //}
       }
-      else if(this.productId=='5' || this.productId=='46'){
+      else if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
         this.coverlist=[];let i=0;
         for(let vehicle of this.newcoverlist){
           let vehEntry = vehicle.Covers;
@@ -4012,7 +4010,7 @@ getMotorUsageList(vehicleValue){
         console.log("BBBBBBBBBBBYYYYYYYYYYYYYY");
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
       }
-    }
+    //}
   }
   viewQuoteDetails(){
 		let ReqObj = {
@@ -4024,7 +4022,7 @@ getMotorUsageList(vehicleValue){
 				if(data?.Result){
 				  let quoteDetails = data?.Result?.QuoteDetails;
 				  this.localPremiumCost = quoteDetails?.OverallPremiumLc;
-          if(this.productId=='5' || this.productId=='46'){
+          if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
             let i=0;
             for(let vehicle of this.newcoverlist){
               let vehEntry = vehicle.Covers;
@@ -4161,7 +4159,7 @@ getMotorUsageList(vehicleValue){
                 //   this.getExistingEserviceDetails();
                 // }
               }
-              else if(this.productId=='5' || this.productId=='46'){
+              else if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
                 this.coverlist=[];let i=0;
                 for(let vehicle of this.newcoverlist){
                   let vehEntry = vehicle.Covers;
@@ -4387,13 +4385,13 @@ getMotorUsageList(vehicleValue){
   getcall(){
     let referenceNo =  sessionStorage.getItem('customerReferenceNo');
     this.getCustomerDetails(referenceNo);
-   if(this.productId=='5'  || this.productId=='3' || this.productId=='46'){
+   if(this.productId=='5'  || this.productId=='3' || this.productId=='46' || this.productId=='29'){
     let vehicles:any;
     if(this.statusValue=='RA'){
       this.getUpdatedVehicleDetails();
     }
     else{
-      if(vehicles && (this.productId=='5' || this.productId=='46')){
+      if(vehicles && (this.productId=='5' || this.productId=='46' || this.productId=='29')){
         let vehicleList=[];
         let i=0;
         for(let veh of vehicles){

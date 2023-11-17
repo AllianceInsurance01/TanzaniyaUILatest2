@@ -1740,7 +1740,7 @@ export class VehicleDetailsComponent implements OnInit {
     else this.fleetYN = "N";
   }
   onGetBack(){
-    if(this.productId=='5') sessionStorage.setItem('vehicleDetails',JSON.stringify(this.vehicleDetailsList));
+    if(this.productId=='5' || this.productId=='29') sessionStorage.setItem('vehicleDetails',JSON.stringify(this.vehicleDetailsList));
     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
     //sessionStorage.removeItem('vehicleDetailsList');
     // let value = sessionStorage.getItem('vehicleType');
