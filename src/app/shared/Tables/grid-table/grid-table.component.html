@@ -55,9 +55,9 @@
                     </ng-container>
                     <ng-container *ngIf="col.key=='CommissionAmt'">
                             {{element[col.key]}} 
-                            <ng-container *ngIf="element[col.key]!=null">
+                            <!-- <ng-container *ngIf="element[col.key]!=null">
                                         &nbsp;&nbsp;({{element['CommissionPercentage']}} &nbsp;%)
-                            </ng-container>
+                            </ng-container> -->
                     </ng-container>
                     <ng-container *ngIf="columnHeader[i]['display']=='CoverBased Endt'">
                         <ng-container *ngIf="element[col.key]=='Y'">Yes</ng-container>
@@ -134,12 +134,15 @@
                             <i class="fas fa-marker"></i>
                           </button>&nbsp;
                     </ng-container>
+                    <ng-container *ngIf="col.config.isView">
+                        <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="View" (click)="onView.emit(element)"><i
+                            class="fa fa-eye"></i></a>
+                        
+                     </ng-container>
                     <ng-container *ngIf="col.config.isDownload">
                         <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onEdit.emit(element)"><i
                             class="fa fa-download"></i></a>
-                        <!-- <button class="btn btn-info btn-sm" (click)="onEdit.emit(element)">
-                             <i class="fas fa-download"></i>
-                           </button>&nbsp; -->
+                        
                      </ng-container>
                     <ng-container *ngIf="col.config.isAddNew">
                         <button class="btn btn-primary btn-sm" (click)="onAddNew.emit(element)">

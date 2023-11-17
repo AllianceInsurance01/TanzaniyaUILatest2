@@ -26,7 +26,7 @@
     <div class="page-container">
         <div class="row">
             <div class="col-3 col-md-3 col-lg-3 col-xl-3">
-                <div class="input-control-container" *ngIf="searchBySection">
+                <div class="input-control-container" >
                     <label class="input-form-label">Search By</label><span class="text-danger">*</span>
                     <ng-select class="input-form-select" appendTo="body" [items]="searchList" [(ngModel)]="searchBy" bindValue="Code" bindLabel="Description">
                     </ng-select>
@@ -38,10 +38,16 @@
                 </div>
             </div>
             <div class="col-3 col-md-3 col-lg-3 col-xl-3">
-                <div class="input-control-container" *ngIf="searchBySection">
+                <div class="input-control-container" >
                     <label class="input-form-label">Search Value</label><span class="text-danger">*</span>
                     <div class="input-form-box">
-                        <input type="text" maxlength="100" (keypress)="omit_special_char($event)" class="input-form-control without-icon" [(ngModel)]="searchValue">
+                        <div class="input-group">
+                            <input type="text" maxlength="100" (keypress)="omit_special_char($event)" class="input-form-control without-icon" [(ngModel)]="searchValue">
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary" (click)="onSearchPolicyData()"><i class="fa fa-search"></i></button>&nbsp;&nbsp;
+                            </div>
+                          </div>
+                        
                     </div>
                 </div>
                 <div class="input-form-error" *ngIf="searchValueError">
@@ -70,18 +76,12 @@
                     </mat-form-field>
                 </ng-container>
             </div>
-            <div class="col-3 col-md-3 col-lg-3 col-xl-3 mt-4" *ngIf="searchBySection">
-                <div class="text-center">
-                    <button class="btn btn-secondary" (click)="onSearchPolicyData()"><i class="fa fa-search"></i>&nbsp;Search</button>&nbsp;&nbsp;
-                    <button class="btn btn-danger" (click)="onCancelSearch()"><i class="fa fa-close"></i>&nbsp;Cancel</button>
-                </div>
-                
-            </div>
-            <div class="col-2 col-md-2 col-lg-2 col-xl-2 mt-4" *ngIf="!searchBySection">
+            
+            <!-- <div class="col-2 col-md-2 col-lg-2 col-xl-2 mt-4" *ngIf="!searchBySection">
                 <button class="btn btn-info" style="border-radius: 20px;" (click)="onSearchPolicy()"><i class="fa fa-search"></i> &nbsp; Search for Policy</button>
-            </div>
+            </div> -->
         </div>
-        <div class="row">
+        <div class="row" *ngIf="!searchBySection">
             <div class="col-12 col-md-9 col-lg-9">
                 <div class="grid">
                     <ng-container >
@@ -195,6 +195,9 @@
                                         Count Based Details
                                     </div>
                                     <div>
+                                        <ng-container *ngIf="planName">
+                                                <b>Plan Name - {{planName}}</b>
+                                        </ng-container>
                                     </div>
                                 </div>
                             </div>
@@ -224,8 +227,12 @@
                             
                             <div class="row" *ngIf="searchedList.length!=0">
                                 <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                                    <app-grid-table [cols]="searchedHeader" [data]="searchedList" [filterValue]="filterValue">
+                                    <app-grid-table [cols]="searchedHeader" [data]="searchedList" [filterValue]="filterValue" (onView)="GetSchedule($event)">
                                     </app-grid-table>
+                                </div>
+                                <div class="text-center mt-2" *ngIf="searchBySection">
+                                    
+                                    <button class="btn btn-danger" (click)="onCancelSearch()">&nbsp;Back</button>
                                 </div>
                             </div>
                             <div class="text-center" *ngIf="searchedList.length==0">

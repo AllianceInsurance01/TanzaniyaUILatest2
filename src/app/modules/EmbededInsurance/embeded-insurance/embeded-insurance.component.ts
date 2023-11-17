@@ -42,6 +42,7 @@ export class EmbededInsuranceComponent {
   countHeader: any[]=[];
   searchByError: boolean=false;
   searchValueError: boolean=false;
+  planName: any;
   constructor(private router: Router,
     private authService: AuthService,
     private loginService:LoginService,private datePipe:DatePipe,
@@ -84,11 +85,11 @@ export class EmbededInsuranceComponent {
         { key: 'PlanType', display: 'Plan Name' },
         { key: 'LoginId', display: 'UserName' },
         { key: 'TotalPolicy', display: 'Total Policy' },
-        { key: 'OverAllComiPremium', display: 'Comission Premium' },
+        { key: 'CommissionPremium', display: 'Commission' },
         { key: 'Premium', display: 'Embedded Premium' },
       ];
       this.searchedHeader = [
-        { key: 'PlanName', display: 'Plan Name' },
+        { key: 'PlanType', display: 'Plan Name' },
         { key: 'LoginId', display: 'UserName' },
         { key: 'OverAllPremium', display: 'Total' },
         { key: 'CommissionAmt', display: 'Commission' },
@@ -98,7 +99,7 @@ export class EmbededInsuranceComponent {
           key: 'actions',
           display: 'Schedule',
           config: {
-            isDownload: true,
+            isView: true,
           },
         },
       ]
@@ -114,6 +115,15 @@ export class EmbededInsuranceComponent {
       },
       (err) => {}
     );
+  }
+  GetSchedule(rowData){
+    const link = document.createElement('a');
+    link.setAttribute('target', '_blank');
+    link.setAttribute('href', rowData.FilePath);
+    link.setAttribute('download', 'Schedule');
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   }
   getProductDashboard(){
     this.planRecordsList=[];this.countBasedRecords=[];this.searchSection=false;
@@ -190,12 +200,16 @@ export class EmbededInsuranceComponent {
       (data: any) => {
         if (data.Result) {
             this.countBasedRecords = data.Result;
+            if(data.Result.length!=0) this.planName = data.Result[0].planName;
             this.countHeader = [
-              { key: 'customerName', display: 'Customer Name' },
-              { key: 'loginId', display: 'UserName' },
+              { key: 'mobileNo', display: 'Mobile No.' },
+              { key: 'policyNo', display: 'Policy No' },
+              { key: 'activePremium', display: 'No.Of.Days' },
+              { key: 'expiryPolicyCount', display: 'Start Date' },
+              { key: 'expiryPolicyPremium', display: 'End Date' },
+              { key: 'clientTransactionNo', display: 'Transaction No' },
               { key: 'amountPaid', display: 'Amount Paid' },
               { key: 'commissionAmount', display: 'Comission' },
-              { key: 'premium', display: 'Embedded Premium' },
               { key: 'taxPremium', display: 'Tax' },
               { key: 'overAllPremium', display: 'Embedded Premium Included' },
               {
@@ -228,6 +242,8 @@ export class EmbededInsuranceComponent {
   }
   onCancelSearch(){
     this.searchBySection = false;this.searchSection=false;
+    this.searchedDataSection = false;
+    this.searchedList = [];this.searchBy='';this.searchValue=null;
   }
   onSearchPolicyData(){
     let i=0;
@@ -248,15 +264,16 @@ export class EmbededInsuranceComponent {
       this.SharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
           if (data.Result) {
-
+            this.searchedList = data.Result;
+            this.searchSection = false;
+            this.searchBySection = true;
+            this.searchedDataSection = true;
           }
         },
         (err) => {}
       );
     }
-    // this.searchSection = false;
-    // this.searchBySection = true;
-    // this.searchedDataSection = true;
+    
     // this.searchedList = [
     //   {
     //     "CompanyId": "100015",

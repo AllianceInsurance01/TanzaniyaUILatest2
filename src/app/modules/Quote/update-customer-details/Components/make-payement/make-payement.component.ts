@@ -85,6 +85,7 @@ export class MakePayementComponent implements OnInit {
   chequeSection: boolean;
   uploadedDocList: any[]=[];totallistselected:any[]=[];
   DueAmount: any;
+  quoteDetails: any;
   constructor(private router:Router,public dialogService: MatDialog,private sharedService: SharedService,private cookieService: CookieService,
     private updateComponent:UpdateCustomerDetailsComponent,private route:ActivatedRoute,
    private datePipe:DatePipe) {
@@ -139,7 +140,7 @@ export class MakePayementComponent implements OnInit {
         this.quoteNo = quoteNo;
         this.updateComponent.quoteNo = this.quoteNo;
         console.log('NNNNNNNNNNNNNN')
-        if(type!='cancel') this.successSection = true;
+        // if(type!='cancel') this.successSection = true;
       }
     })
     if(this.customerDetails){
@@ -403,6 +404,7 @@ export class MakePayementComponent implements OnInit {
           if(data?.Result){
             this.vehicleList = data?.Result?.ProductDetails;
             let quoteDetails = data?.Result?.QuoteDetails;
+            this.quoteDetails = data?.Result?.QuoteDetails;
             this.orgPolicyNo = quoteDetails?.OriginalPolicyNo;
             this.endorsePolicyNo = quoteDetails?.policyNo;
             this.quoteLoginId = quoteDetails?.LoginId;
@@ -414,28 +416,7 @@ export class MakePayementComponent implements OnInit {
             this.endtPremium = quoteDetails?.TotalEndtPremium;
             this.DueAmount=quoteDetails?.DueAmount;
             console.log("Total",this.totalPremium)
-            if(quoteDetails.EmiYn!=null){
-              this.EmiYn = quoteDetails.EmiYn;
-              this.emiPeriod = quoteDetails.InstallmentPeriod;
-              this.emiMonth = quoteDetails.InstallmentMonth;
-              if(this.EmiYn=='Y') this.getCurrentEmiDetails();
-            }
-            else{
-              this.EmiYn = "N";
-              this.emiPeriod = null;
-              this.emiMonth = null;
-            }
-            if(this.endorsementSection){
-              this.totalPremium = quoteDetails?.TotalEndtPremium;
-          }
-          else {
-            if(this.EmiYn !='Y'){
-              this.totalPremium = quoteDetails?.OverallPremiumFc;
-            }
-            else{
-              this.totalPremium = quoteDetails?.DueAmount;
-            }   
-          }
+            this.checkStatus();
             this.getBankList();
             let paymentId = sessionStorage.getItem('quotePaymentId');
             let makepayment= sessionStorage.getItem('Makepaymentid');
@@ -447,6 +428,54 @@ export class MakePayementComponent implements OnInit {
       (err) => { },
     );
 
+  }
+  checkStatus(){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId
+    }
+    let urlLink = `${this.CommonApiUrl}selcom/v1/checkout/order-status/${this.quoteNo}`;
+    
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.result=='FAIL'){
+            if(this.quoteDetails.EmiYn!=null){
+              this.EmiYn = this.quoteDetails.EmiYn;
+              this.emiPeriod = this.quoteDetails.InstallmentPeriod;
+              this.emiMonth = this.quoteDetails.InstallmentMonth;
+              if(this.EmiYn=='Y') this.getCurrentEmiDetails();
+            }
+            else{
+              this.EmiYn = "N";
+              this.emiPeriod = null;
+              this.emiMonth = null;
+            }
+            if(this.endorsementSection){
+              this.totalPremium = this.quoteDetails?.TotalEndtPremium;
+            }
+            else {
+              if(this.EmiYn !='Y'){
+                this.totalPremium = this.quoteDetails?.OverallPremiumFc;
+              }
+              else{
+                this.totalPremium = this.quoteDetails?.DueAmount;
+              }   
+            }
+        }
+        else{
+          this.paymentDetails = {
+            "QuoteNo": this.quoteNo,
+            "PolicyNo": this.quoteDetails.policyNo,
+            "MerchantReference": this.quoteDetails?.MerchantReference,
+            "DebitNoteNo": this.quoteDetails?.DebitNoteNo,
+            "CreditNoteNo": this.quoteDetails?.CreditNoteNo,
+          };
+          this.policyNo = data?.Result?.PolicyNo;
+          this.policySection = true;
+          this.successSection = false;
+          this.updateTiraDetails();
+        }
+      });
   }
   onDebitdownload(rowData){
     console.log('KKKKKKKKKKK',rowData.QuoteNo);
@@ -1182,7 +1211,7 @@ export class MakePayementComponent implements OnInit {
                 this.paymentDetails = data.Result;
                 this.policyNo = data?.Result?.PolicyNo;
                 this.policySection = true;
-              this.updateTiraDetails();
+                this.updateTiraDetails();
               }
              
             }

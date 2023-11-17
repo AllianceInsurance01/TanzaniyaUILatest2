@@ -389,6 +389,9 @@ export class ReferralPendingComponent implements OnInit {
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
         }
         else{
+          sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+          sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
+          sessionStorage.setItem('quoteNo',rowData.QuoteNo);
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
         }
       });

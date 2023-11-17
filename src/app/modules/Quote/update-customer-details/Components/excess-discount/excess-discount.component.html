@@ -3643,12 +3643,12 @@
         </button>
     </div>
     <div class="modal-body">
-        <div class="d-flex justify-content-between">
+        <!-- <div class="d-flex justify-content-between">
             <div></div>
             <div>
                 Cover Name - <b>{{CoverName}}</b>
             </div>
-        </div>
+        </div> -->
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12">
                 <table class="table" *ngIf="!discountEndtSection">
@@ -3683,7 +3683,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Premium Before Discount</td>
+                            <td>{{CoverName}}&nbsp;Premium</td>
                             <td style="text-align: end;">
                                 <ng-container *ngIf="calcType=='P'">
                                     <ng-container *ngIf="!adminSection">
