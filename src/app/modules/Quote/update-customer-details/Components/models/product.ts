@@ -125,7 +125,7 @@ MoneyMajorLoss:any='0';
   JewellerySi:any='0';
   PaitingsSi:any ='0';
   CarpetsSi:any='0';
-  EquipmentSis:any='0';
+  EquipmentSis:any='0';MotorCategory:any='';
 	constructor(data?) {
 		this.id = data?.id ?? ''
 		this.CustomerName = data?.CustomerName ?? '';
