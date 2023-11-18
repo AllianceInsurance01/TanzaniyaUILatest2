@@ -84,7 +84,7 @@ export class CustomerModelComponent {
 		}
 		if(this.loginId=='guest') this.getTitleList();
 		else{
-			if(this.productId=='5' || this.productId=='46'){
+			if(this.productId=='5' || this.productId=='46' ||this.productId=='29'){
 			  if(sessionStorage.getItem('proceedType')){
 				let type = sessionStorage.getItem('proceedType');
 				if(type=='AdditionalInfo') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])

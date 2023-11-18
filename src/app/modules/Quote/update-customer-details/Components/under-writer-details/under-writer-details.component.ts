@@ -144,7 +144,7 @@ export class UnderWriterDetailsComponent implements OnInit {
     );
   }
   onGetBack(){
-    if(this.productId=='5'){
+    if(this.productId=='5' || this.productId=='29'){
       this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/vehicle-details']);
     }
     else if(this.productId == '3'){
@@ -194,7 +194,7 @@ export class UnderWriterDetailsComponent implements OnInit {
       this.sharedService.onPostMethodSync(urlLink, uwList).subscribe(
         (data: any) => {
           if(data.Result){
-            if(this.productId=='5'){
+            if(this.productId=='5' || this.productId=='29'){
               this.saveVehicleDetails();
             }
             else{ 

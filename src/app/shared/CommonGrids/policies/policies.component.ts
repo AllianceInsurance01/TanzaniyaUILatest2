@@ -53,7 +53,7 @@ export class PoliciesComponent implements OnInit {
     
     if(this.userType!='Issuer'){
       console.log('User Types',this.userType);
-      if(this.productId=='5' || this.productId=='46'){
+      if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
         this.quoteHeader =  [
           { key: 'OriginalPolicyNo', display: 'Policy No' },
           { key: 'QuoteNo', display: 'Quote No' },
@@ -158,7 +158,7 @@ export class PoliciesComponent implements OnInit {
     }
     if(this.userType =='Issuer'){
       console.log('User Types',this.userType);
-      if(this.productId=='5' || this.productId=='46'){
+      if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
         this.quoteHeader =  [
           { key: 'PolicyNo', display: 'Policy No' },
           { key: 'QuoteNo', display: 'Quote No' },

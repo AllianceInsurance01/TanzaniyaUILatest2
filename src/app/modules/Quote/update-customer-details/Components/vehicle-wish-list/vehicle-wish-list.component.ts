@@ -209,7 +209,7 @@ export class VehicleWishListComponent implements OnInit {
     }
     else{
       let loadType = sessionStorage.getItem('firstLoad');
-      if(this.productId=='5' && loadType){
+      if((this.productId=='5' || this.productId=='29') && loadType){
        
         let motorDetails = JSON.parse(sessionStorage.getItem('VechileDetails'));
         motorDetails['PolicyStartDate'] = this.datePipe.transform(new Date(this.updateComponent?.policyStartDate), "dd/MM/yyyy");

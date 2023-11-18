@@ -432,7 +432,7 @@ export class DashboardComponent implements OnInit {
         (data: any) => {
           console.log(data);
           if(data.Result){
-            if(this.productId=='5' || this.productId=='46'){
+            if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
 
 
               this.quoteHeader =  [
@@ -801,7 +801,7 @@ export class DashboardComponent implements OnInit {
         console.log(data);
         sessionStorage.removeItem('loadingType');
         if(data.Result){
-          if(this.productId=='5' || this.productId=='46'){
+          if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
             this.policyHeader =  [
               { key: 'OriginalPolicyNo', display: 'Policy No' },
               { key: 'QuoteNo', display: 'Quote No' },
@@ -984,7 +984,7 @@ export class DashboardComponent implements OnInit {
         (data: any) => {
           console.log(data);
           if(data.Result){
-            if(this.productId=='5' || this.productId=='46'){
+            if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
               this.referralHeader =  [
                 { key: 'RequestReferenceNo', display: 'Reference No' },
                 { key: 'ClientName', display: 'Customer Name' },
@@ -1165,7 +1165,7 @@ export class DashboardComponent implements OnInit {
       (data: any) => {
         console.log(data);
         if(data.Result){
-          if(this.productId=='5' || this.productId=='46'){
+          if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
             this.lapsedHeader =  [
               { key: 'QuoteNo', display: 'Quote No' },
               { key: 'RequestReferenceNo', display: 'Reference No' },

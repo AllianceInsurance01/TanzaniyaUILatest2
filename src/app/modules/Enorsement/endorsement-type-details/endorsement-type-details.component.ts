@@ -430,7 +430,7 @@ export class EndorsementTypeDetailsComponent {
           }
           sessionStorage.setItem('endorseTypeId',JSON.stringify(obj));
          
-          if(this.productId=='5' || this.productId=='46'){
+          if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
             this.getVehicleDetails(res.requestReferenceNo,'cancel');
           }
           else if(this.productId=='3'){
@@ -474,7 +474,7 @@ export class EndorsementTypeDetailsComponent {
             // }
             // else{
             if(this.selectedEndorsement.FieldsAllowed.some(ele=>ele=='AddOnCovers' || (ele=='Covers' && EndtType==852) || ele=='RemoveSection')){
-              if(this.productId=='5' || this.productId=='46'){
+              if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
                 this.getVehicleDetails(res.requestReferenceNo,'other');
               }
               else if(this.productId=='3'){

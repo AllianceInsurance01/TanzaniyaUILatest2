@@ -211,7 +211,7 @@ currencyValue:any;
 
      ];
 
-     if(this.productId=='5' || this.productId=='46'){
+     if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
      this.innerColumnHeader=[
       { key: 'PolicyType', display: 'Policy Type' },
       { key: 'PolicyStartDate', display: 'Policy StartDate' },
@@ -224,7 +224,7 @@ currencyValue:any;
 }
 
 
-  if(this.productId!='5' && this.productId!='46'){
+  if(this.productId!='5' && this.productId!='46' && this.productId!='29'){
     this.innerColumnHeader=[
       //{ key: 'PolicyType', display: 'Policy Type' },
       { key: 'OverallPremiumLc', display: 'Premium' },
@@ -232,7 +232,7 @@ currencyValue:any;
       //{ key: 'VehicleType', display: 'VehicleType' },
       //{ key: 'OverallPremiumLc', display: 'Premium' },
       { key: 'QuoteDate', display: 'Quote Date' },
-//{ key: 'PolicyStartDate', display: 'Effective Date' },
+      //{ key: 'PolicyStartDate', display: 'Effective Date' },
  
   ];
 

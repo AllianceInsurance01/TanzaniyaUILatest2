@@ -204,9 +204,9 @@ export class EmbededInsuranceComponent {
             this.countHeader = [
               { key: 'mobileNo', display: 'Mobile No.' },
               { key: 'policyNo', display: 'Policy No' },
-              { key: 'activePremium', display: 'No.Of.Days' },
-              { key: 'expiryPolicyCount', display: 'Start Date' },
-              { key: 'expiryPolicyPremium', display: 'End Date' },
+              { key: 'noOfDays', display: 'No.Of.Days' },
+              { key: 'startDate', display: 'Start Date' },
+              { key: 'endDate', display: 'End Date' },
               { key: 'clientTransactionNo', display: 'Transaction No' },
               { key: 'amountPaid', display: 'Amount Paid' },
               { key: 'commissionAmount', display: 'Comission' },

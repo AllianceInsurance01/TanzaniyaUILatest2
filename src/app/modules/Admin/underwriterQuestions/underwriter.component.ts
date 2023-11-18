@@ -83,7 +83,7 @@ export class UnderWriterComponent implements OnInit {
     //   { key: 'EntryDate', display: 'EntryDate' },
   
     // ];
-    if(this.productId=='5' || this.productId=='46'){
+    if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
       this.quoteHeader =  [
         { key: 'RequestReferenceNo', display: 'Reference No' },
         { key: 'ClientName', display: 'Customer Name' },

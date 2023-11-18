@@ -115,7 +115,7 @@ export class FollowupComponent implements OnInit,OnChanges{
     this.CusName=this.FollowupDetails?.CustomerName;
     this.Sttartdate=this.FollowupDetails?.StartDate;
     this.enddate=this.FollowupDetails?.QuoteNo;
-    if(this.productId=='5'){
+    if(this.productId=='5' || this.productId=='29'){
       this.proname="Motor"
     }
     else if(this.productId=='4'){
