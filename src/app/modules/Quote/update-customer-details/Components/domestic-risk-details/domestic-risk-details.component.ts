@@ -13,7 +13,9 @@ import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { Medical } from '../models/additionalDetails/medical';
 import { ProductData } from '../models/product';
 import { FormlyFieldConfig } from "@ngx-formly/core";
+import { HttpClient } from '@angular/common/http';
 import { LocationDetails } from '../models/additionalDetails/locationdetails';
+
 import { ContentRisk } from '../models/additionalDetails/contentRisk';
 import { PersonalAccident } from '../models/additionalDetails/perosonalaccident';
 import { PersonalIndemenitys } from '../models/additionalDetails/personalIndemenity';
@@ -25,8 +27,10 @@ import { Fedilitis } from '../models/additionalDetails/Fedilitiys';
 import { ElectronicEquip } from '../models/additionalDetails/Electronicequip';
 import { Accessories } from '../models/additionalDetails/Accsessories';
 import { Accessorieswh } from '../models/additionalDetails/Accsessorieswh';
+// import * as fs from 'file-system';
 import { ConstantPool } from '@angular/compiler';
 import { retry } from 'rxjs';
+
 
 export class ForceLengthValidators {
   static maxLength(maxLength: number) {
@@ -274,7 +278,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   actualMachinerySI: any;
   enableCyberSection: boolean = false;
   CyberMake:any;
-  DeviceType:any;
+  DeviceType:any;navItems:any;
   editCyberSection: boolean;
   cyberSectionId: any;
   Cyberyear:any;
@@ -294,6 +298,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   fieldsEmpFields:any[]=[];
   fieldFEFields:any[]=[];
   fieldsElectronic:any[]=[];
+  fileText: string;fileContent: any= '';
 
   formSection: boolean = false; viewSection: boolean = false;
   form = new FormGroup({});
@@ -306,7 +311,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
 
 
   constructor(private router: Router,private datePipe:DatePipe,private modalService: NgbModal,
-     private sharedService: SharedService,private formlyJsonschema: FormlyJsonschema,) {
+     private sharedService: SharedService,private formlyJsonschema: FormlyJsonschema,public http: HttpClient) {
     let homeObj = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.insuranceId = this.userDetails.Result.InsuranceId;
@@ -531,7 +536,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
     
       if(this.productId!='19'){
         let first = this.item.find((Code) => Code == '47' || Code=='40');
-        if (first && this.productId!='6') {
+        if (first && this.productId!='6' && this.productId!='19') {
           this.first=true;
           let fireData = new ContentRisk();
           let entry = [];
@@ -575,7 +580,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
         }
       }
       const second = this.item.find((Code) => Code == '35');
-      if (second) {
+      if (second && this.productId!='19') {
         this.second = true;
         let fireData = new PersonalAccident();
         let entry = [];
@@ -597,7 +602,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
 
       const third = this.item.find((Code) => Code == '3');
       
-      if (third && this.productId!='21') {
+      if (third && this.productId!='21' && this.productId!='19') {
         this.third = true;
         let fireData = new AllRisks();
         let entry = [];
@@ -616,7 +621,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
         this.third = false;
       }
       const fifth = this.item.find((Code) => Code == '36');
-      if (fifth) {
+      if (fifth && this.productId!='19') {
 
         this.fifth = true;
 
@@ -681,7 +686,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
         this.six = false;
       }
       const seven = this.item.find((Code) =>Code =='37' || Code == '38' || Code == '45');
-      if(seven){
+      if(seven && this.productId!='19'){
         this.seven = true;
         this.getEmployeeDetails();
         this.getOccupationList(seven);
@@ -724,7 +729,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
        } 
        else this.seven = false;
        const eight = this.item.find((Code) => Code == '43');
-      if(eight){
+      if(eight && this.productId!='19'){
         this.eight = true;
         this.getFidelityDetails();
         this.getOccupationList(eight);
@@ -767,7 +772,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
        else this.eight = false;
        const nine = this.item.find((Code) => Code == '41');
        console.log('HHHHHHHHHHHH',nine);
-        if (nine && this.productId!='16') {
+        if (nine && this.productId!='16' && this.productId!='19') {
           this.nine = true;
           let fireData = new Machineryss();
           let entry = [];
@@ -790,6 +795,33 @@ export class DomesticRiskDetailsComponent implements OnInit {
    
 
     
+  }
+  newjsonfile(){
+    let ReqObj = {
+      "InsuranceId":this.insuranceId,
+    "ProductId": this.productId,
+    "OptedSectionIds":this.item
+    }
+    let urlLink = `${this.CommonApiUrl}master/getoptedsectionadditionalinfo`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data?.Result){
+          console.log("Datadddddddddddd**",data?.Result);  
+          //let file = data.Result?.JsonPath;
+          //,{ responseType: 'text' as 'json'}
+          this.http.get(`${data.Result[0]?.JsonPath}`,{ responseType: 'text' as 'json'}).subscribe(data => {
+            console.log(data);
+        })
+          // const fileContents = fs.readFileSync(data.Result.JsonPath,'utf8');
+          // console.log('Testsss',fileContents);
+// const file = new File([fileContents], img);
+// const formData: any = new FormData();
+// formData.append("file", file);     
+        }
+           
+      },
+      (err) => { },
+    );
   }
   getEditQuoteDetails(){
     let ReqObj = {
@@ -985,8 +1017,18 @@ export class DomesticRiskDetailsComponent implements OnInit {
         if(data.Result){
           this.sumInsuredDetails = data.Result;
           this.item = this.sumInsuredDetails?.ProductSuminsuredDetails?.SectionId;
-          this.setTabSections();
-          this.getContentList();
+          if(this.productId!='19'){
+            this.setTabSections();
+          }
+          else if(this.productId=='19'){
+            this.newjsonfile();
+            this.setTabSections();
+          }
+          
+          if(this.productId!='19'){
+            this.getContentList();
+          }
+         
           if(this.six){
             this.Electronic();
           }
@@ -1000,7 +1042,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
           // else if(this.productId=='26'){
           //   this.getallriskListsplant();
           // }
-          else if(this.productId=='39' || this.productId=='19'){
+          else if(this.productId=='39' || this.productId!='19'){
             this.getallriskMachinery();
           }
           else if(this.productId=='42'){
@@ -1085,7 +1127,10 @@ export class DomesticRiskDetailsComponent implements OnInit {
             else this.actualFidelitySI=0;
             console.log("SI Rec",this.sumInsuredDetails);
           }
+          if(this.productId!='19') {
             this.getbuilding();
+          } 
+          
             if(this.productId=='5'){
               this.getAccessories();
             }
