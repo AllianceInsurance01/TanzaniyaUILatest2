@@ -4526,7 +4526,7 @@ saveMotorRiskDetails(){
     }
     else regNo = this.productItem.RegistrationNo;
     let createdBy="";
-        let startDate = "",endDate = "",vehicleSI="",accSI="",windSI="",tppSI="";
+        let startDate = "",endDate = "",vehicleSI="0",accSI="",windSI="0",tppSI="0";
         startDate = this.commonDetails[0].PolicyStartDate;
         endDate = this.commonDetails[0].PolicyEndDate;
         if(this.policyStartDate){
@@ -4609,7 +4609,7 @@ saveMotorRiskDetails(){
       "RequestReferenceNo": this.requestReferenceNo,
       "Idnumber": IdNo,
       "VehicleId": "1",
-      "AcccessoriesSumInsured": null,
+      "AcccessoriesSumInsured": '0',
       "AccessoriesInformation": "",
       "AdditionalCircumstances": "",
       "AxelDistance": '01',
