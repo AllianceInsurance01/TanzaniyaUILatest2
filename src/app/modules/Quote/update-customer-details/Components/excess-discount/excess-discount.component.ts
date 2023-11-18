@@ -3920,23 +3920,23 @@ getMotorUsageList(vehicleValue){
   }
   onFinalProceed(){
     //this.emiYN=='Y' && this.emiPeriod!='N'
-    // if(this.emiYN!=null && this.emiYN!='N'){
-    //   if(this.emiYN=='N'){
-    //     this.emistatus='N';
-    //     this.emiPeriod='0';
-    //     this.insertEMIDetails();
-    //   }
-    //   else if(this.emiYN=='Y'){
-    //     if(this.emiPeriod!='0'){
-    //       this.emistatus='Y';
-    //       this.insertEMIDetails();
-    //     }
-    //     else{
-    //       this.emistatus='N';
-    //       this.insertEMIDetails();
-    //     }
-    //   }
-    // }
+    if(this.emiYN!=null){
+      if(this.emiYN=='N'){
+        this.emistatus='N';
+        this.emiPeriod='0';
+        this.insertEMIDetails();
+      }
+      else if(this.emiYN=='Y'){
+        if(this.emiPeriod!='0'){
+          this.emistatus='Y';
+          this.insertEMIDetails();
+        }
+        else{
+          this.emistatus='N';
+          this.insertEMIDetails();
+        }
+      }
+    }
     // else{
       if(this.productId=='3'){
         let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
