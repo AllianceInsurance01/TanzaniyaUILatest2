@@ -3025,7 +3025,7 @@ getMotorUsageList(vehicleValue){
         this.emiYN = this.vehicleData[0].EmiYn;
         console.log('EMI YNSS',this.emiYN);
         this.emiPeriod = this.vehicleData[0].InstallmentPeriod;
-        if(!this.endorsementSection){
+        if(!this.endorsementSection && this.emiYN=='Y'){
         this.EmiInstallment();
         }
         }
@@ -4090,7 +4090,7 @@ getMotorUsageList(vehicleValue){
         "PolicyType":this.emipolicytype,
         "InstallmentPeriod":this.emiPeriod,
         "PremiumWithTax":this.totalPremium,//this.localPremiumCost
-        "PaymentDetails":"Debit Card",
+        "PaymentDetails":"",
         "Status":this.emistatus,
         "CreatedBy":this.loginId,
         "Remarks":"None"
