@@ -5883,7 +5883,7 @@ onSaveBussinessrisk(type,formType){
     "RequestReferenceNo":sessionStorage.getItem('quoteReferenceNo'),
     "RiskId": "1",
     "SectionId":  sectionId,
-    "AllriskSuminsured": productsi,
+    "AllriskSumInsured": productsi,
     "EquipmentSi":productsi
   }
   if (this.endorsementSection) {

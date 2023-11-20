@@ -177,7 +177,7 @@
                         </mat-tab-group> -->
                             <div class="row">
                                 <ng-container *ngFor="let step of fields[0].fieldGroup; let index = index; let last = last">
-                                    <ng-container *ngIf="(step.props.label=='Contents Risk' && insuranceId=='100004') ||step.props.label=='Building Risk' ||step.props.label=='Machinery BreakDown'||step.props.label=='Money'||step.props.label=='Burglary'|| step.props.label=='Fidelity' || step.props.label=='Employers Liability'|| step.props.label=='Fire & Allied Perils'">
+                                    <ng-container *ngIf="(step.props.label=='Contents Risk' && insuranceId=='100004') ||step.props.label=='Building Risk' ||step.props.label=='Burglary'|| step.props.label=='Fidelity' || step.props.label=='Employers Liability'|| step.props.label=='Fire & Allied Perils'">
                                         <div class="col-md-12 col-lg-12 col-xl-12">
                                             <div class="col-md-4 col-lg-4 col-xl-4 splitCardHeaders d-flex justify-content-between" (click)="selectedIndex=index">
                                                 <div (click)="selectedIndex=index" class="mt-2 pl-4"><h1 class="headings"><u>{{ step.props.label }}</u></h1></div>
@@ -197,21 +197,21 @@
                                     
                                  <!--*ngIf="step.props.label=='Fidelity' || step.props.label=='Employers Liability'"-->
                                  <!--*ngIf="step.props.label=='Fidelity' || step.props.label=='Employers Liability' || step.props.label=='Money' || step.props.label=='Machinery BreakDown'"-->
-                                 <!-- <ng-container *ngIf="step.props.label=='Machinery BreakDown'">
-                                    <div class="col-md-6 col-lg-6 col-xl-6">
+                                 <ng-container *ngIf="step.props.label=='Machinery BreakDown' || step.props.label=='Money'">
+                                    <div class="col-md-6 col-lg-6 col-xl-6 ml-2">
                                         <div class="col-md-4 col-lg-4 col-xl-4 splitCardHeaders d-flex justify-content-between" (click)="selectedIndex=index">
                                             <div (click)="selectedIndex=index" class="mt-2 pl-4"><h1 class="headings"><u>{{ step.props.label }}</u></h1></div>
                                             <div class="pr-3 pt-1">
                                             
                                             </div>
                                         </div>
-                                        <div class="card-body">
+                                        <div class="card-body mt-1">
                                             <form [formGroup]="form">
                                                 <formly-form [form]="form" [fields]="step.fieldGroup" [model]="productItem"></formly-form>
                                             </form>
                                         </div>
                                     </div>
-                                </ng-container> -->
+                                </ng-container>
                                     <ng-container *ngIf="(step.props.label=='Contents Risk' && insuranceId!='100004') || step.props.label=='Personal Liability' || step.props.label=='Personal Accident' || step.props.label=='All Risk' || step.props.label=='Business All Risk'">
                                         <div class="col-md-6 col-lg-4 col-xl-4 col-12 ml-2 splitCard">
                                             <div class="col-md-12 col-lg-12 col-xl-12 splitCardHeader d-flex justify-content-between" (click)="selectedIndex=index">

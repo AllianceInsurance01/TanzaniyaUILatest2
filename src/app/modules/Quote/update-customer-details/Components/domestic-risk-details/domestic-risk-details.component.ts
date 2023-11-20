@@ -591,7 +591,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
               });
             } }
             this.fieldsRisk[0].fieldGroup[0].fieldGroup[0].fieldGroup[4].hooks = regionHooks;
-            this.getallriskLists();
+            this.getallriskList();
           }
           else this.third = false;
         }
@@ -768,6 +768,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
               });
             } }
             this.fieldsMachinery[0].fieldGroup[0].fieldGroup[0].fieldGroup[6].hooks = regionHooks;
+            this.getallriskMachinery();
           }
           else this.nine = false;
         }
@@ -882,6 +883,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
           });
         } }
         this.fieldsRisk[0].fieldGroup[0].fieldGroup[0].fieldGroup[4].hooks = regionHooks;
+        this.getallriskList();
       }
       else {
         this.third = false;
@@ -1052,6 +1054,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
             });
           } }
           this.fieldsMachinery[0].fieldGroup[0].fieldGroup[0].fieldGroup[6].hooks = regionHooks;
+          this.getallriskMachinery();
         }
         else {
           this.nine = false;
@@ -1313,8 +1316,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
             this.getcontenttype();
             this.getCyberDetails();
           }
-          else{
-            this.getallriskList();
+          else {
+            //this.getallriskList();
           }
              
           if(this.sumInsuredDetails){
@@ -2882,6 +2885,9 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
           else if(type=='A'){
             if (this.fifth) {
               this.fourth = true;
+              this.selectedTab = this.selectedTab+1;
+            }
+            else if(this.nine){
               this.selectedTab = this.selectedTab+1;
             }
             else{

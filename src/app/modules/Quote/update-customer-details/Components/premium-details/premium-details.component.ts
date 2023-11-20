@@ -1042,7 +1042,7 @@ toggle(index: number) {
     //   }
      
     // }
-    if(this.productId=='3'){
+    if(this.productId=='3' || this.productId=='19'){
       this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
     }
     else if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
