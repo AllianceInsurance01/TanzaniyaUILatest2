@@ -1201,7 +1201,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       { Code: 2, CodeDescription: '24 Months' },
       { Code: 3, CodeDescription: '36 Months' },
     ];
-    this.getUWDetails()
+    //this.getUWDetails()
 
     if (this.productId == '19' || this.productId=='3') this.getIndustryList();
     if (this.productId == '32') {
@@ -1455,25 +1455,8 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         this.getIndemityPeriodList();
       }
      
-      if(sections.some(ele=>ele=='45')){
-        let employeeData = new EmployersLiability();
-        let field = {
-          props: { label: 'Employers Liability' },
-          fieldGroup: employeeData.fields
-        }
-        this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([field]);
-      }
-      if(sections.some(ele=>ele=='43')){
-        let fidelity = new Fidelity();
-        let field = {
-          props: { label: 'Fidelity' },
-          fieldGroup: fidelity.fields
-        }
-        this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([field]);
-      }
-      if(sections.some(ele=>ele=='45')) this.productItem.employeeList = [{"LiabilityOccupationId":null,"TotalNoOfEmployees":null,"EmpLiabilitySi":'0'}];
-        if(sections.some(ele=>ele=='43')) this.productItem.fidelityList = [{"LiabilityOccupationId":null,"TotalNoOfEmployees":null,"EmpLiabilitySi":'0'}];
-      if(sections.some(ele=>ele=='41')){
+      
+        if(sections.some(ele=>ele=='41')){
         let contentData = new MachineryBreakDown();
         let checkYnHooks ={ onInit: (field: FormlyFieldConfig) => {
           field.formControl.valueChanges.subscribe(() => {
@@ -1487,23 +1470,42 @@ export class PersonalQuoteDetailsComponent implements OnInit {
            i+=1;
            if(i==groupList.length){this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields]); this.checkMachineryYNChanges()}
         }
-      }
-      if(sections.some(ele=>ele=='42')){
-        let money = new Money();
-        let checkYnHooks ={ onInit: (field: FormlyFieldConfig) => {
-          field.formControl.valueChanges.subscribe(() => {
-              this.checkMoneyYNChanges()
-          });
-        }};
-        let groupList = money.fields.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
-        let i=0;
-        for(let group of groupList){
-           group.fieldGroup[0].hooks = checkYnHooks;
-           i+=1;
-           if(i==groupList.length){this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([money?.fields]); this.checkMoneyYNChanges()}
         }
-        // this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([money?.fields])
-      }
+        if(sections.some(ele=>ele=='45')){
+          let employeeData = new EmployersLiability();
+          let field = {
+            props: { label: 'Employers Liability' },
+            fieldGroup: employeeData.fields
+          }
+          this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([field]);
+        }
+        if(sections.some(ele=>ele=='43')){
+          let fidelity = new Fidelity();
+          let field = {
+            props: { label: 'Fidelity' },
+            fieldGroup: fidelity.fields
+          }
+          this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([field]);
+        }
+        
+        if(sections.some(ele=>ele=='45')) this.productItem.employeeList = [{"LiabilityOccupationId":null,"TotalNoOfEmployees":null,"EmpLiabilitySi":'0'}];
+          if(sections.some(ele=>ele=='43')) this.productItem.fidelityList = [{"LiabilityOccupationId":null,"TotalNoOfEmployees":null,"EmpLiabilitySi":'0'}];
+          if(sections.some(ele=>ele=='42')){
+            let money = new Money();
+            let checkYnHooks ={ onInit: (field: FormlyFieldConfig) => {
+              field.formControl.valueChanges.subscribe(() => {
+                  this.checkMoneyYNChanges()
+              });
+            }};
+            let groupList = money.fields.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
+            let i=0;
+            for(let group of groupList){
+               group.fieldGroup[0].hooks = checkYnHooks;
+               i+=1;
+               if(i==groupList.length){this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([money?.fields]); this.checkMoneyYNChanges()}
+            }
+            // this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([money?.fields])
+          }
       
       if(sections.some(ele=>ele=='52')){
         let fireData = new Burglary();
@@ -1707,6 +1709,7 @@ getBusinessAllRiskDetails(sections){
       console.log(data);
       if (data.Result) {
         let details = data?.Result;
+        if(data?.Result?.AllriskSumInsured!=null) this.productItem.EquipmentSi = data?.Result?.AllriskSumInsured;
         this.sectionCount +=1;
         if(sections.length==this.sectionCount){
           this.formSection = true; this.viewSection = false;
@@ -5883,8 +5886,7 @@ onSaveBussinessrisk(type,formType){
     "RequestReferenceNo":sessionStorage.getItem('quoteReferenceNo'),
     "RiskId": "1",
     "SectionId":  sectionId,
-    "AllriskSumInsured": productsi,
-    "EquipmentSi":productsi
+    "AllriskSumInsured": productsi
   }
   if (this.endorsementSection) {
     if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {
@@ -5908,9 +5910,9 @@ onSaveBussinessrisk(type,formType){
         if(type=='proceed'){
         if(this.commonDetails){
           if(this.commonDetails[0].SectionId !=null && this.commonDetails[0].SectionId.length!=0){
-            if(!this.commonDetails[0].SectionId.some(ele=>ele=='3')) this.commonDetails[0].SectionId.push('3');
+            if(!this.commonDetails[0].SectionId.some(ele=>ele==sectionId)) this.commonDetails[0].SectionId.push(sectionId);
           }
-          else  this.commonDetails[0]['SectionId']=['3'];
+          else  this.commonDetails[0]['SectionId']=[sectionId];
         }
        
         sessionStorage.setItem('homeCommonDetails', JSON.stringify(this.commonDetails))
