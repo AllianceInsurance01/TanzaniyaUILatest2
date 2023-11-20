@@ -990,8 +990,11 @@ export class MakePayementComponent implements OnInit {
     else if(this.Menu == '3'){ this.seven = true;}
     else if(this.Menu == '4'){
       console.log('Menu Sixth')
-      if(this.EmiYn=='N'){
+      if(this.EmiYn!='Y'){
         this.payAmount = this.totalPremium;
+      }
+      else{
+        this.payAmount =this.DueAmount;
       }
         this.payeeName = this.clientName;
         this.activeMenu = this.Menu;
