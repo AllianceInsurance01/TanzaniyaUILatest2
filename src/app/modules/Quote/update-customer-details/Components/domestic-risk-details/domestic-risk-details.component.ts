@@ -322,7 +322,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
     this.branchCode = this.userDetails.Result.BranchCode;
     this.quoteNo = sessionStorage.getItem('quoteNo');
     console.log("item received", homeObj)
-    if (homeObj && this.productId!='19') {
+    if (homeObj && this.productId!='19' && this.productId!='3') {
       this.item = homeObj[0].SectionId;
       this.InbuildConstructType=homeObj[0].InbuildConstructType
       if(this.item) this.setTabSections();
@@ -479,206 +479,252 @@ export class DomesticRiskDetailsComponent implements OnInit {
       console.log('ten',this.fieldsDevice);  
       // this.CyberItem=[{'Make':'Honda','DeviceType':'1','Making':'2022','SerialNo':1,"DeviceTypeDesc":"Desktop","SumInsured":"123,45"}];
     }
-    if(this.productId=='19'){
-      let items = this.sectionDetails.find((ele) => ele.SectionId == 1 || ele.SectionId==40);
-      if(items){
-        if(items?.AddDetailYn=='Y'){
-          this.sumInsured=true;
-          let fireData = new LocationDetails();
-          let entry = [];
-          this.field = [
-            {
-                  fieldGroupClassName: 'row buildingsuminsureds',
-                  fieldGroup: [
-                        {
-                          type: 'commaSeparator',
-                          key: 'BuildingSumInsureds',
-                          className: 'col-sm-5 offset-lg-1 offset-md-1',
-                          props: {
-                            label: `Sum Insured`,
-                          },
-                          validators: {
-                            validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                          },
-                          hooks: {
-                            onInit: (field: FormlyFieldConfig) => {
-                              field.formControl.valueChanges.subscribe(() => {
-                                this.individualCommaFormatted('building');
-                              });
+    if(this.productId=='19' || this.productId=='3'){
+      if(this.sectionDetails.length!=0){
+        let items = this.sectionDetails.find((ele) => ele.SectionId == 1 || ele.SectionId==40);
+        if(items){
+          if(items?.AddDetailYn=='Y'){
+            this.sumInsured=true;
+            let fireData = new LocationDetails();
+            let entry = [];
+            this.field = [
+              {
+                    fieldGroupClassName: 'row buildingsuminsureds',
+                    fieldGroup: [
+                          {
+                            type: 'commaSeparator',
+                            key: 'BuildingSumInsureds',
+                            className: 'col-sm-5 offset-lg-1 offset-md-1',
+                            props: {
+                              label: `Sum Insured`,
+                            },
+                            validators: {
+                              validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                            },
+                            hooks: {
+                              onInit: (field: FormlyFieldConfig) => {
+                                field.formControl.valueChanges.subscribe(() => {
+                                  this.individualCommaFormatted('building');
+                                });
+                              },
+                            },
+                            expressions: {
                             },
                           },
-                          expressions: {
-                          },
-                        },
-                    
-                  ]
-            }
-          ];
-          this.fieldss = fireData?.fields.concat(this.field);  
-          this.productItem = new ProductData();
-          this.formSection = true; this.viewSection = false;
+                      
+                    ]
+              }
+            ];
+            this.fieldss = fireData?.fields.concat(this.field);  
+            this.productItem = new ProductData();
+            this.formSection = true; this.viewSection = false;
+          }
+          else{
+            this.sumInsured =false;
+            let fireData = new LocationDetails();
+            this.fieldss = fireData?.fields;  
+            console.log('dddddddddddddddddd')
+            this.productItem = new ProductData();
+            this.formSection = true; this.viewSection = false;
+          }
         }
         else{
-          this.sumInsured =false;
-          let fireData = new LocationDetails();
-          this.fieldss = fireData?.fields;  
-          console.log('dddddddddddddddddd')
-          this.productItem = new ProductData();
-          this.formSection = true; this.viewSection = false;
+            this.sumInsured =false;
+            let fireData = new LocationDetails();
+            this.fieldss = fireData?.fields;  
+            this.productItem = new ProductData();
+            this.formSection = true; this.viewSection = false;
         }
-      }
-      else{
-          this.sumInsured =false;
-          let fireData = new LocationDetails();
-          this.fieldss = fireData?.fields;  
-          this.productItem = new ProductData();
-          this.formSection = true; this.viewSection = false;
-      }
-      let first = this.sectionDetails.find((ele) => ele.SectionId == 47 || ele.SectionId==40);
-      if(first){
-        if(first?.AddDetailYn=='Y'){
-          this.first=true;
-          let fireData = new ContentRisk();
-          let entry = [];
-          this.fieldsContent = fireData?.fields;
-          let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
-            field.formControl.valueChanges.subscribe(() => {
-              this.individualCommaFormatted('content')
-            });
-          } }
-          this.fieldsContent[0].fieldGroup[0].fieldGroup[0].fieldGroup[4].hooks = regionHooks;
+        let first = this.sectionDetails.find((ele) => ele.SectionId == 47 || ele.SectionId==40);
+        if(first){
+          if(first?.AddDetailYn=='Y'){
+            this.first=true;
+            let fireData = new ContentRisk();
+            let entry = [];
+            this.fieldsContent = fireData?.fields;
+            let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
+              field.formControl.valueChanges.subscribe(() => {
+                this.individualCommaFormatted('content')
+              });
+            } }
+            this.fieldsContent[0].fieldGroup[0].fieldGroup[0].fieldGroup[4].hooks = regionHooks;
+          }
+          else {
+            this.first =false;
+          }
         }
         else {
           this.first =false;
         }
-      }
-      else {
-        this.first =false;
-      }
-      const second = this.sectionDetails.find((ele) => ele.SectionId == 35);
-      if (second){
-        if(second?.AddDetailYn=='Y'){
-          this.second = true;
-          let fireData = new PersonalAccident();
-          let entry = [];
-          this.fieldsPersonalAccident = fireData?.fields;
-  
-          console.log('Second',this.fieldsPersonalAccident);
-  
-          let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
-            field.formControl.valueChanges.subscribe(() => {
-              this.individualCommaFormatted('PersonalAccident');
-            });
-          } }
-          this.fieldsPersonalAccident[0].fieldGroup[0].fieldGroup[0].fieldGroup[3].hooks = regionHooks;
-        }
-        else{
-          this.second = false;
-        }
-      }
-      else this.second = false;
-      const third = this.sectionDetails.find((ele) => ele.SectionId == 3);
-      if (third){
-        if(third?.AddDetailYn=='Y'){
-          this.third = true;
-          let fireData = new AllRisks();
-          let entry = [];
-          this.fieldsRisk = fireData?.fields;
-          let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
-            field.formControl.valueChanges.subscribe(() => {
-              this.individualCommaFormatted('AllRisk');
-            });
-          } }
-          this.fieldsRisk[0].fieldGroup[0].fieldGroup[0].fieldGroup[4].hooks = regionHooks;
-          this.getallriskLists();
-        }
-        else this.third = false;
-      }
-      else this.third = false;
-      const fifth = this.sectionDetails.find((ele) => ele.SectionId== 36);
-      if(fifth){
-          if(fifth?.AddDetailYn=='Y'){
-            this.fifth = true;
-            let fireData = new PersonalIndemenitys();
+        const second = this.sectionDetails.find((ele) => ele.SectionId == 35);
+        if (second){
+          if(second?.AddDetailYn=='Y'){
+            this.second = true;
+            let fireData = new PersonalAccident();
             let entry = [];
-            this.fieldsPersonalInd = fireData?.fields;
-            this.form = new FormGroup({});
-            this.productItem = new ProductData();
-            console.log('fifth',this.fieldsPersonalInd);
-
+            this.fieldsPersonalAccident = fireData?.fields;
+    
+            console.log('Second',this.fieldsPersonalAccident);
+    
             let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
               field.formControl.valueChanges.subscribe(() => {
-                this.individualCommaFormatted('PersonalInd');
+                this.individualCommaFormatted('PersonalAccident');
               });
             } }
-            this.fieldsPersonalInd[0].fieldGroup[0].fieldGroup[0].fieldGroup[3].hooks = regionHooks;
+            this.fieldsPersonalAccident[0].fieldGroup[0].fieldGroup[0].fieldGroup[3].hooks = regionHooks;
           }
-          else this.fifth = false;
-      }
-      else this.fifth = false; 
-      const six = this.sectionDetails.find((ele) => ele.SectionId== 39); 
-      if(six){
-        if(six?.AddDetailYn=='Y'){
-          this.six = true;
-          let fireData = new ElectronicEquip();
-          let entry = [];
-          this.fieldsElectronic = fireData?.fields;
-          this.form = new FormGroup({});
-          this.productItem = new ProductData();
-          console.log('sssssssssiiiiiiiiiixxxxxxxx',this.fieldsElectronic);
+          else{
+            this.second = false;
+          }
+        }
+        else this.second = false;
+        const third = this.sectionDetails.find((ele) => ele.SectionId == 3);
+        if (third){
+          if(third?.AddDetailYn=='Y'){
+            this.third = true;
+            let fireData = new AllRisks();
+            let entry = [];
+            this.fieldsRisk = fireData?.fields;
+            let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
+              field.formControl.valueChanges.subscribe(() => {
+                this.individualCommaFormatted('AllRisk');
+              });
+            } }
+            this.fieldsRisk[0].fieldGroup[0].fieldGroup[0].fieldGroup[4].hooks = regionHooks;
+            this.getallriskLists();
+          }
+          else this.third = false;
+        }
+        else this.third = false;
+        const fifth = this.sectionDetails.find((ele) => ele.SectionId== 36);
+        if(fifth){
+            if(fifth?.AddDetailYn=='Y'){
+              this.fifth = true;
+              let fireData = new PersonalIndemenitys();
+              let entry = [];
+              this.fieldsPersonalInd = fireData?.fields;
+              this.form = new FormGroup({});
+              this.productItem = new ProductData();
+              console.log('fifth',this.fieldsPersonalInd);
   
-          let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
-            field.formControl.valueChanges.subscribe(() => {
-              this.individualCommaFormatted('Electronicequip');
-            });
-          } }
-          this.fieldsElectronic[0].fieldGroup[0].fieldGroup[0].fieldGroup[5].hooks = regionHooks;
-          this.monthList = [
-            {"Code":"01","CodeDesc":"January"},
-            {"Code":"02","CodeDesc":"February"},
-            {"Code":"03","CodeDesc":"March"},
-            {"Code":"04","CodeDesc":"April"},
-            {"Code":"05","CodeDesc":"May"},
-            {"Code":"06","CodeDesc":"June"},
-            {"Code":"07","CodeDesc":"July"},
-            {"Code":"08","CodeDesc":"August"},
-            {"Code":"09","CodeDesc":"September"},
-            {"Code":"10","CodeDesc":"October"},
-            {"Code":"11","CodeDesc":"November"},
-            {"Code":"12","CodeDesc":"December"},
-          ]
-            for (let i = 0; i < this.monthList.length; i++) {
-              this.monthList[i].label = this.monthList[i]['CodeDesc'];
-              this.monthList[i].value = this.monthList[i]['Code'];
-              delete this.monthList[i].CodeDesc;
-              if (i == this.monthList.length - 1) {
-                this.fieldsElectronic[0].fieldGroup[0].fieldGroup[0].fieldGroup[2].props.options= this.monthList;
-              }
+              let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
+                field.formControl.valueChanges.subscribe(() => {
+                  this.individualCommaFormatted('PersonalInd');
+                });
+              } }
+              this.fieldsPersonalInd[0].fieldGroup[0].fieldGroup[0].fieldGroup[3].hooks = regionHooks;
             }
+            else this.fifth = false;
+        }
+        else this.fifth = false; 
+        const six = this.sectionDetails.find((ele) => ele.SectionId== 39); 
+        if(six){
+          if(six?.AddDetailYn=='Y'){
+            this.six = true;
+            let fireData = new ElectronicEquip();
+            let entry = [];
+            this.fieldsElectronic = fireData?.fields;
+            this.form = new FormGroup({});
+            this.productItem = new ProductData();
+            console.log('sssssssssiiiiiiiiiixxxxxxxx',this.fieldsElectronic);
+    
+            let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
+              field.formControl.valueChanges.subscribe(() => {
+                this.individualCommaFormatted('Electronicequip');
+              });
+            } }
+            this.fieldsElectronic[0].fieldGroup[0].fieldGroup[0].fieldGroup[5].hooks = regionHooks;
+            this.monthList = [
+              {"Code":"01","CodeDesc":"January"},
+              {"Code":"02","CodeDesc":"February"},
+              {"Code":"03","CodeDesc":"March"},
+              {"Code":"04","CodeDesc":"April"},
+              {"Code":"05","CodeDesc":"May"},
+              {"Code":"06","CodeDesc":"June"},
+              {"Code":"07","CodeDesc":"July"},
+              {"Code":"08","CodeDesc":"August"},
+              {"Code":"09","CodeDesc":"September"},
+              {"Code":"10","CodeDesc":"October"},
+              {"Code":"11","CodeDesc":"November"},
+              {"Code":"12","CodeDesc":"December"},
+            ]
+              for (let i = 0; i < this.monthList.length; i++) {
+                this.monthList[i].label = this.monthList[i]['CodeDesc'];
+                this.monthList[i].value = this.monthList[i]['Code'];
+                delete this.monthList[i].CodeDesc;
+                if (i == this.monthList.length - 1) {
+                  this.fieldsElectronic[0].fieldGroup[0].fieldGroup[0].fieldGroup[2].props.options= this.monthList;
+                }
+              }
+          }
+          else this.six = false;
         }
         else this.six = false;
-      }
-      else this.six = false;
-      const seven = this.sectionDetails.find((ele) => ele.SectionId== 37 || ele.SectionId == 38 || ele.SectionId == 45);
-      if(seven){
-        if(seven?.AddDetailYn=='Y'){
-          this.seven = true;
-          this.getEmployeeDetails();
-          this.getOccupationList(seven.SectionId);
-  
-          let fireData = new EmployeeLiablityss();
+        const seven = this.sectionDetails.find((ele) => ele.SectionId== 37 || ele.SectionId == 38 || ele.SectionId == 45);
+        if(seven){
+          if(seven?.AddDetailYn=='Y'){
+            this.seven = true;
+            this.getEmployeeDetails();
+            this.getOccupationList(seven.SectionId);
+    
+            let fireData = new EmployeeLiablityss();
+            let entry = [];
+            this.fieldsEmpFields = fireData?.fields;
+            this.form = new FormGroup({});
+            this.productItem = new ProductData();
+            console.log('Seven',this.fieldsEmpFields);
+    
+            let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
+              field.formControl.valueChanges.subscribe(() => {
+                this.individualCommaFormatted('employee');
+              });
+            } }
+            this.fieldsEmpFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[8].hooks = regionHooks;
+            this.monthList = [
+              {"Code":"01","CodeDesc":"January"},
+              {"Code":"02","CodeDesc":"February"},
+              {"Code":"03","CodeDesc":"March"},
+              {"Code":"04","CodeDesc":"April"},
+              {"Code":"05","CodeDesc":"May"},
+              {"Code":"06","CodeDesc":"June"},
+              {"Code":"07","CodeDesc":"July"},
+              {"Code":"08","CodeDesc":"August"},
+              {"Code":"09","CodeDesc":"September"},
+              {"Code":"10","CodeDesc":"October"},
+              {"Code":"11","CodeDesc":"November"},
+              {"Code":"12","CodeDesc":"December"},
+            ]
+              for (let i = 0; i < this.monthList.length; i++) {
+                this.monthList[i].label = this.monthList[i]['CodeDesc'];
+                this.monthList[i].value = this.monthList[i]['Code'];
+                delete this.monthList[i].CodeDesc;
+                if (i == this.monthList.length - 1) {
+                  this.fieldsEmpFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[5].props.options = this.monthList;
+                }
+              }
+          }
+          else this.seven = false;
+        }
+        else this.seven = false;
+        const eight = this.sectionDetails.find((ele) => ele.SectionId == 43);
+        if(eight){
+          if(eight?.AddDetailYn=='Y'){
+            this.eight = true;
+          this.getFidelityDetails();
+          this.getOccupationList(eight.SectionId);
+          let fireData = new Fedilitis();
           let entry = [];
-          this.fieldsEmpFields = fireData?.fields;
+          this.fieldFEFields = fireData?.fields;
           this.form = new FormGroup({});
           this.productItem = new ProductData();
-          console.log('Seven',this.fieldsEmpFields);
+          console.log('eight',this.fieldFEFields);
   
           let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
             field.formControl.valueChanges.subscribe(() => {
-              this.individualCommaFormatted('employee');
+              this.individualCommaFormatted('fidelity');
             });
           } }
-          this.fieldsEmpFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[8].hooks = regionHooks;
+          this.fieldFEFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[8].hooks = regionHooks;
           this.monthList = [
             {"Code":"01","CodeDesc":"January"},
             {"Code":"02","CodeDesc":"February"},
@@ -698,59 +744,43 @@ export class DomesticRiskDetailsComponent implements OnInit {
               this.monthList[i].value = this.monthList[i]['Code'];
               delete this.monthList[i].CodeDesc;
               if (i == this.monthList.length - 1) {
-                this.fieldsEmpFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[5].props.options = this.monthList;
+                this.fieldFEFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[5].props.options = this.monthList;
               }
             }
-        }
-        else this.seven = false;
-      }
-      else this.seven = false;
-      const eight = this.sectionDetails.find((ele) => ele.SectionId == 43);
-      if(eight){
-        if(eight?.AddDetailYn=='Y'){
-          this.eight = true;
-        this.getFidelityDetails();
-        this.getOccupationList(eight.SectionId);
-        let fireData = new Fedilitis();
-        let entry = [];
-        this.fieldFEFields = fireData?.fields;
-        this.form = new FormGroup({});
-        this.productItem = new ProductData();
-        console.log('eight',this.fieldFEFields);
-
-        let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
-          field.formControl.valueChanges.subscribe(() => {
-            this.individualCommaFormatted('fidelity');
-          });
-        } }
-        this.fieldFEFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[8].hooks = regionHooks;
-        this.monthList = [
-          {"Code":"01","CodeDesc":"January"},
-          {"Code":"02","CodeDesc":"February"},
-          {"Code":"03","CodeDesc":"March"},
-          {"Code":"04","CodeDesc":"April"},
-          {"Code":"05","CodeDesc":"May"},
-          {"Code":"06","CodeDesc":"June"},
-          {"Code":"07","CodeDesc":"July"},
-          {"Code":"08","CodeDesc":"August"},
-          {"Code":"09","CodeDesc":"September"},
-          {"Code":"10","CodeDesc":"October"},
-          {"Code":"11","CodeDesc":"November"},
-          {"Code":"12","CodeDesc":"December"},
-        ]
-          for (let i = 0; i < this.monthList.length; i++) {
-            this.monthList[i].label = this.monthList[i]['CodeDesc'];
-            this.monthList[i].value = this.monthList[i]['Code'];
-            delete this.monthList[i].CodeDesc;
-            if (i == this.monthList.length - 1) {
-              this.fieldFEFields[0].fieldGroup[0].fieldGroup[0].fieldGroup[5].props.options = this.monthList;
-            }
           }
+          else this.eight = false;
         }
         else this.eight = false;
+        const nine = this.sectionDetails.find((ele) => ele.SectionId == 41);
+        if (nine) {
+          if(nine?.AddDetailYn=='Y'){
+            this.nine = true;
+            let fireData = new Machineryss();
+            let entry = [];
+            this.fieldsMachinery = fireData?.fields;
+            this.form = new FormGroup({});
+            this.productItem = new ProductData();
+            console.log('nine',this.fieldsMachinery);
+  
+            let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
+              field.formControl.valueChanges.subscribe(() => {
+                this.individualCommaFormatted('machinery');
+              });
+            } }
+            this.fieldsMachinery[0].fieldGroup[0].fieldGroup[0].fieldGroup[6].hooks = regionHooks;
+          }
+          else this.nine = false;
+        }
+        else this.nine = false;
       }
-      else this.eight = false;
-      const nine = this.item.find((Code) => Code == '41');
+      else{
+            this.sumInsured =false;
+            let fireData = new LocationDetails();
+            this.fieldss = fireData?.fields;  
+            console.log('dddddddddddddddddd')
+            this.productItem = new ProductData();
+            this.formSection = true; this.viewSection = false;
+      }
     }
     else if(this.item){
         let items = this.item.find((Code) => Code == '1' || Code=='40');
@@ -1042,11 +1072,9 @@ export class DomesticRiskDetailsComponent implements OnInit {
       (data: any) => {
         if(data?.Result){
           console.log("Datadddddddddddd**",data?.Result);  
-          if(data.Result.length!=0){
               this.sectionDetails = data.Result;
               this.setTabSections();
               this.getbuilding();
-          }
           //,{ responseType: 'text' as 'json'}
           //   this.http.get(`${file}`,{ responseType: 'text' as 'json'}).subscribe(data => {
           //     console.log(data);
@@ -1256,7 +1284,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
         if(data.Result){
           this.sumInsuredDetails = data.Result;
           this.item = this.sumInsuredDetails?.ProductSuminsuredDetails?.SectionId;
-          if(this.productId!='19'){
+          if(this.productId!='19' && this.productId!='3'){
             this.setTabSections();
             this.getContentList();
           }
