@@ -254,7 +254,7 @@
                 <div class="input-control-container">
                     <label class="input-form-label">Credit Limit<span class="text-danger">*</span></label>
                     <div class="input-form-box">
-                        <input type="text" class="input-form-control without-icon" digitOnly [disabled]="editsSection" (keydown)="onCreditChange($event)" (keyup)="CommaFormatted()" [(ngModel)]="creditLimit" maxlength="50">
+                        <input type="text" class="input-form-control without-icon" digitOnly [disabled]="editSection" (keydown)="onCreditChange($event)" (keyup)="CommaFormatted()" [(ngModel)]="creditLimit" maxlength="50">
                     </div>
                 </div>
             </div>
