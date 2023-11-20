@@ -56,10 +56,8 @@ export class HouseHoldContents{
   fields:FormlyFieldConfig;
     getFieldDetails(){return this.fields; }
     checkDisable(fieldName) {
-        console.log("Disable Check", fieldName);
         if (this.endorsementSection) {
           let entry = this.enableFieldsList.some(ele => ele == fieldName);
-          console.log("Entry ", fieldName, entry)
           return !entry;
         }
         else return false;

@@ -664,7 +664,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
         if(seven?.AddDetailYn=='Y'){
           this.seven = true;
           this.getEmployeeDetails();
-          this.getOccupationList(seven);
+          this.getOccupationList(seven.SectionId);
   
           let fireData = new EmployeeLiablityss();
           let entry = [];
@@ -710,7 +710,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
         if(eight?.AddDetailYn=='Y'){
           this.eight = true;
         this.getFidelityDetails();
-        this.getOccupationList(eight);
+        this.getOccupationList(eight.SectionId);
         let fireData = new Fedilitis();
         let entry = [];
         this.fieldFEFields = fireData?.fields;

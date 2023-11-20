@@ -138,7 +138,6 @@ export class PersonalAccident{
     }
     fields:FormlyFieldConfig[]=[];
     checkDisable(fieldName) {
-        console.log("Disable Check", fieldName);
         if (this.endorsementSection) {
           // let occupationEntry = this.enableFieldsList.some(ele => ele == 'OccupationType');
           // if (occupationEntry) {
