@@ -2744,7 +2744,7 @@
                     </div>
                 </div>
                 <div class="text-center mb-2">
-                    <button class="custom-btn btn-6 maan-button-data  mx-2" matRipple *ngIf="adminSection || subuserType=='low'"
+                    <button class="custom-btn btn-6 maan-button-data  mx-2" matRipple *ngIf="adminSection || (subuserType=='low' && !endorsementSection)"
                     (click)="onUpdateFactor('calculate')">Calculate</button>
                 </div>
             </div>
@@ -3144,11 +3144,13 @@
     <div class="text-center my-3">
         <button class="custom-btn btn-5 mx-2" matRipple (click)="ongetBack()">
             <<&nbsp;Back</button>
+            <button class="custom-btn btn-6 maan-button-data mx-2" matRipple
+                    *ngIf="!adminSection && userType=='Issuer' && statusValue == 'RA' && !otpSection" (click)="onUpdateFactor('')">Buy Policy</button>
                 <button class="custom-btn btn-6 maan-button-data mx-2" matRipple
-                    *ngIf="!adminSection && statusValue == 'RA' && !otpSection" (click)="onFormSubmit()">Proceed</button>
+                    *ngIf="!adminSection && userType!='Issuer' && statusValue == 'RA' && !otpSection" (click)="onFormSubmit()">Buy Policy</button>
                 <button class="custom-btn btn-6 maan-button-data mx-2" matRipple
                     *ngIf="!adminSection && userType!='Issuer' && statusValue != 'RA' && !otpSection" (click)="onFormSubmit()">Buy Policy</button>
-                    <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="userType=='Issuer' && subuserType=='low'"
+                    <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="userType=='Issuer' && subuserType=='low'  && statusValue != 'RA'"
                     (click)="onUpdateFactor('')">Buy Policy</button>
                     <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="adminSection"
                     (click)="onUpdateFactor('')">Proceed</button>

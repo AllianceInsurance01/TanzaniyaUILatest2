@@ -3579,75 +3579,68 @@ getMotorUsageList(vehicleValue){
       }, 1000);
   	}
   onProceed(coverList:any){
-    if(this.statusValue == 'RA' && !this.adminSection){
-      if(this.productId!='4'){
-        console.log('Referral Approved',coverList);
-        // if(this.productId=='5'){
-        //       let accessoriesSI = this.vehicleData[0]?.RiskDetails?.AcccessoriesSumInsured;
-        //       if(accessoriesSI!=null && accessoriesSI!=0 && accessoriesSI!=undefined){
-        //         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
-        //       }
-        //       else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
-        // }
-         if(this.productId=='3' || this.productId=='19' || this.productId=='39' || this.productId=='32' || this.productId=='14' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId=='42' || this.productId=='43' || this.productId=='25'){
-          let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
-          if(homeSession){
-            if(this.loginType=='B2CFlow' && this.loginId=='guest'){
-              window.location.reload();
-            }
-            else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
-          }
-          else{
-            if(this.productId=='3') this.getExistingBuildingList();
-            else  if(this.loginType=='B2CFlow' && this.loginId=='guest'){
-              window.location.reload();
-            }
-            else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
-          }
+    //if(this.statusValue == 'RA' && !this.adminSection){
+      // if(this.productId!='4'){
+      //   console.log('Referral Approved',coverList);
+      //    if(this.productId=='3' || this.productId=='19' || this.productId=='39' || this.productId=='32' || this.productId=='14' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId=='42' || this.productId=='43' || this.productId=='25'){
+      //     let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
+      //     if(homeSession){
+      //       if(this.loginType=='B2CFlow' && this.loginId=='guest'){
+      //         window.location.reload();
+      //       }
+      //       else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
+      //     }
+      //     else{
+      //       if(this.productId=='3') this.getExistingBuildingList();
+      //       else  if(this.loginType=='B2CFlow' && this.loginId=='guest'){
+      //         window.location.reload();
+      //       }
+      //       else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
+      //     }
 
-        }
-        else if(this.productId == '5'){
-          let i=0;let coverlist:any=[];
-          for(let vehicle of coverList){
-            let vehEntry = vehicle.Covers;
-            console.log('VVVVVVVVV',vehEntry);
-            if(vehEntry.length!=0){
-              let entry = vehEntry.filter(ele=>ele.CoverId == '55');
-              if(entry.length!=0){
-                console.log('RRRRRRR',entry);
-                coverlist.push(entry)
-              }
-            }
-            i+=1;
-          }           
-         if(coverlist.length!=0){
-          console.log('if entry of cover id 55',coverlist);
-            sessionStorage.setItem('riskSection','additional');
-            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
-           }
-           else {
-            sessionStorage.setItem('riskSection','normal');
-            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
-           }
-        }
+      //   }
+      //   else if(this.productId == '5'){
+      //     let i=0;let coverlist:any=[];
+      //     for(let vehicle of coverList){
+      //       let vehEntry = vehicle.Covers;
+      //       console.log('VVVVVVVVV',vehEntry);
+      //       if(vehEntry.length!=0){
+      //         let entry = vehEntry.filter(ele=>ele.CoverId == '55');
+      //         if(entry.length!=0){
+      //           console.log('RRRRRRR',entry);
+      //           coverlist.push(entry)
+      //         }
+      //       }
+      //       i+=1;
+      //     }           
+      //    if(coverlist.length!=0){
+      //     console.log('if entry of cover id 55',coverlist);
+      //       sessionStorage.setItem('riskSection','additional');
+      //       this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
+      //      }
+      //      else {
+      //       sessionStorage.setItem('riskSection','normal');
+      //       this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+      //      }
+      //   }
   
-        else{
-          sessionStorage.setItem('riskSection','normal');
-          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
-        }
-        //this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+      //   else{
+      //     sessionStorage.setItem('riskSection','normal');
+      //     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
+      //   }
+      //   //this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
 
-      }
-      else if(this.productId == '4'){
-        console.log('Referral Approved');
-        if(this.loginType=='B2CFlow' && this.loginId=='guest'){
-          window.location.reload();
-        }
-        else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']);
-      }
+      // }
+      // else if(this.productId == '4'){
+      //   console.log('Referral Approved');
+      //   if(this.loginType=='B2CFlow' && this.loginId=='guest'){
+      //     window.location.reload();
+      //   }
+      //   else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']);
+      // }
     
-    }
-    else{
+    // }
+    // else{
       if(!this.statusValue && this.isMannualReferal=='Y'){
           if(this.remarks==null || this.remarks=='' || this.remarks == undefined){
             // let type: NbComponentStatus = 'danger';
@@ -3723,7 +3716,7 @@ getMotorUsageList(vehicleValue){
         //}
         
       }
-    }
+    //}
 
 
   }
