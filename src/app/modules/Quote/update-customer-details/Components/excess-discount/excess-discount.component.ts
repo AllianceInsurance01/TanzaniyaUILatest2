@@ -252,6 +252,7 @@ emiyn="N";
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     let loginType = sessionStorage.getItem('resetLoginDetails');
     this.userType = this.userDetails?.Result?.UserType;
+    this.subuserType = sessionStorage.getItem('typeValue');
     this.agencyCode = this.userDetails.Result.OaCode;
     this.branchCode = this.userDetails.Result.BranchCode;
     this.branchList = this.userDetails.Result.LoginBranchDetails;
@@ -2891,7 +2892,8 @@ getMotorUsageList(vehicleValue){
       else if(this.endorseAddOnCovers && this.adminSection )return false;
       else return true;  
     }
-    else if(!this.adminSection && this.statusValue=='RA') return true;
+    else if(!this.adminSection && this.statusValue=='RA' && (((coverData.isSelected=='D' || coverData.isSelected=='O' || coverData.isSelected=='Y' || coverData?.UserOpt=='Y') && !this.endorsementSection) || 
+    (this.endorsementSection && (coverData.UserOpt=='Y' || coverData.isSelected=='D' || coverData.isSelected=='O')))) return true;
     else return false;
   }
   setDiscountDetails(vehData,rowData,modal){
@@ -4257,8 +4259,8 @@ getMotorUsageList(vehicleValue){
     );
   }
   onUpdateFactor(type){
-    if((this.statusValue!='' && this.statusValue!=null) || (this.endorsementSection && this.endorseCovers)){
-      if(this.statusValue=='RA' || type=='calculate'){
+    if((this.statusValue!='' && this.statusValue!=null) || (this.endorsementSection && this.endorseCovers) || this.userType=='Issuer'){
+      if(this.statusValue=='RA' || type=='calculate' || this.userType=='Issuer'){
         if(this.selectedCoverList.length!=0){
           let i=0;
           for(let vehicle of this.vehicleDetailsList){
@@ -4298,6 +4300,7 @@ getMotorUsageList(vehicleValue){
                                           //sessionStorage.removeItem('vehicleDetailsList');
                                           window.location.reload();
                                         }
+                                        else if(this.subuserType=='low') this.onFormSubmit();
                                         else this.updateReferralStatus();
                                       }
                                     }

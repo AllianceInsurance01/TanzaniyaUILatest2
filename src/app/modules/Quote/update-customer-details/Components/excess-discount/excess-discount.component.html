@@ -2744,7 +2744,7 @@
                     </div>
                 </div>
                 <div class="text-center mb-2">
-                    <button class="custom-btn btn-6 maan-button-data  mx-2" matRipple *ngIf="adminSection"
+                    <button class="custom-btn btn-6 maan-button-data  mx-2" matRipple *ngIf="adminSection || subuserType=='low'"
                     (click)="onUpdateFactor('calculate')">Calculate</button>
                 </div>
             </div>
@@ -3147,8 +3147,10 @@
                 <button class="custom-btn btn-6 maan-button-data mx-2" matRipple
                     *ngIf="!adminSection && statusValue == 'RA' && !otpSection" (click)="onFormSubmit()">Proceed</button>
                 <button class="custom-btn btn-6 maan-button-data mx-2" matRipple
-                    *ngIf="!adminSection && statusValue != 'RA' && !otpSection" (click)="onFormSubmit()">Buy Policy</button>
-                <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="adminSection"
+                    *ngIf="!adminSection && userType!='Issuer' && statusValue != 'RA' && !otpSection" (click)="onFormSubmit()">Buy Policy</button>
+                    <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="userType=='Issuer' && subuserType=='low'"
+                    (click)="onUpdateFactor('')">Buy Policy</button>
+                    <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="adminSection"
                     (click)="onUpdateFactor('')">Proceed</button>
     </div>
 </div>
@@ -3575,8 +3577,7 @@
 
 <ng-template #excessModal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Excess
-                Details</span></h4>
+        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Excess Details</span></h4>
         <button type="button" class="close" #excessModalClose aria-label="Close"
             (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">×</span>
@@ -3597,16 +3598,16 @@
                         <tr>
                             <td>Excess</td>
                             <td style="text-align: center;">
-                                <ng-container *ngIf="!adminSection">
+                                <ng-container *ngIf="!adminSection && userType!='Issuer'">
                                     <span class="spancommon span_font_size">{{excessPercent}}</span>
                                 </ng-container>
-                                <ng-container *ngIf="(adminSection)">
+                                <ng-container *ngIf="(adminSection || userType=='Issuer')">
                                     <input type="text"  style="width: auto !important;max-width:150px;text-align:left !important"
                                         [(ngModel)]="excessPercent">
                                 </ng-container>
                             </td>
                             <td style="text-align: end;">
-                                <ng-container *ngIf="!adminSection">
+                                <ng-container *ngIf="!adminSection && userType!='Issuer'">
                                     <ng-container *ngIf="excessAmount==null || excessAmount=='0.0' || excessAmount=='0'">
                                             0
                                     </ng-container>
@@ -3614,7 +3615,7 @@
                                         <span class="spancommon span_font_size">{{excessAmount | commaseparator}}</span>
                                     </ng-container>
                                 </ng-container>
-                                <ng-container *ngIf="(adminSection)">
+                                <ng-container *ngIf="(adminSection || userType=='Issuer')">
                                     <input type="text"  style="width: auto !important;max-width:150px;text-align:left !important"
                                         [(ngModel)]="excessAmount">
                                 </ng-container>
@@ -3626,9 +3627,9 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" *ngIf="!adminSection"  (click)="modal.dismiss('Cross click')"
+        <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" *ngIf="!adminSection && userType!='Issuer'"  (click)="modal.dismiss('Cross click')"
             style="margin-left:10px;">Close</button>
-        <button class="custom-btn btn-6 maan-button-data  mx-2" *ngIf="adminSection" (click)="SaveLoadingDetails(modal)">Submit
+        <button class="custom-btn btn-6 maan-button-data  mx-2" *ngIf="adminSection || userType=='Issuer'" (click)="SaveLoadingDetails(modal)">Submit
         </button>
 
     </div>
@@ -3655,7 +3656,7 @@
                     <thead>
                         <tr>
                             <th scope="col"><b>Description</b></th>
-                            <th scope="col" style="text-align: end;"><b>Rate (%)</b></th>
+                            <th scope="col" style="text-align: center;"><b>Rate</b></th>
                             <th scope="col" style="text-align: end;"><b>Amount ({{currencyCode}})</b></th>
                         </tr>
                     </thead>
@@ -3665,40 +3666,58 @@
                             <td></td>
                             <td style="text-align: end;"><span class="spancommon span_font_size">{{sumInsured | commaseparator}}</span></td>
                         </tr>
-                        <tr *ngIf="calcType=='A'">
-                            <td>Rate</td>
-                            <td>
-                               
-                            </td>
-                            <td style="text-align: end;">
-                                <ng-container *ngIf="calcType=='A'">
-                                    <ng-container *ngIf="!adminSection">
-                                        <span class="spancommon span_font_size">{{ratePercent}}</span>
-                                    </ng-container>
-                                    <ng-container *ngIf="(adminSection)">
-                                        <input type="text"  style="width: auto !important;max-width:80px;text-align:right !important"
-                                            [(ngModel)]="ratePercent">
-                                    </ng-container>
-                                </ng-container>
-                            </td>
-                        </tr>
                         <tr>
                             <td>{{CoverName}}&nbsp;Premium</td>
-                            <td style="text-align: end;">
-                                <ng-container *ngIf="calcType=='P'">
-                                    <ng-container *ngIf="!adminSection">
-                                        <span class="spancommon span_font_size">{{ratePercent}}</span>
+                            <td>
+                                    <ng-container *ngIf="calcType=='A'">
+                                        <ng-container *ngIf="!adminSection && userType!='Issuer'">
+                                            <span class="spancommon span_font_size">{{ratePercent}}</span>
+                                        </ng-container>
+                                        <ng-container *ngIf="(adminSection || userType=='Issuer')">
+                                            <div class="input-group">
+                                                <input type="text" class="input-form-control without-icon" style="border-radius:5px;width: auto !important;max-width:80px;text-align:right !important"
+                                                [(ngModel)]="ratePercent">
+                                                <div class="input-group-append">
+                                                  <span class="input-group-text" style="padding: 0.05rem 0.5rem;" id="basic-addon2">{{currencyCode}}</span>
+                                                </div>
+                                            </div>
+                                        </ng-container>
                                     </ng-container>
-                                    <ng-container *ngIf="(adminSection)">
-                                        <input type="text"  style="width: auto !important;max-width:80px;text-align:right !important"
-                                            [(ngModel)]="ratePercent">
+                                    <ng-container *ngIf="calcType=='P'">
+                                        <ng-container *ngIf="!adminSection && userType!='Issuer'">
+                                            <span class="spancommon span_font_size">{{ratePercent}}</span>
+                                        </ng-container>
+                                        <ng-container *ngIf="(adminSection || userType=='Issuer')">
+                                            <div class="input-group">
+                                                <input type="text" class="input-form-control without-icon"  style="border-radius:5px;width: auto !important;max-width:80px;text-align:right !important"
+                                                [(ngModel)]="ratePercent">
+                                                <div class="input-group-append">
+                                                  <span class="input-group-text" style="padding: 0.05rem 0.5rem;" id="basic-addon2">%</span>
+                                                </div>
+                                            </div>
+                                            
+                                        </ng-container>
                                     </ng-container>
-                                </ng-container>
                             </td>
                             <td style="text-align: end;">
                                 <span class="spancommon span_font_size">{{beforeDiscount | commaseparator}}</span>
                             </td>
                         </tr>
+                        <!-- <tr>
+                            <td></td>
+                            <td style="text-align: end;">
+                                <ng-container *ngIf="calcType=='P'">
+                                    <ng-container *ngIf="!adminSection && userType!='Issuer'">
+                                        <span class="spancommon span_font_size">{{ratePercent}}</span>
+                                    </ng-container>
+                                    <ng-container *ngIf="(adminSection || userType=='Issuer')">
+                                        <input type="text"  style="width: auto !important;max-width:80px;text-align:right !important"
+                                            [(ngModel)]="ratePercent">
+                                    </ng-container>
+                                </ng-container>
+                            </td>
+                            
+                        </tr> -->
                         <ng-container *ngIf="discountList.length!=0">
                             <tr>
                                 <th scope="col">Discounts</th>
@@ -3726,7 +3745,7 @@
                             <tr *ngFor="let loading of loadingList;let i=index">
                                 <td>{{loading.LoadingDesc}}</td>
                                 <td style="text-align: end;">
-                                    <ng-container *ngIf="(adminSection) && loading.LoadingCalcType!='A'">
+                                    <ng-container *ngIf="(adminSection || userType=='Issuer') && loading.LoadingCalcType!='A'">
                                         <ng-container *ngIf="loading.LoadingCalcType!='P'">
                                             <ng-container *ngIf="loading.LoadingRate!=null">
                                                 <span class="spancommon span_font_size">0</span>
@@ -3738,7 +3757,7 @@
                                                 [(ngModel)]="loading['LoadingRate']" maxlength="5">
                                         </ng-container>
                                     </ng-container>
-                                    <ng-container *ngIf="(!adminSection) && loading.LoadingCalcType!='A'">
+                                    <ng-container *ngIf="(!adminSection && userType!='Issuer') && loading.LoadingCalcType!='A'">
                                         <ng-container *ngIf="loading.LoadingRate==null">
                                             0
                                         </ng-container>
@@ -3749,7 +3768,7 @@
                                     </ng-container>
                                 </td>
                                 <td style="text-align: end;">
-                                    <ng-container *ngIf="(adminSection)">
+                                    <ng-container *ngIf="(adminSection  || userType=='Issuer')">
                                         <ng-container *ngIf="loading.LoadingCalcType!='A'">
                                             <ng-container
                                                 *ngIf="loading.LoadingAmount==0 || loading.LoadingAmount==null">
@@ -3768,7 +3787,7 @@
                                         </ng-container>
 
                                     </ng-container>
-                                    <ng-container *ngIf="(!adminSection)">
+                                    <ng-container *ngIf="(!adminSection && userType!='Issuer')">
                                         <ng-container *ngIf="loading.LoadingAmount==0 || loading.LoadingAmount==null">
                                             0
                                         </ng-container>
@@ -3863,7 +3882,7 @@
                             <tr *ngFor="let loading of loadingList;let i=index">
                                 <td>{{loading.LoadingDesc}}</td>
                                 <td style="text-align: end;">
-                                    <ng-container *ngIf="(adminSection) && loading.LoadingCalcType!='A'">
+                                    <ng-container *ngIf="(adminSection  || userType=='Issuer') && loading.LoadingCalcType!='A'">
                                         <ng-container *ngIf="loading.LoadingCalcType!='P'">
                                             <ng-container *ngIf="loading.LoadingRate!=null">
                                                 <span class="spancommon span_font_size">0</span>
@@ -3875,7 +3894,7 @@
                                                 [(ngModel)]="loading['LoadingRate']" maxlength="5">
                                         </ng-container>
                                     </ng-container>
-                                    <ng-container *ngIf="(!adminSection) && loading.LoadingCalcType!='A'">
+                                    <ng-container *ngIf="(!adminSection && userType!='Issuer') && loading.LoadingCalcType!='A'">
                                         <ng-container *ngIf="loading.LoadingRate==null">
                                             0
                                         </ng-container>
@@ -3886,7 +3905,7 @@
                                     </ng-container>
                                 </td>
                                 <td style="text-align: end;">
-                                    <ng-container *ngIf="(adminSection)">
+                                    <ng-container *ngIf="(adminSection  || userType=='Issuer')">
                                         <ng-container *ngIf="loading.LoadingCalcType!='A'">
                                             <ng-container
                                                 *ngIf="loading.LoadingAmount==0 || loading.LoadingAmount==null">
@@ -3905,7 +3924,7 @@
                                         </ng-container>
 
                                     </ng-container>
-                                    <ng-container *ngIf="(!adminSection)">
+                                    <ng-container *ngIf="(!adminSection && userType!='Issuer')">
                                         <ng-container *ngIf="loading.LoadingAmount==0 || loading.LoadingAmount==null">
                                             0
                                         </ng-container>
@@ -3933,9 +3952,9 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" *ngIf="!adminSection" (click)="modal.dismiss('Cross click')"
+        <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" *ngIf="!adminSection && userType!='Issuer'" (click)="modal.dismiss('Cross click')"
             style="margin-left:10px;">Close</button>
-        <button class="custom-btn btn-6 maan-button-data  mx-2" *ngIf="adminSection" (click)="SaveLoadingDetails(modal)">Submit
+        <button class="custom-btn btn-6 maan-button-data  mx-2" *ngIf="adminSection || userType=='Issuer'" (click)="SaveLoadingDetails(modal)">Submit
         </button>
     </div>
 </ng-template>
@@ -3946,8 +3965,6 @@
         <h4 class="modal-title text-right" id="modal-basic-title"><span class="spancommon span_font_size">
                 CoverName:{{CoverName}}
             </span></h4>
-
-
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">×</span>
         </button>
