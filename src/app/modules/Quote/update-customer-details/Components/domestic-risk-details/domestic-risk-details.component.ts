@@ -405,7 +405,6 @@ export class DomesticRiskDetailsComponent implements OnInit {
     }
     this.getSumInsuredDetails();
 
-
     /*this.jsonList = [
       {
         "ApartmentOrBorder": "Y",
@@ -481,7 +480,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
     }
     if(this.productId=='19' || this.productId=='3'){
       if(this.sectionDetails.length!=0){
-        let items = this.sectionDetails.find((ele) => ele.SectionId == 1 || ele.SectionId==40);
+        let items = this.sectionDetails.find((ele) => ele.SectionId == 1 || (this.productId=='19' && ele.SectionId==40));
         if(items){
           if(items?.AddDetailYn=='Y'){
             this.sumInsured=true;
@@ -535,7 +534,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
             this.productItem = new ProductData();
             this.formSection = true; this.viewSection = false;
         }
-        let first = this.sectionDetails.find((ele) => ele.SectionId == 47 || ele.SectionId==40);
+        let first = this.sectionDetails.find((ele) => (this.productId=='19' && ele.SectionId == 47) || (this.productId!='19' && ele.SectionId==40));
         if(first){
           if(first?.AddDetailYn=='Y'){
             this.first=true;
@@ -1112,7 +1111,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
           this.customerDetails=data?.Result?.CustomerDetails;
           if(this.Riskdetails[0].AcccessoriesSumInsured!=null)
           this.actualAccessoriesSI = String(this.Riskdetails[0].AcccessoriesSumInsured);
-        
+          
           if(this.Riskdetails.length==1){
             this.newacc=true;
             let fireData = new Accessorieswh();
@@ -1275,7 +1274,6 @@ export class DomesticRiskDetailsComponent implements OnInit {
     this.pageIndex = event.pageIndex;
   }
   getSumInsuredDetails(){
-   
     let ReqObj = {
       "QuoteNo": sessionStorage.getItem('quoteNo'),
       "ProductId": this.productId
@@ -2708,6 +2706,8 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
   }
   finalSaveRiskDetails(reqList,type){
  let ReqObj;let urlLink;
+    let sectionId=null;
+    if(type=='MA'){sectionId='41';}
     if(type=='C')
     {
       ReqObj = {
@@ -2733,15 +2733,13 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       }
       urlLink = `${this.motorApiUrl}api/savecontentrisk`;
     }
-    if(type=='A' && this.productId=='39')
-    {
-      console.log('AAAAAAAAA')
+    if(type=='MA'){
       ReqObj = {
         "CreatedBy": this.loginId,
       "QuoteNo":sessionStorage.getItem('quoteNo'),
       "RequestReferenceNo":this.quoteRefNo,
       "SectionId": "41",
-       "Type":type,
+       "Type":'A',
        "ContentRiskDetails":reqList
       }
       urlLink = `${this.motorApiUrl}api/savecontentrisk`;
@@ -2894,12 +2892,7 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
               this.checkValidation();
             }
           }
-          else if(type=='PI'){
-            this.checkValidation();
-          }
-          else if(type='E'){
-            this.checkValidation();
-          }
+          else if(type=='MA' || type=='PI' || type=='E') this.checkValidation();
 
       }
 
@@ -3024,7 +3017,7 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
           reqList.push(data);
           i+=1;
           if(i==this.machineries.length){
-            this.finalSaveRiskDetails(reqList,'A');
+            this.finalSaveRiskDetails(reqList,'MA');
           }
       }
 
@@ -3806,10 +3799,13 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       })
   }
   getContentDetails(){
+    let sectionId=null;
+    if(this.productId=='19') sectionId = '40';
+    else sectionId = '47';
     let urlLink = `${this.motorApiUrl}api/getallcontentrisk`;
     let ReqObj = {
       "QuoteNo": sessionStorage.getItem('quoteNo'),
-      "SectionId": "47"
+      "SectionId": sectionId
     }
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
