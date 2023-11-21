@@ -2741,14 +2741,13 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       "QuoteNo":sessionStorage.getItem('quoteNo'),
       "RequestReferenceNo":this.quoteRefNo,
       "SectionId": "41",
-       "Type":'A',
+       "Type":'MB',
        "ContentRiskDetails":reqList
       }
       urlLink = `${this.motorApiUrl}api/savecontentrisk`;
     }
     if(type=='EA' && (this.productId=='5' || this.productId=='29'))
     {
-      console.log('AAAAAAAAA')
       ReqObj = {
         "CreatedBy": this.loginId,
       "QuoteNo":sessionStorage.getItem('quoteNo'),
