@@ -1072,8 +1072,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
     let urlLink = `${this.CommonApiUrl}master/getoptedsectionadditionalinfo`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
-        if(data?.Result){
-          console.log("Datadddddddddddd**",data?.Result);  
+        if(data?.Result){ 
               this.sectionDetails = data.Result;
               this.setTabSections();
               this.getbuilding();
@@ -2893,7 +2892,7 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
               this.checkValidation();
             }
           }
-          else if(type=='MA' || type=='PI' || type=='E') this.checkValidation();
+          else if(type=='MA' || type=='PI' || type=='E' || type=='EA') this.checkValidation();
 
       }
 
