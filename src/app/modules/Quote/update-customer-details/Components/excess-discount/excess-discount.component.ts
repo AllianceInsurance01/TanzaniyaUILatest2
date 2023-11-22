@@ -246,6 +246,7 @@ emiyn="N";
   SourceType: any;
   emistatus: any;
   emipolicytype: any;
+  minimumPremiumYN: any;finalizeYN:any='N';
 
   constructor(public sharedService: SharedService,private authService: AuthService,private router:Router,private modalService: NgbModal,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe,public dialog: MatDialog) {
@@ -2189,7 +2190,10 @@ getMotorUsageList(vehicleValue){
     //     //this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/underwriter-details']);
     //   }
     //   else if(this.productId == '4'){
-      if(this.statusValue){
+      if(this.finalizeYN!=null && this.subuserType=='low'){
+          this.updateFinalizeYN('back')
+      }
+      else if(this.statusValue){
           if(this.adminSection){
               if(this.statusValue=='RA') this.router.navigate(['/Admin/referralApproved']);
               //else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
@@ -2222,6 +2226,52 @@ getMotorUsageList(vehicleValue){
     }
     else if(this.productId=='4') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
     else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+  }
+  updateFinalizeYN(type){
+    let ReqObj = {
+      "ProductId" : this.productId,
+      "InsuranceId" : this.insuranceId,
+      "RequestReferenceNo" : this.quoteRefNo,
+      "FinalizeYn" : this.finalizeYN
+    }
+    let urlLink = `${this.CommonApiUrl}quote/changefinalyzestatus`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+          sessionStorage.setItem('FinalizeYN',this.finalizeYN);
+              if(type=='back'){
+                if(this.statusValue){
+                  if(this.adminSection){
+                      if(this.statusValue=='RA') this.router.navigate(['/Admin/referralApproved']);
+                      //else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+                      else if(this.statusValue=='RE') this.router.navigate(['/Admin/referralReQuote']);
+                      else this.router.navigate(['/Admin/referralPending']);
+                  }
+                  else{
+                    if(this.statusValue=='RA') this.router.navigate(['/Home/referralApproved']);
+                    else if(this.statusValue=='RE') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+                    else{
+                      this.onSetBackPage();
+                     
+                    } 
+                  }
+                }
+                else{
+                  if(this.endorsementSection && this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='RemoveSection') && !this.endorseSIModification && this.endorsementId!=853){
+                    this.router.navigate(['/Home/policies/Endorsements/endorsementTypes']);
+                  }
+                  else{
+                    this.onSetBackPage();
+                  }
+                }
+              }
+              else{
+                  this.onUpdateFactor('');
+              }
+        }
+      },
+      (err) => { },
+    );
   }
   getUWDetails(){
     let ReqObj = {
@@ -2869,7 +2919,8 @@ getMotorUsageList(vehicleValue){
     console.log("Final Covers",this.vehicleDetailsList,this.selectedCoverList)
   }
   checkCoverSelection(vehicleData,coverData){
-    if(this.endorsementSection && !this.adminSection && this.statusValue!='RA'){
+    if(this.finalizeYN=='Y') return true;
+    else if(this.endorsementSection && !this.adminSection && this.statusValue!='RA'){
       if(this.endorseCovers){
         if(!this.adminSection && coverData.ModifiedYN =='N') return false;
         else if(!this.adminSection) return true;
@@ -2901,6 +2952,7 @@ getMotorUsageList(vehicleValue){
     this.selectedCoverId = rowData.CoverId;
     this.ratePercent = rowData.Rate;
     this.CoverName = rowData.CoverName;
+    this.minimumPremiumYN = rowData.MinimumPremiumYn;
     if(rowData.Discounts) this.discountList = rowData.Discounts;
     if(rowData.Loadings) this.loadingList = rowData.Loadings;
     if(rowData.Endorsements){

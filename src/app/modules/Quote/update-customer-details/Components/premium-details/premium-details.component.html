@@ -87,7 +87,7 @@
                 </div>
             </div>
         </div>
-        <div>
+        <div *ngIf="quoteDetails">
             <app-premiumdetails-subsection [cols]="quoteDetails" [cols1]="Riskdetails" [endrose]="endorsementSection" [cols2]="customerDetails"></app-premiumdetails-subsection>
         </div>
         <!-- <div class="maan-grid-item">

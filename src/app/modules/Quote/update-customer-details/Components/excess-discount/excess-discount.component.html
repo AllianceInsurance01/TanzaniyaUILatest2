@@ -2743,8 +2743,29 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-center mb-2">
-                    <button class="custom-btn btn-6 maan-button-data  mx-2" matRipple *ngIf="adminSection || (subuserType=='low' && !endorsementSection)"
+                <div class="row" *ngIf="(subuserType=='low' && !endorsementSection)">
+                    <div class="col-12 col-md-5 col-lg-5 col-xl-5  mb-3" style="margin-left: 50px;">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Do You Like to Finalise this Quote?</label>
+                                <div class="custom-radio-btn" style="position: relative;top: 1rem;right: 0.3rem;">
+                                    <div class="radio-toolbar">
+                                        <input id="finalize_Yes" type="radio" [(ngModel)]="finalizeYN"  name="finalizeYN" value="Y">
+                                        <label for="finalize_Yes" class="yes">Yes</label>&nbsp;
+                                        <input type="radio" id="finalize_No" [(ngModel)]="finalizeYN" name="finalizeYN" value="N">
+                                        <label for="finalize_No" class="no">No</label>&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div  [ngClass]="finalizeYN=='N' ? 'col-12 col-md-2 col-lg-2 col-xl-2' : 'col-12 col-md-2 col-lg-2 col-xl-2 offset-md-5 offset-lg-5 offset-xl-5'" *ngIf="finalizeYN=='N'">
+                        <button class="custom-btn btn-6 maan-button-data  mx-2" matRipple 
+                        (click)="onUpdateFactor('calculate')">Calculate</button>   
+                    </div>
+                    
+                </div>
+                
+                <div class="text-center mb-2" *ngIf="adminSection">
+                    <button class="custom-btn btn-6 maan-button-data  mx-2" matRipple 
                     (click)="onUpdateFactor('calculate')">Calculate</button>
                 </div>
             </div>
@@ -2764,8 +2785,7 @@
                     <div class="col-12 col-md-6">
                         <div class="mb-3 mt-3">
                             <div class="input-control-container">
-                                <label class="input-form-label">Do You Like to Move this Quote to Referral
-                                    Manually?</label>
+                                <label class="input-form-label">Do You Like to Move this Quote to Referral Manually?</label>
                                 <div class="custom-radio-btn" style="position: relative;top: 1rem;right: 0.3rem;">
                                     <div class="radio-toolbar">
                                         <input id="referral_Yes" type="radio" [(ngModel)]="isMannualReferal" name="referral" value="Y">
@@ -2804,6 +2824,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                 </div>
             </div>
              <div class="col-md-12 col-lg-12" *ngIf="emiSection && Emilist1.length!=0 && emiYN=='Y'">
@@ -2864,50 +2885,50 @@
 
                         </table>
 
-                    </div>
-                    <div class="col-12 col-md-6" *ngIf="isMannualReferal != 'Y' && emiYN=='Y' && Emilist1.length!=0">
-                        <div class="mb-3 mt-3">
-                            <div class="input-control-container">
-                                <label class="input-form-label spancommon span_font_size">EMI Period</label>
-                                <div class="custom-radio-btn">
-                                    <div class="radio-toolbar" style="position: relative;top: 0.5rem;">
-                                        <input id="emi_None" type="radio" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="0">
-                                        <label for="emi_None" class="spancommon span_font_size yes">None</label>&nbsp;
-                                        <ng-container *ngIf="threeMonthSection"><!--*ngIf="yearlySection || nineMonthSection || sixMonthSection || threeMonthSection"-->
-                                            <input type="radio" id="emi_three" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="3">
-                                            <label for="emi_three" class="spancommon span_font_size yes">3
-                                                Months</label>&nbsp;
-                                        </ng-container>
-                                        <ng-container *ngIf="fiveMonthSection"><!--yearlySection || nineMonthSection || sixMonthSection || threeMonthSection || -->
-                                            <input type="radio" id="emi_five" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="5">
-                                            <label for="emi_five" class="spancommon span_font_size yes">5
-                                                Months</label>&nbsp;
-                                        </ng-container>
-                                        <ng-container *ngIf="sixMonthSection"><!--yearlySection || nineMonthSection || -->
-                                            <input type="radio" id="emi_six" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="6">
-                                            <label for="emi_six" class="spancommon span_font_size yes">6
-                                                Months</label>&nbsp;
-                                        </ng-container>
-                                        <ng-container *ngIf="eightMonthSection"><!--yearlySection || sixMonthSection || -->
-                                            <input type="radio" id="emi_eight" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="8">
-                                            <label for="emi_eight" class="spancommon span_font_size yes">8
-                                                Months</label>&nbsp;
-                                        </ng-container>
-                                        <ng-container *ngIf="nineMonthSection"><!--yearlySection || -->
-                                            <input type="radio" id="emi_nine" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="9">
-                                            <label for="emi_nine" class="spancommon span_font_size yes">9
-                                                Months</label>&nbsp;
-                                        </ng-container>
-                                        <ng-container *ngIf="yearlySection">
-                                            <input type="radio" id="emi_twelve" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="9">
-                                            <label for="emi_twelve" class="spancommon span_font_size yes">12
-                                                Months</label>&nbsp;
-                                        </ng-container>
-                                    </div>
-                                </div>
+            </div>
+            <div class="col-12 col-md-6" *ngIf="isMannualReferal != 'Y' && emiYN=='Y' && Emilist1.length!=0">
+                <div class="mb-3 mt-3">
+                    <div class="input-control-container">
+                        <label class="input-form-label spancommon span_font_size">EMI Period</label>
+                        <div class="custom-radio-btn">
+                            <div class="radio-toolbar" style="position: relative;top: 0.5rem;">
+                                <input id="emi_None" type="radio" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="0">
+                                <label for="emi_None" class="spancommon span_font_size yes">None</label>&nbsp;
+                                <ng-container *ngIf="threeMonthSection"><!--*ngIf="yearlySection || nineMonthSection || sixMonthSection || threeMonthSection"-->
+                                    <input type="radio" id="emi_three" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="3">
+                                    <label for="emi_three" class="spancommon span_font_size yes">3
+                                        Months</label>&nbsp;
+                                </ng-container>
+                                <ng-container *ngIf="fiveMonthSection"><!--yearlySection || nineMonthSection || sixMonthSection || threeMonthSection || -->
+                                    <input type="radio" id="emi_five" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="5">
+                                    <label for="emi_five" class="spancommon span_font_size yes">5
+                                        Months</label>&nbsp;
+                                </ng-container>
+                                <ng-container *ngIf="sixMonthSection"><!--yearlySection || nineMonthSection || -->
+                                    <input type="radio" id="emi_six" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="6">
+                                    <label for="emi_six" class="spancommon span_font_size yes">6
+                                        Months</label>&nbsp;
+                                </ng-container>
+                                <ng-container *ngIf="eightMonthSection"><!--yearlySection || sixMonthSection || -->
+                                    <input type="radio" id="emi_eight" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="8">
+                                    <label for="emi_eight" class="spancommon span_font_size yes">8
+                                        Months</label>&nbsp;
+                                </ng-container>
+                                <ng-container *ngIf="nineMonthSection"><!--yearlySection || -->
+                                    <input type="radio" id="emi_nine" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="9">
+                                    <label for="emi_nine" class="spancommon span_font_size yes">9
+                                        Months</label>&nbsp;
+                                </ng-container>
+                                <ng-container *ngIf="yearlySection">
+                                    <input type="radio" id="emi_twelve" [(ngModel)]="emiPeriod" name="emiPeriod" (change)="onEMIChange()" value="9">
+                                    <label for="emi_twelve" class="spancommon span_font_size yes">12
+                                        Months</label>&nbsp;
+                                </ng-container>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
             <div class="maan-grid-item-body p-1" *ngIf="statusValue && adminSection">
                 <div class="row">
                     <div class="col-12 col-md-4 col-lg-4 col-xl-4 ml-4">
@@ -2961,6 +2982,7 @@
                     </div>
                 </div>
             </div>
+            
         </div>
         
     </div>
@@ -3145,13 +3167,13 @@
         <button class="custom-btn btn-5 mx-2" matRipple (click)="ongetBack()">
             <<&nbsp;Back</button>
             <button class="custom-btn btn-6 maan-button-data mx-2" matRipple
-                    *ngIf="!adminSection && userType=='Issuer' && statusValue == 'RA' && !otpSection" (click)="onUpdateFactor('')">Buy Policy</button>
+                    *ngIf="!adminSection && userType=='Issuer' && statusValue == 'RA' && !otpSection" (click)="updateFinalizeYN('proceed')">Buy Policy</button>
                 <button class="custom-btn btn-6 maan-button-data mx-2" matRipple
                     *ngIf="!adminSection && userType!='Issuer' && statusValue == 'RA' && !otpSection" (click)="onFormSubmit()">Buy Policy</button>
                 <button class="custom-btn btn-6 maan-button-data mx-2" matRipple
                     *ngIf="!adminSection && userType!='Issuer' && statusValue != 'RA' && !otpSection" (click)="onFormSubmit()">Buy Policy</button>
                     <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="userType=='Issuer' && subuserType=='low'  && statusValue != 'RA'"
-                    (click)="onUpdateFactor('')">Buy Policy</button>
+                    (click)="updateFinalizeYN('proceed')">Buy Policy</button>
                     <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="adminSection"
                     (click)="onUpdateFactor('')">Proceed</button>
     </div>

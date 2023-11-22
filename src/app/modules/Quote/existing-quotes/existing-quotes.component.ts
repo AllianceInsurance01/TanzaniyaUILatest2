@@ -64,6 +64,7 @@ export class ExistingQuotesComponent implements OnInit {
     sessionStorage.removeItem('loadingType');
     sessionStorage.removeItem('firstLoad');
     sessionStorage.removeItem('VechileDetails');
+    sessionStorage.getItem('FinalizeYN')
     if(this.productId=='5' || this.productId=='46' || this.productId=='29'){
 
 

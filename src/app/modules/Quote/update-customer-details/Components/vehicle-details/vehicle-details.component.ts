@@ -99,7 +99,7 @@ export class VehicleDetailsComponent implements OnInit {
   endorseCoverModification: any=null;
   customerName: any;
   enableRemoveVehicle: boolean = false;
-  showTiraUpdateSection: boolean;
+  showTiraUpdateSection: boolean;finalizeYN:any='N';
   constructor(private router:Router,private sharedService: SharedService,
     private updateComponent:UpdateCustomerDetailsComponent,
    private datePipe:DatePipe) {
@@ -119,6 +119,8 @@ export class VehicleDetailsComponent implements OnInit {
     this.branchList = this.userDetails.Result.LoginBranchDetails;
     this.productId = this.userDetails.Result.ProductId;
     this.insuranceId = this.userDetails.Result.InsuranceId;
+    let finalize = sessionStorage.getItem('FinalizeYN');
+      if(finalize) this.finalizeYN = finalize;
     if(this.userType!='Broker'){
       let quoteStatus = sessionStorage.getItem('QuoteStatus');
       if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA'){
@@ -345,7 +347,7 @@ export class VehicleDetailsComponent implements OnInit {
   }
   checkDisableField(){
     let status = sessionStorage.getItem('QuoteStatus');
-    return (this.adminSection && (status=='AdminRP' || status=='AdminRA'))
+    return ((this.adminSection && (status=='AdminRP' || status=='AdminRA')) || this.finalizeYN=='Y')
   }
   onChangeBodyType(){
     if(this.bodyTypeValue=='7') this.cityValue='';

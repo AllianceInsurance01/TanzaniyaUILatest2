@@ -91,10 +91,15 @@ export class VehicleWishListComponent implements OnInit {
   endtCategoryDesc: any=null;
   endtCount: any=null;
   endtPrevQuoteNo: any=null;
-  endtStatus: any=null;
-  endtPrevPolicyNo: any=null;
-  orginalPolicyNo: any=null;
-  isFinanceEndt: any=null;
+  endtStatus: any=null;colorValue:any=null;
+  endtPrevPolicyNo: any=null;makeList:any[]=[];seatingCapacity:any=null;
+  orginalPolicyNo: any=null;bodyTypeList:any[]=[];bodyTypeId:any=null;
+  isFinanceEndt: any=null;regNo:any=null;bodyTypeValue:any='';
+  makeValue: any='';engineNo:any=null;chassisNo:any=null;
+  modelList: any[]=[];engineCapacity:any=null;usageValue:any='';
+  modelValue: any='';years:any[]=[];manufactureYear:any='';
+  modelDesc: any=null;colorList:any[]=[];usageList:any[]=[];
+  finalizeYN: any='N';
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -106,6 +111,8 @@ export class VehicleWishListComponent implements OnInit {
     this.brokerBranchCode = this.userDetails.Result.BrokerBranchCode;
     this.productId = this.userDetails.Result.ProductId;
     this.insuranceId = this.userDetails.Result.InsuranceId;
+    let finalize = sessionStorage.getItem('FinalizeYN');
+      if(finalize) this.finalizeYN = finalize;
       let quoteNo = sessionStorage.getItem('quoteNo');
       if(quoteNo!=undefined && quoteNo!='undefined') this.quoteNo = quoteNo;
       let quoteStatus = sessionStorage.getItem('QuoteStatus');
@@ -119,7 +126,7 @@ export class VehicleWishListComponent implements OnInit {
         if(quoteStatus) this.statusValue = quoteStatus;
         this.adminSection = false;
       }
-      if(this.adminSection && (quoteStatus=='AdminRP' || quoteStatus == 'AdminRA')){
+      if((this.adminSection && (quoteStatus=='AdminRP' || quoteStatus == 'AdminRA')) || this.finalizeYN=='Y'){
         this.customerHeader =  [
           { key: 'Registrationnumber', display: 'Registration Number' },
           { key: 'PolicyTypeDesc', display: 'Policy Type' },
@@ -196,128 +203,260 @@ export class VehicleWishListComponent implements OnInit {
         { "Code":"02","CodeDesc":"Register Number"}
       ];
       this.searchBy = '02';
-     }
+      if(this.insuranceId=='100004'){
+        let defaultObj = [{"Code":'',"CodeDesc":"---Select---"}]
+        this.years = defaultObj.concat(this.getYearList());
+        this.getBodyTypeList();
+      }
+      
+    }
 
   ngOnInit(): void {
     let referenceNo =  sessionStorage.getItem('quoteReferenceNo');
       if(referenceNo){
         this.quoteRefNo = referenceNo;
       }
-    if(this.quoteRefNo){
-      this.wishSection = true;
-      this.getExistingVehiclesList();
-    }
-    else{
-      let loadType = sessionStorage.getItem('firstLoad');
-      if((this.productId=='5' || this.productId=='29') && loadType){
-       
-        let motorDetails = JSON.parse(sessionStorage.getItem('VechileDetails'));
-        motorDetails['PolicyStartDate'] = this.datePipe.transform(new Date(this.updateComponent?.policyStartDate), "dd/MM/yyyy");
-        motorDetails['PolicyEndDate'] = this.datePipe.transform(new Date(this.updateComponent?.policyEndDate), "dd/MM/yyyy");
-        motorDetails['LoginId'] = this.loginId;
-        this.updateComponent.brokerLoginId = motorDetails?.BrokerLoginId;
-        let quoteStatus = sessionStorage.getItem('QuoteStatus');
-        if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
-          this.adminSection = true;this.issuerSection = false;
-        }
-        else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
-        else this.issuerSection = false;
-        if(this.issuerSection){
-            this.sourceType = motorDetails.SourceType;
-            if(this.Code=='Premia Agent' || this.Code=='Premia Broker' || this.Code=='Premia Direct'){
-              this.customerCode = motorDetails.CustomerCode;
-              this.customerName = motorDetails.CustomerName;
-            }
-            else{
-              this.brokerCode = motorDetails.BrokerCode;
-              this.brokerBranchCode = motorDetails.BrokerBranchCode;
-            }
-            
-            
-        }
-        this.currencyCode = this.updateComponent.CurrencyCode;
-            this.exchangeRate = this.updateComponent.exchangeRate;
-            this.vehicleDetails = motorDetails;
-            this.searchSection = true;
-            this.wishSection = true;
-            this.onSaveSearchVehicles();
+      if(this.quoteRefNo){
+        this.wishSection = true;
+        this.getExistingVehiclesList();
       }
       else{
-        if(this.updateComponent.vehicleWishList.length!=0){
-          this.updateComponent.CurrencyCode = this.updateComponent.vehicleWishList[0].Currency;
-          this.currencyCode = this.updateComponent.vehicleWishList[0].Currency;
-          this.exchangeRate = this.updateComponent.vehicleWishList[0].ExchangeRate;
-          this.policyStartDate = this.updateComponent.vehicleWishList[0].PolicyStartDate;
-          this.policyEndDate = this.updateComponent.vehicleWishList[0].PolicyEndDate;
-          this.HavePromoCode = this.updateComponent.vehicleWishList[0].HavePromoCode;
-          this.PromoCode = this.updateComponent.vehicleWishList[0].PromoCode;
-          this.acExecutiveId = this.updateComponent.vehicleWishList[0].AcExecutiveId;
-          this.commissionType = this.updateComponent.vehicleWishList[0].CommissionType;
-        }
-        this.vehicleWishList = this.updateComponent.vehicleWishList;
-          this.searchSection = true;
-          this.wishSection = true;
-      }
-      
-    }
-    if(sessionStorage.getItem('endorsePolicyNo')){
-      this.endorsementSection = true;
-      this.endorsementSection = true;
-      let endorseObj = JSON.parse(sessionStorage.getItem('endorseTypeId'))
-      if(endorseObj){
-        this.endorseCategory = endorseObj.Category;
-        this.endorsementName = endorseObj?.EndtName;
-        this.endorsementId = endorseObj.EndtTypeId;
-        this.endorseEffectiveDate = endorseObj?.EffectiveDate;
-        this.endorsePolicyNo = endorseObj.PolicyNo;
-        this.enableFieldsList = endorseObj.FieldsAllowed;
-        if(this.endorsementId!=42){
-            this.enableAddVehicle = this.enableFieldsList.some(ele=>ele=='addVehicle');
-            this.enableRemoveVehicle = this.enableFieldsList.some(ele=>ele=='removeVehicle');
+        let loadType = sessionStorage.getItem('firstLoad');
+        if((this.productId=='5' || this.productId=='29') && loadType){
+        
+          let motorDetails = JSON.parse(sessionStorage.getItem('VechileDetails'));
+          motorDetails['PolicyStartDate'] = this.datePipe.transform(new Date(this.updateComponent?.policyStartDate), "dd/MM/yyyy");
+          motorDetails['PolicyEndDate'] = this.datePipe.transform(new Date(this.updateComponent?.policyEndDate), "dd/MM/yyyy");
+          motorDetails['LoginId'] = this.loginId;
+          this.updateComponent.brokerLoginId = motorDetails?.BrokerLoginId;
+          let quoteStatus = sessionStorage.getItem('QuoteStatus');
+          if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
+            this.adminSection = true;this.issuerSection = false;
+          }
+          else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
+          else this.issuerSection = false;
+          if(this.issuerSection){
+              this.sourceType = motorDetails.SourceType;
+              if(this.Code=='Premia Agent' || this.Code=='Premia Broker' || this.Code=='Premia Direct'){
+                this.customerCode = motorDetails.CustomerCode;
+                this.customerName = motorDetails.CustomerName;
+              }
+              else{
+                this.brokerCode = motorDetails.BrokerCode;
+                this.brokerBranchCode = motorDetails.BrokerBranchCode;
+              }
+              
+              
+          }
+          this.currencyCode = this.updateComponent.CurrencyCode;
+              this.exchangeRate = this.updateComponent.exchangeRate;
+              this.vehicleDetails = motorDetails;
+              this.searchSection = true;
+              this.wishSection = true;
+              this.onSaveSearchVehicles();
         }
         else{
-          this.enableAddVehicle = false;
-        } 
+          if(this.updateComponent.vehicleWishList.length!=0){
+            this.updateComponent.CurrencyCode = this.updateComponent.vehicleWishList[0].Currency;
+            this.currencyCode = this.updateComponent.vehicleWishList[0].Currency;
+            this.exchangeRate = this.updateComponent.vehicleWishList[0].ExchangeRate;
+            this.policyStartDate = this.updateComponent.vehicleWishList[0].PolicyStartDate;
+            this.policyEndDate = this.updateComponent.vehicleWishList[0].PolicyEndDate;
+            this.HavePromoCode = this.updateComponent.vehicleWishList[0].HavePromoCode;
+            this.PromoCode = this.updateComponent.vehicleWishList[0].PromoCode;
+            this.acExecutiveId = this.updateComponent.vehicleWishList[0].AcExecutiveId;
+            this.commissionType = this.updateComponent.vehicleWishList[0].CommissionType;
+          }
+          this.vehicleWishList = this.updateComponent.vehicleWishList;
+            this.searchSection = true;
+            this.wishSection = true;
+        }
+        
       }
-    }
-    if(this.endorsementSection && this.enableRemoveVehicle){
-      this.customerHeader =  [
-        { key: 'Registrationnumber', display: 'Registration Number' },
-        { key: 'PolicyTypeDesc', display: 'Policy Type' },
-        
-        { key: 'OverallPremiumFc', display: 'Premium' },
-        { key: 'Vehiclemake', display: 'Make' },
-        { key: 'Vehcilemodel', display: 'Model' },
-        { key: 'Status', display: 'Status' },
-        {
-          key: 'actions',
-          display: 'Action',
-          config: {
-            isRemove: true,
+      if(sessionStorage.getItem('endorsePolicyNo')){
+        this.endorsementSection = true;
+        this.endorsementSection = true;
+        let endorseObj = JSON.parse(sessionStorage.getItem('endorseTypeId'))
+        if(endorseObj){
+          this.endorseCategory = endorseObj.Category;
+          this.endorsementName = endorseObj?.EndtName;
+          this.endorsementId = endorseObj.EndtTypeId;
+          this.endorseEffectiveDate = endorseObj?.EffectiveDate;
+          this.endorsePolicyNo = endorseObj.PolicyNo;
+          this.enableFieldsList = endorseObj.FieldsAllowed;
+          if(this.endorsementId!=42){
+              this.enableAddVehicle = this.enableFieldsList.some(ele=>ele=='addVehicle');
+              this.enableRemoveVehicle = this.enableFieldsList.some(ele=>ele=='removeVehicle');
+          }
+          else{
+            this.enableAddVehicle = false;
+          } 
+        }
+      }
+      if(this.endorsementSection && this.enableRemoveVehicle){
+        this.customerHeader =  [
+          { key: 'Registrationnumber', display: 'Registration Number' },
+          { key: 'PolicyTypeDesc', display: 'Policy Type' },
+          
+          { key: 'OverallPremiumFc', display: 'Premium' },
+          { key: 'Vehiclemake', display: 'Make' },
+          { key: 'Vehcilemodel', display: 'Model' },
+          { key: 'Status', display: 'Status' },
+          {
+            key: 'actions',
+            display: 'Action',
+            config: {
+              isRemove: true,
+            },
           },
-        },
 
-      ];
-    }
-    else if(this.endorsementSection){
-      this.customerHeader =  [
-        { key: 'Registrationnumber', display: 'Registration Number' },
-        { key: 'PolicyTypeDesc', display: 'Policy Type' },
-        
-        { key: 'OverallPremiumFc', display: 'Premium' },
-        { key: 'Vehiclemake', display: 'Make' },
-        { key: 'Vehcilemodel', display: 'Model' },
-        { key: 'Status', display: 'Status' },
-        {
-          key: 'actions',
-          display: 'Action',
-          config: {
-            isEdit: true,
+        ];
+      }
+      else if(this.endorsementSection){
+        this.customerHeader =  [
+          { key: 'Registrationnumber', display: 'Registration Number' },
+          { key: 'PolicyTypeDesc', display: 'Policy Type' },
+          
+          { key: 'OverallPremiumFc', display: 'Premium' },
+          { key: 'Vehiclemake', display: 'Make' },
+          { key: 'Vehcilemodel', display: 'Model' },
+          { key: 'Status', display: 'Status' },
+          {
+            key: 'actions',
+            display: 'Action',
+            config: {
+              isEdit: true,
+            },
           },
-        },
 
-      ];
+        ];
+      }
+  }
+  omit_special_char(event){
+   var k;
+   k = event.charCode;  //         k = event.keyCode;  (Both can be used)
+   return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || (k >= 48 && k <= 57));
+  }
+  getBodyTypeList(){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId,
+      "BranchCode": this.branchCode
     }
+    let urlLink = `${this.CommonApiUrl}master/dropdown/induvidual/bodytype`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          let defaultObj = [{"Code":'',"CodeDesc":"---Select---"}]
+            this.bodyTypeList = defaultObj.concat(data.Result);
+            this.getUsageList();
+        }
+
+      },
+      (err) => { },
+    );
+  }
+  getUsageList(){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId,
+      "BranchCode": this.branchCode
+    }
+    let urlLink = `${this.CommonApiUrl}api/dropdown/induvidual/vehicleusage`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          let defaultObj = [{"Code":'',"CodeDesc":"---Select---"}]
+            this.usageList = defaultObj.concat(data.Result);
+            this.getColorsList();
+        }
+      },
+      (err) => { },
+    );
+  }
+  getColorsList(){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId,
+      "BranchCode": this.branchCode
+    }
+    let urlLink = `${this.CommonApiUrl}master/dropdown/color`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+          let defaultObj = [{"Code":'',"CodeDesc":"---Select---"}]
+            this.colorList = defaultObj.concat(data.Result);
+        }
+      },
+      (err) => { },
+    );
+  }
+  getYearList(){
+    var d = new Date();
+    var year = d.getFullYear();
+    var month = d.getMonth();
+    var day = d.getDate();
+    const currentYear = new Date().getFullYear()-20, years = [];
+    while ( year >= currentYear ) {
+      let yearEntry = year--
+      years.push({"Code":String(yearEntry),"CodeDesc":String(yearEntry)});
+    }   
+    return years;
+  }
+  onBodyTypeChange(type){
+    if(this.bodyTypeValue!=null && this.bodyTypeValue!=''){
+      this.bodyTypeId = this.bodyTypeList.find(ele=>ele.CodeDesc==this.bodyTypeValue)?.Code;
+      if(type=='change'){this.makeValue=null;this.modelValue=null;}
+      if(this.bodyTypeId) this.getMakeList();
+    }
+  }
+  getMakeList(){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId,
+      "BranchCode": this.branchCode,
+      "BodyId": this.bodyTypeId
+    }
+    let urlLink = `${this.CommonApiUrl}master/dropdown/motormake`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          let defaultObj = [{"Code":'',"CodeDesc":"---Select---"}]
+            this.makeList = defaultObj.concat(data.Result);
+            
+        }
+
+      },
+      (err) => { },
+    );
+  }
+  onModelChange(type){
+    if(this.modelValue!=null && this.modelValue!=''){
+      if(this.modelValue!='99999'){
+        this.modelDesc = this.bodyTypeList.find(ele=>ele.CodeDesc==this.modelValue)?.CodeDesc;
+      }
+      
+      else if(type=='change'){this.modelDesc = null}
+    }
+  }
+  onMakeChange(){
+    console.log("on make change",this.makeValue);
+    let ReqObj = {
+      "InsuranceId": this.insuranceId,
+      "BranchCode": this.branchCode,
+      "BodyId": this.bodyTypeId,
+      "MakeId": this.makeValue
+    }
+    let urlLink = `${this.CommonApiUrl}master/dropdown/motormakemodel`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+          let defaultObj = [{"Code":'',"CodeDesc":"---Select---"}]
+            this.modelList = defaultObj.concat(data.Result);
+        }
+      },
+      (err) => { },
+    );
   }
   onDelete(rowData){
       if(rowData.Active){
@@ -1163,7 +1302,7 @@ export class VehicleWishListComponent implements OnInit {
   }
   checkDisableField(){
     let status = sessionStorage.getItem('QuoteStatus');
-    return (this.adminSection && (status=='AdminRP' || status=='AdminRA'))
+    return ((this.adminSection && (status=='AdminRP' || status=='AdminRA')) || this.finalizeYN=='Y')
   }
   onEditVehicle(rowData){
     if(this.statusValue=='RA'){
