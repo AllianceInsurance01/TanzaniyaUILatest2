@@ -1053,6 +1053,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       let fireData = new BussinessAllRisk();
       let entry = [];
       this.fields[0] = fireData?.fields;
+      console.log("Final Form",this.fields);
       let referenceNo = sessionStorage.getItem('quoteReferenceNo');
       if (referenceNo) {
         this.requestReferenceNo = referenceNo;
@@ -1442,16 +1443,13 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       if(sections.some(ele=>ele=='47' && this.insuranceId=='100004')){
          let contentData = new HouseHoldContentsss();
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields]);
-        // alert(this.fields[0].fieldGroup.concat([contentData?.fields]));
       }
       if(sections.some(ele=>ele=='40')){
-        // alert('Fire');
         let fireData = new FireAlliedPerils();
         let entry = [];
         entry.push(fireData?.fields);
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([fireData?.fields]);
         //this.fields[0].fieldGroup = entry.concat(this.fields[0].fieldGroup);
-        // alert(this.fields[0].fieldGroup.concat([fireData?.fields]));
         this.getIndemityPeriodList();
       }
      
@@ -5888,6 +5886,7 @@ onSaveBussinessrisk(type,formType){
     "SectionId":  sectionId,
     "AllriskSumInsured": productsi
   }
+  if(this.productId=='26') ReqObj['EquipmentSi'] = productsi
   if (this.endorsementSection) {
     if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {
       ReqObj['Status'] = 'E';
@@ -7062,6 +7061,7 @@ setCommonFormValues(){
           else if(this.productId =='26'){
             this.ProductCode = details?.SectionId;
             this.productItem.EquipmentSi  = details?.EquipmentSi;
+            this.formSection = true; this.viewSection = false;
           }
           else if(this.productId =='25'){
             this.ProductCode = details?.SectionId;
