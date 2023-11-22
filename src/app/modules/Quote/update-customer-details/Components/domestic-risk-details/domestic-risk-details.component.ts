@@ -534,7 +534,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
             this.productItem = new ProductData();
             this.formSection = true; this.viewSection = false;
         }
-        let first = this.sectionDetails.find((ele) => (this.productId=='19' && ele.SectionId == 47) || (this.productId!='19' && ele.SectionId==40));
+        let first = this.sectionDetails.find((ele) => ( ele.SectionId == 47));
         if(first){
           if(first?.AddDetailYn=='Y'){
             this.first=true;
@@ -3800,7 +3800,7 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
   }
   getContentDetails(){
     let sectionId=null;
-    if(this.productId=='19') sectionId = '40';
+    if(this.productId=='19') sectionId = '47';
     else sectionId = '47';
     let urlLink = `${this.motorApiUrl}api/getallcontentrisk`;
     let ReqObj = {
