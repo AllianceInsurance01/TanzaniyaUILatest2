@@ -212,7 +212,7 @@
 
         </div>
     </div> -->
-    <div class="maan-grid-item" *ngIf="(!policySection && !endorsementSection && !successSection)|| (endorsementSection && IsChargeOrRefund=='CHARGE' && !policySection)">
+    <div class="maan-grid-item" *ngIf="(!policySection && !endorsementSection && !successSection && !loadingSection) || (endorsementSection && IsChargeOrRefund=='CHARGE' && !policySection && !loadingSection)">
         <div class="display1">
             <div class="maan-grid-item-title " style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
                 <span class="mx-0">
@@ -895,6 +895,11 @@
             </div>
         </div>
     </div>     
+</div>
+<div class="row"  *ngIf="loadingSection">
+    <div class="col-12 col-md-12 col-lg-10 offset-lg-1 text-center spancommon span_font_size">
+                <b>Please Wait... Fetching Policy Details</b>
+    </div>  
 </div>
 <div class="row"  *ngIf="policySection">
     <div class="col-12 col-md-12 col-lg-10 offset-lg-1 spancommon span_font_size">

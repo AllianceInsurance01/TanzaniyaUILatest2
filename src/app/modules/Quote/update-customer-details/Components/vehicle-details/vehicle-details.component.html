@@ -285,7 +285,7 @@
                         <div class="maan-grid-item-body smallclass">
                             
                             <!--style="padding-left: 40px !important;padding-right: 40px !important;"-->
-                            <div class="row">
+                            <div class="row" *ngIf="insuranceId!='100004'">
                                 <div class="col-12 col-md-4">
                                     <div class="input-control-container policyfield">
                                         <label class="input-form-label">Insurance Type</label><span class="text-danger">*</span>
@@ -310,7 +310,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" *ngIf="insuranceId!='100004'">
                                 <div class="col-12 col-md-4">
                                     <div class="input-control-container policyfield">
                                         
@@ -349,7 +349,7 @@
                                 </div>
                                 
                             </div>
-                            <!-- <div class="row" *ngIf="insuranceId=='100004'">
+                            <div class="row" *ngIf="insuranceId=='100004'">
                                 <div class="col-12 col-md-4">
                                     <div class="input-control-container policyfield">
                                         <label class="input-form-label">Insurance Class</label><span class="text-danger">*</span>
@@ -360,16 +360,18 @@
                                 <div class="col-12 col-md-4 col-lg-4">
                                     <div class="input-control-container policyfield2">
                                         <label class="input-form-label">Motor Usage</label><span class="text-danger">*</span>
-                                        <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="motorUsageList" [(ngModel)]="motorUsageValue" bindValue="Code" bindLabel="CodeDesc">
+                                        <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="motorUsageList" [(ngModel)]="motorUsageValue" (change)="getMotorTypeAltList('change')" bindValue="Code" bindLabel="CodeDesc">
                                         </ng-select>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4">
                                     <div class="input-control-container smallclass">
-                                        
+                                        <label class="input-form-label">Body Type</label><span class="text-danger">*</span>
+                                        <ng-select class="input-form-select" appendTo="body" [disabled]="(endorsementSection && !enableFieldsSection) || checkDisableField()" [items]="motorTypeList" [(ngModel)]="bodyTypeValue" (change)="onChangeBodyType()" bindValue="Code" bindLabel="CodeDesc">
+                                        </ng-select>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                             <div class="row">
                                 <div class="col-12 col-md-4" *ngIf="classValue=='1' || classValue=='2'">
                                     <div class="input-control-container policyfield">

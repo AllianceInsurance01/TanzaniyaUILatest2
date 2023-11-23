@@ -180,7 +180,6 @@ export class Medical {
   }
   fields: FormlyFieldConfig[] = [];
   checkDisable(fieldName) {
-    console.log("Disable Check", fieldName);
     if (this.endorsementSection) {
       let entry = this.enableFieldsList.some(ele => ele == fieldName);
       return !entry;

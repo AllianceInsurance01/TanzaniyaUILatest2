@@ -86,6 +86,7 @@ export class MakePayementComponent implements OnInit {
   uploadedDocList: any[]=[];totallistselected:any[]=[];
   DueAmount: any;
   quoteDetails: any;
+  loadingSection: boolean=false;
   constructor(private router:Router,public dialogService: MatDialog,private sharedService: SharedService,private cookieService: CookieService,
     private updateComponent:UpdateCustomerDetailsComponent,private route:ActivatedRoute,
    private datePipe:DatePipe) {
@@ -416,13 +417,30 @@ export class MakePayementComponent implements OnInit {
             this.endtPremium = quoteDetails?.TotalEndtPremium;
             this.DueAmount=quoteDetails?.DueAmount;
             console.log("Total",this.totalPremium)
-            this.checkStatus();
-            this.getBankList();
-            let paymentId = sessionStorage.getItem('quotePaymentId');
-            let makepayment= sessionStorage.getItem('Makepaymentid');
-            if(paymentId || makepayment =='Ids'){
-              this.getPaymentTypeList();
+            if(this.loadingSection && this.quoteDetails?.policyNo!=null && this.quoteDetails?.policyNo!=''){
+              this.paymentDetails = {
+                "QuoteNo": this.quoteNo,
+                "PolicyNo": this.quoteDetails?.policyNo,
+                "MerchantReference": this.quoteDetails?.MerchantReference,
+                "DebitNoteNo": this.quoteDetails?.DebitNoteNo,
+                "CreditNoteNo": this.quoteDetails?.CreditNoteNo,
+              };
+              this.policyNo = data?.Result?.PolicyNo;
+              this.policySection = true;
+              this.successSection = false;
+              this.updateTiraDetails();
             }
+            else{
+              this.checkStatus();
+              this.getBankList();
+              let paymentId = sessionStorage.getItem('quotePaymentId');
+              let makepayment= sessionStorage.getItem('Makepaymentid');
+              if(paymentId || makepayment =='Ids'){
+                this.getPaymentTypeList();
+              } 
+            }
+            
+            
           }
       },
       (err) => { },
@@ -463,17 +481,23 @@ export class MakePayementComponent implements OnInit {
             }
         }
         else{
-          this.paymentDetails = {
-            "QuoteNo": this.quoteNo,
-            "PolicyNo": this.quoteDetails.policyNo,
-            "MerchantReference": this.quoteDetails?.MerchantReference,
-            "DebitNoteNo": this.quoteDetails?.DebitNoteNo,
-            "CreditNoteNo": this.quoteDetails?.CreditNoteNo,
-          };
-          this.policyNo = data?.Result?.PolicyNo;
-          this.policySection = true;
-          this.successSection = false;
-          this.updateTiraDetails();
+          if(this.quoteDetails?.policyNo!=null && this.quoteDetails?.policyNo!='' && this.quoteDetails?.policyNo!=undefined){
+            this.paymentDetails = {
+              "QuoteNo": this.quoteNo,
+              "PolicyNo": this.quoteDetails?.policyNo,
+              "MerchantReference": this.quoteDetails?.MerchantReference,
+              "DebitNoteNo": this.quoteDetails?.DebitNoteNo,
+              "CreditNoteNo": this.quoteDetails?.CreditNoteNo,
+            };
+            this.policyNo = data?.Result?.PolicyNo;
+            this.policySection = true;
+            this.successSection = false;
+            this.updateTiraDetails();
+          }
+          else{
+            this.loadingSection = true;
+            this.getEditQuoteDetails();
+          }
         }
       });
   }
@@ -1137,6 +1161,7 @@ export class MakePayementComponent implements OnInit {
   }
   onCashPayment(){
     let chequeDate = "";let amount=this.totalPremium;
+   
     if(this.IsChargeOrRefund=='REFUND'){
       this.Menu='2';
       this.activeMenu = '2';
@@ -1155,6 +1180,11 @@ export class MakePayementComponent implements OnInit {
     else{
       this.chequeDate = null;this.chequeNo = null;this.micrNo=null;if(this.IsChargeOrRefund!='REFUND')this.bankName = null;
     }
+    // if(this.Menu=='4'){
+    //   if(this.payAmount==undefined) amount = null;
+    //   else if(String(this.payAmount).includes(',')){ amount = this.payAmount.replace(/,/g, '') }
+    //   else amount = this.payAmount;
+    // }
     let ReqObj = {
       "CreatedBy": this.loginId,
       "InsuranceId": this.insuranceId,

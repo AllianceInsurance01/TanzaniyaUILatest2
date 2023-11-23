@@ -1053,6 +1053,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       let fireData = new BussinessAllRisk();
       let entry = [];
       this.fields[0] = fireData?.fields;
+      console.log("Final Form",this.fields);
       let referenceNo = sessionStorage.getItem('quoteReferenceNo');
       if (referenceNo) {
         this.requestReferenceNo = referenceNo;
@@ -1201,7 +1202,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       { Code: 2, CodeDescription: '24 Months' },
       { Code: 3, CodeDescription: '36 Months' },
     ];
-    this.getUWDetails()
+    //this.getUWDetails()
 
     if (this.productId == '19' || this.productId=='3') this.getIndustryList();
     if (this.productId == '32') {
@@ -1417,6 +1418,10 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         let contentData = new PersonalAccident();
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields])
       }
+      if(sections.some(ele=>ele=='69')){
+        let fireData = new BussinessAllRisk();
+        this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([fireData?.fields]);
+      }
       if(sections.some(ele=>ele=='1')){
         //alert(sections)
         let contentData 
@@ -1438,38 +1443,18 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       if(sections.some(ele=>ele=='47' && this.insuranceId=='100004')){
          let contentData = new HouseHoldContentsss();
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields]);
-        // alert(this.fields[0].fieldGroup.concat([contentData?.fields]));
       }
       if(sections.some(ele=>ele=='40')){
-        // alert('Fire');
         let fireData = new FireAlliedPerils();
         let entry = [];
         entry.push(fireData?.fields);
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([fireData?.fields]);
         //this.fields[0].fieldGroup = entry.concat(this.fields[0].fieldGroup);
-        // alert(this.fields[0].fieldGroup.concat([fireData?.fields]));
         this.getIndemityPeriodList();
       }
      
-      if(sections.some(ele=>ele=='45')){
-        let employeeData = new EmployersLiability();
-        let field = {
-          props: { label: 'Employers Liability' },
-          fieldGroup: employeeData.fields
-        }
-        this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([field]);
-      }
-      if(sections.some(ele=>ele=='43')){
-        let fidelity = new Fidelity();
-        let field = {
-          props: { label: 'Fidelity' },
-          fieldGroup: fidelity.fields
-        }
-        this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([field]);
-      }
-      if(sections.some(ele=>ele=='45')) this.productItem.employeeList = [{"LiabilityOccupationId":null,"TotalNoOfEmployees":null,"EmpLiabilitySi":'0'}];
-        if(sections.some(ele=>ele=='43')) this.productItem.fidelityList = [{"LiabilityOccupationId":null,"TotalNoOfEmployees":null,"EmpLiabilitySi":'0'}];
-      if(sections.some(ele=>ele=='41')){
+      
+        if(sections.some(ele=>ele=='41')){
         let contentData = new MachineryBreakDown();
         let checkYnHooks ={ onInit: (field: FormlyFieldConfig) => {
           field.formControl.valueChanges.subscribe(() => {
@@ -1483,23 +1468,42 @@ export class PersonalQuoteDetailsComponent implements OnInit {
            i+=1;
            if(i==groupList.length){this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields]); this.checkMachineryYNChanges()}
         }
-      }
-      if(sections.some(ele=>ele=='42')){
-        let money = new Money();
-        let checkYnHooks ={ onInit: (field: FormlyFieldConfig) => {
-          field.formControl.valueChanges.subscribe(() => {
-              this.checkMoneyYNChanges()
-          });
-        }};
-        let groupList = money.fields.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
-        let i=0;
-        for(let group of groupList){
-           group.fieldGroup[0].hooks = checkYnHooks;
-           i+=1;
-           if(i==groupList.length){this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([money?.fields]); this.checkMoneyYNChanges()}
         }
-        // this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([money?.fields])
-      }
+        if(sections.some(ele=>ele=='45')){
+          let employeeData = new EmployersLiability();
+          let field = {
+            props: { label: 'Employers Liability' },
+            fieldGroup: employeeData.fields
+          }
+          this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([field]);
+        }
+        if(sections.some(ele=>ele=='43')){
+          let fidelity = new Fidelity();
+          let field = {
+            props: { label: 'Fidelity' },
+            fieldGroup: fidelity.fields
+          }
+          this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([field]);
+        }
+        
+        if(sections.some(ele=>ele=='45')) this.productItem.employeeList = [{"LiabilityOccupationId":null,"TotalNoOfEmployees":null,"EmpLiabilitySi":'0'}];
+          if(sections.some(ele=>ele=='43')) this.productItem.fidelityList = [{"LiabilityOccupationId":null,"TotalNoOfEmployees":null,"EmpLiabilitySi":'0'}];
+          if(sections.some(ele=>ele=='42')){
+            let money = new Money();
+            let checkYnHooks ={ onInit: (field: FormlyFieldConfig) => {
+              field.formControl.valueChanges.subscribe(() => {
+                  this.checkMoneyYNChanges()
+              });
+            }};
+            let groupList = money.fields.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup;
+            let i=0;
+            for(let group of groupList){
+               group.fieldGroup[0].hooks = checkYnHooks;
+               i+=1;
+               if(i==groupList.length){this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([money?.fields]); this.checkMoneyYNChanges()}
+            }
+            // this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([money?.fields])
+          }
       
       if(sections.some(ele=>ele=='52')){
         let fireData = new Burglary();
@@ -1542,6 +1546,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
            if(sections.some(ele=>ele=='41')){ this.getMachineryBreakDownDetails(sections)}
            if(sections.some(ele=>ele=='42')){ this.getMoneyDetails(sections)}
            if(sections.some(ele=>ele=='52')){ this.getBurglaryDetails(sections) }
+           if(sections.some(ele=>ele=='69')){ this.getBusinessAllRiskDetails(sections) }
            if(sections.some(ele=>ele=='3') && this.productId=='21' || this.productId == '26'){ this.getPlantallrisk(sections) }
           //  if(sections.some(ele=>ele=='3') && this.productId=='21'){ this.getElectronicEquipment(sections) }
            if(sections.some(ele=>ele=='56' || ele=='53' || ele=='54')){ 
@@ -1687,6 +1692,31 @@ checkMoneyYNChanges(){
   //   if(!this.productItem.MoneyAnnualcarrySuminsuredSIYN) { this.productItem.MoneyAnnualEstimate = '0'; this.form?.controls['MoneyAnnualEstimate']?.setValue('0')}
   //   console.log("Tablessssss",tableData)
   // }
+}
+getBusinessAllRiskDetails(sections){
+  let sectionId = null;
+  if(this.productId=='19') sectionId='69';
+  let ReqObj = {
+    "RequestReferenceNo": this.requestReferenceNo,
+    "RiskId": "1",
+    "SectionId":  sectionId
+  }
+  let urlLink=`${this.motorApiUrl}api/slide2/getallriskdetails`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      console.log(data);
+      if (data.Result) {
+        let details = data?.Result;
+        if(data?.Result?.AllriskSumInsured!=null) this.productItem.EquipmentSi = data?.Result?.AllriskSumInsured;
+        this.sectionCount +=1;
+        if(sections.length==this.sectionCount){
+          this.formSection = true; this.viewSection = false;
+        }
+      }
+    },
+    (err) => { },
+  );
+
 }
 getBurglaryDetails(sections){
   let sectionId = null;
@@ -4020,7 +4050,6 @@ getBodyTypeList(){
                   this.productItem.BodyType = this.bodyTypeList.find(ele=>ele.label==this.motorDetails.VehicleType || ele.Code ==this.motorDetails.VehicleType)?.Code;
                   this.onBodyTypeChange('direct');
                 }
-                console.log("Entered BodyType")
             }
           } 
       }
@@ -4526,7 +4555,7 @@ saveMotorRiskDetails(){
     }
     else regNo = this.productItem.RegistrationNo;
     let createdBy="";
-        let startDate = "",endDate = "",vehicleSI="",accSI="",windSI="",tppSI="";
+        let startDate = "",endDate = "",vehicleSI="0",accSI="",windSI="0",tppSI="0";
         startDate = this.commonDetails[0].PolicyStartDate;
         endDate = this.commonDetails[0].PolicyEndDate;
         if(this.policyStartDate){
@@ -4609,7 +4638,7 @@ saveMotorRiskDetails(){
       "RequestReferenceNo": this.requestReferenceNo,
       "Idnumber": IdNo,
       "VehicleId": "1",
-      "AcccessoriesSumInsured": null,
+      "AcccessoriesSumInsured": '0',
       "AccessoriesInformation": "",
       "AdditionalCircumstances": "",
       "AxelDistance": '01',
@@ -4780,6 +4809,9 @@ onNextProceed(){
   else if(rowData.props.label=='Burglary'){
     this.onSaveBurglaryDetails(type,'Group');
   }
+  else if(rowData.props.label=='Business All Risk'){
+    this.onSaveBussinessrisk(type,'Group');
+  }
 }
 isValid(field: FormlyFieldConfig): boolean {
     
@@ -4798,7 +4830,6 @@ getYearList() {
   var month = d.getMonth();
   var day = d.getDate();
   const currentYear = new Date().getFullYear() - 40, years = [];
-  console.log("Entered File",this.fields)
   while (year >= currentYear) {
     let yearEntry = year--
     years.push({ "label": String(yearEntry), "value": String(yearEntry) });
@@ -5472,7 +5503,6 @@ onSaveFireAlliedDetails(type,formType){
     );
 }
 onSaveMachineryDetails(type,formType){
-  console.log("Final Form",this.productItem)
   let ReqObj = {
     "CreatedBy": this.loginId,
     "InsuranceId": this.insuranceId,
@@ -5781,8 +5811,6 @@ onSaveBurglaryDetails(type,formType){
     );
 }
 onSaveElectronicEquipment(type,formType){
-  console.log('RRRRRRRRRRRR',sessionStorage.getItem('quoteReferenceNo'));
-  console.log('KKKKKKKKKKK',this.ProductCode);
   let ReqObj={
     "CreatedBy": this.loginId,
     "InsuranceId": this.insuranceId,
@@ -5831,7 +5859,6 @@ onSaveElectronicEquipment(type,formType){
         
         sessionStorage.setItem('homeCommonDetails', JSON.stringify(this.commonDetails))
         }
-        console.log('RRRRRRRRRRR',data.Result);
          this.onCheckUWQuestionProceed(data.Result,type,formType);
       }
   },
@@ -5847,16 +5874,19 @@ onSaveBussinessrisk(type,formType){
   else{
     productsi=this.productItem.EquipmentSi;
   }
-  console.log('RRRRRRRRRRRR',sessionStorage.getItem('quoteReferenceNo'));
+  let sectionId=null;
+  if(this.productId=='26') sectionId='3';
+  else sectionId = '69';
   let ReqObj={
     "CreatedBy": this.loginId,
     "InsuranceId": this.insuranceId,
     "ProductId": this.productId,
     "RequestReferenceNo":sessionStorage.getItem('quoteReferenceNo'),
     "RiskId": "1",
-    "SectionId":  "3",
-    "EquipmentSi":productsi
+    "SectionId":  sectionId,
+    "AllriskSumInsured": productsi
   }
+  if(this.productId=='26') ReqObj['EquipmentSi'] = productsi
   if (this.endorsementSection) {
     if (this.productItem?.Status == undefined || this.productItem?.Status == null || this.productItem?.Status == 'Y') {
       ReqObj['Status'] = 'E';
@@ -5879,14 +5909,13 @@ onSaveBussinessrisk(type,formType){
         if(type=='proceed'){
         if(this.commonDetails){
           if(this.commonDetails[0].SectionId !=null && this.commonDetails[0].SectionId.length!=0){
-            if(!this.commonDetails[0].SectionId.some(ele=>ele=='3')) this.commonDetails[0].SectionId.push('3');
+            if(!this.commonDetails[0].SectionId.some(ele=>ele==sectionId)) this.commonDetails[0].SectionId.push(sectionId);
           }
-          else  this.commonDetails[0]['SectionId']=['3'];
+          else  this.commonDetails[0]['SectionId']=[sectionId];
         }
        
         sessionStorage.setItem('homeCommonDetails', JSON.stringify(this.commonDetails))
         }
-        console.log('RRRRRRRRRRR',data.Result);
          this.onCheckUWQuestionProceed(data.Result,type,formType);
       }
   },
@@ -6426,7 +6455,6 @@ onSaveAllRiskDetails(type,formType){
   );
 }
 checkDisable(fieldName) {
-  console.log("Disable Check", fieldName);
   if (this.endorsementSection) {
     let entry = this.enableFieldsList.some(ele => ele == fieldName);
     return !entry;
@@ -6584,7 +6612,6 @@ onCalculate(buildDetails,type,formType) {
           if (data) {
             let entry = data?.Result;
             i += 1;
-            console.log("Indexxx", i, buildDetails.length,formType,type)
             if (i == buildDetails.length) {
               if(formType=='Group'){
                 if(type=='save'){this.selectedIndex +=1;
@@ -7034,6 +7061,7 @@ setCommonFormValues(){
           else if(this.productId =='26'){
             this.ProductCode = details?.SectionId;
             this.productItem.EquipmentSi  = details?.EquipmentSi;
+            this.formSection = true; this.viewSection = false;
           }
           else if(this.productId =='25'){
             this.ProductCode = details?.SectionId;

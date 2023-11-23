@@ -21,7 +21,7 @@ export class BussinessAllRisk{
           }
       }
       this.fields = {
-          props: { label: 'Bussiness All Risk' },
+          props: { label: 'Business All Risk' },
           fieldGroup: [
             {
               fieldGroupClassName: 'row',
@@ -60,10 +60,8 @@ export class BussinessAllRisk{
   }
   fields:FormlyFieldConfig;
   checkDisable(fieldName) {
-      console.log("Disable Check", fieldName);
       if (this.endorsementSection) {
         let entry = this.enableFieldsList.some(ele => ele == fieldName);
-        console.log("Entry ", fieldName, entry)
         return !entry;
       }
       else return false;

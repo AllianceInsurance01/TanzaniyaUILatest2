@@ -99,7 +99,7 @@ export class VehicleDetailsComponent implements OnInit {
   endorseCoverModification: any=null;
   customerName: any;
   enableRemoveVehicle: boolean = false;
-  showTiraUpdateSection: boolean;
+  showTiraUpdateSection: boolean;finalizeYN:any='N';
   constructor(private router:Router,private sharedService: SharedService,
     private updateComponent:UpdateCustomerDetailsComponent,
    private datePipe:DatePipe) {
@@ -119,13 +119,16 @@ export class VehicleDetailsComponent implements OnInit {
     this.branchList = this.userDetails.Result.LoginBranchDetails;
     this.productId = this.userDetails.Result.ProductId;
     this.insuranceId = this.userDetails.Result.InsuranceId;
+    let finalize = sessionStorage.getItem('FinalizeYN');
+      if(finalize) this.finalizeYN = finalize;
     if(this.userType!='Broker'){
       let quoteStatus = sessionStorage.getItem('QuoteStatus');
       if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA'){
         this.adminSection = true;this.issuerSection = false;
       }
     }
-    this.getInsuranceTypeList();
+    if(this.insuranceId!='100004') this.getInsuranceTypeList();
+    else{this.getMotorUsageAltList();}
     
     this.getBorrowerList();
     this.getBankList();
@@ -344,7 +347,7 @@ export class VehicleDetailsComponent implements OnInit {
   }
   checkDisableField(){
     let status = sessionStorage.getItem('QuoteStatus');
-    return (this.adminSection && (status=='AdminRP' || status=='AdminRA'))
+    return ((this.adminSection && (status=='AdminRP' || status=='AdminRA')) || this.finalizeYN=='Y')
   }
   onChangeBodyType(){
     if(this.bodyTypeValue=='7') this.cityValue='';
@@ -352,6 +355,23 @@ export class VehicleDetailsComponent implements OnInit {
   onEditVehicle(rowData){
     sessionStorage.setItem('editVehicleId',String(rowData.Vehicleid));
     window.location.reload();
+  }
+  getMotorTypeAltList(type){
+    let ReqObj = {
+      "SectionId": this.motorUsageValue,
+      "InsuranceId": this.insuranceId,
+      "BranchCode": this.branchCode
+    }
+    let urlLink = `${this.CommonApiUrl}master/dropdown/bodytype`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+            this.motorTypeList = data.Result;
+            if(type=='change') this.bodyTypeValue = '';
+        }
+      },
+      (err) => { },
+    );
   }
   getMotorTypeList(type,motorValue,vehicleUsage){
     let ReqObj = {
@@ -362,7 +382,6 @@ export class VehicleDetailsComponent implements OnInit {
     let urlLink = `${this.CommonApiUrl}master/dropdown/bodytype`;
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
-        console.log(data);
         if(data.Result){
           if(type=='change') this.cityValue = null;
             this.motorTypeList = data.Result;
@@ -393,6 +412,22 @@ export class VehicleDetailsComponent implements OnInit {
             
         }
 
+      },
+      (err) => { },
+    );
+  }
+  getMotorUsageAltList(){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId,
+      "BranchCode": this.branchCode
+    }
+    let urlLink = `${this.CommonApiUrl}api/dropdown/induvidual/vehicleusage`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Result){
+            this.motorUsageList = data.Result;
+        }
       },
       (err) => { },
     );
@@ -748,7 +783,8 @@ export class VehicleDetailsComponent implements OnInit {
       this.endtPrevPolicyNo = null;this.isFinanceEndt = null;
     }
     if(type=='edit'){
-      this.getMotorTypeList('direct',this.vehicleDetails?.VehicleType,this.vehicleDetails?.Motorusage)
+      if(this.insuranceId!='100004') this.getMotorTypeList('direct',this.vehicleDetails?.VehicleType,this.vehicleDetails?.Motorusage)
+      else{this.motorUsageValue=this.vehicleDetails?.Motorusage; this.getMotorTypeAltList('direct');}
       this.bodyTypeValue = this.vehicleDetails?.VehicleType;
       this.tiraCoverNoteNo = this.vehicleDetails?.TiraCoverNoteNo;
       this.motorUsageValue = this.vehicleDetails?.Motorusage;
@@ -973,7 +1009,7 @@ export class VehicleDetailsComponent implements OnInit {
       }
     }
     else{
-      
+      if(this.insuranceId=='100004') this.typeValue = this.classValue;
       let createdBy="";
       let startDate = "",endDate = "",vehicleSI="",accSI="",windSI="",tppSI="";
       if(this.vehicleSI==undefined) vehicleSI = null;

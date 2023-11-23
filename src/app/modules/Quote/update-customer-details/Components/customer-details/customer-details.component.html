@@ -246,7 +246,7 @@
                            <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Division</label><span class="text-danger">*</span>
-                                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="branchValue" [disabled]="endorsementSection" [items]="branchList"  (change)="onBranchValueChange()" bindValue="BranchCode" bindLabel="BranchName">
+                                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="branchValue" [disabled]="endorsementSection || finalizeYN=='Y'" [items]="branchList"  (change)="onBranchValueChange()" bindValue="BranchCode" bindLabel="BranchName">
                                     </ng-select>
                                     <div class="input-form-error" *ngIf="branchValueError">
                                         <div class="error-text text-danger">
@@ -258,7 +258,7 @@
                             <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Source</label><span class="text-danger">*</span>
-                                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="Code"  [items]="productList" [disabled]="endorsementSection" bindValue="Code" bindLabel="CodeDesc" (change)="onSourceTypeChange('change')">
+                                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="Code"  [items]="productList" [disabled]="endorsementSection || finalizeYN=='Y'" bindValue="Code" bindLabel="CodeDesc" (change)="onSourceTypeChange('change')">
                                     </ng-select>
                                     <div class="input-form-error" *ngIf="sourceCodeError">
                                         <div class="error-text text-danger">
@@ -302,11 +302,11 @@
                                 <div class="input-control-container">
                                     <label class="input-form-label">Source Code</label><span class="text-danger">*</span>
                                     <ng-container *ngIf="Code!='broker' && Code!='Broker'">
-                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerCode"  [disabled]="endorsementSection" [items]="brokerList" (change)="onBrokerChange()" bindValue="Code" bindLabel="Name">
+                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerCode"  [disabled]="endorsementSection || finalizeYN=='Y'" [items]="brokerList" (change)="onBrokerChange()" bindValue="Code" bindLabel="Name">
                                         </ng-select>
                                     </ng-container>
                                     <ng-container *ngIf="Code=='broker' || Code=='Broker'">
-                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerCode"  [disabled]="endorsementSection" (change)="onBrokerChange()">
+                                        <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerCode"  [disabled]="endorsementSection || finalizeYN=='Y'" (change)="onBrokerChange()">
                                             <ng-option *ngFor="let item of brokerList" [value]="item.Code">{{item.Name}}</ng-option>
                                         </ng-select>
                                     </ng-container>
@@ -320,7 +320,7 @@
                             <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection && brokerCode && (Code=='agent' || Code=='broker' || Code=='direct' || Code=='bank' || Code=='Broker' || Code=='whatsapp')">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Broker Branch</label><span class="text-danger">*</span>
-                                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerBranchCode"  [disabled]="endorsementSection" [items]="brokerBranchList" (change)="onBrokerBranchChange()" bindValue="Code" bindLabel="CodeDesc">
+                                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerBranchCode"  [disabled]="endorsementSection || finalizeYN=='Y'" [items]="brokerBranchList" (change)="onBrokerBranchChange()" bindValue="Code" bindLabel="CodeDesc">
                                     </ng-select>
                                 </div>
                                 <div class="input-form-error" *ngIf="brokerBranchCodeError">
@@ -370,7 +370,7 @@
                                     <span class="heading">SELECT INDUSTRY TYPE <span class="text-danger">*</span></span>
                                     <div class="row mt-3">
                                         <div class="input-control-container col-md-12 col-lg-12">
-                                            <ng-select class="input-form-select" appendTo="body" [(ngModel)]="IndustryId" [items]="industryList" [disabled]="(endorsementSection)" bindValue="Code" bindLabel="CodeDesc">
+                                            <ng-select class="input-form-select" appendTo="body" [(ngModel)]="IndustryId" [items]="industryList" [disabled]="(endorsementSection || finalizeYN=='Y')" bindValue="Code" bindLabel="CodeDesc">
                                             </ng-select>
                                         </div>
                                     </div>
@@ -517,7 +517,7 @@
                                 <div class="input-control-container">
                                     <label class="input-form-label">Promo Code</label>
                                     <div class="input-form-box">
-                                        <input type="text" [(ngModel)]="PromoCode" [disabled]="endorsementSection" (change)="onPromoCodeChange()" maxlength="20" class="input-form-control without-icon">
+                                        <input type="text" [(ngModel)]="PromoCode" [disabled]="endorsementSection || finalizeYN=='Y'" (change)="onPromoCodeChange()" maxlength="20" class="input-form-control without-icon">
                                     </div>
                                     <div class="input-form-error" *ngIf="promoError">
                                         <div class="error-text">

@@ -246,12 +246,14 @@ emiyn="N";
   SourceType: any;
   emistatus: any;
   emipolicytype: any;
+  minimumPremiumYN: any;finalizeYN:any='N';
 
   constructor(public sharedService: SharedService,private authService: AuthService,private router:Router,private modalService: NgbModal,
     private updateComponent:UpdateCustomerDetailsComponent,private datePipe:DatePipe,public dialog: MatDialog) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     let loginType = sessionStorage.getItem('resetLoginDetails');
     this.userType = this.userDetails?.Result?.UserType;
+    this.subuserType = sessionStorage.getItem('typeValue');
     this.agencyCode = this.userDetails.Result.OaCode;
     this.branchCode = this.userDetails.Result.BranchCode;
     this.branchList = this.userDetails.Result.LoginBranchDetails;
@@ -2188,7 +2190,10 @@ getMotorUsageList(vehicleValue){
     //     //this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/underwriter-details']);
     //   }
     //   else if(this.productId == '4'){
-      if(this.statusValue){
+      if(this.finalizeYN!=null && this.subuserType=='low'){
+          this.updateFinalizeYN('back')
+      }
+      else if(this.statusValue){
           if(this.adminSection){
               if(this.statusValue=='RA') this.router.navigate(['/Admin/referralApproved']);
               //else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
@@ -2221,6 +2226,52 @@ getMotorUsageList(vehicleValue){
     }
     else if(this.productId=='4') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
     else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+  }
+  updateFinalizeYN(type){
+    let ReqObj = {
+      "ProductId" : this.productId,
+      "InsuranceId" : this.insuranceId,
+      "RequestReferenceNo" : this.quoteRefNo,
+      "FinalizeYn" : this.finalizeYN
+    }
+    let urlLink = `${this.CommonApiUrl}quote/changefinalyzestatus`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+          sessionStorage.setItem('FinalizeYN',this.finalizeYN);
+              if(type=='back'){
+                if(this.statusValue){
+                  if(this.adminSection){
+                      if(this.statusValue=='RA') this.router.navigate(['/Admin/referralApproved']);
+                      //else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+                      else if(this.statusValue=='RE') this.router.navigate(['/Admin/referralReQuote']);
+                      else this.router.navigate(['/Admin/referralPending']);
+                  }
+                  else{
+                    if(this.statusValue=='RA') this.router.navigate(['/Home/referralApproved']);
+                    else if(this.statusValue=='RE') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
+                    else{
+                      this.onSetBackPage();
+                     
+                    } 
+                  }
+                }
+                else{
+                  if(this.endorsementSection && this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='RemoveSection') && !this.endorseSIModification && this.endorsementId!=853){
+                    this.router.navigate(['/Home/policies/Endorsements/endorsementTypes']);
+                  }
+                  else{
+                    this.onSetBackPage();
+                  }
+                }
+              }
+              else{
+                  this.onUpdateFactor('');
+              }
+        }
+      },
+      (err) => { },
+    );
   }
   getUWDetails(){
     let ReqObj = {
@@ -2868,7 +2919,8 @@ getMotorUsageList(vehicleValue){
     console.log("Final Covers",this.vehicleDetailsList,this.selectedCoverList)
   }
   checkCoverSelection(vehicleData,coverData){
-    if(this.endorsementSection && !this.adminSection && this.statusValue!='RA'){
+    if(this.finalizeYN=='Y') return true;
+    else if(this.endorsementSection && !this.adminSection && this.statusValue!='RA'){
       if(this.endorseCovers){
         if(!this.adminSection && coverData.ModifiedYN =='N') return false;
         else if(!this.adminSection) return true;
@@ -2891,7 +2943,8 @@ getMotorUsageList(vehicleValue){
       else if(this.endorseAddOnCovers && this.adminSection )return false;
       else return true;  
     }
-    else if(!this.adminSection && this.statusValue=='RA') return true;
+    else if(!this.adminSection && this.statusValue=='RA' && (((coverData.isSelected=='D' || coverData.isSelected=='O' || coverData.isSelected=='Y' || coverData?.UserOpt=='Y') && !this.endorsementSection) || 
+    (this.endorsementSection && (coverData.UserOpt=='Y' || coverData.isSelected=='D' || coverData.isSelected=='O')))) return true;
     else return false;
   }
   setDiscountDetails(vehData,rowData,modal){
@@ -2899,6 +2952,7 @@ getMotorUsageList(vehicleValue){
     this.selectedCoverId = rowData.CoverId;
     this.ratePercent = rowData.Rate;
     this.CoverName = rowData.CoverName;
+    this.minimumPremiumYN = rowData.MinimumPremiumYn;
     if(rowData.Discounts) this.discountList = rowData.Discounts;
     if(rowData.Loadings) this.loadingList = rowData.Loadings;
     if(rowData.Endorsements){
@@ -3577,75 +3631,68 @@ getMotorUsageList(vehicleValue){
       }, 1000);
   	}
   onProceed(coverList:any){
-    if(this.statusValue == 'RA' && !this.adminSection){
-      if(this.productId!='4'){
-        console.log('Referral Approved',coverList);
-        // if(this.productId=='5'){
-        //       let accessoriesSI = this.vehicleData[0]?.RiskDetails?.AcccessoriesSumInsured;
-        //       if(accessoriesSI!=null && accessoriesSI!=0 && accessoriesSI!=undefined){
-        //         this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
-        //       }
-        //       else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
-        // }
-         if(this.productId=='3' || this.productId=='19' || this.productId=='39' || this.productId=='32' || this.productId=='14' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId=='42' || this.productId=='43' || this.productId=='25'){
-          let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
-          if(homeSession){
-            if(this.loginType=='B2CFlow' && this.loginId=='guest'){
-              window.location.reload();
-            }
-            else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
-          }
-          else{
-            if(this.productId=='3') this.getExistingBuildingList();
-            else  if(this.loginType=='B2CFlow' && this.loginId=='guest'){
-              window.location.reload();
-            }
-            else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
-          }
+    //if(this.statusValue == 'RA' && !this.adminSection){
+      // if(this.productId!='4'){
+      //   console.log('Referral Approved',coverList);
+      //    if(this.productId=='3' || this.productId=='19' || this.productId=='39' || this.productId=='32' || this.productId=='14' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId=='42' || this.productId=='43' || this.productId=='25'){
+      //     let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
+      //     if(homeSession){
+      //       if(this.loginType=='B2CFlow' && this.loginId=='guest'){
+      //         window.location.reload();
+      //       }
+      //       else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
+      //     }
+      //     else{
+      //       if(this.productId=='3') this.getExistingBuildingList();
+      //       else  if(this.loginType=='B2CFlow' && this.loginId=='guest'){
+      //         window.location.reload();
+      //       }
+      //       else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
+      //     }
 
-        }
-        else if(this.productId == '5'){
-          let i=0;let coverlist:any=[];
-          for(let vehicle of coverList){
-            let vehEntry = vehicle.Covers;
-            console.log('VVVVVVVVV',vehEntry);
-            if(vehEntry.length!=0){
-              let entry = vehEntry.filter(ele=>ele.CoverId == '55');
-              if(entry.length!=0){
-                console.log('RRRRRRR',entry);
-                coverlist.push(entry)
-              }
-            }
-            i+=1;
-          }           
-         if(coverlist.length!=0){
-          console.log('if entry of cover id 55',coverlist);
-            sessionStorage.setItem('riskSection','additional');
-            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
-           }
-           else {
-            sessionStorage.setItem('riskSection','normal');
-            this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
-           }
-        }
+      //   }
+      //   else if(this.productId == '5'){
+      //     let i=0;let coverlist:any=[];
+      //     for(let vehicle of coverList){
+      //       let vehEntry = vehicle.Covers;
+      //       console.log('VVVVVVVVV',vehEntry);
+      //       if(vehEntry.length!=0){
+      //         let entry = vehEntry.filter(ele=>ele.CoverId == '55');
+      //         if(entry.length!=0){
+      //           console.log('RRRRRRR',entry);
+      //           coverlist.push(entry)
+      //         }
+      //       }
+      //       i+=1;
+      //     }           
+      //    if(coverlist.length!=0){
+      //     console.log('if entry of cover id 55',coverlist);
+      //       sessionStorage.setItem('riskSection','additional');
+      //       this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
+      //      }
+      //      else {
+      //       sessionStorage.setItem('riskSection','normal');
+      //       this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+      //      }
+      //   }
   
-        else{
-          sessionStorage.setItem('riskSection','normal');
-          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
-        }
-        //this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
+      //   else{
+      //     sessionStorage.setItem('riskSection','normal');
+      //     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
+      //   }
+      //   //this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details']);
 
-      }
-      else if(this.productId == '4'){
-        console.log('Referral Approved');
-        if(this.loginType=='B2CFlow' && this.loginId=='guest'){
-          window.location.reload();
-        }
-        else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']);
-      }
+      // }
+      // else if(this.productId == '4'){
+      //   console.log('Referral Approved');
+      //   if(this.loginType=='B2CFlow' && this.loginId=='guest'){
+      //     window.location.reload();
+      //   }
+      //   else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details']);
+      // }
     
-    }
-    else{
+    // }
+    // else{
       if(!this.statusValue && this.isMannualReferal=='Y'){
           if(this.remarks==null || this.remarks=='' || this.remarks == undefined){
             // let type: NbComponentStatus = 'danger';
@@ -3721,7 +3768,7 @@ getMotorUsageList(vehicleValue){
         //}
         
       }
-    }
+    //}
 
 
   }
@@ -4149,7 +4196,7 @@ getMotorUsageList(vehicleValue){
               //   }
               //   else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/premium-details'])
               // }
-              else if(this.productId=='32' || this.productId=='14' || this.productId=='19' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId=='42' || this.productId=='43'){
+              else if(this.productId=='32' || this.productId=='39' || this.productId=='14' || this.productId=='15' || this.productId=='19' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId =='21' || this.productId =='26' || this.productId =='25'|| this.productId=='42' || this.productId=='43'){
                 this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details'])
                 // let homeSession = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
                 // if(homeSession){
@@ -4257,8 +4304,8 @@ getMotorUsageList(vehicleValue){
     );
   }
   onUpdateFactor(type){
-    if((this.statusValue!='' && this.statusValue!=null) || (this.endorsementSection && this.endorseCovers)){
-      if(this.statusValue=='RA' || type=='calculate'){
+    if((this.statusValue!='' && this.statusValue!=null) || (this.endorsementSection && this.endorseCovers) || this.userType=='Issuer'){
+      if(this.statusValue=='RA' || type=='calculate' || this.userType=='Issuer'){
         if(this.selectedCoverList.length!=0){
           let i=0;
           for(let vehicle of this.vehicleDetailsList){
@@ -4298,6 +4345,7 @@ getMotorUsageList(vehicleValue){
                                           //sessionStorage.removeItem('vehicleDetailsList');
                                           window.location.reload();
                                         }
+                                        else if(this.subuserType=='low') this.onFormSubmit();
                                         else this.updateReferralStatus();
                                       }
                                     }

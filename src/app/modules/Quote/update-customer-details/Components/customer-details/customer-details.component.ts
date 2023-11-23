@@ -103,6 +103,7 @@ export class CustomerDetailsComponent implements OnInit {
   customerIdNumberError: boolean;
   customerMobileNoError: boolean;
   customerReferenceNo: any;
+  finalizeYN: any='N';
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       
@@ -173,6 +174,8 @@ export class CustomerDetailsComponent implements OnInit {
         this.customerCode = this.userDetails.Result.CustomerCode;
         this.customerName = this.userDetails.Result.UserName;
     }
+    let finalize = sessionStorage.getItem('FinalizeYN');
+    if(finalize) this.finalizeYN = finalize;
    }
 
   ngOnInit(): void {
@@ -903,7 +906,7 @@ export class CustomerDetailsComponent implements OnInit {
   }
   checkDisableField(){
     let status = sessionStorage.getItem('QuoteStatus');
-    return (this.adminSection && (status=='AdminRP' || status=='AdminRA'))
+    return ((this.adminSection && (status=='AdminRP' || status=='AdminRA')) || this.finalizeYN=='Y')
   }
   getExistingBuildingList(){
     let urlLink:any;

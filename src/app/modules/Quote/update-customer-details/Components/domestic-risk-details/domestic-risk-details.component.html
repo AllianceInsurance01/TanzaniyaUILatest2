@@ -2021,7 +2021,7 @@
                         <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="machineries.length!=0 && !enableMachineryEditSection" (click)="onSaveMachineryRisk()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
                     </div>
                 </mat-tab>
-                <mat-tab label="Accessories" *ngIf="!buildingDetailsSection && productId=='5'">
+                <mat-tab label="Accessories" *ngIf="!buildingDetailsSection && (productId=='5' || productId=='29')">
                     <!--table-->
                     <div>
                         <!-- <div class="row mt-1">
