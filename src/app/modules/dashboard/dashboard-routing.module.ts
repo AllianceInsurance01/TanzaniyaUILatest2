@@ -194,6 +194,15 @@ const routes: Routes = [
     }
    },
    {
+    path:'paymentstatus',
+    loadChildren: () => import('../../shared/CommonGrids/PaymentStatus/paymentstatus.module').then(m => m.PaymentStatusModule),
+    data:{
+     preload: true,
+     title: 'Policies',
+     breadcrumb:'Policies'
+   }
+  },
+   {
      path:'cancelledPolicies',
     loadChildren: () => import('../../shared/CommonGrids/cancelled-policies/cancelled-policies.module').then(m => m.CancelledPoliciesModule),
     data:{
