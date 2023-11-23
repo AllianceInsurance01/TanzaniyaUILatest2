@@ -259,7 +259,8 @@ this.enddate=this.datePipe.transform(this.EndDate, "dd/MM/yyyy");
               "BranchCode":this.branchValue,
               "LoginId":rowdata.BrokerLoginId,
               "page":'new',
-              "rowData":rowdata
+              "rowData":rowdata,
+              "BrokerName":rowdata.BrokerName
             }
             console.log('PPPPPPPP');
             sessionStorage.setItem('editdetails',JSON.stringify(quoteObj));
