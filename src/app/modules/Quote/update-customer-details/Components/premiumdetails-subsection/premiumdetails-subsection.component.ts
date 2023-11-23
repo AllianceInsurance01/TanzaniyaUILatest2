@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UpdateCustomerDetailsComponent } from '../../update-customer-details.component';
+import moment from 'moment';
 @Component({
   selector: 'app-premiumdetails-subsection',
   templateUrl: './premiumdetails-subsection.component.html',
@@ -7,7 +9,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class PremiumdetailsSubsectionComponent {
   panelOpenState = false;
-  @Input('cols') columnHeader: any = [];
+  @Input('cols') columnHeader: any;
   @Input('cols1') columnriskdetails: any = [];
   @Input('cols2') customerDetails: any = [];
   @Input('endrose') endrosement: boolean ;
@@ -22,15 +24,29 @@ export class PremiumdetailsSubsectionComponent {
   coverModificationYN: string;
   enableFieldsList: any[]=[];
   endorsementId: any;
-  constructor(private modalService: NgbModal){
+  enableDateSection: boolean;
+  policyStartDate: any=null;
+  policyEndDate: any=null;
+  minDate: Date;
+  maxDate: Date;
+  endMinDate: Date;
+  endMaxDate: Date;
+  noOfDays: number;
+  constructor(private modalService: NgbModal, private updateComponent:UpdateCustomerDetailsComponent){
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.productId = this.userDetails.Result.ProductId;
     this.productName =  this.userDetails.Result.ProductName;
+    this.minDate = new Date();
+    if(this.productId=='5' || this.productId=='4' || this.productId=='46' || this.productId=='29'){
+      this.minDate = new Date();
+      var d = this.minDate;
+      var year = d.getFullYear();
+      var month = d.getMonth();
+      var day = d.getDate();
+      this.maxDate = new Date(year, month, day+90);
+    }
   }
-  ngOninit(){
-    console.log("columnHeader",this.columnHeader);
-    console.log("columnHeader",this.columnriskdetails);
-    console.log("customerDetails",this.customerDetails);
+  ngOnInit(): void{
     let endorseObj = JSON.parse(sessionStorage.getItem('endorseTypeId'))
       if(endorseObj){
         this.endorsementId = endorseObj.EndtTypeId;
@@ -42,6 +58,93 @@ export class PremiumdetailsSubsectionComponent {
       }
       else{
       }
+      
+  }
+  ngAfterViewInit() {
+    console.log("columnHeader",this.columnHeader);
+    console.log("customerDetails",this.customerDetails);
+    let endDate = this.columnHeader?.ExpiryDate;
+    var dateParts = this.columnHeader?.InceptionDate.split("/");
+    var dateParts2 = this.columnHeader?.ExpiryDate.split('/');
+    var startDate = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
+    console.log(startDate,(new Date(startDate)).setHours(0,0,0,0),(new Date()).setHours(0,0,0,0))
+    if((new Date(startDate)).setHours(0,0,0,0) >= (new Date()).setHours(0,0,0,0) ){
+        this.enableDateSection = false;
+    }
+    else{
+      this.enableDateSection = true;
+      // month is 0-based, that's why we need dataParts[1] - 1
+      this.policyStartDate = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
+      this.policyEndDate = dateParts2[2]+'-'+dateParts2[1]+'-'+dateParts2[0];
+      this.updateComponent.modifiedYN='Y';
+      this.updateComponent.policyStartDate = this.policyStartDate;
+      this.updateComponent.policyEndDate = this.policyEndDate;
+    }
+  }
+  onStartDateChange(type){
+    if(this.productId!='4'){
+      if((this.productId=='5' || this.productId=='46' || this.productId=='29') && type=='change'){this.updateComponent.modifiedYN = 'Y'}
+      var d = this.policyStartDate;
+      var year = d.getFullYear();
+      var month = d.getMonth();
+      var day = d.getDate();
+      if(this.productId=='46'){
+        this.endMinDate = new Date(this.policyStartDate);
+        this.policyEndDate = new Date(year, month, day+29);
+        this.endMaxDate = new Date(year, month, day+30);
+        this.updateComponent.policyStartDate = this.policyStartDate;
+        //this.updateComponent.policyEndDate = this.policyEndDate;
+        this.onChangeEndDate(type);
+      }
+      else {
+        this.endMinDate = new Date(this.policyStartDate);
+        this.policyEndDate = new Date(year + 1, month, day-1);
+        this.endMaxDate = new Date(year + 2, month, day-1);
+        this.updateComponent.policyStartDate = this.policyStartDate;
+        //this.updateComponent.policyEndDate = this.policyEndDate;
+        this.onChangeEndDate(type);
+      }
+    }
+    else{
+      // var d = this.travelStartDate;
+      // var year = d.getFullYear();
+      // var month = d.getMonth();
+      // var day = d.getDate();
+      // this.endMinDate = new Date(this.travelStartDate);
+      // this.endMaxDate = new Date(year + 1, month, day-1);
+      //  this.updateComponent.travelStartDate = this.travelStartDate;
+      // if(this.noOfDays!='' && this.noOfDays!=undefined && this.noOfDays!=null){
+      //   this.travelEndDate = new Date(year, month, day+Number(this.noOfDays-1));
+      //   //this.endMaxDate = new Date(year + 1, month, day-1);
+      //   this.updateComponent.travelStartDate = this.travelStartDate;
+      //   this.updateComponent.travelEndDate = this.travelEndDate;
+      // }
+    }
+  }
+  onChangeEndDate(type){
+    if(this.productId!='4'){
+      if((this.productId=='5' || this.productId=='46' || this.productId=='29') && type=='change'){this.updateComponent.modifiedYN = 'Y'}
+    const oneday = 24 * 60 * 60 * 1000;
+    const momentDate = new Date(this.policyEndDate); // Replace event.value with your date value
+    const formattedDate = moment(momentDate).format("YYYY-MM-DD");
+    const formattedDatecurrent = new Date(this.policyStartDate);
+    console.log(formattedDate);
+    this.updateComponent.policyStartDate = this.policyStartDate;
+    this.updateComponent.policyEndDate = this.policyEndDate;
+    this.noOfDays = Math.round(Math.abs((Number(momentDate)  - Number(formattedDatecurrent) )/oneday)+1);
+    this.updateComponent.noOfDays = this.noOfDays;
+    }
+    else{
+    // const oneday = 24 * 60 * 60 * 1000;
+    // const momentDate = new Date(this.travelEndDate); // Replace event.value with your date value
+    // const formattedDate = moment(momentDate).format("YYYY-MM-DD");
+    // const formattedDatecurrent = new Date(this.travelStartDate);
+    // console.log(formattedDate);
+    // this.noOfDays = Math.round(Math.abs((Number(momentDate)  - Number(formattedDatecurrent) )/oneday)+1);
+    // this.updateComponent.travelStartDate = this.travelStartDate;
+    // this.updateComponent.travelEndDate = this.travelEndDate;
+    // this.updateComponent.noOfDays = this.noOfDays;
+    }
   }
   openmodel(modal){
     this.open(modal);

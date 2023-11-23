@@ -262,6 +262,8 @@ emiyn="N";
     this.insuranceId = this.userDetails.Result.InsuranceId;
     this.brokerbranchCode = this.userDetails.Result.BrokerBranchCode;
     this.loginType = this.userDetails.Result.LoginType;
+    let finalize = sessionStorage.getItem('FinalizeYN');
+      if(finalize) this.finalizeYN = finalize;
     this.updateComponent.showStepperSection = true;
     this.updateComponent.modifiedYN = 'N';
     if(loginType){
@@ -2205,10 +2207,9 @@ getMotorUsageList(vehicleValue){
             else if(this.statusValue=='RE') this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/customer-details']);
             else{
               this.onSetBackPage();
-             
             } 
           }
-      }
+       }
       else{
         if(this.endorsementSection && this.enableFieldsList.some(ele=>ele=='Covers' || ele=='AddOnCovers' || ele=='RemoveSection') && !this.endorseSIModification && this.endorsementId!=853){
           this.router.navigate(['/Home/policies/Endorsements/endorsementTypes']);
@@ -3339,7 +3340,8 @@ getMotorUsageList(vehicleValue){
     this.dataSource.filter = filterValue?.trim().toLowerCase();
   }
   onFormSubmit(){
-    console.log("Selected Covers",this.selectedCoverList)
+    console.log("Selected Covers",this.selectedCoverList);
+    this.updateComponent.modifiedYN = 'N';
     this.subuserType = sessionStorage.getItem('typeValue');
     if(this.selectedCoverList.length!=0){
       let coverList:any[]=[];
@@ -4304,6 +4306,7 @@ getMotorUsageList(vehicleValue){
     );
   }
   onUpdateFactor(type){
+    this.updateComponent.modifiedYN = 'N';
     if((this.statusValue!='' && this.statusValue!=null) || (this.endorsementSection && this.endorseCovers) || this.userType=='Issuer'){
       if(this.statusValue=='RA' || type=='calculate' || this.userType=='Issuer'){
         if(this.selectedCoverList.length!=0){

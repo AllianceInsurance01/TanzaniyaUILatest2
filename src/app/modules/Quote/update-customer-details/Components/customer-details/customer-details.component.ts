@@ -908,6 +908,9 @@ export class CustomerDetailsComponent implements OnInit {
     let status = sessionStorage.getItem('QuoteStatus');
     return ((this.adminSection && (status=='AdminRP' || status=='AdminRA')) || this.finalizeYN=='Y')
   }
+  checkDatesDisabled(){
+    return (new Date(this.policyStartDate)).setHours(0,0,0,0) < (new Date()).setHours(0,0,0,0)
+  }
   getExistingBuildingList(){
     let urlLink:any;
     let ReqObj = {
