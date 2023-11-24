@@ -1,0 +1,66 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div class="spancommon span_font_size">
+                Tira Searched Vehicles
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12 col-md-4 col-lg-2 offset-lg-1 input-control-container">
+                <label class="input-form-label">Start Date</label><span class="text-danger">*</span>
+                <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="StartDate" (dateChange)="search()" [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 col-lg-2 input-control-container">
+                <label class="input-form-label">End Date</label><span class="text-danger">*</span>
+                <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker1" [(ngModel)]="EndDate" (dateChange)="getalldetails()" [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12 mt-2">
+                <ng-container *ngIf="issuerData.length!=0">
+                    <app-grid-table [cols]="issuerHeader" [data]="issuerData" [Currency]="Currency" (onViews)="onViews($event,mymodal)">
+                    </app-grid-table>
+                </ng-container>
+                <ng-container *ngIf="issuerData.length==0">
+                    <div class="text-center spancommon span_font_size">
+                        No Quote Available
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<ng-template #mymodal let-modal>
+    <div class="modal-header" style="height: 48px;">
+        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Tira Message</span></h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="card">
+            <ng-container *ngIf="reqstring.length!=0">
+             Request String:{{reqstring}}
+           </ng-container>
+           <ng-container *ngIf="reqstring.length==0">
+                 No Data Found
+           </ng-container>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="custom-btn btn-5 spancommon span_font_size" (click)="modal.dismiss('Cross click')">Close</button>
+    </div>
+  </ng-template>

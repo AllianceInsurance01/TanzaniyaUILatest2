@@ -203,6 +203,24 @@ const routes: Routes = [
    }
   },
   {
+    path: 'others',
+    loadChildren: () => import('../../shared/CommonGrids/Others/others.module').then(m => m.OthersViewModule),
+    data: {
+      preload: true,
+      title: 'Others',
+      breadcrumb:  'Others',
+    }
+  },
+   {
+    path: 'premiaintegrationgrid',
+    loadChildren: () => import('../../shared/CommonGrids/othersmenu/premia.module').then(m => m.PremiaIntegrationViewModule),
+    data: {
+      preload: true,
+      title: 'Premia',
+      breadcrumb:  'Premia',
+    }
+  },
+  {
     path:'tirastatus',
     loadChildren: () => import('../../shared/CommonGrids/Tira/tira.module').then(m => m.TiraViewModule),
     data:{

@@ -1,0 +1,795 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div> Premia Integration View</div>
+            <div>QuoteNO:{{quoteno}}</div>
+        </div>
+       
+    </div>
+
+    <div class="card-body" *ngIf="!shows">
+        <div class="row">
+            <div class="col-12 col-lg-10 col-md-12" style="margin-left: auto;margin-right: auto;margin-top:auto;margin-bottom: auto;">
+                <div class="row">
+                    <div class="mt-2 col-12 col-md-3">
+                        <div class="item components-card">
+                        <div class="module-info-icon">
+                            <div class="d-flex justify-content-between" (click)="Details('PolicyDetail')" style="color:orangered;">
+                                <div> Policy Details </div>
+                                <div><i class="fa-solid fa-circle-arrow-right"></i></div>
+                            </div>
+                          </div>
+                    </div>
+                 </div>
+            <div class="mt-2 col-12 col-md-3">
+            <div class="item components-card">
+            <div class="module-info-icon">
+                <div class="d-flex justify-content-between" (click)="Details('Section')" style="color:orangered;">
+                    <div> Section Details </div>
+                    <div><i class="fa-solid fa-circle-arrow-right"></i></div>
+                </div>
+              </div>
+        </div>
+     </div>
+     <div class="mt-2 col-12 col-md-3">
+        <div class="item components-card">
+        <div class="module-info-icon">
+            <div class="d-flex justify-content-between" (click)="Details('Risk')" style="color:orangered;">
+                <div> Risk Details </div>
+                <div><i class="fa-solid fa-circle-arrow-right"></i></div>
+            </div>
+          </div>
+    </div>
+ </div>
+ <div class="mt-2 col-12 col-md-3">
+    <div class="item components-card">
+    <div class="module-info-icon">
+        <div class="d-flex justify-content-between" (click)="Details('Driver')" style="color:orangered;">
+            <div> Driver Details </div>
+            <div><i class="fa-solid fa-circle-arrow-right"></i></div>
+        </div>
+      </div>
+</div>
+</div>
+ <div class="mt-2 col-12 col-md-3">
+    <div class="item components-card">
+    <div class="module-info-icon">
+        <div class="d-flex justify-content-between" (click)="Details('Cover')" style="color:orangered;">
+            <div> Cover details</div>
+            <div><i class="fa-solid fa-circle-arrow-right"></i></div>
+        </div>
+      </div>
+</div>
+</div>
+<div class="mt-2 col-12 col-md-3">
+    <div class="item components-card">
+    <div class="module-info-icon">
+        <div class="d-flex justify-content-between" (click)="Details('Discount')" style="color:orangered;">
+            <div> Discount Detail</div>
+            <div><i class="fa-solid fa-circle-arrow-right"></i></div>
+        </div>
+      </div>
+</div>
+</div>
+<div class="mt-2 col-12 col-md-3">
+    <div class="item components-card">
+    <div class="module-info-icon">
+        <div class="d-flex justify-content-between" (click)="Details('Charge')" style="color:orangered;">
+            <div> Charge Detail</div>
+            <div><i class="fa-solid fa-circle-arrow-right"></i></div>
+        </div>
+      </div>
+</div>
+</div>
+<div class="mt-2 col-12 col-md-3">
+    <div class="item components-card">
+    <div class="module-info-icon">
+        <div class="d-flex justify-content-between" (click)="Details('vat')" style="color:orangered;">
+            <div> Vat Detail</div>
+            <div><i class="fa-solid fa-circle-arrow-right"></i></div>
+        </div>
+      </div>
+</div>
+</div>
+<div class="mt-2 col-12 col-md-3">
+    <div class="item components-card">
+    <div class="module-info-icon">
+        <div class="d-flex justify-content-between" (click)="Details('precal')" style="color:orangered;">
+            <div>Premia Caluclation</div>
+            <div><i class="fa-solid fa-circle-arrow-right"></i></div>
+        </div>
+      </div>
+</div>
+</div>
+<div class="mt-2 col-12 col-md-3">
+    <div class="item components-card">
+    <div class="module-info-icon">
+        <div class="d-flex justify-content-between" (click)="Details('Approval')" style="color:orangered;">
+            <div>Policy Approval</div>
+            <div><i class="fa-solid fa-circle-arrow-right"></i></div>
+        </div>
+      </div>
+</div>
+</div>
+<div class="mt-2 col-12 col-md-3">
+    <div class="item components-card">
+    <div class="module-info-icon">
+        <div class="d-flex justify-content-between" (click)="Details('Credit')" style="color:orangered;">
+            <div>Credit Details</div>
+            <div><i class="fa-solid fa-circle-arrow-right"></i></div>
+        </div>
+      </div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+    </div>
+    <div class="text-center mt-2">
+        <button class="btn btn-danger" (click)="backd()">Back</button>
+    </div>
+    </div>
+
+     <div class="card-body" *ngIf="shows">
+        <div class="row">
+            <div class="col-12 offset-lg-1 col-md-10 col-lg-10">
+                        <div class="leave-info" *ngIf="Name=='PolicyDetail' && shows">
+                    <div class="leave-info-title"> Policy Details </div>
+                    <ng-container *ngIf="PolicyData.length!=0">
+                     <div class="row" *ngFor="let s of PolicyData" style="margin-left:10px !important;">
+                        <div class="col-12 col-md-4 mt-2">
+                            <div> Customer</div>
+                            <div>{{s?.Customer}}</div>
+                        </div>
+                        <div class="col-12 col-md-4 mt-2">
+                            <div>Request Time</div>
+                            <div>{{s?.RequestTime}}</div>
+                        </div>
+                        <div class="col-12 col-md-4 mt-2">
+                            <div>Response Time</div>
+                            <div>{{s?.ResponseTime}}</div>
+                        </div>
+                        <div class="col-12 col-md-4 mt-2">
+                            <div> Status</div>
+                            <div>{{s?.Status}}</div>
+                        </div>
+                        <div class="col-12 col-md-4 mt-2">
+                            <div>Occupation</div>
+                            <div>{{s?.InsuredOccupation}}</div>
+                        </div>
+                        <div class="col-12 col-md-4 mt-2">
+                            <div>Premium</div>
+                            <div>{{s?.NetPremium}}</div>
+                        </div>
+                        <div class="col-12 col-md-4 mt-2">
+                            <div>Policy Period</div>
+                            <div>{{s?.PolicyPeriod}}</div>
+                        </div>
+                        <div class="col-12 col-md-4 mt-2">
+                            <div>Period From</div>
+                            <div>{{s?.PeriodFrom}}</div>
+                        </div>
+                        <div class="col-12 col-md-4 mt-2">
+                            <div>PeriodTo</div>
+                            <div>{{s?.PeriodTo}}</div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div>Policy Issue Date</div>
+                            <div>{{s?.PolicyIssueDt}}</div>
+                        </div>
+                     </div>
+                     </ng-container>
+                     <ng-container *ngIf="PolicyData.length==0">
+                        No Records Found
+                        </ng-container>
+            
+                        <div class="text-center mt-2">
+                            <button class="btn btn-danger" (click)="backs()">Back</button>
+                        </div>
+                        </div>
+                        <div class="leave-info" *ngIf="Name=='Section'">
+                                <div class="leave-info-title"> Section Details </div>
+                                <ng-container *ngIf="SectionData.length!=0">
+                                <div class="row" *ngFor="let s of SectionData" style="margin-left:10px !important;">
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Request ReferenceNo</div>
+                                        <div>{{s?.RequestReferenceNo}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Policy No</div>
+                                        <div>{{s?.quotationPolicyNo}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Request Time</div>
+                                        <div>{{s?.requestTime}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Response Time</div>
+                                        <div>{{s?.responseTime}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div> Status</div>
+                                        <div>{{s?.status}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>PWs ResponseType</div>
+                                        <div>{{s?.pWsResponseType}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>PWs Error </div>
+                                        <div>{{s?.pWsError}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Product Code</div>
+                                        <div>{{s?.productCode}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Iteration No</div>
+                                        <div>{{s?.iterationNo}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Scheme Desc</div>
+                                        <div>{{s?.schemeDesc}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>ServiceId</div>
+                                        <div>{{s?.serviceId}}</div>
+                                    </div>
+                                 </div>
+                                </ng-container>
+                                <ng-container *ngIf="SectionData.length==0">
+                                    No Records Found
+                                    </ng-container>
+                                    <div class="text-center mt-2">
+                                        <button class="btn btn-danger" (click)="backs()">Back</button>
+                                    </div>
+                        </div>
+                        <div class="leave-info" *ngIf="Name=='Risk'">
+                    <div class="leave-info-title"> Risk Details </div>
+                    <mat-accordion>
+                        <mat-expansion-panel (opened)="panelOpenState = true"
+                                             (closed)="panelOpenState = false">
+                          <mat-expansion-panel-header>
+                            <mat-panel-title>
+                               Risk Details
+                            </mat-panel-title>
+                          </mat-expansion-panel-header>
+                          <div class="maan-grid-item mt-3 p-0">
+                      <ng-container *ngIf="riskData.length!=0">
+                        <div class="row" *ngFor="let s of riskData" style="margin-left:10px !important;">
+                            <div class="col-12 col-md-4 mt-2">
+                                <div>Risk Id</div>
+                                <div>{{s?.RiskId}}</div>
+                            </div>
+                            <div class="col-12 col-md-4 mt-2">
+                                <div>Request Time</div>
+                                <div>{{s?.RequestTime}}</div>
+                            </div>
+                            <div class="col-12 col-md-4 mt-2">
+                                <div>Response Time</div>
+                                <div>{{s?.ResponseTime}}</div>
+                            </div>
+                            <div class="col-12 col-md-4 mt-2">
+                                <div> Status</div>
+                                <div>{{s?.Status}}</div>
+                            </div>
+                            <div class="col-12 col-md-4 mt-2">
+                                <div>PWs ResponseType</div>
+                                <div>{{s?.PWsResponseType}}</div>
+                            </div>
+                            <div class="col-12 col-md-4 mt-2">
+                                <div>PWs Error </div>
+                                <div>{{s?.PWsError}}</div>
+                            </div>
+                            <div class="col-12 col-md-4 mt-2">
+                                <div>Product Code</div>
+                                <div>{{s?.PraiProdCode}}</div>
+                            </div>
+                         </div>
+                        </ng-container>
+                    </div>
+                        </mat-expansion-panel>
+                      </mat-accordion>
+                    <!-- <ng-container *ngIf="riskData.length!=0">
+                        <div class="row" *ngFor="let s of riskData" style="margin-left:10px !important;">
+                            <div class="col-12 col-md-4 mt-2">
+                                <div>Risk Id</div>
+                                <div>{{s?.RiskId}}</div>
+                            </div>
+                            <div class="col-12 col-md-4 mt-2">
+                                <div>Request Time</div>
+                                <div>{{s?.RequestTime}}</div>
+                            </div>
+                            <div class="col-12 col-md-4 mt-2">
+                                <div>Response Time</div>
+                                <div>{{s?.ResponseTime}}</div>
+                            </div>
+                            <div class="col-12 col-md-4 mt-2">
+                                <div> Status</div>
+                                <div>{{s?.Status}}</div>
+                            </div>
+                            <div class="col-12 col-md-4 mt-2">
+                                <div>PWs ResponseType</div>
+                                <div>{{s?.PWsResponseType}}</div>
+                            </div>
+                            <div class="col-12 col-md-4 mt-2">
+                                <div>PWs Error </div>
+                                <div>{{s?.PWsError}}</div>
+                            </div>
+                            <div class="col-12 col-md-4 mt-2">
+                                <div>Product Code</div>
+                                <div>{{s?.PraiProdCode}}</div>
+                            </div>
+                         </div>
+                        </ng-container>
+                        <ng-container *ngIf="riskData.length==0">
+                            No Records Found
+                            </ng-container> -->
+                            <div class="text-center mt-2">
+                                <button class="btn btn-danger" (click)="backs()">Back</button>
+                            </div>
+                        </div>
+
+                        <ng-container *ngIf="Name=='Driver'">
+                        <div class="leave-info" *ngFor="let s of DriverDetail">
+                        <div class="leave-info-title"> Driver Details </div>
+                        <ng-container *ngIf="DriverDetail.length!=0">
+                            <div class="row" style="margin-left:10px !important;">
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Name</div>
+                                     <div>{{s.Name}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Request Time</div>
+                                    <div>{{s?.RequestTime}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Response Time</div>
+                                    <div>{{s?.ResponseTime}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div> Status</div>
+                                    <div>{{s?.Status}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>PWs ResponseType</div>
+                                    <div>{{s?.PWsResponseType}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>PWs Error </div>
+                                    <div>{{s?.PWsError}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Product Code</div>
+                                    <div>{{s?.ProductCode}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Date Of Birth</div>
+                                     <div>{{s.DateOfBirth | date: 'dd/MM/yyyy'}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Entry Date</div>
+                                     <div>{{s.EntryDate}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Id ResidentNo</div>
+                                     <div>{{s.IdResidentNo}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Iteration No</div>
+                                     <div>{{s.IterationNo}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Section Code</div>
+                                     <div>{{s.SecCode}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Type Of Class</div>
+                                     <div>{{s.TypeOfClass}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Service Id</div>
+                                     <div>{{s.ServiceId}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>License IssuedOn</div>
+                                     <div>{{s.LicenseIssuedOn}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>L1s2Id</div>
+                                     <div>{{s.L1s2Id}}</div>
+                                </div>
+                             </div>
+                        </ng-container>
+                       
+                         <ng-container *ngIf="DriverDetail.length==0">
+                                  No Records Found
+                         </ng-container>
+                         <div class="text-center mt-2">
+                            <button class="btn btn-danger" (click)="backs()">Back</button>
+                        </div>
+                        </div>
+                       </ng-container>
+                       <div *ngIf="Name=='Cover'">
+                        <ng-container *ngIf="CoverData.length!=0">
+                        <div class="leave-info" *ngFor="let s of CoverData">
+                            <div class="leave-info-title"> Cover Details </div>
+                            <div class="row" style="margin-left:10px !important;">
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Cover Desc</div>
+                                     <div>{{s.CoverDesc}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Cover Code</div>
+                                     <div>{{s.CoverCode}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Cover Id</div>
+                                     <div>{{s.CvrId}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Request Time</div>
+                                    <div>{{s?.RequestTime}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Response Time</div>
+                                    <div>{{s?.ResponseTime}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div> Status</div>
+                                    <div>{{s?.Status}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>PWs ResponseType</div>
+                                    <div>{{s?.PWsResponseType}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>PWs Error </div>
+                                    <div>{{s?.PWsError}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Product Code</div>
+                                    <div>{{s?.ProdCode}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Rate</div>
+                                     <div>{{s?.Rate}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Sum Insured</div>
+                                     <div>{{s?.SumInsured}}</div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2">
+                                    <div>Premium</div>
+                                     <div>{{s?.Premium}}</div>
+                                </div>
+                             </div>
+                            <div class="text-center mt-2">
+                                <button class="btn btn-danger" (click)="backs()">Back</button>
+                            </div>
+                        </div>
+                        </ng-container>
+                        <ng-container *ngIf="CoverData.length==0">
+                            No Record Found
+                        </ng-container>
+                    </div>
+                      <ng-container *ngIf="Name=='Discount'">
+                        <ng-container *ngIf="DiscountDetail.length!=0">
+                        <div class="leave-info" *ngFor="let s of DiscountDetail">
+                                <div class="leave-info-title"> Discount Details </div>
+                                <div class="row" style="margin-left:10px !important;">
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Request Time</div>
+                                        <div>{{s?.RequestTime}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Response Time</div>
+                                        <div>{{s?.ResponseTime}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div> Status</div>
+                                        <div>{{s?.Status}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>PWs ResponseType</div>
+                                        <div>{{s?.PWsResponseType}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>PWs Error </div>
+                                        <div>{{s?.PWsError}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Product Code</div>
+                                        <div>{{s?.ProdCode}}</div>
+                                    </div>
+                                  
+                                 </div>
+                        </div>
+                       </ng-container>
+                        <ng-container *ngIf="DiscountDetail.length==0">
+                            No Record Found
+                        </ng-container>
+                        <div class="text-center mt-2">
+                            <button class="btn btn-danger" (click)="backs()">Back</button>
+                        </div>
+                    </ng-container>
+                        <div class="leave-info" *ngIf="Name=='Charge'">
+                                <div class="leave-info-title"> Charge Details </div>
+                                <ng-container *ngIf="ChargeDetail.length!=0">
+                                <div class="row" *ngFor="let s of ChargeDetail" style="margin-left:10px !important;">
+                                    
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Charge Code</div>
+                                        <div>{{s?.ChargeCode}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Charge Amount</div>
+                                        <div>{{s?.ChargeAmount}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Charge Rate</div>
+                                        <div>{{s?.ChargeRate}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Request Time</div>
+                                        <div>{{s?.RequestTime}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Response Time</div>
+                                        <div>{{s?.ResponseTime}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div> Status</div>
+                                        <div>{{s?.Status}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>PWs ResponseType</div>
+                                        <div>{{s?.PWsResponseType}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>PWs Error </div>
+                                        <div>{{s?.PWsError}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Product Code</div>
+                                        <div>{{s?.ProdCode}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>RateModified Yn</div>
+                                        <div>{{s?.RateModifiedYn}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>RateModified Yn</div>
+                                        <div>{{s?.RateModifiedYn}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>ChargeModified Yn</div>
+                                        <div>{{s?.ChargeModifiedYn}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Charge Id</div>
+                                        <div>{{s?.ChgId}}</div>
+                                    </div>
+                                  
+                                 </div>
+                                </ng-container>
+                                 <ng-container *ngIf="ChargeDetail.length==0">
+                                    No Record Found
+                                </ng-container>
+                                <div class="text-center mt-2">
+                                    <button class="btn btn-danger" (click)="backs()">Back</button>
+                                </div>
+                        </div>
+                        <div class="leave-info" *ngIf="Name=='vat'">
+                                <div class="leave-info-title"> Vat Details </div>
+                                <ng-container *ngIf="VatDetail.length!=0">
+                                <div class="row" *ngFor="let s of VatDetail" style="margin-left:10px !important;">
+                                  
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Request Time</div>
+                                        <div>{{s?.requestTime}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Response Time</div>
+                                        <div>{{s?.responseTime}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div> Status</div>
+                                        <div>{{s?.status}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>PWs ResponseType</div>
+                                        <div>{{s?.pWsResponseType}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>PWs Error </div>
+                                        <div>{{s?.pWsError}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Product Code</div>
+                                        <div>{{s?.prodCode}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Vat Amount</div>
+                                        <div>{{s?.vatAmount}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Vat Percentage</div>
+                                        <div>{{s?.vatPerc}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Vat ApplyOn</div>
+                                        <div>{{s?.vatApplyOn}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Vat Id</div>
+                                        <div>{{s?.vatId}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Vat ModifiedYn</div>
+                                        <div>{{s?.vatModifiedYn}}</div>
+                                    </div>
+                                 </div>
+                                </ng-container>
+                                 <ng-container *ngIf="VatDetail.length==0">
+                                    No Record Found
+                          </ng-container>
+                          <div class="text-center mt-2">
+                            <button class="btn btn-danger" (click)="backs()">Back</button>
+                        </div>
+                        </div>
+                        <div class="leave-info" *ngIf="Name=='precal'">
+                                <div class="leave-info-title"> Premia Calculation </div>
+                                <ng-container *ngIf="issuerData.length!=0">
+                                <div class="row" *ngFor="let s of issuerData" style="margin-left:10px !important;">
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Risk Id</div>
+                                        <div>{{s?.RiskId}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Cover Code</div>
+                                        <div>{{s?.CoverCode}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Cover Description</div>
+                                        <div>{{s?.CoverDescription}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Cover Premium</div>
+                                        <div>{{s?.CoverPremium}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Request Time</div>
+                                        <div>{{s?.RequestTime}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Response Time</div>
+                                        <div>{{s?.ResponseTime}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div> Status</div>
+                                        <div>{{s?.status}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>PWs ResponseType</div>
+                                        <div>{{s?.PWsResponseType}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>PWs Error </div>
+                                        <div>{{s?.PWsError}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Product Code</div>
+                                        <div>{{s?.ProductCode}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Sum Insured</div>
+                                        <div>{{s?.SumInsured}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Product Code</div>
+                                        <div>{{s?.ProductCode}}</div>
+                                    </div>
+                                   
+                                 </div>
+                                </ng-container>
+                                <ng-container *ngIf="issuerData.length==0">
+                                          No Record Found
+                                </ng-container>
+                                <div class="text-center mt-2">
+                                    <button class="btn btn-danger" (click)="backs()">Back</button>
+                                </div>
+                        </div>
+                        <div class="leave-info" *ngIf="Name=='Approval'">
+                                <div class="leave-info-title"> Policy Details </div>
+                                <ng-container *ngIf="PolicyDetail.length!=0">
+                                <div class="row" *ngFor="let s of PolicyDetail" style="margin-left:10px !important;">
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Request Time</div>
+                                        <div>{{s?.RequestTime}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Response Time</div>
+                                        <div>{{s?.ResponseTime}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div> Status</div>
+                                        <div>{{s?.Status}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>PWs ResponseType</div>
+                                        <div>{{s?.PWsResponseType}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>PWs Error </div>
+                                        <div>{{s?.PWsError}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Request Time</div>
+                                        <div>{{s?.RequestTime}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div> Renewal CurrentStatus</div>
+                                        <div>{{s?.RenewalCurrentStatus}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Appr Description</div>
+                                        <div>{{s?.ApprDesc}}</div>
+                                    </div>
+                                    <div class="col-12 col-md-4 mt-2">
+                                        <div>Document No</div>
+                                        <div>{{s?.DocNo}}</div>
+                                    </div>
+                                 </div>
+                                </ng-container>
+                                <ng-container *ngIf="PolicyDetail.length==0">
+                                    No Records Found
+                                </ng-container>
+                                <div class="text-center mt-2">
+                                    <button class="btn btn-danger" (click)="backs()">Back</button>
+                                </div>
+                        </div>
+                        <div class="leave-info" *ngIf="Name=='Credit'">
+                                <div class="leave-info-title"> Credit Details </div>
+                                <ng-container *ngIf="CreditDetail.length!=0">
+                                    <div class="row" *ngFor="let s of CreditDetail" style="margin-left:10px !important;">
+                                        <div class="col-12 col-md-4 mt-2">
+                                            <div>Request Time</div>
+                                            <div>{{s?.RequestTime}}</div>
+                                        </div>
+                                        <div class="col-12 col-md-4 mt-2">
+                                            <div>Response Time</div>
+                                            <div>{{s?.ResponseTime}}</div>
+                                        </div>
+                                        <div class="col-12 col-md-4 mt-2">
+                                            <div> Status</div>
+                                            <div>{{s?.Status}}</div>
+                                        </div>
+                                        <div class="col-12 col-md-4 mt-2">
+                                            <div>PWs ResponseType</div>
+                                            <div>{{s?.PWsResponseType}}</div>
+                                        </div>
+                                        <div class="col-12 col-md-4 mt-2">
+                                            <div>PWs Error </div>
+                                            <div>{{s?.PWsError}}</div>
+                                        </div>
+                                     </div>
+                                </ng-container>
+                                <ng-container *ngIf="CreditDetail.length==0">
+                                    No Records
+                                </ng-container>
+                                <div class="text-center mt-2">
+                                    <button class="btn btn-danger" (click)="backs()">Back</button>
+                                </div>
+                               
+                        </div>
+                           
+                            
+
+                  </div>
+            </div>
+     </div>
+   
+</div>

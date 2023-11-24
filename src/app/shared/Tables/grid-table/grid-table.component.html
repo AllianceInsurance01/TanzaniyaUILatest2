@@ -139,6 +139,16 @@
                             class="fa fa-eye"></i></a>
                         
                      </ng-container>
+                     <ng-container *ngIf="col.config.isRequestdown">
+                        <button class="circle btn btn-primary btn-sm" (click)="onRequestdown.emit(element)">
+                            <i class="fa fa-download"></i>
+                        </button>&nbsp;
+                    </ng-container>
+                    <ng-container *ngIf="col.config.isResponsedown">
+                        <button class="circle btn btn-primary btn-sm" (click)="onResponsedown.emit(element)">
+                            <i class="fa fa-download"></i>
+                        </button>&nbsp;
+                    </ng-container>
                     <ng-container *ngIf="col.config.isDownload">
                         <a mat-raised-button class="mx-1" data-toggle="tooltip" data-placement="top" title="Download" (click)="onEdit.emit(element)"><i
                             class="fa fa-download"></i></a>
@@ -559,6 +569,17 @@
                           <i class="fas fa-eye"></i>
                         </button>&nbsp;
                     </ng-container>
+                    <ng-container *ngIf="col.config.isRequestdown">
+                        <button class="circle btn btn-primary btn-sm" (click)="onRequestdown.emit(element)">
+                            <i class="fa-solid fa-download"></i>
+                        </button>&nbsp;
+                    </ng-container>
+                    <ng-container *ngIf="col.config.isResponsedown">
+                        <button class="circle btn btn-primary btn-sm" (click)="onResponsedown.emit(element)">
+                            <i class="fas fa-download"></i>
+                        </button>&nbsp;
+                    </ng-container>
+                    
                     <ng-container *ngIf="col.config.isOpenGridAction">
                         <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                 <i class="fas fa-ellipsis-v"></i>

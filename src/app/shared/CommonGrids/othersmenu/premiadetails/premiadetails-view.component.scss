@@ -1,0 +1,81 @@
+// .card {
+//     background-color: white;
+//     //background-color:#efefef;
+//     border-radius: 4px;
+//     margin-top: 8px;
+//     margin-bottom: 5px;
+//     // padding: 15px 15px 10px 20px;
+//     padding:none !important;
+//     transition: 0.3s;
+//     box-shadow: 5px 1px 20px 1px #ddd;
+//   }
+
+  .line-in-middle {
+    width:50px;
+    height:auto;
+	  background: linear-gradient(to right, 
+	                              transparent 0%, 
+	                              transparent calc(50% - 0.81px), 
+	                              #EAECF0 calc(50% - 0.8px), 
+                                #EAECF0 calc(50% + 0.8px), 
+	                              transparent calc(50% + 0.81px), 
+	                              transparent 100%); 
+	}
+
+
+	:host ::ng-deep .mat-mdc-tab-body-content {
+		height: 100%;
+		overflow: hidden !important;
+	}
+
+	.heading1{
+		color: gray;
+	font-size: 13px;
+	font-weight:thin;
+	font-family: 'Inter', sans-serif !important;
+	}
+	.heading2{
+		font-size:14px !important;
+		font-weight: bold !important;
+		font-family: 'Inter', sans-serif !important;
+	}
+
+.components-card{
+		//background-color: #e1e8eb;
+		//display: flex;
+		box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+		//align-items: center;
+		//justify-content: space-between;
+		padding: 0.8rem 0.9rem;
+	}
+.item{
+		border-radius: 10px;
+		cursor: pointer;
+	}
+	.components-card:hover {
+		box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+		transition: all;
+	}
+
+	.leave-info{
+		box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+		border-radius: 10px;
+		cursor: pointer;
+		margin: 1rem;
+		background-color: white;
+		overflow: hidden;
+	}
+	.leave-info .leave-info-title{
+		background-color: #22C55E;
+		color: white;
+		padding: 1rem;
+	}
+	.leave-info .list-group-item{
+		// display: flex;
+		// justify-content: space-between;
+		align-items: center;
+		background-color: transparent;
+	}
+	.list-group-flush {
+		border-radius: 0;
+	}
