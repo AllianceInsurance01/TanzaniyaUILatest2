@@ -768,6 +768,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
             } }
             this.fieldsMachinery[0].fieldGroup[0].fieldGroup[0].fieldGroup[6].hooks = regionHooks;
             this.getallriskMachinery();
+            this.getMachineryRisk();
           }
           else this.nine = false;
         }
@@ -777,7 +778,6 @@ export class DomesticRiskDetailsComponent implements OnInit {
             this.sumInsured =false;
             let fireData = new LocationDetails();
             this.fieldss = fireData?.fields;  
-            console.log('dddddddddddddddddd')
             this.productItem = new ProductData();
             this.formSection = true; this.viewSection = false;
       }
@@ -1054,6 +1054,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
           } }
           this.fieldsMachinery[0].fieldGroup[0].fieldGroup[0].fieldGroup[6].hooks = regionHooks;
           this.getallriskMachinery();
+          this.getMachineryRisk();
         }
         else {
           this.nine = false;
@@ -3320,9 +3321,6 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
           else if(this.nine){
             this.getMachineryRisk();
             }
-            else if(this.nine){
-              this.getMachineryRisk();
-              }
       })
   }
   onSIValueChange (args) {
