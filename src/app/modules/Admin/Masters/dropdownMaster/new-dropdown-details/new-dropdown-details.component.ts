@@ -344,8 +344,11 @@ let ItemId
     );
   }
   tableName(){
+    let Reqobj={
+      "InsuranceId": this.insuranceId,
+    }
     let urlLink = `${this.CommonApiUrl1}dropdown/mastertable`;
-    this.sharedService.onGetMethodSync(urlLink).subscribe(
+    this.sharedService.onPostMethodSync(urlLink,Reqobj).subscribe(
       (data:any) => {
         if (data.Result){
           let obj = [];
@@ -356,8 +359,11 @@ let ItemId
     );
   }
   getKeyTableList(){
+    let Reqobj={
+      "InsuranceId": this.insuranceId,
+    }
     let urlLink = `${this.CommonApiUrl1}dropdown/eservicetable`;
-    this.sharedService.onGetMethodSync(urlLink).subscribe(
+    this.sharedService.onPostMethodSync(urlLink,Reqobj).subscribe(
       (data:any) => {
         if (data.Result){
           let obj = [];
@@ -389,9 +395,11 @@ let ItemId
     );
   }
   keyTable(){
-
+    let Reqobj={
+      "InsuranceId": this.insuranceId,
+    }
     let urlLink = `${this.CommonApiUrl1}dropdown/eservicetable`;
-    this.sharedService.onGetMethodSync(urlLink).subscribe(
+    this.sharedService.onPostMethodSync(urlLink,Reqobj).subscribe(
       (data:any) => {
         if (data.Result){
           let obj = [];
