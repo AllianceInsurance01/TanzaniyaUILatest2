@@ -63,9 +63,11 @@ export class PremiaConfigDetailsComponent implements OnInit {
 
   }
   getpremiaList() {
-
+    let ReqObj = {
+      "InsuranceId":this.insuranceId
+         }
     let urlLink = `${this.CommonApiUrl}dropdown/integratointable`;
-    this.sharedService.onGetMethodSync(urlLink).subscribe(
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         if (data.Result) {
           let obj = [];
@@ -78,9 +80,11 @@ export class PremiaConfigDetailsComponent implements OnInit {
     );
   }
   getmultpremiaList() {
-
+    let ReqObj = {
+      "InsuranceId":this.insuranceId
+         }
     let urlLink = `${this.CommonApiUrl}dropdown/sourcetable`;
-    this.sharedService.onGetMethodSync(urlLink).subscribe(
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         if (data.Result) {
           let obj = [];

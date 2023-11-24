@@ -29,7 +29,7 @@ export class MotorDocumentsComponent implements OnInit {
   quoteHeader:any[]=[];
   customerData:any[]=[];
   innerColumnHeader:any[]=[];
-  innerTableData:any[]=[];
+  innerTableData:any[]=[];tiradetails:any[]=[];
   CyberItem:any[]=[];
   search: any;
   searchValue: any;
@@ -287,6 +287,7 @@ export class MotorDocumentsComponent implements OnInit {
             this.Documentview();
             this.onCustomerSearch();
             this.getallriskDetails();
+            this.getTiraDetails();
            }
            if(this.productId!='42'){
             this.getbuilding();
@@ -315,9 +316,9 @@ export class MotorDocumentsComponent implements OnInit {
             this.getMoneyDetails();
            }
 
-           if(this.ReferenceNo){
-            this.onRating()
-           }
+          //  if(this.ReferenceNo){
+          //   this.onRating()
+          //  }
 
            if(this.productId =='46'){
             this.getmotordetails();
@@ -727,7 +728,22 @@ this.passengerName=type;
         );
        }
 
-
+       onDownload(type){
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href',type);
+        link.setAttribute('download','Request');
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        // let  a = document.createElement("a");
+        // document.body.appendChild(a);
+        // let file = new Blob(type, {type:'text/plain'});
+        //   let fileURL = window.URL.createObjectURL(file);
+        //   a.href = fileURL;
+        //   a.download = 'log';
+        //   a.click();
+       }
        onPremium(){
         let ReqObj={
           "RequestReferenceNo":this.ReferenceNo,
@@ -1254,6 +1270,21 @@ onListDocumentDownload(vehicleIndex,doc){
     (err) => { },
   );
 }
-
+getTiraDetails(){
+  let ReqObj={
+    "QuoteNo":this.quoteNo,
+  }
+  let urlLink = `${this.CommonApiUrl}api/tiraview`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      console.log(data);
+      if(data?.Result){
+          this.tiradetails=data?.Result;
+          console.log('tiradetails',this.tiradetails);
+      }
+    },
+    (err) => { },
+  );
+}
 
 }

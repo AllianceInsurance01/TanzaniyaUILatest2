@@ -511,8 +511,11 @@ export class AddReferralDetailsComponent implements OnInit {
     );
   }
   tableName(){
+    let Reqobj={
+      "InsuranceId": this.insuranceId,
+    }
     let urlLink = `${this.CommonApiUrl1}dropdown/mastertable`;
-    this.sharedService.onGetMethodSync(urlLink).subscribe(
+    this.sharedService.onPostMethodSync(urlLink,Reqobj).subscribe(
       (data:any) => {
         if (data.Result){
           let obj = [];
@@ -523,8 +526,11 @@ export class AddReferralDetailsComponent implements OnInit {
     );
   }
   getKeyTableList(){
+    let Reqobj={
+      "InsuranceId": this.insuranceId,
+    }
     let urlLink = `${this.CommonApiUrl1}dropdown/eservicetable`;
-    this.sharedService.onGetMethodSync(urlLink).subscribe(
+    this.sharedService.onPostMethodSync(urlLink,Reqobj).subscribe(
       (data:any) => {
         if (data.Result){
           let obj = [];
@@ -558,9 +564,11 @@ export class AddReferralDetailsComponent implements OnInit {
     console.log('DropDown',this.DropDownDetails)
   }
   keyTable(){
-
+    let Reqobj={
+      "InsuranceId": this.insuranceId,
+    }
     let urlLink = `${this.CommonApiUrl1}dropdown/eservicetable`;
-    this.sharedService.onGetMethodSync(urlLink).subscribe(
+    this.sharedService.onPostMethodSync(urlLink,Reqobj).subscribe(
       (data:any) => {
         if (data.Result){
           let obj = [];

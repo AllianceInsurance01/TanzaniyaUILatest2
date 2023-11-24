@@ -1252,7 +1252,8 @@
 
            <mat-tab label="Tira Details">
             <div class="card">
-                <div class="row p-5 ml-4 mr-4"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
+                <ng-container *ngIf="tiradetails.length!=0">
+                <div class="row p-5 ml-4 mr-4" *ngFor="let cus of tiradetails"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
                     <div class="col-12 col-md-3 col-lg-3">
                         <div>
                             <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;">Tira Details</h1></div>
@@ -1261,21 +1262,21 @@
                                 <div class="row mt-2">
                                  
                                     <div class="col-12 mt-2">
-                                        <div class="heading1">CoverNoteNo</div>
-                                        <div class="heading2">10523-20930-89713</div>
+                                        <div class="heading1">Request Id</div>
+                                        <div class="heading2">{{cus?.RequestId}}</div>
                                     </div>
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-12 mt-2">
-                                        <div class="heading1">Response_Id_Successful</div>
-                                        <div class="heading2" >EWAY1690539843418</div>
+                                        <div class="heading1">Response Id</div>
+                                        <div class="heading2" >{{cus?.ResponseId}}</div>
                                     </div>
                                 </div>
                                   
                                 <div class="row mt-2">
                                     <div class="col-12 mt-2">
-                                        <div class="heading1">City</div>
-                                        <div class="heading2">23002-20931-14913</div>
+                                        <div class="heading1">Entry Date</div>
+                                        <div class="heading2">{{cus?.EntryDate}}</div>
                                     </div>
                                 </div>
                                   
@@ -1290,28 +1291,31 @@
                                     <div class="Personal Details">
                                         <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">History</h1></div>
                                        </div>
-                                       <div *ngFor="let s of History">
+                                       <div>
                                        <div class="row mt-2">
-                                        <div class="col-6 col-md-4 col-md-4 mt-2">
+                                        <!-- <div class="col-6 col-md-4 col-md-4 mt-2">
     
                                            <div class="heading3">Status</div>
-                                           <div class="heading4">{{s.Status}}</div>
+                                           <div class="heading4">{{cus?.Status}}</div>
+                                        </div> -->
+                                        <div class="col-6 col-md-4 col-md-4 mt-2">
+                                            <div class="heading3">Status</div>
+                                            <div class="heading4">{{cus.StatusDesc}}</div>
+                                        </div>
+                                        <div class="col-6 col-md-4 col-md-4 mt-2">
+                                            <div class="heading3">Status Code</div>
+                                            <div class="heading4">{{cus.StatusCode}}</div>
                                         </div>
                                         <div class="col-6 col-md-4 col-md-4 mt-2">
                                             <div class="heading3">AcknowledgementId</div>
-                                            <div class="heading4">{{s.AcknowledgementId}}</div>
+                                            <div class="heading4">{{cus?.AcknowledgementId}}</div>
                                         </div>
-                                        <div class="col-6 col-md-4 col-md-4 mt-2">
-                                            <div class="heading3">RequestStatusCode</div>
-                                            <div class="heading4">{{s.RequestStatusCode}}</div>
-                                        </div>
-                                        
                                     </div>
                                     <div class="row mt-2">
                                            <div class="col-12 col-md-12 col-lg-12 mt-2">
                                                 <div class="heading3">RequestFilePath</div>
                                                 <div class="heading4">
-                                                    <a style="text-decoration:underline;color: rgb(18, 174, 236);cursor: pointer;">{{s.RequestFilePath}}</a></div>
+                                                    <a style="text-decoration:underline;color: rgb(18, 174, 236);cursor: pointer;" (click)="onDownload(cus?.RequestFilePath)">{{cus?.RequestFilePath}}</a></div>
                                                </div>
                                             </div>
                                         
@@ -1319,7 +1323,7 @@
                                         <div class="col-12 col-md-12 col-lg-12 mt-2">
                                             <div class="heading1">ResponseFilePath</div>
                                             <div class="heading2">
-                                                <a style="text-decoration:underline;color: rgb(18, 174, 236);cursor: pointer;"> {{s.ResponseFilePath}}</a>
+                                                <a style="text-decoration:underline;color: rgb(18, 174, 236);cursor: pointer;" (click)="onDownload(cus?.ResponseFilePath)">{{cus?.ResponseFilePath}}</a>
                                                </div>
                                         </div>
                                         </div>
@@ -1332,6 +1336,10 @@
                         
                        
                 </div>
+               </ng-container>
+               <ng-container *ngIf="tiradetails.length==0">
+                     No Data Found
+               </ng-container>
             </div>
            </mat-tab>
 
