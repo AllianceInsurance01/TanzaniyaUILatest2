@@ -32,6 +32,8 @@ export class GridTableComponent implements OnInit, OnChanges, AfterViewInit {
   // tslint:disable-next-line: no-output-rename
   @Output('onOpenCoverAction') onOpenCoverAction = new EventEmitter();
   @Output('onViews') onViews = new EventEmitter();
+  @Output('onReqPath') onReqPath = new EventEmitter();
+  @Output('onResPath') onResPath = new EventEmitter();
   @Output('onGetSchedule') onGetSchedule = new EventEmitter();
   @Output('onGetSchedules') onGetSchedules = new EventEmitter();
   @Output('onView') onView = new EventEmitter();
@@ -43,6 +45,7 @@ export class GridTableComponent implements OnInit, OnChanges, AfterViewInit {
   @Output('onInfo') onInfo = new EventEmitter();
   @Output('onCredit') onCredit = new EventEmitter();
   @Output('onDebit') onDebit = new EventEmitter();
+
   @Output('countBasedPolicy') countBasedPolicy = new EventEmitter();
   public dataSource: any;
   @ViewChild(MatSort) sort!: MatSort;

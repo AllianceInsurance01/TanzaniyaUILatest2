@@ -192,19 +192,54 @@
                 </div>
             </div>   
             <div class="row mt-1 customPadding">
-                
-                <div class="col-12 col-md-4 col-lg-4 col-xl-4" style="position: inherit;overflow: revert;">
+                <div class="col-12 col-md-4 col-lg-4 col-xl-4" style="position: inherit;overflow: revert;" *ngIf="!enableDateSection">
                     <div class="input-control-container">
-                        <label class="input-form-label">Policy Start Date</label>
+                        <label class="input-form-label">Departure Date</label>
                         <div class="input-form-radio-box">
                             <span class="spancommon span_font_size">{{columnHeader?.InceptionDate}}</span>
     
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-4 col-lg-4 col-xl-4" style="position: inherit;overflow: revert;">
+                <div class="col-12 col-md-4 col-lg-4 col-xl-4" style="position: inherit;overflow: revert;" *ngIf="!enableDateSection">
                     <div class="input-control-container">
-                        <label class="input-form-label">Policy End Date</label>
+                        <label class="input-form-label">Arrival Date</label>
+                        <div class="input-form-radio-box">
+                            <span class="spancommon span_font_size">{{columnHeader?.ExpiryDate}}</span>
+    
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4" *ngIf="enableDateSection">
+                    <label class="input-form-label spancommon span_font_size">Departure Date<span class="text-danger">*</span></label>
+                    <mat-form-field appearance="fill">
+                        <!-- <mat-label>Departure Date<span class="text-danger">*</span></mat-label> -->
+                        <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" (dateChange)="onStartDateChange('change')" [(ngModel)]="travelStartDate" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4" *ngIf="enableDateSection">
+                    <label class="input-form-label spancommon span_font_size">Arrival Date<span class="text-danger">*</span></label>
+                    <mat-form-field appearance="fill">
+                        <!-- <mat-label>Arrival Date<span class="text-danger">*</span></mat-label> -->
+                        <input matInput [matDatepicker]="picker2"  disabled [min]="endMinDate" (dateChange)="onChangeEndDate('change')" [(ngModel)]="travelEndDate" [ngModelOptions]="{standalone: true}">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 col-xl-4" style="position: inherit;overflow: revert;" *ngIf="!enableDateSection">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Departure Date</label>
+                        <div class="input-form-radio-box">
+                            <span class="spancommon span_font_size">{{columnHeader?.InceptionDate}}</span>
+    
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4 col-xl-4" style="position: inherit;overflow: revert;" *ngIf="!enableDateSection">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Arrival Date</label>
                         <div class="input-form-radio-box">
                             <span class="spancommon span_font_size">{{columnHeader?.ExpiryDate}}</span>
     
@@ -648,7 +683,7 @@
                         
                         <div class="col-12 col-md-4 col-lg-4 col-xl-4" style="position: inherit;overflow: revert;">
                             <div class="input-control-container">
-                                <label class="input-form-label">Policy Start Date</label>
+                                <label class="input-form-label">Departure Date</label>
                                 <div class="input-form-radio-box">
                                     <span class="spancommon span_font_size">{{columnHeader?.InceptionDate}}</span>
             
@@ -657,7 +692,7 @@
                         </div>
                         <div class="col-12 col-md-4 col-lg-4 col-xl-4" style="position: inherit;overflow: revert;">
                             <div class="input-control-container">
-                                <label class="input-form-label">Policy End Date</label>
+                                <label class="input-form-label">Arrival Date</label>
                                 <div class="input-form-radio-box">
                                     <span class="spancommon span_font_size">{{columnHeader?.ExpiryDate}}</span>
             

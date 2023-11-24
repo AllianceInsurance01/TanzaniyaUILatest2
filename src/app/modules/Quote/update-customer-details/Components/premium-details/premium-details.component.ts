@@ -1204,7 +1204,9 @@ toggle(index: number) {
      }
   onProceed(){
     if(this.updateComponent.modifiedYN=='Y'){
-        let startDate = this.updateComponent.policyStartDate;
+      let startDate = null;
+      if(this.productId=='4') startDate = this.updateComponent.travelStartDate;
+      else startDate = this.updateComponent.policyStartDate;
         if(startDate){
             this.updatePolicyDate(startDate);
         }
