@@ -1,0 +1,42 @@
+<div class="card">
+    <div class="card-header">Premia View</div>
+    <div class="card-body">
+        <div class="row mb-2">
+            <div class="col-12 col-md-4 col-lg-2 input-control-container">
+                <label class="input-form-label">Start Date</label><span class="text-danger">*</span>
+                <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker" [(ngModel)]="startdate" [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4 col-lg-2 input-control-container">
+                <label class="input-form-label">End Date</label><span class="text-danger">*</span>
+                <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker1" [(ngModel)]="enddate" [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 col-lg-3 col-xl-3 col-12">
+                <div class="input-control-container">
+                    <label class="input-form-label">Product<span class="text-required">*</span></label>
+                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="productId" [items]="productList" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                </div>
+            </div>
+            <div class="col-md-2 col-xl-2 col-lg-2 mt-4" *ngIf="enddate && productId">
+                <button class="custom-btn btn-6" matRipple (click)="onCustomerSearch()"><i class="fas fa-search"></i>&nbsp;Search </button>
+            </div>
+        </div>
+        <ng-container *ngIf="issuerData && show">
+            <app-grid-table [cols]="issuerHeader" [data]="issuerData" [filterValue]="filterValue" changeStatus="true" (onViews)="onViews($event)">
+            </app-grid-table>
+            <!-- <app-commodity-table [cols]="quoteHeader" [data]="quoteData" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousData($event)" (onLoadNextData)="onNextData($event)"  (onView)="onViews($event)">
+            </app-commodity-table> -->
+        </ng-container>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,782 @@
+<div>
+    <div class="card-body">
+           <div class="row">
+            <div class="col-12 col-lg-1 col-md-1" style="background: #feb602!important;border-radius: 10px 10px !important;">
+                <!--background: #feb602 #f7d560-->
+                    <div>
+                        <div class="mt-2">
+                            <div (click)="redirect('payment')">
+                            <img src="../../../../../assets/pay.png" width="70px" height="60px">
+                            <span class="header9" style="color:#fff !important;font-weight:700;">
+                                Payment
+                            </span>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <div (click)="redirect('notifications')">
+                                <img src="../../../../../assets/notification.png" width="70px" height="60px">
+                                <span class="header9" style="color:#fff !important;font-weight:700;">
+                                   Notifications
+                                </span>
+                                </div>
+                           
+                        </div>
+                        <div class="header8 mt-2">
+                            <div (click)="redirect('policy')">
+                                <img src="../../../../../assets/policy2.png" width="70px" height="60px">
+                                <span class="header9" style="color:#fff !important;font-weight:700;">
+                                   Policy
+                                </span>
+                                </div>
+                        </div>
+                        <div class="header8 mt-2">
+                            <div (click)="redirect('Searchvech')">
+                                <img src="../../../../../assets/search1.png" width="70px" height="60px">
+                                <span class="header9" style="color:#fff !important;font-weight:700;">
+                                   Tira Seach Vehicle
+                                </span>
+                                </div>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="col-lg-11 col-md-11 col-12" style="box-shadow: 0 0 50px #ccc;border-radius:10px 10px !important;">
+                <div class="container">
+                    <div class="d-flex justify-content-end" *ngIf="show">
+                        <div *ngIf="!nextbtn">
+                            <button class="btn btn-success" style="font-size: 14px !important;" (click)="next()">Next</button>
+                        </div>
+                        <div *ngIf="nextbtn">
+                            <button class="btn btn-danger" style="font-size: 14px !important;" (click)="backs()">Back</button>
+                        </div>
+                      </div>
+                    <div class="gradient-cards">
+                      <div class="card" *ngIf="show && !nextbtn">
+                        <div class="author"> Latest Cash Payment</div>
+                        <div class="container-card">
+                         <div>
+                              <div class="row light">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        QuoteNo
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{cashpayment?.QuoteNo}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        BranchName
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{cashpayment?.BranchName}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        CurrencyId
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{cashpayment?.CurrencyId}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        CustomerId
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{cashpayment?.CustomerId}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        CustomerName
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{cashpayment?.CustomerName}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        EntryDate
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{cashpayment?.EntryDate}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Exchange Rate
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{cashpayment?.ExchangeRate}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Merchant No
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{cashpayment?.MerchantReference}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        PaymentId
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{cashpayment?.PaymentId}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Payment Type
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{cashpayment?.PaymentTypedesc}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Payment Status
+                                    </div>
+                                    <div class="header9 mt-1" style="color: green !important;">
+                                        {{cashpayment?.PaymentStatus}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Premium Lc
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{cashpayment?.PremiumLc}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Email
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{cashpayment?.CustomerEmail}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Updated Date 
+                                    </div>
+                                    <div class="header9 mt-1" style="color: green !important;">
+                                        {{cashpayment?.UpdatedDate}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Tiny Url
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{cashpayment?.TinyUrl}}
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                        </div>
+                      </div>
+                      <div class="card" *ngIf="show && !nextbtn">
+                        <div class="author">Latest Cheque Payment</div>
+                        <div class="container-card">
+                         <div>
+                              <div class="row light">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        QuoteNo
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{chequepayment?.QuoteNo}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        BranchName
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{chequepayment?.BranchName}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        CurrencyId
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{chequepayment?.CurrencyId}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        CustomerId
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{chequepayment?.CustomerId}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        CustomerName
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{chequepayment?.CustomerName}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        EntryDate
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{chequepayment?.EntryDate}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Exchange Rate
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{chequepayment?.ExchangeRate}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Merchant No
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{chequepayment?.MerchantReference}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        PaymentId
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{chequepayment?.PaymentId}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Payment Type
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{chequepayment?.PaymentTypedesc}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Payment Status
+                                    </div>
+                                    <div class="header9 mt-1" style="color: green !important;">
+                                        {{chequepayment?.PaymentStatus}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Premium Lc
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{chequepayment?.PremiumLc}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Email
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{chequepayment?.CustomerEmail}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Updated Date 
+                                    </div>
+                                    <div class="header9 mt-1" style="color: green !important;">
+                                        {{chequepayment?.UpdatedDate}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Tiny Url
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{chequepayment?.TinyUrl}}
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+                        </div>
+                      </div>
+
+                      <div class="card" *ngIf="show && nextbtn">
+                        <div class="author">Latest Online Payment</div>
+                        <div class="container-card">
+                         <div>
+                              <div class="row light">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        QuoteNo
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{OnlinePayment?.QuoteNo}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        BranchName
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{OnlinePayment?.BranchName}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        CurrencyId
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{OnlinePayment?.CurrencyId}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        CustomerId
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{OnlinePayment?.CustomerId}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        CustomerName
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{OnlinePayment?.CustomerName}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        EntryDate
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{OnlinePayment?.EntryDate}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Exchange Rate
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{OnlinePayment?.ExchangeRate}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Merchant No
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{OnlinePayment?.MerchantReference}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        PaymentId
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{OnlinePayment?.PaymentId}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Payment Type
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{OnlinePayment?.PaymentTypedesc}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Payment Status
+                                    </div>
+                                    <div class="header9 mt-1" style="color: green !important;">
+                                        {{OnlinePayment?.PaymentStatus}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Premium Lc
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{OnlinePayment?.PremiumLc}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Email
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{OnlinePayment?.CustomerEmail}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Updated Date 
+                                    </div>
+                                    <div class="header9 mt-1" style="color: green !important;">
+                                        {{OnlinePayment?.UpdatedDate}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Country
+                                    </div>
+                                    <div class="header9 mt-1" style="color: green !important;">
+                                        {{OnlinePayment?.ReqBillToCountry}}
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            <div class="row light mt-2">
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="header8">
+                                    Tiny Url
+                                </div>
+                                <div class="header9 mt-1">
+                                    {{OnlinePayment?.TinyUrl}}
+                                </div>
+                            </div>
+                           </div>
+                         </div>
+                        </div>
+                      </div>
+
+                      <div class="card" *ngIf="show && nextbtn">
+                        <div class="author">Latest Credit Payment</div>
+                        <div class="container-card">
+                         <div>
+                              <div class="row light">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        QuoteNo
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{CreditPayment?.QuoteNo}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        BranchName
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{CreditPayment?.BranchName}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        CurrencyId
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{CreditPayment?.CurrencyId}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        CustomerId
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{CreditPayment?.CustomerId}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        CustomerName
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{CreditPayment?.CustomerName}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        EntryDate
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{CreditPayment?.EntryDate}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Exchange Rate
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{CreditPayment?.ExchangeRate}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Merchant No
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{CreditPayment?.MerchantReference}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        PaymentId
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{CreditPayment?.PaymentId}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Payment Type
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{CreditPayment?.PaymentTypedesc}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Payment Status
+                                    </div>
+                                    <div class="header9 mt-1" style="color: green !important;">
+                                        {{CreditPayment?.PaymentStatus}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Premium Lc
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{CreditPayment?.PremiumLc}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Email
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{CreditPayment?.CustomerEmail}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Updated Date 
+                                    </div>
+                                    <div class="header9 mt-1" style="color: green !important;">
+                                        {{CreditPayment?.UpdatedDate}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Country
+                                    </div>
+                                    <div class="header9 mt-1" style="color: green !important;">
+                                        {{CreditPayment?.ReqBillToCountry}}
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            <div class="row light mt-2">
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="header8">
+                                    Tiny Url
+                                </div>
+                                <div class="header9 mt-1">
+                                    {{CreditPayment?.TinyUrl}}
+                                </div>
+                            </div>
+                           </div>
+                         </div>
+                        </div>
+                      </div>
+
+
+                      <div class="card" *ngIf="noti">
+                        <div class="author">Latest SentMail</div>
+                        <div class="container-card">
+                         <div>
+                              <div class="row light">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="header8">
+                                        FromEmail
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{SentMail?.FromEmail}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="header8">
+                                        ToEmail
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{SentMail?.ToEmail}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="header8">
+                                        Mail Subject
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{SentMail?.MailSubject}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="header8">
+                                        Mail Response
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{SentMail?.MailResponse}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="header8">
+                                        Mail Transaction Id
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{SentMail?.MailTranId}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="header8">
+                                        Notiftification No
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{SentMail?.NotifNo}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="header8">
+                                    Mail Body
+                                </div>
+                                <div class="header9 mt-1">
+                                    {{SentMail?.MailBody}}
+                                </div>
+                            </div>
+                           </div>
+                         </div>
+                        </div>
+                      </div>
+
+                      <div class="card" *ngIf="noti">
+                        <div class="author">Latest SentSms</div>
+                        <div class="container-card">
+                         <div>
+                              <div class="row light">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="header8">
+                                        Sms From
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{Sms?.SmsFrom}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="header8">
+                                        Sms Type
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{Sms?.SmsType}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="header8">
+                                        Notification No
+
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{Sms?.NotifNo}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="header8">
+                                        Response Message
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{Sms?.ResMessage}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="header8">
+                                        MobileNo
+
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{Sms?.MobileNo}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="header8">
+                                        Request Time
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{Sms?.reqTime}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="header8">
+                                    Sms Content
+                                </div>
+                                <div class="header9 mt-1">
+                                    {{Sms?.SmsContent}}
+                                </div>
+                            </div>
+                           </div>
+                         </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                 
+            </div>
+           </div>
+    </div>
+</div>
+
+
