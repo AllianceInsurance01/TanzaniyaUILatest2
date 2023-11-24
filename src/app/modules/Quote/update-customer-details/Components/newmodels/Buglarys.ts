@@ -541,7 +541,7 @@ export class Burglarys{
                                     {
                                       className: "mt-3",
                                       type: 'commaSeparator',
-                                      key: 'GoodsSi',
+                                      key: 'FurnitureSi',
                     
                                       templateOptions: {
                                         disabled: this.checkDisable('SumInsured'),
@@ -560,7 +560,7 @@ export class Burglarys{
                                     },
                                     {
                                       type: 'select',
-                                      key: 'GoodsLossPercent',
+                                      key: 'FurnitureLossPercent',
                                       className:'formlymargin',
                                       templateOptions: {
                                         disabled: this.checkDisable('SumInsured'),
