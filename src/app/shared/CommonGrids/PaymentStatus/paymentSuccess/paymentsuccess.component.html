@@ -18,9 +18,17 @@
             </div>
         
         </div>
-        <ng-container *ngIf="issuerData && show">
-            <app-grid-table [cols]="issuerHeader" [data]="issuerData" [filterValue]="filterValue" changeStatus="true" (onViews)="onViews($event)">
-            </app-grid-table>
+        <ng-container *ngIf="searchedSection">
+            <ng-container *ngIf="issuerData.length==0">
+                    <div class="text-center mt-2">
+                        <b>No Data Avaible</b>
+                    </div>
+            </ng-container>
+            <ng-container *ngIf="issuerData.length!=0">
+                <app-grid-table [cols]="issuerHeader" [data]="issuerData" [filterValue]="filterValue" changeStatus="true" (onViews)="onViews($event)">
+                </app-grid-table>
+            </ng-container>
+            
         </ng-container>
     </div>
 </div>

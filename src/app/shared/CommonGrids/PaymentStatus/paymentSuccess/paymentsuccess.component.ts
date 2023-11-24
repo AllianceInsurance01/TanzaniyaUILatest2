@@ -21,7 +21,7 @@ export class PaymentSuccessComponent implements OnInit {
   quotePageNo: any;
   startIndex: number;
   endIndex: number;
-  totalQuoteRecords: any;
+  totalQuoteRecords: any;searchedSection:boolean=false;
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
@@ -121,6 +121,7 @@ export class PaymentSuccessComponent implements OnInit {
   
   }
   getalldetails(){
+    this.searchedSection = false;
     let ReqObj = {
         "LoginId":"",
     "ProductId":this.productId,
@@ -130,6 +131,7 @@ export class PaymentSuccessComponent implements OnInit {
       let urlLink = `${this.CommonApiUrl}api/paymentsucessstatus`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
+        this.searchedSection = true;
         if(data.Result?.PaymentStausRes){
             this.issuerData=data.Result?.PaymentStausRes;
         }
