@@ -31,7 +31,9 @@ export class PremiumdetailsSubsectionComponent {
   maxDate: Date;
   endMinDate: Date;
   endMaxDate: Date;
-  noOfDays: number;
+  noOfDays: any=null;
+  travelStartDate: any=null;
+  travelEndDate: any=null;
   constructor(private modalService: NgbModal, private updateComponent:UpdateCustomerDetailsComponent){
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.productId = this.userDetails.Result.ProductId;
@@ -73,12 +75,23 @@ export class PremiumdetailsSubsectionComponent {
     }
     else{
       this.enableDateSection = true;
-      // month is 0-based, that's why we need dataParts[1] - 1
-      this.policyStartDate = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
-      this.policyEndDate = dateParts2[2]+'-'+dateParts2[1]+'-'+dateParts2[0];
+      if(this.productId!='4'){
+          // month is 0-based, that's why we need dataParts[1] - 1
+        this.policyStartDate = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
+        this.policyEndDate = dateParts2[2]+'-'+dateParts2[1]+'-'+dateParts2[0];
+        this.updateComponent.policyStartDate = this.policyStartDate;
+        this.updateComponent.policyEndDate = this.policyEndDate;
+      }
+      else{
+        // month is 0-based, that's why we need dataParts[1] - 1
+        this.travelStartDate = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
+        this.travelEndDate = dateParts2[2]+'-'+dateParts2[1]+'-'+dateParts2[0];
+        this.updateComponent.travelStartDate = this.travelStartDate;
+        this.updateComponent.travelEndDate = this.travelEndDate;
+        this.onChangeEndDate('direct');
+      }
       this.updateComponent.modifiedYN='Y';
-      this.updateComponent.policyStartDate = this.policyStartDate;
-      this.updateComponent.policyEndDate = this.policyEndDate;
+      
     }
   }
   onStartDateChange(type){
@@ -106,19 +119,19 @@ export class PremiumdetailsSubsectionComponent {
       }
     }
     else{
-      // var d = this.travelStartDate;
-      // var year = d.getFullYear();
-      // var month = d.getMonth();
-      // var day = d.getDate();
-      // this.endMinDate = new Date(this.travelStartDate);
-      // this.endMaxDate = new Date(year + 1, month, day-1);
-      //  this.updateComponent.travelStartDate = this.travelStartDate;
-      // if(this.noOfDays!='' && this.noOfDays!=undefined && this.noOfDays!=null){
-      //   this.travelEndDate = new Date(year, month, day+Number(this.noOfDays-1));
-      //   //this.endMaxDate = new Date(year + 1, month, day-1);
-      //   this.updateComponent.travelStartDate = this.travelStartDate;
-      //   this.updateComponent.travelEndDate = this.travelEndDate;
-      // }
+      var d = this.travelStartDate;
+      var year = d.getFullYear();
+      var month = d.getMonth();
+      var day = d.getDate();
+      this.endMinDate = new Date(this.travelStartDate);
+      this.endMaxDate = new Date(year + 1, month, day-1);
+       this.updateComponent.travelStartDate = this.travelStartDate;
+      if(this.noOfDays!='' && this.noOfDays!=undefined && this.noOfDays!=null){
+        this.travelEndDate = new Date(year, month, day+Number(this.noOfDays-1));
+        //this.endMaxDate = new Date(year + 1, month, day-1);
+        this.updateComponent.travelStartDate = this.travelStartDate;
+        this.updateComponent.travelEndDate = this.travelEndDate;
+      }
     }
   }
   onChangeEndDate(type){
@@ -135,15 +148,15 @@ export class PremiumdetailsSubsectionComponent {
     this.updateComponent.noOfDays = this.noOfDays;
     }
     else{
-    // const oneday = 24 * 60 * 60 * 1000;
-    // const momentDate = new Date(this.travelEndDate); // Replace event.value with your date value
-    // const formattedDate = moment(momentDate).format("YYYY-MM-DD");
-    // const formattedDatecurrent = new Date(this.travelStartDate);
-    // console.log(formattedDate);
-    // this.noOfDays = Math.round(Math.abs((Number(momentDate)  - Number(formattedDatecurrent) )/oneday)+1);
-    // this.updateComponent.travelStartDate = this.travelStartDate;
-    // this.updateComponent.travelEndDate = this.travelEndDate;
-    // this.updateComponent.noOfDays = this.noOfDays;
+    const oneday = 24 * 60 * 60 * 1000;
+    const momentDate = new Date(this.travelEndDate); // Replace event.value with your date value
+    const formattedDate = moment(momentDate).format("YYYY-MM-DD");
+    const formattedDatecurrent = new Date(this.travelStartDate);
+    console.log(formattedDate);
+    this.noOfDays = Math.round(Math.abs((Number(momentDate)  - Number(formattedDatecurrent) )/oneday)+1);
+    this.updateComponent.travelStartDate = this.travelStartDate;
+    this.updateComponent.travelEndDate = this.travelEndDate;
+    this.updateComponent.noOfDays = this.noOfDays;
     }
   }
   openmodel(modal){

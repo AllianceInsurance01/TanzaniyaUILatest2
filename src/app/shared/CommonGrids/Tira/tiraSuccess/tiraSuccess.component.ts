@@ -41,7 +41,7 @@ export class TiraSuccessComponent implements OnInit {
     startDate: any;
     EndDate:any;
     StartDate:any;
-    endDate: any;tiradetails:any[]=[];
+    endDate: any;tiradetails:any[]=[];tiraHeader:any[]=[];
   constructor(private datePipe:DatePipe,private router:Router,private sharedService:SharedService,private modalService: NgbModal) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     console.log("UserDetails",this.userDetails);
@@ -55,8 +55,13 @@ export class TiraSuccessComponent implements OnInit {
     this.insuranceId = this.userDetails.Result.InsuranceId;
     this.branchList = this.userDetails.Result.LoginBranchDetails;
     this.loginType = this.userDetails.Result.LoginType;
- 
-  }
+    var d= new Date();
+    var year = d.getFullYear();
+    var month = d.getMonth();
+    var day = d.getDate();
+    this.StartDate = new Date(year,month-11, day);
+    this.EndDate = new Date(year,month, day);
+}
   ngOnInit(): void {
    //this.getalldetails();
     this.issuerHeader = [
@@ -76,8 +81,43 @@ export class TiraSuccessComponent implements OnInit {
         },
         
       ];
+      this.tiraHeader = [
+        { key: 'StatusCode', display: 'TIRA Code'},
+        { key: 'TiraTrackingId', display: 'Tracking Id' },
+        { key: 'HitCount', display: 'Hit Count' },
+        { key: 'StatusDesc', display: 'Status' },
+        { key: 'RequestFilePath', display: 'Request',
+          config: {
+            isReqPathDownload:true,
+          },
+        },
+        { key: 'ResponseFilePath', display: 'Response',
+          config: {
+            isResPathDownload:true,
+          },
+        }
+        
+      ];
+      this.getalldetails();
   }
-
+  onReqPathDownload(rowData){
+    const link = document.createElement('a');
+    link.setAttribute('target', '_blank');
+    link.setAttribute('href',rowData.RequestFilePath);
+    link.setAttribute('download','Request');
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+  onResPathDownload(rowData){
+    const link = document.createElement('a');
+    link.setAttribute('target', '_blank');
+    link.setAttribute('href',rowData.ResponseFilePath);
+    link.setAttribute('download','Request');
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
   getCompanyList(){
     let ReqObj = {
       "BrokerCompanyYn":"",
