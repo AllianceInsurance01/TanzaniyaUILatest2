@@ -1001,7 +1001,6 @@ toggle(index: number) {
         }
         i+=1;
       }           
-      console.log('if entry of cover id 55',this.coverlist);
               if(this.coverlist.length!=0){
                 this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
               }
@@ -1204,7 +1203,13 @@ toggle(index: number) {
       )
      }
   onProceed(){
-    if(this.endorsementSection){
+    if(this.updateComponent.modifiedYN=='Y'){
+        let startDate = this.updateComponent.policyStartDate;
+        if(startDate){
+            this.updatePolicyDate(startDate);
+        }
+    }
+    else if(this.endorsementSection){
         if(this.endtPremium!=null && this.endtPremium!='' && this.endtPremium!=0 && this.endtPremium!=undefined){
               this.onMakePayment();
         }
@@ -1228,6 +1233,48 @@ toggle(index: number) {
     else{
       this.onMakePayment();
     }
+  }
+  updatePolicyDate(startDate){
+    let date = this.datePipe.transform(startDate,'dd/MM/yyyy');
+    let ReqObj = {
+      "QuoteNo": this.quoteNo,
+      "PolicyStartDate": date
+    }
+    let urlLink = `${this.CommonApiUrl}quote/updatepolicystartenddate`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        let res:any = data;
+        if(data.ErrorMessage.length!=0){
+          
+        }
+        else if(this.endorsementSection){
+          if(this.endtPremium!=null && this.endtPremium!='' && this.endtPremium!=0 && this.endtPremium!=undefined){
+                this.onMakePayment();
+          }
+          else{
+            sessionStorage.removeItem('quotePaymentId');
+            if((this.productId=='5' || this.productId=='46' || this.productId=='29') && this.enableDriverDetails){
+              this.onsave();
+            }
+            // else if(this.enableCustomerDetails){
+            //     this.saveCustomerDetails();
+            // }
+            else {
+              
+              if(this.loginType=='B2CFlow' || (this.loginType=='B2CFlow2')){
+                this.router.navigate(['/Home/customer/ClientDetails']);
+              }
+              else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/make-payment']);
+            }
+          }
+        }
+        else{
+          this.onMakePayment();
+        }
+      },
+  
+      (err: any) => { console.log(err); },
+    );
   }
   saveCustomerDetails(){
     let appointmentDate = "";

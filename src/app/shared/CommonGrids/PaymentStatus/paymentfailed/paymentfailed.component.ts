@@ -21,7 +21,7 @@ export class PaymentFailedComponent implements OnInit {
     totalRecords: any;
     quotePageNo: any;
     startIndex: number;
-    endIndex: number;
+    endIndex: number;searchedSection:boolean=false;
     totalQuoteRecords: any;
     public AppConfig: any = (Mydatas as any).default;
     public ApiUrl1: any = this.AppConfig.ApiUrl1;

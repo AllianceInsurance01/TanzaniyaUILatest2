@@ -31,6 +31,7 @@ export class PaymentPendingComponent implements OnInit {
     insuranceList: any[]=[];
       branchValue: any;
       branchList:any;
+  searchedSection: boolean;
     constructor(private router:Router,private sharedService:SharedService,private modalService: NgbModal) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       const user = this.userDetails?.Result;
@@ -40,9 +41,7 @@ export class PaymentPendingComponent implements OnInit {
         this.insuranceId = insurance;
       }
       else{
-        if(user.AttachedCompanies){
-          if(user.AttachedCompanies.length!=0) this.insuranceId=user.AttachedCompanies[0];
-        }
+        this.insuranceId = this.userDetails.Result.InsuranceId;
       }
       // this.productId =  sessionStorage.getItem('companyProductId');
       this.subUserType = sessionStorage.getItem('typeValue');
@@ -117,6 +116,7 @@ export class PaymentPendingComponent implements OnInit {
     
     }
     getalldetails(){
+      this.searchedSection = false;
       let ReqObj = {
           "LoginId":"",
       "ProductId":this.productId,
@@ -126,7 +126,9 @@ export class PaymentPendingComponent implements OnInit {
         let urlLink = `${this.CommonApiUrl}api/paymentpendingstatus`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
+          this.searchedSection = true;
           if(data.Result?.PaymentStausRes){
+           
             this.issuerData=data.Result?.PaymentStausRes;
         }
         },
