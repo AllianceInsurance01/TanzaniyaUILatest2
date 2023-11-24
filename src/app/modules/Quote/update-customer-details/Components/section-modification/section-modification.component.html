@@ -21,9 +21,9 @@
                                 <label class="input-form-label">Ownership Status</label><span class="text-danger">*</span>
                                 <div class="input-form-radio-box">
                                     <div class="radio-toolbar">
-                                        <input id="claims_Own" type="radio" name="rentOwnHome" [disabled]="endorsementSection" [(ngModel)]="BuildingOwnerYn"  (change)="onOwnerYNChange()" value="Y">
+                                        <input id="claims_Own" type="radio" name="rentOwnHome" [disabled]="endorsementSection || finalizeYN=='Y'" [(ngModel)]="BuildingOwnerYn"  (change)="onOwnerYNChange()" value="Y">
                                         <label for="claims_Own" class="yes_alt"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/landlord.png">LANDLORD</label>
-                                        <input id="claims_Rent" type="radio" name="rentOwnHome" [disabled]="endorsementSection" [(ngModel)]="BuildingOwnerYn" (change)="onOwnerYNChange()" value="N">
+                                        <input id="claims_Rent" type="radio" name="rentOwnHome" [disabled]="endorsementSection || finalizeYN=='Y'" [(ngModel)]="BuildingOwnerYn" (change)="onOwnerYNChange()" value="N">
                                         <label for="claims_Rent" class="no"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/rentHome.png">TENANT</label>
                                     </div>
                                 </div>
@@ -34,12 +34,12 @@
                                 <label class="input-form-label">Cover Required</label><span class="text-danger">*</span>
                                 <div class="input-form-radio-box">
                                     <div class="radio-toolbar">
-                                        <input id="Content" type="radio" name="Content" [disabled]="(endorsementSection)" [(ngModel)]="coversRequired" value="C" (change)="onChangeCoversType()">
+                                        <input id="Content" type="radio" name="Content" [disabled]="(endorsementSection || finalizeYN=='Y')" [(ngModel)]="coversRequired" value="C" (change)="onChangeCoversType()">
                                         <label for="Content" class="yes_alt"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/contents.png">&nbsp;CONTENTS</label>
                                         <ng-container *ngIf="BuildingOwnerYn=='Y'">
-                                            <input id="Building" type="radio" name="Content" [disabled]="(endorsementSection)" [(ngModel)]="coversRequired" value="B" (change)="onChangeCoversType()">
+                                            <input id="Building" type="radio" name="Content" [disabled]="(endorsementSection || finalizeYN=='Y')" [(ngModel)]="coversRequired" value="B" (change)="onChangeCoversType()">
                                             <label for="Building" class="no"><img style="max-width: 30px;max-height: 10px;" src="./assets/images/buildingSection.png">&nbsp;BUILDING</label>
-                                            <input id="Building_Contents" type="radio" name="Content" [disabled]="(endorsementSection)" [(ngModel)]="coversRequired" value="BC" (change)="onChangeCoversType()">
+                                            <input id="Building_Contents" type="radio" name="Content" [disabled]="(endorsementSection || finalizeYN=='Y')" [(ngModel)]="coversRequired" value="BC" (change)="onChangeCoversType()">
                                             <label for="Building_Contents" class="no"><img style="max-width: 30px;max-height: 10px;"  src="./assets/images/houseContents.png">&nbsp;BUILDING & CONTENTS</label>
                                         </ng-container>
                                     </div>
@@ -51,7 +51,7 @@
                         <div class="col-12 col-md-5 col-lg-5 offset-md-1 offset-lg-1">
                             <div class="input-control-container">
                                   <label class="input-form-label">Industry</label>&nbsp;<ng-container *ngIf="categoryDesc">({{categoryDesc}})</ng-container><span class="text-danger">*</span>
-                                  <ng-select class="custom" [items]="industryList" [disabled]="endorsementSection && !enableIndustry" [(ngModel)]="IndustryId" placeholder="Select Industry" (change)="onIndustryChange()" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
+                                  <ng-select class="custom" [items]="industryList" [disabled]="(endorsementSection && !enableIndustry) || finalizeYN=='Y'" [(ngModel)]="IndustryId" placeholder="Select Industry" (change)="onIndustryChange()" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="Code" bindLabel="CodeDesc">
                                   </ng-select>
                             </div>
                             <div class="input-form-error" *ngIf="industryError" style="position: relative;">
@@ -81,17 +81,17 @@
                             <div class="row mt-3">
                               <ng-container *ngFor="let g of productList;let i = index">
                                   <ng-container *ngIf="g.Code=='47' && (coversRequired=='C' || coversRequired=='BC')">
-                                      <div class="col-md-6" [disabled]="endorsementSection">
+                                      <div class="col-md-6" [disabled]="endorsementSection || finalizeYN=='Y'">
                                         <div >
                                             <!-- {{g.CodeDesc}} -->
                                             <div class="print-check">
                                             <label class="custom-checkbox-container">
-                                            <input type="checkbox" [checked]="checkSections(g)" [disabled]="(endorsementSection)">
+                                            <input type="checkbox" [checked]="checkSections(g)" [disabled]="(endorsementSection || finalizeYN=='Y')">
                                             <span class="checkmark">
                                               <span class="text-light" *ngIf="g.checked==true"><i class="fa fa-check-circle"></i></span>
                                               <span class="" *ngIf="g.checked==false"><i class="fa fa-minus-circle"></i></span>
                                             </span>
-                                            <div class="description" [ngClass]="{customBg : g.checked==true}" [disabled]="(endorsementSection)" (click)="onChangeSections(g,i)">
+                                            <div class="description" [ngClass]="{customBg : g.checked==true}" [disabled]="(endorsementSection || finalizeYN=='Y')" (click)="onChangeSections(g,i)">
                                               <div class="description-name">
                                                 <span>
                                                 {{g.CodeDesc}}
@@ -104,17 +104,17 @@
                                       </div>
                                   </ng-container>
                                   <ng-container *ngIf="(g.Code=='40' || g.Code=='1') && (coversRequired=='B' || coversRequired=='BC')">
-                                    <div class="col-md-6" [disabled]="endorsementSection">
+                                    <div class="col-md-6" [disabled]="endorsementSection || finalizeYN=='Y'">
                                       <div >
                                           <!-- {{g.CodeDesc}} -->
                                           <div class="print-check" >
                                           <label class="custom-checkbox-container">
-                                          <input type="checkbox" [checked]="checkSections(g)" [disabled]="(endorsementSection)">
+                                          <input type="checkbox" [checked]="checkSections(g)" [disabled]="(endorsementSection || finalizeYN=='Y')">
                                           <span class="checkmark">
                                             <span class="text-light" *ngIf="g.checked==true"><i class="fas fa-check-circle"></i></span>
                                             <span class="" *ngIf="g.checked==false"><i class="fas fa-minus-circle"></i></span>
                                           </span>
-                                          <div class="description" [ngClass]="{customBg : g.checked==true}" [disabled]="(endorsementSection)" (click)="onChangeSections(g,i)">
+                                          <div class="description" [ngClass]="{customBg : g.checked==true}" [disabled]="(endorsementSection || finalizeYN=='Y')" (click)="onChangeSections(g,i)">
                                             <div class="description-name">
                                               <span>
                                               {{g.CodeDesc}}
@@ -132,12 +132,12 @@
                                           <!-- {{g.CodeDesc}} -->
                                           <div class="print-check" >
                                           <label class="custom-checkbox-container">
-                                          <input type="checkbox"  [checked]="checkSections(g)" [disabled]="(endorsementSection)">
+                                          <input type="checkbox"  [checked]="checkSections(g)" [disabled]="(endorsementSection || finalizeYN=='Y')">
                                           <span class="checkmark">
                                             <span class="" *ngIf="checkSections(g)"><i class="fa fa-check-circle"></i></span>
                                             <span class="" *ngIf="!checkSections(g)"><i class="fa fa-minus-circle"></i></span>
                                           </span>
-                                          <div class="description" [ngClass]="{customBg : g.checked==true}" [disabled]="(endorsementSection)" (click)="onChangeSections(g,i)">
+                                          <div class="description" [ngClass]="{customBg : g.checked==true}" [disabled]="(endorsementSection || finalizeYN=='Y')" (click)="onChangeSections(g,i)">
                                             <div class="description-name">
                                               <span>
                                               {{g.CodeDesc}}

@@ -173,6 +173,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
   vehicleDetails: any;
   motorDetails: any;
   activeSection: boolean;
+  finalizeYN: any='N';
   constructor(private formlyJsonschema: FormlyJsonschema, private sharedService: SharedService, private datePipe: DatePipe,
     private router: Router, private http: HttpClient, private updateComponent: UpdateCustomerDetailsComponent) {
     this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -189,6 +190,9 @@ export class PersonalQuoteDetailsComponent implements OnInit {
     this.countryId = this.userDetails.Result.CountryId;
     this.productId = this.userDetails.Result.ProductId;
     this.insuranceId = this.userDetails.Result.InsuranceId;
+    let finalize = sessionStorage.getItem('FinalizeYN');
+    if(finalize) this.finalizeYN = finalize;
+    this.subuserType = sessionStorage.getItem('typeValue');
     let commonDetails = null;
     if(this.productId=='46'){
       commonDetails = JSON.parse(sessionStorage.getItem('vehicleDetailsList'));
@@ -1391,7 +1395,24 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       console.log('sectionssss',sections)
       //this.updateComponent.setTabCountSection(0);
       this.showSection = true;
-     
+      if(sections.some(ele=>ele=='1')){
+        //alert(sections)
+        let contentData 
+        if(this.insuranceId=='100004'){
+          contentData = new Buildingss();
+        }
+        else{
+          contentData = new Building();
+        }
+        this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields]);
+        this.getWallMaterialList();
+        this.getRoofMaterialList();
+        this.getbuildingpurposeList();
+        if(this.insuranceId =='100004'){
+          this.getTypeOfProperty();
+        }
+        
+      }
       if(sections.some(ele=>ele=='47' && this.insuranceId!='100004')){
         let contentData = new HouseHoldContents();
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields]);
@@ -1422,24 +1443,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         let fireData = new BussinessAllRisk();
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([fireData?.fields]);
       }
-      if(sections.some(ele=>ele=='1')){
-        //alert(sections)
-        let contentData 
-        if(this.insuranceId=='100004'){
-          contentData = new Buildingss();
-        }
-        else{
-          contentData = new Building();
-        }
-        this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields]);
-        this.getWallMaterialList();
-        this.getRoofMaterialList();
-        this.getbuildingpurposeList();
-        if(this.insuranceId =='100004'){
-          this.getTypeOfProperty();
-        }
-        
-      }
+     
       if(sections.some(ele=>ele=='47' && this.insuranceId=='100004')){
          let contentData = new HouseHoldContentsss();
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields]);
@@ -4774,43 +4778,134 @@ onNextProceed(){
   if(count!=totalCount) type='save';
   else type ='proceed';
   if(rowData.props.label=='Building Risk'){
-    this.onSaveBuildingDetails(type,'Group');
+    if(this.finalizeYN=='Y'){
+        if(type=='save'){
+          this.selectedIndex +=1;
+          this.onNextProceed();
+        }
+        else if(type!='save'){ this.onFinalProceed();}
+    }
+    else this.onSaveBuildingDetails(type,'Group');
   }
   if(rowData.props.label=='Fire & Allied Perils'){
-     this.onSaveFireAlliedDetails(type,'Group');
+    if(this.finalizeYN=='Y'){
+      if(type=='save'){
+        this.selectedIndex +=1;
+        this.onNextProceed();
+      }
+      else if(type!='save'){ this.onFinalProceed();}
+    }
+    else this.onSaveFireAlliedDetails(type,'Group');
   }
   else if(rowData.props.label=='Contents Risk'){
-    this.onSaveContentRiskDetails(type,'Group');
+    if(this.finalizeYN=='Y'){
+      if(type=='save'){
+        this.selectedIndex +=1;
+        this.onNextProceed();
+      }
+      else if(type!='save'){ this.onFinalProceed();}
+    }
+    else this.onSaveContentRiskDetails(type,'Group');
   }
   else if(rowData.props.label=='All Risk'){
-    this.onSaveAllRiskDetails(type,'Group');
+    if(this.finalizeYN=='Y'){
+      if(type=='save'){
+        this.selectedIndex +=1;
+        this.onNextProceed();
+      }
+      else if(type!='save'){ this.onFinalProceed();}
+    }
+    else this.onSaveAllRiskDetails(type,'Group');
   }
   else if(rowData.props.label=='Personal Accident'){
-    this.onSavePersonalAccidentDetails(type,'Group');
+    if(this.finalizeYN=='Y'){
+      if(type=='save'){
+        this.selectedIndex +=1;
+        this.onNextProceed();
+      }
+      else if(type!='save'){ this.onFinalProceed();}
+    }
+    else this.onSavePersonalAccidentDetails(type,'Group');
   }
    else if(rowData.props.label=='Personal Liability'){
-    this.onSavePersonalLiability(type,'Group');
+    if(this.finalizeYN=='Y'){
+      if(type=='save'){
+        this.selectedIndex +=1;
+        this.onNextProceed();
+      }
+      else if(type!='save'){ this.onFinalProceed();}
+    }
+    else this.onSavePersonalLiability(type,'Group');
   }
   else if(rowData.props.label=='Machinery BreakDown'){
-    this.onSaveMachineryDetails(type,'Group');
+    if(this.finalizeYN=='Y'){
+      if(type=='save'){
+        this.selectedIndex +=1;
+        this.onNextProceed();
+      }
+      else if(type!='save'){ this.onFinalProceed();}
+    }
+    else this.onSaveMachineryDetails(type,'Group');
   }
   else if(rowData.props.label=='Employers Liability'){
-    this.onSaveEmployeeDetails(type,'Group');
+    if(this.finalizeYN=='Y'){
+      if(type=='save'){
+        this.selectedIndex +=1;
+        this.onNextProceed();
+      }
+      else if(type!='save'){ this.onFinalProceed();}
+    }
+    else this.onSaveEmployeeDetails(type,'Group');
   }
   else if(rowData.props.label=='Fidelity'){
-    this.onSaveFidelityDetails(type,'Group');
+    if(this.finalizeYN=='Y'){
+      if(type=='save'){
+        this.selectedIndex +=1;
+        this.onNextProceed();
+      }
+      else if(type!='save'){ this.onFinalProceed();}
+    }
+    else this.onSaveFidelityDetails(type,'Group');
   }
   else if(rowData.props.label=='Machinery BreakDown'){
-    this.onSaveMachineryDetails(type,'Group');
+    if(this.finalizeYN=='Y'){
+      if(type=='save'){
+        this.selectedIndex +=1;
+        this.onNextProceed();
+      }
+      else if(type!='save'){ this.onFinalProceed();}
+    }
+    else this.onSaveMachineryDetails(type,'Group');
   }
   else if(rowData.props.label=='Money'){
-    this.onSaveMoneyDetails(type,'Group');
+    if(this.finalizeYN=='Y'){
+      if(type=='save'){
+        this.selectedIndex +=1;
+        this.onNextProceed();
+      }
+      else if(type!='save'){ this.onFinalProceed();}
+    }
+    else this.onSaveMoneyDetails(type,'Group');
   }
   else if(rowData.props.label=='Burglary'){
-    this.onSaveBurglaryDetails(type,'Group');
+    if(this.finalizeYN=='Y'){
+      if(type=='save'){
+        this.selectedIndex +=1;
+        this.onNextProceed();
+      }
+      else if(type!='save'){ this.onFinalProceed();}
+    }
+    else this.onSaveBurglaryDetails(type,'Group');
   }
   else if(rowData.props.label=='Business All Risk'){
-    this.onSaveBussinessrisk(type,'Group');
+    if(this.finalizeYN=='Y'){
+      if(type=='save'){
+        this.selectedIndex +=1;
+        this.onNextProceed();
+      }
+      else if(type!='save'){ this.onFinalProceed();}
+    }
+    else this.onSaveBussinessrisk(type,'Group');
   }
 }
 isValid(field: FormlyFieldConfig): boolean {

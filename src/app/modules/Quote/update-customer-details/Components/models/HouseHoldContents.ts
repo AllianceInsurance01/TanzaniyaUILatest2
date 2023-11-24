@@ -9,7 +9,12 @@ export class HouseHoldContents{
     commonDetails: any[]=[];
     endorsementSection: boolean=false;
     enableFieldsList: any[]=[];
+  finalizeYN: any='N';
+  subuserType: string;
     constructor() {
+      let finalize = sessionStorage.getItem('FinalizeYN');
+      if(finalize) this.finalizeYN = finalize;
+      this.subuserType = sessionStorage.getItem('typeValue');
         this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
         let commonDetails = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
         if (commonDetails) this.commonDetails = commonDetails;
@@ -58,8 +63,9 @@ export class HouseHoldContents{
     checkDisable(fieldName) {
         if (this.endorsementSection) {
           let entry = this.enableFieldsList.some(ele => ele == fieldName);
-          return !entry;
+          return !entry ;
         }
+        else if(this.subuserType=='low') return this.finalizeYN=='Y'; 
         else return false;
       
       }

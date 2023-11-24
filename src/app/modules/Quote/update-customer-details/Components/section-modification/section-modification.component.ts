@@ -72,6 +72,7 @@ export class SectionModificationComponent implements OnInit {
   endorsementDetails: any;
   customerName: any;
   endorsePolicyNo: any=null;
+  finalizeYN: any='N';
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -89,6 +90,9 @@ export class SectionModificationComponent implements OnInit {
       this.insuranceId = this.userDetails.Result.InsuranceId;
       this.branchList = this.userDetails.Result.LoginBranchDetails;
       this.updateComponent.showStepperSection = true;
+      let finalize = sessionStorage.getItem('FinalizeYN');
+      if(finalize) this.finalizeYN = finalize;
+      this.subuserType = sessionStorage.getItem('typeValue');
       let referenceNo = sessionStorage.getItem('quoteReferenceNo');
       if (referenceNo) {
         this.requestReferenceNo = referenceNo;
@@ -225,7 +229,24 @@ getIndustryList() {
   );
 }
   onFormSubmit(){
-    if(this.IndustryId!=null && this.IndustryId!='' && this.IndustryId!=undefined){
+    if(this.finalizeYN=='Y'){
+        if(this.updateComponent.modifiedYN=='Y'){
+          if(this.IndustryId!=null && this.IndustryId!='' && this.IndustryId!=undefined){
+            this.industryError = false;
+            if(this.selectedSections.length!=0){
+              this.sectionError = false;
+              this.finalProceed();
+            }
+            else{this.sectionError = true;}
+            
+          }
+          else{
+              this.industryError = true;
+          }
+        }
+        else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
+    }
+    else if(this.IndustryId!=null && this.IndustryId!='' && this.IndustryId!=undefined){
       this.industryError = false;
       if(this.selectedSections.length!=0){
         this.sectionError = false;

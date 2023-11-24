@@ -9,7 +9,12 @@ export class EmployersLiability{
     commonDetails: any[]=[];
     endorsementSection: boolean=false;
     enableFieldsList: any[]=[];
+  subuserType: any=null;
+  finalizeYN: any='N';
     constructor() {
+        let finalize = sessionStorage.getItem('FinalizeYN');
+        if(finalize) this.finalizeYN = finalize;
+        this.subuserType = sessionStorage.getItem('typeValue');
         this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
         let commonDetails = JSON.parse(sessionStorage.getItem('homeCommonDetails'));
         if (commonDetails) this.commonDetails = commonDetails;
@@ -111,6 +116,7 @@ export class EmployersLiability{
           //}
           
         }
+        else if(this.subuserType=='low') return this.finalizeYN=='Y'; 
         else return false;
       
       }
