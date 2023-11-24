@@ -202,6 +202,15 @@ const routes: Routes = [
      breadcrumb:'Policies'
    }
   },
+  {
+    path:'tirastatus',
+    loadChildren: () => import('../../shared/CommonGrids/Tira/tira.module').then(m => m.TiraViewModule),
+    data:{
+     preload: true,
+     title: 'Tira Success',
+     breadcrumb:'Tira Success'
+   }
+  },
    {
      path:'cancelledPolicies',
     loadChildren: () => import('../../shared/CommonGrids/cancelled-policies/cancelled-policies.module').then(m => m.CancelledPoliciesModule),
