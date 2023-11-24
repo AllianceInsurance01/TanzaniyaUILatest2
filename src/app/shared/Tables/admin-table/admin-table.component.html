@@ -328,6 +328,33 @@
                             </div>
                       
                     </ng-container>
+                    <ng-container *ngIf="col.config.isPremium">
+                        <div class="d-flex justify-content-between">
+                        <div>
+                            <span class="mobile-label"> 
+                                {{ columnHeader[i]["display"] }}
+                        </span>
+                        </div>
+                        <div>
+                            {{element.TotalPremiumLc}}
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="col.config.isTotalCount"> 
+                        <div class="d-flex justify-content-between">      
+                            <div>
+                                <span class="mobile-label"> 
+                                    {{ columnHeader[i]["display"] }}
+                            </span>
+                            </div>
+                        <div>
+                            <button class="btn btn-primary btn-sm" (click)="onTotal.emit(element)" style="text-align: right;">
+                               <span>{{element.TotalCount}}</span> 
+                                <!-- <i class="fas fa-marker"></i> -->
+                              </button>&nbsp;
+                        </div>
+                        </div>
+               </ng-container>
                     <ng-container *ngIf="col.config.isEndorseEdit">
                         <ng-container *ngIf="element?.endorsementStatus">
                             <ng-container *ngIf="element?.endorsementStatus=='C'">

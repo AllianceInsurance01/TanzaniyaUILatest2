@@ -211,6 +211,7 @@ this.enddate=this.datePipe.transform(this.EndDate, "dd/MM/yyyy");
       this.branchValue=CustomerObj?.BranchCode,
       this.newlogin=CustomerObj?.LoginId,
       this.page=CustomerObj?.page,
+      this.BrokerName=CustomerObj?.BrokerName,
       console.log('ooooooooo',this.page);
       this.rowdata=CustomerObj?.rowData
       }
@@ -395,6 +396,43 @@ this.enddate=this.datePipe.transform(this.EndDate, "dd/MM/yyyy");
             document.body.appendChild(link);
             link.click();
             link.remove();
+          }
+          onCreditdownload(rowData){
+            console.log('KKKKKKKKKKK',rowData.QuoteNo);
+            let urlLink = `${this.CommonApiUrl}pdf/creditNote?quoteNo=${rowData.QuoteNo}`
+        
+            this.sharedService.onGetMethodSync(urlLink).subscribe(
+              (data: any) => {
+                console.log(data);
+                const link = document.createElement('a');
+                link.setAttribute('target', '_blank');
+                link.setAttribute('href', data?.Result.PdfOutFile);
+                link.setAttribute('download','Creditpdf');
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+            },
+              (err) => { },
+            );
+          }
+        
+          onDebitdownload(rowData){
+            console.log('KKKKKKKKKKK',rowData.QuoteNo);
+            let urlLink = `${this.CommonApiUrl}pdf/taxInvoice?quoteNo=${rowData.QuoteNo}`
+        
+            this.sharedService.onGetMethodSync(urlLink).subscribe(
+              (data: any) => {
+                console.log(data);
+                const link = document.createElement('a');
+                link.setAttribute('target', '_blank');
+                link.setAttribute('href', data?.Result.PdfOutFile);
+                link.setAttribute('download','DebitPdf');
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+            },
+              (err) => { },
+            );
           }
  }
 

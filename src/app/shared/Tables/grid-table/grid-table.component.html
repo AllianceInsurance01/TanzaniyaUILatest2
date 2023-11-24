@@ -162,6 +162,8 @@
                         </button>
                         <mat-menu #menu="matMenu">
                             <button mat-menu-item (click)="onSchedule.emit(element)"><i class="fas fa-file"></i>&nbsp;Schedule</button>
+                            <button mat-menu-item (click)="onCredit.emit(element)" *ngIf="element.CreditNo!=null && element.CreditNo!=''"><i class="fas fa-file"></i>&nbsp;Credit Note</button>
+                            <button mat-menu-item (click)="onDebit.emit(element)" *ngIf="element.DebitNo!=null && element.DebitNo!=''"><i class="fas fa-file"></i>&nbsp;Debit Note</button>
                             <button mat-menu-item (click)="onView.emit(element)"><i class="fas fa-eye"></i>&nbsp;View Quote Details</button>
                         </mat-menu>
                     </ng-container>
@@ -499,6 +501,18 @@
                         <i class="fas fa-cog"></i>
                       </button>
                     </ng-container>
+                    <ng-container *ngIf="col.config.isPremiums">
+                        <div class="row">
+                            <div class="col-6">
+                                <span class="mobile-label"> 
+                                    {{ columnHeader[i]["display"] }}
+                            </span>
+                            </div>
+                            <div class="col-6" (click)="onTotals.emit(element)">
+                                {{element.OverallPremiumLc}}
+                                </div>
+                        </div>
+                    </ng-container>
                     <ng-container *ngIf="col.config.isRemove">
                         <div class="row">
                             <div class="col-6">
@@ -512,6 +526,27 @@
                                   </button>
                             </div>
                             </div>
+                       
+                    </ng-container>
+                    <ng-container *ngIf="col.config.isPolicyConfig">
+                        <div class="row">
+                            <div class="col-6">
+                                    <span class="mobile-label"> 
+                                        {{ columnHeader[i]["display"] }}
+                                </span>
+                                </div>  
+                                <div class="col-6">
+                                    <button mat-button [matMenuTriggerFor]="menu">
+                                        <i class="fas fa-cog"></i>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item (click)="onSchedule.emit(element)"><i class="fas fa-file"></i>&nbsp;Schedule</button>
+                                        <button mat-menu-item (click)="onCredit.emit(element)" *ngIf="element.CreditNo!=null && element.CreditNo!=''"><i class="fas fa-file"></i>&nbsp;Credit Note</button>
+                                        <button mat-menu-item (click)="onDebit.emit(element)" *ngIf="element.DebitNo!=null && element.DebitNo!=''"><i class="fas fa-file"></i>&nbsp;Debit Note</button>
+                                        <button mat-menu-item (click)="onView.emit(element)"><i class="fas fa-eye"></i>&nbsp;View Quote Details</button>
+                                    </mat-menu>
+                                </div>                    
+                        </div>
                        
                     </ng-container>
                     <ng-container *ngIf="col.config.isAddNew">

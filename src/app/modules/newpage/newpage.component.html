@@ -5,16 +5,16 @@
                 
                 <div class="row">
                     <div class="col-12 col-md-3">
-                        <span style="color:black"><b>Product Name</b></span>:<span>{{ProductName}}</span>
+                        <span style="color:black"><b style="font-size:15px !important;font-feature-settings: 'liga' 0;">Product Name</b></span>:<span style="font-family: 'TimesNewRoman';font-size:14px !important;font-feature-settings: 'liga' 0;">{{ProductName}}</span>
                      </div>
                      <div class="col-12 col-md-3">
-                              <span style="color:black"><b>Broker Name</b></span>:<span>{{BrokerName}}</span>
+                              <span style="color:black"><b style="font-size:15px !important;font-feature-settings: 'liga' 0;">Broker Name</b></span>:<span style="font-family: 'TimesNewRoman';font-size:14px !important;font-feature-settings: 'liga' 0;">{{BrokerName}}</span>
                      </div>
                      <div class="col-12 col-md-3">
-                        <span style="color:black"><b>Start Date</b></span>:<span>{{startDate}}</span>
+                        <span style="color:black"><b style="font-size:15px !important;font-feature-settings: 'liga' 0;">Start Date</b></span>:<span style="font-family: 'TimesNewRoman';font-size:14px !important;font-feature-settings: 'liga' 0;">{{startDate}}</span>
                </div>
                      <div class="col-12 col-md-3">
-                        <span style="color:black"><b>End Date</b></span>:<span>{{enddate}}</span>
+                        <span style="color:black"><b style="font-size:15px !important;font-feature-settings: 'liga' 0;">End Date</b></span>:<span style="font-family: 'TimesNewRoman';font-size:14px !important;font-feature-settings: 'liga' 0;">{{enddate}}</span>
                      </div>
                 </div>
             </div>
@@ -22,7 +22,7 @@
     <div class="row">
         <div class="col-12 col-md-12">
             <ng-container *ngIf="tableData1.length!=0">
-            <app-grid-table [cols]="quotesHeader" [data]="tableData1" (onSchedule)="onGetSchedule($event)" (onView)="onViews($event)">
+            <app-grid-table [cols]="quotesHeader" [data]="tableData1" (onSchedule)="onGetSchedule($event)" (onCredit)="onCreditdownload($event)" (onDebit)="onDebitdownload($event)" (onView)="onViews($event)">
             </app-grid-table>
              </ng-container>
         </div>
