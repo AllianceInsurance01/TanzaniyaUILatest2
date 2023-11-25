@@ -229,22 +229,47 @@ export class TiraFailureComponent implements OnInit {
     }
   }
   onReqPathDownload(rowData){
-    const link = document.createElement('a');
-    link.setAttribute('target', '_blank');
-    link.setAttribute('href',rowData.RequestFilePath);
-    link.setAttribute('download','Request');
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+    let urlLink = `${this.CommonApiUrl}document/download`;
+    this.sharedService.onPostFilePathDocumentMethodSync(urlLink, rowData.RequestFilePath).subscribe(
+      (data: any) => {
+          const link = document.createElement('a');
+          link.setAttribute('target', '_blank');
+          link.setAttribute('href',data);
+          link.setAttribute('download','Request');
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+      },
+      (err) => { },
+    );
+    // let  a = document.createElement("a");
+    // document.body.appendChild(a);
+    // let data  = rowData.RequestFilePath;
+    // let file = new Blob(data, {type:'text/plain'});
+    //   let fileURL = window.URL.createObjectURL(file);
+    //   a.href = fileURL;
+    //   a.download = 'log';
+    //   a.click();
+    //   const data = 'some text';
+    // const blob = new Blob([rowData.RequestFilePath], { type: 'application/octet-stream' });
+
+    // this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
   }
   onResPathDownload(rowData){
-    const link = document.createElement('a');
-    link.setAttribute('target', '_blank');
-    link.setAttribute('href',rowData.ResponseFilePath);
-    link.setAttribute('download','Request');
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+    let urlLink = `${this.CommonApiUrl}document/download`;
+    this.sharedService.onPostFilePathDocumentMethodSync(urlLink, rowData.ResponseFilePath).subscribe(
+      (data: any) => {
+          const link = document.createElement('a');
+          link.setAttribute('target', '_blank');
+          link.setAttribute('href',data);
+          link.setAttribute('download','Response');
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+      },
+      (err) => { },
+    );
+    
   }
   onDownload(type){
     const link = document.createElement('a');

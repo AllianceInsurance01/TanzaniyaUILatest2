@@ -108,6 +108,21 @@ export class SharedService {
       .get<any>(UrlLink, { headers: headers })
       .pipe(retry(1), catchError(this.handleError));
   }
+  onPostFilePathDocumentMethodSync(UrlLink: string, filePath:any): Observable<any[]> {
+    const formData: FormData = new FormData();
+    formData.append('FilePath', filePath);
+    this.cookieService.set("XSRF-TOKEN", this.getToken(), 1, '/','localhost', false, "Strict");
+    let headers = new HttpHeaders();
+    headers = headers.append('Cache-Control', 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0');
+    headers = headers.append('Pragma','no-cache');
+    headers = headers.append('Expires','0');
+    headers = headers.append('Authorization', 'Bearer ' + this.getToken());
+    headers = headers.append("X-XSRF-TOKEN", this.getToken());
+    return this.http
+      .post<any>(UrlLink, formData, { headers: headers })
+      .pipe(catchError(this.handleError));
+  }
+
   onPostDocumentMethodSync(UrlLink: string, ReqObj: any,file:File): Observable<any[]> {
     const formData: FormData = new FormData();
     formData.append('File', file);

@@ -5,6 +5,7 @@ import { SharedService } from '../../../../shared/shared.service';
 import {NgbModule, NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 declare var $:any;
 import { DatePipe } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tiraSuccess',
@@ -42,7 +43,8 @@ export class TiraSuccessComponent implements OnInit {
     EndDate:any;
     StartDate:any;
     endDate: any;tiradetails:any[]=[];tiraHeader:any[]=[];
-  constructor(private datePipe:DatePipe,private router:Router,private sharedService:SharedService,private modalService: NgbModal) {
+  fileUrl: any;
+  constructor(private datePipe:DatePipe,private router:Router,private sanitizer: DomSanitizer,private sharedService:SharedService,private modalService: NgbModal) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     console.log("UserDetails",this.userDetails);
     this.loginId = this.userDetails.Result.LoginId;
@@ -101,22 +103,47 @@ export class TiraSuccessComponent implements OnInit {
       this.getalldetails();
   }
   onReqPathDownload(rowData){
-    const link = document.createElement('a');
-    link.setAttribute('target', '_blank');
-    link.setAttribute('href',rowData.RequestFilePath);
-    link.setAttribute('download','Request');
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+    let urlLink = `${this.CommonApiUrl}document/download`;
+    this.sharedService.onPostFilePathDocumentMethodSync(urlLink, rowData.RequestFilePath).subscribe(
+      (data: any) => {
+          const link = document.createElement('a');
+          link.setAttribute('target', '_blank');
+          link.setAttribute('href',data);
+          link.setAttribute('download','Request');
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+      },
+      (err) => { },
+    );
+    // let  a = document.createElement("a");
+    // document.body.appendChild(a);
+    // let data  = rowData.RequestFilePath;
+    // let file = new Blob(data, {type:'text/plain'});
+    //   let fileURL = window.URL.createObjectURL(file);
+    //   a.href = fileURL;
+    //   a.download = 'log';
+    //   a.click();
+    //   const data = 'some text';
+    // const blob = new Blob([rowData.RequestFilePath], { type: 'application/octet-stream' });
+
+    // this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
   }
   onResPathDownload(rowData){
-    const link = document.createElement('a');
-    link.setAttribute('target', '_blank');
-    link.setAttribute('href',rowData.ResponseFilePath);
-    link.setAttribute('download','Request');
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+    let urlLink = `${this.CommonApiUrl}document/download`;
+    this.sharedService.onPostFilePathDocumentMethodSync(urlLink, rowData.ResponseFilePath).subscribe(
+      (data: any) => {
+          const link = document.createElement('a');
+          link.setAttribute('target', '_blank');
+          link.setAttribute('href',data);
+          link.setAttribute('download','Response');
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+      },
+      (err) => { },
+    );
+    
   }
   getCompanyList(){
     let ReqObj = {

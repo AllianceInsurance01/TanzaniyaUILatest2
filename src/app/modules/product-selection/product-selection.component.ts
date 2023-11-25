@@ -142,7 +142,7 @@ export class ProductSelectionComponent implements OnInit {
     userDetails.Result['PackageYn'] = item.PackageYn;
     this.insuranceId= this.userDetails.Result.InsuranceId;
     sessionStorage.setItem('Userdetails', JSON.stringify(userDetails));
-    if(this.insuranceId=='100015' || item.ProductId=='13'){
+    if(this.insuranceId=='100015' || (item.ProductId=='13' && this.insuranceId!='100004')){
       this.router.navigate(['/dashboardView']);
     }
     else this.router.navigate(['/Home']);
