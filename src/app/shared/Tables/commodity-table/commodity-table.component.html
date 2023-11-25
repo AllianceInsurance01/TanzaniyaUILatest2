@@ -159,6 +159,11 @@
                                
                             </mat-menu>
                         </ng-container>
+                        <ng-container *ngIf="col.config.isCheckStatus">
+                            <a mat-raised-button class="mx-1" data-toggle="tooltip" color="primary" style="border-radius: 20px;" data-placement="top" title="Check Status" (click)="onCheckStatus.emit(element)"><i
+                                class="fa fa-question-circle"></i></a>
+                            
+                         </ng-container>
                         <ng-container *ngIf="col.config.isCollapse">
                             <button class="btn btn-light btnVehicle" shape="round" size="tiny" (click)="onPassData(element,j);expandedElement = expandedElement === element ? null : element;">
                         <ng-container *ngIf="element.CommodityNotInResponse">

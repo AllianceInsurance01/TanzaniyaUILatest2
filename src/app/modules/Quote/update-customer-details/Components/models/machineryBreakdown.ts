@@ -75,9 +75,10 @@ export class MachineryBreakDown{
                                   key: 'PowerPlantSi',
                                     props: {
                                     label: `Sum Insured`,
+                                    disabled: this.checkDisable('SumInsured'),
                                   },
                                   templateOptions: {
-                                    disabled: this.checkDisable('SumInsured'),
+                                    
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -122,9 +123,10 @@ export class MachineryBreakDown{
                                   key: 'ElecMachinesSi',
                                   props: {
                                     label: `Sum Insured`,
+                                    disabled: this.checkDisable('SumInsured'),
                                   },
                                   templateOptions: {
-                                    disabled: this.checkDisable('SumInsured'),
+                                   
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -169,9 +171,10 @@ export class MachineryBreakDown{
                                   key: 'EquipmentSi',
                                   props: {
                                     label: `Sum Insured`,
+                                    disabled: this.checkDisable('SumInsured'),
                                   },
                                   templateOptions: {
-                                    disabled: this.checkDisable('SumInsured'),
+                                    
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -216,18 +219,15 @@ export class MachineryBreakDown{
                                   key: 'MachineEquipSi',
                                   props: {
                                     label: `Sum Insured`,
+                                    disabled: this.checkDisable('SumInsured'),
                                   },
                                   templateOptions: {
-                                    disabled: this.checkDisable('SumInsured'),
+                                    
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
                                   },
                                   hooks: {
-                                  },
-                  
-                                  expressions: {
-                                    disabled: '!model.MachineEquipSIYN'
                                   },
                                 }
                               ]
@@ -263,9 +263,10 @@ export class MachineryBreakDown{
                                   key: 'GeneralMachineSi',
                                   props: {
                                     label: `Sum Insured`,
+                                    disabled: this.checkDisable('SumInsured'),
                                   },
                                   templateOptions: {
-                                    disabled: this.checkDisable('SumInsured'),
+                                    
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -310,9 +311,10 @@ export class MachineryBreakDown{
                                   key: 'ManuUnitsSi',
                                   props: {
                                     label: `Sum Insured`,
+                                    disabled: this.checkDisable('SumInsured'),
                                   },
                                   templateOptions: {
-                                    disabled: this.checkDisable('SumInsured'),
+                                    
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -357,9 +359,10 @@ export class MachineryBreakDown{
                                   key: 'BoilerPlantsSi',
                                   props: {
                                     label: `Sum Insured`,
+                                    disabled: this.checkDisable('SumInsured'),
                                   },
                                   templateOptions: {
-                                    disabled: this.checkDisable('SumInsured'),
+                                    
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
