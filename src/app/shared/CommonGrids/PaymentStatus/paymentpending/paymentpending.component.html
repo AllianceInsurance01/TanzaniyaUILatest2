@@ -5,23 +5,33 @@
             <div class="col-md-4 col-lg-3 col-xl-3 col-12">
                 <div class="input-control-container">
                     <label class="input-form-label">Product<span class="text-required">*</span></label>
-                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="productId" [items]="productList" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="productId" (change)="getalldetails(null,'change')" [items]="productList" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                 </div>
             </div>
             <div class="col-md-4 col-lg-4 col-xl-3 ml-3">
                 <div class="input-control-container">
                     <label class="input-form-label">Branch<span class="text-required">*</span></label>
-                    <ng-select class="input-form-select" appendTo="body" [items]="branchList" [(ngModel)]="branchValue" bindValue="Code" bindLabel="CodeDesc" (change)="getalldetails()">
+                    <ng-select class="input-form-select" appendTo="body" [items]="branchList" [(ngModel)]="branchValue" bindValue="Code" bindLabel="CodeDesc" (change)="getalldetails(null,'change')">
                     </ng-select>
                 </div>
             </div>
-        
+            <div class="col-md-4 col-lg-4 col-xl-3 ml-3">
+                <button class="btn btn-secondary" (click)="onCheckStatus(sampleData,mymodal)">Success View</button>
+            </div>
         </div>
         <ng-container *ngIf="searchedSection">
+            <div class="row mt-1 mb-2 p-2" *ngIf="paymentPendingInfo">
+                <div class="col-md-8 col-lg-8 col-xl-8 offset-md-2 offset-lg-2 offset-xl-2 text-center bg-secondary text-white" style="padding: 6px;border-radius: 25px;">
+                     <b>Payment is Still Pending, Please Try Later...</b>
+                </div>
+                
+            </div>
             <ng-container *ngIf="issuerData.length!=0">
-                <app-grid-table [cols]="issuerHeader" [data]="issuerData" [filterValue]="filterValue" changeStatus="true" (onViews)="onViews($event)">
-                </app-grid-table>
+                <app-commodity-table [cols]="issuerHeader" [data]="issuerData" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousData($event)" (onLoadNextData)="onNextData($event)" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onCheckStatus)="onCheckStatus($event,mymodal)">
+                </app-commodity-table>
+                <!-- <app-grid-table [cols]="issuerHeader" [data]="issuerData" [filterValue]="filterValue" changeStatus="true" (onViews)="onViews($event)" (onCheckStatus)="onCheckStatus($event)">
+                </app-grid-table> -->
             </ng-container>
             <ng-container *ngIf="issuerData.length==0">
                     <div class="text-center mt-2">
@@ -32,6 +42,93 @@
         </ng-container>
     </div>
 </div>
+<ng-template #mymodal let-modal>
+    <div class="modal-header" style="height: 48px;">
+        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Payment Details</span></h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        
+        <div class="row">
+            <div class="col-10 offset-1 spancommon span_font_size">
+                <h4 class="spancommon span_font_size" style="font-weight: 600;text-align: center;">Payment Completed Successfully...</h4>
+            </div>
+        </div><hr class="m-1">
+          
+          <div class="d-flex justify-content-between" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
+            <div class="mx-0 mt-1 slider-main">
+              <span class="spancommon span_font_size">Quote No</span>&nbsp;&nbsp;
+            </div>
+            <div class="mx-0 mt-1 slider-main">
+              <span style="font-weight:600;color: darkblue;">{{quoteNo}}</span>
+            </div>
+          </div><hr class="m-1">
+          <!-- <div class="d-flex justify-content-between" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
+            <div class="mx-0 mt-1 slider-main">
+              <span class="spancommon span_font_size">Policy No</span>&nbsp;&nbsp;
+            </div>
+            <div class="mx-0 mt-1 slider-main">
+              <span class="spancommon span_font_size" style="font-weight:600;color: darkblue;word-wrap: break-word !important;">{{paymentDetails?.PolicyNo}}</span>
+            </div>
+          </div>-->
+          <div class="d-flex justify-content-between" style="margin: 0px !important;top:0rem;bottom: 0rem !important;">
+            <div class="mx-0 mt-1 slider-main">
+              <span class="spancommon span_font_size">Policy No</span>&nbsp;&nbsp;
+              
+            </div>
+            <div>
+              <span  style="font-weight:600;color: darkblue;text-wrap: wrap !important;
+              text-overflow: ellipsis !important;
+              word-break: break-word !important;"> {{policyNo}}</span>
+            </div>
+          </div>
+          <hr class="m-1">
+          <div class="d-flex justify-content-between" style="margin: 0px !important;top:0rem;bottom: 0rem !important;" *ngIf="debitNoteNo">
+            <div class="mx-0 mt-1 slider-main">
+              <span class="spancommon span_font_size">Debit Note No</span>&nbsp;&nbsp;
+            </div>
+            <div class="mx-0 mt-1 slider-main">
+              <span class="spancommon span_font_size" style="font-weight:600;color: darkblue;">{{debitNoteNo}}</span>
+            </div>
+          </div><hr *ngIf="debitNoteNo" class="m-1">
+          <div class="d-flex justify-content-between" style="margin: 0px !important;top:0rem;bottom: 0rem !important;" *ngIf="creditNoteNo">
+            <div class="mx-0 mt-1 slider-main">
+              <span class="spancommon span_font_size">Credit Note No</span>&nbsp;&nbsp;
+            </div>
+            <div class="mx-0 mt-1 slider-main">
+              <span class="spancommon span_font_size" style="font-weight:600;color: darkblue;">{{creditNoteNo}}</span>
+            </div>
+          </div><hr *ngIf="creditNoteNo" class="m-1">
+          <div class="d-flex justify-content-between" style="margin: 0px !important;top:0rem;bottom: 0rem !important;" *ngIf="merchantRefNo">
+            <div class="mx-0 mt-1 slider-main">
+              <span class="spancommon span_font_size">Merchant Reference No</span>&nbsp;&nbsp;
+              
+            </div>
+            <div class="mx-0 mt-1 slider-main">
+              <span class="spancommon span_font_size" style="font-weight:600;color: darkblue;">{{merchantRefNo}}</span>
+            </div>
+          </div><hr *ngIf="merchantRefNo" class="m-1">
+          <div class="row mt-2" style="text-align: center;">
+              <div class="mt-2 col-12 col-md-4 col-lg-4 col-xl-4">
+                <button class="btn btn-warning" style="font-size:0.85rem !important;" *ngIf="debitNoteNo" (click)="onDebitdownload(paymentDetails)">Debit Note Pdf &nbsp;<i class="fa fa-download"
+                aria-hidden="true"></i></button>
+              </div>
+              <div class="mt-2 col-12 col-md-4 col-lg-4 col-xl-4">
+                <button class="btn btn-info" style="font-size:0.85rem !important;" *ngIf="creditNoteNo" (click)="onCreditdownload(paymentDetails)">Credit Note Pdf &nbsp;<i class="fa fa-download"
+                aria-hidden="true"></i></button>
+              </div>
+              <div class="mt-2 col-12 col-md-4 col-lg-4 col-xl-4">
+                <button class="btn btn-success" style="font-size:0.85rem !important;" *ngIf="policyNo" (click)="onGetSchedule(paymentDetails)">Schedule Pdf &nbsp;<i class="fa fa-download"
+                aria-hidden="true"></i></button>
+              </div>
+              
+              
+          </div>
+        
+    </div>
+</ng-template>
 
 
 

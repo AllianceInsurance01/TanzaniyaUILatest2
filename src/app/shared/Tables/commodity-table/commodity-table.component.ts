@@ -59,6 +59,7 @@ export class CommodityTableComponent implements OnInit {
    @Output('onView') onView = new EventEmitter();
    @Output('onViews') onViews = new EventEmitter();
    @Output('add') add =new EventEmitter();
+   @Output('onCheckStatus') onCheckStatus = new EventEmitter();
    @Output('onLoadNextData') onLoadNextData =new EventEmitter();
    @Output('onLoadPreviousData') onLoadPreviousData =new EventEmitter();
   public dataSource: any;
