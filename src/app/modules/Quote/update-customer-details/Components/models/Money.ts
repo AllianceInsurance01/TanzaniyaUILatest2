@@ -75,9 +75,10 @@ export class Money{
                                   key: 'MoneyOutofSafe',
                                   props: { 
                                     label: `Sum Insured`,
+                                    disabled: this.checkDisable('SumInsured')
                                   },
                                   templateOptions: {
-                                    disabled: this.checkDisable('SumInsured')
+                                    
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -122,9 +123,9 @@ export class Money{
                                   key: 'MoneyDirectorResidence',
                                   props: {
                                     label: `Sum Insured`,
+                                    disabled: this.checkDisable('SumInsured')
                                   },
                                   templateOptions: {
-                                    disabled: this.checkDisable('SumInsured')
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -169,9 +170,10 @@ export class Money{
                                   key: 'MoneyMajorLoss',
                                   props: {
                                     label: `Sum Insured`,
+                                    disabled: this.checkDisable('SumInsured')
                                   },
                                   templateOptions: {
-                                    disabled: this.checkDisable('SumInsured')
+                                    
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -216,9 +218,10 @@ export class Money{
                                   key: 'MoneyCollector',
                                   props: {
                                     label: `Sum Insured`,
+                                    disabled: this.checkDisable('SumInsured')
                                   },
                                   templateOptions: {
-                                    disabled: this.checkDisable('SumInsured')
+                                    
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -261,10 +264,11 @@ export class Money{
                                   key: 'MoneySafeLimit',
                                   props: {
                                     label: `Sum Insured`,
+                                    disabled: this.checkDisable('SumInsured')
                                   },
                                   templateOptions: {
                                  
-                                    disabled: this.checkDisable('SumInsured')
+                                   
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
@@ -309,9 +313,10 @@ export class Money{
                                   key: 'MoneyAnnualEstimate',
                                   props: {
                                     label: `Sum Insured`,
+                                    disabled: this.checkDisable('SumInsured')
                                   },
                                   templateOptions: {
-                                    disabled: this.checkDisable('SumInsured')
+                                    
                                   },
                                   validators: {
                                     validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
