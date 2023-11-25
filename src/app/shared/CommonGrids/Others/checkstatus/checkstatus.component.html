@@ -4,7 +4,7 @@
             <div class="col-12 col-lg-1 col-md-1" style="background: #feb602!important;border-radius: 10px 10px !important;">
                 <!--background: #feb602 #f7d560-->
                     <div>
-                        <div class="mt-2">
+                        <div class="mt-2"><!--[ngClass]="pay =='payment' ? '' : ''" -->
                             <div (click)="redirect('payment')">
                             <img src="../../../../../assets/pay.png" width="70px" height="60px">
                             <span class="header9" style="color:#fff !important;font-weight:700;">
@@ -770,7 +770,420 @@
                          </div>
                         </div>
                       </div>
+
+
+                      <div class="card" *ngIf="policy">
+                        <div class="author">Latest Converted Policy</div>
+                        <div class="container-card">
+                         <div>
+                              <div class="row light">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Client Name
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{ConvertedPolicy?.ClientName}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Customer ReferenceNo
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{ConvertedPolicy?.CustomerReferenceNo}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Debit NoteNo
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{ConvertedPolicy?.DebitNoteNo}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Credit No
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{ConvertedPolicy?.CreditNo}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        CustomerId
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{ConvertedPolicy?.CustomerId}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        EntryDate
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{ConvertedPolicy?.EntryDate}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Exchange Rate
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{ConvertedPolicy?.ExchangeRate}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        IdNumber
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{ConvertedPolicy?.IdNumber}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Id Type Description
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{ConvertedPolicy?.IdTypeDesc}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Policy CovertedDate
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{ConvertedPolicy?.PolicyCovertedDate}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Policy No
+                                    </div>
+                                    <div class="header9 mt-1" style="color: green !important;">
+                                        {{ConvertedPolicy?.PolicyNo}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Premium Lc
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{ConvertedPolicy?.OverallPremiumLc}}
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        AdminRemarks
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{ConvertedPolicy?.AdminRemarks}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Currency
+
+                                    </div>
+                                    <div class="header9 mt-1" style="color: green !important;">
+                                        {{ConvertedPolicy?.Currency}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Policy HolderType
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{ConvertedPolicy?.PolicyHolderTypeDesc}}
+                                    </div>
+                                </div>
+                            </div>
+                          
+                         </div>
+                        </div>
+                      </div>
+
+                      <div class="card" *ngIf="policy">
+                        <div class="author">Latest Endrosment Policy</div>
+                        <div class="container-card">
+                         <div>
+                              <div class="row light">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Client Name
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{EndrosmentPolicy?.ClientName}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Customer ReferenceNo
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{EndrosmentPolicy?.CustomerReferenceNo}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Debit NoteNo
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{EndrosmentPolicy?.DebitNoteNo}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Credit No
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{EndrosmentPolicy?.CreditNo}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        CustomerId
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{EndrosmentPolicy?.CustomerId}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        EntryDate
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{EndrosmentPolicy?.EntryDate}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Exchange Rate
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{EndrosmentPolicy?.ExchangeRate}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Currency
+
+                                    </div>
+                                    <div class="header9 mt-1" style="color: green !important;">
+                                        {{EndrosmentPolicy?.Currency}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Policy HolderType
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{EndrosmentPolicy?.PolicyHolderTypeDesc}}
+                                    </div>
+                                </div>
+                              
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Endt Category Description
+
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{EndrosmentPolicy?.EndtCategDesc}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Endorsement Type Description
+
+                                    </div>
+                                    <div class="header9 mt-1" style="color: green !important;">
+                                        {{EndrosmentPolicy?.EndorsementTypeDesc}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Endorsement Date
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{EndrosmentPolicy?.EndorsementDate}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Endt Count
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{EndrosmentPolicy?.EndtCount}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Endt Premium
+                                    </div>
+                                    <div class="header9 mt-1" style="color: green !important;">
+                                        {{EndrosmentPolicy?.EndtPremium}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Endt Prev QuoteNo
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{EndrosmentPolicy?.EndtPrevQuoteNo}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Policy CovertedDate
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{EndrosmentPolicy?.PolicyCovertedDate}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Policy No
+                                    </div>
+                                    <div class="header9 mt-1" style="color: green !important;">
+                                        {{EndrosmentPolicy?.PolicyNo}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Premium Lc
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{EndrosmentPolicy?.OverallPremiumLc}}
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        AdminRemarks
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{EndrosmentPolicy?.AdminRemarks}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        IdNumber
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{EndrosmentPolicy?.IdNumber}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-4">
+                                    <div class="header8">
+                                        Id Type Description
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{EndrosmentPolicy?.IdTypeDesc}}
+                                    </div>
+                                </div>
+                               
+                            </div>
+                          
+                         </div>
+                        </div>
+                      </div>
                     </div>
+
+                    <div class="card" *ngIf="vech" style="max-width: 100% !important;">
+                        <div class="author">Latest TiraSearched Vehicle</div>
+                        <div class="container-card">
+                         <div>
+                              <div class="row light">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="header8">
+                                        Api Description
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{Searchedvehicle?.ApiDescription}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="header8">
+                                        Chassis number
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{Searchedvehicle?.Chassisnumber}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="header8">
+                                        Registration Number
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{Searchedvehicle?.RegistrationNumber}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="header8">
+                                        Entry Date
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{Searchedvehicle?.EntryDate}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="header8">
+                                        Request Headers
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{Searchedvehicle?.ReqHeaders}}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6">
+                                    <div class="header8">
+                                        Response Status
+                                    </div>
+                                    <div class="header9 mt-1">
+                                        {{Searchedvehicle?.ResponseStatusDesc}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row light mt-2">
+                            <div class="col-12 col-md-12 col-lg-12">
+                                <div class="header8">
+                                    Request String
+                                </div>
+                                <div class="header9 mt-1">
+                                    {{Searchedvehicle?.ReqString}}
+                                </div>
+                            </div>
+                           </div>
+                         </div>
+                        </div>
+                      </div>
                   </div>
 
                  

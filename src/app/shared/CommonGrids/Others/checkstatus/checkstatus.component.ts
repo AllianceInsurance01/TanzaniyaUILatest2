@@ -50,6 +50,7 @@ export class CheckStatusComponent implements OnInit {
   noti: boolean=false;
   policy: boolean=false;nextbtn:any=false;
   vech: boolean=false;
+  pay: any;
     constructor(private router:Router,private sharedService:SharedService,private modalService: NgbModal) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       console.log("UserDetails",this.userDetails);
@@ -97,6 +98,7 @@ export class CheckStatusComponent implements OnInit {
     }
 
     redirect(type){
+      this.pay=type
       if(type=='payment'){
         this.show=true;
         this.noti=false;
