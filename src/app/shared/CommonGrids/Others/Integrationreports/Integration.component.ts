@@ -43,7 +43,7 @@ export class TiraIntegrationComponent implements OnInit {
       EndDate:any;
       StartDate:any;
       endDate: any;tiradetails:any[]=[];
-    reqstring: any;
+    reqstring: any;tiraHeader:any[]=[];
     constructor(private datePipe:DatePipe,private router:Router,private sharedService:SharedService,private modalService: NgbModal) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
       console.log("UserDetails",this.userDetails);
@@ -69,20 +69,30 @@ export class TiraIntegrationComponent implements OnInit {
           { key: 'ResponseId', display: 'ResponseId' },
           { key: 'Status', display: 'Status' },
           { key: 'EntryDate', display: 'Entry Date' },
-          {
-            key: 'edit',
-            display: 'Request Download',
-            config: {
-               isRequestdown:true,
-            },
+          { key: 'RequestFilePath', display: 'Request',
+          config: {
+            isReqPathDownload:true,
           },
-          {
-            key: 'mail',
-            display: 'Response Download',
-            config: {
-              isResponsedown:true,
-            },
+        },
+        { key: 'ResponseFilePath', display: 'Response',
+          config: {
+            isResPathDownload:true,
           },
+        },
+          // {
+          //   key: 'edit',
+          //   display: 'Request Download',
+          //   config: {
+          //      isRequestdown:true,
+          //   },
+          // },
+          // {
+          //   key: 'mail',
+          //   display: 'Response Download',
+          //   config: {
+          //     isResponsedown:true,
+          //   },
+          // },
           {
             key: 'actions',
             display: 'View',
@@ -90,6 +100,23 @@ export class TiraIntegrationComponent implements OnInit {
               isViews:true,
             },
           },
+          
+        ];
+        this.tiraHeader = [
+          { key: 'StatusCode', display: 'TIRA Code'},
+          { key: 'TiraTrackingId', display: 'Tracking Id' },
+          { key: 'HitCount', display: 'Hit Count' },
+          { key: 'StatusDesc', display: 'Status' },
+          { key: 'RequestFilePath', display: 'Request',
+            config: {
+              isReqPathDownload:true,
+            },
+          },
+          { key: 'ResponseFilePath', display: 'Response',
+            config: {
+              isResPathDownload:true,
+            },
+          }
           
         ];
     }
@@ -240,5 +267,23 @@ export class TiraIntegrationComponent implements OnInit {
         link.click();
         link.remove();
      }
+     onReqPathDownload(rowData){
+      const link = document.createElement('a');
+      link.setAttribute('target', '_blank');
+      link.setAttribute('href',rowData.RequestFilePath);
+      link.setAttribute('download','Request');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+    onResPathDownload(rowData){
+      const link = document.createElement('a');
+      link.setAttribute('target', '_blank');
+      link.setAttribute('href',rowData.ResponseFilePath);
+      link.setAttribute('download','Request');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
   }
   

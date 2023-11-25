@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12 mt-2">
                 <ng-container *ngIf="issuerData.length!=0">
-                    <app-grid-table [cols]="issuerHeader" [data]="issuerData" [Currency]="Currency" (onViews)="onViews($event,mymodal)" (onRequestdown)="onRequestdown($event)" (onResponsedown)="onResponsedown($event)">
+                    <app-grid-table [cols]="issuerHeader" [data]="issuerData" [Currency]="Currency" (onViews)="onViews($event,mymodal)" (onReqPath)="onReqPathDownload($event)" (onResPath)="onResPathDownload($event)">
                     </app-grid-table>
                 </ng-container>
                 <ng-container *ngIf="issuerData.length==0">
@@ -52,85 +52,11 @@
     </div>
     <div class="modal-body">
         <div class="card">
-            <ng-container *ngIf="tiradetails.length!=0">
-                <div class="row p-5 ml-4 mr-4" *ngFor="let cus of tiradetails"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
-                    <div class="col-12 col-md-3 col-lg-3">
-                        <div>
-                            <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;">Tira Details</h1></div>
-                            <div class="Personal Details mt-2 pl-5 pr-5">
-    
-                                <div class="row mt-2">
-                                 
-                                    <div class="col-12 mt-2">
-                                        <div class="heading1">Request Id</div>
-                                        <div class="heading2">{{cus?.RequestId}}</div>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-12 mt-2">
-                                        <div class="heading1">Response Id</div>
-                                        <div class="heading2" >{{cus?.ResponseId}}</div>
-                                    </div>
-                                </div>
-                                  
-                                <div class="row mt-2">
-                                    <div class="col-12 mt-2">
-                                        <div class="heading1">Entry Date</div>
-                                        <div class="heading2">{{cus?.EntryDate}}</div>
-                                    </div>
-                                </div>
-                                  
-                                
-                            </div>
-                         </div>
+                <ng-container *ngIf="tiradetails.length!=0">
+                    <div class="row ml-4 mr-4">
+                        <app-grid-table [cols]="tiraHeader" [data]="tiradetails" [Currency]="Currency" (onViews)="onViews($event,mymodal)" (onReqPath)="onReqPathDownload($event)" (onResPath)="onResPathDownload($event)">
+                        </app-grid-table>
                     </div>
-                        
-                    <div class="line-in-middle"></div>
-                    <div class="col-12 col-md-8 col-lg-8">
-                                <div>
-                                    <div class="Personal Details">
-                                        <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">History</h1></div>
-                                       </div>
-                                       <div>
-                                       <div class="row mt-2">
-                                        <div class="col-6 col-md-4 col-md-4 mt-2">
-                                            <div class="heading3">Status</div>
-                                            <div class="heading4">{{cus.StatusDesc}}</div>
-                                        </div>
-                                        <div class="col-6 col-md-4 col-md-4 mt-2">
-                                            <div class="heading3">Status Code</div>
-                                            <div class="heading4">{{cus.StatusCode}}</div>
-                                        </div>
-                                        <div class="col-6 col-md-4 col-md-4 mt-2">
-                                            <div class="heading3">AcknowledgementId</div>
-                                            <div class="heading4">{{cus?.AcknowledgementId}}</div>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2">
-                                           <div class="col-12 col-md-12 col-lg-12 mt-2">
-                                                <div class="heading3">RequestFilePath</div>
-                                                <div class="heading4">
-                                                    <a style="text-decoration:underline;color: rgb(18, 174, 236);cursor: pointer;" (click)="onDownload(cus?.RequestFilePath)">{{cus?.RequestFilePath}}</a></div>
-                                               </div>
-                                            </div>
-                                        
-                                            <div class="row mt-2"> 
-                                        <div class="col-12 col-md-12 col-lg-12 mt-2">
-                                            <div class="heading1">ResponseFilePath</div>
-                                            <div class="heading2">
-                                                <a style="text-decoration:underline;color: rgb(18, 174, 236);cursor: pointer;" (click)="onDownload(cus?.ResponseFilePath)">{{cus?.ResponseFilePath}}</a>
-                                               </div>
-                                        </div>
-                                        </div>
-    
-                                 
-                                  
-                                </div>
-                                </div>
-                            </div>
-                        
-                       
-                </div>
                </ng-container>
            <ng-container *ngIf="tiradetails.length==0">
                  No Data Found
