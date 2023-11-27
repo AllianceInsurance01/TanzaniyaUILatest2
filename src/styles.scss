@@ -50,6 +50,19 @@
     display: flex;
     justify-content: space-between;
 }
+// ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+//     border-radius: 3px !important;
+//     border: 1px solid #CAD0DB !important;
+//     width: 100%;
+//     padding: 0px !important;
+//     transition: .25s;
+//     outline: 1px solid lightslategrey !important;
+//    /*border-left: 0px !important;
+//    border-top: 0px !important;
+//    border-right: 0px !important;
+//    border-bottom: 0.5px lightgray !important; */
+  
+// }
 
 .cuslabel {
     font-size: 18px;
@@ -590,7 +603,7 @@ ng-select input {
     width: 100%;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: #fff;
-    padding: 5px 1rem;
+    padding: 2px !important;
     transition: 0.25s;
 }
 
@@ -2008,7 +2021,8 @@ td {
     width: 100%;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: #fff;
-    padding: 5px 1rem;
+    padding:2px !important;
+    //padding: 5px 1rem;
     transition: 0.25s;
     font-size: 14px !important;
 }
@@ -2420,21 +2434,25 @@ td {
     bottom: 0rem!important;
 }
 
-// .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-//     // border-radius: 10px;
-//     // outline: 1px solid lightslategrey;
-//     border: 0;
-//     width: 100%;
-//     //font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-//     //background-color: #fff;
-//     padding: 5px 1rem;
-//     transition: 0.25s;
-// }
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    // border-radius: 10px;
+    // outline: 1px solid lightslategrey;
+    border-radius: 3px !important;
+    border: 1px solid #CAD0DB !important;
+    border: 0;
+    width: 100%;
+    outline: 1px solid lightslategrey !important;
+    //font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    //background-color: #fff;
+    padding: 0px !important;
+    transition: 0.25s;
+}
 
 .mdc-text-field--no-label:not(.mdc-text-field--textarea) .mat-mdc-form-field-input-control.mdc-text-field__input,
 .mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control {
     position: relative !important;
     top: 0.05rem;
+    border: 2px solid #eaecf1 !important;
 }
 
 // .mat-mdc-paginator-range-actions {
@@ -2971,6 +2989,7 @@ p {
 .mdc-text-field--no-label:not(.mdc-text-field--textarea) .mat-mdc-form-field-input-control.mdc-text-field__input, .mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control {
     position: relative!important;
     top: 1rem;
+    border: 2px solid #eaecf1 !important;
 }
 .mdc-text-field--no-label:not(.mdc-text-field--textarea) .mat-mdc-form-field-input-control.mdc-text-field__input, .mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control {
     height: 3rem !important;
@@ -3584,15 +3603,4 @@ input[type="radio"]{
     top: 0 !important;
 }
 
-::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-     border-radius: 3px !important;
-     border: 1px solid #CAD0DB !important;
-     outline: 1px solid lightslategrey !important;
-    /*border-left: 0px !important;
-    border-top: 0px !important;
-    border-right: 0px !important;
-    border-bottom: 0.5px lightgray !important; */
-    width: 100%;
-    padding: 0px !important;
-    transition: .25s;
-}
+
