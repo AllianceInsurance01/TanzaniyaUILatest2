@@ -322,19 +322,19 @@ export class DomesticRiskDetailsComponent implements OnInit {
     this.branchCode = this.userDetails.Result.BranchCode;
     this.quoteNo = sessionStorage.getItem('quoteNo');
     console.log("item received", homeObj)
-    if (homeObj && this.productId!='19' && this.productId!='3') {
-      this.item = homeObj[0].SectionId;
-      this.InbuildConstructType=homeObj[0].InbuildConstructType
-      if(this.item) this.setTabSections();
-    }
-    else{
-      let referenceNo = sessionStorage.getItem('quoteReferenceNo');
-      if (referenceNo) {
-        this.quoteRefNo = referenceNo;
-        this.Section = false;
+    // if (homeObj && this.productId!='19' && this.productId!='3') {
+    //   this.item = homeObj[0].SectionId;
+    //   this.InbuildConstructType=homeObj[0].InbuildConstructType
+    //   if(this.item) this.setTabSections();
+    // }
+    // else{
+      // let referenceNo = sessionStorage.getItem('quoteReferenceNo');
+      // if (referenceNo) {
+      //   this.quoteRefNo = referenceNo;
+      //   this.Section = false;
         //this.getEditQuoteDetails();
-      }
-    }
+      //}
+    //}
     let referenceNo = sessionStorage.getItem('quoteReferenceNo');
     if (referenceNo) {
       this.quoteRefNo = referenceNo;
