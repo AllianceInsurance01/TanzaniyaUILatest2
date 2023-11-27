@@ -25,6 +25,8 @@ export class InnerTableComponent implements OnInit {
   @Output('onEdit') onEdit = new EventEmitter();
   @Output('onOpenCoverAction') onOpenCoverAction = new EventEmitter();
   @Output('isActionBtn') isActionBtn = new EventEmitter();
+  @Output('onReqPath') onReqPath = new EventEmitter();
+  @Output('onResPath') onResPath = new EventEmitter();
 
   public dataSource: any;currencyCode:any;
   @ViewChild(MatSort) sort!: MatSort;

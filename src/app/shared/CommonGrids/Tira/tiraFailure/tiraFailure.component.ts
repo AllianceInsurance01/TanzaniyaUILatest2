@@ -20,7 +20,7 @@ export class TiraFailureComponent implements OnInit {
   pageCount: number;
   totalRecords: any;
   quotePageNo: any;
-  startIndex: number;
+  startIndex: number =0;
   endIndex: number;
   totalQuoteRecords: any;
   public AppConfig: any = (Mydatas as any).default;
@@ -29,6 +29,7 @@ export class TiraFailureComponent implements OnInit {
   productId: string;show:boolean=false;productList:any[]=[];
   loginId: any;
   insuranceList: any[]=[];
+  limit: any='0';
     branchValue: any;
     branchList:any;
   loginType: any;
@@ -38,9 +39,9 @@ export class TiraFailureComponent implements OnInit {
   branchCode: any;
   userType: any;
   startDate: any;
-  EndDate:any;
-  StartDate:any;tiraHeader:any[]=[];
-  endDate: any;closeResult: string;tiradetails:any[]=[];
+  EndDate:any;innerdata:any[]=[];innerTableData:any[]=[];
+  StartDate:any;tiraHeader:any[]=[];innergrid:any[]=[];outergrid:any[]=[];
+  endDate: any;closeResult: string;tiradetails:any[]=[];innerColumnHeader:any[]=[];
   constructor(private datePipe:DatePipe,private router:Router,private sharedService:SharedService,private modalService: NgbModal) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     console.log("UserDetails",this.userDetails);
@@ -72,6 +73,37 @@ export class TiraFailureComponent implements OnInit {
     //     { key: 'TiraRequestId', display: 'Request Id' },
     //     { key: 'TiraResponseId', display: 'TiraResponseId' },
     //   ];
+
+    this.tiraHeader = [
+          { key: 'RequestId', display: 'Request Id' },
+          { key: 'ResponseId', display: 'Response Id' },
+          { key: 'StatusCode', display: 'TIRA Code'},
+          { key: 'TiraTrackingId', display: 'Tracking Id' },
+          { key: 'HitCount', display: 'Hit Count' },
+          { key: 'StatusDesc', display: 'Status' },
+          { key: 'EntryDate', display: 'Entry Date' },
+          { key: 'MethodName', display: 'Method Name' },
+          { key: 'RequestFilePath', display: 'Request',
+            config: {
+              isReqPathDownload:true,
+            },
+          },
+          { key: 'ResponseFilePath', display: 'Response',
+            config: {
+              isResPathDownload:true,
+            },
+          },
+          {
+            key: 'edit',
+            display: 'Acknowledge Details',
+            sticky: false,
+            config: {
+              isCollapse: true,
+              isCollapseName:'Details'
+            },
+          },
+          
+        ];
     this.issuerHeader = [
       { key: 'QuoteNo', display: 'QuoteNo'},
       { key: 'ClientName', display: 'Customer Name' },
@@ -79,7 +111,15 @@ export class TiraFailureComponent implements OnInit {
       { key: 'ResponseStatusDesc', display: 'Response Status' },
       { key: 'ResponseStatusCode', display: 'Response StatusCode' },
       { key: 'LoginId', display: 'Login Id' },
-      { key: 'BranchName', display: 'Branch' },
+      { key: 'TiraRequestId', display: 'Tira RequestId' },
+      { key: 'TiraResponseId', display: 'Tira ResponseId' },
+      {
+        key: 'Hit',
+        display: 'ReHit',
+        config: {
+          ishit:true,
+        },
+      },
       {
         key: 'actions',
         display: 'View',
@@ -89,11 +129,15 @@ export class TiraFailureComponent implements OnInit {
       },
       
     ];
-    this.tiraHeader = [
+    this.innerColumnHeader = [
+      { key: 'RequestId', display: 'Request Id' },
+      { key: 'ResponseId', display: 'Response Id' },
       { key: 'StatusCode', display: 'TIRA Code'},
       { key: 'TiraTrackingId', display: 'Tracking Id' },
       { key: 'HitCount', display: 'Hit Count' },
       { key: 'StatusDesc', display: 'Status' },
+      { key: 'EntryDate', display: 'Entry Date' },
+      { key: 'MethodName', display: 'Method Name' },
       { key: 'RequestFilePath', display: 'Request',
         config: {
           isReqPathDownload:true,
@@ -103,7 +147,7 @@ export class TiraFailureComponent implements OnInit {
         config: {
           isResPathDownload:true,
         },
-      }
+      },
       
     ];
     this.getalldetails();
@@ -149,6 +193,22 @@ export class TiraFailureComponent implements OnInit {
   
   );
   }
+  onHit(event,modal){
+    let ReqObj={
+      "QuoteNo":event.QuoteNo,
+    }
+    let urlLink = `${this.CommonApiUrl}payment/pushtira`;
+   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      if(data?.Result){
+          if(data?.Result?.Response=='Success'){
+         this.onViews(event,modal)
+          }
+      } 
+    },
+    (err) => { },
+    );
+  }
   getProductList(){
 
     console.log('KKKKKKKKKKKK',this.insuranceId);
@@ -174,7 +234,8 @@ export class TiraFailureComponent implements OnInit {
         "ProductId":this.productId,
         "InsuranceId":this.insuranceId,
         "StartDate":this.startDate,
-        "EndDate":this.endDate
+        "EndDate":this.endDate,
+        "BranchCode":this.branchCode
       }
       let urlLink = `${this.CommonApiUrl}api/tirafailure`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -190,10 +251,73 @@ export class TiraFailureComponent implements OnInit {
   search(){
     this.EndDate="";
   }
-
+// onViews(event,modal,entryType){
+//   this.open(modal);
+//     let ReqObj={
+//       "QuoteNo":event?.QuoteNo,
+//     }
+//     let urlLink = `${this.CommonApiUrl}api/tiraview`;
+//     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+//       (data: any) => {
+//         console.log(data);
+//         if(data?.Result){
+//             this.tiradetails=data?.Result;
+//             if (data.Result) {
+//               if (data.Result?.length != 0) {
+//                 this.totalQuoteRecords = data.Result?.TotalCount;
+//                 this.pageCount = 10;
+//                 if (entryType == 'change') {
+//                   this.quotePageNo = 1;
+//                   let startCount = 1, endCount = this.pageCount;
+//                   startCount = endCount + 1;
+//                     let quoteData = data.Result;
+//                     let outergrid
+//                     for(let i=0;i<=quoteData.length;i++){
+//                       this.innergrid=this.tiradetails.filter(ele => ele.MethodName == '/covernote/non-life/motor/v2/acknowledge')
+//                        outergrid=this.tiradetails.filter(ele => ele.MethodName == '/covernote/non-life/motor/v2/request')
+//                                    }
+                    
+//                     this.outergrid = outergrid;
+//                     if (quoteData.length <= this.pageCount) {
+//                       endCount = quoteData.length
+//                     }
+//                     else endCount = this.pageCount;
+                  
+//                   this.startIndex = startCount; this.endIndex = endCount;
+//                 }
+//                 else {
+          
+//                   let startCount = event.startCount, endCount = event.endCount;
+//                   this.pageCount = event.n;
+//                   startCount = endCount + 1;
+//                     let quoteData = data.Result;
+//                     let outergrid
+//                     for(let i=0;i<=quoteData.length;i++){
+//                       this.innergrid=this.tiradetails.filter(ele => ele.MethodName == '/covernote/non-life/motor/v2/acknowledge')
+//                        outergrid=this.tiradetails.filter(ele => ele.MethodName == '/covernote/non-life/motor/v2/request')
+//                                    }
+//                     this.outergrid= this.outergrid.concat(outergrid);
+//                   if (this.totalQuoteRecords <= endCount + (event.n)) {
+//                     endCount = this.totalQuoteRecords
+//                   }
+//                   else endCount = endCount + (event.n);
+//                   this.startIndex = startCount; this.endIndex = endCount;
+//                 }
+//               }
+//               else {
+//                 this.outergrid = []; 
+//               }
+//             }
+//         }
+//       },
+//       (err) => { },
+//     );
+  
+// }
   
   onViews(event,modal){
     this.open(modal);
+    this.outergrid=[];this.innergrid=[];
     let ReqObj={
       "QuoteNo":event?.QuoteNo,
     }
@@ -203,7 +327,50 @@ export class TiraFailureComponent implements OnInit {
         console.log(data);
         if(data?.Result){
             this.tiradetails=data?.Result;
-            console.log('tiradetails',this.tiradetails);
+            this.outergrid=[];this.innergrid=[];
+
+            for(let i=0;i<=this.tiradetails.length;i++){
+                 this.innergrid=this.tiradetails.filter(ele => ele.MethodName == '/covernote/non-life/motor/v2/acknowledge')
+                 this.outergrid=this.tiradetails.filter(ele => ele.MethodName == '/covernote/non-life/motor/v2/request')
+            }
+            this.pageCount=10
+            this.startIndex = 1; this.endIndex = 10;
+
+            // if(this.outergrid.length!=0){
+            //   console.log('tiradetails',this.innergrid);
+            //   console.log('tiradetails22',this.outergrid);
+            //   this.tiraHeader = [
+            //     { key: 'RequestId', display: 'Request Id' },
+            //     { key: 'ResponseId', display: 'Response Id' },
+            //     { key: 'StatusCode', display: 'TIRA Code'},
+            //     { key: 'TiraTrackingId', display: 'Tracking Id' },
+            //     { key: 'HitCount', display: 'Hit Count' },
+            //     { key: 'StatusDesc', display: 'Status' },
+            //     { key: 'EntryDate', display: 'Entry Date' },
+            //     { key: 'MethodName', display: 'Method Name' },
+            //     { key: 'RequestFilePath', display: 'Request',
+            //       config: {
+            //         isReqPathDownload:true,
+            //       },
+            //     },
+            //     { key: 'ResponseFilePath', display: 'Response',
+            //       config: {
+            //         isResPathDownload:true,
+            //       },
+            //     },
+            //     {
+            //       key: 'edit',
+            //       display: 'Acknowledge Details',
+            //       sticky: false,
+            //       config: {
+            //         isCollapse: true,
+            //         isCollapseName:'Vehicles'
+            //       },
+            //     },
+                
+            //   ];
+            // }
+           
         }
       },
       (err) => { },
@@ -280,4 +447,25 @@ export class TiraFailureComponent implements OnInit {
     link.click();
     link.remove();
    }
+
+   onInnerData(rowData){
+    this.innerdata=this.innergrid.filter(ele => ele.RequestId == rowData.RequestId && ele.AcknowledgementId== rowData.AcknowledgementId)
+    console.log('Inner grid datas',this.innerdata);
+    rowData.MotorList=this.innerdata
+
+}
+
+
+onNextData(element,modal){
+  this.limit = String(Number(this.limit)+1);
+  this.quotePageNo = this.quotePageNo+1;
+  this.startIndex = 0;
+  this.endIndex = element.endCount
+  this.onViews(element,modal);
+}
+onPreviousData(element,modal){
+  this.limit = String(Number(this.limit)-1);
+    this.quotePageNo = this.quotePageNo-1;
+    this.onViews(element,modal);
+}
 }

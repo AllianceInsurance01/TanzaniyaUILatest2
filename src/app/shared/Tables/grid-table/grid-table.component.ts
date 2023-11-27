@@ -45,6 +45,7 @@ export class GridTableComponent implements OnInit, OnChanges, AfterViewInit {
   @Output('onInfo') onInfo = new EventEmitter();
   @Output('onCredit') onCredit = new EventEmitter();
   @Output('onDebit') onDebit = new EventEmitter();
+  @Output('onHit') onHit = new EventEmitter();
 
   @Output('countBasedPolicy') countBasedPolicy = new EventEmitter();
   public dataSource: any;

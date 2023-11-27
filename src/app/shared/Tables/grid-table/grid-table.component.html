@@ -139,6 +139,11 @@
                             class="fa fa-eye"></i></a>
                         
                      </ng-container>
+                     <ng-container *ngIf="col.config.ishit">
+                        <button class="circle btn btn-success btn-sm" (click)="onHit.emit(element)">
+                            <i class="fas fa-thumbs-up"></i>
+                        </button>&nbsp;
+                    </ng-container>
                      <ng-container *ngIf="col.config.isRequestdown">
                         <button class="circle btn btn-primary btn-sm" (click)="onRequestdown.emit(element)">
                             <i class="fa fa-download"></i>

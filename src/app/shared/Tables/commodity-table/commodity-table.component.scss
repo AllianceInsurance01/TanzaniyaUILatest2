@@ -5,6 +5,10 @@ td.mat-footer-cell {
     border-bottom-color: #ccc;
 
 }
+// *{
+//     word-break: break-word !important;
+//     text-overflow: ellipsis !important;
+// }
 ::ng-deep  .mdc-data-table__cell, .mdc-data-table__header-cell {
     padding: 0px 8px !important;
 }
@@ -40,6 +44,7 @@ table {
     box-shadow: 1px 2px 2px #1f26875e !important;
     backdrop-filter: blur(18.5px);
     list-style-type: none;
+ 
 }
 .mat-table th,
 .mat-table td {

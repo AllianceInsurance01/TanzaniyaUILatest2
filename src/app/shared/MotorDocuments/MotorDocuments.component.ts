@@ -282,7 +282,7 @@ export class MotorDocumentsComponent implements OnInit {
             
            if(this.quoteNo || this.ReferenceNo){
             this.onPremium();
-            this.VechileTira();
+            //this.VechileTira();
             this.payment();
             this.Documentview();
             this.onCustomerSearch();
