@@ -214,8 +214,9 @@
                                 </ng-container> -->
                                     <ng-container *ngIf="(step.props.label=='Contents Risk' && insuranceId!='100004') || step.props.label=='Personal Liability' || step.props.label=='Personal Accident' || step.props.label=='All Risk' || step.props.label=='Business All Risk'">
                                         <div class="col-md-6 col-lg-4 col-xl-4 col-12 ml-2 splitCard">
-                                            <div class="col-md-12 col-lg-12 col-xl-12 customer-grid maan-grid-item-titles d-flex justify-content-between" (click)="selectedIndex=index">
-                                                <div (click)="selectedIndex=index" class="mt-2 pl-4"><h1 class="spancon"><u>{{ step.props.label }}</u></h1></div>
+                                            <div class="col-md-12 col-lg-12 col-xl-12 splitCardHeader d-flex justify-content-between" (click)="selectedIndex=index">
+                                            <!--customer-grid maan-grid-item-titles -->
+                                                <div (click)="selectedIndex=index" class="mt-2 pl-4"><h1 class="headings"><u>{{ step.props.label }}</u></h1></div>
                                                 <div class="pr-3 pt-1">
                                                     <!-- <button class="btn btn-danger btn-sm" >
                                                         <i class="fa fa-trash" aria-hidden="true"></i>
