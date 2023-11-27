@@ -310,7 +310,8 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         this.getCustomerDetails(referenceNo)
       }
     }
-    if (this.productId == '13') {
+    if (this.productId == '13' && this.insuranceId!='100004') {
+      console.log('Tanzania Products')
       this.fields = [
         {
           fieldGroup: [
@@ -1200,6 +1201,11 @@ export class PersonalQuoteDetailsComponent implements OnInit {
           this.formSection = true; this.viewSection = false;
           this.formSection = true; this.viewSection = false;
       }
+    }
+    if(this.productId=='13' && this.insuranceId=='100004'){
+      let contentData = new PersonalAccident();
+      this.fields = [contentData?.fields]
+      this.formSection = true; this.viewSection = false;
     }
     this.BenifitList = [
       { Code: 1, CodeDescription: '12 Months' },
@@ -6858,6 +6864,7 @@ getOccupationList(sections) {
             this.occupationList[i].value = this.occupationList[i]['Code'];
             delete this.occupationList[i].CodeDesc;
             if (i == this.occupationList.length - 1) {
+              console.log("Fields",this.fields)
               if(this.productId=='19' || this.productId=='3'){
                     let fields = this.fields[0].fieldGroup;
                     for(let field of fields){
@@ -6882,7 +6889,7 @@ getOccupationList(sections) {
                     }
                     console.log("Fields in Occupation",this.productItem,this.fields)
               }
-              if (this.productId != '19' && this.productId != '3' && this.productId!='6' && this.productId != '1' && this.productId != '32' && this.productId!='14' && this.productId!='16' && this.productId!='25' && this.productId!='26' && this.productId!='21' && this.productId!='27') this.fields[0].fieldGroup[0].fieldGroup[2].props.options = defaultObj.concat(this.occupationList);
+              if (this.productId != '19' && this.productId != '3' && this.productId!='6' && this.productId != '1' && this.productId != '32' && this.productId!='14' && this.productId!='16' && this.productId!='25' && this.productId!='26' && this.productId!='21' && this.productId!='27' && this.productId!='13') this.fields[0].fieldGroup[0].fieldGroup[2].props.options = defaultObj.concat(this.occupationList);
               if(this.productId=='14' && this.insuranceId == '100002'){
                 let fireData = new EmployersLiability();
                 let entry = [];
