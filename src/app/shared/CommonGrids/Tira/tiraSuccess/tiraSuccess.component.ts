@@ -74,6 +74,8 @@ export class TiraSuccessComponent implements OnInit {
         { key: 'ResponseStatusCode', display: 'Response StatusCode' },
         { key: 'LoginId', display: 'Login Id' },
         { key: 'BranchName', display: 'Branch' },
+        { key: 'TiraRequestId', display: 'Tira RequestId' },
+        { key: 'TiraResponseId', display: 'Tira ResponseId' },
         {
           key: 'actions',
           display: 'View',
@@ -87,7 +89,7 @@ export class TiraSuccessComponent implements OnInit {
         { key: 'StatusCode', display: 'TIRA Code'},
         { key: 'TiraTrackingId', display: 'Tracking Id' },
         { key: 'HitCount', display: 'Hit Count' },
-        { key: 'StatusDesc', display: 'Status' },
+        { key: 'Status', display: 'Status' },
         { key: 'RequestFilePath', display: 'Request',
           config: {
             isReqPathDownload:true,

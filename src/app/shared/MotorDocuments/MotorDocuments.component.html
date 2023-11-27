@@ -978,69 +978,13 @@
                                             <div class="heading1">Date And Time</div>
                                             <div class="heading2">{{pay.EntryDate}}</div>
                                         </div>
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc!='Cash'">
+                                            <div class="heading1">Amount</div>
+                                            <div class="heading2">{{pay.PremiumLc|commaseparator}}</div>
+                                        </div>
                                     </div>
+
                                     <div class="mt-4">
-                                    <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">Bank Details</h1></div>
-                                    <div class="row mt-2">
-                                           
-                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
-                                                <div class="heading1">Payment Id</div>
-                                                <div class="heading2">{{pay.PaymentId}}</div>
-                                             </div>
-                                             <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cash'">
-                                                <div class="heading1">Payee name</div>
-                                                <div class="heading2">{{pay.PayeeName}}</div><!--{{pay.ChequeNo}}-->
-                                            </div>
-                                            <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cash'">
-                                                <div class="heading1">Amount</div>
-                                                <div class="heading2">{{pay.PremiumLc|commaseparator}}</div><!--{{pay.ChequeNo}}-->
-                                            </div>
-                                                                      
-                                    </div>
-                                    <div class="row mt-2">
-                                      
-                                        <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cheque'">
-                                            <div class="heading1">ChequeNo</div>
-                                            <div class="heading2">{{pay.ChequeNo}}</div><!--{{pay.ChequeNo}}-->
-                                        </div>
-                                        <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cheque'">
-                                            <div class="heading1">BankName</div>
-                                            <div class="heading2">{{pay.BankName}}</div><!--{{pay.BankName}}-->
-                                        </div>
-                                        <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cheque'">
-                                            <div class="heading1">ChequeDate</div>
-                                            <div class="heading2">{{pay.ChequeDate}}</div>
-                                         </div>
-                                         <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='CreditCard'">
-                                            <div class="heading1">Transaction Ref No</div>
-                                            <div class="heading2">{{pay.AuthTransRefNo}}</div><!--{{pay.ChequeNo}}-->
-                                        </div>
-                                        <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='CreditCard'">
-                                            <div class="heading1">Transaction Date</div>
-                                            <div class="heading2">04-08-2023</div>{{pay.TransactionDate}}
-                                         </div>
-                                         <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='CreditCard'">
-                                            <div class="heading1">Transaction Time</div>
-                                            <div class="heading2">{{pay.AuthTransRefNo}}</div><!--{{pay.ChequeNo}}-->
-                                        </div>
-                                        <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='CreditCard'">
-                                            <div class="heading1">Status</div>
-                                            <div class="heading2">04-08-2023</div>{{pay.TransactionDate}}
-                                         </div>
-                                        
-                                        <!-- <div class="col-4 mt-2">
-                                            <div class="heading1">PaymentDescription</div>
-                                            <div class="heading2">Insurance Payment</div>
-                                        </div> -->
-                                    </div>
-                                    </div>
-                                </div>
-                             </div>
-                        </div>
-                            
-                        <div class="line-in-middle"></div>
-                        <div class="col-12 col-md-5 col-lg-5">
-                                    <div>
                                         <div class="Personal Details">
                                             <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">EMI Installment Info</h1></div>
                                            </div>
@@ -1062,6 +1006,199 @@
                                         </div>
                                        
                                     </div>
+                                   
+                                </div>
+                             </div>
+                        </div>
+                            
+                        <div class="line-in-middle"></div>
+                        <div class="col-12 col-md-5 col-lg-5">
+                            <div>
+                                <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">{{pay?.PaymentTypedesc}} Details</h1></div>
+
+                                <div class="mt-2">
+                                    <div *ngIf="pay.PaymentTypedesc=='Cash'">
+                                        <ng-container *ngIf="pay.PaymentCashRes.length!=0">
+                                            <div class="row">
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Payment Id</div>
+                                                <div class="heading2">{{pay.PaymentId}}</div>
+                                             </div>
+                                             <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cash'">
+                                                <div class="heading1">Payee name</div>
+                                                <div class="heading2">{{pay.PayeeName}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cash'">
+                                                <div class="heading1">Amount</div>
+                                                <div class="heading2">{{pay.PremiumLc|commaseparator}}</div>
+                                            </div>
+                                        </div>
+                                        </ng-container>
+                                    </div>
+
+
+                                    <div *ngIf="pay.PaymentTypedesc=='Cheque'">
+                                        <ng-container *ngIf="pay.PaymentChequeRes.length!=0">
+                                        <div class="row mt-2">
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Payment Id</div>
+                                                <div class="heading2">{{pay.PaymentId}}</div>
+                                             </div>
+                                             <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Payee name</div>
+                                                <div class="heading2">{{pay.PayeeName}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Cheque Date</div>
+                                                <div class="heading2">{{pay.PaymentChequeRes.ChequeDate}}</div>
+                                            </div>
+                                       
+                                            <div class="col-6 col-md-6 col-lg-8 mt-2">
+                                                <div class="heading1">Bank Name</div>
+                                                <div class="heading2">{{pay.PaymentChequeRes.BankName}}</div>
+                                            </div>
+                                     
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Cheque No</div>
+                                                <div class="heading2">{{pay.PaymentChequeRes.ChequeNo}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Micr No</div>
+                                                <div class="heading2">{{pay.PaymentChequeRes.MicrNo}}</div>
+                                            </div>
+                                        </div>
+                                       </ng-container>
+                                    </div>
+
+
+                                    <div *ngIf="pay.PaymentTypedesc=='Online'">
+                                        <ng-container *ngIf="pay.PaymentOnlineRes.length!=0">
+                                        <div class="row mt-2">
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Payment Id</div>
+                                                <div class="heading2">{{pay.PaymentId}}</div>
+                                             </div>
+                                             <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Payee name</div>
+                                                <div class="heading2">{{pay.PayeeName}}</div>
+                                            </div>
+                                           
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Request Time</div>
+                                                <div class="heading2">{{pay.PaymentOnlineRes.RequestTime}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Response Time</div>
+                                                <div class="heading2">{{pay.PaymentOnlineRes.ResponseTime}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Response Status</div>
+                                                <div class="heading2">{{pay.PaymentOnlineRes.ResponseStatus}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Auth Trans RefNo</div>
+                                                <div class="heading2">{{pay.PaymentOnlineRes.AuthTransRefNo}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Auth Amount</div>
+                                                <div class="heading2">{{pay.PaymentOnlineRes.AuthAmount}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Auth Response</div>
+                                                <div class="heading2">{{pay.PaymentOnlineRes.AuthResponse}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Channel</div>
+                                                <div class="heading2">{{pay.PaymentOnlineRes.Channel}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Reference</div>
+                                                <div class="heading2">{{pay.PaymentOnlineRes.Reference}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Msisdn</div>
+                                                <div class="heading2">{{pay.PaymentOnlineRes.Msisdn}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Msisdn</div>
+                                                <div class="heading2">{{pay.PaymentOnlineRes.ResponseMessage}}</div>
+                                            </div>
+                                        </div>
+                                       </ng-container>
+                                    </div>
+
+
+
+                                    <div *ngIf="pay.PaymentTypedesc=='Credit'">
+                                        <ng-container>
+                                        <div class="row mt-2">
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Payment Id</div>
+                                                <div class="heading2">{{pay.PaymentId}}</div>
+                                             </div>
+                                             <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Payee name</div>
+                                                <div class="heading2">{{pay.PayeeName}}</div>
+                                            </div>
+                                           
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Cbc No</div>
+                                                <div class="heading2">{{pay.PaymentCreditRes.CbcNo}}</div>
+                                            </div>
+                                        </div>
+                                       </ng-container>
+                                    </div>
+                                
+                                </div>
+                                <!-- <div class="row mt-2">
+                                       
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                            <div class="heading1">Payment Id</div>
+                                            <div class="heading2">{{pay.PaymentId}}</div>
+                                         </div>
+                                         <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cash'">
+                                            <div class="heading1">Payee name</div>
+                                            <div class="heading2">{{pay.PayeeName}}</div>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cash'">
+                                            <div class="heading1">Amount</div>
+                                            <div class="heading2">{{pay.PremiumLc|commaseparator}}</div>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cheque'">
+                                            <div class="heading1">ChequeNo</div>
+                                            <div class="heading2">{{pay.ChequeNo}}</div>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cheque'">
+                                            <div class="heading1">BankName</div>
+                                            <div class="heading2">{{pay.BankName}}</div>
+                                        </div>
+                                                                  
+                                </div>
+                                <div class="row mt-2">
+
+                                    <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='Cheque'">
+                                        <div class="heading1">ChequeDate</div>
+                                        <div class="heading2">{{pay.ChequeDate}}</div>
+                                     </div>
+                                     <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='CreditCard'">
+                                        <div class="heading1">Transaction Ref No</div>
+                                        <div class="heading2">{{pay.AuthTransRefNo}}</div>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='CreditCard'">
+                                        <div class="heading1">Transaction Date</div>
+                                        <div class="heading2">04-08-2023</div>{{pay.TransactionDate}}
+                                     </div>
+                                     <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='CreditCard'">
+                                        <div class="heading1">Transaction Time</div>
+                                        <div class="heading2">{{pay.AuthTransRefNo}}</div>
+                                    </div>
+                                    <div class="col-6 col-md-6 col-lg-4 mt-2" *ngIf="pay.PaymentTypedesc=='CreditCard'">
+                                        <div class="heading1">Status</div>
+                                        <div class="heading2">04-08-2023</div>{{pay.TransactionDate}}
+                                     </div>
+                               
+                                </div> -->
+                                </div>
                                 </div>
                             
                            

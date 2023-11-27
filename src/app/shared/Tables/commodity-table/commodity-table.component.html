@@ -59,6 +59,16 @@
                                 <i class="fas fa-check"></i>
                             </button>
                         </ng-container>
+                        <ng-container *ngIf="col.config.isReqPathDownload">
+                            <a mat-raised-button class="mx-1" data-toggle="tooltip" color="primary" style="border-radius: 20px;" data-placement="top" title="Download" (click)="onReqPath.emit(element)"><i
+                                class="fa fa-download"></i></a>
+                            
+                         </ng-container>
+                         <ng-container *ngIf="col.config.isResPathDownload">
+                            <a mat-raised-button class="mx-1" data-toggle="tooltip" color="accent" style="border-radius: 20px;" data-placement="top" title="Download" (click)="onResPath.emit(element)"><i
+                                class="fa fa-download"></i></a>
+                            
+                         </ng-container>
                         <ng-container *ngIf="col.config.isReject">
                             <button class="circle btn btn-danger btn-sm" (click)="onReject.emit(element)">
                                 <i class='fa fa-times' style='color: yellow'></i>
@@ -345,6 +355,16 @@
                                     <i class="fas fa-check"></i>
                                 </button>
                             </ng-container>
+                            <ng-container *ngIf="col.config.isReqPathDownload">
+                                <a mat-raised-button class="mx-1" data-toggle="tooltip" color="primary" style="border-radius: 20px;" data-placement="top" title="Download" (click)="onReqPath.emit(element)"><i
+                                    class="fa fa-download"></i></a>
+                                
+                             </ng-container>
+                             <ng-container *ngIf="col.config.isResPathDownload">
+                                <a mat-raised-button class="mx-1" data-toggle="tooltip" color="accent" style="border-radius: 20px;" data-placement="top" title="Download" (click)="onResPath.emit(element)"><i
+                                    class="fa fa-download"></i></a>
+                                
+                             </ng-container>
                             <ng-container *ngIf="col.config.isReject">
                                 <button class="circle btn btn-danger btn-sm" (click)="onReject.emit(element)">
                                     <i class='fa fa-times' style='color: yellow'></i>

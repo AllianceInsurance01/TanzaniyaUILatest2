@@ -40,7 +40,11 @@ export class TiraPendingComponent implements OnInit {
   startDate: any;
   EndDate:any;
   StartDate:any;tiraHeader:any[]=[];
+  limit: any='0';
   endDate: any;closeResult: string;tiradetails:any[]=[];
+  innerdata:any[]=[];innerTableData:any[]=[];
+  innergrid:any[]=[];outergrid:any[]=[];
+  innerColumnHeader:any[]=[];
   constructor(private datePipe:DatePipe,private router:Router,private sharedService:SharedService,private modalService: NgbModal) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     console.log("UserDetails",this.userDetails);
@@ -58,32 +62,20 @@ export class TiraPendingComponent implements OnInit {
     var year = d.getFullYear();
     var month = d.getMonth();
     var day = d.getDate();
-    this.StartDate = new Date(year,month-11, day);
+    this.StartDate = new Date(year,month-1, day);
     this.EndDate = new Date(year,month, day);
   }
   ngOnInit(): void {
     //this.getProductList();
-    this.issuerHeader = [
-      { key: 'QuoteNo', display: 'QuoteNo'},
-      { key: 'ClientName', display: 'Customer Name' },
-      { key: 'PolicyNo', display: 'Policy No' },
-      { key: 'ResponseStatusDesc', display: 'Response Status' },
-      { key: 'ResponseStatusCode', display: 'Response StatusCode' },
-      { key: 'LoginId', display: 'Login Id' },
-      { key: 'BranchName', display: 'Branch' },
-      {
-        key: 'actions',
-        display: 'View',
-        config: {
-          isViews:true,
-        },
-      },
-    ];
     this.tiraHeader = [
+      { key: 'RequestId', display: 'Request Id' },
+      { key: 'ResponseId', display: 'Response Id' },
       { key: 'StatusCode', display: 'TIRA Code'},
       { key: 'TiraTrackingId', display: 'Tracking Id' },
       { key: 'HitCount', display: 'Hit Count' },
       { key: 'StatusDesc', display: 'Status' },
+      { key: 'EntryDate', display: 'Entry Date' },
+      { key: 'MethodName', display: 'Method Name' },
       { key: 'RequestFilePath', display: 'Request',
         config: {
           isReqPathDownload:true,
@@ -93,9 +85,64 @@ export class TiraPendingComponent implements OnInit {
         config: {
           isResPathDownload:true,
         },
-      }
+      },
+      {
+        key: 'edit',
+        display: 'Acknowledge Details',
+        sticky: false,
+        config: {
+          isCollapse: true,
+          isCollapseName:'Details'
+        },
+      },
       
     ];
+this.issuerHeader = [
+  { key: 'QuoteNo', display: 'QuoteNo'},
+  { key: 'ClientName', display: 'Customer Name' },
+  { key: 'PolicyNo', display: 'Policy No' },
+  { key: 'ResponseStatusDesc', display: 'Response Status' },
+  { key: 'ResponseStatusCode', display: 'Response StatusCode' },
+  { key: 'LoginId', display: 'Login Id' },
+  { key: 'TiraRequestId', display: 'Tira RequestId' },
+  { key: 'TiraResponseId', display: 'Tira ResponseId' },
+  {
+    key: 'Hit',
+    display: 'ReHit',
+    config: {
+      ishit:true,
+    },
+  },
+  {
+    key: 'actions',
+    display: 'View',
+    config: {
+      isViews:true,
+    },
+  },
+  
+];
+this.innerColumnHeader = [
+  { key: 'RequestId', display: 'Request Id' },
+  { key: 'ResponseId', display: 'Response Id' },
+  { key: 'StatusCode', display: 'TIRA Code'},
+  { key: 'TiraTrackingId', display: 'Tracking Id' },
+  { key: 'HitCount', display: 'Hit Count' },
+  { key: 'StatusDesc', display: 'Status' },
+  { key: 'EntryDate', display: 'Entry Date' },
+  { key: 'MethodName', display: 'Method Name' },
+  { key: 'RequestFilePath', display: 'Request',
+    config: {
+      isReqPathDownload:true,
+    },
+  },
+  { key: 'ResponseFilePath', display: 'Response',
+    config: {
+      isResPathDownload:true,
+    },
+  },
+  
+];
     this.getalldetails();
   }
 
@@ -223,9 +270,9 @@ export class TiraPendingComponent implements OnInit {
   search(){
     this.EndDate="";
   }
-
   onViews(event,modal){
     this.open(modal);
+    this.outergrid=[];this.innergrid=[];
     let ReqObj={
       "QuoteNo":event?.QuoteNo,
     }
@@ -235,12 +282,73 @@ export class TiraPendingComponent implements OnInit {
         console.log(data);
         if(data?.Result){
             this.tiradetails=data?.Result;
-            console.log('tiradetails',this.tiradetails);
+            this.outergrid=[];this.innergrid=[];
+
+            for(let i=0;i<=this.tiradetails.length;i++){
+                 this.innergrid=this.tiradetails.filter(ele => ele.MethodName == '/covernote/non-life/motor/v2/acknowledge')
+                 this.outergrid=this.tiradetails.filter(ele => ele.MethodName == '/covernote/non-life/motor/v2/request')
+            }
+            this.pageCount=10
+            this.startIndex = 1; this.endIndex = 10;
+
+            // if(this.outergrid.length!=0){
+            //   console.log('tiradetails',this.innergrid);
+            //   console.log('tiradetails22',this.outergrid);
+            //   this.tiraHeader = [
+            //     { key: 'RequestId', display: 'Request Id' },
+            //     { key: 'ResponseId', display: 'Response Id' },
+            //     { key: 'StatusCode', display: 'TIRA Code'},
+            //     { key: 'TiraTrackingId', display: 'Tracking Id' },
+            //     { key: 'HitCount', display: 'Hit Count' },
+            //     { key: 'StatusDesc', display: 'Status' },
+            //     { key: 'EntryDate', display: 'Entry Date' },
+            //     { key: 'MethodName', display: 'Method Name' },
+            //     { key: 'RequestFilePath', display: 'Request',
+            //       config: {
+            //         isReqPathDownload:true,
+            //       },
+            //     },
+            //     { key: 'ResponseFilePath', display: 'Response',
+            //       config: {
+            //         isResPathDownload:true,
+            //       },
+            //     },
+            //     {
+            //       key: 'edit',
+            //       display: 'Acknowledge Details',
+            //       sticky: false,
+            //       config: {
+            //         isCollapse: true,
+            //         isCollapseName:'Vehicles'
+            //       },
+            //     },
+                
+            //   ];
+            // }
+           
         }
       },
       (err) => { },
     );
   }
+
+  // onViews(event,modal){
+  //   this.open(modal);
+  //   let ReqObj={
+  //     "QuoteNo":event?.QuoteNo,
+  //   }
+  //   let urlLink = `${this.CommonApiUrl}api/tiraview`;
+  //   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+  //     (data: any) => {
+  //       console.log(data);
+  //       if(data?.Result){
+  //           this.tiradetails=data?.Result;
+  //           console.log('tiradetails',this.tiradetails);
+  //       }
+  //     },
+  //     (err) => { },
+  //   );
+  // }
   openRejectpopup(modal){
     this.open(modal);
   }
@@ -269,4 +377,42 @@ export class TiraPendingComponent implements OnInit {
     link.click();
     link.remove();
    }
+
+   
+   onInnerData(rowData){
+    this.innerdata=this.innergrid.filter(ele => ele.RequestId == rowData.RequestId && ele.AcknowledgementId== rowData.AcknowledgementId)
+    console.log('Inner grid datas',this.innerdata);
+    rowData.MotorList=this.innerdata
+
+}
+
+
+onNextData(element,modal){
+  this.limit = String(Number(this.limit)+1);
+  this.quotePageNo = this.quotePageNo+1;
+  this.startIndex = 0;
+  this.endIndex = element.endCount
+  this.onViews(element,modal);
+}
+onPreviousData(element,modal){
+  this.limit = String(Number(this.limit)-1);
+    this.quotePageNo = this.quotePageNo-1;
+    this.onViews(element,modal);
+}
+onHit(event,modal){
+  let ReqObj={
+    "QuoteNo":event.QuoteNo,
+  }
+  let urlLink = `${this.CommonApiUrl}payment/pushtira`;
+ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+  (data: any) => {
+    if(data?.Result){
+        if(data?.Result?.Response=='Success'){
+       this.onViews(event,modal)
+        }
+    } 
+  },
+  (err) => { },
+  );
+}
 }

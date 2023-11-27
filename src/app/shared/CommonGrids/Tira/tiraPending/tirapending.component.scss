@@ -1,3 +1,7 @@
+
+:host ::ng-deep .inner-table td{
+    white-space: normal !important;
+}
 .line-in-middle {
     width:50px;
     height:auto;

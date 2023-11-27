@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-12 col-md-12 col-lg-12 mt-2">
                     <ng-container *ngIf="issuerData.length!=0">
-                        <app-grid-table [cols]="issuerHeader" [data]="issuerData" [Currency]="Currency" (onViews)="onViews($event,mymodal)">
+                        <app-grid-table [cols]="issuerHeader" [data]="issuerData" [Currency]="Currency" (onHit)="onHit($event,mymodal)" (onViews)="onViews($event,mymodal)">
                         </app-grid-table>
                     </ng-container>
                     <ng-container *ngIf="issuerData.length==0">
@@ -53,10 +53,10 @@
     </div>
     <div class="modal-body">
         <div class="card">
-            <ng-container *ngIf="tiradetails.length!=0">
+            <ng-container *ngIf="outergrid.length!=0">
                 <div class="row ml-4 mr-4">
-                    <app-grid-table [cols]="tiraHeader" [data]="tiradetails" [Currency]="Currency" (onViews)="onViews($event,mymodal)" (onReqPath)="onReqPathDownload($event)" (onResPath)="onResPathDownload($event)">
-                    </app-grid-table>
+                    <app-commodity-table [cols]="tiraHeader" [data]="outergrid" [innerCols]="innerColumnHeader" [innerData]="innerdata" [Currency]="Currency" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousData($event,mymodal)" (onLoadNextData)="onNextData($event,mymodal)"  (onAdd)="onInnerData($event)"(onViews)="onViews($event,mymodal)" (onReqPath)="onReqPathDownload($event)"  (onResPath)="onResPathDownload($event)">
+                    </app-commodity-table>
                 </div>
             <!-- <div class="row p-5 ml-4 mr-4" *ngFor="let cus of tiradetails">
                 <div class="col-12 col-md-3 col-lg-3">
@@ -137,7 +137,7 @@
                    
             </div> -->
            </ng-container>
-           <ng-container *ngIf="tiradetails.length==0">
+           <ng-container *ngIf="outergrid.length==0">
                  No Data Found
            </ng-container>
         </div>

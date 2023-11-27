@@ -62,6 +62,8 @@ export class CommodityTableComponent implements OnInit {
    @Output('onCheckStatus') onCheckStatus = new EventEmitter();
    @Output('onLoadNextData') onLoadNextData =new EventEmitter();
    @Output('onLoadPreviousData') onLoadPreviousData =new EventEmitter();
+   @Output('onReqPath') onReqPath = new EventEmitter();
+   @Output('onResPath') onResPath = new EventEmitter();
   public dataSource: any;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) private paginator!: MatPaginator;
