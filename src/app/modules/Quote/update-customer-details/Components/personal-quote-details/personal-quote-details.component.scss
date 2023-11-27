@@ -198,6 +198,28 @@ font-size:.75rem !important;
 :host ::ng-deep .form-control{
     margin:7px 3px !important;
 }
+.maan-grid-item-titles{
+    width: 100%;
+    border-bottom: 2px solid #333b85;
+    margin-top:1px !important;
+    margin-bottom:0px !important;
+    outline: none;
+    box-sizing: border-box;
+    /* transition: all .3s; */
+    height: 44px;
+    background: rgb(255,255,255);
+    -webkit-backdrop-filter: blur(18.5px);
+    backdrop-filter: blur(18.5px);
+}
+
+.spancon{
+    padding: 0.5rem;
+    font-size: 17px;
+    color: #000;
+    font-weight: 600;
+    position: relative;
+    top: 0.5rem;
+}
 .splitCardHeaders{
     //display: block !important; 
     // padding-left: 3px;
@@ -374,3 +396,6 @@ margin-left:0px !important;
         cursor: pointer !important;
         background: #e3e0e0 !important;
         color: #6f6c6c !important;}
+
+
+        .slider-mainss {box-shadow: 1px 1px 8px rgba(0,0,0,.1);padding:10px;text-align: center;margin-top: 20px;width:30% !important;}
