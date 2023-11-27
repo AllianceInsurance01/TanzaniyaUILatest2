@@ -229,7 +229,7 @@ export class TiraFailureComponent implements OnInit {
     }
   }
   onReqPathDownload(rowData){
-    let urlLink = `${this.CommonApiUrl}document/download`;
+    let urlLink = `${this.CommonApiUrl}document/download2`;
     this.sharedService.onPostFilePathDocumentMethodSync(urlLink, rowData.RequestFilePath).subscribe(
       (data: any) => {
           const link = document.createElement('a');
@@ -256,7 +256,7 @@ export class TiraFailureComponent implements OnInit {
     // this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
   }
   onResPathDownload(rowData){
-    let urlLink = `${this.CommonApiUrl}document/download`;
+    let urlLink = `${this.CommonApiUrl}document/download2`;
     this.sharedService.onPostFilePathDocumentMethodSync(urlLink, rowData.ResponseFilePath).subscribe(
       (data: any) => {
           const link = document.createElement('a');
