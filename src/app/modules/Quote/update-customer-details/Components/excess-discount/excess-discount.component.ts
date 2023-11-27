@@ -3086,6 +3086,7 @@ getMotorUsageList(vehicleValue){
         }
         else{
           this.emiYN = "N";
+          this.EmiInstallment();
         }
     }
     console.log("Total Premium",this.vehicleDetailsList)
@@ -3116,7 +3117,9 @@ getMotorUsageList(vehicleValue){
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         if(data.Result){
-            let emiList = data.Result;
+            //let emiList = data.Result;
+            let emiList=[];
+            emiList = data.Result;
             let EmiYnShow =data.Result[0].EmiYn;
             if(EmiYnShow=='Y')
             {
