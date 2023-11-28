@@ -1008,7 +1008,7 @@ toggle(index: number) {
                 this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
               }
     }
-    else if(this.productId=='5' || this.productId=='32' || this.productId=='39' || this.productId=='14' || this.productId=='15' || this.productId=='19' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId =='21' || this.productId =='26' || this.productId =='25'|| this.productId=='42' || this.productId=='43'){
+    else if(this.productId=='5' || this.productId=='32' || this.productId=='39' || this.productId=='14' || this.productId=='15' || this.productId=='19' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId =='21' || this.productId =='26' || this.productId =='25'|| this.productId=='42' || this.productId=='43' || this.productId=='13' || this.productId=='27'){
     //   console.log('JJJJJJJJJJ',this.Riskdetails);
     //   let entry=this.Riskdetails.filter(ele => ele.AcccessoriesSumInsured!=0)
     //   if(entry.length!=0){
