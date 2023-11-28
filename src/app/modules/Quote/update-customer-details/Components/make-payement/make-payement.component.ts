@@ -87,6 +87,7 @@ export class MakePayementComponent implements OnInit {
   DueAmount: any;
   quoteDetails: any;
   loadingSection: boolean=false;
+  emiyn: any;
   constructor(private router:Router,public dialogService: MatDialog,private sharedService: SharedService,private cookieService: CookieService,
     private updateComponent:UpdateCustomerDetailsComponent,private route:ActivatedRoute,
    private datePipe:DatePipe) {
@@ -210,7 +211,10 @@ export class MakePayementComponent implements OnInit {
           "ProductId":this.productId,
           "FileName":doc.filename,
           "OriginalFileName":doc.filename,
-          "UploadedBy":this.loginId
+          "UploadedBy":this.loginId,
+          "EmiYn": this.EmiYn,
+           "NoOfInstallment": this.emiMonth,
+          "InstallmentPeriod": this.emiPeriod,
         }
         // if(this.endorsementSection && this.enableDocumentDetails){
         //   ReqObj['EndtStatus'] = this.quoteDetails?.EndtStatus;
@@ -246,7 +250,13 @@ export class MakePayementComponent implements OnInit {
                 if(i==docList.length){
                   this.uploadDocList = [];
                   this.uploadSection = false;
-                  this.getUploadedDocList(null,-1);
+                  if(this.EmiYn!='Y'){
+                    this.getUploadedDocList(null,-1);
+                  }
+                  else{
+                    this.emiupload();
+                  }
+                  
                 }
               }
             },
@@ -256,6 +266,7 @@ export class MakePayementComponent implements OnInit {
     }
   }
   getUploadedDocList(vehicleData:any,index:any){
+    this.uploadedDocList=[];
     let ReqObj = {
       "QuoteNo":  this.quoteNo
     }
@@ -359,7 +370,13 @@ export class MakePayementComponent implements OnInit {
               //   "Delete",
               //   "Document Deleted Successfully",
               //   config);
+              if(this.EmiYn!='Y'){
                 this.getUploadedDocList(null,-1);
+              }
+              else{
+                this.emiupload();
+              }
+                
             }
           },
           (err) => { },
@@ -416,6 +433,9 @@ export class MakePayementComponent implements OnInit {
             this.IsChargeOrRefund = quoteDetails?.IsChargeOrRefund;
             this.endtPremium = quoteDetails?.TotalEndtPremium;
             this.DueAmount=quoteDetails?.DueAmount;
+            this.EmiYn = this.quoteDetails.EmiYn;
+            this.emiPeriod = this.quoteDetails.InstallmentPeriod;
+            this.emiMonth = this.quoteDetails.InstallmentMonth;
             console.log("Total",this.totalPremium)
             if(this.loadingSection && this.quoteDetails?.policyNo!=null && this.quoteDetails?.policyNo!=''){
               this.paymentDetails = {
@@ -1035,8 +1055,15 @@ export class MakePayementComponent implements OnInit {
         if(data.Result){
           this.paymentTypeList = data.Result;
           if(this.paymentTypeList.some(ele=>ele.Code=='2')){
-            this.getCommonDocTypeList();
-            this.getUploadedDocList(null,-1);
+            if(this.EmiYn!='Y'){
+              console.log('Document listsssss',this.emiyn)
+              this.getCommonDocTypeList();
+              this.getUploadedDocList(null,-1);
+            }
+            else{
+              this.emiupload();
+            }
+           
           }
         } 
       },
@@ -1061,6 +1088,27 @@ export class MakePayementComponent implements OnInit {
       (err) => { },
     );
 
+  }
+
+  emiupload(){
+    let ReqObj = {
+      "EmiYn":this.EmiYn,
+      "QuoteNo":  this.quoteNo,
+      "InstallmentPeriod":this.emiPeriod,
+     "NoOfInstallment":this.emiMonth
+    }
+    let urlLink = `${this.CommonApiUrl}document/getemidoc`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+          if(data?.Result){
+            this.uploadedDocList = data?.Result?.CommmonDocument;
+            this.chequeSection=true;
+          }
+        }
+      },
+      (err) => { },
+    );
   }
 //   onproceed(){
 //     let makepayment= sessionStorage.getItem('Makepaymentid');

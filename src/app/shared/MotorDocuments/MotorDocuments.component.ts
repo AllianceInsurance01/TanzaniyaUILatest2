@@ -729,20 +729,20 @@ this.passengerName=type;
        }
 
        onDownload(type){
-        const link = document.createElement('a');
-        link.setAttribute('target', '_blank');
-        link.setAttribute('href',type);
-        link.setAttribute('download','Request');
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        // let  a = document.createElement("a");
-        // document.body.appendChild(a);
-        // let file = new Blob(type, {type:'text/plain'});
-        //   let fileURL = window.URL.createObjectURL(file);
-        //   a.href = fileURL;
-        //   a.download = 'log';
-        //   a.click();
+        let urlLink = `${this.CommonApiUrl}document/downloadbase64`;
+        this.sharedService.onPostFilePathDocumentMethodSync(urlLink,type).subscribe(
+          (data: any) => {
+              const link = document.createElement('a');
+              link.setAttribute('target', '_blank');
+              link.setAttribute('href',data);
+              link.setAttribute('download','Response');
+              document.body.appendChild(link);
+              link.click();
+              link.remove();
+          },
+          (err) => { },
+        );
+        
        }
        onPremium(){
         let ReqObj={

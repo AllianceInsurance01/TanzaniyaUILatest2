@@ -63,6 +63,7 @@ export class PoliciesComponent implements OnInit {
           { key: 'OverallPremiumLc', display: 'Premium' },
           { key: 'PolicyStartDate', display: 'Start Date' },
           { key: 'PolicyEndDate', display: 'End Date' },
+          { key: 'EmiYn', display: 'Emi Yn' },
           
           //{ key: 'ClientName', display: 'Customer Name' },
           // { key: 'CreditNo', display: 'Credit Note No' },
@@ -132,6 +133,7 @@ export class PoliciesComponent implements OnInit {
           { key: 'ClientName', display: 'Insured Name' },
           { key: 'PolicyStartDate', display: 'Policy Start Date' },
           { key: 'PolicyEndDate', display: 'Policy End Date' },
+          { key: 'EmiYn', display: 'Emi Yn' },
   
           // { key: 'CreditNo', display: 'Credit Note No' },
           // { key: 'DebitNoteNo', display: 'Debit Note No' },
@@ -168,6 +170,7 @@ export class PoliciesComponent implements OnInit {
           { key: 'OverallPremiumLc', display: 'Premium' },
           { key: 'PolicyStartDate', display: 'Start Date' },
           { key: 'PolicyEndDate', display: 'End Date' },
+          { key: 'EmiYn', display: 'Emi Yn' },
           
           //{ key: 'ClientName', display: 'Customer Name' },
           // { key: 'CreditNo', display: 'Credit Note No' },
@@ -237,6 +240,7 @@ export class PoliciesComponent implements OnInit {
           { key: 'ClientName', display: 'Insured Name' },
           { key: 'PolicyStartDate', display: 'Policy Start Date' },
           { key: 'PolicyEndDate', display: 'Policy End Date' },
+          { key: 'EmiYn', display: 'Emi Yn' },
   
           // { key: 'CreditNo', display: 'Credit Note No' },
           // { key: 'DebitNoteNo', display: 'Debit Note No' },
@@ -273,6 +277,13 @@ export class PoliciesComponent implements OnInit {
     console.log('NNNNNNNN',element)
             sessionStorage.setItem('quoteReferenceNo',element.RequestReferenceNo);
            sessionStorage.setItem('quoteNo',element.QuoteNo);
+           if(element?.NoOfInstallment!=element?.InstallmentPeriod){
+            sessionStorage.setItem('PaymentStatus',"Pending");
+           }
+           else{
+            sessionStorage.setItem('PaymentStatus',"ACCEPTED");
+           }
+           
            sessionStorage.setItem('Makepaymentid','Ids');
            let ReqObj={
            TitleDesc:"",
