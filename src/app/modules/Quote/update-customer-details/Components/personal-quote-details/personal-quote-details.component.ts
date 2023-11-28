@@ -1205,7 +1205,16 @@ export class PersonalQuoteDetailsComponent implements OnInit {
     if(this.productId=='13' && this.insuranceId=='100004'){
       let contentData = new PersonalAccident();
       this.fields = [contentData?.fields]
-      this.formSection = true; this.viewSection = false;
+      let referenceNo = sessionStorage.getItem('quoteReferenceNo');
+      if (referenceNo) {
+        this.requestReferenceNo = referenceNo;
+        this.updateComponent.referenceNo = referenceNo;
+        this.setCommonFormValues();
+      }
+      else {
+          this.productItem = new ProductData();
+          this.formSection = true; this.viewSection = false;
+      }
     }
     this.BenifitList = [
       { Code: 1, CodeDescription: '12 Months' },
@@ -1450,7 +1459,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([fireData?.fields]);
       }
      
-      if(sections.some(ele=>ele=='47' && this.insuranceId=='100004')){
+      if(sections.some(ele=>(ele=='47' || ele=='74') && this.insuranceId=='100004')){
          let contentData = new HouseHoldContentsss();
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields]);
       }
@@ -1547,7 +1556,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
            console.log("Final fiiledd Fields",this.fields)
            if(sections.some(ele=>ele=='1')) this.getBuildingDetails(sections);
            if(sections.some(ele=>ele=='3')) this.getAllRiskDetails(sections);
-           if(sections.some(ele=>ele=='47')) this.getContentDetails(sections);
+           if(sections.some(ele=>ele=='47' || ele=='74')) this.getContentDetails(sections);
            if(sections.some(ele=>ele=='35')) this.getPersonalAccidentDetails(sections);
            if(sections.some(ele=>ele=='36')) this.getPersonalLiabilityDetails(sections);
            if(sections.some(ele=>ele=='40')) this.getFireAlliedRiskDetails(sections);
@@ -1563,9 +1572,9 @@ export class PersonalQuoteDetailsComponent implements OnInit {
             this.sectionCount +=1;
             if(sections.length==this.sectionCount){
               this.formSection = true; this.viewSection = false;
+              console.log("Final fiiledddd Fields",this.fields)
             }
            }
-          
       }
       else{
         this.formSection = true; this.viewSection = false;
@@ -2036,10 +2045,13 @@ getFireAlliedRiskDetails(sections){
   );
 }
 getContentDetails(sections){
+  let sectionId = null;
+  if(this.productId=='24') sectionId='74';
+  else sectionId='47';
   let ReqObj = {
     "RequestReferenceNo": this.requestReferenceNo,
     "RiskId": "1",
-    "SectionId":  '47'
+    "SectionId":  sectionId
   }
   let urlLink = `${this.motorApiUrl}api/slide5/getcontent`;
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -6528,13 +6540,16 @@ onSaveFidelityDetails(type,formType){
   }
 }
 onSaveContentRiskDetails(type,formType){
+  let sectionId = null;
+  if(this.productId=='24') sectionId='74';
+  else sectionId='47';
   let ReqObj = {
     "CreatedBy": this.loginId,
     "InsuranceId": this.insuranceId,
     "ProductId": this.productId,
     "RequestReferenceNo": this.requestReferenceNo,
     "RiskId": "1",
-    "SectionId": "47",
+    "SectionId": sectionId,
      "ContentSuminsured": this.productItem?.ContentSuminsured,
      "EndorsementDate": this.endorsementDate,
     "EndorsementEffectiveDate": this.endorsementEffectiveDate,
@@ -6576,9 +6591,15 @@ onSaveContentRiskDetails(type,formType){
         if(type=='proceed'){ 
           if(this.commonDetails){
             if(this.commonDetails[0].SectionId !=null && this.commonDetails[0].SectionId.length!=0){
-              if(!this.commonDetails[0].SectionId.some(ele=>ele=='47')) this.commonDetails[0].SectionId.push('47');
+              if(this.productId=='24'){
+                if(!this.commonDetails[0].SectionId.some(ele=>ele=='74')) this.commonDetails[0].SectionId.push('74');  
+              }
+              else if(!this.commonDetails[0].SectionId.some(ele=>ele=='47')) this.commonDetails[0].SectionId.push('47');
             }
-            else  this.commonDetails[0]['SectionId']=['47'];
+            else{
+              if(this.productId=='24')  this.commonDetails[0]['SectionId']=['74'];
+              else  this.commonDetails[0]['SectionId']=['47'];
+            }
           }
         console.log("Final Common Details", this.commonDetails)
         sessionStorage.setItem('homeCommonDetails', JSON.stringify(this.commonDetails)) }
@@ -7077,6 +7098,7 @@ setCommonFormValues(){
   let urlLink = null;
   if(this.productId=='6'){ReqObj.SectionId='40';urlLink=`${this.motorApiUrl}api/slide4/getfireandperils`;}
   else if(this.productId=='39'){ReqObj.SectionId='41';urlLink=`${this.motorApiUrl}api/slide9/getmachinerybreakdown`;}
+  else if(this.productId=='13'){ReqObj.SectionId='35';urlLink=`${this.motorApiUrl}api/slide13/getpersonlaaccident`}
   else if(this.productId=='16'){ReqObj.SectionId='42';urlLink=`${this.motorApiUrl}api/slide10/getmoneydetails`;}
   else if(this.productId=='14'){ReqObj.SectionId='45';urlLink=`${this.motorApiUrl}api/slide7/getempliablity`;}
   else if(this.productId=='32'){ReqObj.SectionId='43';urlLink=`${this.motorApiUrl}api/slide8/getfidelityemp`;}
@@ -7219,6 +7241,12 @@ setCommonFormValues(){
               if(this.productItem.ManuUnitsSi!=null && this.productItem.ManuUnitsSi!='0' && this.productItem.ManuUnitsSi!='' && this.productItem.ManuUnitsSi!='0.0') this.productItem.ManuUnitsSIYN = true;
               if(this.productItem.PowerPlantSi!=null && this.productItem.PowerPlantSi!='0' && this.productItem.PowerPlantSi!='' && this.productItem.PowerPlantSi!='0.0') this.productItem.PowerPlantSIYN = true;
               this.checkMachineryYNChanges();
+          }
+          else if(this.productId =='13'){
+            this.productItem.PersonalAccidentSuminsured = details[0].SumInsured;
+            console.log('Personal Acidentssss',details[0].SumInsured);
+            if(details[0].OccupationType!=null)this.productItem.OccupationType = details[0].OccupationType;
+            else this.productItem.OccupationType = null;
           }
           else if(this.productId =='21'){
             this.productItem.MiningPlantSi  = details?.MiningPlantSi;
