@@ -53,6 +53,9 @@ export class EmiDetailsNewComponent implements OnInit {
   emiPeriod: any;
   emiMonth: any;payamount:any=0;
   paidshow:boolean=false;
+  paymentstatus: string;
+  middleshow: boolean=false;
+  lastshow: boolean=false;
   constructor(private router:Router,private sharedService: SharedService,private updateComponent:UpdateCustomerDetailsComponent) {
     sessionStorage.removeItem('buyPolicyDetails');
     this.customerDetails = JSON.parse(sessionStorage.getItem('customerDetails'));
@@ -75,10 +78,11 @@ export class EmiDetailsNewComponent implements OnInit {
     sessionStorage.removeItem('firstLoad');
     sessionStorage.removeItem('VechileDetails');
     this.updateComponent.showStepperSection = false;
+    this.paymentstatus=sessionStorage.getItem('PaymentStatus');
    }
 
   ngOnInit(): void {
-    this.getCurrentEmiDetails();
+    //this.getCurrentEmiDetails();
     this.getEditQuoteDetails();
   }
   getEditQuoteDetails(){
@@ -126,7 +130,9 @@ export class EmiDetailsNewComponent implements OnInit {
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
           if(data?.Result){
-              let emiList = data.Result;
+
+              let emiList = [];
+              emiList = data.Result;
               // emiList.map(emiList=>({
               //   ...emiList,
               //   isChecked:false
@@ -179,6 +185,12 @@ export class EmiDetailsNewComponent implements OnInit {
             if(data.PaymentStatus=='Paid'){
               this.paidshow=true;
             }
+            if(data.PaymentStatus=='Pending' && data.SelectYn!='N'){
+              this.middleshow=true;
+            }
+            if(data.PaymentStatus=='Pending' && data.SelectYn!='Y'){
+              this.lastshow=true;
+            }
             if(yearlyList[i]){data['yearlyAmount']=yearlyList[i].InstallmentAmount}
             else{data['yearlyAmount']=null}
             if(nineList[i]){data['nineAmount']=nineList[i].InstallmentAmount}
@@ -206,6 +218,12 @@ export class EmiDetailsNewComponent implements OnInit {
            if(data.PaymentStatus=='Paid'){
             this.paidshow=true;
           }
+          if(data.PaymentStatus=='Pending' && data.SelectYn!='N'){
+            this.middleshow=true;
+          }
+          if(data.PaymentStatus=='Pending' && data.SelectYn!='Y'){
+            this.lastshow=true;
+          }
            if(yearlyList[i]){data['yearlyAmount']=yearlyList[i].InstallmentAmount}
            else{data['yearlyAmount']=null}
            if(nineList[i]){data['nineAmount']=nineList[i].InstallmentAmount}
@@ -232,6 +250,12 @@ export class EmiDetailsNewComponent implements OnInit {
            let data = entry;
            if(data.PaymentStatus=='Paid'){
             this.paidshow=true;
+          }
+          if(data.PaymentStatus=='Pending' && data.SelectYn!='N'){
+            this.middleshow=true;
+          }
+          if(data.PaymentStatus=='Pending' && data.SelectYn!='Y'){
+            this.lastshow=true;
           }
            if(yearlyList[i]){data['yearlyAmount']=yearlyList[i].InstallmentAmount}
            else{data['yearlyAmount']=null}
@@ -261,6 +285,12 @@ export class EmiDetailsNewComponent implements OnInit {
            if(data.PaymentStatus=='Paid'){
             this.paidshow=true;
           }
+          if(data.PaymentStatus=='Pending' && data.SelectYn!='N'){
+            this.middleshow=true;
+          }
+          if(data.PaymentStatus=='Pending' && data.SelectYn!='Y'){
+            this.lastshow=true;
+          }
            if(yearlyList[i]){data['yearlyAmount']=yearlyList[i].InstallmentAmount}
            else{data['yearlyAmount']=null}
            if(nineList[i]){data['nineAmount']=nineList[i].InstallmentAmount}
@@ -288,6 +318,12 @@ export class EmiDetailsNewComponent implements OnInit {
          if(data.PaymentStatus=='Paid'){
           this.paidshow=true;
         }
+        if(data.PaymentStatus=='Pending' && data.SelectYn!='N'){
+          this.middleshow=true;
+        }
+        if(data.PaymentStatus=='Pending' && data.SelectYn!='Y'){
+          this.lastshow=true;
+        }
          if(yearlyList[i]){data['yearlyAmount']=yearlyList[i].InstallmentAmount}
          else{data['yearlyAmount']=null}
          if(nineList[i]){data['nineAmount']=nineList[i].InstallmentAmount}
@@ -314,6 +350,12 @@ export class EmiDetailsNewComponent implements OnInit {
        let data = entry;
        if(data.PaymentStatus=='Paid'){
         this.paidshow=true;
+      }
+      if(data.PaymentStatus=='Pending' && data.SelectYn!='N'){
+        this.middleshow=true;
+      }
+      if(data.PaymentStatus=='Pending' && data.SelectYn!='Y'){
+        this.lastshow=true;
       }
        if(yearlyList[i]){data['yearlyAmount']=yearlyList[i].InstallmentAmount}
        else{data['yearlyAmount']=null}
@@ -537,13 +579,6 @@ let urlLink = `${this.CommonApiUrl}api/updateemitransactiondetails`;
             let totf = this.Emilist1.filter(ele=> ele.Status =='Y' && ele.isChecked);
             if(totf.length!=0){
               this.payamount=0;
-            //   for(let i=0;i<index;i++){
-            //     console.log('YYYYYYYYYYY',totm.length,totm,this.payamount);
-            //     for(let n of this.Emilist1){
-            //       this.payamount=Number(n.DueAmount) - Number(this.payamount);
-            //       console.log('Payee Amounts',totm.length,totm,this.payamount);
-            //     }
-            // }
             }
             else{
               console.log('Firstee',this.Emilist1[index].Status,this.Emilist1[index].isChecked);
@@ -562,21 +597,6 @@ let urlLink = `${this.CommonApiUrl}api/updateemitransactiondetails`;
             }
            
           }
-          // if(totm.length!=0){
-          //     for(let i=0;i<totm.length;i++){
-          //       console.log('YYYYYYYYYYY',totm.length,totm,this.payamount);
-          //       for(let n of totm){
-          //         this.payamount=Number(this.payamount) - Number(n.DueAmount);
-          //         console.log('Payee Amounts',totm.length,totm,this.payamount);
-          //       //j+=1;
-          //       }
-          //   }
-          // }
-          // else{
-          //   console.log('Another',this.payamount)
-          //   this.payamount= Number( this.Emilist1[index].DueAmount) - Number(this.payamount); 
-          // }
-
         }
        let List =this.Emilist1.indexOf(tot);
             for(let i=List+1;i<this.Emilist1.length;i++){
