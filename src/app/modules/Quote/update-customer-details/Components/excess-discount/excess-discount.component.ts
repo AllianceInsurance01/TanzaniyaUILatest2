@@ -553,42 +553,42 @@ emiyn="N";
      console.log('Final Status Value',this.statusValue)
     //this.currencyCode="TZS"
      //this.getCoverList(coverListObj);
-     this.ClausesColumnHeader =[
-      { key: 'ClausesId', display: 'Clauses Id' },
-      { key: 'ClausesDesc', display: 'Clauses Description' },
-      { key: 'DocRefNo', display: 'Document Reference No' },
-    ];
-     this.ClauseColumnHeader =[
-      { key: 'ClausesId', display: 'Clauses Id' },
-      { key: 'ClausesDesc', display: 'Clauses Description' },
-    ];
-    this.ExclusionColumnHeader =[
+    //  this.ClausesColumnHeader =[
+    //   { key: 'ClausesId', display: 'Clauses Id' },
+    //   { key: 'ClausesDesc', display: 'Clauses Description' },
+    //   { key: 'DocRefNo', display: 'Document Reference No' },
+    // ];
+    //  this.ClauseColumnHeader =[
+    //   { key: 'ClausesId', display: 'Clauses Id' },
+    //   { key: 'ClausesDesc', display: 'Clauses Description' },
+    // ];
+    // this.ExclusionColumnHeader =[
 
-      { key: 'ExclusionId', display: 'Exclusion Id' },
-      { key: 'ExclusionDesc', display: 'Exclusion Description' },
-      { key: 'DocRefNo', display: 'Document Reference No' },
-    ];
-    this.ExclusionsColumnHeader =[
+    //   { key: 'ExclusionId', display: 'Exclusion Id' },
+    //   { key: 'ExclusionDesc', display: 'Exclusion Description' },
+    //   { key: 'DocRefNo', display: 'Document Reference No' },
+    // ];
+    // this.ExclusionsColumnHeader =[
 
-      { key: 'ExclusionId', display: 'Exclusion Id' },
-      { key: 'ExclusionDesc', display: 'Exclusion Descriptions' },
+    //   { key: 'ExclusionId', display: 'Exclusion Id' },
+    //   { key: 'ExclusionDesc', display: 'Exclusion Descriptions' },
 
-    ];
-    this.WarrantyColumnHeader =[
-      { key: 'WarrantyId', display: 'Warranty Id' },
-      { key: 'WarrantyDesc', display: 'Warranty Description' },
-      { key: 'DocRefNo', display: 'Document Reference No' },
-    ];
-    this.WarrantiesColumnHeader =[
-      { key: 'WarrantyId', display: 'Warranty Id' },
-      { key: 'WarrantyDesc', display: 'Warranty Description' },
+    // ];
+    // this.WarrantyColumnHeader =[
+    //   { key: 'WarrantyId', display: 'Warranty Id' },
+    //   { key: 'WarrantyDesc', display: 'Warranty Description' },
+    //   { key: 'DocRefNo', display: 'Document Reference No' },
+    // ];
+    // this.WarrantiesColumnHeader =[
+    //   { key: 'WarrantyId', display: 'Warranty Id' },
+    //   { key: 'WarrantyDesc', display: 'Warranty Description' },
 
-    ];
-    this.WarrteColumnHeader =[
-      { key: 'WarrateId', display: 'Warrate Id' },
-      { key: 'WarrateDesc', display: 'Warrate Description' },
-      { key: 'DocRefNo', display: 'Document Reference No' },
-    ];
+    // ];
+    // this.WarrteColumnHeader =[
+      // { key: 'WarrateId', display: 'Warrate Id' },
+      // { key: 'WarrateDesc', display: 'Warrate Description' },
+      // { key: 'DocRefNo', display: 'Document Reference No' },
+    //];
     this.ViewDropDown();
 
     $('#exampleModal').on('shown.bs.modal', function () {

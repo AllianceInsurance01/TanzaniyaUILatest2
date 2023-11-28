@@ -2578,10 +2578,10 @@
                                     <ng-container *ngIf="ClausesData">
 
                                         <app-grid-table [cols]="ClauseColumnHeader" [data]="ClausesData"
-                                            [filterValue]="filterValue" *ngIf="userType=='Broker' || !endorsementSection">
+                                            [filterValue]="filterValue" *ngIf="userType=='Broker' && !endorsementSection">
                                         </app-grid-table>
 
-                                        <table *ngIf="userType!='Broker' && endorsementSection" class="styled-table">
+                                        <table *ngIf="userType!='Broker'" class="styled-table">
 
                                             <thead>
                                                 <tr>
