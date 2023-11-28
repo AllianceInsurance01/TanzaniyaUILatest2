@@ -126,6 +126,7 @@ MoneyMajorLoss:any='0';
   PaitingsSi:any ='0';
   CarpetsSi:any='0';
   EquipmentSis:any='0';MotorCategory:any='';
+  LegalLiabilityAnnualAggreagte:any='0';ProductTurnover:any='0';
 	constructor(data?) {
 		this.id = data?.id ?? ''
 		this.CustomerName = data?.CustomerName ?? '';
@@ -293,6 +294,8 @@ MoneyMajorLoss:any='0';
 		this.ModelDesc = data?.ModelDesc ?? '';
 		this.OtherModelDesc = data?.OtherModelDesc ?? '';
 		this.LiabilityOccupationId = data?.LiabilityOccupationId ?? '';
+		this.ProductTurnover = data?.ProductTurnover ?? '0';
+		this.LegalLiabilityAnnualAggreagte = data?.LegalLiabilityAnnualAggreagte ?? '0';
 		// this.EquipmentSi = data?.EquipmentSi ?? '0';
 		// this.ElectronicEquipSuminsured = data.ElectronicEquipSuminsured ?? '0';
 	}
