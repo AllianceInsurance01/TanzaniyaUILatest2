@@ -20,7 +20,7 @@
         </div>
     </div>
 </div>
-<div class="maan-grid-item" *ngIf="uploadSection">
+<div class="maan-grid-item" style="margin-top: -6px !important;" *ngIf="uploadSection">
     <div class="maan-grid-item-title">
         <div class="d-flex justify-content-between">
             <div>
@@ -167,7 +167,7 @@
         </div>
     </div>
 </div>
-<div class="maan-grid-item" >
+<div class="maan-grid-item" style="margin-top: -6px !important;" *ngIf="customerData.length!=0">
     <div class="maan-grid-item-title display1" *ngIf="customerData.length!=0">
         <div class="d-flex justify-content-between">
             <div>
@@ -176,7 +176,7 @@
                 </span> <span class="spancommon">Vehicle to Insure</span>
             </div>
             <div *ngIf="!searchSection && statusValue!='RA' && (!endorsementSection || (endorsementSection && enableAddVehicle)) && !checkDisableField()">
-                <button class="maan-btn maan-btn-blue maan-button-data" style="bottom: 0.2rem !important;" (click)="searchSection=!searchSection;uploadSection=false;" matRipple><i class="fas fa-plus"></i>&nbsp;Add New</button>&nbsp;
+                <button class="maan-btn maan-btn-blue maan-button-data" style="bottom: 0.2rem !important;" (click)="searchSection=!searchSection;uploadSection=false;setDefaultValues()" matRipple><i class="fas fa-plus"></i>&nbsp;Add New</button>&nbsp;
                 <button class="maan-btn maan-btn-yellow maan-btn-data ml-1" (click)="employeedownload()" *ngIf="loginType==null" style="white-space: nowrap;bottom: 0.2rem !important;"><i class="fas fa-download mx-1"></i>Sample Vehicle Details</button>&nbsp;
                 <button class="maan-btn maan-btn-green maan-btn-data ml-1" matRipple *ngIf="!uploadSection && loginType==null" (click)="onEnableUploadSection()" style="white-space: nowrap;bottom: 0.2rem !important;"><i class="fas fa-upload"></i>&nbsp;Upload Vehicle Details</button>
             </div>
@@ -223,7 +223,7 @@
         </div>
     </div>
 </div>
-<div class="maan-grid-item" *ngIf="searchSection && insuranceId!='100004'">
+<div class="maan-grid-item" style="margin-top: -6px !important;" *ngIf="searchSection && insuranceId!='100004'">
     <div class="maan-grid-item-title display1">
         <div class="d-flex justify-content-between">
             <div>
@@ -297,7 +297,7 @@
         </div>
     </div>
 </div>
-<div class="maan-grid-item" *ngIf="searchSection && insuranceId=='100004'">
+<div class="maan-grid-item" style="margin-top: -6px !important;" *ngIf="searchSection && insuranceId=='100004'">
     <div class="maan-grid-item-title display1">
         <div class="d-flex justify-content-between">
             <div>
@@ -438,12 +438,13 @@
             </div>
         </div>
         <div class="text-center mt-2">
-                <button class="btn btn-danger">Cancel</button>&nbsp;
-                <button class="btn btn-primary">Submit</button>
+                <button class="btn btn-danger"  *ngIf="customerData.length!=0" (click)="searchSection=!searchSection">Cancel</button>&nbsp;
+                <button class="btn btn-danger"  *ngIf="customerData.length==0" (click)="ongetBack()">Back</button>&nbsp;
+                <button class="btn btn-primary" (click)="onMotorDetailsSave()">Submit</button>
         </div>
     </div>
 </div>
-<div class="maan-grid-item" *ngIf="vehicleWishList.length!=0">
+<div class="maan-grid-item" style="margin-top: -6px !important;" *ngIf="vehicleWishList.length!=0">
     <div class="maan-grid-item-title">
         <div class="d-flex justify-content-between">
             <div>

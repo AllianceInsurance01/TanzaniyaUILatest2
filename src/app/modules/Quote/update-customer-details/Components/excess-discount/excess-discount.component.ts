@@ -1315,7 +1315,11 @@ getMotorUsageList(vehicleValue){
           if(data.Result){
 
               this.vehicleData = data.Result;
-    
+              if(this.vehicleData.length!=0){
+                let finalizeyn = this.vehicleData[0]?.FinalizeYn;
+                if(finalizeyn!=null){this.finalizeYN = finalizeyn;sessionStorage.setItem('FinalizeYN',finalizeyn);}
+                else{this.finalizeYN='N';sessionStorage.removeItem('FinalizeYN')};
+              }
               // this.emipolicytype=this.vehicleData[0]?.RiskDetails?.InsuranceClass;
               //     console.log('KKKKKKKKKKKK',this.emipolicytype);
              

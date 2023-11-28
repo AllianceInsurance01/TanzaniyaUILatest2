@@ -6889,6 +6889,9 @@ getOccupationList(sections) {
                     }
                     console.log("Fields in Occupation",this.productItem,this.fields)
               }
+              else if(this.productId=='13'){
+                this.fields[0].fieldGroup[0].fieldGroup[0].props.options = defaultObj.concat(this.occupationList);
+              }
               if (this.productId != '19' && this.productId != '3' && this.productId!='6' && this.productId != '1' && this.productId != '32' && this.productId!='14' && this.productId!='16' && this.productId!='25' && this.productId!='26' && this.productId!='21' && this.productId!='27' && this.productId!='13') this.fields[0].fieldGroup[0].fieldGroup[2].props.options = defaultObj.concat(this.occupationList);
               if(this.productId=='14' && this.insuranceId == '100002'){
                 let fireData = new EmployersLiability();
@@ -6950,7 +6953,7 @@ getOccupationList(sections) {
               }
              
               else if (this.productId == '6') this.setCommonFormValues();
-              if (this.productId != '3' && this.productId != '6' && this.productId != '19' && this.productId!='14' && this.productId!='32') {
+              if (this.productId != '3' && this.productId!='13' && this.productId != '6' && this.productId != '19' && this.productId!='14' && this.productId!='32') {
 
                 let referenceNo = sessionStorage.getItem('quoteReferenceNo');
                 if (referenceNo) {
@@ -6968,8 +6971,6 @@ getOccupationList(sections) {
                   this.formSection = true; this.viewSection = false;
                 }
               }
-              
-              console.log("Final Form Fieldssssss", this.fields)
 
               // if(this.customerReferenceNo){
               // 	this.setValues();
@@ -7600,6 +7601,7 @@ onFormSubmit() {
   else if(this.productId=='26'){this.onSaveBussinessrisk('proceed','individual')}
   else if(this.productId=='25'){this.onSaveElectronicEquipment('proceed','individual')}
  else if(this.productId=='43'){this.onSaveMedicalDetails('proceed','individual')}
+ else if(this.productId=='13'){this.onSavePersonalAccidentDetails('proceed','individual')}
   else {
     let createdBy = "";
     let quoteStatus = sessionStorage.getItem('QuoteStatus');

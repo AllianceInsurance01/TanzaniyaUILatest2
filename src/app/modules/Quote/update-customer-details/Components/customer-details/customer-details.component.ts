@@ -181,7 +181,7 @@ export class CustomerDetailsComponent implements OnInit {
   ngOnInit(): void {
     if(this.productId=='3' && this.userType!='Issuer') this.getBackDaysDetails();
     this.cyrrencylogin=sessionStorage.getItem('CurrencyidLogin');
-    if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='21' || this.productId=='26' || this.productId == '25'){this.getIndustryList()}
+    if(this.productId=='6' || this.productId=='13' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='21' || this.productId=='26' || this.productId == '25'){this.getIndustryList()}
     this.customerHeader =  [
       { key: 'Chassisnumber', display: 'Chassis Number' },
       { key: 'Registrationnumber', display: 'Registration No' },
@@ -930,6 +930,11 @@ export class CustomerDetailsComponent implements OnInit {
               let entry:any;
               //if(this.productId=='3') entry = this.customerData[0];
                entry = this.customerData
+               if(entry?.FinalizeYn!=null){
+                this.finalizeYN== entry?.FinalizeYn;
+                sessionStorage.setItem('FinalizeYN',this.finalizeYN);
+               }
+               else this.finalizeYN='N';
                 if(entry?.EndorsementDate!=null){
                   this.endorsementDetails['EndorsementDate'] = entry?.EndorsementDate;
                   this.endorsementDetails['EndorsementEffectiveDate'] = entry?.EndorsementEffectiveDate;
@@ -1569,6 +1574,11 @@ export class CustomerDetailsComponent implements OnInit {
             this.customerData = data.Result;
             console.log("Edit Customer Final 1",this.customerData)
             if(this.customerData.length!=0){
+              if(this.customerData[0]?.FinalizeYn!=null){
+                this.finalizeYN = this.customerData[0]?.FinalizeYn;
+                sessionStorage.setItem('FinalizeYN',this.customerData[0]?.FinalizeYn)
+              }
+              else this.finalizeYN = 'N';
               this.applicationId = this.customerData[0].ApplicationId;
               let quoteStatus = sessionStorage.getItem('QuoteStatus');
               if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
@@ -2407,7 +2417,7 @@ export class CustomerDetailsComponent implements OnInit {
         if(this.productId=='19' || this.productId == '3'){
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
         }
-        else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1'|| this.productId=='21' || this.productId=='26' || this.productId =='25' || this.productId=='43') this.saveCommonDetails(Details); 
+        else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1'|| this.productId=='21' || this.productId=='26' || this.productId =='25' || this.productId=='43' || this.productId=='13') this.saveCommonDetails(Details); 
         else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
     }
     
@@ -2460,7 +2470,7 @@ export class CustomerDetailsComponent implements OnInit {
                     if(this.productId=='19' || this.productId=='3'){
                       this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
                     }
-                    else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='43') this.saveCommonDetails(Details); 
+                    else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='43' || this.productId=='13') this.saveCommonDetails(Details); 
                     else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
                   }
                   else{
@@ -2537,7 +2547,7 @@ export class CustomerDetailsComponent implements OnInit {
                     }
                     
                   }
-                  else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId =='21' || this.productId=='43') this.saveCommonDetails(Details); 
+                  else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId =='21' || this.productId=='43' || this.productId=='13') this.saveCommonDetails(Details); 
                   else{
                     let loginType = this.loginType;
                     if(loginType){
@@ -2681,6 +2691,7 @@ export class CustomerDetailsComponent implements OnInit {
     if(this.productId=='21'){section.push('3');};
     if(this.productId=='26'){section.push('3');};
     if(this.productId=='25'){section.push('39');};
+    if(this.productId=='13'){section.push('35');};
     if(this.productId=='43'){section.push('70');this.IndustryId='44'};
     let ReqObj = { 
         "AcexecutiveId": "",
@@ -3009,7 +3020,7 @@ export class CustomerDetailsComponent implements OnInit {
             this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
         }
       }
-      else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='21'  || this.productId=='26' || this.productId == '25' || this.productId=='43') this.saveCommonDetails([vehicle]); 
+      else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='21'  || this.productId=='26' || this.productId == '25' || this.productId=='43' || this.productId=='13') this.saveCommonDetails([vehicle]); 
       else{
         let loginType = this.loginType;
                     if(loginType){

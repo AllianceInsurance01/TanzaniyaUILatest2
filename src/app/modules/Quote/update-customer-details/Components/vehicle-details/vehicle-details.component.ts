@@ -673,6 +673,11 @@ export class VehicleDetailsComponent implements OnInit {
         if(data.Result){
             this.vehicleDetailsList = data.Result;
             if(this.vehicleDetailsList.length!=0){
+              if(this.vehicleDetailsList[0]?.FinalizeYn!=null){
+                this.finalizeYN = this.vehicleDetailsList[0]?.FinalizeYn;
+                sessionStorage.setItem('FinalizeYN',this.vehicleDetailsList[0]?.FinalizeYn)
+              }
+              else this.finalizeYN = 'N';
               this.updateComponent.CurrencyCode = this.vehicleDetailsList[0].Currency;
               this.currencyValue = this.vehicleDetailsList[0].Currency;
               this.exchangeRate = this.vehicleDetailsList[0].ExchangeRate;
@@ -1091,7 +1096,7 @@ export class VehicleDetailsComponent implements OnInit {
           else{
             appId = this.loginId;
             loginId = this.vehicleDetailsList[0].LoginId;
-            loginId = this.updateComponent.brokerLoginId
+           if(this.updateComponent.brokerLoginId) loginId = this.updateComponent.brokerLoginId
             brokerbranchCode = this.vehicleDetailsList[0].BrokerBranchCode;
           }
         }

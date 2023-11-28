@@ -166,6 +166,17 @@ ul{
     text-decoration: none !important;
     margin-bottom: 0px !important;
 }
+.headings2 {
+    padding-left: 7px;
+    color: black;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-decoration: none !important;
+    margin-bottom: 0px !important;
+}
 .line-middle {
     width: 1px;
     height: 270px;
@@ -271,8 +282,8 @@ font-size:.75rem !important;
         margin-right:0px !important;
         //border-radius: 5px;
         cursor: pointer;
-        background: #e3e0e0;
-        color: #6f6c6c;  
+        background: #fff;
+        color: black;  
     }
     :host ::ng-deep .mat-vertical-content-container{
 margin-left:0px !important;
@@ -311,8 +322,8 @@ margin-left:0px !important;
             margin-right:0px !important;
             //border-radius: 5px;
             cursor: pointer;
-            background: #e3e0e0;
-            color: #6f6c6c;  
+            background: #fff;
+            color: black;  
         }
         :host ::ng-deep .mat-vertical-content-container{
             margin-left:0px !important;
@@ -353,8 +364,8 @@ margin-left:0px !important;
             margin-top:-6px !important;
             //border-radius: 5px;
             cursor: pointer;
-            background: #e3e0e0;
-            color: #6f6c6c;  
+            background: #fff;
+            color: black;  
         }
         :host ::ng-deep .mat-vertical-content-container{
             margin-left:36px !important;

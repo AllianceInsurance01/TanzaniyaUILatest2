@@ -345,8 +345,6 @@ export class DomesticRiskDetailsComponent implements OnInit {
     }
     else if(this.productId!='43'){
       this.buildingDetailsSection=true;
-    
-      console.log('BBBBBBBBBBBBBBBBBBBB',this.buildingDetailsSection);
       // let items = this.item?.find((Code) => Code == '1' || Code=='40');
       // console.log('JJJJJJJJJJJJJJJJJJ',items);
     }
@@ -654,6 +652,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
                   this.fieldsElectronic[0].fieldGroup[0].fieldGroup[0].fieldGroup[2].props.options= this.monthList;
                 }
               }
+              this.Electronic();
           }
           else this.six = false;
         }

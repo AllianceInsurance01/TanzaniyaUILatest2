@@ -119,7 +119,7 @@
                                     <ng-container *ngIf="step.props.label=='Business All Risk' || step.props.label=='Electronic Equipment' || step.props.label=='Personal Accident'">
                                         <div class="col-md-6 col-lg-5 col-xl-5 col-12 ml-2 splitCard">
                                             <div class="col-md-12 col-lg-12 col-xl-12 splitCardHeader d-flex justify-content-between" (click)="selectedIndex=index">
-                                                <div (click)="selectedIndex=index" class="mt-2 pl-4"><h1 class="headings"><u>{{ step.props.label }}</u></h1></div>
+                                                <div (click)="selectedIndex=index" class="mt-2 pl-4"><h1 class="headings2"><u>{{ step.props.label }}</u></h1></div>
                                                 <div class="pr-3 pt-1">
                                                    
                                                 </div>
@@ -129,7 +129,6 @@
                                                     <formly-form [form]="form" [fields]="step.fieldGroup" [model]="productItem"></formly-form>
                                                 </form>
                                             </div>
-                                           
                                         </div>
                                         
                                     </ng-container>
@@ -216,7 +215,7 @@
                                         <div class="col-md-6 col-lg-4 col-xl-4 col-12 ml-2 splitCard">
                                             <div class="col-md-12 col-lg-12 col-xl-12 splitCardHeader d-flex justify-content-between" (click)="selectedIndex=index">
                                             <!--customer-grid maan-grid-item-titles -->
-                                                <div (click)="selectedIndex=index" class="mt-2 pl-4"><h1 class="headings"><u>{{ step.props.label }}</u></h1></div>
+                                                <div (click)="selectedIndex=index" class="mt-2 pl-4"><h1 class="headings2"><u>{{ step.props.label }}</u></h1></div>
                                                 <div class="pr-3 pt-1">
                                                     <!-- <button class="btn btn-danger btn-sm" >
                                                         <i class="fa fa-trash" aria-hidden="true"></i>

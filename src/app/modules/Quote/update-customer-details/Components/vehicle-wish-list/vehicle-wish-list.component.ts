@@ -429,6 +429,68 @@ export class VehicleWishListComponent implements OnInit {
       (err) => { },
     );
   }
+  setDefaultValues(){
+    this.regNo=null;this.bodyTypeValue='';this.makeValue='';
+    this.modelValue='';this.chassisNo=null;this.engineNo=null;
+    this.engineCapacity = null;this.manufactureYear='';this.colorValue='';
+    this.seatingCapacity=null;this.usageValue = '';
+
+  }
+  onMotorDetailsSave(){
+    let make = "";
+    if(this.makeValue!='' && this.makeValue!=undefined && this.makeValue!=null){
+      let entry = this.makeList.find(ele=>ele.Code==this.makeValue);
+      make = entry.CodeDesc;
+    }
+    let modelDesc = null;
+    if(this.bodyTypeId=='1' || this.bodyTypeId=='2' || this.bodyTypeId=='3' || this.bodyTypeId=='4' || this.bodyTypeId=='5'){
+      if(this.modelValue=='99999'){
+          modelDesc = this.modelDesc;
+      }
+      else if(this.modelValue!='' && this.modelValue!=null){
+        modelDesc = this.modelList.find(ele=>ele.Code==this.modelValue)?.CodeDesc
+      }
+    }
+    else modelDesc = this.modelDesc;
+    let ReqObj = {
+      "Insuranceid": this.insuranceId,
+      "BranchCode": this.branchCode,
+      "AxelDistance": null,
+      "Chassisnumber": this.chassisNo?.toUpperCase(),
+      "Color": this.colorValue,
+      "CreatedBy": this.loginId,
+      "EngineNumber": this.engineNo?.toUpperCase(),
+      "FuelType": null,
+      "Grossweight": null,
+      "ManufactureYear": this.manufactureYear,
+      "MotorCategory": null,
+      "Motorusage": this.usageValue,
+      "NumberOfAxels": null,
+      "OwnerCategory": null,
+      "Registrationnumber": this.regNo?.toUpperCase(),
+      "ResEngineCapacity": this.engineCapacity,
+      "ResOwnerName": null,
+      "ResStatusCode": "Y",
+      "ResStatusDesc": "None",
+      "SeatingCapacity": this.seatingCapacity,
+      "Tareweight": null,
+      "Vehcilemodel": modelDesc,
+      "VehicleType": this.bodyTypeValue,
+      "Vehiclemake": make,
+      "ExcessLimit" : "",
+      "NonElecAccessoriesSi" : ""
+    }
+    let urlLink = `${this.motorApiUrl}regulatory/savevehicleinfo`;
+    this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
+      (data: any) => {
+        if(data.Result){
+          this.searchValue = this.regNo?.toUpperCase();
+          this.onSearchVehicle();
+        }
+      },
+      (err) => { },
+    );
+  }
   onModelChange(type){
     if(this.modelValue!=null && this.modelValue!=''){
       if(this.modelValue!='99999'){
@@ -539,6 +601,11 @@ export class VehicleWishListComponent implements OnInit {
           this.uploadSection = false;
             this.customerData = data.Result;
             if(this.customerData.length!=0){
+              if(this.customerData[0]?.FinalizeYn!=null){
+                this.finalizeYN = this.customerData[0]?.FinalizeYn;
+                sessionStorage.setItem('FinalizeYN',this.customerData[0]?.FinalizeYn)
+              }
+              else this.finalizeYN = 'N';
               this.updateComponent.CurrencyCode = this.customerData[0].Currency;
               this.currencyCode = this.customerData[0].Currency;
               this.exchangeRate = this.customerData[0].ExchangeRate;
