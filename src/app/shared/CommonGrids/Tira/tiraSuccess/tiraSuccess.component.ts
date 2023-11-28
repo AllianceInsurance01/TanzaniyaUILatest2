@@ -105,12 +105,12 @@ export class TiraSuccessComponent implements OnInit {
       this.getalldetails();
   }
   onReqPathDownload(rowData){
-    let urlLink = `${this.CommonApiUrl}document/download2`;
+    let urlLink = `${this.CommonApiUrl}document/downloadbase64`;
     this.sharedService.onPostFilePathDocumentMethodSync(urlLink, rowData.RequestFilePath).subscribe(
       (data: any) => {
           const link = document.createElement('a');
           link.setAttribute('target', '_blank');
-          link.setAttribute('href',data);
+          link.setAttribute('href',data?.Result?.ImgUrl);
           link.setAttribute('download','Request');
           document.body.appendChild(link);
           link.click();
@@ -132,12 +132,12 @@ export class TiraSuccessComponent implements OnInit {
     // this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
   }
   onResPathDownload(rowData){
-    let urlLink = `${this.CommonApiUrl}document/download2`;
+    let urlLink = `${this.CommonApiUrl}document/downloadbase64`;
     this.sharedService.onPostFilePathDocumentMethodSync(urlLink, rowData.ResponseFilePath).subscribe(
       (data: any) => {
           const link = document.createElement('a');
           link.setAttribute('target', '_blank');
-          link.setAttribute('href',data);
+          link.setAttribute('href',data?.Result?.ImgUrl);
           link.setAttribute('download','Response');
           document.body.appendChild(link);
           link.click();
@@ -212,7 +212,8 @@ export class TiraSuccessComponent implements OnInit {
         "ProductId":this.productId,
         "InsuranceId":this.insuranceId,
         "StartDate":this.startDate,
-        "EndDate":this.endDate
+        "EndDate":this.endDate,
+        "BranchCode":this.branchCode
       }
       let urlLink = `${this.CommonApiUrl}api/tirasuccess`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(

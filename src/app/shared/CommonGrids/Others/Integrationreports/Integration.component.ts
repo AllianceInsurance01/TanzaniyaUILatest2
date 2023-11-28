@@ -267,23 +267,36 @@ export class TiraIntegrationComponent implements OnInit {
         link.click();
         link.remove();
      }
-     onReqPathDownload(rowData){
-      const link = document.createElement('a');
-      link.setAttribute('target', '_blank');
-      link.setAttribute('href',rowData.RequestFilePath);
-      link.setAttribute('download','Request');
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+    onReqPathDownload(rowData){
+      let urlLink = `${this.CommonApiUrl}document/downloadbase64`;
+      this.sharedService.onPostFilePathDocumentMethodSync(urlLink, rowData.RequestFilePath).subscribe(
+        (data: any) => {
+            const link = document.createElement('a');
+            link.setAttribute('target', '_blank');
+            link.setAttribute('href',data?.Result?.ImgUrl);
+            link.setAttribute('download','Request');
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        },
+        (err) => { },
+      );
     }
     onResPathDownload(rowData){
-      const link = document.createElement('a');
-      link.setAttribute('target', '_blank');
-      link.setAttribute('href',rowData.ResponseFilePath);
-      link.setAttribute('download','Request');
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      let urlLink = `${this.CommonApiUrl}document/downloadbase64`;
+      this.sharedService.onPostFilePathDocumentMethodSync(urlLink, rowData.ResponseFilePath).subscribe(
+        (data: any) => {
+            const link = document.createElement('a');
+            link.setAttribute('target', '_blank');
+            link.setAttribute('href',data?.Result.ImgUrl);
+            link.setAttribute('download','Response');
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        },
+        (err) => { },
+      );
+      
     }
   }
   

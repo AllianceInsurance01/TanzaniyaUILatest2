@@ -139,15 +139,15 @@ export class TiraFailureComponent implements OnInit {
       { key: 'EntryDate', display: 'Entry Date' },
       { key: 'MethodName', display: 'Method Name' },
       { key: 'RequestFilePath', display: 'Request',
-        config: {
-          isReqPathDownload:true,
-        },
+      config: {
+        isReqPathDownload:true,
       },
-      { key: 'ResponseFilePath', display: 'Response',
-        config: {
-          isResPathDownload:true,
-        },
+     },
+    { key: 'ResponseFilePath', display: 'Response',
+      config: {
+        isResPathDownload:true,
       },
+    },
       
     ];
     this.getalldetails();
@@ -396,12 +396,12 @@ export class TiraFailureComponent implements OnInit {
     }
   }
   onReqPathDownload(rowData){
-    let urlLink = `${this.CommonApiUrl}document/download2`;
+    let urlLink = `${this.CommonApiUrl}document/downloadbase64`;
     this.sharedService.onPostFilePathDocumentMethodSync(urlLink, rowData.RequestFilePath).subscribe(
       (data: any) => {
           const link = document.createElement('a');
           link.setAttribute('target', '_blank');
-          link.setAttribute('href',data);
+          link.setAttribute('href',data?.Result?.ImgUrl);
           link.setAttribute('download','Request');
           document.body.appendChild(link);
           link.click();
@@ -423,12 +423,12 @@ export class TiraFailureComponent implements OnInit {
     // this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
   }
   onResPathDownload(rowData){
-    let urlLink = `${this.CommonApiUrl}document/download2`;
+    let urlLink = `${this.CommonApiUrl}document/downloadbase64`;
     this.sharedService.onPostFilePathDocumentMethodSync(urlLink, rowData.ResponseFilePath).subscribe(
       (data: any) => {
           const link = document.createElement('a');
           link.setAttribute('target', '_blank');
-          link.setAttribute('href',data);
+          link.setAttribute('href',data?.Result.ImgUrl);
           link.setAttribute('download','Response');
           document.body.appendChild(link);
           link.click();

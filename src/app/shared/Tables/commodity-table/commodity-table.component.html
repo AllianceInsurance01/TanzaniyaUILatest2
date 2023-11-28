@@ -206,7 +206,7 @@
                 <td mat-cell *matCellDef="let element" [attr.colspan]="columnHeader.length">
                     <div class="example-element-detail" [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'">
                         <ng-container>
-                            <app-inner-table [cols]="innerColumnHeader" [data]="element.MotorList" (isActionBtn)="isActionBtn.emit($event)">
+                            <app-inner-table [cols]="innerColumnHeader" [data]="element.MotorList" (onResPath)="onResPath.emit($event)" (onReqPath)="onReqPath.emit($event)" (isActionBtn)="isActionBtn.emit($event)">
                             </app-inner-table>
                         </ng-container>
                     </div>

@@ -56,7 +56,7 @@
         <div class="card">
             <ng-container *ngIf="outergrid.length!=0">
                 <div class="row ml-4 mr-4">
-                    <app-commodity-table [cols]="tiraHeader" [data]="outergrid" [innerCols]="innerColumnHeader" [innerData]="innerdata" [Currency]="Currency" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousData($event,mymodal)" (onLoadNextData)="onNextData($event,mymodal)"  (onAdd)="onInnerData($event)"(onViews)="onViews($event,mymodal)" (onReqPath)="onReqPathDownload($event)"  (onResPath)="onResPathDownload($event)">
+                    <app-commodity-table [cols]="tiraHeader" [data]="outergrid" [innerCols]="innerColumnHeader" [innerData]="innerdata" [Currency]="Currency" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousData($event,mymodal)" (onLoadNextData)="onNextData($event,mymodal)"  (onAdd)="onInnerData($event)" (onViews)="onViews($event,mymodal)" (onReqPath)="onReqPathDownload($event)"  (onResPath)="onResPathDownload($event)">
                     </app-commodity-table>
                 </div>
             <!-- <div class="row p-5 ml-4 mr-4" *ngFor="let cus of tiradetails">

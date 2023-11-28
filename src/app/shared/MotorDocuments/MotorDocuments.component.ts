@@ -734,7 +734,7 @@ this.passengerName=type;
           (data: any) => {
               const link = document.createElement('a');
               link.setAttribute('target', '_blank');
-              link.setAttribute('href',data);
+              link.setAttribute('href',data?.Result?.ImgUrl);
               link.setAttribute('download','Response');
               document.body.appendChild(link);
               link.click();
