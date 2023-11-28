@@ -2417,7 +2417,7 @@ export class CustomerDetailsComponent implements OnInit {
         if(this.productId=='19' || this.productId == '3'){
           this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
         }
-        else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1'|| this.productId=='21' || this.productId=='26' || this.productId =='25' || this.productId=='43' || this.productId=='13') this.saveCommonDetails(Details); 
+        else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1'|| this.productId=='21' || this.productId=='26' || this.productId =='25' || this.productId=='43' || this.productId=='13' || this.productId=='27') this.saveCommonDetails(Details); 
         else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
     }
     
@@ -2467,10 +2467,10 @@ export class CustomerDetailsComponent implements OnInit {
                     }
                     sessionStorage.setItem('homeCommonDetails',JSON.stringify(Details))
                     console.log("On First Save",Details);
-                    if(this.productId=='19' || this.productId=='3'){
+                    if(this.productId=='19' || this.productId=='3' || this.productId=='24'){
                       this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
                     }
-                    else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='43' || this.productId=='13') this.saveCommonDetails(Details); 
+                    else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='43' || this.productId=='13' || this.productId=='27') this.saveCommonDetails(Details); 
                     else this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/personal-accident']);
                   }
                   else{
@@ -2501,7 +2501,7 @@ export class CustomerDetailsComponent implements OnInit {
                       Details[0]['IndustryName'] = this.industryList.find(ele=>ele.Code==this.IndustryId).CodeDesc;
                   }
                   sessionStorage.setItem('homeCommonDetails',JSON.stringify(Details))
-                  if(this.productId=='19' || this.productId=='3'){
+                  if(this.productId=='19' || this.productId=='3' || this.productId=='24'){
                     let loginType = this.loginType;
                     if(loginType){
                       if(loginType=='B2CFlow' || loginType=='B2CFlow2'){
@@ -2547,7 +2547,7 @@ export class CustomerDetailsComponent implements OnInit {
                     }
                     
                   }
-                  else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId =='21' || this.productId=='43' || this.productId=='13') this.saveCommonDetails(Details); 
+                  else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='26' || this.productId =='21' || this.productId=='43' || this.productId=='13' || this.productId=='27') this.saveCommonDetails(Details); 
                   else{
                     let loginType = this.loginType;
                     if(loginType){
@@ -2692,7 +2692,8 @@ export class CustomerDetailsComponent implements OnInit {
     if(this.productId=='26'){section.push('3');};
     if(this.productId=='25'){section.push('39');};
     if(this.productId=='13'){section.push('35');};
-    if(this.productId=='43'){section.push('70');this.IndustryId='44'};
+    if(this.productId=='43' || this.productId=='27'){section.push('70');this.IndustryId='44'};
+    if( this.productId=='27'){section.push('54');this.IndustryId='44'};
     let ReqObj = { 
         "AcexecutiveId": "",
         "PolicyNo": this.endorsePolicyNo,
@@ -2975,7 +2976,7 @@ export class CustomerDetailsComponent implements OnInit {
       vehicle['RiskId'] = String(1);
       vehicle['Active'] = false;
       sessionStorage.setItem('homeCommonDetails',JSON.stringify([vehicle]));
-      if(this.productId=='19' || this.productId=='3'){
+      if(this.productId=='19' || this.productId=='3' || this.productId=='24'){
         let loginType = this.loginType;
         if(loginType){
           if(loginType=='B2CFlow' || loginType=='B2CFlow2'){
@@ -3020,7 +3021,7 @@ export class CustomerDetailsComponent implements OnInit {
             this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/risk-selection']);
         }
       }
-      else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='21'  || this.productId=='26' || this.productId == '25' || this.productId=='43' || this.productId=='13') this.saveCommonDetails([vehicle]); 
+      else if(this.productId=='6' || this.productId=='16' || this.productId=='39' || this.productId=='14' || this.productId=='32' || this.productId=='1' || this.productId=='21'  || this.productId=='26' || this.productId == '25' || this.productId=='43' || this.productId=='13' || this.productId=='27') this.saveCommonDetails([vehicle]); 
       else{
         let loginType = this.loginType;
                     if(loginType){

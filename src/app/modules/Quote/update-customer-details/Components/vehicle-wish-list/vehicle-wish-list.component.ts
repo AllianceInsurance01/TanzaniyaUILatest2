@@ -485,6 +485,7 @@ export class VehicleWishListComponent implements OnInit {
       (data: any) => {
         if(data.Result){
           this.searchValue = this.regNo?.toUpperCase();
+          this.searchBy = '02';
           this.onSearchVehicle();
         }
       },

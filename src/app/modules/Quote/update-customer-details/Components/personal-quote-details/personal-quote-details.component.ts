@@ -3551,7 +3551,7 @@ getBuildingOccupiedList(){
 }
 ongetDistrictList(type){
   let ReqObj = {
-    "CountryId": 'TZA',
+    "CountryId": this.countryId,
     "RegionCode": this.productItem.RegionCode
   }
   let urlLink = `${this.CommonApiUrl}master/dropdown/regionstate`;
@@ -6188,6 +6188,7 @@ onSaveMoneyDetails(type,formType){
 onSavePersonalAccidentDetails(type,formType){
   this.subuserType = sessionStorage.getItem('typeValue');
   let quoteStatus = sessionStorage.getItem('QuoteStatus');
+  this.requestReferenceNo = sessionStorage.getItem('quoteReferenceNo')
   let appId = "1",loginId="",brokerbranchCode="";
   let createdBy="";
     if(quoteStatus=='AdminRP' || quoteStatus=='AdminRA' || quoteStatus=='AdminRR'){
@@ -7023,6 +7024,7 @@ setCommonFormValues(){
   else if(this.productId=='25'){ReqObj.SectionId='39';urlLink=`${this.motorApiUrl}api/slide6/getelectronicequip`;}
   else if(this.productId=='42'){urlLink=`${this.motorApiUrl}api/slide6/getelectronicequip`;}
   else if(this.productId=='43'){ReqObj.SectionId='70';urlLink=`${this.motorApiUrl}api/slide12/getpublicliability`;}
+  else if(this.productId=='27'){ReqObj.SectionId='54';urlLink=`${this.motorApiUrl}api/slide12/getpublicliability`;}
   else if(this.productId=='46'){ReqObj['Vehicleid']='1';urlLink=`${this.motorApiUrl}api/getmotordetails`;}
   this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
@@ -7168,7 +7170,6 @@ setCommonFormValues(){
           }
           else if(this.productId =='25'){
             this.ProductCode = details?.SectionId;
-            console.log('HHHHHHHHHHHHHHHHH',this.ProductCode);
             this.productItem.ElectronicEquipSuminsured  = details?.ElecEquipSuminsured;
           }
           else if(this.productId=='1'){
@@ -7288,6 +7289,9 @@ setCommonFormValues(){
               this.getUsageList();
               this.getMotorCategoryList();
               this.getMakeList();
+          }
+          else if(this.productId=='27'){
+            this.ProductCode = details?.SectionId;
           }
           else{
             if(this.productId=='6' && this.insuranceId == '100004'){

@@ -85,16 +85,17 @@ export class EmbededInsuranceComponent {
         { key: 'PlanType', display: 'Plan Name' },
         { key: 'LoginId', display: 'UserName' },
         { key: 'TotalPolicy', display: 'Total Policy' },
-        { key: 'CommissionPremium', display: 'Commission' },
         { key: 'Premium', display: 'Embedded Premium' },
+        { key: 'CommissionPremium', display: 'Commission' },
+        
       ];
       this.searchedHeader = [
         { key: 'PlanType', display: 'Plan Name' },
         { key: 'LoginId', display: 'UserName' },
         { key: 'OverAllPremium', display: 'Total' },
-        { key: 'CommissionAmt', display: 'Commission' },
         { key: 'TaxPremium', display: 'Tax' },
-        { key: 'AmountPaid', display: 'Amount Paid' },
+        { key: 'CommissionAmt', display: 'Commission' },
+        { key: 'AmountPaid', display: 'Transaction Amount' },
         {
           key: 'actions',
           display: 'Schedule',
@@ -208,10 +209,11 @@ export class EmbededInsuranceComponent {
               { key: 'startDate', display: 'Start Date' },
               { key: 'endDate', display: 'End Date' },
               { key: 'clientTransactionNo', display: 'Transaction No' },
-              { key: 'amountPaid', display: 'Amount Paid' },
-              { key: 'commissionAmount', display: 'Comission' },
-              { key: 'taxPremium', display: 'Tax' },
+              { key: 'amountPaid', display: 'Transaction Amount' },
               { key: 'overAllPremium', display: 'Embedded Premium Included' },
+              { key: 'taxPremium', display: 'Tax' },
+              { key: 'commissionAmount', display: 'Comission' },
+              
               {
                 key: 'actions',
                 display: 'Schedule',

@@ -3978,7 +3978,7 @@
     <div class="modal-footer">
         <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" *ngIf="(!adminSection && userType!='Issuer') || finalizeYN=='Y'" (click)="modal.dismiss('Cross click')"
             style="margin-left:10px;">Close</button>
-        <button class="custom-btn btn-6 maan-button-data  mx-2" *ngIf="adminSection || (userType=='Issuer' && finalizeYN=='Y')" (click)="SaveLoadingDetails(modal)">Submit
+        <button class="custom-btn btn-6 maan-button-data  mx-2" *ngIf="adminSection || (userType=='Issuer' && finalizeYN!='Y')" (click)="SaveLoadingDetails(modal)">Submit
         </button>
     </div>
 </ng-template>

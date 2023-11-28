@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  userDetails:any;insuranceId:any=null;
+  constructor() {
+    this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+    this.insuranceId = this.userDetails.Result.InsuranceId;
+   }
 
   ngOnInit(): void {
   }
