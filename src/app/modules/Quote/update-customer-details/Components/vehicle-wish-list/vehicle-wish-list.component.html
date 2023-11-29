@@ -204,6 +204,11 @@
         </div>
     </div>
     <div class="maan-grid-item-body" *ngIf="customerData.length!=0">
+        <ng-container *ngIf="showTiraUpdateSection">
+            <div class="text-center text-primary mt-2">
+                    Registration Number Already Available, Motor Details Pulled From Tira 
+            </div>
+        </ng-container>
         <div class="row mt-2">
             <div class="col-12 col-md-12">
                 <ng-container *ngIf="customerData.length!=0">
@@ -324,10 +329,21 @@
             <div class="col-12 col-md-3 ">
                 <div class="input-control-container">
                     <label class="input-form-label">Registration No</label>&nbsp;<span
-                        class="text-danger">*</span>&nbsp;
+                    class="text-danger">*</span>&nbsp;<span
+                    class="text-success" *ngIf="validSection"><i class="fa fa-circle-check"></i></span>
                     <div class="input-form-box">
-                        <input type="text" maxlength="25" [(ngModel)]="regNo"
-                            class="input-form-control without-icon new">
+                        <input type="text" maxlength="25" [(ngModel)]="regNo" (change)="onRegistrationSearch()"
+                            class="input-form-control without-icon new" (keypress)="omit_special_char($event)">
+                    </div>
+                    <div class="input-form-error" *ngIf="editSection && !duplicateSection">
+                        <div class="text-primary" style="font-size: 12px;">
+                            Validating Registration Number..Please Wait
+                        </div>
+                    </div>
+                    <div class="input-form-error" *ngIf="duplicateSection">
+                        <div class="text-danger" style="font-size: 12px;">
+                            Registration Number Already Exist in this Quote...
+                        </div>
                     </div>
                 </div>
             </div>
@@ -337,7 +353,7 @@
                 <div class="input-control-container">
                     <label class="input-form-label">Body Type</label>&nbsp;<span
                         class="text-danger">*</span>
-                    <ng-select class="input-form-select" appendTo="body" [(ngModel)]="bodyTypeValue" [items]="bodyTypeList" (change)="onBodyTypeChange('change')" bindValue="CodeDesc" bindLabel="CodeDesc">
+                    <ng-select class="input-form-select" appendTo="body" [disabled]="editSection" [(ngModel)]="bodyTypeValue" [items]="bodyTypeList" (change)="onBodyTypeChange('change')" bindValue="CodeDesc" bindLabel="CodeDesc">
                     </ng-select>
                 </div>
             </div>
@@ -345,7 +361,7 @@
                 <div class="input-control-container">
                     <label class="input-form-label">Make</label>&nbsp;<span
                     class="text-danger">*</span>
-                    <ng-select class="input-form-select" [items]="makeList" (change)="onMakeChange()" [(ngModel)]="makeValue" appendTo="body"  bindValue="Code"
+                    <ng-select class="input-form-select" [disabled]="editSection" [items]="makeList" (change)="onMakeChange()" [(ngModel)]="makeValue" appendTo="body"  bindValue="Code"
                         bindLabel="CodeDesc">
                     </ng-select>
                 </div>
@@ -354,7 +370,7 @@
                 <div class="input-control-container">
                     <label class="input-form-label">Model</label>&nbsp;<span
                     class="text-danger">*</span>
-                    <ng-select class="input-form-select" appendTo="body" (change)="onModelChange()"  [items]="modelList"
+                    <ng-select class="input-form-select" appendTo="body" [disabled]="editSection" (change)="onModelChange()"  [items]="modelList"
                     [(ngModel)]="modelValue" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                 </div>
@@ -364,7 +380,7 @@
                     <label class="input-form-label">Model Description</label>&nbsp;<span
                     class="text-danger">*</span>
                     <div class="input-form-box">
-                        <input type="text" [(ngModel)]="modelDesc" maxlength="50"
+                        <input type="text" [(ngModel)]="modelDesc" maxlength="50" [disabled]="editSection"
                             class="input-form-control without-icon" (keypress)="omit_special_char($event)">
                     </div>
                 </div>
@@ -375,7 +391,7 @@
                         class="text-danger">*</span>
                     <div class="input-form-box">
                         <input type="text" maxlength="25" [(ngModel)]="chassisNo" (keypress)="omit_special_char($event)"
-                            class="input-form-control without-icon new" >
+                            class="input-form-control without-icon new" [disabled]="editSection">
                     </div>
                 </div>
             </div>
@@ -384,7 +400,7 @@
                     <label class="input-form-label">Engine No</label>&nbsp;<span
                         class="text-danger">*</span>
                     <div class="input-form-box"> 
-                        <input type="text"  maxlength="20"  [(ngModel)]="engineNo" 
+                        <input type="text"  maxlength="20"  [(ngModel)]="engineNo" [disabled]="editSection"
                             class="input-form-control without-icon new" (keypress)="omit_special_char($event)">
                     </div>
                 </div>
@@ -394,7 +410,7 @@
                     <label class="input-form-label">Engine Capacity</label>&nbsp;<span
                         class="text-danger">*</span>
                     <div class="input-form-box">
-                        <input type="text"  maxlength="5" [(ngModel)]="engineCapacity"
+                        <input type="text"  maxlength="5" [(ngModel)]="engineCapacity" [disabled]="editSection"
                             class="input-form-control without-icon">
                     </div>
                 </div>
@@ -403,7 +419,7 @@
                 <div class="input-control-container">
                     <label class="input-form-label">Manufacture Year</label>&nbsp;<span
                         class="text-danger">*</span>
-                    <ng-select class="input-form-select" appendTo="body"  [items]="years" [(ngModel)]="manufactureYear" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="input-form-select" appendTo="body" [disabled]="editSection" [items]="years" [(ngModel)]="manufactureYear" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
 
                 </div>
@@ -412,7 +428,7 @@
             <div class="col-12 col-md-3">
                 <div class="input-control-container">
                     <label class="input-form-label">Color</label>
-                    <ng-select class="input-form-select" appendTo="body" [items]="colorList" [(ngModel)]="colorValue" bindValue="CodeDesc" bindLabel="CodeDesc">
+                    <ng-select class="input-form-select" appendTo="body" [disabled]="editSection" [items]="colorList" [(ngModel)]="colorValue" bindValue="CodeDesc" bindLabel="CodeDesc">
                     </ng-select>
                 </div>
             </div>
@@ -422,7 +438,7 @@
                     <label class="input-form-label">Seating Capacity</label>&nbsp;<span
                         class="text-danger">*</span>
                     <div class="input-form-box">
-                        <input type="text"  maxlength="3"  [(ngModel)]="seatingCapacity"
+                        <input type="text"  maxlength="3"  [(ngModel)]="seatingCapacity" [disabled]="editSection"
                             class="input-form-control without-icon">
                     </div>
                 </div>
@@ -432,15 +448,15 @@
                 <div class="input-control-container">
                     <label class="input-form-label">Motor Usage</label>&nbsp;<span
                         class="text-danger">*</span>
-                    <ng-select class="input-form-select" appendTo="body" [items]="usageList" [(ngModel)]="usageValue" bindValue="CodeDesc" bindLabel="CodeDesc">
+                    <ng-select class="input-form-select" appendTo="body" [disabled]="editSection" [items]="usageList" [(ngModel)]="usageValue" bindValue="CodeDesc" bindLabel="CodeDesc">
                     </ng-select>
                 </div>
             </div>
         </div>
         <div class="text-center mt-2">
-                <button class="btn btn-danger"  *ngIf="customerData.length!=0" (click)="searchSection=!searchSection">Cancel</button>&nbsp;
-                <button class="btn btn-danger"  *ngIf="customerData.length==0" (click)="ongetBack()">Back</button>&nbsp;
-                <button class="btn btn-primary" (click)="onMotorDetailsSave()">Submit</button>
+                <button class="btn btn-danger"  *ngIf="customerData.length!=0" (click)="searchSection=!searchSection" [disabled]="editSection">Cancel</button>&nbsp;
+                <button class="btn btn-danger"  *ngIf="customerData.length==0" (click)="ongetBack()" [disabled]="editSection">Back</button>&nbsp;
+                <button class="btn btn-primary" (click)="onMotorDetailsSave()" [disabled]="editSection">Submit</button>
         </div>
     </div>
 </div>

@@ -38,7 +38,7 @@ export class VehicleWishListComponent implements OnInit {
   endMinDate: Date;adminSection:boolean = false;issuerSection:boolean=false;executiveList:any[]=[];
   maxDate: Date;Code:any;brokerList:any[]=[];subUsertype:any;executiveSection:boolean=false;
   statusValue:any;HavePromoCode:any="N";PromoCode:any;
-  editSection:boolean=true;uploadStatus:any;
+  editSection:boolean=false;uploadStatus:any;
   code:any;
   acExecutiveId: any;
   commissionType: any;endorsementSection:boolean=false;
@@ -99,7 +99,8 @@ export class VehicleWishListComponent implements OnInit {
   modelList: any[]=[];engineCapacity:any=null;usageValue:any='';
   modelValue: any='';years:any[]=[];manufactureYear:any='';
   modelDesc: any=null;colorList:any[]=[];usageList:any[]=[];
-  finalizeYN: any='N';
+  finalizeYN: any='N';validSection:boolean=false;duplicateSection:boolean=false;
+  showTiraUpdateSection: boolean=false;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -332,6 +333,58 @@ export class VehicleWishListComponent implements OnInit {
         ];
       }
   }
+  onRegistrationSearch(){
+    this.duplicateSection=false;this.editSection=false;this.validSection=false;
+      if(this.regNo!=null && this.regNo!='' && this.regNo!=undefined){
+        this.regNo = this.regNo.toUpperCase();
+        this.editSection = true;
+        sessionStorage.setItem('loadingType','motorSearch');
+        let ReqObj = {
+          "ReqChassisNumber": '',
+          "ReqRegNumber": this.regNo,
+          "InsuranceId": this.insuranceId,
+          "BranchCode": this.branchCode,
+          "BrokerBranchCode": this.branchCode,
+          "ProductId": this.productId,
+          "CreatedBy": this.loginId,
+          "SavedFrom": 'API'
+        }
+        let urlLink = `${this.motorApiUrl}regulatory/showvehicleinfo`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+            if(data.Result){
+              let vehicleDetails:any = data?.Result;
+              this.vehicleDetails = data?.Result;
+              this.vehicleDetails.PolicyStartDate = this.datePipe.transform(this.updateComponent.policyStartDate, "dd/MM/yyyy");
+              this.vehicleDetails.PolicyEndDate = this.datePipe.transform(this.updateComponent.policyEndDate, "dd/MM/yyyy");
+              sessionStorage.removeItem('loadingType');
+              this.showTiraUpdateSection = true;
+              setTimeout(() => {this.showTiraUpdateSection = false;sessionStorage.removeItem('vehicleExist')},6000);
+              if(this.customerData.length!=0){
+                  let entry = this.customerData.some(ele=>ele.Registrationnumber==this.regNo);
+                  if(entry){
+                      this.duplicateSection = true;
+                      this.validSection = false;
+                  }
+                  else this.onSaveSearchVehicles();
+              }
+              else this.onSaveSearchVehicles();
+            }
+            else if(data.ErrorMessage!=null){
+              if(data.ErrorMessage.length!=0){
+                sessionStorage.removeItem('loadingType');
+                this.duplicateSection = false;
+                this.editSection = false;
+                this.validSection = true;
+              }
+            }
+          },
+          (err) => {
+            
+           },
+          );
+      }
+}
   omit_special_char(event){
    var k;
    k = event.charCode;  //         k = event.keyCode;  (Both can be used)
@@ -434,6 +487,7 @@ export class VehicleWishListComponent implements OnInit {
     this.modelValue='';this.chassisNo=null;this.engineNo=null;
     this.engineCapacity = null;this.manufactureYear='';this.colorValue='';
     this.seatingCapacity=null;this.usageValue = '';
+    this.duplicateSection=false;this.editSection=false;this.validSection=false;
 
   }
   onMotorDetailsSave(){
