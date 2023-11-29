@@ -484,6 +484,7 @@ export class VehicleWishListComponent implements OnInit {
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         if(data.Result){
+          this.updateComponent.modifiedYN = 'Y';
           this.searchValue = this.regNo?.toUpperCase();
           this.searchBy = '02';
           this.onSearchVehicle();

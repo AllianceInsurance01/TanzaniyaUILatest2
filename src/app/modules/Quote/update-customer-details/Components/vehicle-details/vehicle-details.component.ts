@@ -1880,12 +1880,14 @@ export class VehicleDetailsComponent implements OnInit {
       }
     }
   }
+  checkEmptyDetails(){
+    return this.vehicleDetailsList.some(ele=>ele.InsuranceType=='' || ele.InsuranceType==null || ele.Motorusage=='' || ele.Motorusage==null);
+  }
   onFinalProceed(){
     let i=0,j=0;
     for(let veh of this.vehicleDetailsList){
       let refNo = veh?.MSRefNo;
-      if((refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection || this.changeUwSection)) && (this.finalizeYN!='Y' || this.updateComponent.modifiedYN=='Y')){
-        
+      if(((refNo==undefined && (veh?.modifiedYN=='Y' || this.requestReferenceNo==null || this.requestReferenceNo==undefined || this.endorsementSection || this.changeUwSection)) && (this.finalizeYN!='Y' || this.updateComponent.modifiedYN=='Y' )) || this.checkEmptyDetails()){
         i+=1;
       }
       j+=1;
