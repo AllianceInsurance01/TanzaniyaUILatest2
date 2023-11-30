@@ -5052,7 +5052,7 @@ this.viewCondition(i);
      this.ExclusionData[index].TypeId='D';
        } 
        else if(!checked) {
-         let index = this.ExclusionData.find(ele => ele.SubId == clause.SubId);
+         let index = this.ExclusionData.findIndex(ele => ele.SubId == clause.SubId);
          console.log('IIIIIIIIIII',index)
          this.ExclusionData[index].TypeId='O';
      }
