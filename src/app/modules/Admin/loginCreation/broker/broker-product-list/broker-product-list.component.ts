@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { DatePipe } from '@angular/common';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-broker-product-list',
@@ -21,10 +22,14 @@ export class BrokerProductListComponent implements OnInit {
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
   branchData: any[]=[];branchHeader:any[]=[];
   productHeader: any[]=[];
+  productHeader1:any[]=[];
   productData: any;brokerCompanyYN:any;
   dataSource: any;
+  dataSource1:any;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatPaginator) private paginator!: MatPaginator;
+  // @ViewChild('paginator') paginator: MatPaginator;
+  @ViewChild('secondPaginator') secondPaginator: MatPaginator;
+  @ViewChild('paginator') private paginator!: MatPaginator;
   filterValue: any;  sortProperty: any = 'AllotedYN';
   sortDirection: any = 'desc';
   minDate: Date;filteredList:any[]=[];
@@ -33,11 +38,14 @@ export class BrokerProductListComponent implements OnInit {
   selectedList: any[]=[];
   selectedProductList: any;
   nonOptedProductList: any;
+  p:Number=1;
   newList: any =[];
   newslist: any =[];
   LossList:any;
   userType: any;
   subUserType: any;
+  existings: boolean=false;insertlist:any[]=[];
+  pa:Number=1;
   constructor(private router:Router,private sharedService: SharedService,private datePipe: DatePipe) {
     this.minDate = new Date();
     let brokerObj = JSON.parse(sessionStorage.getItem('brokerConfigureDetails'));
@@ -84,6 +92,26 @@ export class BrokerProductListComponent implements OnInit {
       //   },
       // },
     ];
+
+
+    this.productHeader1 = [
+      { key: 'Select', display: 'Select' },
+      { key: 'ProductName', display: 'Product Name' },
+      {key: 'CommissionPercent', display: 'Commission (%)'},
+      {key: 'SumInsuredEnd', display: 'Max SumInsured'},
+      {key: 'BackDays', display: 'Backdays'},
+      {key: 'CreditYn', display: 'CreditYN'},
+      {key: 'CheckerYn', display: 'CheckerYN'},
+      { key: 'Status', display: 'Status' },
+      { key: 'EffectiveDate', display: 'Effective Date' }
+      // {
+      //   key: 'remove',
+      //   display: 'Remove',
+      //   config: {
+      //     isRemove: true,
+      //   },
+      // },
+    ];
    
     // let selectedList = this.productData.filter(ele=>ele.SelectedYN=='Y');
     // let nonSelected = this.productData.filter(ele=>ele.SelectedYN!='Y');
@@ -108,10 +136,15 @@ export class BrokerProductListComponent implements OnInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.applyFilter(this.filterValue);
+    this.dataSource1 = new MatTableDataSource(this.filteredList);//this.filteredList
+    this.dataSource1.sort = this.sort;
+    this.dataSource1.paginator = this.secondPaginator;
+    this.applyFilters(this.filterValue);
     console.log(this.filterValue);
   }
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator
+    this.dataSource.paginator = this.paginator;
+    this.dataSource1.paginator = this.secondPaginator;
   }
   getOptedProductDetails(){
     this.newList =[];
@@ -128,7 +161,8 @@ export class BrokerProductListComponent implements OnInit {
         (data: any) => {
             if(data.Result){
               let selectedList = data.Result;
-
+              this.newList =[];
+              this.newslist=[];
               console.log('KKKKKKKKKK',selectedList);
               if(selectedList.length!=0){
                 let i=0;
@@ -157,18 +191,24 @@ export class BrokerProductListComponent implements OnInit {
                     
                       i+=1;
                       if(i==selectedList.length){
-                        this.selectedProductList= selectedList;
+                        this.selectedProductList= this.newslist;
                         this.dataSource = new MatTableDataSource(this.selectedProductList);
-                        console.log('OOOOOOOOOOOOOOO',this.selectedProductList);
                         this.dataSource.sort = this.sort;
                         this.dataSource.paginator = this.paginator;
+                        console.log('Paginatorsss',this.dataSource.paginator);
                         this.applyFilter(this.filterValue);
+                        console.log('OOOOOOOOOOOOOOO',this.dataSource);
                         this.editSection = false;
-                      
+                        
                         //this.getNonOptedProctList();
                       }
-                    
-                    
+                      if(this.newList.length!=0){
+                         this.dataSource1 = new MatTableDataSource(this.newList);
+                        this.dataSource1.sort = this.sort;
+                        this.dataSource1.paginator = this.secondPaginator;
+                         console.log('OOOOOOOOOOOOOOO',this.secondPaginator,this.dataSource1);
+                        this.applyFilters(this.filterValue);
+                             }
                   }
                   // if(this.selectedList.length-1 == i){
                   //   this.LossList = this.newList;
@@ -189,6 +229,11 @@ export class BrokerProductListComponent implements OnInit {
       },
       (err) => { },
     );
+  }
+
+  existing(){
+    this.existings=true;
+    this.editSection=false;
   }
   getNonOptedProctList(){
     let ReqObj = {
@@ -245,14 +290,54 @@ export class BrokerProductListComponent implements OnInit {
     this.router.navigate(['Admin/brokersList']);
   }
   applyFilter(filterValue: string) {
+    console.log('Apply Filters',filterValue);
     this.dataSource.filter = filterValue?.trim().toLowerCase();
+  }
+  applyFilters(filterValue: string) {
+    console.log('Apply Filters',filterValue);
+    this.dataSource1.filter = filterValue?.trim().toLowerCase();
   }
   checkSelectedProducts(rowData){
     return rowData.SelectedYn=='Y';
   }
-  onChangeSelectedProduct(rowData){
-    if(rowData.SelectedYn=='Y') rowData.SelectedYn = 'N';
-    else rowData.SelectedYn = 'Y';
+  checkSelectedProductss(rowData){
+    return rowData.SelectedYn=='N'; 
+  }
+  onChangeSelectedProduct(rowData,check){
+    console.log('Checked Statusss',rowData,check)
+    if(check){
+     return rowData.SelectedYn = 'Y';
+    }
+    else{
+      return rowData.SelectedYn = 'N';
+    }
+    // if(rowData.SelectedYn=='Y') rowData.SelectedYn = 'N';
+    // else rowData.SelectedYn = 'Y';
+  }
+
+
+
+  onChangeSelectedProduc(rowData,check,h){
+    console.log('Checked Statusss',rowData,check)
+    if(check){
+     rowData.SelectedYn = 'N';
+     this.insertlist.push(rowData);
+    }
+    else{
+      rowData.SelectedYn = 'Y';
+      if(this.insertlist.length!=0){
+        let rows = this.insertlist.indexOf(rowData);
+        console.log('NNNNNNNNN',rows,this.insertlist);
+        this.insertlist.splice(rowData,h);
+      }
+    }
+    // if(rowData.SelectedYn=='Y') rowData.SelectedYn = 'N';
+    // else rowData.SelectedYn = 'Y';
+  }
+
+  onChangeSelectedProducts(rowData){
+    if(rowData.SelectedYn=='Y') rowData.SelectedYn = 'Y';
+    else rowData.SelectedYn = 'N';
   }
   getBrokerProductList(){
     let ReqObj = {
@@ -346,9 +431,16 @@ export class BrokerProductListComponent implements OnInit {
   }
   onSaveProductDetails(){
     //let selectedList = this.productData.filter(ele=>ele.SelectedYn=='Y');
-    console.log('KKKKKKKKKKKKK',this.selectedProductList);
-    let selectedList = this.selectedProductList.filter(ele=>ele.SelectedYn=='Y');
-    console.log("Final Selected List",selectedList)
+    let selectedList=[];
+    console.log('KKKKKKKKKKKKK',this.newList);
+    if(this.editSection){
+      selectedList = this.selectedProductList.filter(ele => ele.SelectedYn=='Y');
+      console.log("Final Selected List",selectedList)
+    }
+    else if(this.existings){
+      selectedList = this.newList.filter(ele=>ele.SelectedYn=='N');
+      console.log("Existing Selected List",selectedList)
+    }
     let finalObj = [];let i=0;
     for(let entry of selectedList){
       let SumInsured =0;
@@ -387,6 +479,12 @@ export class BrokerProductListComponent implements OnInit {
                 this.selectedProductList = [];
                 this.nonOptedProductList = [];
                 this.productData = [];
+                this.newslist=[];
+                this.newList=[];
+                this.selectedList=[];
+                this.insertlist=[];
+                this.existings=false;
+                this.editSection=false;
                 this.getOptedProductDetails();
           }
         },
@@ -426,4 +524,6 @@ export class BrokerProductListComponent implements OnInit {
       }
     }
   }
+
+
 }

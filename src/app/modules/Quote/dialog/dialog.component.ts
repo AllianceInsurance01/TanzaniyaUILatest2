@@ -121,7 +121,7 @@ export class DialogComponent implements OnInit {
   addItem(){
     //this.jsonList.push(row);
     let entry = [{
-     "TypeId":"D",
+     "TypeId":"",
      "Id":this.Id,
      "SubId":null,
      "SubIdDesc":"",
@@ -132,6 +132,37 @@ export class DialogComponent implements OnInit {
    this.jsonList = entry.concat(this.jsonList);
      }
 
+     newChange(title,row,checked,index){
+      console.log('Rowsss',row);
+      if(checked){
+        return row.TypeId='D';
+      }
+      else{
+        return row.TypeId='O';
+      }
+
+     }
+
+
+     newChangeExclusion(title,row,checked,index){
+      if(checked){
+        return row.TypeId='D';
+      }
+      else{
+        return row.TypeId='O';
+      }
+
+     }
+
+     newChangeWarranty(title,row,checked,index){
+      if(checked){
+        return row.TypeId='D';
+      }
+      else{
+        return row.TypeId='O';
+      }
+
+     }
 
   saveChanges(){
 
@@ -223,8 +254,10 @@ export class DialogComponent implements OnInit {
         //exampleModel.hide()
         this.jsonList =[
           {
-            "TermsId":null,
-             "Id":this.Id,
+            "TypeId":"D",
+            "DocRefNo":null,
+          "DocumentId":null,
+             "Id":"6",
             "SubId":null,
              "SubIdDesc":""
           }
@@ -294,10 +327,12 @@ else{
         //$('#ExclusionModal').modal('hide');
         this.ExclusionList =[
           {
-            "TermsId":null,
-             "Id":"7",
-            "SubId":null,
-             "SubIdDesc":""
+            "TypeId":"D",
+            "Id":"7",
+           "SubId":null,
+            "SubIdDesc":"",
+            "DocRefNo":null,
+            "DocumentId":null,
           }
         ];
         this.close();
@@ -375,10 +410,12 @@ else{
 
         this.json = [
           {
-            "TermsId":null,
-             "Id": "4",
-            "SubId":null,
-             "SubIdDesc":""
+            "TypeId":"D",
+            "Id":"4",
+           "SubId":null,
+            "SubIdDesc":"",
+            "DocRefNo":null,
+            "DocumentId":null,
           }
         ]
         this.close();

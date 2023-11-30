@@ -1829,10 +1829,22 @@ getMotorUsageList(vehicleValue){
     }
     let i=0;
     let passData:any[]=[];
+    let id:any;
+    // if(type){
+    //   if(type=='Clauses'){
+    //   id="6";
+    //   }
+    //   else if(type=='Exclusion'){
+    //  id="7";
+    //   }
+    //   else if(type=='Warranty'){
+    //     id="4";
+    //   }      
+    //   }
     for( let f of rawData){
-       if(f.TypeId == 'D'){
+       if(f.TypeId != 'D'){
         console.log('KKKKKKKKK',f.TypeId);
-          passData.push(f);
+        rawData[i].TypeId='O';
        }
        i+=1;
     }
@@ -1848,7 +1860,7 @@ getMotorUsageList(vehicleValue){
       //TermsId:null,
       RiskId:'1',
       SectionId:'99999',
-      TermsAndConditionReq:passData,
+      TermsAndConditionReq:rawData,
       RequestReferenceNo: this.requestReferenceNo
     };
 
@@ -4960,25 +4972,15 @@ this.viewCondition(i);
     const checked = event.target.checked; // stored checked value true or false
     if (checked) {
      //this.common1.push({ SubId: i });
-     let index = this.ClausesData.find(ele => ele.SubId == clause.SubId);
-     console.log('BBBBBBBBBBBB',this.ClausesData);
-         
-     if(index){
-       index.TypeId='D';
-       // this.common1.push(index);
-       console.log('OOOOOOOOOOOOOO',index);
-     }
+     let index = this.ClausesData.findIndex(ele => ele.SubId == clause.SubId);
+     console.log('BBBBBBBBBBBB',this.ClausesData);   
+     this.ClausesData[index].TypeId='D';
+     console.log('OOOOOOOOOOOOOO',index);
        } 
        else if(!checked) {
-         let index = this.ClausesData.find(ele => ele.SubId == clause.SubId);
+         let index = this.ClausesData.findIndex(ele => ele.SubId == clause.SubId);
+         this.ClausesData[index].TypeId='O';
          console.log('IIIIIIIIIII',index)
-         if(index){
-           index.TypeId='O';
-         }
-       //  this.common1=this.ClausesData.splice(i,1);
-       //   console.log('IDDDDDDDDDDDS',i);
-       //   console.log('cccccc',this.common1)
- 
      }
   //   const checked = event.target.checked; // stored checked value true or false
   //    if (checked) {
@@ -5027,42 +5029,32 @@ this.viewCondition(i);
     const checked = event.target.checked; // stored checked value true or false
     if (checked) {
      //this.common1.push({ SubId: i });
-     let index = this.WarrantyData.find(ele => ele.SubId == clause.SubId);
+     let index = this.WarrantyData.findIndex(ele => ele.SubId == clause.SubId);
      console.log('BBBBBBBBBBBB',this.WarrantyData);
-         
-     if(index){
-       index.TypeId='D';
-       // this.common1.push(index);
+       this.WarrantyData[index].TypeId='D';
        console.log('OOOOOOOOOOOOOO',index);
-     }
        } 
        else if(!checked) {
-         let index = this.WarrantyData.find(ele => ele.SubId == clause.SubId);
-         console.log('IIIIIIIIIII',index)
-         if(index){
-           index.TypeId='O';
-         }
+         let index = this.WarrantyData.findIndex(ele => ele.SubId == clause.SubId);
+         console.log('IIIIIIIIIII',index,this.WarrantyData);
+         console.log('Warranty Datas',this.WarrantyData);
+           this.WarrantyData[index].TypeId='O';
+           console.log('Warranty Datas 1',this.WarrantyData);
+        
      }
   }
   onUser(i,event,clause){
     const checked = event.target.checked; // stored checked value true or false
     if (checked) {
      //this.common1.push({ SubId: i });
-     let index = this.ExclusionData.find(ele => ele.SubId == clause.SubId);
+     let index = this.ExclusionData.findIndex(ele => ele.SubId == clause.SubId);
      console.log('BBBBBBBBBBBB',this.ExclusionData);
-         
-     if(index){
-       index.TypeId='D';
-       // this.common1.push(index);
-       console.log('OOOOOOOOOOOOOO',index);
-     }
+     this.ExclusionData[index].TypeId='D';
        } 
        else if(!checked) {
-         let index = this.ExclusionData.find(ele => ele.SubId == clause.SubId);
+         let index = this.ExclusionData.findIndex(ele => ele.SubId == clause.SubId);
          console.log('IIIIIIIIIII',index)
-         if(index){
-           index.TypeId='O';
-         }
+         this.ExclusionData[index].TypeId='O';
      }
   }
   getSectionName(index){

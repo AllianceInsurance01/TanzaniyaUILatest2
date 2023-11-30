@@ -622,7 +622,8 @@ ongetEndorsement(rowData){
       "CustomerName": rowData.ClientName,
       "ProductName":rowData.ProductName,
       "PolicyNo":rowData.PolicyNo,
-      "Currency":rowData.Currency
+      "Currency":rowData.Currency,
+      "EmiYn":rowData?.EmiYn
     }
     sessionStorage.setItem('editCustomer',JSON.stringify(ReqObj));
  this.router.navigate(['/Home/MotorDocument']);

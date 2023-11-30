@@ -984,7 +984,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="mt-4">
+                                    <!-- <div class="mt-4">
                                         <div class="Personal Details">
                                             <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">EMI Installment Info</h1></div>
                                            </div>
@@ -1005,7 +1005,7 @@
                                             
                                         </div>
                                        
-                                    </div>
+                                    </div> -->
                                    
                                 </div>
                              </div>
@@ -1206,6 +1206,94 @@
                 </div>
             </div>
             </mat-tab>
+
+            <ng-container *ngIf="Emiyn=='Y'">
+                <mat-tab label="Emi Details">
+                    <div class="card-body">
+                        <div style="font-family: 'Inter', sans-serif !important;">
+                        <div class="row p-4 ml-2 mr-4" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)!important"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
+                            <div class="col-md-5 col-12">
+                                <div class="heading5">EMI Paid Details</div>
+                                <ng-container *ngFor="let Cus of Emilist1">
+                                    <div *ngIf="Cus.PaymentStatus=='Paid'" class="mt-2 pl-5 pr-5">
+                                    <div class="Personal Details">
+        
+                                        <div class="row mt-1">
+                                            <div class="col-md-2 col-lg-2 col-4 mt-2">
+                                                <div class="heading3">Emi Month</div>
+                                                <div class="heading4">{{Cus.NoOfInstallment}}</div>
+                                            </div>
+                                            <div class="col-4 col-lg-4 col-md-4 mt-2">
+                                                <div class="heading3">Installment Type</div>
+                                                <div class="heading4"> {{Cus.InstallmentDesc}}</div>
+                                             </div>
+                                             <div class="col-md-2 col-lg-3 col-4 mt-2">
+                                                <div class="heading3">Due Date</div>
+                                                <div class="heading4">{{Cus.DueDate}}</div>
+                                             </div>
+                                             
+                                            <div class="col-md-3 col-lg-3 col-4 mt-2">
+                                                <div class="heading3">Due Amount</div>
+                                                <div class="heading4" >{{Cus.DueAmount|commaseparator}}</div>
+                                            </div>
+                                            <div class="col-md-2 col-lg-2 col-4 mt-2">
+                                                <div class="heading3">PaymentStatus</div>
+                                                <div class="heading4"> {{Cus.PaymentStatus}}</div>
+                                            </div>
+                                        </div>
+                                      
+                                    </div>
+                                   
+                                </div>
+                                 </ng-container>
+                                
+                            </div>
+                                
+                            <div class="line-in-middle"></div>
+                            <div class="col-md-6 col-12">
+                                <div class="heading5">Emi Pending Details</div>
+                                <ng-container *ngFor="let Cus of Emilist1">
+                                    <div *ngIf="Cus.PaymentStatus=='Pending'" class="mt-2 pl-5 pr-5">
+                                    <div class="Personal Details">
+        
+                                        <div class="row mt-1">
+                                            <div class="col-md-2 col-lg-2 col-4 mt-2">
+                                                <div class="heading3">Emi Month</div>
+                                                <div class="heading4">{{Cus.NoOfInstallment}}</div>
+                                            </div>
+                                            <div class="col-4 col-lg-3 col-md-4 mt-2">
+                                                <div class="heading3">Installment Type</div>
+                                                <div class="heading4"> {{Cus.InstallmentDesc}}</div>
+                                             </div>
+                                             <div class="col-md-2 col-lg-2 col-4 mt-2">
+                                                <div class="heading3">Due Date</div>
+                                                <div class="heading4">{{Cus.DueDate}}</div>
+                                             </div>
+                                             
+                                            <div class="col-md-3 col-lg-3 col-4 mt-2">
+                                                <div class="heading3">Due Amount</div>
+                                                <div class="heading4" >{{Cus.DueAmount|commaseparator}}</div>
+                                            </div>
+                                            <div class="col-md-2 col-lg-2 col-4 mt-2">
+                                                <div class="heading3">PaymentStatus</div>
+                                                <div class="heading4"> {{Cus.PaymentStatus}}</div>
+                                            </div>
+                                        </div>
+                                      
+                                    </div>
+                                   
+                                </div>
+                                 </ng-container>
+                                 
+                                       
+                                    </div>
+                                
+                               
+                        </div>
+                    </div>
+                    </div>
+                </mat-tab>
+            </ng-container>
             <mat-tab label="Cover Details"> 
                 <div class="card-body">
                     <div style="font-family: 'Inter', sans-serif !important;">
