@@ -194,6 +194,7 @@ u{
     text-decoration: none !important;
 }
 :host ::ng-deep .labelsum .form-label{
+    line-height: 20px !important;
 font-size:.75rem !important;
 }
 :host ::ng-deep .labelsum .customInput{

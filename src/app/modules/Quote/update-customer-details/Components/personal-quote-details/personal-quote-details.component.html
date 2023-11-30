@@ -99,10 +99,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form__wrapper" *ngIf="productId=='21' || productId=='26'|| productId=='6' || productId=='25' || productId=='13'">
+                    <div class="form__wrapper" *ngIf="productId=='21' || productId=='26'|| productId=='6' || productId=='25' || productId=='13' || (productId=='1' && insuranceId!='100004') || (productId=='39' && insuranceId!='100004') || (productId=='27' && insuranceId!='100004')">
                             <div class="row">
                                 <ng-container *ngFor="let step of fields; let index = index; let last = last">
-                                    <ng-container *ngIf="step.props.label=='Plant All Risk'||step.props.label=='Fire And Material Damage' || step.props.label=='Fire & Allied Perils'">
+                                    <ng-container *ngIf="step.props.label=='Plant All Risk'||step.props.label=='Fire And Material Damage' || step.props.label=='Fire & Allied Perils' || step.props.label=='Burglary' || step.props.label=='Machinery BreakDown' || step.props.label=='Public Liability'">
                                         <div class="col-md-12 col-lg-12 col-xl-12">
                                             <div class="col-md-4 col-lg-4 col-xl-4 splitCardHeaders d-flex justify-content-between" (click)="selectedIndex=index">
                                                 <div (click)="selectedIndex=index" class="mt-2 pl-4"><h1 class="headings"><u>{{ step.props.label }}</u></h1></div>
@@ -138,8 +138,7 @@
                       
 
                     </div>
-               
-                    <div class="form__wrapper" *ngIf="productId!='19' && productId!='24' && productId!='3' && productId!='42' && productId!='13' && productId!='21' && productId!='26' && productId!='6' && productId!='25'">
+                    <div class="form__wrapper" *ngIf="productId!='19' && productId!='24' && productId!='3' && productId!='42' && productId!='13' && productId!='21' && productId!='26' && productId!='6' && productId!='25' && (productId!='1' || (productId=='1' && insuranceId=='100004'))  && (productId!='39' || (productId=='39' && insuranceId=='100004')) && (productId!='27' || (productId=='27' && insuranceId=='100004'))">
                         <form [formGroup]="form" (ngSubmit)="onSubmit(productItem)">
                             <formly-form [form]="form" [fields]="fields" [model]="productItem"></formly-form>
                         </form>
@@ -176,7 +175,7 @@
                         </mat-tab-group> -->
                             <div class="row">
                                 <ng-container *ngFor="let step of fields[0].fieldGroup; let index = index; let last = last">
-                                    <ng-container *ngIf="(step.props.label=='Contents Risk' && insuranceId=='100004') || step.props.label=='Building Risk' || step.props.label=='Money' ||step.props.label=='Burglary'|| step.props.label=='Fidelity' || step.props.label=='Employers Liability' || step.props.label=='Machinery BreakDown' || step.props.label=='Fire & Allied Perils'">
+                                    <ng-container *ngIf="(step.props.label=='Contents Risk' && insuranceId=='100004') || step.props.label=='Building Risk' || step.props.label=='Money' || step.props.label=='Business Interruption' || (step.props.label=='Burglary' && insuranceId=='100004') || step.props.label=='Fidelity' || step.props.label=='Employers Liability' || step.props.label=='Machinery BreakDown' || step.props.label=='Fire & Allied Perils'">
                                         <div class="col-md-12 col-lg-12 col-xl-12">
                                             <div style="width:100% !important;" class="col-md-4 col-lg-4 col-xl-4 customer-grid maan-grid-item-titles d-flex justify-content-between" (click)="selectedIndex=index">
                                                 <div (click)="selectedIndex=index" class="mt-2 pl-4"><h1 class="spancon"><u>{{ step.props.label }}</u></h1></div>

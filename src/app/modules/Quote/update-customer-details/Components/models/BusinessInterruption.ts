@@ -4,7 +4,7 @@ import { UpdateCustomerDetailsComponent } from "../../update-customer-details.co
 import { ForceLengthValidators } from "../personal-quote-details/personal-quote-details.component";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 
-export class MachineryBreakDown{
+export class BusinessInterruption{
     customerDetails: any;
     commonDetails: any[]=[];
     endorsementSection: boolean=false;
@@ -26,7 +26,7 @@ export class MachineryBreakDown{
             }
         }
         this.fields = {
-          props: { label: 'Machinery BreakDown' },
+          props: { label: 'Business Interruption' },
           fieldGroup: [
             {
               fieldGroupClassName: 'row mt-2',
@@ -50,7 +50,7 @@ export class MachineryBreakDown{
                                   type: 'displays',
                 
                                   templateOptions: {
-                                    label: `Sum Insured`,
+                                    label: `Gross Profit including standing charges & wages`,
                                     required: false,
                 
                                   },
@@ -58,7 +58,42 @@ export class MachineryBreakDown{
                                 {
                                   className:"labelsum",
                                   type: 'commaSeparator',
-                                  key: 'PowerPlantSi',
+                                  key: 'GrossProfitSi',
+                                    props: {
+                                    label: `  `,
+                                    disabled: this.checkDisable('SumInsured'),
+                                  },
+                                  templateOptions: {
+                                    
+                                  },
+                                  validators: {
+                                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                                  },
+                                  hooks: {
+                                  },
+                  
+                                  expressions: {
+                                    disabled: '!model.PowerPlantSIYN'
+                                  },
+                                }
+                              ]
+                            },
+                            {
+                              fieldGroup:[
+                                {
+                                  className: "mt-1",
+                                  type: 'displays',
+                
+                                  templateOptions: {
+                                    label: `Indemnity period - 6 Months `,
+                                    required: false,
+                
+                                  },
+                                },
+                                {
+                                  className:"labelsum",
+                                  type: 'commaSeparator',
+                                  key: 'IndemnityPeriodSi',
                                     props: {
                                     label: `  `,
                                     disabled: this.checkDisable('SumInsured'),

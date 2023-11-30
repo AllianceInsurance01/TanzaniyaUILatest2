@@ -46,73 +46,47 @@ export class Money{
                     {
                       fieldGroup:[
                           
-                            {
-                              fieldGroup:[
-                                // {
-                                //   className:'customCheckbox',
-                                //   key: 'MoneyOutSafeBusinessSIYN',
-                                //   type: 'checkbox',
-                                //   templateOptions: {
-                                //     type: 'checkbox',
-                                //     label: '',
-                                //     required: false,
-                                //     disabled: this.checkDisable('SumInsured'),
-                                //     name: 'MoneyOutSafeBusinessSIYN',
-                                //     options: [],
-                                //   }
-                                // },
-                                {
-                                  className: "splitCardHeaderss",
-                                  type: 'displays',
-                                  templateOptions: {
-                                    label: `Safe Outside Working Hours`,
-                                    required: false,
-                                  },
-                                },
-                                {
-                                  className:"labelsum",
-                                  type: 'commaSeparator',
-                                  key: 'MoneyOutofSafe',
-                                  props: { 
-                                    label: `Sum Insured`,
-                                    disabled: this.checkDisable('SumInsured')
-                                  },
-                                  templateOptions: {
+                            // {
+                            //   fieldGroup:[
+                            //     {
+                            //       className: "splitCardHeaderss",
+                            //       type: 'displays',
+                            //       templateOptions: {
+                            //         label: `Safe Outside Working Hours`,
+                            //         required: false,
+                            //       },
+                            //     },
+                            //     {
+                            //       className:"labelsum",
+                            //       type: 'commaSeparator',
+                            //       key: 'MoneyOutofSafe',
+                            //       props: { 
+                            //         label: `Sum Insured`,
+                            //         disabled: this.checkDisable('SumInsured')
+                            //       },
+                            //       templateOptions: {
                                     
-                                  },
-                                  validators: {
-                                    validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-                                  },
-                                  hooks: {
-                                  },
+                            //       },
+                            //       validators: {
+                            //         validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                            //       },
+                            //       hooks: {
+                            //       },
                   
-                                  expressions: {
-                                    disabled: '!model.MoneyOutSafeBusinessSIYN'
-                                  },
-                                }
-                              ]
-                            },
+                            //       expressions: {
+                            //         disabled: '!model.MoneyOutSafeBusinessSIYN'
+                            //       },
+                            //     }
+                            //   ]
+                            // },
                             {
                               fieldGroup:[
-                                // {
-                                //   className:'customCheckbox',
-                                //   key: 'MoneyInPremisesSIYN',
-                                //   type: 'checkbox',
-                                //   templateOptions: {
-                                //     type: 'checkbox',
-                                //     label: '',
-                                //     required: false,
-                                //     disabled: this.checkDisable('SumInsured'),
-                                //     name: 'MoneyInPremisesSIYN',
-                                //     options: [],
-                                //   }
-                                // },
                                 {
                                   className: "splitCardHeaderss",
                                   type: 'displays',
                 
                                   templateOptions: {
-                                    label: `Director/Partner - Residence`,
+                                    label: `Premises`,
                                     required: false,
                 
                                   },
@@ -141,25 +115,12 @@ export class Money{
                             },
                             {
                               fieldGroup:[
-                                // {
-                                //   className:'customCheckbox',
-                                //   key: 'CashInTransitSIYN',
-                                //   type: 'checkbox',
-                                //   templateOptions: {
-                                //     type: 'checkbox',
-                                //     label: '',
-                                //     required: false,
-                                //     disabled: this.checkDisable('SumInsured'),
-                                //     name: 'CashInTransitSIYN',
-                                //     options: [],
-                                //   }
-                                // },
                                 {
                                   className: "splitCardHeaderss",
                                   type: 'displays',
                 
                                   templateOptions: {
-                                    label: `Cash in Transit Limit`,
+                                    label: `Money in Transit`,
                                     required: false,
                 
                                   },
@@ -187,27 +148,50 @@ export class Money{
                                 }
                               ]
                             },
+                            // {
+                            //   fieldGroup:[
+                            //     {
+                            //       className: "splitCardHeaderss",
+                            //       type: 'displays',
+                
+                            //       templateOptions: {
+                            //         label: `Custody Of Collectors`,
+                            //         required: false,
+                
+                            //       },
+                            //     },
+                            //     {
+                            //       className:"labelsum",
+                            //       type: 'commaSeparator',
+                            //       key: 'MoneyCollector',
+                            //       props: {
+                            //         label: `Sum Insured`,
+                            //         disabled: this.checkDisable('SumInsured')
+                            //       },
+                            //       templateOptions: {
+                                    
+                            //       },
+                            //       validators: {
+                            //         validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
+                            //       },
+                            //       hooks: {
+                            //       },
+                  
+                            //       expressions: {
+                            //         disabled: '!model.CashInHandEmployeesSIYN'
+                            //       },
+                            //     }
+                            //   ]
+                            // },
                             {
                               fieldGroup:[
-                                // {
-                                //   className:'customCheckbox',
-                                //   key: 'CashInHandEmployeesSIYN',
-                                //   type: 'checkbox',
-                                //   templateOptions: {
-                                //     type: 'checkbox',
-                                //     label: '',
-                                //     required: false,
-                                //     disabled: this.checkDisable('SumInsured'),
-                                //     name: 'CashInHandEmployeesSIYN',
-                                //     options: [],
-                                //   }
-                                // },
+                               
                                 {
-                                  className: "splitCardHeaderss",
+                                  className: "labeltable",
                                   type: 'displays',
                 
                                   templateOptions: {
-                                    label: `Custody Of Collectors`,
+                                    label: `StrongRoom`,
                                     required: false,
                 
                                   },
@@ -215,7 +199,7 @@ export class Money{
                                 {
                                   className:"labelsum",
                                   type: 'commaSeparator',
-                                  key: 'MoneyCollector',
+                                  key: 'MoneyAnnualEstimate',
                                   props: {
                                     label: `Sum Insured`,
                                     disabled: this.checkDisable('SumInsured')
@@ -230,31 +214,19 @@ export class Money{
                                   },
                   
                                   expressions: {
-                                    disabled: '!model.CashInHandEmployeesSIYN'
+                                    disabled: '!model.MoneyAnnualcarrySuminsuredSIYN'
                                   },
                                 }
                               ]
                             },
                             {
                               fieldGroup:[
-                                // {
-                                //   className:'customCheckbox',
-                                //   key: 'MoneyInSafeBusinessSIYN',
-                                //   type: 'checkbox',
-                                //   templateOptions: {
-                                //     type: 'checkbox',
-                                //     label: '',
-                                //     required: false,
-                                //     disabled: this.checkDisable('SumInsured'),
-                                //     name: 'MoneyInSafeBusinessSIYN',
-                                //     options: [],
-                                //   }
-                                // },
+                               
                                 {
                                   className: "splitCardHeaderss",
                                   type: 'displays',
                                   templateOptions: {
-                                    label: `Value Of Safe`,
+                                    label: `Money In Safe`,
                                     required: false,
                                   },
                                 },
@@ -284,25 +256,13 @@ export class Money{
                             },
                             {
                               fieldGroup:[
-                                // {
-                                //   className:'customCheckbox',
-                                //   key: 'MoneyAnnualcarrySuminsuredSIYN',
-                                //   type: 'checkbox',
-                                //   templateOptions: {
-                                //     type: 'checkbox',
-                                //     label: '',
-                                //     required: false,
-                                //     disabled: this.checkDisable('SumInsured'),
-                                //     name: 'MoneyAnnualcarrySuminsuredSIYN',
-                                //     options: [],
-                                //   }
-                                // },
+                               
                                 {
                                   className: "labeltable",
                                   type: 'displays',
                 
                                   templateOptions: {
-                                    label: `Annual Cash Carry`,
+                                    label: `Estimated annual carryings`,
                                     required: false,
                 
                                   },
@@ -337,139 +297,6 @@ export class Money{
               ]
               
             },
-            // {
-            //   fieldGroupClassName: 'row',
-            //   fieldGroup: [
-            //     {
-            //       className: 'col-4',
-            //       type: 'commaSeparator',
-            //       key: 'MoneyInSafeBusiness',
-            //       templateOptions: {
-            //         label: `Safe During Working Hours`,
-            //         disabled: this.checkDisable('MoneyInSafeBusiness')
-            //       },
-            //       validators: {
-            //         validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-            //       },
-            //       hooks: {
-            //       },
-  
-            //       expressions: {
-                    
-            //       },
-            //     },
-            //     {
-            //       className: 'col-4',
-            //       type: 'commaSeparator',
-            //       key: 'MoneyOutSafeBusiness',
-            //       templateOptions: {
-            //         label: `Safe Outside Working Hours`,
-            //         disabled: this.checkDisable('MoneyOutSafeBusiness')
-            //       },
-            //       validators: {
-            //         validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-            //       },
-            //       hooks: {
-            //       },
-  
-            //       expressions: {
-                    
-            //       },
-            //     },
-            //     {
-            //       className: 'col-4',
-            //       type: 'commaSeparator',
-            //       key: 'MoneyInPremises',
-            //       templateOptions: {
-            //         label: `Residence Of Director And Partner`,
-            //         disabled: this.checkDisable('MoneyInPremises')
-            //       },
-            //       validators: {
-            //         validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-            //       },
-            //       hooks: {
-            //       },
-  
-            //       expressions: {
-                    
-            //       },
-            //     },
-            //     {
-            //       className: 'col-4',
-            //       type: 'commaSeparator',
-            //       key: 'CashInTransit',
-            //       templateOptions: {
-            //         label: `Cash in Transit Limit`,
-            //         disabled: this.checkDisable('CashInTransit')
-            //       },
-            //       validators: {
-            //         validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-            //       },
-            //       hooks: {
-            //       },
-  
-            //       expressions: {
-                    
-            //       },
-            //     },
-            //     {
-            //       className: 'col-4',
-            //       type: 'commaSeparator',
-            //       key: 'CashInHandEmployees',
-            //       templateOptions: {
-            //         label: `Custody Of Collectors`,
-            //         disabled: this.checkDisable('CashInHandEmployees')
-            //       },
-            //       validators: {
-            //         validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-            //       },
-            //       hooks: {
-            //       },
-  
-            //       expressions: {
-                    
-            //       },
-            //     },
-            //     {
-            //       className: 'col-4',
-            //       type: 'commaSeparator',
-            //       key: 'CashInSafe',
-            //       templateOptions: {
-            //         label: `Value Of Safe`,
-            //         disabled: this.checkDisable('CashInSafe')
-            //       },
-            //       validators: {
-            //         validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-            //       },
-            //       hooks: {
-            //       },
-  
-            //       expressions: {
-                    
-            //       },
-            //     },
-  
-            //     {
-            //       className: 'col-4',
-            //       type: 'commaSeparator',
-            //       key: 'MoneyAnnualcarrySuminsured',
-            //       templateOptions: {
-            //         label: `Estimated Annual Cash Carrying`,
-            //         disabled: this.checkDisable('MoneyAnnualcarrySuminsured')
-            //       },
-            //       validators: {
-            //         validation: [ForceLengthValidators.maxLength(20), ForceLengthValidators.min(1)]
-            //       },
-            //       hooks: {
-            //       },
-  
-            //       expressions: {
-                    
-            //       },
-            //     },
-  
-            //   ]
-            // },
   
           ],
         }
