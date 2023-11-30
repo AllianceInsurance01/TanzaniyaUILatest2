@@ -121,7 +121,7 @@ export class DialogComponent implements OnInit {
   addItem(){
     //this.jsonList.push(row);
     let entry = [{
-     "TypeId":"",
+     "TypeId":"D",
      "Id":this.Id,
      "SubId":null,
      "SubIdDesc":"",
@@ -348,10 +348,14 @@ else{
     const index = this.ExclusionList.indexOf(row);
     this.ExclusionList.splice(index, 1);
   }
+  delete(row){
+    const index = this.json.indexOf(row);
+    this.json.splice(index, 1);
+  }
 
   addExclusion(){
     let entry = [{
-      "TermsId":null,
+      "TypeId":"D",
       "Id":"7",
       "SubId":null,
       "SubIdDesc":"",
@@ -428,7 +432,7 @@ else{
 
   addwarranty(){
     let entry = [{
-      "TermsId":null,
+      "TypeId":"D",
       "Id":"4",
       "SubId":null,
       "SubIdDesc":"",
