@@ -50,7 +50,7 @@ export class MotorDocumentsComponent implements OnInit {
   VechileColumnHeader:any[]=[];
   PaymentInfo:any[]=[];
   DocumentInfo:any[]=[];
-  CommonDoc:any[]=[];
+  CommonDoc:any[]=[];Emilist1:any[]=[];
   Currency:any;
   OverallPremiumFc: any;
   pass: boolean;
@@ -82,6 +82,16 @@ export class MotorDocumentsComponent implements OnInit {
   borrowerList:any[]=[];
   moneydetails:any[]=[];
   curency: any;MechineryInfo:any;
+  Emiyn: any;
+  yearlySection: boolean=false;
+  nineMonthSection: boolean=false;
+  sixMonthSection: boolean=false;
+  threeMonthSection: boolean=false;
+  fiveMonthSection: boolean=false;
+  eightMonthSection: boolean=false;
+  middleshow: boolean=false;
+  paidshow: boolean=false;
+  emiSection: boolean;
 
   constructor(public router:Router,private sharedService: SharedService,public dialogService: MatDialog){
 
@@ -277,6 +287,7 @@ export class MotorDocumentsComponent implements OnInit {
        this.PolicyNo=CustomerObj?.PolicyNo
        this.ProductName=CustomerObj?.ProductName;
        this.curency=CustomerObj?.Currency;
+       this.Emiyn=CustomerObj?.EmiYn;
 
        console.log('sssssssssss',this.search)
             
@@ -314,6 +325,9 @@ export class MotorDocumentsComponent implements OnInit {
            }
            if(this.productId =='16'){
             this.getMoneyDetails();
+           }
+           if(this.Emiyn=='Y'){
+            this.getCurrentEmiDetails();
            }
 
           //  if(this.ReferenceNo){
@@ -1285,6 +1299,242 @@ getTiraDetails(){
     },
     (err) => { },
   );
+}
+
+
+getCurrentEmiDetails(){
+  let ReqObj = {
+       "QuoteNo": this.quoteNo,
+       "InsuranceId": this.insuranceId,
+       "ProductId": this.productId
+       }
+  let urlLink = `${this.CommonApiUrl}api/getemidetailsbyquoteno`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+        if(data?.Result){
+            let emiList = [];
+            emiList = data.Result;         
+            if(emiList.length!=0){
+                  let i=0,yearlyList=[],nineList=[],sixList=[],threeList=[],fiveList=[],eightList=[];
+                  let isChecked=false;
+                  if(emiList.length==13){
+                    this.yearlySection = true;
+                    yearlyList = emiList;
+                  }
+                  else if(emiList.length==10){
+                    nineList = emiList;
+                    this.nineMonthSection = true;
+                  }
+                  else if(emiList.length==7){
+                    sixList = emiList;
+                    this.sixMonthSection = true;
+                  }
+                  else if(emiList.length==4){
+                    threeList = emiList;
+                    this.threeMonthSection = true;
+                  }
+                  else if(emiList.length==6){
+                    fiveList = emiList;
+                    this.fiveMonthSection = true;
+                  }
+                  else if(emiList.length==9){
+                    eightList = emiList;
+                    this.eightMonthSection = true;
+                  }
+                  this.setEmiTableValues(yearlyList,nineList,sixList,threeList,fiveList,eightList,isChecked);
+            }
+            
+        }
+      },
+      (err) => { },
+    );
+}
+
+
+setEmiTableValues(yearlyList,nineList,sixList,threeList,fiveList,eightList,isChecked){
+  if(this.yearlySection){
+     let i=0;this.Emilist1=[];
+     for(let entry of yearlyList){
+          let data = entry;
+          if(data.PaymentStatus=='Paid'){
+            this.paidshow=true;
+          }
+          if(data.PaymentStatus=='Pending'){
+            this.middleshow=true;
+          }
+          if(yearlyList[i]){data['yearlyAmount']=yearlyList[i].InstallmentAmount}
+          else{data['yearlyAmount']=null}
+          if(nineList[i]){data['nineAmount']=nineList[i].InstallmentAmount}
+          else{data['nineAmount']=null}
+          if(sixList[i]){data['sixAmount']=sixList[i].InstallmentAmount}
+          else{data['sixAmount']=null}
+          if(threeList[i]){data['threeAmount']=threeList[i].InstallmentAmount}
+          else{data['threeAmount']=null}
+          if(fiveList[i]){data['fiveAmount']=fiveList[i].InstallmentAmount}
+          else{data['fiveAmount']=null}
+          if(eightList[i]){data['eightAmount']=eightList[i].InstallmentAmount}
+          else{data['eightAmount']=null}
+          //if(data.SelectYn){data['isChecked']=false}
+          if(data.SelectYn == 'Y'){data['isChecked']=true}
+          else{data['isChecked']=false}
+          this.Emilist1.push(entry);
+          i+=1;
+          if(i==yearlyList.length){this.emiSection=true}
+     }
+  }
+  else if(this.nineMonthSection){
+    let i=0;this.Emilist1=[];
+    for(let entry of nineList){
+         let data = entry;
+         if(data.PaymentStatus=='Paid'){
+          this.paidshow=true;
+        }
+        if(data.PaymentStatus=='Pending'){
+          this.middleshow=true;
+        }
+         if(yearlyList[i]){data['yearlyAmount']=yearlyList[i].InstallmentAmount}
+         else{data['yearlyAmount']=null}
+         if(nineList[i]){data['nineAmount']=nineList[i].InstallmentAmount}
+         else{data['nineAmount']=null}
+         if(sixList[i]){data['sixAmount']=sixList[i].InstallmentAmount}
+         else{data['sixAmount']=null}
+         if(threeList[i]){data['threeAmount']=threeList[i].InstallmentAmount}
+         else{data['threeAmount']=null}
+         if(fiveList[i]){data['fiveAmount']=fiveList[i].InstallmentAmount}
+          else{data['fiveAmount']=null}
+          if(eightList[i]){data['eightAmount']=eightList[i].InstallmentAmount}
+          else{data['eightAmount']=null}
+          if(data.SelectYn){data['isChecked']=false}
+          // if(data.SelectYn == 'Y'){data['isChecked']=true}
+          // else{data['isChecked']=false}
+         this.Emilist1.push(entry);
+         i+=1;
+         if(i==nineList.length){this.emiSection=true}
+    }
+ }
+ else if(this.sixMonthSection){
+    let i=0;this.Emilist1=[];
+    for(let entry of sixList){
+         let data = entry;
+         if(data.PaymentStatus=='Paid'){
+          this.paidshow=true;
+        }
+        if(data.PaymentStatus=='Pending'){
+          this.middleshow=true;
+        }
+         if(yearlyList[i]){data['yearlyAmount']=yearlyList[i].InstallmentAmount}
+         else{data['yearlyAmount']=null}
+         if(nineList[i]){data['nineAmount']=nineList[i].InstallmentAmount}
+         else{data['nineAmount']=null}
+         if(sixList[i]){data['sixAmount']=sixList[i].InstallmentAmount}
+         else{data['sixAmount']=null}
+         if(threeList[i]){data['threeAmount']=threeList[i].InstallmentAmount}
+         else{data['threeAmount']=null}
+         if(fiveList[i]){data['fiveAmount']=fiveList[i].InstallmentAmount}
+          else{data['fiveAmount']=null}
+          if(eightList[i]){data['eightAmount']=eightList[i].InstallmentAmount}
+          else{data['eightAmount']=null}
+          if(data.SelectYn){data['isChecked']=false}
+          // if(data.SelectYn == 'Y'){data['isChecked']=true}
+          // else{data['isChecked']=false}
+         this.Emilist1.push(entry);
+         i+=1;
+         if(i==sixList.length){this.emiSection=true}
+
+    }
+ }
+ else if(this.threeMonthSection){
+    let i=0;this.Emilist1=[];
+    for(let entry of threeList){
+         let data = entry;
+         if(data.PaymentStatus=='Paid'){
+          this.paidshow=true;
+        }
+        if(data.PaymentStatus=='Pending'){
+          this.middleshow=true;
+        }
+         if(yearlyList[i]){data['yearlyAmount']=yearlyList[i].InstallmentAmount}
+         else{data['yearlyAmount']=null}
+         if(nineList[i]){data['nineAmount']=nineList[i].InstallmentAmount}
+         else{data['nineAmount']=null}
+         if(sixList[i]){data['sixAmount']=sixList[i].InstallmentAmount}
+         else{data['sixAmount']=null}
+         if(threeList[i]){data['threeAmount']=threeList[i].InstallmentAmount}
+         else{data['threeAmount']=null}
+         if(fiveList[i]){data['fiveAmount']=fiveList[i].InstallmentAmount}
+          else{data['fiveAmount']=null}
+          if(eightList[i]){data['eightAmount']=eightList[i].InstallmentAmount}
+          else{data['eightAmount']=null}
+          if(data.SelectYn){data['isChecked']=false}
+          // if(data.SelectYn == 'Y'){data['isChecked']=true}
+          // else{data['isChecked']=false}
+         this.Emilist1.push(entry);
+         i+=1;
+         if(i==threeList.length){this.emiSection=true}
+    }
+ }
+ else if(this.fiveMonthSection){
+  let i=0;this.Emilist1=[];
+  for(let entry of fiveList){
+       let data = entry;
+       if(data.PaymentStatus=='Paid'){
+        this.paidshow=true;
+      }
+      if(data.PaymentStatus=='Pending'){
+        this.middleshow=true;
+      }
+       if(yearlyList[i]){data['yearlyAmount']=yearlyList[i].InstallmentAmount}
+       else{data['yearlyAmount']=null}
+       if(nineList[i]){data['nineAmount']=nineList[i].InstallmentAmount}
+       else{data['nineAmount']=null}
+       if(sixList[i]){data['sixAmount']=sixList[i].InstallmentAmount}
+       else{data['sixAmount']=null}
+       if(threeList[i]){data['threeAmount']=threeList[i].InstallmentAmount}
+       else{data['threeAmount']=null}
+       if(fiveList[i]){data['fiveAmount']=fiveList[i].InstallmentAmount}
+        else{data['fiveAmount']=null}
+        if(eightList[i]){data['eightAmount']=eightList[i].InstallmentAmount}
+        else{data['eightAmount']=null}
+        // if(data.SelectYn == 'Y'){data['isChecked']=true}
+        // else{data['isChecked']=false}
+        if(data.SelectYn){data['isChecked']=false}
+       this.Emilist1.push(entry);
+       i+=1;
+       if(i==fiveList.length){this.emiSection=true}
+  }
+}
+else if(this.eightMonthSection){
+let i=0;this.Emilist1=[];
+for(let entry of eightList){
+     let data = entry;
+     if(data.PaymentStatus=='Paid'){
+      this.paidshow=true;
+    }
+    if(data.PaymentStatus=='Pending'){
+      this.middleshow=true;
+    }
+     if(yearlyList[i]){data['yearlyAmount']=yearlyList[i].InstallmentAmount}
+     else{data['yearlyAmount']=null}
+     if(nineList[i]){data['nineAmount']=nineList[i].InstallmentAmount}
+     else{data['nineAmount']=null}
+     if(sixList[i]){data['sixAmount']=sixList[i].InstallmentAmount}
+     else{data['sixAmount']=null}
+     if(threeList[i]){data['threeAmount']=threeList[i].InstallmentAmount}
+     else{data['threeAmount']=null}
+     if(fiveList[i]){data['fiveAmount']=fiveList[i].InstallmentAmount}
+      else{data['fiveAmount']=null}
+      if(eightList[i]){data['eightAmount']=eightList[i].InstallmentAmount}
+      else{data['eightAmount']=null}
+      // if(data.SelectYn == 'Y'){data['isChecked']=true}
+      // else{data['isChecked']=false}
+      if(data.SelectYn){data['isChecked']=false}
+        
+     this.Emilist1.push(entry);
+     i+=1;
+     if(i==eightList.length){this.emiSection=true}
+}
+}
+console.log('NNNNNNNNNNNNN',this.Emilist1)
 }
 
 }
