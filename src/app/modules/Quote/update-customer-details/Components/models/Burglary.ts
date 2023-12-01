@@ -57,7 +57,7 @@ export class Burglary{
                             {
                               className:"labelsum",
                               type: 'commaSeparator',
-                              key: 'BuildingSuminsured',
+                              key: 'BurglarySi',
                               props: { 
                                 label: `Not limited to Goods in trusts (customers vehicles), Spare Parts,Tools, equipments and the like`,
                               },

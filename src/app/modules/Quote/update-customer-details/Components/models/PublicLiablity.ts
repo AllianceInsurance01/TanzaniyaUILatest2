@@ -54,7 +54,7 @@ export class PublicLiability{
                           {
                             className:"labelsum",
                             type: 'commaSeparator',
-                            key: 'BuildingSuminsured',
+                            key: 'LegalLiabilityAnnualAggreagte',
                             props: { 
                               label: `Sum Insured`,
                             },
@@ -89,7 +89,7 @@ export class PublicLiability{
                           {
                             className:"labelsum",
                             type: 'commaSeparator',
-                            key: 'BuildingSuminsured',
+                            key: 'ProductTurnover',
                             props: { 
                               label: `Sum Insured`,
                             },

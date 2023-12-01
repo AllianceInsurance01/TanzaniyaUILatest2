@@ -146,7 +146,7 @@ export class FireAlliedPerils{
                                 {
                                   className:"labelsum",
                                   type: 'commaSeparator',
-                                  key: 'BuildingSuminsured',
+                                  key: 'onAssetSumInsured',
                                   props: { 
                                     label: `Sum Insured`,
                                   },
@@ -181,7 +181,7 @@ export class FireAlliedPerils{
                                 {
                                   className:"labelsum",
                                   type: 'commaSeparator',
-                                  key: 'BuildingSuminsured',
+                                  key: 'onStockSumInsured',
                                   props: { 
                                     label: `Sum Insured`,
                                   },

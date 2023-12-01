@@ -192,6 +192,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
     this.branchList = this.userDetails.Result.LoginBranchDetails;
     this.countryId = this.userDetails.Result.CountryId;
     this.productId = this.userDetails.Result.ProductId;
+    console.log('product Idssssss',this.productId);
     this.insuranceId = this.userDetails.Result.InsuranceId;
     let finalize = sessionStorage.getItem('FinalizeYN');
     if(finalize) this.finalizeYN = finalize;
@@ -1446,7 +1447,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       //this.updateComponent.setTabCountSection(0);
       this.showSection = true;
       if(sections.some(ele=>ele=='1')){
-        //alert(sections)
+        
         let contentData 
         if(this.insuranceId=='100004'){
           contentData = new Buildingss();
@@ -1560,8 +1561,16 @@ export class PersonalQuoteDetailsComponent implements OnInit {
           }
       
       if(sections.some(ele=>ele=='52')){
+        if(this.insuranceId=='100002'){
         let fireData = new Burglary();
-        let field = {
+        //let entry = [];
+        //entry.push(fireData?.fields);
+        this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([fireData?.fields]);
+        console.log("Burglary Fields", this.fields[0].fieldGroup);
+        }
+        else if(this.insuranceId=='100004'){
+          let fireData = new Burglarys();
+            let field = {
           props: { label: 'Burglary' },
           fieldGroup: [fireData.fields]
         }
@@ -1584,6 +1593,30 @@ export class PersonalQuoteDetailsComponent implements OnInit {
           this.getWindowConsMaterialList();
           this.getDoorsMaterilalList(); 
           this.getNightLeftDoorList(); this.getBuildingOccupiedList();
+        }
+        // let field = {
+        //   props: { label: 'Burglary' },
+        //   fieldGroup: [fireData.fields]
+        // }
+        // console.log("Burglary Fields",field)
+        // let regionHooks ={ onInit: (field: FormlyFieldConfig) => {
+        //   field.formControl.valueChanges.subscribe(() => {
+        //     this.ongetDistrictList('change')
+        //   });
+        // } }
+        
+        // field.fieldGroup[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].hooks = regionHooks;
+        //this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([field])
+          // this.getNatureTradeList();
+          // this.getInsuranceForList();
+          // this.getWallMaterialList();
+          // this.buglaryloss();
+          // this.getRoofMaterialList();
+          // this.getCeilingMaterialList();
+          // this.getRegionList();
+          // this.getWindowConsMaterialList();
+          // this.getDoorsMaterilalList(); 
+          // this.getNightLeftDoorList(); this.getBuildingOccupiedList();
       }
       if(sections.some(ele=>ele=='75')){
         let fireData = new BusinessInterruption();
@@ -1856,6 +1889,7 @@ getBurglaryDetails(sections){
             this.productItem.BackDoors = details?.BackDoors;
             this.productItem.BuildingOccupied = details?.BuildingOccupied;
             this.productItem.CeilingType = details?.CeilingType;
+            this.productItem.BurglarySi  = details?.BurglarySi;
              if(details?.RegionCode!=null && details?.RegionCode!=''){
               this.productItem.RegionCode = details?.RegionCode;
               this.ongetDistrictList('direct');
@@ -2119,6 +2153,9 @@ getFireAlliedRiskDetails(sections){
             this.productItem.BuildingSuminsured = data?.Result?.BuildingSuminsured;
             this.productItem.IndemityPeriod = data?.Result?.IndemityPeriod;
             this.productItem.MakutiYn = data?.Result?.MakutiYn;
+            this.productItem.onAssetSumInsured = data?.Result?.OnAssetsSi;
+            this.productItem.onStockSumInsured = data?.Result?.OnStockSi;
+            console.log('On Assets',data?.Result?.OnStockSi)
             let details = data.Result;
             if(details?.EndorsementDate){
               this.endorsementDate = details?.EndorsementDate;
@@ -5687,6 +5724,8 @@ onSaveFireAlliedDetails(type,formType){
     "FirePlantSi": this.productItem?.FirePlantSi,
     "FireEquipSi": this.productItem?.FireEquipSi,
     "StockInTradeSi": this.productItem?.FireStockSi,
+    "OnStockSi":this.productItem?.onStockSumInsured,
+    "OnAssetsSi":this.productItem?.onAssetSumInsured,
     "MakutiYn": this.productItem?.MakutiYn,
     "EndorsementDate": this.endorsementDate,
     "EndorsementEffectiveDate": this.endorsementEffectiveDate,
@@ -6197,6 +6236,7 @@ onSaveBurglaryDetails(type,formType){
     "DoorsMaterialId": this.productItem?.DoorsMaterialId,
     "NightLeftDoor": this.productItem?.NightLeftDoor,
     "BuildingOccupied": this.productItem?.BuildingOccupied,
+    "BurglarySi":this.productItem?.BurglarySi,
     "RoofType": this.productItem?.RoofType,
     "RequestReferenceNo": reqRefNo,
     "EndorsementDate": this.endorsementDate,
@@ -7586,6 +7626,7 @@ setCommonFormValues(){
             this.productItem.ElectronicEquipSuminsured  = details?.ElecEquipSuminsured;
           }
           else if(this.productId=='1'){
+            this.productItem.BurglarySi  = details?.BurglarySi;
             if(details?.EndorsementDate){
               this.endorsementDate = details?.EndorsementDate;
               this.endorsementEffectiveDate = details?.EndorsementEffectiveDate;
@@ -7715,6 +7756,14 @@ setCommonFormValues(){
               this.productItem.FireEquipSi=details?.FireEquipSi;
               this.productItem.FirePlantSi=details?.FirePlantSi;
               this.productItem.FireStockSi=details?.StockInTradeSi;
+            }
+            if(this.productId=='6' && this.insuranceId == '100002'){
+              console.log('NNNNNNNNNNNNNNN')
+              //this.productItem.FireBuildingSi=details?.FireBuildingSi;
+              this.productItem.BuildingSuminsured = details?.BuildingSuminsured;
+              this.productItem.onAssetSumInsured = details?.OnAssetsSi;
+              console.log('NNNNNNNNNNNNNNN',this.productItem?.onAssetSumInsured)
+		          this.productItem.onStockSumInsured = details?.OnStockSi;
             }
             this.productItem.IndemityPeriod = details?.IndemityPeriod;
             if(details.MakutiYn==null || details.MakutiYn=="" || details.MakutiYn==undefined) this.productItem.MakutiYn='N';
