@@ -128,6 +128,9 @@ MoneyMajorLoss:any='0';
   EquipmentSis:any='0';MotorCategory:any='';
   LegalLiabilityAnnualAggreagte:any='0';ProductTurnover:any='0';
 	GrossProfitSi: any='0';IndemnityPeriodSi:any='0';
+	TransportedBy: any='';ModeOfTransport:any='';
+	GeographicalCoverage: any='';
+	EstAnnualCarriesSiLc: any='0';SingleRoadSiLc:any='0';
 	constructor(data?) {
 		this.id = data?.id ?? ''
 		this.CustomerName = data?.CustomerName ?? '';
@@ -299,6 +302,11 @@ MoneyMajorLoss:any='0';
 		this.LegalLiabilityAnnualAggreagte = data?.LegalLiabilityAnnualAggreagte ?? '0';
 		this.GrossProfitSi = data?.GrossProfitSi ?? '0';
 		this.IndemnityPeriodSi = data?.IndemnityPeriodSi ?? '0';
+		this.TransportedBy = data?.TransportedBy ?? '';
+		this.ModeOfTransport = data?.ModeOfTransport ?? '';
+		this.GeographicalCoverage = data?.GeographicalCoverage ?? '';
+		this.SingleRoadSiLc = data?.SingleRoadSiLc ?? '0';
+		this.EstAnnualCarriesSiLc = data?.EstAnnualCarriesSiLc ?? '0';
 		// this.EquipmentSi = data?.EquipmentSi ?? '0';
 		// this.ElectronicEquipSuminsured = data.ElectronicEquipSuminsured ?? '0';
 	}
