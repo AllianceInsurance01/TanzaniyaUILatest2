@@ -1633,10 +1633,12 @@ export class PersonalQuoteDetailsComponent implements OnInit {
         if(sections.some(ele=>ele=='46')){
           let fireData = new GoodsInTransit();
           this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([fireData?.fields]);
-          console.log("Goods Fields",this.fields)
+          console.log("Goods Fields",this.fields);
+          this.getTransportList();
+          this.getgeographicalLimit();
           this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].props.options = this.transaportList;
-          this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[1].fieldGroup[1].props.options = this.modeTransportList;
-          this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[2].fieldGroup[1].props.options = this.geographicalList;
+          
+          
           }
       if(this.requestReferenceNo){
            this.sectionCount = 0;
@@ -1845,6 +1847,8 @@ getPublicLiabilityDetails(sections){
         let details = data?.Result;
         this.productItem.LegalLiabilityAnnualAggreagte = details?.LiabilitySi;
         this.productItem.ProductTurnover = details?.ProductTurnoverSi;
+        this.productItem.InsurancePeriodSi = details?.InsurancePeriodSi;
+        this.productItem.AnyAccidentSi = details?.AnyAccidentSi;
         this.sectionCount +=1;
         if(sections.length==this.sectionCount){
           this.formSection = true; this.viewSection = false;
@@ -2346,6 +2350,56 @@ getPersonalLiabilityDetails(sections){
     },
     (err) => { },
   );
+}
+getTransportList(){
+  let ReqObj = {
+    "InsuranceId": this.insuranceId,
+    "BranchCode": this.branchCode,
+    "ProductId": this.productId
+  }
+  let urlLink = `${this.CommonApiUrl}dropdown/modeoftransport`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      if (data.Result) {
+        let defaultObj = [{ 'label': '-Select-', 'value': '' }]
+        this.modeTransportList = data.Result;
+        if (this.modeTransportList.length != 0) {
+          for (let i = 0; i < this.modeTransportList.length; i++) {
+            this.modeTransportList[i].label = this.modeTransportList[i]['CodeDesc'];
+            this.modeTransportList[i].value = this.modeTransportList[i]['Code'];
+            delete this.modeTransportList[i].CodeDesc;
+            if (i == this.modeTransportList.length - 1) {
+              this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[1].fieldGroup[1].props.options = defaultObj.concat(this.modeTransportList);
+            }
+          }
+        }
+      }
+    });
+}
+getgeographicalLimit(){
+  let ReqObj = {
+    "InsuranceId": this.insuranceId,
+    "BranchCode": this.branchCode,
+    "ProductId": this.productId
+  }
+  let urlLink = `${this.CommonApiUrl}dropdown/geographicalcoverage`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      if (data.Result) {
+        let defaultObj = [{ 'label': '-Select-', 'value': '' }]
+        this.geographicalList = data.Result;
+        if (this.geographicalList.length != 0) {
+          for (let i = 0; i < this.geographicalList.length; i++) {
+            this.geographicalList[i].label = this.geographicalList[i]['CodeDesc'];
+            this.geographicalList[i].value = this.geographicalList[i]['Code'];
+            delete this.geographicalList[i].CodeDesc;
+            if (i == this.geographicalList.length - 1) {
+              this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[2].fieldGroup[1].props.options = defaultObj.concat(this.geographicalList);
+            }
+          }
+        }
+      }
+    });
 }
 getBuildingDetails(sections){
   let ReqObj = {
@@ -6726,6 +6780,8 @@ onSavePublicLiability(type,formType){
     "SectionId": "54",
     "LiabilitySi": this.productItem?.LegalLiabilityAnnualAggreagte,
     "ProductTurnoverSi": this.productItem?.ProductTurnover,
+    "InsurancePeriodSi":this.productItem.InsurancePeriodSi,
+    "AnyAccidentSi": this.productItem.AnyAccidentSi,
      "EndorsementDate": this.endorsementDate,
     "EndorsementEffectiveDate": this.endorsementEffectiveDate,
     "EndorsementRemarks": this.endorsementRemarks,
@@ -7827,6 +7883,8 @@ setCommonFormValues(){
             this.ProductCode = details?.SectionId;
             this.productItem.LegalLiabilityAnnualAggreagte = details?.LiabilitySi;
             this.productItem.ProductTurnover = details?.ProductTurnoverSi;
+            this.productItem.InsurancePeriodSi = details?.InsurancePeriodSi;
+            this.productItem.AnyAccidentSi = details?.AnyAccidentSi;
           }
           else{
             if(this.productId=='6' && this.insuranceId == '100004'){
