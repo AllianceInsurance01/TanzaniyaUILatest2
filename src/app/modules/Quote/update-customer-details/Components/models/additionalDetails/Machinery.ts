@@ -110,7 +110,7 @@ export class Machineryss{
                         type: 'input',
                         key: 'MBrand',
                         templateOptions: {
-                          label: 'NationalityID',
+                          label: 'Brand Name',
                           required: true,
                         },
                         validators: {
@@ -134,7 +134,7 @@ export class Machineryss{
                         type: 'commaSeparator',
                         key: 'MSI',
                         templateOptions: {
-                          label: 'Salary',
+                          label: 'Sum Insured',
                           required: true,
                         },
                         validators: {
