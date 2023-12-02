@@ -92,6 +92,22 @@ export class MotorDocumentsComponent implements OnInit {
   middleshow: boolean=false;
   paidshow: boolean=false;
   emiSection: boolean;
+  AdminViewRisk:any[]=[];
+  contentriskview: any;
+  AllRiskView: any;
+  FirePerilsRiskView: any;
+  MachineryBreakDownRiskView: any;
+  FidelityRiskView: any;
+  MoneyRiskView: any;
+  BurglaryRiskView: any;
+  BusinessRiskView: any;
+  PersonalAccidentView: any;
+  EmpLiabilityView: any;
+  ElecEquipRiskView: any;
+  PlateGlassRiskView: any;
+  PublicLiabilityRiskView: any;
+  GoodsInTransitRiskView: any;
+  BusinessInterruptionRiskView: any;
 
   constructor(public router:Router,private sharedService: SharedService,public dialogService: MatDialog){
 
@@ -292,6 +308,7 @@ export class MotorDocumentsComponent implements OnInit {
        console.log('sssssssssss',this.search)
             
            if(this.quoteNo || this.ReferenceNo){
+            this.quoterisk();
             this.onPremium();
             //this.VechileTira();
             this.payment();
@@ -309,16 +326,18 @@ export class MotorDocumentsComponent implements OnInit {
 
            // && this.quoteNo || this.ReferenceNo 
            if(this.productId =='5'){
-            this.onRisk();
+           
+            //this.onRisk();
             this.getDriverDetails();
             this.getAccessories();
+            this.VechileTira();
             // this.getBorrowerList();
            }
            if(this.productId =='4' && this.ReferenceNo){
             this.onTravelRisk();
            }
            if(this.productId =='3' && this.ReferenceNo){
-            this.onDomesRisk();
+            //this.onDomesRisk();
             this.getContentDetails();
             this.getPersonalAccidentDetails();
             this.getPersonalIntermediaryDetails();
@@ -343,6 +362,9 @@ export class MotorDocumentsComponent implements OnInit {
             }
             if(this.productId=='42'){
               this.getCyberDetails();
+            }
+            if(this.productId!='4' && this.productId!='5'){
+              this.ViewRiskss();
             }
             this.getMachineryRisk();
 
@@ -576,6 +598,29 @@ this.passengerName=type;
   
         (err) => { },
       );
+    }
+
+
+    quoterisk(){
+      let Reqobj={
+        "QuoteNo": this.quoteNo,
+        "ProductId": this.productId,
+        "RequestReferenceNo": this.ReferenceNo,
+        "InsuranceId": this.insuranceId
+      }
+      let urlLink = `${this.CommonApiUrl}api/viewquotedetails`;
+      this.sharedService.onPostMethodSync(urlLink, Reqobj).subscribe(
+        (data: any) => {
+          console.log(data);
+          if(data?.Result){
+              this.ViewRisk=data?.Result;
+              //this.ChasNo(this.ViewRisk,this.ViewRisk[0].Chassisnumber,'1');
+              console.log('mmmmmmmmmm',this.ViewRisk)
+          }
+        },
+        (err) => { },
+      );
+    
     }
     onRisk(){
   
@@ -1008,8 +1053,84 @@ this.passengerName=type;
       //     (err) => { },
       //   );
       //  }
+Riskdetails(){
+  let ReqObj={
+    "ApplicationId": null,
+    "BranchCode": null,
+    "CustomerCode": null,
+    "InsuranceId":this.insuranceId,
+    "LoginId": null,
+    "MotorCategory": null,
+    "RequestReferenceNo": this.ReferenceNo,
+    "SearchKey": null,
+    "SearchValue": null,
+    "UserType": null,
+    "VehicleMake": null,
+    "VehicleModel": null,
+    "VehicleType": null,
+    "QuoteNo": this.quoteNo,
+    "ProductId": this.productId
+  }
+  let urlLink = `${this.CommonApiUrl}api/adminviewropvehicledetails`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      console.log(data);
+      if(data?.Result){
+          this.RopVechileDetails=data?.Result?.VehicleDetails;
+          console.log('RopInformation',this.RopVechileDetails)
+          //this.quoteno=data.Result.QuoteNo
+      }
 
+    },
+    (err) => { },
+  );
+}
 
+ViewRiskss(){
+  let ReqObj={
+    "ApplicationId": null,
+    "BranchCode": null,
+    "CustomerCode": null,
+    "InsuranceId":this.insuranceId,
+    "LoginId": null,
+    "MotorCategory": null,
+    "RequestReferenceNo":this.ReferenceNo,
+    "SearchKey": null,
+    "SearchValue": null,
+    "UserType": null,
+    "VehicleMake": null,
+    "VehicleModel": null,
+    "VehicleType": null,
+    "QuoteNo":this.quoteNo,
+    "ProductId":this.productId
+  }
+  let urlLink = `${this.CommonApiUrl}api/adminviewquoteriskdetails`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      console.log(data);
+      if(data?.Result){
+          this.AdminViewRisk=data?.Result;
+          this.contentriskview=data?.Result?.ContentRisk;
+          this.AllRiskView=data?.Result?.AllRisk;
+          this.FirePerilsRiskView=data?.Result?.FirePerilsRisk;
+          this.MachineryBreakDownRiskView=data?.Result?.MachineryBreakDownRisk;
+          this.FidelityRiskView=data?.Result?.FidelityRisk;
+          this.MoneyRiskView=data?.Result?.MoneyRisk;
+          this.BurglaryRiskView=data?.Result?.BurglaryRisk;
+          this.BusinessRiskView=data?.Result?.BusinessRisk;
+          this.PersonalAccidentView=data?.Result?.PersonalAccident;
+          this.EmpLiabilityView=data?.Result?.EmpLiability;
+          this.ElecEquipRiskView=data?.Result?.ElecEquipRisk;
+          this.PlateGlassRiskView=data?.Result?.PlateGlassRisk;
+          this.PublicLiabilityRiskView=data?.Result?.PublicLiabilityRisk;
+          this.GoodsInTransitRiskView=data?.Result?.GoodsInTransitRisk;
+          this.BusinessInterruptionRiskView=data?.Result?.BusinessInterruptionRisk;
+          console.log('RopInformation',this.AdminViewRisk)
+      }
+    },
+    (err) => { },
+  );
+}
        
        VechileTira(){
     
@@ -1019,19 +1140,13 @@ this.passengerName=type;
            "RequestReferenceNo": this.ReferenceNo,
         }
         let urlLink = `${this.CommonApiUrl}api/adminviewropvehicledetails`;
-       
-       
         this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
           (data: any) => {
             console.log(data);
             if(data?.Result){
-  
                 this.RopVechileDetails=data?.Result?.VehicleDetails;
-
                 console.log('RopInformation',this.RopVechileDetails)
                 //this.quoteno=data.Result.QuoteNo
-  
-  
             }
   
           },

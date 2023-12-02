@@ -142,7 +142,7 @@
                     <div class="line-in-middle"></div>
                     <div class="col-md-6 col-12">
                                 <div>
-                                    <div class="Personal Details">
+                                    <div class="Personal Details ">
                                         <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">Additional Information</h1></div>
                                        </div>
                                        <div class="row mt-2">
@@ -185,15 +185,13 @@
                                     </div>
                                 </div>
                             </div>
-                        
-                       
                 </div>
             </div>
             </div>
             </mat-tab>
             <mat-tab label="Quote Info">
                 <div class="card">
-                <div class="row" *ngIf="productId == '5'" style="margin-left:10px !important;margin-right:10px !important;"> <!--d-flex justify-content-between *ngFor="let vech of ViewRisk"-->
+                <!-- <div class="row" *ngIf="productId == '5'" style="margin-left:10px !important;margin-right:10px !important;"> 
                     <div class="col-12 col-md-4" *ngFor="let vech of ViewRisk;let i=index;">
                     <div class="scroll-cards">
                       <div class="card my_class2 ml-2 mr-2" (click)="ChasNo(vech,vech.Chassisnumber,i)" style="padding:10px 10px 10px 10px !important;background-color:lightblue;cursor:pointer;"
@@ -209,11 +207,219 @@
                       </div>
                     </div>
                 </div>
-                  </div>
-                   <ng-container *ngIf="productId == '5'">
-                    <div class="ml-5 mt-2" *ngFor="let vech of ViewRisk"><!--class="message"-->
+                  </div> -->
+                   <ng-container *ngIf="productId != '4'">
+                    <div>
+                        <div class="card-body p-5">
+                            <div class="row mt-2">
+                                <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-2">
+                                    <div class="ant-card" style="height:90%;">
+                                        <div class="author">Customer Details</div>
+                                           <div class="ant-card-body">
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Customer Code</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.CustomerCode}}</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Customer Name</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.CustomerCodeName}}</div>
+                                            </div>
+                                           </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-2">
+                                    <div class="ant-card" style="width:100%;height:90%;">
+                                        <div class="author">Broker Details</div>
+                                           <div class="ant-card-body">
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Login Id</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.Loginid}}</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Quote No</div>
+                                                <div class="col-6 heading0">{{quoteNo}}</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Reference No</div>
+                                                <div class="col-6 heading0">{{ReferenceNo}}</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Exchange Rate</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.ExchangeRate}}</div>
+                                            </div>
+                                           </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-2">
+                                    <div class="ant-card" style="width:100%;height:90%;">
+                                        <div class="author">Integration</div>
+                                           <div class="ant-card-body">
+                                                   <div class="row">
+                                                      <div class="boxsss">
+                                                            <div class="headersss">
+                                                                    Tira Integration
+                                                            </div>
+                                                            <div class="row mt-1">
+                                                                <div class="col-6 ant-padding ant-heading">Status</div>
+                                                                <div class="col-6 heading0">Y</div>
+                                                            </div>
+                                                            <div class="row mt-1">
+                                                                <div class="col-6 ant-padding ant-heading">Sticker No</div>
+                                                                <div class="col-6 heading0">{{ViewRisk?.StrickerNo}}</div>
+                                                            </div>
+                                                            <div class="row mt-1">
+                                                                <div class="col-6 ant-padding ant-heading">CoverNote No</div>
+                                                                <div class="col-6 heading0">{{ViewRisk?.CoverNoteNo}}</div>
+                                                            </div>
+                                                      </div>
+                                                   </div>
+                                                   <div class="row">
+                                                    <div class="boxsss">
+                                                          <div class="headersss">
+                                                                Premia Integration
+                                                          </div>
+                                                          <div class="row mt-1">
+                                                            <div class="col-6 ant-padding ant-heading">Status</div>
+                                                            <div class="col-6 heading0">Y</div>
+                                                        </div>
+                                                    </div>
+                                                 </div>
+                                           </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-3">
+                                    <div class="ant-card" style="width:100%;height:90%;">
+                                        <div class="author">Payment Details</div>
+                                        <div class="ant-card-body">
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Payment Status</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.PaymentStatus}}</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-7 ant-padding ant-heading">Payment Mode</div>
+                                                <div class="col-5 heading0">{{ViewRisk?.PaymentMode}}</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Credit No</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.CreditNo}}</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Debit No</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.DebitNoteNo}}</div>
+                                            </div>
+                                           </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-3">
+                                    <div class="ant-card" style="width:100%;height:90%;">
+                                        <div class="author">Policy Details</div>
+                                        <div class="ant-card-body">
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Policy No</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.PolicyNo}}</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Entry Date</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.InceptionDate}}</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Expiry Date</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.ExpiryDate}}</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Craeted Date</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.QuoteCreatedDate}}</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Policy Period</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.PolicyPeriod}}</div>
+                                            </div>
+                                           </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-3">
+                                    <div class="ant-card" style="width:100%;height:90%;">
+                                        <div class="author">Commission Details</div>
+                                        <div class="ant-card-body">
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">PremiumLc</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.OverallPremiumLc}}</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Commission Percentage</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.CommissionPercentage}}</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Commission</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.Commission}}</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Vat Commission</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.VatCommission}}</div>
+                                            </div>
+                                         
+                                           </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-3">
+                                    <div class="ant-card" style="width:100%;height:90%;">
+                                        <div class="author">Referral Details</div>
+                                        <div class="ant-card-body">
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Referral Status</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.ReferralStatus}}</div>
+                                            </div>
+                                            <div class="row mt-1" *ngIf="ViewRisk?.ReferralRemarks!=null">
+                                                <div class="col-6 ant-padding ant-heading">Referral Remarks</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.ReferralRemarks}}</div>
+                                            </div>
+                                            <div class="row mt-1" *ngIf="ViewRisk?.AdminRemarks!=null">
+                                                <div class="col-6 ant-padding ant-heading">Admin Remarks</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.AdminRemarks}}</div>
+                                            </div>
+                                           </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-3" *ngIf="ViewRisk?.EndorsementYn!='N'">
+                                    <div class="ant-card" style="width:100%;height:90%;">
+                                        <div class="author">Enodorsement Details</div>
+                                        <div class="ant-card-body">
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Endt Type</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.EndtType}}</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Endt TypeDesc</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.EndtTypeDesc}}</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">EndtPremium</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.EndtPremium}}</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-6 ant-padding ant-heading">Endt Count</div>
+                                                <div class="col-6 heading0">{{ViewRisk?.EndtCount}}</div>
+                                            </div>
+                                           </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="ml-5 mt-2" *ngFor="let vech of ViewRisk">
                         <div class="container">
-                            <div class="row p-3 ml-4 mr-4" *ngIf="vech.Chassisnumber==chhassisno"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
+                            <div class="row p-3 ml-4 mr-4" *ngIf="vech.Chassisnumber==chhassisno">
                                 <div class="col-md-6 col-12">
                                     <div>
                                         <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;">Vechile Info</h1></div>
@@ -258,13 +464,6 @@
                                                     <div class="heading1">Fuel Type</div>
                                                     <div class="heading2"> {{vech.FuelTypeDesc}}</div>
                                                  </div>
-                                                 <!-- <div class="col-4 mt-2">
-                                                    <div class="heading1">PolicyType</div>
-                                                    <div class="heading2"> {{vech.PolicyTypeDesc}}</div>
-                                                 </div> -->
-                                              
-                                               
-                                                  
                                                  <div class="col-6 col-md-4 mt-2">
                                                     <div class="heading1">Motor Category</div>
                                                     <div class="heading2"> {{vech.MotorCategoryDesc}}</div>
@@ -279,19 +478,7 @@
                                                 </div>
                                                 
                                                 
-                                                 <!-- <div class="row mt-2">
-                                                    <div class="col-4 mt-2">
-                                                        <div class="heading1">Motor Usage</div>
-                                                        <div class="heading2"> {{vech.Motorusage}}</div>
-                                                     </div>
-                                                 
-                                                
                                                
-                                                 <div class="col-4 mt-2">
-                                                    <div class="heading1">SeatingCapacity</div>
-                                                    <div class="heading2"> {{vech.SeatingCapacity}}</div>
-                                                 </div>
-                                                 </div> -->
                                            
                                                 </div>
                                         </div>
@@ -303,7 +490,7 @@
                                             <div>
                                                 <div class="Personal Details">
                                                     <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">SumInsured</h1>
-                                                        <!-- <h3 class="heading3" style="text-decoration: underline;">SumInsured</h3> -->
+                                                       
                                                     </div>
                                                    </div>
                                                    <div class="row mt-2">
@@ -319,10 +506,6 @@
                                                         <div class="heading3">Acccessories</div>
                                                         <div class="heading2" >{{vech.AcccessoriesSumInsured | commaseparator}}</div>
                                                     </div>
-                                                    <!-- <div class="col-4 mt-2">
-                                                        <div class="heading3">Gpstrackinginstalled</div>
-                                                        <div class="heading2">{{vech.Gpstrackinginstalled}}</div>
-                                                    </div> -->
                                                 </div>
                                              
                                                     <div class="row mt-2">
@@ -339,18 +522,7 @@
                                                             <div class="heading3">Ncd Yn</div>
                                                             <div class="heading2">{{vech.NcdYn}}</div>
                                                          </div>
-                                                    <!-- <div class="col-4 mt-2">
-                                                        <div class="heading3">NcdYears</div>
-                                                        <div class="heading2">{{vech.NcdYears}}</div>
-                                                     </div>
-                                                     <div class="col-4 mt-2">
-                                                        <div class="heading3">NcdYn</div>
-                                                        <div class="heading2">{{vech.NcdYn}}</div>
-                                                     </div>
-                                                     <div class="col-4 mt-2">
-                                                        <div class="heading3">CollateralYn</div>
-                                                        <div class="heading2"> {{vech.CollateralYn}}</div>
-                                                     </div> -->
+                                                  
                                                     
                                                 </div>
 
@@ -371,17 +543,14 @@
                                                    
                                                 </div>
                                                 <div class="mt-3"><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;">Hypothecation</h1>
-                                                    <!-- <h3 class="heading3" style="text-decoration: underline;">SumInsured</h3> -->
+                                                  
                                                 </div>
                                                 <div class="row mt-1">
                                                     <div class="col-6 col-md-4 mt-2">
                                                         <div class="heading3">Collateral Yn</div>
                                                         <div class="heading2"> {{vech.CollateralYn}}</div>
                                                     </div>
-                                                    <!-- <div class="col-6 col-md-4 mt-2">
-                                                        <div class="heading3">Bank Name</div>
-                                                        <div class="heading2"></div>
-                                                    </div> -->
+                                                
                                                     <div class="col-6 col-md-6 mt-2" *ngIf="vech.CollateralYn == 'Y' && vech.BorrowerType=='1'">
                                                         <div class="heading3">Bank Name</div>
                                                         <div class="heading2"> {{vech.CollateralName}}</div>
@@ -401,7 +570,7 @@
 
                     </div>
                      
-                    </div>
+                    </div> -->
                    </ng-container>
 
                    <ng-container *ngIf="productId == '4'">
@@ -573,379 +742,399 @@
                            
                     </div>
                    </ng-container>
-                   
-                   <ng-container *ngIf="productId == '3'">
-                    <div class="row p-3 ml-4 mr-4" *ngFor="let vech of ViewRisk;let i=index;"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
-                        <div class="col-12 col-md-6">
-                            <div>
-                                <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;" class="mt-2">Domestic Info</h1></div>
-                                <div class="mt-2 pl-5 pr-5">
-    
-                                    <div class="row mt-2">
-                                        <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">BuildingType</div>
-                                            <div class="heading2">{{vech?.BuildingType}}</div>
-                                        </div>
-                                        <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">InbuildConstructType</div>
-                                            <div class="heading2">{{vech.InbuildConstructType}}</div>
-                                        </div>
-                                        <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">OutbuildConstructType</div>
-                                            <div class="heading2">{{vech.OutbuildConstructType}}</div>
-                                        </div>
-                                    </div>
-                                 
-                                        <div class="row mt-2">
-                                        <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">Occupation</div>
-                                            <div class="heading2">{{vech.OccupationTypeDesc}}</div>
-                                         </div>
-                                         <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">Built Year</div>
-                                            <div class="heading2">{{vech.BuildingBuildYear}}</div>
-                                         </div>
-                                         <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">Currency</div>
-                                            <div class="heading2" >{{vech.Currency}}</div>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-2">
-                                        <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">Buiding Area Sqm</div>
-                                            <div class="heading2"> {{vech.BuidingAreaSqm}}</div>
-                                        </div>
-                                        <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">Building Condition</div>
-                                            <div class="heading2"> {{vech.BuildingCondition}}</div>
-                                         </div>
-                                         <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading3">Building Usage</div>
-                                            <div class="heading2">{{vech.BuildingUsageDesc}}</div>
-                                        </div>
-                                        </div>
-                                </div>
-                             </div>
-                        </div>
-                            
-                        <div class="line-in-middle"></div>
-                        <div class="col-12 col-md-5">
-                                    <div>
-                                        <div class="Personal Details">
-                                            <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral" class="mt-2">Additional Information</h1></div>
-                                           </div>
-                                           <div class="row mt-2">
-                                         
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading3">BuildingSI</div>
-                                                <div class="heading2">{{vech.BuildingSuminsured}}</div>
-                                            </div>
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading3">Personal Accident SI</div>
-                                                <div class="heading2"> {{vech.PersonalAccSuminsured}}</div>
-                                             </div>
-                                             <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading3">Pa Total disability SI</div>
-                                                <div class="heading2">{{vech.NcdYears}}</div>
-                                             </div>
-                                           
-                                             <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading3">All Risk SI</div>
-                                                <div class="heading2">{{vech.AllriskSumInsured
-                                                }}</div>
-                                             </div>
-                                             <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading3">ContentSI</div>
-                                                <div class="heading2"> {{vech.ContentSuminsured
-                                                }}</div>
-                                             </div>
-                                             <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading3">Pa Medical SI</div>
-                                                <div class="heading2"> {{vech.CollateralName}}</div>
-                                             </div>
-                                        
-                                             <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading3">Personal Intermediary SI</div>
-                                                <div class="heading4">{{vech.PersonalIntermediarySuminsured
-                                                }}</div>
-                                            </div>
-                                        </div>
-                                           
-                                             <!-- <div class="col-4 mt-2">
-                                                <div class="heading3">AcccessoriesSI</div>
-                                                <div class="heading2" >{{vech.AcccessoriesSumInsured}}</div>
-                                            </div> -->
-                                             
-                                            
-                                            <!-- <div class="row mt-2">
-                                                <div class="col-4 mt-2">
-                                                    <div class="heading3">WindScreenSI</div>
-                                                    <div class="heading2"> {{vech.WindScreenSumInsured}}</div>
-                                                </div>
-                                                <div class="col-5 mt-2">
-                                                    <div class="heading3">ExtendedTPPDSI</div>
-                                                    <div class="heading2"> {{vech.ExtendedTPPDSumInsured}}</div>
-                                                 </div>
-                                           
-                                             </div> -->
-                                             
-                                    </div>
-                                </div>
-                            
-                           
-                    </div>
-                   </ng-container>
-                   <ng-container *ngIf="productId == '26'">
-                    <div class="row p-3 ml-4 mr-4" *ngFor="let vech of PremiumInfo;let i=index;"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
-                        <div class="col-12 col-md-6">
-                            <div>
-                                <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;" class="mt-2">Business All Risk Details</h1></div>
-                                <div class="mt-2 pl-5 pr-5">
-    
-                                    <div class="row mt-2">
-                                        <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">Reference No</div>
-                                            <div class="heading2">{{vech?.RequestReferenceNo}}</div>
-                                        </div>
-                                        <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">QuoteNo</div>
-                                            <div class="heading2">{{quoteNo}}</div>
-                                        </div>
-                                        <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">Currency</div>
-                                            <div class="heading2" >{{vech.Currency}}</div>
-                                        </div>
-                                    </div>
-                                        <div class="row mt-2">
-                                    </div>
-                                   
-                                </div>
-                             </div>
-                        </div>
-                            
-                        <div class="line-in-middle"></div>
-                        <div class="col-12 col-md-5">
-                                    <div>
-                                        <div class="Personal Details">
-                                            <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral" class="mt-2">Additional Information</h1></div>
-                                           </div>
-                                           <div class="row mt-2">
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Equipment SI</div>
-                                                <div class="heading2">{{vech.RiskDetails.EquipmentSi}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                           
-                    </div>
-                   </ng-container>
-                   <ng-container *ngIf="productId == '16'">
-                    <div class="row p-3 ml-4 mr-4"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
-                        <div class="col-12 col-md-6">
-                            <div>
-                                <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;" class="mt-2">Money Details</h1></div>
-                                <div class="mt-2 pl-5 pr-5">
-    
-                                    <div class="row mt-2">
-                                        <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">Reference No</div>
-                                            <div class="heading2">{{moneydetails?.RequestReferenceNo}}</div>
-                                        </div>
-                                        <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">QuoteNo</div>
-                                            <div class="heading2">{{quoteNo}}</div>
-                                        </div>
-                                        <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">Currency</div>
-                                            <div class="heading2" >{{curency}}</div>
-                                        </div>
-                                    </div>
-                                        <div class="row mt-2">
-                                    </div>
-                                   
-                                </div>
-                             </div>
-                        </div>
-                            
-                        <div class="line-in-middle"></div>
-                        <div class="col-12 col-md-5">
-                                    <div>
-                                        <div class="Personal Details">
-                                            <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral" class="mt-2">Additional Information</h1></div>
-                                           </div>
-                                           <div class="row mt-2">
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Safe Outside Working Hours</div>
-                                                <div class="heading2">{{moneydetails?.MoneyOutofSafe}}</div>
-                                            </div>
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Residence Of Director And Partner</div>
-                                                <div class="heading2">{{moneydetails?.MoneyDirectorResidence}}</div>
-                                            </div>
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Cash in Transit Limit</div>
-                                                <div class="heading2">{{moneydetails?.MoneyMajorLoss}}</div>
-                                            </div>
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Custody Of Collectors</div>
-                                                <div class="heading2">{{moneydetails?.MoneyCollector}}</div>
-                                            </div>
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Value Of Safe</div>
-                                                <div class="heading2">{{moneydetails?.MoneySafeLimit}}</div>
-                                            </div>
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Annual Cash Carrying</div>
-                                                <div class="heading2">{{moneydetails?.MoneyAnnualEstimate}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                           
-                    </div>
-                   </ng-container>
-                   <ng-container *ngIf="productId == '39'">
-                    <div class="row p-3 ml-4 mr-4"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
-                        <div class="col-12 col-md-6">
-                            <div>
-                                <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;" class="mt-2">Money Details</h1></div>
-                                <div class="mt-2 pl-5 pr-5">
-    
-                                    <div class="row mt-2">
-                                        <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">Reference No</div>
-                                            <div class="heading2">{{MechineryInfo?.RequestReferenceNo}}</div>
-                                        </div>
-                                        <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">QuoteNo</div>
-                                            <div class="heading2">{{quoteNo}}</div>
-                                        </div>
-                                        <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">Currency</div>
-                                            <div class="heading2" >{{curency}}</div>
-                                        </div>
-                                    </div>
-                                        <div class="row mt-2">
-                                    </div>
-                                   
-                                </div>
-                             </div>
-                        </div>
-                            
-                        <div class="line-in-middle"></div>
-                        <div class="col-12 col-md-5">
-                                    <div>
-                                        <div class="Personal Details">
-                                            <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral" class="mt-2">Additional Information</h1></div>
-                                           </div>
-                                           <div class="row mt-2">
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Power Plant SI</div>
-                                                <div class="heading2">{{MechineryInfo?.PowerPlantSi}}</div>
-                                            </div>
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Electrical Machines SI</div>
-                                                <div class="heading2">{{MechineryInfo?.ElecMachinesSi}}</div>
-                                            </div>
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Equipments SI</div>
-                                                <div class="heading2">{{MechineryInfo?.EquipmentSi}}</div>
-                                            </div>
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Electronic Equipment SI</div>
-                                                <div class="heading2">{{MechineryInfo?.MachineEquipSi}}</div>
-                                            </div>
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">General Machines SI</div>
-                                                <div class="heading2">{{MechineryInfo?.GeneralMachineSi}}</div>
-                                            </div>
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Manufacturing Units SI</div>
-                                                <div class="heading2">{{MechineryInfo?.ManuUnitsSi}}</div>
-                                            </div>
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Pressure Plants  SI</div>
-                                                <div class="heading2">{{MechineryInfo?.BoilerPlantsSi}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                           
-                    </div>
-                   </ng-container>
-
-                   <ng-container *ngIf="productId == '46'">
-                    <div class="row p-3 ml-4 mr-4"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
-                        <div class="col-12 col-md-6">
-                            <div>
-                                <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral;" class="mt-2">Short Term Details</h1></div>
-                                <div class="mt-2 pl-5 pr-5">
-    
-                                    <div class="row mt-2">
-                                        <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">Body Type</div>
-                                            <div class="heading2">{{shorttermpolicy?.VehicleTypeDesc}}</div>
-                                        </div>
-                                        <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">Make</div>
-                                            <div class="heading2">{{shorttermpolicy?.VehiclemakeDesc}}</div>
-                                        </div>
-                                        <div class="col-6 col-md-4 mt-2">
-                                            <div class="heading1">Model</div>
-                                            <div class="heading2" >{{shorttermpolicy?.VehicleModelDesc}}</div>
-                                        </div>
-                                    </div>
-                                        <div class="row mt-2">
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Chassis Number</div>
-                                                <div class="heading2">{{shorttermpolicy?.Chassisnumber}}</div>
-                                            </div>
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Engine Number</div>
-                                                <div class="heading2">{{shorttermpolicy?.EngineNumber}}</div>
-                                            </div>
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Engine Capacity</div>
-                                                <div class="heading2" >{{shorttermpolicy?.EngineCapacity}}</div>
-                                            </div>
-                                    </div>
-                                   
-                                </div>
-                             </div>
-                        </div>
-                            
-                        <div class="line-in-middle"></div>
-                        <div class="col-12 col-md-5">
-                                    <div>
-                                        <div class="Personal Details">
-                                            <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral" class="mt-2">Additional Information</h1></div>
-                                           </div>
-                                           <div class="row mt-2">
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Seating Capacity</div>
-                                                <div class="heading2">{{shorttermpolicy?.SeatingCapacity}}</div>
-                                            </div>
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Manufacture Year</div>
-                                                <div class="heading2">{{shorttermpolicy?.ManufactureYear}}</div>
-                                            </div>
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Fuel Used</div>
-                                                <div class="heading2">{{shorttermpolicy?.FuelTypeDesc}}</div>
-                                            </div>
-                                            <div class="col-6 col-md-4 mt-2">
-                                                <div class="heading1">Vehicle Color</div>
-                                                <div class="heading2">{{shorttermpolicy?.ColorDesc}}</div>
-                                            </div>
-                                           
-                                        </div>
-                                    </div>
-                                </div>
-                           
-                    </div>
-                   </ng-container>
+                
                 </div>
+            </mat-tab>
+
+
+            <mat-tab label="Risk Details" *ngIf="productId != '4' && productId!='5' && productId!='46">
+                <div class="card">
+                       <ng-container *ngIf="productId != '4' && productId!='5'">
+                        <div>
+                            <div class="card-body p-5">
+                                <div class="row mt-2">
+                                    <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-2" *ngIf="contentriskview!=null">
+                                        <div class="ant-card" style="height:90%;">
+                                            <div class="author">ContentRisk</div>
+                                               <div class="ant-card-body">
+                                                <div class="row mt-1" *ngIf="contentriskview?.ContentSumInsured!=null && contentriskview?.ContentSumInsured!=0">
+                                                    <div class="col-6 ant-padding ant-heading">Content Risk</div>
+                                                    <div class="col-6 heading0">{{contentriskview?.ContentSumInsured | commaseparator}}</div>
+                                                </div>
+                                               </div>
+                                        </div>
+    
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-2" *ngIf="AllRiskView!=null">
+                                        <div class="ant-card" style="width:100%;height:90%;">
+                                            <div class="author">All Risk</div>
+                                               <div class="ant-card-body">
+                                                <div class="row mt-1" *ngIf="AllRiskView?.AllRiskSumInsured!=null && AllRiskView?.AllRiskSumInsured!=0">
+                                                    <div class="col-6 ant-padding ant-heading">All Risk</div>
+                                                    <div class="col-6 heading0">{{AllRiskView?.AllRiskSumInsured | commaseparator}}</div>
+                                                </div>
+                                               </div>
+                                        </div>
+    
+                                    </div>
+
+                                    <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-2" *ngIf="FirePerilsRiskView!=null">
+                                        <div class="ant-card" style="width:100%;height:90%;">
+                                            <div class="author">Fire Perils Risk</div>
+                                               <div class="ant-card-body">
+                                                <div class="row mt-1" *ngIf="FirePerilsRiskView?.BuildingSumInsured!=0 && FirePerilsRiskView?.BuildingSumInsured!=null">
+                                                    <div class="col-6 ant-padding ant-heading">Building</div>
+                                                    <div class="col-6 heading0">{{FirePerilsRiskView?.BuildingSumInsured | commaseparator}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="FirePerilsRiskView?.IndemityPeriod!=0 && FirePerilsRiskView?.IndemityPeriod!=null">
+                                                    <div class="col-6 ant-padding ant-heading">IndemityPeriod</div>
+                                                    <div class="col-6 heading0">{{FirePerilsRiskView?.IndemityPeriod | commaseparator}}</div>
+                                                </div>
+                                                <div class="row mt-1">
+                                                    <div class="col-6 ant-padding ant-heading">Makuti Yn</div>
+                                                    <div class="col-6 heading0">{{FirePerilsRiskView?.MakutiYn}}</div>
+                                                </div>
+                                               </div>
+                                        </div>
+    
+                                    </div>
+
+                                    <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-2" *ngIf="MachineryBreakDownRiskView!=null">
+                                        <div class="ant-card" style="width:100%;height:90%;">
+                                            <div class="author" style="left:25% !important;">Machinery BreakDown Risk</div>
+                                               <div class="ant-card-body">
+                                                <div class="row mt-1" *ngIf="MachineryBreakDownRiskView?.PowerPlantSi!=0 && MachineryBreakDownRiskView?.PowerPlantSi!=null">
+                                                    <div class="col-6 ant-padding ant-heading">Power Plant</div>
+                                                    <div class="col-6 heading0">{{MachineryBreakDownRiskView?.PowerPlantSi | commaseparator}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="MachineryBreakDownRiskView?.ElecMachinesSi!=0 && MachineryBreakDownRiskView?.ElecMachinesSi!=null">
+                                                    <div class="col-6 ant-padding ant-heading">Elec Machines</div>
+                                                    <div class="col-6 heading0">{{MachineryBreakDownRiskView?.ElecMachinesSi | commaseparator}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="MachineryBreakDownRiskView?.EquipmentSi!=0 && MachineryBreakDownRiskView?.EquipmentSi!=null">
+                                                    <div class="col-6 ant-padding ant-heading">Equipment</div>
+                                                    <div class="col-6 heading0">{{MachineryBreakDownRiskView?.EquipmentSi | commaseparator}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="MachineryBreakDownRiskView?.GeneralMachineSi!=0 && MachineryBreakDownRiskView?.GeneralMachineSi!=null">
+                                                    <div class="col-6 ant-padding ant-heading">General Machine</div>
+                                                    <div class="col-6 heading0">{{MachineryBreakDownRiskView?.GeneralMachineSi | commaseparator}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="MachineryBreakDownRiskView?.ManuUnitsSi!=0 && MachineryBreakDownRiskView?.ManuUnitsSi!=null">
+                                                    <div class="col-6 ant-padding ant-heading">Manu Units</div>
+                                                    <div class="col-6 heading0">{{MachineryBreakDownRiskView?.ManuUnitsSi | commaseparator}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="MachineryBreakDownRiskView?.BoilerPlantsSi!=0 && MachineryBreakDownRiskView?.BoilerPlantsSi!=null">
+                                                    <div class="col-6 ant-padding ant-heading">Boiler Plants</div>
+                                                    <div class="col-6 heading0">{{MachineryBreakDownRiskView?.EquipmentSi | commaseparator}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="MachineryBreakDownRiskView?.MachineEquipSi!=0 && MachineryBreakDownRiskView?.MachineEquipSi!=null">
+                                                    <div class="col-6 ant-padding ant-heading">Machine Equip</div>
+                                                    <div class="col-6 heading0">{{MachineryBreakDownRiskView?.MachineEquipSi | commaseparator}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="MachineryBreakDownRiskView?.MachinerySi!=0 && MachineryBreakDownRiskView?.MachinerySi!=null">
+                                                    <div class="col-6 ant-padding ant-heading">Machinery</div>
+                                                    <div class="col-6 heading0">{{MachineryBreakDownRiskView?.MachinerySi | commaseparator}}</div>
+                                                </div>
+                                               </div>
+                                        </div>
+    
+                                    </div>
+
+
+                                    <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-2" *ngIf="MoneyRiskView!=null">
+                                        <div class="ant-card" style="height:90%;">
+                                            <div class="author">Money Risk</div>
+                                               <div class="ant-card-body">
+                                                <div class="row mt-1" *ngIf="MoneyRiskView?.MoneyCollector!=0 && MoneyRiskView?.MoneyCollector!=null">
+                                                    <div class="col-6 ant-padding ant-heading">Collector</div>
+                                                    <div class="col-6 heading0">{{MoneyRiskView?.MoneyCollector | commaseparator}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="MoneyRiskView?.MoneyAnnualEstimate!=0 && MoneyRiskView?.MoneyAnnualEstimate!=null">
+                                                    <div class="col-6 ant-padding ant-heading">Annual Estimate</div>
+                                                    <div class="col-6 heading0">{{MoneyRiskView?.MoneyAnnualEstimate| commaseparator}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="MoneyRiskView?.MoneyDirectorResidence!=0 && MoneyRiskView?.MoneyDirectorResidence!=null">
+                                                    <div class="col-6 ant-padding ant-heading">Director Residence</div>
+                                                    <div class="col-6 heading0">{{MoneyRiskView?.MoneyDirectorResidence| commaseparator}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="MoneyRiskView?.MoneySafeLimit!=0 && MoneyRiskView?.MoneySafeLimit!=null">
+                                                    <div class="col-6 ant-padding ant-heading">Safe Limit</div>
+                                                    <div class="col-6 heading0">{{MoneyRiskView?.MoneySafeLimit| commaseparator}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="MoneyRiskView?.MoneyMajorLoss!=0 && MoneyRiskView?.MoneyMajorLoss!=null">
+                                                    <div class="col-6 ant-padding ant-heading">Major Loss</div>
+                                                    <div class="col-6 heading0">{{MoneyRiskView?.MoneyMajorLoss| commaseparator}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="MoneyRiskView?.MoneyMajorLoss!=0 && MoneyRiskView?.MoneyMajorLoss!=null">
+                                                    <div class="col-6 ant-padding ant-heading">Out of Safe</div>
+                                                    <div class="col-6 heading0">{{MoneyRiskView?.MoneyOutofSafe| commaseparator}}</div>
+                                                </div>
+                                               </div>
+                                        </div>
+    
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-2" *ngIf="GoodsInTransitRiskView!=null">
+                                        <div class="ant-card" style="height:90%;">
+                                            <div class="author">Goods In Transit</div>
+                                               <div class="ant-card-body">
+                                                <div class="row mt-1" *ngIf="GoodsInTransitRiskView?.TransportedBy!=null">
+                                                    <div class="col-6 ant-padding ant-heading">Transported By</div>
+                                                    <div class="col-6 heading0">{{GoodsInTransitRiskView?.TransportedBy}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="GoodsInTransitRiskView?.ModeOfTransport!=null">
+                                                    <div class="col-6 ant-padding ant-heading">Mode Of Transport</div>
+                                                    <div class="col-6 heading0">{{GoodsInTransitRiskView?.ModeOfTransport}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="GoodsInTransitRiskView?.GeographicalCoverage!=null">
+                                                    <div class="col-6 ant-padding ant-heading">Geographical Coverage</div>
+                                                    <div class="col-6 heading0">{{GoodsInTransitRiskView?.GeographicalCoverage}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="GoodsInTransitRiskView?.SingleRoadSiFc!=null">
+                                                    <div class="col-6 ant-padding ant-heading">Single Road</div>
+                                                    <div class="col-6 heading0">{{GoodsInTransitRiskView?.SingleRoadSiFc}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="GoodsInTransitRiskView?.EstAnnualCarriesSiFc!=null">
+                                                    <div class="col-6 ant-padding ant-heading">Est Annual Carries</div>
+                                                    <div class="col-6 heading0">{{GoodsInTransitRiskView?.EstAnnualCarriesSiFc}}</div>
+                                                </div>
+                                               
+                                               </div>
+                                        </div>
+    
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-2" *ngIf="BusinessInterruptionRiskView!=null">
+                                        <div class="ant-card" style="height:90%;">
+                                            <div class="author">Business Interruption</div>
+                                               <div class="ant-card-body">
+                                                <div class="row mt-1" *ngIf="BusinessInterruptionRiskView?.GrossProfitSi!=null && BusinessInterruptionRiskView?.GrossProfitSi!=0">
+                                                    <div class="col-6 ant-padding ant-heading">Content Risk</div>
+                                                    <div class="col-6 heading0">{{BusinessInterruptionRiskView?.GrossProfitSi | commaseparator}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="BusinessInterruptionRiskView?.IndemnityPeriodSi!=null && BusinessInterruptionRiskView?.IndemnityPeriodSi!=0">
+                                                    <div class="col-6 ant-padding ant-heading">Indemnity Period</div>
+                                                    <div class="col-6 heading0">{{BusinessInterruptionRiskView?.IndemnityPeriodSi | commaseparator}}</div>
+                                                </div>
+
+                                               </div>
+                                        </div>
+    
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-2" *ngIf="PlateGlassRiskView!=null">
+                                        <div class="ant-card" style="height:90%;">
+                                            <div class="author">Plate Glass Risk</div>
+                                               <div class="ant-card-body">
+                                                <div class="row mt-1" *ngIf="PlateGlassRiskView?.PlateGlassSi!=null && PlateGlassRiskView?.PlateGlassSi!=0">
+                                                    <div class="col-6 ant-padding ant-heading">Content Risk</div>
+                                                    <div class="col-6 heading0">{{PlateGlassRiskView?.PlateGlassSi| commaseparator}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="PlateGlassRiskView?.PlateGlassType!=null && PlateGlassRiskView?.PlateGlassType!=0">
+                                                    <div class="col-6 ant-padding ant-heading">Plate GlassType</div>
+                                                    <div class="col-6 heading0">{{PlateGlassRiskView?.PlateGlassType}}</div>
+                                                </div>
+
+                                               </div>
+                                        </div>
+    
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-2" *ngIf="ElecEquipRiskView!=null">
+                                        <div class="ant-card" style="height:90%;">
+                                            <div class="author">Elec Equip</div>
+                                               <div class="ant-card-body">
+                                                <div class="row mt-1" *ngIf="ElecEquipRiskView?.ElecEquipSumInsured!=null && ElecEquipRiskView?.ElecEquipSumInsured!=0">
+                                                    <div class="col-6 ant-padding ant-heading">Elec Equip SI</div>
+                                                    <div class="col-6 heading0">{{ElecEquipRiskView?.ElecEquipSumInsured| commaseparator}}</div>
+                                                </div>
+                                               </div>
+                                        </div>
+    
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-2" *ngIf="EmpLiabilityView!=null">
+                                        <div class="ant-card" style="height:90%;">
+                                            <div class="author">Employee Liability</div>
+                                               <div class="ant-card-body">
+                                               </div>
+                                        </div>
+    
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-2" *ngIf="PersonalAccidentView!=null">
+                                        <div class="ant-card" style="height:90%;">
+                                            <div class="author">Employee Liability</div>
+                                               <div class="ant-card-body">
+                                               </div>
+                                        </div>
+    
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-2" *ngIf="BusinessRiskView!=null">
+                                        <div class="ant-card" style="height:90%;">
+                                            <div class="author">Business Risk</div>
+                                               <div class="ant-card-body">
+                                                <div class="row mt-1" *ngIf="BusinessRiskView?.AllriskSumInsured!=null && BusinessRiskView?.AllriskSumInsured!=0">
+                                                    <div class="col-6 ant-padding ant-heading">Elec Equip SI</div>
+                                                    <div class="col-6 heading0">{{BusinessRiskView?.AllriskSumInsured| commaseparator}}</div>
+                                                </div>
+                                               </div>
+                                        </div>
+    
+                                    </div>
+                                    <div class="col-12 col-md-8 col-lg-8 col-xl-8 mt-2" *ngIf="BurglaryRiskView!=null && insuranceId!='100002'">
+                                        <div class="ant-card" style="height:90%;">
+                                            <div class="author" style="left:30% !important;">Burglary</div>
+                                               <div class="ant-card-body row">
+                                                <div class="col-3 mt-1" *ngIf="BurglaryRiskView?.NatureOfTradeId!=null && BurglaryRiskView?.NatureOfTradeId!=0">
+                                                    <div class="ant-heading">Nature Of TradeId</div>
+                                                    <div class="heading0">{{BurglaryRiskView?.NatureOfTradeId}}</div>
+                                                </div>
+                                                <div class="col-3 mt-1" *ngIf="BurglaryRiskView?.InsuranceForId!=null && BurglaryRiskView?.InsuranceForId!=0">
+                                                    <div class="ant-heading">Insurance For</div>
+                                                    <div class="heading0">{{BurglaryRiskView?.InsuranceForId}}</div>
+                                                </div>
+                                                <div class="col-3 mt-1" *ngIf="BurglaryRiskView?.InternalWallType!=null && BurglaryRiskView?.InternalWallType!=0">
+                                                    <div class="ant-heading">Internal WallType</div>
+                                                    <div class="heading0">{{BurglaryRiskView?.InternalWallType}}</div>
+                                                </div>
+                                                <div class="col-3 mt-1" *ngIf="BurglaryRiskView?.OccupiedYear!=null && BurglaryRiskView?.OccupiedYear!=0">
+                                                    <div class="ant-heading">Occupation Year</div>
+                                                    <div class="heading0">{{BurglaryRiskView?.OccupiedYear}}</div>
+                                                </div>
+                                                <div class="col-6 mt-1" *ngIf="BurglaryRiskView?.BuildingBuildYear!=null && BurglaryRiskView?.BuildingBuildYear!=0">
+                                                    <div class="ant-padding ant-heading">Building Year</div>
+                                                    <div class="heading0">{{BurglaryRiskView?.BuildingBuildYear}}</div>
+                                                </div>
+                                                <div class="col-6 mt-1" *ngIf="BurglaryRiskView?.RoofType!=null && BurglaryRiskView?.RoofType!=0">
+                                                    <div class="ant-padding ant-heading">Roof Type</div>
+                                                    <div class="heading0">{{BurglaryRiskView?.RoofType}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="BurglaryRiskView?.WallType!=null && BurglaryRiskView?.WallType!=0">
+                                                    <div class="col-6 ant-padding ant-heading">Wall Type</div>
+                                                    <div class="col-6 heading0">{{BurglaryRiskView?.WallType}}</div>
+                                                </div>
+                                               </div>
+                                        </div>
+    
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-2" *ngIf="BurglaryRiskView!=null && insuranceId=='100002'">
+                                        <div class="ant-card" style="height:90%;">
+                                            <div class="author">Burglary</div>
+                                               <div class="ant-card-body">
+                                                <div class="row mt-1" *ngIf="BurglaryRiskView?.BurglarySi!=null && BurglaryRiskView?.BurglarySi!=0">
+                                                    <div class="col-6 ant-padding ant-heading">Burglary</div>
+                                                    <div class="col-6 heading0">{{BurglaryRiskView?.BurglarySi}}</div>
+                                                </div>
+                                               </div>
+                                        </div>
+    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       </ng-container>
+                    </div>
+            </mat-tab>
+
+
+            <mat-tab label="Vehicle Info" *ngIf="productId == '5' && productId=='46'">
+                <div class="card">
+                <div class="container">
+                    <div class="row p-5 ml-4 mr-4" *ngFor="let pay of RopVechileDetails"><!--d-flex justify-content-between p-5 ml-4 mr-4-->
+                        <div class="col-12 col-md-6 col-lg-6">
+                            <div>
+                                <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">Vehicle Information</h1></div>
+                                <div class="Personal Details mt-2 pl-5 pr-5">
+                                    <div class="row mt-2">
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                            <div class="heading1">Registration No</div>
+                                            <div class="heading2">{{pay?.RegistrationNo}}</div>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                            <div class="heading1">Chassis Number</div>
+                                            <div class="heading2">{{pay?.ChassisNumber}}&nbsp;</div>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                            <div class="heading1">Make</div>
+                                            <div class="heading2">{{pay?.Make}}&nbsp;</div>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                            <div class="heading1">Model</div>
+                                            <div class="heading2">{{pay?.Model}}&nbsp;</div>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                            <div class="heading1">Engine Number</div>
+                                            <div class="heading2">{{pay?.EngineNumber}}</div>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-4 mt-2">
+                                            <div class="heading1">Vehicle Type</div>
+                                            <div class="heading2">{{pay?.VehicleType}}</div>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                            <div class="heading1">Motor Desc</div>
+                                            <div class="heading2">{{pay?.MotorDesc}}</div>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                            <div class="heading1">Motor Category</div>
+                                            <div class="heading2">{{pay?.MotorCategory}}</div>
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                            <div class="heading1">Policy Type</div>
+                                            <div class="heading2">{{pay?.PolicyType}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+                            
+                        <div class="line-in-middle"></div>
+                        <div class="col-12 col-md-5 col-lg-5">
+                            <div>
+                                <div><h1 style="font-weight:500!important;font-size:16px!important;color:lightcoral">Aditional Info</h1></div>
+
+                                <div class="mt-2">
+                                    <div>
+                                        <ng-container>
+                                            <div class="row">
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Fuel Type</div>
+                                                <div class="heading2">{{pay?.FuelType}}</div>
+                                             </div>
+                                             <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Vehicle Usage</div>
+                                                <div class="heading2">{{pay?.VehicleUsage}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Color</div>
+                                                <div class="heading2">{{pay?.Color}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Manufacture Year</div>
+                                                <div class="heading2">{{pay?.YearOfManufacture}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Seating Capacity</div>
+                                                <div class="heading2">{{pay?.SeatingCapacity}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Gross Weight</div>
+                                                <div class="heading2">{{pay?.GrossWeight}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Tare Weight</div>
+                                                <div class="heading2">{{pay?.TareWeight}}</div>
+                                            </div>
+                                            <div class="col-6 col-md-6 col-lg-4 mt-2">
+                                                <div class="heading1">Sum Insured</div>
+                                                <div class="heading2">{{pay?.SumInsured | commaseparator}}</div>
+                                            </div>
+                                        </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                           
+                                </div>
+                                </div>
+                            
+                           
+                    </div>
+                </div>
+            </div>
             </mat-tab>
          
             <mat-tab label="Payment">

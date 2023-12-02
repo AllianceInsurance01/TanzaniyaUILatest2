@@ -608,3 +608,66 @@ font-family: 'Inter', sans-serif !important;
   tr{
       padding: 8px !important;
   }
+  .ant-card{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: rgba(0,0,0,.85);
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+    font-feature-settings: "tnum","tnum";
+    position: relative;
+    background: #fff !important;
+    border-radius: 10px;
+    border: 2px solid #f0f0f0 !important;
+
+  }
+  .ant-card-body {
+    padding:18px !important;
+    //padding: 24px;
+}
+.ant-padding{
+  padding-left:15% !important;
+}
+.ant-heading{
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    color: rgba(0,0,0,.85);
+    font-weight: 500;
+    font-family:'Times New Roman', Times, serif !important;
+}
+.dJdFwe {
+  font-size: 1.2rem;
+  font-weight: 200;
+  color: grey;
+  font-family: 'Inter' !important;
+}
+.boxsss {
+  margin:auto;
+  margin-top:10px;
+}
+.headersss {
+  text-align:center !important;
+  background-color: #f3f1e4e6 !important;
+}
+.author{
+  font-size: .8rem;
+  position: absolute;
+  background-color: #f3f1e4e6;
+  border-top: 2px solid #554F27;
+  color: #554f27;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: -1rem 0 0 auto;
+  padding: 0.25rem 1rem;
+  left: 30% !important;
+}
+.heading0{
+  //font-weight:400!important;
+  font-size:14px !important;
+  font-weight: 500 !important;
+  color:gray !important;
+  font-family:'Times New Roman', Times, serif !important;
+}
