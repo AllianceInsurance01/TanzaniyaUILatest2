@@ -330,7 +330,7 @@ export class MotorDocumentsComponent implements OnInit {
             //this.onRisk();
             this.getDriverDetails();
             this.getAccessories();
-            this.VechileTira();
+            
             // this.getBorrowerList();
            }
            if(this.productId =='4' && this.ReferenceNo){
@@ -355,6 +355,9 @@ export class MotorDocumentsComponent implements OnInit {
 
            if(this.productId =='46'){
             this.getmotordetails();
+           }
+           if(this.productId=='5' || this.productId=='46'){
+            this.VechileTira();
            }
            if(this.quoteNo){
             if(this.productId=='14' || this.productId=='32'){
