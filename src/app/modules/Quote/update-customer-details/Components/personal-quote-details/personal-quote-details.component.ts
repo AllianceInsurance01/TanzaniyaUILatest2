@@ -1636,9 +1636,7 @@ export class PersonalQuoteDetailsComponent implements OnInit {
           console.log("Goods Fields",this.fields);
           this.getTransportList();
           this.getgeographicalLimit();
-          this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].props.options = this.transaportList;
-          
-          
+          this.getTransportedByList();
           }
       if(this.requestReferenceNo){
            this.sectionCount = 0;
@@ -2350,6 +2348,31 @@ getPersonalLiabilityDetails(sections){
     },
     (err) => { },
   );
+}
+getTransportedByList(){
+  let ReqObj = {
+    "InsuranceId": this.insuranceId,
+    "BranchCode": this.branchCode,
+    "ProductId": this.productId
+  }
+  let urlLink = `${this.CommonApiUrl}dropdown/modeoftransport`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      if (data.Result) {
+        let defaultObj = [{ 'label': '-Select-', 'value': '' }]
+        this.transaportList = data.Result;
+        if (this.transaportList.length != 0) {
+          for (let i = 0; i < this.transaportList.length; i++) {
+            this.transaportList[i].label = this.transaportList[i]['CodeDesc'];
+            this.transaportList[i].value = this.transaportList[i]['Code'];
+            delete this.transaportList[i].CodeDesc;
+            if (i == this.transaportList.length - 1) {
+              this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].props.options = defaultObj.concat(this.transaportList);
+            }
+          }
+        }
+      }
+    });
 }
 getTransportList(){
   let ReqObj = {
