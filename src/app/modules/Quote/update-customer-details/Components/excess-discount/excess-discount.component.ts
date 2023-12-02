@@ -3099,7 +3099,7 @@ getMotorUsageList(vehicleValue){
         this.EmiInstallment();
         }
         }
-        else{
+        else if(!this.endorsementSection) {
           this.emiYN = "N";
           this.EmiInstallment();
         }
