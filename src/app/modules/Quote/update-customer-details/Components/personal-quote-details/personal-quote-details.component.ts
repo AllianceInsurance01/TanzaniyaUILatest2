@@ -1986,6 +1986,7 @@ getElectronicEquipment(sections){
       if (data.Result) {
         let details = data?.Result;
         this.productItem.ElectronicEquipSuminsured = details?.MiningPlantSi;
+        if(this.productId=='19') this.productItem.ElectronicEquipSuminsured = details?.ElecEquipSuminsured;
         this.sectionCount +=1;
         if(sections.length==this.sectionCount){
           this.formSection = true; this.viewSection = false;
