@@ -1,4 +1,10 @@
-<div class="example-container">
+<div class="example-container mt-2 mb-2">
+    <div class="d-flex justify-content-between mb-2" *ngIf="coverSection">
+        <div></div>
+            <div>
+                <button class="btn btn-warning" (click)="onAddSubCover()"><i class="fas fa-plus"></i>&nbsp;Create SubCover</button>
+            </div>
+    </div>
     <table class="inner-table" mat-table [dataSource]="dataSource" matSort [matSortActive]="sortProperty" [matSortDirection]="sortDirection" matSortDisableClear>
         <ng-container *ngFor="let col of columnHeader; let i = index;" [matColumnDef]="col.key" [sticky]="col.sticky" [stickyEnd]="col.sticky">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="table-header mat-header-cell" style="background: #0d6efd!important;">
@@ -19,6 +25,16 @@
                         <button class="btn btn-primary btn-sm" (click)="onEdit.emit(element)">
                             <i class="fas fa-marker"></i>
                         </button>
+                    </ng-container>
+                    <ng-container *ngIf="col.config.isSubCoverEdit">
+                        <button class="circle btn btn-primary btn-sm" (click)="onSubCoverEdit.emit(element)">
+                            <i class="fas fa-marker"></i>
+                        </button>&nbsp;
+                    </ng-container>
+                    <ng-container *ngIf="col.config.isDelete">
+                        <button class="circle btn btn-danger btn-sm" (click)="onDeleteSubCoverRow.emit(element)">
+                            <i class="fas fa-trash"></i>
+                        </button>&nbsp;
                     </ng-container>
                     <ng-container *ngIf="col.config.isSchedule">
                         <button class="btn btn-primary btn-sm">
@@ -121,6 +137,16 @@
                         <button class="btn btn-primary btn-sm" (click)="onEdit.emit(element)">
                             <i class="fas fa-marker"></i>
                         </button>
+                    </ng-container>
+                    <ng-container *ngIf="col.config.isSubCoverEdit">
+                        <button class="circle btn btn-primary btn-sm" (click)="onEdit.emit(element)">
+                            <i class="fas fa-marker"></i>
+                        </button>&nbsp;
+                    </ng-container>
+                    <ng-container *ngIf="col.config.isDelete">
+                        <button class="circle btn btn-danger btn-sm" (click)="onDeleteSubCoverRow.emit(element)">
+                            <i class="fas fa-trash"></i>
+                        </button>&nbsp;
                     </ng-container>
                     <ng-container *ngIf="col.config.isSchedule">
                         <button class="btn btn-primary btn-sm">

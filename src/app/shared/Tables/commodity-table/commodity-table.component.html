@@ -69,6 +69,13 @@
                                 class="fa fa-download"></i></a>
                             
                          </ng-container>
+                         
+                         
+                         <ng-container *ngIf="col.config.isDelete">
+                            <button class="circle btn btn-danger btn-sm" (click)="onDeleteCoverRow.emit(element)">
+                                <i class="fas fa-trash"></i>
+                            </button>&nbsp;
+                        </ng-container>
                         <ng-container *ngIf="col.config.isReject">
                             <button class="circle btn btn-danger btn-sm" (click)="onReject.emit(element)">
                                 <i class='fa fa-times' style='color: yellow'></i>
@@ -179,7 +186,14 @@
                         <ng-container *ngIf="element.CommodityNotInResponse">
                   New
                 </ng-container>
-                <span style="font-size:13px !important;">{{col.config.isCollapseName}}</span>
+                <ng-container *ngIf="col.config.isCollapseName=='View'">
+                    <span style="font-size:13px !important;" *ngIf="selectedIndex!=j">{{col.config.isCollapseName}} &nbsp;</span>
+                    <span style="font-size:13px !important;" *ngIf="selectedIndex==j">Hide &nbsp;</span>
+                </ng-container>
+                <ng-container *ngIf="col.config.isCollapseName!='View'">
+                    <span style="font-size:13px !important;">{{col.config.isCollapseName}}</span>
+                </ng-container>
+                
                 
                 <i [ngClass]="selectedIndex!=j ?'fas fa-plus-circle':'fas fa-minus-circle'" ></i>
                 </button>
@@ -206,7 +220,7 @@
                 <td mat-cell *matCellDef="let element" [attr.colspan]="columnHeader.length">
                     <div class="example-element-detail" [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'">
                         <ng-container>
-                            <app-inner-table [cols]="innerColumnHeader" [data]="element.MotorList" (onResPath)="onResPath.emit($event)" (onReqPath)="onReqPath.emit($event)" (isActionBtn)="isActionBtn.emit($event)">
+                            <app-inner-table [cols]="innerColumnHeader"  [coverSection]="coverSection" [data]="element.MotorList" (onSubCoverEdit)="onSubCoverEdit.emit($event)" (onResPath)="onResPath.emit($event)" (onReqPath)="onReqPath.emit($event)" (isActionBtn)="isActionBtn.emit($event)">
                             </app-inner-table>
                         </ng-container>
                     </div>
@@ -428,7 +442,13 @@
                             <ng-container *ngIf="element.CommodityNotInResponse">
                                 New
                                 </ng-container>
-                                {{col.config.isCollapseName}}
+                                <ng-container *ngIf="col.config.isCollapseName=='View'">
+                                    <span style="font-size:13px !important;" *ngIf="selectedIndex!=j">{{col.config.isCollapseName}} &nbsp;</span>
+                                    <span style="font-size:13px !important;" *ngIf="selectedIndex==j">Hide &nbsp;</span>
+                                </ng-container>
+                                <ng-container *ngIf="col.config.isCollapseName!='View'">
+                                    <span style="font-size:13px !important;">{{col.config.isCollapseName}}</span>
+                                </ng-container>
                                 <i [ngClass]="selectedIndex!=i?'fas fa-plus-circle':'fas fa-minus-circle'" ></i>
                                 </button>
                             </ng-container>
@@ -454,7 +474,7 @@
                     <div [ngClass]="{'example-element-detail' : element === expandedElement, 'example-element-details': element !== expandedElement}" [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'">
                         <!--class="example-element-detail" -->
                         <ng-container>
-                            <app-inner-table [cols]="innerColumnHeader" [data]="element.MotorList" (isActionBtn)="isActionBtn.emit($event)">
+                            <app-inner-table [cols]="innerColumnHeader" [coverSection]="coverSection" [data]="element.MotorList" (isActionBtn)="isActionBtn.emit($event)">
                             </app-inner-table>
                         </ng-container>
                     </div>

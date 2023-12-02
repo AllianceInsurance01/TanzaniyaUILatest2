@@ -448,6 +448,7 @@ export class MakePayementComponent implements OnInit {
               this.policyNo = data?.Result?.PolicyNo;
               this.policySection = true;
               this.successSection = false;
+              this.loadingSection = false;
               this.updateTiraDetails();
             }
             else{

@@ -19,15 +19,17 @@ export class InnerTableComponent implements OnInit {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public proposalNo = '';
   public userDetails: any;
+  @Input('coverSection') coverSection: any=null;
   @Input('data') tableData: any[] = [];
   @Input('cols') columnHeader: any[] = [];
   @Input('filterValue') filterValue: any = '';
   @Output('onEdit') onEdit = new EventEmitter();
+  @Output('onSubCoverEdit') onSubCoverEdit = new EventEmitter();
   @Output('onOpenCoverAction') onOpenCoverAction = new EventEmitter();
   @Output('isActionBtn') isActionBtn = new EventEmitter();
   @Output('onReqPath') onReqPath = new EventEmitter();
   @Output('onResPath') onResPath = new EventEmitter();
-
+  @Output('onDeleteSubCoverRow') onDeleteSubCoverRow = new EventEmitter();
   public dataSource: any;currencyCode:any;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) private paginator!: MatPaginator;
@@ -54,7 +56,7 @@ export class InnerTableComponent implements OnInit {
         this.currencyCode = this.tableData[0].Currency;
       }
     }
-    
+    console.log("Final CoverSection",this.coverSection)
     this.dataSource = new MatTableDataSource(this.tableData);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -129,7 +131,9 @@ export class InnerTableComponent implements OnInit {
     // );
 
   }
-
+  onAddSubCover(){
+    this.onSubCoverEdit.emit(null)
+  }
   onPassData(element: any, name: any) {
     element['btnValue'] = name
     this.isActionBtn.emit(element);

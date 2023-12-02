@@ -27,7 +27,7 @@ export class CommodityTableComponent implements OnInit {
   closeResult: string;
   popupopen:boolean=false;
   minus:boolean=true;
-
+  @Input('coverSection') coverSection:any=null;
   @Input('data') tableData: any[] = [];
   @Input('cols') columnHeader: any[] = [];
   @Input("innerData") innerTableData: any = [];
@@ -64,6 +64,8 @@ export class CommodityTableComponent implements OnInit {
    @Output('onLoadPreviousData') onLoadPreviousData =new EventEmitter();
    @Output('onReqPath') onReqPath = new EventEmitter();
    @Output('onResPath') onResPath = new EventEmitter();
+   @Output('onDeleteCoverRow') onDeleteCoverRow = new EventEmitter();
+   @Output('onSubCoverEdit') onSubCoverEdit = new EventEmitter();
   public dataSource: any;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) private paginator!: MatPaginator;

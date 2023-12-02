@@ -23,8 +23,6 @@
                     <label for="menu15">Policy Type</label>
                     <input type="radio" id="menu10" name="menu" value="Emi" (click)="onRedirect('Emi')" [(ngModel)]="activeMenu">
                     <label for="menu10">EMI</label>
-                    <!-- <input type="radio" id="menu3" name="menu" value="SubCover" (click)="onRedirect('SubCover')" [(ngModel)]="activeMenu">
-                    <label for="menu3">SubCover</label> -->
                     <input type="radio" id="menu8" name="menu" value="Tax" (click)="onRedirect('Tax')" [(ngModel)]="activeMenu">
                     <label for="menu8">Tax</label>
                     <input type="radio" id="menu9" name="menu" value="Prorata" (click)="onRedirect('Prorata')" [(ngModel)]="activeMenu">
@@ -43,8 +41,6 @@
                     <label for="menu13">TinyUrl</label>
                     <input type="radio" id="menu14" name="menu" value="Premia"(click)="onRedirect('Premia')" [(ngModel)]="activeMenu">
                     <label for="menu14">Premia Configuration</label>
-                    <!--<input type="radio" id="menu16" name="menu" value="Industry"(click)="onRedirect('Industry')" [(ngModel)]="activeMenu">
-                    <label for="menu16">Industry</label>-->
                     <input type="radio" id="menu17" name="menu" value="Promo"(click)="onRedirect('Promo')" [(ngModel)]="activeMenu">
                     <label for="menu17">PromoCode</label>
                     <input type="radio" id="menu19" name="menu" value="EndorsementField"(click)="onRedirect('EndorsementField')" [(ngModel)]="activeMenu">
@@ -67,13 +63,6 @@
                     </div>
                     <div class="card-body">
                                 <div class="row">
-                                    <!-- <div class="col-md-4 col-lg-4 col-xl-4">
-                                        <div class="input-control-container">
-                                            <label class="input-form-label">Country</label>
-                                            <ng-select class="input-form-select" appendTo="body" [items]="countryList" [(ngModel)]="countryValue" (change)="getPlanTypeList()" bindValue="Code" bindLabel="CodeDesc">
-                                            </ng-select>
-                                        </div>
-                                    </div> -->
                                     <div class="col-md-4 col-lg-4 col-xl-4">
                                         <div class="input-control-container">
                                             <label class="input-form-label">Premium Plan</label>
@@ -84,13 +73,13 @@
                                     <div class="col-md-4 col-lg-4 col-xl-4">
                                         <div class="input-control-container">
                                             <label class="input-form-label">Plan Type</label>
-                                            <ng-select class="input-form-select" appendTo="body" [items]="planTypeList" [(ngModel)]="planTypeValue"  (change)="getBenefitsList()" bindValue="Code" bindLabel="CodeDesc">
+                                            <ng-select class="input-form-select" appendTo="body" [items]="planTypeList" [(ngModel)]="planTypeValue"  (change)="getBenefitsList(null,'change')" bindValue="Code" bindLabel="CodeDesc">
                                             </ng-select>
                                         </div>
                                     </div>
                                     
                                 </div>
-                                <div class="row" *ngIf="benefitsList.length!=0">
+                                <!-- <div class="row" *ngIf="benefitsList.length!=0">
                                     <div class="col-md-4 col-lg-4 col-xl-4" >
                                         <div class="input-control-container">
                                             <label class="input-form-label">Effective Date</label>
@@ -109,9 +98,25 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                        
-                                <ng-container *ngIf="benefitsList.length==0">
+                                </div> -->
+                                <ng-container *ngIf="benefitsList.length!=0">
+                                    <div class="col-md-2 col-lg-2 col-xl-2 offset-10">
+                                        <button class="btn btn-warning btn-sm" (click)="createCover(null,myModal2)">
+                                            <i class="fas fa-plus"></i>&nbsp;Create Cover
+                                        </button>
+                                    </div>
+                                    <app-commodity-table [cols]="columnHeader" [coverSection]="coverSection" [data]="benefitsList" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousData($event)" (onLoadNextData)="onNextData($event)" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onAdd)="onInnerData($event)"
+                                    (onSubCoverEdit)="onSubCoverEdit($event,myModal3)" (onDeleteCoverRow)="onDeleteCoverRow($event)">
+                                    </app-commodity-table>
+                                </ng-container>
+                                <ng-container *ngIf="benefitsList.length==0 && planTypeValue!='' && sectionValue!=''">
+                                    <div class="col-md-2 col-lg-2 col-xl-2 offset-10">
+                                        <button class="btn btn-warning btn-sm" (click)="createCover(null,myModal2)">
+                                            <i class="fas fa-plus"></i>&nbsp;Create Cover
+                                        </button>
+                                    </div>
+                                </ng-container>
+                                <!-- <ng-container *ngIf="benefitsList.length==0">
                                     <div class="row">
                                         
                                     </div>
@@ -134,10 +139,6 @@
                                                 </button>
                                             </div>
                                         </div>
-                                        
-                                        <!-- <mat-form-field class="mt-3" style="width: 40%;">
-                                            <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue" placeholder="Filter" />
-                                        </mat-form-field> -->
                                         <div class="row mt-3">
                                             <div class="col-md-12 col-lg-12 col-xl-12">
                                                 <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
@@ -169,16 +170,6 @@
                                                                             <label [for]="'orginwarehouse_No'+j" class="customLabel">DeActive</label>
                                                                         </div>
                                                                     </div>
-                                                                    <!-- <span *ngIf="element[col.key]=='Y'">Active</span>
-                                                                    <span *ngIf="element[col.key]=='RP'">Referral Pending</span>
-                                                                    <span *ngIf="element[col.key]=='RR'">Referral Rejected</span>
-                                                                    <span *ngIf="element[col.key]=='RA'">Referral Approved</span>
-                                                                    <span *ngIf="element[col.key]=='RE'">Referral ReQuote</span>
-                                                                    <span *ngIf="element[col.key]=='R'">Referral</span>
-                                                                    <span *ngIf="element[col.key]=='P'">Pending</span>
-                                                                    <span *ngIf="element[col.key]=='E'">Endorsement</span>
-                                                                    <span *ngIf="element[col.key]=='D'">Removed</span>
-                                                                    <span *ngIf="element[col.key]=='N'">DeActive</span> -->
                                                                 </ng-container>
                                                             </ng-container>
                                             
@@ -228,9 +219,6 @@
                                                                         <i class='fa fa-times' style='color: yellow'></i>
                                                                     </button>
                                                                 </ng-container>
-                                            
-                                            
-                                                                <!--need to delete-->
                                                                 <ng-container *ngIf="col.config.isMoreView">
                                                                             <button mat-icon-button (click)="onPassData(element);expandedElement = expandedElement === element ? null : element">
                                                                                     <mat-icon>keyboard_arrow_down</mat-icon> 
@@ -245,12 +233,6 @@
                                                             </button>
                                                         
                                                         </ng-container>
-                                            
-                                            
-                                            
-                                                        <!--<ng-container *ngIf="columnHeader[i]['display']=='IncludedTax'">
-                                                            {{ columnHeader[i]["display"] }} &nbsp; ({{Currency}})
-                                                        </ng-container>-->
                                             
                                                                 <ng-container *ngIf="col.config.isMoView && element.SubCovers!=null">
                                                                     <button mat-icon-button (click)="onPassData(element);expandedElement = expandedElement === element ? null : element">
@@ -420,20 +402,8 @@
                                                         </td>
                                                     </ng-container>
                                             
-                                                    <!--<ng-container matColumnDef="expandedvech">
-                                                        <td mat-cell *matCellDef="let element" [attr.colspan]="columnHeader.length">
-                                                            <div class="example-element-details" [@detailExpand]="element === expandedvech ? 'expanded' : 'collapsed'">
-                                                                <ng-container>
-                                                                <app-vechileCustomer>
-                                                                    </app-vechileCustomer>
-                                                                </ng-container>
-                                                            </div>
-                                                        </td>
-                                                    </ng-container>-->
-                                            
                                                     <tr mat-header-row *matHeaderRowDef="keys"></tr>
                                                     <tr mat-row *matRowDef="let element; columns: keys" class="example-element-row" [class.example-expanded-row]="expandedElement === element"></tr>
-                                                    <!--<tr mat-row *matRowDef="let element; columns: keys" class="example-element-row" [class.example-expanded-row]="expandedvech === element"></tr>-->
                                                     <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
                                                 </table>
                                                 <table width="100%">
@@ -445,10 +415,9 @@
                                                 </table>
                                             </div>
                                         </div>
-                                         <!--Reject My Model Popup-->
                                     
                                     </div>
-                                    <div class="example-containers mat-elevation-z8"><!--style="overflow-y: scroll;"-->
+                                    <div class="example-containers mat-elevation-z8">
                                         <div class="input-form-box" id="gridstyle" >
                                             <input type="text" class="input-form-control with-icon" (keyup)="applyFilter($event.target.value)" placeholder="Filter">
                                             <span class="input-form-icon">
@@ -591,10 +560,7 @@
                                                   <ng-container matColumnDef="expandedDetail">
                                                     <mat-cell *matCellDef="let element" [attr.colspan]="columnHeader.length">
                                                         <div [ngClass]="{'example-element-detail' : element === expandedElement, 'example-element-details': element !== expandedElement}" [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'">
-                                                            <!--class="example-element-detail" -->
-                                                            <ng-container>
-                                                                <!-- <app-inner-table [cols]="innerColumnHeader" [data]="element.MotorList" (isActionBtn)="isActionBtn.emit($event)">
-                                                                </app-inner-table> -->
+                                                           <ng-container>
                                                             </ng-container>
                                                         </div>
                                                     </mat-cell>
@@ -614,20 +580,208 @@
                                        
                                       </div>
                                     
-                                </ng-container>
-                                <ng-container *ngIf="benefitsList.length==0">
+                                </ng-container> -->
+                                <ng-container *ngIf="benefitsList.length==0 && planTypeValue!='' && sectionValue!=''">
                                         <div class="text-center">
                                             No Data Available
                                         </div>
                                 </ng-container>
-                            <mat-paginator [hidden]="benefitsList.length==0" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Select page of periodic elements">
-                            </mat-paginator>
-                        <div class="d-flex justify-content-center" *ngIf="benefitsList.length!=0">
+                            <!-- <mat-paginator [hidden]="benefitsList.length==0" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons aria-label="Select page of periodic elements">
+                            </mat-paginator> -->
+                        <!-- <div class="d-flex justify-content-center" *ngIf="benefitsList.length!=0">
                             <button class="btn btn-primary ml-2" (click)="onSaveCoverDetails()">Submit</button> 
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<ng-template #myModal2 let-modal>
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              Cover Details
+              <button type="button" class="close btn btn-secondary" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-xl-12 col-12">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Cover Name</label>
+                                <div class="input-form-box">
+                                    <textarea cols="60" ros="3" maclength="300" class="input-form-select" [(ngModel)]="coverName" placeholder="Enter Your Cover Name"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col-md-12 col-lg-12 col-xl-12 col-12">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Currency</label>
+                                <div class="input-form-box">
+                                    <input type="text" class="input-form-control without-icon" maxlength="50" [(ngModel)]="currencyValue" placeholder="Enter Your Currency Type">
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="row">
+                        <div class="col-md-7 col-lg-7 col-xl-7 col-7">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Effective Date</label>
+                                <mat-form-field appearance="fill">
+                                    <input matInput [matDatepicker]="picker1" [min]="minDate" [(ngModel)]="coverEffectiveDate">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7 col-lg-7 col-xl-7" >
+                            <div class="input-control-container">
+                                <label class="input-form-label">Remarks</label>
+                                <div class="input-form-box">
+                                    <textarea cols="60" ros="3" class="input-form-select" [(ngModel)]="Remarks"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-xl-12 col-12">
+                            <div class="input-control-container">
+                                <label class="input-form-label">Status</label>
+                                <div class="input-form-radio-box">
+                                    <div class="radio-toolbar" style="width: 300px;">
+                                        <input [id]="'orginwarehouse_Yes'" type="radio" [name]="'originatingWarehouse'" [(ngModel)]="statusValue" value="Y">
+                                        <label [for]="'orginwarehouse_Yes'" class="customLabel">Active</label>
+                                        <input type="radio" [id]="'orginwarehouse_No'" [name]="'originatingWarehouse'" [(ngModel)]="statusValue" value="N">
+                                        <label [for]="'orginwarehouse_No'" class="customLabel">DeActive</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <div class="text-center">
+                    <button class="btn btn-danger" (click)="modal.dismiss('Cross click')">Cancel</button>&nbsp;
+                    <button class="btn btn-success" (click)="onSaveCoverAltDetails(myModal2)">Submit</button>
+                </div>
+            </div>
+          </div>
+        </div>
+</ng-template>
+<ng-template #myModal3 let-modal>
+    <div class="modal-dialog2" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          SubCover Details
+          <button type="button" class="close btn btn-secondary" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-xl-12 col-12">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Cover Name</label>&nbsp;:&nbsp;<span style="font-size:14px !important">{{coverName}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-xl-12 col-12">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Sub Cover Description</label>
+                            <div class="input-form-box">
+                                <textarea cols="60" ros="3" maclength="300" class="input-form-select" [(ngModel)]="subCoverName" placeholder="Enter Your SubCover Description"></textarea>
+                            </div>
+                            <div class="input-form-error" *ngIf="subCoverNameError">
+                                <div class="error-text  text-danger">
+                                    <span class="spancommon span_font_size">Please Enter SubCover Desription</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-xl-12 col-12">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Currency</label>
+                            <div class="input-form-box">
+                                <input type="text" class="input-form-control without-icon" maxlength="50" [(ngModel)]="currencyValue" placeholder="Enter Your Currency Type">
+                            </div>
+                            <div class="input-form-error" *ngIf="currencyError">
+                                <div class="error-text  text-danger">
+                                    <span class="spancommon span_font_size">Please Enter Currency</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-xl-12 col-12">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Excess Amount</label>
+                            <div class="input-form-box">
+                                <input type="text" class="input-form-control without-icon" maxlength="50" [(ngModel)]="excessValue" placeholder="Enter Your Excess Amount">
+                            </div>
+                            <div class="input-form-error" *ngIf="excessError">
+                                <div class="error-text  text-danger">
+                                    <span class="spancommon span_font_size">Please Enter Excess Amount</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-xl-12 col-12">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Excess Limits</label>
+                            <div class="input-form-box">
+                                <input type="text" class="input-form-control without-icon" maxlength="150" [(ngModel)]="excessLimits" placeholder="Enter Your Excess Limits">
+                            </div>
+                            <div class="input-form-error" *ngIf="excessError">
+                                <div class="error-text  text-danger">
+                                    <span class="spancommon span_font_size">Please Enter Excess Limits</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-md-12 col-lg-12 col-xl-12 col-12">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Effective Date</label>
+                            <mat-form-field appearance="fill">
+                                <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="coverEffectiveDate">
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-xl-12 col-12">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Status</label>
+                            <div class="input-form-radio-box">
+                                <div class="radio-toolbar" style="width: 300px;">
+                                    <input [id]="'orginwarehouse_Yes'" type="radio" [name]="'originatingWarehouse'" [(ngModel)]="statusValue" value="Y">
+                                    <label [for]="'orginwarehouse_Yes'" class="customLabel">Active</label>
+                                    <input type="radio" [id]="'orginwarehouse_No'" [name]="'originatingWarehouse'" [(ngModel)]="statusValue" value="N">
+                                    <label [for]="'orginwarehouse_No'" class="customLabel">DeActive</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="modal-footer">
+            <div class="text-center">
+                <button class="btn btn-danger" (click)="modal.dismiss('Cross click')">Cancel</button>&nbsp;
+                <button class="btn btn-success" (click)="onSaveSubCoverDetails(modal)">Submit</button>
+            </div>
+        </div>
+      </div>
+    </div>
+</ng-template>
+  

@@ -24,7 +24,7 @@ import Swal from 'sweetalert2';
 export class PlanTypeBenefitsListComponent {
   insuranceName: any=null;
   insuranceId: any=null;
-  productId: any=null;
+  productId: any=null;coverSection:boolean=true;
   loginId: any=null;countryList:any[]=[];planTypeList:any[]=[];
   public activeMenu:any='PlanType';planTypeValue:any=null;
   sectionList:any[]=[];sectionValue:any=null;countryValue:any=null;
@@ -32,10 +32,10 @@ export class PlanTypeBenefitsListComponent {
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl:any= this.AppConfig.CommonApiUrl;
   public motorApiUrl: any = this.AppConfig.MotorApiUrl;
-  benefitsList: any[]=[];
-  columnHeader: any[]=[];
-  innerColumnHeader: any[]=[];
-  dataSource: any;
+  benefitsList: any[]=[];coverName:any=null;excessLimits:any=null;
+  columnHeader: any[]=[];currencyValue:any=null;excessValue:any='0';
+  innerColumnHeader: any[]=[];coverEffectiveDate:any=null
+  dataSource: any;statusValue:any='Y';
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) private paginator!: MatPaginator;
   @ViewChild(MatSort) sort2!: MatSort;
@@ -53,6 +53,22 @@ export class PlanTypeBenefitsListComponent {
   minDate: Date;EffectiveDateStart:any;
   policyTypeDesc: any;
   planTypeDesc: any;
+  totalQuoteRecords: number;
+  pageCount: number;
+  quotePageNo: number;
+  startIndex: any;
+  endIndex: any;
+  limit: any=0;
+  innerTableData: any[]=[];
+  selectedCoverId: any=null;
+  selectedSubCoverId: any=null;
+  subCoverName: any=null;
+  subCoverStatus: any='Y';
+  subCoverNameError: boolean;
+  currencyError: boolean;
+  excessError: boolean;
+  limitsError: boolean;
+  coverStatusValue: any;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,private modalService: NgbModal,) {
     this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
     this.insuranceId = sessionStorage.getItem('insuranceConfigureId');
@@ -91,26 +107,29 @@ export class PlanTypeBenefitsListComponent {
   
   ngOnInit(){
     this.columnHeader =  [
-      {
-        key: 'edit',
-        display: 'SubCovers',
-        sticky: false,
-        config: {
-          isCollapse: true,
-          isCollapseName:''
-        },
-      },
+      
       { key: 'CoverDesc', display: 'Cover Name' },
+      { key: 'EffectiveDate',display: 'Effective Date' },
       {
         key: 'CoverStatus',
         display: 'Status',
         
       },
       {
+        key: 'edit',
+        display: 'SubCovers',
+        sticky: false,
+        config: {
+          isCollapse: true,
+          isCollapseName:'View'
+        },
+      },
+      {
         key: 'add',
         display: 'Action',
         config: {
-          isDelete: true
+          isEdit:true,
+          //isDelete: true
         }
       },
     ];
@@ -129,17 +148,41 @@ export class PlanTypeBenefitsListComponent {
         key: 'add',
         display: 'Action',
         config: {
-          isDelete: true
+          isSubCoverEdit:true,
+         // isDelete: true,
         }
       },
 
     ];
   }
-  onDeleteCoverRow(index){
-    this.benefitsList.splice(index,1);
-    this.dataSource = new MatTableDataSource(this.benefitsList);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
+  onDeleteCoverRow(rowData){
+    // this.benefitsList.splice(index,1);
+    // this.dataSource = new MatTableDataSource(this.benefitsList);
+    //   this.dataSource.sort = this.sort;
+    //   this.dataSource.paginator = this.paginator;
+  }
+  onSubCoverEdit(rowData,modal){
+    this.subCoverNameError = false;this.currencyError=false;this.excessError = false;this.limitsError = false;
+      if(this.selectedCoverId!=null){
+          if(rowData==null){
+            this.selectedSubCoverId = null;
+            this.subCoverName = rowData?.SubCoverDesc;
+            this.excessValue = rowData?.ExcessAmt;
+            this.excessLimits = rowData?.SumInsured;
+            this.subCoverStatus = rowData?.Status;
+            this.currencyValue = rowData?.Currency;
+          }
+          else{
+            this.selectedSubCoverId = rowData?.SubCoverId;
+            this.subCoverName = rowData?.SubCoverDesc;
+            this.excessValue = rowData?.ExcessAmt;
+            this.excessLimits = rowData?.SumInsured;
+            this.subCoverStatus = rowData?.Status;
+            this.currencyValue = rowData?.Currency;
+          }
+          this.open(modal)
+      }
+      
   }
   onDeleteSubCoverRow(coverIndex,subCoverIndex){
     let subCoverDetails = this.benefitsList[this.selectedIndex].SubCoverDetails;
@@ -147,6 +190,55 @@ export class PlanTypeBenefitsListComponent {
     this.dataSource2 = new MatTableDataSource(subCoverDetails);
     this.dataSource2.sort = this.sort;
     this.dataSource2.paginator = this.paginator;
+  }
+  onSaveSubCoverDetails(modal){
+    let effectiveDate = null;
+    this.subCoverNameError = false;this.currencyError=false;this.excessError = false;this.limitsError = false;
+    if(this.subCoverName==null || this.subCoverName=='') this.subCoverNameError = true;
+    if(this.currencyValue==null || this.currencyValue=='') this.currencyError = true;
+    if(this.excessValue==null || this.excessValue=='') this.excessError = true;
+    if(this.excessLimits==null || this.excessLimits=='') this.limitsError = true;
+    if(!this.subCoverNameError && !this.currencyError && !this.excessError && !this.limitsError){
+      let sectionDesc=null,planTypeDesc = null;
+      if(this.subCoverStatus==undefined || this.subCoverStatus==null) this.subCoverStatus = 'Y';
+      if(this.planTypeDesc!=undefined && this.planTypeDesc!=null){
+        sectionDesc = this.policyTypeDesc;planTypeDesc=this.planTypeDesc;
+      }
+      let ReqObj={
+        "BranchCode": "99999",
+        "CoverDesc": this.coverName,
+        "CreatedBy": this.loginId,
+        "CoverStatus": this.coverStatusValue,
+        "CoverId": this.selectedCoverId,
+        "InsuranceId": this.insuranceId,
+        "ProductId": this.productId,
+        "Currency": this.currencyValue,
+        "ExcessAmt": this.excessValue,
+        "Status": this.subCoverStatus,
+        "SubCoverDesc": this.subCoverName,
+        "SubCoverId": this.selectedSubCoverId,
+        "SumInsured": this.excessLimits,
+        "EffectiveDateStart": this.EffectiveDateStart,
+        "PlanTypeDesc": planTypeDesc,
+        "PlanTypeId": this.planTypeValue,
+        "PolicyTypeDesc": sectionDesc,
+        "PolicyTypeId": this.sectionValue,
+        "Remarks": this.Remarks,
+      }
+      let urlLink = `${this.ApiUrl1}master/insertpolicytypesubcover`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+            if(data.ErrorMessage.length!=0){
+
+            }
+            else{
+              modal.dismiss('Cross click');
+              this.onInnerData(null)
+            }
+        },
+        (err) => { },
+      );
+    }
   }
   getPlanTypeList(){
     let ReqObj = {
@@ -156,19 +248,39 @@ export class PlanTypeBenefitsListComponent {
     let urlLink = `${this.ApiUrl1}master/dropdown/productsection`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
-        console.log(data);
         let obj = [{ Code: "", CodeDesc: "--SELECT--" }];
         this.sectionList = obj.concat(data?.Result);
+        this.sectionValue = '';
         let details = JSON.parse(sessionStorage.getItem('planBenefitsObj'));
         if(details){
           this.planTypeValue = details?.planTypeId;
           this.sectionValue = details?.policyTypeId;
-          if(this.planTypeValue!=null) this.getPlanList();
+          if(this.planTypeValue!=null && this.planTypeValue!='') this.getPlanList();
+          else this.planTypeValue = '';
         }
+        else this.planTypeValue = '';
         //this.typeList = data.Result;
       },
       (err) => { },
     );
+  }
+  createCover(element,modal){
+    if(element==null){
+      this.selectedCoverId = null;
+      this.coverName = null;
+      this.EffectiveDateStart = null;
+      this.coverEffectiveDate = null;
+      this.Remarks = null;
+      this.coverStatusValue = 'Y';
+      this.open(modal)
+    }
+    else{
+      this.selectedCoverId = element?.CoverId;
+      this.Remarks = element?.Remarks;
+      this.coverStatusValue = element?.CoverStatus;
+      this.coverName = element?.CoverDesc;
+      if(element?.EffectiveDateStart!=null && element?.EffectiveDateStart!=''){ this.coverEffectiveDate = this.onDateFormatInEdit(element?.EffectiveDateStart); }
+    }
   }
   getPlanList(){
     let ReqObj = {
@@ -185,47 +297,92 @@ export class PlanTypeBenefitsListComponent {
         let obj = [{ Code: "", CodeDesc: "--SELECT--" }];
         this.policyTypeDesc = (this.sectionList.find(ele=>ele.Code==this.sectionValue))?.CodeDesc
         this.planTypeList = obj.concat(data?.Result);
-        if(this.planTypeValue!=null){
-          this.getBenefitsList();
+        if(this.planTypeValue!=null && this.planTypeValue!=''){
+          this.getBenefitsList(null,'change');
         }
+        else this.planTypeValue = '';
         //this.typeList = data.Result;
       },
       (err) => { },
     );
   }
-  getBenefitsList(){
+  getBenefitsList(element,entryType){
     this.planTypeDesc = (this.planTypeList.find(ele=>ele.Code==this.planTypeValue))?.CodeDesc
     
     this.benefitsList = [];
       let ReqObj = {
         "PlanTypeId": this.planTypeValue,
         "PolicyTypeId": this.sectionValue,
-        "Status": ""
+        "CompanyId": this.insuranceId,
+        "ProductId": this.productId,
+        "BranchCode":"99999",
+        "Status":"",
+        "Limit":this.limit,
+        "Offset": 60
       }
-      let urlLink = `${this.motorApiUrl}api/gettravelpolicytype`;
+      let urlLink = `${this.ApiUrl1}TravelPolicyType/getalltravelpolicytype`;
+     //let urlLink = `${this.ApiUrl1}TravelPolicyType/getalltravelpolicytype`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
         (data: any) => {
-          if(data.Result.length!=0){
+          if(data.Result.TravelPolicyType.length!=0){
+            this.planTypeDesc = data?.Result?.TravelPolicyType[0].PlanTypeDesc;
+            this.policyTypeDesc = data?.Result?.TravelPolicyType[0].PolicyTypeDesc;
             let obj = {
               "planTypeId":this.planTypeValue,
               "policyTypeId": this.sectionValue
             }
             sessionStorage.setItem('planBenefitsObj',JSON.stringify(obj))
-            this.benefitsList = data?.Result[0].CoverDetails;
-            this.Remarks = data?.Result[0].Remarks;
-            this.planTypeDesc = data?.Result[0].PlanTypeDesc;
-            this.policyTypeDesc = data?.Result[0].PolicyTypeDesc;
-            if(data.Result[0].EffectiveDateStart!=null){
-              this.EffectiveDateStart = this.onDateFormatInEdit(data.Result[0].EffectiveDateStart)
+            this.totalQuoteRecords = data.Result?.TotalCount;
+            this.pageCount = 10;
+            if (entryType == 'change') {
+              this.quotePageNo = 1;
+              let startCount = 1, endCount = this.pageCount;
+              startCount = endCount + 1;
+                let quoteData = data.Result.TravelPolicyType;
+                this.benefitsList = data.Result.TravelPolicyType;
+                if (quoteData.length <= this.pageCount) {
+                  endCount = quoteData.length
+                }
+                else endCount = this.pageCount;
+              
+              this.startIndex = startCount; this.endIndex = endCount;
             }
-            this.dataSource = new MatTableDataSource(this.benefitsList);
-            this.dataSource.sort = this.sort;
-            this.dataSource.paginator = this.paginator;
+            else {
+
+              let startCount = element.startCount, endCount = element.endCount;
+              this.pageCount = element.n;
+              startCount = endCount + 1;
+                this.benefitsList = data.Result.TravelPolicyType;
+                //this.quoteData = this.quoteData.concat(data.Result?.CustomerDetails);
+              if (this.totalQuoteRecords <= endCount + (element.n)) {
+                endCount = this.totalQuoteRecords
+              }
+              else endCount = endCount + (element.n);
+              this.startIndex = startCount; this.endIndex = endCount;
+            }
+           
+           
+           
+            // this.dataSource = new MatTableDataSource(this.benefitsList);
+            // this.dataSource.sort = this.sort;
+            // this.dataSource.paginator = this.paginator;
           }
-          
+          else{this.benefitsList=[]}
         },
         (err) => { },
       );
+  }
+  onNextData(element){
+    this.limit = String(Number(this.limit)+1);
+    this.quotePageNo = this.quotePageNo+1;
+    this.startIndex = element.startCount;
+    this.endIndex = element.endCount
+    this.getBenefitsList(element,'direct');
+  }
+  onPreviousData(element){
+    this.limit = String(Number(this.limit)-1);
+      this.quotePageNo = this.quotePageNo-1;
+    this.getBenefitsList(element,'direct');
   }
   onAddCoverRow(){
     let entry = [
@@ -265,6 +422,34 @@ export class PlanTypeBenefitsListComponent {
       this.dataSource2.sort = this.sort;
       this.dataSource2.paginator = this.paginator;
   }
+  onInnerData(element){
+    if(element){
+      this.selectedCoverId = element?.CoverId;
+      this.Remarks = element?.Remarks;
+      this.coverName = element?.CoverDesc;
+      this.coverStatusValue = element?.CoverStatus;
+      this.EffectiveDateStart = element.EffectiveDateStart;
+    }
+    
+    let ReqObj = {
+        "PolicyTypeId": this.sectionValue,
+        "PlanTypeId": this.planTypeValue,
+        "CoverId": element?.CoverId,
+        "InsuranceId": this.insuranceId,
+        "ProductId": this.productId,
+        "BranchCode": "99999"
+    }
+    let urlLink = `${this.CommonApiUrl}master/getallpolicytypesubcover`;
+    //let urlLink = `${this.ApiUrl1}TravelPolicyType/getalltravelpolicytype`;
+     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+       (data: any) => {
+         if(data.Result.length!=0){
+          element['MotorList'] = data.Result;
+
+         }
+      });
+    //element['MotorList'] = element.SubCoverDetails;
+  }
   onPassData(element:any,index){
    
     element.isClicked = !element.isClicked;
@@ -292,6 +477,42 @@ export class PlanTypeBenefitsListComponent {
     const filterValue = value.toLowerCase();
     return data.filter((option) => option?.CodeDescription?.toLowerCase().includes(filterValue));
   }
+  onSaveCoverAltDetails(modal){
+    let sectionDesc=null,planTypeDesc = null,effectiveDate=null;
+    if(this.planTypeDesc!=undefined && this.planTypeDesc!=null){
+      sectionDesc = this.policyTypeDesc;planTypeDesc=this.planTypeDesc;
+    }
+    if(this.coverStatusValue==null || this.coverStatusValue==undefined) this.coverStatusValue = 'Y';
+    if(this.coverEffectiveDate!=undefined && this.coverEffectiveDate!=null) effectiveDate = this.datePipe.transform(this.coverEffectiveDate, "dd/MM/yyyy");
+    let ReqObj = {
+      "PlanTypeId": this.planTypeValue,
+      "PolicyTypeId": this.sectionValue,
+      "CoverId": this.selectedCoverId,
+      "CompanyId": this.insuranceId,
+      "ProductId": this.productId,
+      "BranchCode": "99999",
+      "PolicyTypeDesc": sectionDesc,
+      "PlanTypeDesc": planTypeDesc,
+      "CoverDesc": this.coverName,
+      "Remarks": this.Remarks,
+      "EffectiveDateStart": effectiveDate,
+      "CreatedBy": this.loginId,
+      "CoverStatus": this.coverStatusValue
+    }
+    let urlLink = `${this.ApiUrl1}TravelPolicyType/inserttravelpolicytype`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+            if(data.ErrorMessage.length!=0){
+
+            }
+            else{
+              modal.dismiss('Cross click');
+              this.getBenefitsList(null,'change');
+            }
+        },
+        (err) => { },
+      );
+  }
   onSaveCoverDetails(){
     let sectionDesc=null,planTypeDesc = null;
     if(this.planTypeDesc!=undefined && this.planTypeDesc!=null){
@@ -299,13 +520,12 @@ export class PlanTypeBenefitsListComponent {
     }
     let effectiveDate = null;
     console.log("Final Insert List",this.benefitsList);
-    if(this.EffectiveDateStart!=undefined && this.EffectiveDateStart!=null) effectiveDate = this.datePipe.transform(this.EffectiveDateStart, "dd/MM/yyyy");
       let ReqObj =  {
         "BranchCode": "99999",
         "CoverDetails": this.benefitsList,
         "CreatedBy": this.loginId,
         "EffectiveDateEnd": null,
-        "EffectiveDateStart": effectiveDate,
+        "EffectiveDateStart": this.EffectiveDateStart,
         "InsuranceId": this.insuranceId,
         "PlanTypeDesc": planTypeDesc,
         "PlanTypeId": this.planTypeValue,
