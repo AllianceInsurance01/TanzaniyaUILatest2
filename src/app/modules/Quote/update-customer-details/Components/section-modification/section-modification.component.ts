@@ -440,7 +440,7 @@ getIndustryList() {
     );
   }
   checkDisable(){
-    return this.selectedSections.some(ele=>ele =='56' || ele=='39' || ele=='53' || ele=='54')
+    return this.selectedSections.some(ele=>ele =='56' || ele=='39' || ele=='53')
   }
   checkSectionOpted(rowData){
     return this.selectedSections.some(ele=>ele==rowData.Code);

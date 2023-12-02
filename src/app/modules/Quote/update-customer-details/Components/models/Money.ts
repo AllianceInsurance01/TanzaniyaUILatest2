@@ -199,10 +199,10 @@ export class Money{
                                 {
                                   className:"labelsum",
                                   type: 'commaSeparator',
-                                  key: 'MoneyAnnualEstimate',
+                                  key: 'StrongroomSi',
                                   props: {
                                     label: `Sum Insured`,
-                                    disabled: this.checkDisable('SumInsured')
+                                    disabled: this.checkDisable('StrongroomSi')
                                   },
                                   templateOptions: {
                                     
