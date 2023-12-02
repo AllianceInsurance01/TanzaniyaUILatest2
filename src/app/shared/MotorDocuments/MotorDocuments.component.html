@@ -254,7 +254,7 @@
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-2">
                                     <div class="ant-card" style="width:100%;height:90%;">
-                                        <div class="author">Integration</div>
+                                        <div class="author" style="left:35% !important;">Integration</div>
                                            <div class="ant-card-body">
                                                    <div class="row">
                                                       <div class="boxsss">
@@ -263,7 +263,7 @@
                                                             </div>
                                                             <div class="row mt-1">
                                                                 <div class="col-6 ant-padding ant-heading">Status</div>
-                                                                <div class="col-6 heading0">Y</div>
+                                                                <div class="col-6 heading0">{{ViewRisk?.TirraIntegrationStatus}}</div>
                                                             </div>
                                                             <div class="row mt-1">
                                                                 <div class="col-6 ant-padding ant-heading">Sticker No</div>
@@ -282,7 +282,7 @@
                                                           </div>
                                                           <div class="row mt-1">
                                                             <div class="col-6 ant-padding ant-heading">Status</div>
-                                                            <div class="col-6 heading0">Y</div>
+                                                            <div class="col-6 heading0">{{ViewRisk?.PremiaIntegrationStatus}}</div>
                                                         </div>
                                                     </div>
                                                  </div>
@@ -344,7 +344,7 @@
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-3">
                                     <div class="ant-card" style="width:100%;height:90%;">
-                                        <div class="author">Commission Details</div>
+                                        <div class="author" style="left:25% !important;">Commission Details</div>
                                         <div class="ant-card-body">
                                             <div class="row mt-1">
                                                 <div class="col-6 ant-padding ant-heading">PremiumLc</div>
@@ -952,14 +952,55 @@
                                         <div class="ant-card" style="height:90%;">
                                             <div class="author">Employee Liability</div>
                                                <div class="ant-card-body">
+                                                <div class="row mt-1" *ngIf="EmpLiabilityView?.TotalNoOfEmployees!=null && EmpLiabilityView?.TotalNoOfEmployees!=0">
+                                                    <div class="col-6 ant-padding ant-heading">Employee Count</div>
+                                                    <div class="col-6 heading0">{{EmpLiabilityView?.TotalNoOfEmployees}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="EmpLiabilityView?.LiabilityOccupationId!=null && EmpLiabilityView?.LiabilityOccupationId!=0">
+                                                    <div class="col-6 ant-padding ant-heading">Occupation</div>
+                                                    <div class="col-6 heading0">{{EmpLiabilityView?.LiabilityOccupationId}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="EmpLiabilityView?.EmpLiabilitySi!=null && EmpLiabilityView?.EmpLiabilitySi!=0">
+                                                    <div class="col-6 ant-padding ant-heading">Sum Insured</div>
+                                                    <div class="col-6 heading0">{{EmpLiabilityView?.EmpLiabilitySi}}</div>
+                                                </div>
+                                               </div>
+                                        </div>
+    
+                                    </div>
+
+                                    <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-2" *ngIf="FidelityRiskView!=null">
+                                        <div class="ant-card" style="height:90%;">
+                                            <div class="author">Fidelity</div>
+                                               <div class="ant-card-body">
+                                                <div class="row mt-1" *ngIf="FidelityRiskView?.FidEmpCount!=null && FidelityRiskView?.FidEmpCount!=0">
+                                                    <div class="col-6 ant-padding ant-heading">Count</div>
+                                                    <div class="col-6 heading0">{{FidelityRiskView?.FidEmpCount}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="FidelityRiskView?.OccupationType!=null && FidelityRiskView?.OccupationType!=0">
+                                                    <div class="col-6 ant-padding ant-heading">Occupation</div>
+                                                    <div class="col-6 heading0">{{FidelityRiskView?.OccupationType}}</div>
+                                                </div>
+                                                <div class="row mt-1" *ngIf="FidelityRiskView?.FidEmpSi!=null && FidelityRiskView?.FidEmpSi!=0">
+                                                    <div class="col-6 ant-padding ant-heading">Sum Insured</div>
+                                                    <div class="col-6 heading0">{{FidelityRiskView?.FidEmpSi}}</div>
+                                                </div>
                                                </div>
                                         </div>
     
                                     </div>
                                     <div class="col-12 col-md-6 col-lg-6 col-xl-4 mt-2" *ngIf="PersonalAccidentView!=null">
                                         <div class="ant-card" style="height:90%;">
-                                            <div class="author">Employee Liability</div>
+                                            <div class="author">Personal Accident</div>
                                                <div class="ant-card-body">
+                                                <div class="row mt-1">
+                                                    <div class="col-6 ant-padding ant-heading">OccupationType</div>
+                                                    <div class="col-6 heading0">{{PersonalAccidentView?.OccupationType}}</div>
+                                                </div>
+                                                <div class="row mt-1">
+                                                    <div class="col-6 ant-padding ant-heading">Sum Insured</div>
+                                                    <div class="col-6 heading0">{{PersonalAccidentView?.SumInsured | commaseparator}}</div>
+                                                </div>
                                                </div>
                                         </div>
     
