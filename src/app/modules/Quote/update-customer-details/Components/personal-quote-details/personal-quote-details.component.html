@@ -176,7 +176,7 @@
                             <div class="row">
                                 <ng-container *ngFor="let step of fields[0].fieldGroup; let index = index; let last = last">
 
-                                    <ng-container *ngIf="(step.props.label=='Contents Risk' && insuranceId=='100004') || step.props.label=='Building Risk' || step.props.label=='Money' || step.props.label=='Business Interruption' || (step.props.label=='Burglary' && insuranceId=='100004') || step.props.label=='Fidelity' || step.props.label=='Employers Liability' || step.props.label=='Machinery BreakDown' || step.props.label=='Fire & Allied Perils' || (step.props.label=='Burglary' && insuranceId=='100002')">
+                                    <ng-container *ngIf="(step.props.label=='Contents Risk' && insuranceId=='100004') || step.props.label=='Building Risk' || step.props.label=='Money' || step.props.label=='Business Interruption' || (step.props.label=='Burglary' && insuranceId=='100004') || step.props.label=='Fidelity' || step.props.label=='Public Liability' || step.props.label=='Employers Liability' || step.props.label=='Machinery BreakDown' || step.props.label=='Fire & Allied Perils' || (step.props.label=='Burglary' && insuranceId=='100002')  || step.props.label=='Goods in Transit'">
 
                                         <div class="col-md-12 col-lg-12 col-xl-12">
                                             <div style="width:100% !important;" class="col-md-4 col-lg-4 col-xl-4 customer-grid maan-grid-item-titles d-flex justify-content-between" (click)="selectedIndex=index">
@@ -212,7 +212,7 @@
                                         </div>
                                     </div>
                                 </ng-container> -->
-                                    <ng-container *ngIf="(step.props.label=='Contents Risk' && insuranceId!='100004') || step.props.label=='Personal Liability' || step.props.label=='Personal Accident' || step.props.label=='All Risk' || step.props.label=='Business All Risk'">
+                                    <ng-container *ngIf="(step.props.label=='Contents Risk' && insuranceId!='100004') || step.props.label=='Personal Liability' || step.props.label=='Personal Accident' || step.props.label=='All Risk' || step.props.label=='Business All Risk' || step.props.label=='Electronic Equipment'">
                                         <div class="col-md-6 col-lg-4 col-xl-4 col-12 ml-2 splitCard">
                                             <div class="col-md-12 col-lg-12 col-xl-12 splitCardHeader d-flex justify-content-between" (click)="selectedIndex=index">
                                             <!--customer-grid maan-grid-item-titles -->

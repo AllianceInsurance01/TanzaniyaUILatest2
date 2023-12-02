@@ -108,7 +108,7 @@ MoneyDirectorResidence:any='0';
 MoneyCollector:any='0';
 MoneyAnnualEstimate:any='0';
 MoneyMajorLoss:any='0';onAssetSumInsured:any='0';onStockSumInsured:any='0';
-BurglarySi:any='0';
+BurglarySi:any='0';StrongroomSi:any='0';
 	/*ShortTerm Product*/
 	OwnerName:any=null;
 	OwnerCategory: any=null;RegistrationNo:any=null;
@@ -311,7 +311,7 @@ BurglarySi:any='0';
 		this.onAssetSumInsured = data?.OnAssetsSi?? '0';
 		this.onStockSumInsured = data?.OnStockSi ?? '0';
 		this.BurglarySi = data?.BurglarySi ?? '0';
-
+		this.StrongroomSi = data?.StrongroomSi ?? '0';
 		// this.EquipmentSi = data?.EquipmentSi ?? '0';
 		// this.ElectronicEquipSuminsured = data.ElectronicEquipSuminsured ?? '0';
 	}
