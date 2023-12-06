@@ -105,7 +105,7 @@
                                             <i class="fas fa-plus"></i>&nbsp;Create Cover
                                         </button>
                                     </div>
-                                    <app-commodity-table [cols]="columnHeader" [coverSection]="coverSection" [data]="benefitsList" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousData($event)" (onLoadNextData)="onNextData($event)" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onAdd)="onInnerData($event)"
+                                    <app-commodity-table [cols]="columnHeader" [coverSection]="coverSection" [data]="benefitsList" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousData($event)" (onLoadNextData)="onNextData($event)" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="createCover($event,myModal2)" (onAdd)="onInnerData($event)"
                                     (onSubCoverEdit)="onSubCoverEdit($event,myModal3)" (onDeleteCoverRow)="onDeleteCoverRow($event)">
                                     </app-commodity-table>
                                 </ng-container>
@@ -602,7 +602,10 @@
           <div class="modal-content">
             <div class="modal-header">
               Cover Details
-              <button type="button" class="close btn btn-secondary" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')"><span aria-hidden="true">&times;</span></button>
+              <a  #myModalClose class="text-white" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <i class="ti-close"></i>
+             </a>
+              <!-- <button type="button" #myModalClose class="close btn btn-secondary" data-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')"><span aria-hidden="true">&times;</span></button> -->
             </div>
             <div class="modal-body">
                     <div class="row">
@@ -666,7 +669,7 @@
             <div class="modal-footer">
                 <div class="text-center">
                     <button class="btn btn-danger" (click)="modal.dismiss('Cross click')">Cancel</button>&nbsp;
-                    <button class="btn btn-success" (click)="onSaveCoverAltDetails(myModal2)">Submit</button>
+                    <button class="btn btn-success" (click)="onSaveCoverAltDetails(modal)">Submit</button>
                 </div>
             </div>
           </div>
@@ -759,6 +762,18 @@
                         </div>
                     </div>
                 </div> -->
+                <div class="row">
+                    <div class="col-md-7 col-lg-7 col-xl-7 col-7">
+                        <div class="input-control-container">
+                            <label class="input-form-label">Effective Date</label>
+                            <mat-form-field appearance="fill">
+                                <input matInput [matDatepicker]="picker1" [min]="minDate" [(ngModel)]="coverEffectiveDate">
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-xl-12 col-12">
                         <div class="input-control-container">

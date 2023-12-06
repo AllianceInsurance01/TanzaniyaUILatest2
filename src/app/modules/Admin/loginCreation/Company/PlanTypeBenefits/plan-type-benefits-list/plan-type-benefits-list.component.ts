@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedService } from 'src/app/shared/shared.service';
 import * as Mydatas from '../../../../../../app-config.json';
@@ -9,6 +9,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2';
+declare var $:any;
 @Component({
   selector: 'app-plan-type-benefits-list',
   templateUrl: './plan-type-benefits-list.component.html',
@@ -40,6 +41,7 @@ export class PlanTypeBenefitsListComponent {
   @ViewChild(MatPaginator) private paginator!: MatPaginator;
   @ViewChild(MatSort) sort2!: MatSort;
   @ViewChild(MatPaginator) private paginator2!: MatPaginator;
+  @ViewChild('myModalClose') myModalClose: ElementRef
   sortProperty: any = 'AllotedYN';
   sortDirection: any = 'desc';
   filterValue: any = '';filterValue2: any = '';
@@ -204,6 +206,7 @@ export class PlanTypeBenefitsListComponent {
       if(this.planTypeDesc!=undefined && this.planTypeDesc!=null){
         sectionDesc = this.policyTypeDesc;planTypeDesc=this.planTypeDesc;
       }
+      if(this.coverEffectiveDate!=undefined && this.coverEffectiveDate!=null) effectiveDate = this.datePipe.transform(this.coverEffectiveDate, "dd/MM/yyyy");
       let ReqObj={
         "BranchCode": "99999",
         "CoverDesc": this.coverName,
@@ -218,7 +221,7 @@ export class PlanTypeBenefitsListComponent {
         "SubCoverDesc": this.subCoverName,
         "SubCoverId": this.selectedSubCoverId,
         "SumInsured": this.excessLimits,
-        "EffectiveDateStart": this.EffectiveDateStart,
+        "EffectiveDateStart": effectiveDate,
         "PlanTypeDesc": planTypeDesc,
         "PlanTypeId": this.planTypeValue,
         "PolicyTypeDesc": sectionDesc,
@@ -280,6 +283,7 @@ export class PlanTypeBenefitsListComponent {
       this.coverStatusValue = element?.CoverStatus;
       this.coverName = element?.CoverDesc;
       if(element?.EffectiveDateStart!=null && element?.EffectiveDateStart!=''){ this.coverEffectiveDate = this.onDateFormatInEdit(element?.EffectiveDateStart); }
+      this.open(modal)
     }
   }
   getPlanList(){
@@ -429,6 +433,7 @@ export class PlanTypeBenefitsListComponent {
       this.coverName = element?.CoverDesc;
       this.coverStatusValue = element?.CoverStatus;
       this.EffectiveDateStart = element.EffectiveDateStart;
+      if(element?.EffectiveDateStart!=null && element?.EffectiveDateStart!=''){ this.coverEffectiveDate = this.onDateFormatInEdit(element?.EffectiveDateStart); }
     }
     
     let ReqObj = {
@@ -506,7 +511,8 @@ export class PlanTypeBenefitsListComponent {
 
             }
             else{
-              modal.dismiss('Cross click');
+              modal.dismiss('Cross click')
+              $('#myModal2').modal('hide');
               this.getBenefitsList(null,'change');
             }
         },
