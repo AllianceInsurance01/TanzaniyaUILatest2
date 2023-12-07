@@ -186,9 +186,14 @@ export class UserDetailsComponent implements OnInit {
       (data: any) => {
         if(data.Result){
             this.brokerList = data?.Result;
+            if(this.brokerValue!=null && this.brokerValue!=undefined && this.brokerValue!=undefined){
+                let entry = this.brokerList.find(ele=>ele.BrokerId==this.brokerValue);
+                if(entry){
+                  this.customerCode = entry?.CustomerCode;
+                  this.userName = entry?.CustomerName;
+                }
+            }
             this.getCountryList();
-
-
         }
 
       },

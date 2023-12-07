@@ -13,7 +13,7 @@
                 <div class="input-control-container">
                     <label class="input-form-label">Customer Code<span class="text-danger">*</span></label>
                     <div class="input-form-box">
-                        <input id="CustomerInput" class="input-form-control without-icon" [(ngModel)]="customerCode" type="text" (keyup)="onGetCustomerList('change',$event.target.value)" autocomplete="off" placeholder="Search here" data-toggle="dropdown" /><br>
+                        <input id="CustomerInput" class="input-form-control without-icon" [(ngModel)]="customerCode" type="text" disabled (keyup)="onGetCustomerList('change',$event.target.value)" autocomplete="off" placeholder="Search here" data-toggle="dropdown" /><br>
                         <ul class="dropdown-menu dropdown-list-style CustomerInput" appendTo="body"   [ngClass]="{dropdownDisplay: showCustomerList, dropdownNotDisplay: !showCustomerList}">
                             <li *ngFor="let item of customerList" (click)="setCustomerValue(item.Code, item.Name,'change')">
                                 {{item.Code}} - {{ item.Name }}
