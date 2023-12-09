@@ -236,7 +236,14 @@ export class PlanTypeBenefitsListComponent {
             }
             else{
               modal.dismiss('Cross click');
-              this.onInnerData(null)
+              let element = {
+                "CoverId":this.selectedCoverId,
+                "Remarks": this.Remarks,
+                "CoverDesc": this.coverName,
+                "CoverStatus": this.coverStatusValue,
+                "EffectiveDateStart": effectiveDate
+              }
+              this.onInnerData(element)
             }
         },
         (err) => { },
@@ -449,7 +456,11 @@ export class PlanTypeBenefitsListComponent {
      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
        (data: any) => {
          if(data.Result.length!=0){
-          element['MotorList'] = data.Result;
+          if(element?.BranchCode)  element['MotorList'] = data.Result;
+          else{
+            let entry = this.benefitsList.find(ele=>ele.CoverId==this.selectedCoverId);
+            if(entry){console.log("Entry",entry);entry['MotorList'] = data.Result;}
+          }
 
          }
       });
