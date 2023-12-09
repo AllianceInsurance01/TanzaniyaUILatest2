@@ -2138,9 +2138,10 @@ export class CustomerDetailsComponent implements OnInit {
                     if(this.currencyCode!='' && this.currencyCode!=undefined && this.currencyCode!=null){
                       this.currencyError = false;
                       console.log("Form Validated 22")
+                      if(this.minCurrencyRate!=null && this.minCurrencyRate!=undefined)
                       if(Number(this.exchangeRate) >= Number(this.minCurrencyRate) && Number(this.exchangeRate) <= Number(this.maxCurrencyRate)){
+                        alert('Exchange Validated')
                         this.exchangeMaxError = false;this.exchangeMinError = false;
-                        console.log("Form Validated 222")
                         if(this.HavePromoCode!='' && this.HavePromoCode!=undefined && this.HavePromoCode!=null){
                           this.promoYNError = false;
                           if(this.HavePromoCode=='N'){
