@@ -111,7 +111,7 @@ export class PlanTypeBenefitsListComponent {
     this.columnHeader =  [
       
       { key: 'CoverDesc', display: 'Cover Name' },
-      { key: 'EffectiveDate',display: 'Effective Date' },
+      { key: 'EffectiveStartdate',display: 'Effective Date' },
       {
         key: 'CoverStatus',
         display: 'Status',
@@ -289,7 +289,7 @@ export class PlanTypeBenefitsListComponent {
       this.Remarks = element?.Remarks;
       this.coverStatusValue = element?.CoverStatus;
       this.coverName = element?.CoverDesc;
-      if(element?.EffectiveDateStart!=null && element?.EffectiveDateStart!=''){ this.coverEffectiveDate = this.onDateFormatInEdit(element?.EffectiveDateStart); }
+      if(element?.EffectiveStartdate!=null && element?.EffectiveStartdate!=''){ this.coverEffectiveDate = this.onDateFormatInEdit(element?.EffectiveStartdate); }
       this.open(modal)
     }
   }
@@ -439,8 +439,8 @@ export class PlanTypeBenefitsListComponent {
       this.Remarks = element?.Remarks;
       this.coverName = element?.CoverDesc;
       this.coverStatusValue = element?.CoverStatus;
-      this.EffectiveDateStart = element.EffectiveDateStart;
-      if(element?.EffectiveDateStart!=null && element?.EffectiveDateStart!=''){ this.coverEffectiveDate = this.onDateFormatInEdit(element?.EffectiveDateStart); }
+      this.EffectiveDateStart = element.EffectiveStartdate;
+      if(element?.EffectiveStartdate!=null && element?.EffectiveStartdate!=''){ this.coverEffectiveDate = this.onDateFormatInEdit(element?.EffectiveStartdate); }
     }
     
     let ReqObj = {
@@ -451,7 +451,7 @@ export class PlanTypeBenefitsListComponent {
         "ProductId": this.productId,
         "BranchCode": "99999"
     }
-    let urlLink = `${this.CommonApiUrl}master/getallpolicytypesubcover`;
+    let urlLink = `${this.ApiUrl1}master/getallpolicytypesubcover`;
     //let urlLink = `${this.ApiUrl1}TravelPolicyType/getalltravelpolicytype`;
      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
        (data: any) => {
