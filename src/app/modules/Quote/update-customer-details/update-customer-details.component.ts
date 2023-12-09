@@ -56,6 +56,7 @@ export class UpdateCustomerDetailsComponent implements OnInit {
   CustomerType: any;
   ModifiedCurrencyYN: string;
   PreferredNotification: any;
+  sourceTypeDesc: null;
   //public orderStatus="customerDetails"
 
   constructor(

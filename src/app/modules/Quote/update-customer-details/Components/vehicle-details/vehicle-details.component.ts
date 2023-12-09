@@ -1103,7 +1103,7 @@ export class VehicleDetailsComponent implements OnInit {
         if(this.userType!='Broker' && this.userType!='User'){
           console.log("Vehicle Details",this.vehicleDetails,this.updateComponent.sourceType)
           if(this.updateComponent.sourceType==null || this.updateComponent.sourceType==undefined){
-            this.sourceType = this.vehicleDetails.SourceType;
+            this.sourceType = this.vehicleDetails.SourceTypeId;
             this.bdmCode = this.vehicleDetails.BrokerCode;
             this.brokerCode = this.vehicleDetails.BrokerCode;
             brokerbranchCode =  this.vehicleDetails.BrokerBranchCode;
@@ -1183,7 +1183,7 @@ export class VehicleDetailsComponent implements OnInit {
         "Registrationnumber": this.vehicleDetails?.Registrationnumber,
         "RoofRack": null,
         "SeatingCapacity": this.vehicleDetails?.SeatingCapacity,
-        "SourceType":this.sourceType,
+        "SourceTypeId":this.sourceType,
         "SpotFogLamp": null,
         "Stickerno": null,
         "SumInsured": vehicleSI,
@@ -2074,7 +2074,7 @@ export class VehicleDetailsComponent implements OnInit {
                 console.log("Vehicle Details",this.vehicleDetails,this.updateComponent.sourceType)
                 if(this.updateComponent.sourceType==null || this.updateComponent.sourceType==undefined){
                   
-                  this.sourceType = this.vehicleDetails.SourceType;
+                  this.sourceType = this.vehicleDetails.SourceTypeId;
                   this.bdmCode = this.vehicleDetails.BrokerCode;
                   this.brokerCode = this.vehicleDetails.BrokerCode;
                   brokerbranchCode =  this.vehicleDetails.BrokerBranchCode;
@@ -2111,7 +2111,7 @@ export class VehicleDetailsComponent implements OnInit {
                 "BdmCode": this.customerCode,
                 "BrokerCode": this.brokerCode,
                 "LoginId": loginId,
-              "SourceType":this.sourceType,
+              "SourceTypeId":this.sourceType,
               "SubUserType": this.subuserType,
               "ApplicationId": appId,
               "CustomerReferenceNo": refNo,

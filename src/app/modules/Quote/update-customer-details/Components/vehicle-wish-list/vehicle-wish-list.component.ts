@@ -101,6 +101,7 @@ export class VehicleWishListComponent implements OnInit {
   modelDesc: any=null;colorList:any[]=[];usageList:any[]=[];
   finalizeYN: any='N';validSection:boolean=false;duplicateSection:boolean=false;
   showTiraUpdateSection: boolean=false;
+  sourceTypeDesc: any;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -859,7 +860,8 @@ export class VehicleWishListComponent implements OnInit {
       "Registrationnumber": this.vehicleDetails?.Registrationnumber,
       "RoofRack": null,
       "SeatingCapacity": this.vehicleDetails?.SeatingCapacity,
-      "SourceType": this.sourceType,
+      "SourceTypeId": this.sourceType,
+      "SourceType" : this.sourceTypeDesc,
       "SpotFogLamp": null,
       "Stickerno": null,
       "SumInsured": null,
@@ -996,6 +998,7 @@ export class VehicleWishListComponent implements OnInit {
             this.HavePromoCode = this.updateComponent?.HavePromoCode;
             this.PromoCode = this.updateComponent?.PromoCode;
             this.sourceType = this.updateComponent?.sourceType;
+            this.sourceTypeDesc = this.updateComponent?.sourceTypeDesc;
             this.brokerCode = this.updateComponent?.brokerCode;
             this.brokerBranchCode = this.updateComponent?.brokerBranchCode;
             if(this.policyStartDate!=null && this.policyStartDate!='' && this.policyStartDate!=undefined){
@@ -1199,6 +1202,7 @@ export class VehicleWishListComponent implements OnInit {
       }
       if(this.userType!='Broker' && this.userType!='User'){
         this.sourceType = this.updateComponent.sourceType;
+        this.sourceTypeDesc = this.updateComponent?.sourceTypeDesc;
         this.bdmCode = this.updateComponent.brokerCode;
         this.brokerCode = this.updateComponent.brokerCode;
         brokerbranchCode =  this.updateComponent.brokerBranchCode;
@@ -1220,7 +1224,8 @@ export class VehicleWishListComponent implements OnInit {
       "BdmCode": this.customerCode,
       "CustomerCode": this.customerCode,
       "CustomerName": this.customerName,
-      "SourceType": this.sourceType,
+      "SourceTypeId": this.sourceType,
+      "SourceType" : this.sourceTypeDesc,
       "CustomerRefNo": sessionStorage.getItem('customerReferenceNo'),
       "AcExecutiveId":null,
       "BrokerCode": this.brokerCode,

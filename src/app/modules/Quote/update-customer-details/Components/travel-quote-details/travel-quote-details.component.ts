@@ -540,9 +540,9 @@ export class TravelQuoteDetailsComponent implements OnInit {
     if (this.issuerSection) {
       if(this.updateComponent.branchValue != '' && this.updateComponent.branchValue != undefined && this.updateComponent.branchValue != null){
           this.redirectValidations.emit('reset'); 
-          if(this.updateComponent.sourceType != '' && this.updateComponent.sourceType != undefined && this.updateComponent.sourceType != null){
+          if(this.updateComponent.sourceTypeDesc != '' && this.updateComponent.sourceTypeDesc != undefined && this.updateComponent.sourceTypeDesc != null){
             this.redirectValidations.emit('reset'); 
-            if(this.updateComponent.sourceType=='Premia Agent' || this.updateComponent.sourceType=='Premia Broker' || this.updateComponent.sourceType=='Premia Direct'){
+            if(this.updateComponent.sourceTypeDesc=='Premia Agent' || this.updateComponent.sourceTypeDesc=='Premia Broker' || this.updateComponent.sourceTypeDesc=='Premia Direct'){
               if(this.updateComponent.CustomerName!='' && this.updateComponent.CustomerName!=undefined && this.updateComponent.CustomerName!=null){
                 this.brokerCode = null;
                 this.brokerLoginId = null;
@@ -802,7 +802,7 @@ export class TravelQuoteDetailsComponent implements OnInit {
       "CustomerCode": customerCode,
       "CustomerName": customerName,
       "InsuranceId": this.insuranceId,
-      "SourceType":sourceType,//this.subuserType,
+      "SourceTypeId":sourceType,//this.subuserType,
       "SectionId": this.TravelForm.controls['SectionId'].value,
       "TravelCoverId": this.TravelForm.controls['SectionId'].value,
       "Currency": currencyCode,
