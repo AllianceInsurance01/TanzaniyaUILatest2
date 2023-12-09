@@ -478,6 +478,7 @@ emiyn="N";
                     console.log('MannnnnnnnReferral', this.isMannualReferal);
                   }
                   if(this.statusValue=='RP' && !this.adminSection){
+                    
                     if(!this.vehicleDetailsList.some(ele=>ele.Status=='RP') && this.isMannualReferal!='Y'){
                       this.statusValue = null;
                       sessionStorage.removeItem('QuoteStatus')
@@ -1363,6 +1364,7 @@ getMotorUsageList(vehicleValue){
                 if(this.vehicleData[0].EndtTypeMaster!=null){
                   let quoteDetails = this.vehicleData[0].EndtTypeMaster
                   this.endorsementType = quoteDetails.Endtcategdesc;
+                  this.endorsementCategory = quoteDetails.Endttypecategory;
                   if(!JSON.parse(sessionStorage.getItem('endorseTypeId'))){
                     let obj = {
                       "EndtTypeId": Number(quoteDetails?.Endttypeid),

@@ -301,7 +301,7 @@ export class CustomerDetailsComponent implements OnInit {
                     var year = d.getFullYear();
                     var month = d.getMonth();
                     var day = d.getDate();
-                    if(this.productId=='5' || this.productId=='29'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
+                    if(this.productId=='5' || this.productId=='29'){ this.policyStartDate = new Date(year,month, day ); this.onStartDateChange('direct')}
                     else if(this.productId=='46'){this.policyStartDate = new Date(year,month, day ); this.onStartDateChange('direct')}
                     this.searchSection = true;
                   this.commonSection = true;
@@ -341,7 +341,7 @@ export class CustomerDetailsComponent implements OnInit {
                     var year = d.getFullYear();
                     var month = d.getMonth();
                     var day = d.getDate();
-                    if(this.productId=='5' || this.productId=='29'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
+                    if(this.productId=='5' || this.productId=='29'){ this.policyStartDate = new Date(year,month, day ); this.onStartDateChange('direct')}
                     else if(this.productId=='46'){this.policyStartDate = new Date(year,month, day ); this.onStartDateChange('direct')}
                     this.searchSection = true;
                   this.commonSection = true;
@@ -865,7 +865,7 @@ export class CustomerDetailsComponent implements OnInit {
                   var year = d.getFullYear();
                   var month = d.getMonth();
                   var day = d.getDate();
-                  if(this.productId=='5' || this.productId=='29'){ this.policyStartDate = new Date(year,month, day+1 ); this.onStartDateChange('direct')}
+                  if(this.productId=='5' || this.productId=='29'){ this.policyStartDate = new Date(year,month, day ); this.onStartDateChange('direct')}
                   else if(this.productId=='46'){this.policyStartDate = new Date(year,month, day ); this.onStartDateChange('direct')}
                 this.searchSection = true;
                 this.commonSection = true;
@@ -965,8 +965,10 @@ export class CustomerDetailsComponent implements OnInit {
               }
               //this.executiveValue = entry?.AcExecutiveId;
               this.currencyCode = entry?.Currency;
-              this.exchangeRate = entry?.ExchangeRate;
+              
               this.onCurrencyChange('direct');
+              this.exchangeRate = entry?.ExchangeRate;
+              this.updateComponent.exchangeRate = this.exchangeRate;
               this.IndustryId = entry?.IndustryId;
               this.executiveValue= entry?.AcExecutiveId;
               this.InsuranceType=entry?.SectionId;
@@ -1383,9 +1385,26 @@ export class CustomerDetailsComponent implements OnInit {
         this.updateComponent.policyEndDate = this.policyEndDate;
         this.onChangeEndDate('direct');
       }
+      else if(((new Date(endDate)).setHours(0,0,0,0) >= (new Date()).setHours(0,0,0,0))){
+        var d = new Date(endDate);
+        var year = d.getFullYear();
+        var month = d.getMonth();
+        var day = d.getDate();
+        let policyStartDate:any = this.datePipe.transform(new Date(year, month, day+1), "dd/MM/yyyy");
+        let policyEndDate:any = this.datePipe.transform(new Date(year+1, month, day), "dd/MM/yyyy");
+        var dateParts = policyEndDate.split("/");
+        var dateParts2 = policyStartDate.split('/');
+        var startDate = dateParts2[2]+'-'+dateParts2[1]+'-'+dateParts2[0];
+        var endDate = dateParts[2]+'-'+dateParts[1]+'-'+dateParts[0];
+        this.policyStartDate = startDate;
+        this.policyEndDate = endDate;
+        this.updateComponent.policyStartDate = this.policyStartDate;
+        this.updateComponent.policyEndDate = this.policyEndDate;
+        this.onChangeEndDate('direct');
+      }
       else{
-        let startDate1 = this.datePipe.transform(new Date(year, month, day+1), "dd/MM/yyyy");
-        let EndDate1 = this.datePipe.transform(new Date(year+1, month, day), "dd/MM/yyyy");
+        let startDate1 = this.datePipe.transform(new Date(year, month, day), "dd/MM/yyyy");
+        let EndDate1 = this.datePipe.transform(new Date(year+1, month, day-1), "dd/MM/yyyy");
         var dateParts:any = startDate1.split("/");
         var dateParts2:any = EndDate1.split('/');
         var endDate = dateParts2[2]+'-'+dateParts2[1]+'-'+dateParts2[0];
@@ -1403,8 +1422,8 @@ export class CustomerDetailsComponent implements OnInit {
       var year = d.getFullYear();
       var month = d.getMonth();
       var day = d.getDate();
-      let startDate1 = this.datePipe.transform(new Date(year, month, day+1), "dd/MM/yyyy");
-        let EndDate1 = this.datePipe.transform(new Date(year+1, month, day), "dd/MM/yyyy");
+      let startDate1 = this.datePipe.transform(new Date(year, month, day), "dd/MM/yyyy");
+        let EndDate1 = this.datePipe.transform(new Date(year+1, month, day-1), "dd/MM/yyyy");
         var dateParts:any = startDate1.split("/");
         var dateParts2:any = EndDate1.split('/');
         var endDate = dateParts2[2]+'-'+dateParts2[1]+'-'+dateParts2[0];
@@ -1489,6 +1508,7 @@ export class CustomerDetailsComponent implements OnInit {
     this.executiveValue = entry?.AcExecutiveId;
     this.currencyCode = entry?.Currency;
     this.onCurrencyChange('direct');
+    this.exchangeRate = entry?.ExchangeRate;
     this.updateComponent.exchangeRate = entry?.ExchangeRate;
     this.updateComponent.HavePromoCode = entry?.HavePromoCode;
     this.updateComponent.PromoCode = entry?.PromoCode;
@@ -2118,9 +2138,10 @@ export class CustomerDetailsComponent implements OnInit {
                     if(this.currencyCode!='' && this.currencyCode!=undefined && this.currencyCode!=null){
                       this.currencyError = false;
                       console.log("Form Validated 22")
+                      if(this.minCurrencyRate!=null && this.minCurrencyRate!=undefined)
                       if(Number(this.exchangeRate) >= Number(this.minCurrencyRate) && Number(this.exchangeRate) <= Number(this.maxCurrencyRate)){
+                        alert('Exchange Validated')
                         this.exchangeMaxError = false;this.exchangeMinError = false;
-                        console.log("Form Validated 222")
                         if(this.HavePromoCode!='' && this.HavePromoCode!=undefined && this.HavePromoCode!=null){
                           this.promoYNError = false;
                           if(this.HavePromoCode=='N'){

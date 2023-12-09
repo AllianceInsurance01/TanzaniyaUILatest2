@@ -611,7 +611,7 @@
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12 col-12">
                             <div class="input-control-container">
-                                <label class="input-form-label">Cover Name</label>
+                                <label class="input-form-label">Cover Name <span class="text-danger">*</span></label>
                                 <div class="input-form-box">
                                     <textarea cols="60" ros="3" maclength="300" class="input-form-select" [(ngModel)]="coverName" placeholder="Enter Your Cover Name"></textarea>
                                 </div>
@@ -631,7 +631,7 @@
                     <div class="row">
                         <div class="col-md-7 col-lg-7 col-xl-7 col-7">
                             <div class="input-control-container">
-                                <label class="input-form-label">Effective Date</label>
+                                <label class="input-form-label">Effective Date <span class="text-danger">*</span></label>
                                 <mat-form-field appearance="fill">
                                     <input matInput [matDatepicker]="picker1" [min]="minDate" [(ngModel)]="coverEffectiveDate">
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -643,7 +643,7 @@
                     <div class="row">
                         <div class="col-md-7 col-lg-7 col-xl-7" >
                             <div class="input-control-container">
-                                <label class="input-form-label">Remarks</label>
+                                <label class="input-form-label">Remarks <span class="text-danger">*</span></label>
                                 <div class="input-form-box">
                                     <textarea cols="60" ros="3" class="input-form-select" [(ngModel)]="Remarks"></textarea>
                                 </div>
@@ -653,12 +653,12 @@
                     <div class="row">
                         <div class="col-md-12 col-lg-12 col-xl-12 col-12">
                             <div class="input-control-container">
-                                <label class="input-form-label">Status</label>
+                                <label class="input-form-label">Status <span class="text-danger">*</span></label>
                                 <div class="input-form-radio-box">
                                     <div class="radio-toolbar" style="width: 300px;">
-                                        <input [id]="'orginwarehouse_Yes'" type="radio" [name]="'originatingWarehouse'" [(ngModel)]="statusValue" value="Y">
+                                        <input [id]="'orginwarehouse_Yes'" type="radio" [name]="'originatingWarehouse'" [(ngModel)]="coverStatusValue" value="Y">
                                         <label [for]="'orginwarehouse_Yes'" class="customLabel">Active</label>
-                                        <input type="radio" [id]="'orginwarehouse_No'" [name]="'originatingWarehouse'" [(ngModel)]="statusValue" value="N">
+                                        <input type="radio" [id]="'orginwarehouse_No'" [name]="'originatingWarehouse'" [(ngModel)]="coverStatusValue" value="N">
                                         <label [for]="'orginwarehouse_No'" class="customLabel">DeActive</label>
                                     </div>
                                 </div>
@@ -693,7 +693,7 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-xl-12 col-12">
                         <div class="input-control-container">
-                            <label class="input-form-label">Sub Cover Description</label>
+                            <label class="input-form-label">Sub Cover Description <span class="text-danger">*</span></label>
                             <div class="input-form-box">
                                 <textarea cols="60" ros="3" maclength="300" class="input-form-select" [(ngModel)]="subCoverName" placeholder="Enter Your SubCover Description"></textarea>
                             </div>
@@ -708,7 +708,7 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-xl-12 col-12">
                         <div class="input-control-container">
-                            <label class="input-form-label">Currency</label>
+                            <label class="input-form-label">Currency <span class="text-danger">*</span></label>
                             <div class="input-form-box">
                                 <input type="text" class="input-form-control without-icon" maxlength="50" [(ngModel)]="currencyValue" placeholder="Enter Your Currency Type">
                             </div>
@@ -723,7 +723,7 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-xl-12 col-12">
                         <div class="input-control-container">
-                            <label class="input-form-label">Excess Amount</label>
+                            <label class="input-form-label">Excess Amount <span class="text-danger">*</span></label>
                             <div class="input-form-box">
                                 <input type="text" class="input-form-control without-icon" maxlength="50" [(ngModel)]="excessValue" placeholder="Enter Your Excess Amount">
                             </div>
@@ -738,7 +738,7 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-xl-12 col-12">
                         <div class="input-control-container">
-                            <label class="input-form-label">Excess Limits</label>
+                            <label class="input-form-label">Excess Limits<span class="text-danger">*</span></label>
                             <div class="input-form-box">
                                 <input type="text" class="input-form-control without-icon" maxlength="150" [(ngModel)]="excessLimits" placeholder="Enter Your Excess Limits">
                             </div>
@@ -765,7 +765,7 @@
                 <div class="row">
                     <div class="col-md-7 col-lg-7 col-xl-7 col-7">
                         <div class="input-control-container">
-                            <label class="input-form-label">Effective Date</label>
+                            <label class="input-form-label">Effective Date<span class="text-danger">*</span></label>
                             <mat-form-field appearance="fill">
                                 <input matInput [matDatepicker]="picker1" [min]="minDate" [(ngModel)]="coverEffectiveDate">
                                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -777,7 +777,7 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-12 col-xl-12 col-12">
                         <div class="input-control-container">
-                            <label class="input-form-label">Status</label>
+                            <label class="input-form-label">Status<span class="text-danger">*</span></label>
                             <div class="input-form-radio-box">
                                 <div class="radio-toolbar" style="width: 300px;">
                                     <input [id]="'orginwarehouse_Yes'" type="radio" [name]="'originatingWarehouse'" [(ngModel)]="statusValue" value="Y">

@@ -111,7 +111,7 @@ export class PlanTypeBenefitsListComponent {
     this.columnHeader =  [
       
       { key: 'CoverDesc', display: 'Cover Name' },
-      { key: 'EffectiveDate',display: 'Effective Date' },
+      { key: 'EffectiveStartdate',display: 'Effective Date' },
       {
         key: 'CoverStatus',
         display: 'Status',
@@ -236,7 +236,14 @@ export class PlanTypeBenefitsListComponent {
             }
             else{
               modal.dismiss('Cross click');
-              this.onInnerData(null)
+              let element = {
+                "CoverId":this.selectedCoverId,
+                "Remarks": this.Remarks,
+                "CoverDesc": this.coverName,
+                "CoverStatus": this.coverStatusValue,
+                "EffectiveDateStart": effectiveDate
+              }
+              this.onInnerData(element)
             }
         },
         (err) => { },
@@ -282,7 +289,7 @@ export class PlanTypeBenefitsListComponent {
       this.Remarks = element?.Remarks;
       this.coverStatusValue = element?.CoverStatus;
       this.coverName = element?.CoverDesc;
-      if(element?.EffectiveDateStart!=null && element?.EffectiveDateStart!=''){ this.coverEffectiveDate = this.onDateFormatInEdit(element?.EffectiveDateStart); }
+      if(element?.EffectiveStartdate!=null && element?.EffectiveStartdate!=''){ this.coverEffectiveDate = this.onDateFormatInEdit(element?.EffectiveStartdate); }
       this.open(modal)
     }
   }
@@ -432,8 +439,8 @@ export class PlanTypeBenefitsListComponent {
       this.Remarks = element?.Remarks;
       this.coverName = element?.CoverDesc;
       this.coverStatusValue = element?.CoverStatus;
-      this.EffectiveDateStart = element.EffectiveDateStart;
-      if(element?.EffectiveDateStart!=null && element?.EffectiveDateStart!=''){ this.coverEffectiveDate = this.onDateFormatInEdit(element?.EffectiveDateStart); }
+      this.EffectiveDateStart = element.EffectiveStartdate;
+      if(element?.EffectiveStartdate!=null && element?.EffectiveStartdate!=''){ this.coverEffectiveDate = this.onDateFormatInEdit(element?.EffectiveStartdate); }
     }
     
     let ReqObj = {
@@ -444,12 +451,16 @@ export class PlanTypeBenefitsListComponent {
         "ProductId": this.productId,
         "BranchCode": "99999"
     }
-    let urlLink = `${this.CommonApiUrl}master/getallpolicytypesubcover`;
+    let urlLink = `${this.ApiUrl1}master/getallpolicytypesubcover`;
     //let urlLink = `${this.ApiUrl1}TravelPolicyType/getalltravelpolicytype`;
      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
        (data: any) => {
          if(data.Result.length!=0){
-          element['MotorList'] = data.Result;
+          if(element?.BranchCode)  element['MotorList'] = data.Result;
+          else{
+            let entry = this.benefitsList.find(ele=>ele.CoverId==this.selectedCoverId);
+            if(entry){console.log("Entry",entry);entry['MotorList'] = data.Result;}
+          }
 
          }
       });
