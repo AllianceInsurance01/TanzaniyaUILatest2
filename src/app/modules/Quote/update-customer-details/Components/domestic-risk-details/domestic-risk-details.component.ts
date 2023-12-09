@@ -30,6 +30,8 @@ import { Accessorieswh } from '../models/additionalDetails/Accsessorieswh';
 // import * as fs from 'file-system';
 import { ConstantPool } from '@angular/compiler';
 import { retry } from 'rxjs';
+import { AnyMxRecord } from 'dns';
+import { map } from "rxjs/operators";
 
 
 export class ForceLengthValidators {
@@ -158,6 +160,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
   p: Number = 1;j: Number= 1;
   count: Number = 20;
   s: Number = 1;
+  fds:Number = 1;
+  js: Number = 1;
   pa:Number=1;
   ar:Number=1;
   pi:Number=1;emp:Number=1;
@@ -214,6 +218,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
   currentEmployeeIndex: number;
   editEmployeeSection: boolean=false;
   enableEmployeeEditSection: boolean=false;enableFidelityEditSection:boolean=false;
+  enableAllRiskEditSection:boolean=false;
   empAddress: any=null;employeeName: any=null;nationalityList:any[]=[];
   occupationType: any;employeeSalary: any;nationality: any;
   totalEmpIntSI: number;
@@ -233,9 +238,13 @@ export class DomesticRiskDetailsComponent implements OnInit {
   uploadDocList: any[]=[];
   uploadFedDocList:any[]=[];
   employeeUploadRecords: any[]=[];
+  employeeUploadRecords1:any[]=[];
   FedUploadRecords:any[]=[];
+  fieldsMachinerys:any[]=[];
   showEmpRecordsSection: boolean;
   errorRecords: any[]=[];
+  errorRecords1:any[]=[];
+  errorRecordsRisk :any[]=[];
   uploadStatus: any;
   closeResult: string;
   errorRowNum: any;accessoriesList:any[]=[];
@@ -243,9 +252,14 @@ export class DomesticRiskDetailsComponent implements OnInit {
   empJoiningMonth: any;
   originalEmployeeList: any[]=[];
   editFidelitySection: boolean=false;fidelityList: any[]=[];
+  allrisksList: any[]=[];
   currentFidelityIndex: number;
   enableFidelityUploadSection: boolean=false;
+  enableAllRiskUploadSection: boolean=false;
+  enableAllContentUploadSection: boolean=false;
   showFidelityRecordsSection: boolean=false;
+  showAllRiskRecordsSection: boolean=false;
+  showAllContentRecordsSection:boolean=false;
   editRiskSection:boolean;
   editElectronicSection:boolean;
   originalFidelityList: any;
@@ -256,6 +270,9 @@ export class DomesticRiskDetailsComponent implements OnInit {
   fidelityOccupationList: any[]=[];
   actualFidelitySI: any="0";
   nine: boolean=false;
+  showgrids:boolean=false;
+  uploadrisk=false;
+  uploadcontent=false;
   currentMachineryIndex: number;
   editMachinerySection: boolean;
   totalMachinerySI: number;
@@ -294,11 +311,12 @@ export class DomesticRiskDetailsComponent implements OnInit {
   fieldsPersonalInd:any[]=[];
   fieldsDevice:any[]=[];
   fieldsRisk:any[]=[];
+  sectionDetailsffff:any[]=[];
   fieldsMachinery:any[]=[];
   fieldsEmpFields:any[]=[];
   fieldFEFields:any[]=[];
   fieldsElectronic:any[]=[];
-  fileText: string;fileContent: any= '';
+  fileText: any;fileContent: any= '';
 
   formSection: boolean = false; viewSection: boolean = false;
   form = new FormGroup({});
@@ -309,6 +327,10 @@ export class DomesticRiskDetailsComponent implements OnInit {
   actualAssSI: any;
   newacc: boolean;
   sectionDetails: any;
+  descallrisk: any;
+  serialno: any;
+  suminsuredallrisk: any;
+  indexallrisk: number;
 
 
   constructor(private router: Router,private datePipe:DatePipe,private modalService: NgbModal,
@@ -321,7 +343,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
     this.userType = this.userDetails?.Result?.UserType;
     this.branchCode = this.userDetails.Result.BranchCode;
     this.quoteNo = sessionStorage.getItem('quoteNo');
-    console.log("item received", homeObj)
+    console.log("item received", homeObj);
+ 
     // if (homeObj && this.productId!='19' && this.productId!='3') {
     //   this.item = homeObj[0].SectionId;
     //   this.InbuildConstructType=homeObj[0].InbuildConstructType
@@ -1075,6 +1098,18 @@ export class DomesticRiskDetailsComponent implements OnInit {
               this.sectionDetails = data.Result;
               this.setTabSections();
               this.getbuilding();
+              //this.getpath(data.Result[0]?.JsonPath);
+              //this.getpath('\\\\192.168.1.99\\Users\\CommonPath\\EwayPortal\\OrginalPath\\File.txt');
+              // const file = data.Result[1]?.JsonPath;
+              // const reader = new FileReader();
+              // reader.readAsDataURL(file)
+              // reader.onload = (e: any) => {
+              //  let source = reader.result;
+              //   console.log(source) // <-- should be inside the callback
+              // }
+              console.log('SEEEEEEEEEEEEEE',data.Result[0]?.JsonPath);
+  
+          
           //,{ responseType: 'text' as 'json'}
           //   this.http.get(`${file}`,{ responseType: 'text' as 'json'}).subscribe(data => {
           //     console.log(data);
@@ -1090,6 +1125,35 @@ export class DomesticRiskDetailsComponent implements OnInit {
       (err) => { },
     );
   }
+  // getpath(rowdata){
+  //   let urlLink = `${this.CommonApiUrl}document/downloadbase64`;
+  //   this.sharedService.onPostFilePathDocumentMethodSync(urlLink, rowdata).subscribe(
+  //     (data: any) => {
+  //       this.http.get(data?.Result?.ImgUrl, { responseType: 'text' as 'json' }) 
+  //       .subscribe((res : any[]) => { 
+           
+  //           this.fileText=res;
+  //           console.log('Datas',this.fileText);
+           
+  //         //   let variable= JSON.stringify(this.fileText);
+  //         // let vara=(variable.replace(/\\n/g, ''));
+  //         // let vara1=(vara.replace(/\\r/g, '')); 
+  //         // //let vara=JSON.parse(JSON.stringify(this.fileText));
+  //         //   console.log('Vailables',vara1);
+  //           let text = JSON.stringify(data);
+            
+  //          let fireData = JSON.parse(text);
+  //         this.fieldsMachinerys = fireData;
+  //         console.log('new Testxx',this.fieldsMachinerys);
+  //         this.setTabSections();
+  //         this.getbuilding();
+      
+  //       }); 
+  //     },
+  //     (err) => { },
+  //   );
+   
+  // }
   getEditQuoteDetails(){
     let ReqObj = {
       "QuoteNo":this.quoteNo
@@ -1193,6 +1257,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         if(data?.Result){
+          console.log('SectionId',this.SectionId);
           if(this.productId!=='32'){
             this.employeeList = data?.Result;
             console.log('OOOOO',this.employeeList);
@@ -1201,6 +1266,10 @@ export class DomesticRiskDetailsComponent implements OnInit {
             this.fidelityList =data?.Result;
             console.log('Ferdility Lists',this.fidelityList);
           }
+          else if(this.productId=='3'){
+            this.risk =data?.Result;
+            console.log('Ferdility Lists',this.risk);
+          }
             this.originalEmployeeList = new Array().concat(data?.Result);
             if(this.employeeList.length!=0 && this.productId!=='32'){
               this.getTotalSICost('Employee');
@@ -1208,8 +1277,15 @@ export class DomesticRiskDetailsComponent implements OnInit {
             else if(this.productId=='32' && this.fidelityList.length!=0 ){
               this.getTotalSICost('Fidelity');
             }
+            else if(this.productId=='3' && this.risk.length!=0 ){
+              //this.getTotalSICost('Fidelity');
+            }
         }
       });
+  }
+  newAllrisk(){
+    this.enableAllRiskEditSection=true;
+    this.errorRecordsRisk=[];
   }
   newFidelity(){
     this.enableFidelityEditSection=true;
@@ -1235,6 +1311,7 @@ export class DomesticRiskDetailsComponent implements OnInit {
         }
       });
   }
+
   enableAddNewBtn(type){
     //console.log('YYYYYYYYYY',this.buildingSection,this.enableAllSection);
     if(this.endorsementSection){
@@ -1453,10 +1530,24 @@ export class DomesticRiskDetailsComponent implements OnInit {
    this.enablePersonalAccEditSection = false;
   }
   onAllRiskCancel(){
-    if(!this.editRiskSection) this.risk.splice(this.currentPersonalAccidentIndex,1);
+    if(!this.editRiskSection)  console.log('Enables',); this.risk.splice(this.currentPersonalAccidentIndex,1);
    this.productItem.RiskContentType=null; this.productItem.RiskDescription=null; this.productItem.RiskLocation= null;
    this.productItem.RiskSerialNo=null; this.productItem.RiskSI =null;
    this.enableAllriskEditSection=false;
+  }
+  onAllRiskCancela(){
+    this.enableAllriskEditSection=false;
+    this.enableAllRiskUploadSection=false;
+    this.employeeUploadRecords=[];
+    this.errorRecords=[];
+    
+  }
+
+  onAllRiskContent(){
+this.enableContentEditSection=false;
+this.enableAllContentUploadSection=false;
+this.employeeUploadRecords1=[];
+this.errorRecords1=[];
   }
 
   onPeronalIndCancel(){
@@ -1490,6 +1581,8 @@ export class DomesticRiskDetailsComponent implements OnInit {
     this.empAddress = null;this.employeeName = null;this.occupationType = null;this.empLocation = null;
       this.employeeSalary = null;this.nationality = null;this.empDob = null;this.empJoiningDate=null;
   }
+
+
   onMedicalSave(){
     let date = null;
     console.log("Final Product Value",this.productItem)
@@ -3891,6 +3984,27 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
     this.employeeUploadRecords = [];
     this.uploadStatus = null;
   }
+  onUploadAllRiskSection(){
+    this.uploadrisk=true;
+    this.uploadcontent=false;
+    this.currentRiskIndex = null;this.enableAllRiskEditSection = false;
+    this.enableAllRiskUploadSection = true;
+    this.showAllRiskRecordsSection = false;
+    this.uploadDocList=[];
+    this.employeeUploadRecords = [];
+    this.uploadStatus = null;
+  }
+  onUploadContentRiskSection(){
+    this.uploadcontent=true;
+    this.uploadrisk=false;
+    this.currentContentIndex = null;this.enableContentEditSection = false;
+    this.enableAllContentUploadSection = true;
+    this.showAllContentRecordsSection = false;
+    this.uploadDocList=[];
+    this.employeeUploadRecords1 = [];
+    this.uploadStatus = null;
+  }
+
   onUploadDocuments(target:any,fileType:any,type:any,uploadType:any){
     console.log("Event ",target);
     this.imageUrl = null;this.uploadDocList=[];
@@ -4013,6 +4127,7 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       }
   }
   onProceedUpload(type){
+    console.log('Section Details', this.sectionDetails)
     let typeId=null;
     if(this.productId=='32') typeId = '104';
     else if(this.productId=='14') typeId='102';
@@ -4020,6 +4135,16 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
     let SectionId = null;
     if(this.productId=='14' || this.productId=='19') SectionId = '45';
     if(this.productId=='32') SectionId = '43';
+    if(this.productId=='3' && this.first && !this.third) SectionId = '47';
+    if(this.productId=='3' && this.third && !this.first) SectionId = '3';
+    if(this.productId=='3' && this.third && this.first){
+      if(this.uploadrisk && !this.uploadcontent){
+        SectionId='3';
+      }
+      if(this.uploadcontent && !this.uploadrisk){
+        SectionId='47';
+      }
+    }
     let ReqObj={
       "CompanyId":this.insuranceId,
       "ProductId":this.productId,
@@ -4056,7 +4181,12 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
               if(data){
                 let res = data?.Result;
                 if(res.Status=='S'){
-                      this.getValidRecordDetails();
+                  if(this.productId=='3'){
+                    this.getValidRecordDetailsAllRisk()
+                  }
+                  else{
+                    this.getValidRecordDetails();
+                  }
                 }
                 else if(res.Status=='E'){
                   this.uploadStatus = 'Upload Failed..Please Try Again...'
@@ -4085,6 +4215,56 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
             (err) => { },
           );
   }
+  uploadallContentsection(){
+    if (this.employeeUploadRecords1.length != 0) {
+      let i=0, reqList =[];
+      for(let entry of this.employeeUploadRecords1){
+        let sumInsured;
+        if(entry.SumInsured==undefined || entry.SumInsured==null) sumInsured = null;
+        // else if(entry.SumInsured.includes(',')){ sumInsured = entry.SumInsured.replace(/,/g, '') }
+        else sumInsured = entry.SumInsured;
+          let data = {
+              "ItemId":entry.LocationId,
+              "RiskId":entry.ContentTypeId,
+              "ContentRiskDesc":entry.Description,
+              "SerialNoDesc": entry.SerialNumber,
+              "MakeAndModel":"TN123",
+              "SerialNo":"155685",
+              "ItemValue":"26534556",
+              "SumInsured":sumInsured
+          }
+          reqList.push(data)
+          i+=1;
+          if(i==this.employeeUploadRecords1.length)  this.finalSaveRiskDetails(reqList,'C');
+      }
+
+    }
+  }
+  uploadallrisksection(){
+    if (this.employeeUploadRecords.length != 0) {
+      let i=0, reqList =[];
+      for(let entry of this.employeeUploadRecords){
+        let sumInsured;
+        if(entry.SumInsured==undefined || entry.SumInsured==null) sumInsured = null;
+        // else if(entry.SumInsured.includes(',')){ sumInsured = entry.SumInsured.replace(/,/g, '') }
+        else sumInsured = entry.SumInsured;
+          let data = {
+              "ItemId":entry.LocationId,
+              "RiskId":entry.ContentTypeId,
+              "ContentRiskDesc":entry.Description,
+              "SerialNoDesc": entry.SerialNumber,
+              "MakeAndModel":"TN123",
+              "SerialNo":"155685",
+              "ItemValue":"26534556",
+              "SumInsured":sumInsured
+          }
+          reqList.push(data)
+          i+=1;
+          if(i==this.employeeUploadRecords.length)  this.finalSaveRiskDetails(reqList,'A');
+      }
+
+    }
+  }
   updateEmployeeRecordsTable(){
     let ReqObj = {
       "CompanyId":this.insuranceId,
@@ -4107,6 +4287,10 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
                   else if(this.productId=='32'){
                     this.enableFidelityEditSection = false;
                     this.enableFidelityUploadSection = false;
+                  }
+                  else if(this.productId=='3'){
+                    this.enableAllRiskEditSection = false;
+                    this.enableAllRiskUploadSection = false;
                   }
              
                   this.errorRecords = [];this.uploadStatus=null;
@@ -4140,6 +4324,94 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
                
                   if(res?.ErrorRecords!=null && res?.ErrorRecords!='0') this.getErrorRecords();
                   else this.errorRecords = [];
+                }
+              }
+            },  
+            (err) => { },
+          );
+  }
+
+
+  getValidRecordDetailsAllRisk(){
+    let ReqObj={
+      "CompanyId":this.insuranceId,
+      "ProductId":this.productId,
+      "RequestRefNo":this.quoteRefNo
+    }
+    let urlLink = `${this.UploadUrl}eway/vehicle/get/upload/record`;
+        this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+          (data: any) => {
+              if(data){
+                let res = data?.Result;
+                if(res){
+                  if(this.productId==3 && res?.SuccessRecords.length!=0){
+                    let items = this.sectionDetails.find((ele) => ele.SectionId == 3);
+                    if(this.uploadrisk)
+                    {
+                    this.employeeUploadRecords =res?.SuccessRecords;
+                    console.log('employeeUploadRecords',this.employeeUploadRecords);
+                    console.log('Section Details', this.sectionDetails)
+                    this.showAllRiskRecordsSection= true;
+                    }
+                    let item = this.sectionDetails.find((ele) => ele.SectionId == 47);
+                    if(this.uploadcontent){
+                      this.employeeUploadRecords1 =res?.SuccessRecords;
+                    console.log('employeeUploadRecords',this.employeeUploadRecords);
+                    console.log('Section Details', this.sectionDetails)
+                      this.showAllContentRecordsSection= true;
+                    }
+                    
+                  }
+                  else if(res?.SuccessRecords.length==0){
+                    let items = this.sectionDetails.find((ele) => ele.SectionId == 3);
+                    if(this.uploadrisk)
+                    {
+                      this.showAllRiskRecordsSection= true;
+                      this.employeeUploadRecords = [];
+                      console.log('employeeUploadRecords',this.employeeUploadRecords);
+                      console.log('Section Details', this.sectionDetails)
+                    }
+                    let item = this.sectionDetails.find((ele) => ele.SectionId == 47);
+                    if(this.uploadcontent){
+                      this.employeeUploadRecords1 = [];
+                      this.showAllContentRecordsSection= true;
+                    }
+                    
+                  }
+                  if(res?.ErrorRecords.length!=0){
+                 
+                    let items = this.sectionDetails.find((ele) => ele.SectionId == 3);
+                    if(this.uploadrisk)
+                    {
+                      this.errorRecords=res?.ErrorRecords;
+                      console.log('employeeError Records',this.errorRecords);
+                      this.showAllRiskRecordsSection= true;
+                    }
+                    let item = this.sectionDetails.find((ele) => ele.SectionId == 47);
+                    if(this.uploadcontent){
+                      this.errorRecords1=res?.ErrorRecords;
+                      console.log('employeeError Records',this.errorRecords);
+                      this.showAllContentRecordsSection= true;
+                    }
+                
+                  }
+                  else if(res?.ErrorRecords.length==0){
+                   
+                    let items = this.sectionDetails.find((ele) => ele.SectionId == 3);
+                    if(this.uploadrisk)
+                    {
+                      this.errorRecords=[];
+                      console.log('employeeError Records',this.errorRecords);
+                      this.showAllRiskRecordsSection= true;
+                    }
+                    let item = this.sectionDetails.find((ele) => ele.SectionId == 47);
+                    if(this.uploadcontent){
+                      this.errorRecords1=[];
+                      console.log('employeeError Records',this.errorRecords);
+                      this.showAllContentRecordsSection= true;
+                    }
+                  }
+                  
                 }
               }
             },  
@@ -4187,6 +4459,36 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
     this.empJoiningDate = rowData.DateOfJoiningYear;
     this.empJoiningMonth = rowData.DateOfJoiningMonth;
     this.employeeSalary = rowData.Salary;
+      this.open(modal);
+  }
+
+
+  onEditAllRiskError(rowData,modal,type,types){
+    if(types=='Edit'){
+      this.showgrids=false;
+    }
+    else if(types=='ADD'){
+      this.showgrids=true;
+    }
+    if(type=='AllRisk'){
+      this.indexallrisk=this.employeeUploadRecords.findIndex(ele => ele.SerialNumber == rowData.SerialNumber && ele.ContentTypeId == rowData.ContentTypeId);
+      console.log('Employee recordsss',this.indexallrisk,this.employeeUploadRecords);
+    }
+    else if(type=='Content'){
+      this.indexallrisk=this.employeeUploadRecords1.findIndex(ele => ele.SerialNumber == rowData.SerialNumber && ele.ContentTypeId == rowData.ContentTypeId);
+      console.log('Employee recordsss',this.indexallrisk,this.employeeUploadRecords1);
+    }
+   
+    this.enableType= type;
+    console.log('OOOOOOOOOOOO',rowData);
+    this.errorRowNum = rowData?.RowNum;
+    this.empLocation = rowData?.LocationId;
+    this.employeeName = rowData?.ContentTypeId;
+    this.descallrisk = rowData?.Description;
+    this.serialno= rowData?.SerialNumber;
+    this.suminsuredallrisk=rowData?.SumInsured;
+    console.log('SSSSSSSSSS',rowData?.EmployeeName);
+    this.individualCommaFormatted('AllRisk');
       this.open(modal);
   }
   onSaveErrorRecordDetails(modal){
@@ -4761,15 +5063,16 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
     //this.individualCommaFormatted('PersonalInd');
     //this.productItem.IndSI = rowdata.Salary;
   }
-  onEditAllRisk(index){
-    this.currentRiskIndex= index;
+  onEditAllRisk(index,rowdata){
+    let edit = this.risk.findIndex(ele=>ele.SerialNoDesc == rowdata.SerialNoDesc && ele.SerialNoDesc);
+    this.currentRiskIndex= edit;
     this.editRiskSection= true;
     this.enableAllriskEditSection= true;
-    this.productItem.RiskLocation = this.risk[index].RiskId;
-    this.productItem.RiskSerialNo = this.risk[index].SerialNoDesc;
-    this.productItem.RiskDescription = this.risk[index].ContentRiskDesc;
-    this.productItem.RiskContentType = this.risk[index].ItemId;
-    this.productItem.RiskSI = this.risk[index].SumInsured;
+    this.productItem.RiskLocation = rowdata.RiskId;
+    this.productItem.RiskSerialNo = rowdata.SerialNoDesc;
+    this.productItem.RiskDescription = rowdata.ContentRiskDesc;
+    this.productItem.RiskContentType = rowdata.ItemId;
+    this.productItem.RiskSI = rowdata.SumInsured;
     this.individualCommaFormatted('AllRisk');
   }
 
@@ -5352,4 +5655,79 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
 
     
   }
+  onsaveallrisks(modal){
+    console.log("employee records",this.employeeUploadRecords,this.indexallrisk)
+    //let index=this.employeeUploadRecords.indexOf(ele => ele.SerialNumber == this.serialno)
+    this.employeeUploadRecords[this.indexallrisk]['SumInsured'] = this.suminsuredallrisk;
+    this.employeeUploadRecords[this.indexallrisk]['Description'] = this.descallrisk;
+    this.employeeUploadRecords[this.indexallrisk]['SerialNumber'] = this.serialno,
+    this.employeeUploadRecords[this.indexallrisk]['LocationId'] = this.empLocation;//this.serialNoDesc
+    this.employeeUploadRecords[this.indexallrisk]['ContentTypeId'] =this.employeeName; 
+    this.employeeUploadRecords[this.indexallrisk]['LocationDesc'] = this.LocationList.find(ele=>ele.Code==this.empLocation).label;//this.serialNoDesc
+    this.employeeUploadRecords[this.indexallrisk]['ContentTypeDesc'] =this.allriskList.find(ele=>ele.Code==this.employeeName).label; 
+    console.log("After List",this.employeeUploadRecords,this.indexallrisk);
+    modal.dismiss('Cross click');
+  }
+  onsavecontent(modal){
+    console.log("employee records",this.employeeUploadRecords1,this.indexallrisk)
+    //let index=this.employeeUploadRecords.indexOf(ele => ele.SerialNumber == this.serialno)
+    this.employeeUploadRecords1[this.indexallrisk]['SumInsured'] = this.suminsuredallrisk;
+    this.employeeUploadRecords1[this.indexallrisk]['Description'] = this.descallrisk;
+    this.employeeUploadRecords1[this.indexallrisk]['SerialNumber'] = this.serialno,
+    this.employeeUploadRecords1[this.indexallrisk]['LocationId'] = this.empLocation;//this.serialNoDesc
+    this.employeeUploadRecords1[this.indexallrisk]['ContentTypeId'] =this.employeeName; 
+    this.employeeUploadRecords1[this.indexallrisk]['LocationDesc'] = this.LocationList.find(ele=>ele.Code==this.empLocation).label;//this.serialNoDesc
+    this.employeeUploadRecords1[this.indexallrisk]['ContentTypeDesc'] =this.allriskList.find(ele=>ele.Code==this.employeeName).label; 
+    console.log("After List",this.employeeUploadRecords,this.indexallrisk);
+    modal.dismiss('Cross click');
+  }
+
+  onSaveErrorRecordDetailsAllRisk(modal,type){
+    // this.employeeErrorList = [];
+    this.employeeErrorList =[];
+    // this.employeeNameError = false;this.employeeOccupationError = false;this.employeeAddressError=false;
+    // this.employeeNationalityError = false;this.employeeDobError = false;this.employeeDojError = false;
+    // this.employeeSalaryError = false;let i=0;
+    // if(this.employeeName=='' || this.employeeName==null || this.employeeName == undefined){i+=1;this.employeeNameError=true};
+    // if(this.occupationType=='' || this.occupationType==null || this.occupationType == undefined){i+=1;this.employeeOccupationError=true};
+    // if(this.nationality=='' || this.nationality==null || this.nationality == undefined){i+=1;this.employeeNationalityError=true};
+    // if(this.empDob=='' || this.empDob==null || this.empDob == undefined){i+=1;this.employeeDobError=true};
+    // if(this.empJoiningDate=='' || this.empJoiningDate==null || this.empJoiningDate == undefined){i+=1;this.employeeDojError=true};
+    // if(this.employeeSalary=='' || this.employeeSalary==null || this.employeeSalary == undefined){i+=1;this.employeeSalaryError=true};
+    // //if(i==0){
+      let ReqObj = {
+        "CompanyId":this.insuranceId,
+        "ContentTypeDesc":this.allriskList.find(ele=>ele.Code==this.employeeName).label,
+        "ContentTypeId": this.employeeName,
+        "Description": this.descallrisk,
+        "LocationDesc":this.LocationList.find(ele=>ele.Code==this.empLocation).label,
+        "LocationId":this.empLocation,
+        "ProductId":this.productId,
+        "RequestReferenceNo":this.quoteRefNo,
+      "SerialNumber":this.serialno,
+        "RowNum": this.errorRowNum,
+        "SumInsured":this.suminsuredallrisk
+      }
+      let urlLink = `${this.UploadUrl}eway/vehicle/update/employee/record`
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+            if(data){
+              let res = data?.Result;
+              if(data?.Message=='Records updated Success'){
+                this.employeeErrorList =[];
+                modal.dismiss('Cross click');
+                this.getValidRecordDetailsAllRisk();
+                //this.modalClose.nativeElement.click();
+              }
+              else{
+                if(res.length!=0){this.employeeErrorList = res;}
+              }
+            }
+        },
+        (err) => { },
+        ); 
+    //}
+  }
 }
+
+
