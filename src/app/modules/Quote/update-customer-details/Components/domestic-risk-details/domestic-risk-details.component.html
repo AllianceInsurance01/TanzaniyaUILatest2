@@ -290,7 +290,7 @@
                         </mat-paginator>-->
 
                 </mat-tab>
-                <mat-tab label="Content Risk" [disabled]="!fourth" *ngIf="first">
+                <mat-tab label="Content Risk" [disabled]="!fourth" *ngIf="first && insuranceId!=='100004'">
                     <div>
                         
                         <div class="row mt-2" *ngIf="!enableContentEditSection">
@@ -548,6 +548,267 @@
                       <pagination-controls (pageChange)="s=$event" id="s"></pagination-controls>
                     </div> -->
                 </mat-tab>
+
+
+    <!--Madison Content Risk-->
+    <mat-tab label="Content Risk" [disabled]="!fourth" *ngIf="first && insuranceId=='100004'">
+        <div class="row mt-2" *ngIf="!enableContentEditSection">
+            <div class="col-md-8 col-12 col-lg-8 col-xl-8 offset-lg-2">
+                <div class="boxForm">
+                    <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                        <div class="headcommon" *ngIf="!enableAllContentUploadSection">
+                            <span><i class="fas fa-users mx-1 mt-3"></i></span>
+                            <span class="spancommon span_font_size" style="font-weight:600">Content Details</span>
+                        </div>
+                        
+                        
+                        <div class="headcommon mr-3"  *ngIf="enableAddNewBtn('content') && Cotentrisk.length!=0! && !enableAllContentUploadSection">
+                            <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2"  (click)="ContentAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>&nbsp;
+                                <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2"  (click)="onUploadContentRiskSection()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
+                        </div>
+                        <div class="headcommon" *ngIf="enableAllContentUploadSection">
+                            <ng-container *ngIf="showAllContentRecordsSection">
+                                <span><i class="fas fa-users mx-1 mt-3"></i></span>
+                                <span class="spancommon span_font_size" style="font-weight:600">Content Records</span>
+                            </ng-container>
+                            <ng-container *ngIf="!showAllContentRecordsSection">
+                                <span><i class="fas fa-upload mx-1 mt-3"></i></span>
+                                <span class="spancommon span_font_size" style="font-weight:600">Content Details</span>
+                            </ng-container>
+                        </div>
+                        <div class="headcommon mr-3"  *ngIf="enableAllContentUploadSection"> 
+                            <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data" (click)="employeedownload()"><i class="fas fa-download mx-1"></i>Sample</button>
+                        </div>
+                        <div *ngIf="!enableAllContentUploadSection">Currency&nbsp;({{currencyValue}})</div>
+                    </div>
+                    <div  *ngIf="Cotentrisk.length==0 && !enableAllContentUploadSection">
+                        <div class="groupBtnMembers text-center">
+                            <div class="groupBtnMembers__desc groupBtnMembers__desc_top">
+                                Enter Content Details that you want to insure
+                            </div>
+                            <div>
+                                <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="ContentAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>&nbsp;
+                                <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2" (click)="onUploadContentRiskSection()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div  class="addMembers" *ngIf="Cotentrisk.length!=0 && !enableAllContentUploadSection">
+                        <div class="addMembers__item" *ngFor="let entry of Cotentrisk|paginate:{itemsPerPage: 5, currentPage:fds, id:'fds'};let i=index">
+                            <div class="addMembers__header">
+                                <div class="addMembers__name">{{getLocationName(entry.RiskId)}}</div>
+                                <div class="addMembers__edit">
+                                    <button class="circle btn btn-danger btn-sm mr-2" (click)="ContentDelete(entry)" *ngIf="checkEndorseDisable('content')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                    <button class="circle btn btn-primary btn-sm" (click)="onEditContent(i)" *ngIf="checkEndorseDisable('content')"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                    
+                                    
+                                </div>
+                                <div class="addMembers__edit">
+                                    <span>{{entry.SumInsured| commaseparator }} </span>&nbsp;&nbsp;
+                                </div>
+                            </div>
+                            <ul class="addMembers__list">
+                                <li>{{getContentName(entry)}} &nbsp; | &nbsp; {{entry.SerialNoDesc}}</li>
+                            </ul>
+                        </div>
+                        <div  class="small justify-content-between maan-grid-item maan-grid-item-title" style="height:60px !important;">
+                            <div class="totalProsession">
+                                <span ><b>Sum Insured</b></span>
+                            </div>
+                            <div class="totalProsession">
+                                <span ><b>Actual&nbsp;&nbsp;{{actualContentSI | commaseparator }}</b></span>
+                            </div>
+                            <div class="totalProsession">
+                                <ng-container *ngIf="totalContentSI!=0 && totalContentSI!='0' && totalContentSI!=null">
+                                    &nbsp;<span style="text-align: end !important;"><b> <span class="mobilelabel">Total</span>&nbsp;&nbsp;{{totalContentSI | commaseparator }}</b></span>
+                                </ng-container>
+                                <ng-container *ngIf="totalContentSI==0 || totalContentSI=='0' || totalContentSI==null">
+                                    <span style="text-align: end !important;"><b><span class="mobilelabel">Total</span>0</b></span>
+                                </ng-container>
+                                
+                            </div>
+                        </div>  
+                       
+                      
+                        <div class="d-flex justify-content-end">
+                            <pagination-controls (pageChange)="fds=$event" id="fds"></pagination-controls>
+                        </div>
+                        
+                    </div>
+                    <div *ngIf="enableAllContentUploadSection && !showAllContentRecordsSection">
+                        <div class="row" *ngIf="uploadStatus==null">
+                            <div class="col-md-8 col-lg-8 offset-2" >
+                                <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct','select')" #doc>
+                                <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadDocuments($event,null,'direct','drag')" (click)="doc.click()">
+                                    <div>
+                                        <div class="center">
+                                            <b class="text-dark" style="font-size:1rem">
+                                                <i class="far fa-images"></i> Drag or Click</b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="uploadDocList.length!=0 && uploadStatus==null">
+                            <div class="col-md-12 col-lg-12 col-xl-12">
+                                <table class="table" id="capture_table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                            <th scope="col"><span class="spancommon">FileName</span></th>
+                                            <th scope="col"><span class="spancommon">Delete</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let document of uploadDocList;let i=index">
+                                            <th scope="row">{{i+1}}</th>
+                                            <td><span class="spancommon">{{document.filename}}</span></td>
+                                            <td>
+                                                <button class="btn-sm btn btn-danger" (click)="uploadDocList=[];"><i class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="text-center mt-2" *ngIf="uploadStatus==null">
+                            <button class="btn btn-danger btn-sm mr-5" (click)="enableAllContentUploadSection=!enableAllContentUploadSection;uploadDocList=[]"> Cancel</button>&nbsp;&nbsp;
+                            <button class="btn btn-success btn-sm" *ngIf="uploadDocList.length!=0" (click)="onUploadEmployeeDetails()">Upload</button>
+                        </div>
+                        <div class="text-center">
+                            <p>{{uploadStatus}}</p>
+                        </div>
+                    </div>
+                    <div *ngIf="enableAllContentUploadSection && showAllContentRecordsSection">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-xl-12" *ngIf="employeeUploadRecords1.length!=0">
+                                <table class="table" id="capture_table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                            <th scope="col"><span class="spancommon">Location</span></th>
+                                            <th scope="col"><span class="spancommon">Content Type</span></th>
+                                            <th scope="col"><span class="spancommon">Status</span></th>
+                                            <th scope="col"><span class="spancommon">SumInsured</span></th>
+                                            <th scope="col"><span class="spancommon">Action</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let records of employeeUploadRecords1|paginate:{itemsPerPage: 5, currentPage:js , id:'js'};let i=index">
+                                            <th scope="row">{{i+1}}</th>
+                                            <td><span class="spancommon">{{records.LocationDesc}}</span></td>
+                                            <td> <span class="spancommon">{{records.ContentTypeDesc}}</span> </td>
+                                            <td> <span class="spancommon">{{records.Status}}</span> </td>
+                                            <td> <span class="spancommon">{{records.SumInsured}}</span> </td>
+                                            <td> 
+                                                <button class="btn btn-primary" (click)="onEditAllRiskError(records,mymodalss,'Content','ADD')"><i class="fa fa-pencil"></i></button>    
+                                        </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="d-flex justify-content-end">
+                                    <pagination-controls (pageChange)="js=$event"  id="js"></pagination-controls>
+                                </div>
+                            </div>
+                            <div class="text-center mt-2" *ngIf="errorRecords1.length==0">
+                                <button class="custom-btn btn-7 maan-button-data mx-2" (click)="uploadallContentsection()">Move Records</button>
+                            </div>
+                            <ng-container *ngIf="errorRecords1.length!=0">
+                                <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                    <div class="headcommon" >
+                                        <span><i class="fas fa-users mx-1 mt-3"></i></span>
+                                        <span class="spancommon span_font_size" style="font-weight:600">Error  Details</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-12 col-xl-12">
+                                    <table class="table" id="capture_table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                                <th scope="col"><span class="spancommon">Location</span></th>
+                                                <th scope="col"><span class="spancommon">Content Type</span></th>
+                                                <th scope="col"><span class="spancommon">Status</span></th>
+                                                <th scope="col"><span class="spancommon">SumInsured</span></th>
+                                                <th scope="col"><span class="spancommon">Error Reason</span></th>
+                                                <th scope="col"><span class="spancommon">Action</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let records of errorRecords1|paginate:{itemsPerPage: 5, currentPage:j , id:'j'};let i=index">
+                                                <th scope="row">{{i+1}}</th>
+                                                <td><span class="spancommon">{{records.LocationDesc}}</span></td>
+                                                <td> <span class="spancommon">{{records.ContentTypeDesc}}</span> </td>
+                                                <td> <span class="spancommon">{{records.Status}}</span> </td>
+                                                <td> <span class="spancommon">{{records.SumInsured}}</span> </td>
+                                                <td> <span class="spancommon">{{records.ErrorDesc}}</span> </td>
+                                                <td> 
+                                                        <button class="btn btn-primary" (click)="onEditAllRiskError(records,mymodalss,'Content','Edit')"><i class="fa fa-pencil"></i></button>    
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <pagination-controls (pageChange)="j=$event"  id="j"></pagination-controls>
+                                </div>
+                                <div style="text-align: center;">
+                                    <button class="btn btn-danger btn-sm mr-5" (click)="onAllRiskContent()"> Cancel</button>&nbsp;&nbsp;
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-2">
+                <div class="text-center">
+                    <button class="custom-btn btn-5  mx-2" *ngIf="!enableAllContentUploadSection" matRipple (click)="getBack('All Risk')" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                    <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="Cotentrisk.length!=0 && !enableAllContentUploadSection" matRipple (click)="onSaveContentRisk()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
+                </div>
+                <!-- <button class="custom-btn btn-5 mx-2" *ngIf="!enableFidelityUploadSection" matRipple (click)="getBack('Fedility')" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                <button class="custom-btn btn-8 mx-2" *ngIf="fidelityList.length!=0 && !enableFidelityUploadSection"  matRipple (click)="onSaveFidelityDetails('save')" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Save & Proceed</button>
+                <button class="custom-btn btn-6 mx-2" *ngIf="fidelityList.length!=0 && !enableFidelityUploadSection"  matRipple (click)="onSaveFidelityDetails('proceed')" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button> -->
+                <!-- <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="fidelityList.length!=0 && !enableFidelityUploadSection" matRipple (click)="onSaveFidelityDetails('direct')" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button> -->
+            </div>
+        </div>
+        <div class="row" *ngIf="enableContentEditSection">
+            <div class="col-md-12 col-lg-8 col-xl-8 col-12 offset-lg-2">
+                <div class="boxForm" >
+                        <span><u> Content Risk Details </u></span>
+                        <div class="buildingcss">
+                            <form [formGroup]="form">
+                                <formly-form [form]="form" [fields]="fieldsContent" [model]="productItem"></formly-form>
+                            </form>
+                        </div>
+                    <div class="row">
+                        <span><u> Sum Insured </u></span>
+                    </div>
+                    <div class="row" >
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6 ml-3">
+                            <b style="white-space: nowrap;">Actual</b>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                            <b style="white-space: nowrap;">{{actualContentSI | commaseparator }} &nbsp;({{currencyValue}})</b>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="ml-3">
+                                <b style="white-space: nowrap;">Total</b>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalContentSI==0 || totalContentSI=='0' || totalContentSI==null">
+                            <b style="white-space: nowrap;">0</b>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalContentSI!=0 && totalContentSI!='0' && totalContentSI!=null">
+                            <b style="white-space: nowrap;">{{totalContentSI | commaseparator }} &nbsp;({{currencyValue}})</b>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-danger btn-sm mr-5" (click)="onContentCancel()"> Cancel</button>&nbsp;&nbsp;
+                        <button class="btn btn-primary btn-sm" (click)="onContentSubmit()"> Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+    <!--Finish Content Risk-->
                 <mat-tab label="Personal Accident" [disabled]="!fourth" *ngIf="second" style="overflow: none;">
                    
                     <div>
@@ -672,7 +933,7 @@
                     </div> -->
 
                 </mat-tab>
-                <mat-tab label="All Risk" [disabled]="!fourth" *ngIf="third">
+                <mat-tab label="All Risk" [disabled]="!fourth" *ngIf="third && insuranceId!='100004'">
                     <div>
                         
                         <div class="row mt-2" *ngIf="!enableAllriskEditSection">
@@ -702,7 +963,7 @@
                                                 <div class="addMembers__name">{{getLocationName(entry.RiskId)}}</div>
                                                 <div class="addMembers__edit">
                                                     <button class="circle btn btn-danger btn-sm mr-2" (click)="AllRiskDelete(entry)" *ngIf="checkEndorseDisable('allRisk')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
-                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditAllRisk(i)" *ngIf="checkEndorseDisable('allRisk')"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                                    <button class="circle btn btn-primary btn-sm" (click)="onEditAllRisk(i,entry)" *ngIf="checkEndorseDisable('allRisk')"> <i class="fa fa-pencil"></i></button>&nbsp;
                                                 </div>
                                                 <div class="addMembers__edit">
                                                     <span> {{entry.SumInsured}}</span>&nbsp;&nbsp;
@@ -792,6 +1053,282 @@
                     </div>
                     <div class="d-flex justify-content-end">
                       <pagination-controls (pageChange)="ar=$event" id="ar"></pagination-controls>
+                    </div>
+                </mat-tab>
+
+                <mat-tab label="All Risk" [disabled]="!fourth" *ngIf="third && insuranceId=='100004'">
+                    <div class="row mt-2" *ngIf="!enableAllriskEditSection">
+                        <div class="col-md-8 col-12 col-lg-8 col-xl-8 offset-lg-2">
+                            <div class="boxForm">
+                                <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                    <div class="headcommon" *ngIf="!enableAllRiskUploadSection">
+                                        <span><i class="fas fa-users mx-1 mt-3"></i></span>
+                                        <span class="spancommon span_font_size" style="font-weight:600">All Risk Details</span>
+                                    </div>
+                                    
+                                    
+                                    <div class="headcommon mr-3"  *ngIf="enableAddNewBtn('allrisk') && !enableAllRiskUploadSection && risk.length!=0">
+                                        <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2"  (click)="AllAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>&nbsp;
+                                            <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2"  (click)="onUploadAllRiskSection()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
+                                    </div>
+                                    <div class="headcommon" *ngIf="enableAllRiskUploadSection">
+                                        <ng-container *ngIf="showAllRiskRecordsSection">
+                                            <span><i class="fas fa-users mx-1 mt-3"></i></span>
+                                            <span class="spancommon span_font_size" style="font-weight:600">All Risk Records</span>
+                                        </ng-container>
+                                        <ng-container *ngIf="!showAllRiskRecordsSection">
+                                            <span><i class="fas fa-upload mx-1 mt-3"></i></span>
+                                            <span class="spancommon span_font_size" style="font-weight:600">Upload All Risk Details</span>
+                                        </ng-container>
+                                    </div>
+                                    <div class="headcommon mr-3"  *ngIf="enableAllRiskUploadSection"> 
+                                        <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data" (click)="employeedownload()"><i class="fas fa-download mx-1"></i>Sample</button>
+                                    </div>
+                                    <div *ngIf="!enableAllRiskUploadSection">Currency&nbsp;({{currencyValue}})</div>
+                                </div>
+                                <div  *ngIf="risk.length==0 && !enableAllRiskUploadSection">
+                                    <div class="groupBtnMembers text-center">
+                                        <div class="groupBtnMembers__desc groupBtnMembers__desc_top">
+                                            Enter All All Risk Details that you want to insure
+                                        </div>
+                                        <div>
+                                            <button class="groupBtnMembers__btn custom-btn btn-6 maan-button-data  mx-2" (click)="AllAdd()"><i class="fa fa-plus-circle"></i>&nbsp; Add New </button>&nbsp;
+                                            <button class="groupBtnMembers__btn custom-btn btn-7 maan-button-data  mx-2" (click)="onUploadAllRiskSection()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div  class="addMembers" *ngIf="risk.length!=0 && !enableAllRiskUploadSection">
+                                    <div class="addMembers__item" *ngFor="let entry of risk|paginate:{itemsPerPage: 5, currentPage:fd, id:'fd'};;let i=index">
+                                        <div class="addMembers__header">
+                                            <div class="addMembers__name">{{getLocationName(entry.RiskId)}}</div>
+                                            <div class="addMembers__edit">
+                                                <button class="circle btn btn-danger btn-sm mr-2" (click)="AllRiskDelete(entry)" *ngIf="checkEndorseDisable('allRisk')"> <i class="fa fa-trash"></i></button>&nbsp;&nbsp;
+                                                <button class="circle btn btn-primary btn-sm" (click)="onEditAllRisk(i,entry)" *ngIf="checkEndorseDisable('allRisk')"> <i class="fa fa-pencil"></i></button>&nbsp;
+                                            </div>
+                                            <div class="addMembers__edit">
+                                                <span> {{entry.SumInsured}}</span>&nbsp;&nbsp;
+                                            </div>
+                                        </div>
+                                        <ul class="addMembers__list">
+                                            <li>{{getContentssName(entry.ItemId)}} &nbsp;|{{entry.SerialNoDesc}} &nbsp;</li>
+                                        </ul>
+                                    </div>
+                                    <div  class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                        <div class="totalProsession">
+                                            <span ><b>Sum Insured</b></span>
+                                        </div>
+                                    
+                                        <div class="totalProsession" *ngIf="productId!='26'">
+                                            <span ><b>Actual&nbsp;&nbsp;{{actualAllRiskSI | commaseparator }}</b></span>
+                                        </div>
+                                        <div class="totalProsession" *ngIf="productId=='26'">
+                                            <span ><b>Actual&nbsp;&nbsp;{{EquipmentSi | commaseparator }}</b></span>
+                                        </div>
+                                        <div class="totalProsession">
+                                            <ng-container *ngIf="totalAllRiskSI!=0 && totalAllRiskSI!='0' && totalAllRiskSI!=null">
+                                                &nbsp;<span style="text-align: end !important;"><b>{{totalAllRiskSI | commaseparator }}</b></span>
+                                            </ng-container>
+                                            <ng-container *ngIf="totalAllRiskSI==0 || totalAllRiskSI=='0' || totalAllRiskSI==null">
+                                                <span style="text-align: end !important;"><b>0</b></span>
+                                            </ng-container>
+                                            
+                                        </div>
+                                    </div>  
+                                  
+                                    <div class="d-flex justify-content-end">
+                                        <pagination-controls (pageChange)="fd=$event" id="fd"></pagination-controls>
+                                    </div>
+                                    
+                                </div>
+                                <div *ngIf="enableAllRiskUploadSection && !showAllRiskRecordsSection">
+                                    <div class="row" *ngIf="uploadStatus==null">
+                                        <div class="col-md-8 col-lg-8 offset-2" >
+                                            <input style="display: none;" type="file" (change)="onUploadDocuments($event,null,'direct','select')" #doc>
+                                            <div class="imag-card my-3" appDragDropFileUpload (fileDropped)="onUploadDocuments($event,null,'direct','drag')" (click)="doc.click()">
+                                                <div>
+                                                    <div class="center">
+                                                        <b class="text-dark" style="font-size:1rem">
+                                                            <i class="far fa-images"></i> Drag or Click</b>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="uploadDocList.length!=0 && uploadStatus==null">
+                                        <div class="col-md-12 col-lg-12 col-xl-12">
+                                            <table class="table" id="capture_table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                                        <th scope="col"><span class="spancommon">FileName</span></th>
+                                                        <th scope="col"><span class="spancommon">Delete</span></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let document of uploadDocList;let i=index">
+                                                        <th scope="row">{{i+1}}</th>
+                                                        <td><span class="spancommon">{{document.filename}}</span></td>
+                                                        <td>
+                                                            <button class="btn-sm btn btn-danger" (click)="uploadDocList=[];"><i class="fa fa-trash"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-2" *ngIf="uploadStatus==null">
+                                        <button class="btn btn-danger btn-sm mr-5" (click)="enableAllRiskUploadSection=!enableAllRiskUploadSection;uploadDocList=[]"> Cancel</button>&nbsp;&nbsp;
+                                        <button class="btn btn-success btn-sm" *ngIf="uploadDocList.length!=0" (click)="onUploadEmployeeDetails()">Upload</button>
+                                    </div>
+                                    <div class="text-center">
+                                        <p>{{uploadStatus}}</p>
+                                    </div>
+                                </div>
+                                <div *ngIf="enableAllRiskUploadSection && showAllRiskRecordsSection">
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12 col-xl-12"  *ngIf="employeeUploadRecords.length!=0">
+                                            <table class="table" id="capture_table" style="width:70% !important;">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                                        <th scope="col"><span class="spancommon">Location</span></th>
+                                                        <th scope="col"><span class="spancommon">Content Type</span></th>
+                                                        <th scope="col"><span class="spancommon">Status</span></th>
+                                                        <th scope="col"><span class="spancommon">SumInsured</span></th>
+                                                        <th scope="col"><span class="spancommon">Action</span></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let records of employeeUploadRecords|paginate:{itemsPerPage: 5, currentPage:js , id:'js'};let i=index">
+                                                        <th scope="row">{{i+1}}</th>
+                                                        <td><span class="spancommon">{{records.LocationDesc}}</span></td>
+                                                        <td> <span class="spancommon">{{records.ContentTypeDesc}}</span> </td>
+                                                        <td> <span class="spancommon">{{records.Status}}</span> </td>
+                                                        <td> <span class="spancommon">{{records.SumInsured}}</span> </td>
+                                                        <td> 
+                                                            <button class="btn btn-primary" (click)="onEditAllRiskError(records,mymodalss,'AllRisk','ADD')"><i class="fa fa-pencil"></i></button>    
+                                                    </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="d-flex justify-content-end">
+                                                <pagination-controls (pageChange)="js=$event"  id="js"></pagination-controls>
+                                            </div>
+                                        </div>
+                                        <div class="text-center mt-2" *ngIf="errorRecords.length==0">
+                                            <button class="custom-btn btn-7 maan-button-data mx-2" (click)="uploadallrisksection()">Move Records</button>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 col-xl-12">
+                                        <ng-container *ngIf="errorRecords.length!=0">
+                                            <div class="d-flex justify-content-between maan-grid-item maan-grid-item-title">
+                                                <div class="headcommon" >
+                                                    <span><i class="fas fa-users mx-1 mt-3"></i></span>
+                                                    <span class="spancommon span_font_size" style="font-weight:600">Error  Details</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-xl-12" >
+                                                <table class="table" id="capture_table" style="width:70% !important;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
+                                                            <th scope="col"><span class="spancommon">Location</span></th>
+                                                            <th scope="col"><span class="spancommon">Content Type</span></th>
+                                                            <th scope="col"><span class="spancommon">Status</span></th>
+                                                            <th scope="col"><span class="spancommon">SumInsured</span></th>
+                                                            <th scope="col"><span class="spancommon">Error Reason</span></th>
+                                                            <th scope="col"><span class="spancommon">Action</span></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let records of errorRecords|paginate:{itemsPerPage: 5, currentPage:j , id:'j'};let i=index">
+                                                            <th scope="row">{{i+1}}</th>
+                                                            <td><span class="spancommon">{{records.LocationDesc}}</span></td>
+                                                            <td> <span class="spancommon">{{records.ContentTypeDesc}}</span> </td>
+                                                            <td> <span class="spancommon">{{records.Status}}</span> </td>
+                                                            <td> <span class="spancommon">{{records.SumInsured}}</span> </td>
+                                                            <td> <span class="spancommon">{{records.ErrorDesc}}</span> </td>
+                                                            <td> 
+                                                                    <button class="btn btn-primary" (click)="onEditAllRiskError(records,mymodalss,'AllRisk','Edit')"><i class="fa fa-pencil"></i></button>    
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="d-flex justify-content-end">
+                                                <pagination-controls (pageChange)="j=$event"  id="j"></pagination-controls>
+                                            </div>
+                                            <div style="text-align: center;">
+                                                <button class="btn btn-danger btn-sm mr-5" (click)="onAllRiskCancela()"> Cancel</button>&nbsp;&nbsp;
+                                            </div>
+                                        </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-2">
+                            <div class="text-center">
+                                <button class="custom-btn btn-5  mx-2" *ngIf="!enableAllRiskUploadSection" matRipple (click)="getBack('All Risk')" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                                <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="risk.length!=0 && !enableAllRiskUploadSection" matRipple (click)="onSaveAllRisk()" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button>
+                            </div>
+                            <!-- <button class="custom-btn btn-5 mx-2" *ngIf="!enableFidelityUploadSection" matRipple (click)="getBack('Fedility')" routerLinkActive="router-link-active"><<&nbsp;Back</button>
+                            <button class="custom-btn btn-8 mx-2" *ngIf="fidelityList.length!=0 && !enableFidelityUploadSection"  matRipple (click)="onSaveFidelityDetails('save')" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Save & Proceed</button>
+                            <button class="custom-btn btn-6 mx-2" *ngIf="fidelityList.length!=0 && !enableFidelityUploadSection"  matRipple (click)="onSaveFidelityDetails('proceed')" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button> -->
+                            <!-- <button class="custom-btn btn-6 maan-button-data mx-2" *ngIf="fidelityList.length!=0 && !enableFidelityUploadSection" matRipple (click)="onSaveFidelityDetails('direct')" routerLinkActive="router-link-active" routerLinkActive="router-link-active">Proceed</button> -->
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="enableAllriskEditSection">
+                        <div class="col-md-12 col-12 col-lg-8 col-xl-8 offset-lg-2">
+                            <div class="boxForm">
+                                <div class="mobileheading justify-content-between maan-grid-item maan-grid-item-title">
+                                    <div class="headcommon">
+                                        <span><i class="fas fa-home mx-1 mt-3"></i></span>
+                                        <span class="spancommon span_font_size" style="font-weight:600">All RiskDetails</span>
+                                    </div>
+                                    <div>Currency&nbsp;({{currencyValue}})</div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="buildingcss">
+                                        <form [formGroup]="form">
+                                            <formly-form [form]="form" [fields]="fieldsRisk" [model]="productItem"></formly-form>
+                                        </form>
+                                    </div>
+                              
+                            </div>
+                            <div class="row">
+                                <span><u> Sum Insured </u></span>
+                            </div>
+                            <div class="row" >
+                                <div class="col-12 col-md-6 col-lg-6 col-xl-6 ml-3">
+                                    <b style="white-space: nowrap;">Actual</b>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6 col-xl-6" *ngIf="productId!='26'">
+                                    <b style="white-space: nowrap;">{{actualAllRiskSI| commaseparator }} &nbsp;({{currencyValue}})</b>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6 col-xl-6" *ngIf="productId=='26'">
+                                    <b style="white-space: nowrap;">{{EquipmentSi| commaseparator }} &nbsp;({{currencyValue}})</b>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                                    <div class="ml-3">
+                                        <b style="white-space: nowrap;">Total</b>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalAllRiskSI==0 || totalAllRiskSI=='0' || totalAllRiskSI==null">
+                                    <b style="white-space: nowrap;">0</b>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-6 col-xl-6"  *ngIf="totalAllRiskSI!=0 && totalAllRiskSI!='0' &&totalAllRiskSI!=null">
+                                    <b style="white-space: nowrap;">{{totalAllRiskSI | commaseparator }} &nbsp;({{currencyValue}})</b>
+                                </div>
+                            </div>
+                          
+                            
+                            <div class="text-center">
+                                <button class="btn btn-danger btn-sm mr-5" (click)="onAllRiskCancel()"> Cancel</button>&nbsp;&nbsp;
+                                <button class="btn btn-primary btn-sm" (click)="onAllRiskSubmit()"> Save</button>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 </mat-tab>
                 <mat-tab label="Personal Indemenity" [disabled]="!fourth" *ngIf="fifth">
@@ -2497,3 +3034,85 @@
             <button class="btn btn-success" (click)="onSaveErrorRecordDetails(modal)">Submit</button>
     </div>
 </ng-template>
+
+
+
+
+<ng-template #mymodalss let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">
+               Additional Details</span></h4>
+        <button type="button" class="close" #myModalClose aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <ng-container *ngIf="employeeErrorList.length!=0">
+            <div class="row" *ngFor="let emp of employeeErrorList">
+                <div class="col-lg-4 col-md-4 col-xl-4 text-danger">
+                    <b>{{emp.Message}}</b>
+                </div>
+            </div>
+        </ng-container>
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4 input-control-container">
+                <label class="input-form-label">Location</label><span class="text-danger">*</span>
+                <div class="input-form-box mt-2">
+                    <ng-select class="custom" [items]="LocationList" [(ngModel)]="empLocation" placeholder="Select Location" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="value" bindLabel="label">
+                    </ng-select>
+                </div>
+                
+            </div>
+            <div class="col-12 col-md-6 col-lg-5 input-control-container">
+                <label class="input-form-label">Content Type</label><span class="text-danger">*</span>
+                <div class="input-form-box mt-2">
+                    <ng-select class="custom" [items]="allriskList" [(ngModel)]="employeeName" placeholder="Select Content" appendTo="body" [ngModelOptions]="{standalone: true}" bindValue="value" bindLabel="label">
+                    </ng-select>
+                </div>
+                
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 input-control-container">
+                <label class="input-form-label">Serial No</label><span class="text-danger">*</span>
+                <div class="input-form-box mt-2">
+                    <input type="text" style="position: relative;bottom: 0.35rem;" class="input-form-control without-icon" [(ngModel)]="serialno" [ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="input-form-error" *ngIf="employeeNationalityError">
+                    <div class="error-text text-danger">
+                        Please Enter Valid NationalityID
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 input-control-container">
+                <label class="input-form-label">Description</label><span class="text-danger">*</span>
+                <div class="input-form-box mt-2">
+                    <input type="text" style="position: relative;bottom: 0.35rem;" class="input-form-control without-icon" [(ngModel)]="descallrisk" [ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="input-form-error" *ngIf="employeeNationalityError">
+                    <div class="error-text text-danger">
+                        Please Enter Valid NationalityID
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4 input-control-container">
+                <label class="input-form-label">Sum Insured</label><span class="text-danger">*</span>
+                <div class="input-form-box mt-2">
+                    <input type="text" class="input-form-control without-icon" [(ngModel)]="suminsuredallrisk" [ngModelOptions]="{standalone: true}">
+                </div>
+                <div class="input-form-error" *ngIf="employeeNationalityError">
+                    <div class="error-text text-danger">
+                        Please Enter Valid NationalityID
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <div class="modal-footer text-end">
+            <button class="btn btn-danger" (click)="modal.dismiss('Cross click')">Cancel</button>&nbsp;
+            <button class="btn btn-success" *ngIf="!showgrids" (click)="onSaveErrorRecordDetailsAllRisk(modal)">Submit</button>
+            <button class="btn btn-success" *ngIf="showgrids && uploadrisk" (click)="onsaveallrisks(modal)">Submit</button>
+            <button class="btn btn-success" *ngIf="showgrids && uploadcontent" (click)="onsavecontent(modal)">Submit</button>
+    </div>
+</ng-template>
+
+
