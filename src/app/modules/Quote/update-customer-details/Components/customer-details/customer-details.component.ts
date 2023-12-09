@@ -965,8 +965,10 @@ export class CustomerDetailsComponent implements OnInit {
               }
               //this.executiveValue = entry?.AcExecutiveId;
               this.currencyCode = entry?.Currency;
-              this.exchangeRate = entry?.ExchangeRate;
+              
               this.onCurrencyChange('direct');
+              this.exchangeRate = entry?.ExchangeRate;
+              this.updateComponent.exchangeRate = this.exchangeRate;
               this.IndustryId = entry?.IndustryId;
               this.executiveValue= entry?.AcExecutiveId;
               this.InsuranceType=entry?.SectionId;
@@ -1506,6 +1508,7 @@ export class CustomerDetailsComponent implements OnInit {
     this.executiveValue = entry?.AcExecutiveId;
     this.currencyCode = entry?.Currency;
     this.onCurrencyChange('direct');
+    this.exchangeRate = entry?.ExchangeRate;
     this.updateComponent.exchangeRate = entry?.ExchangeRate;
     this.updateComponent.HavePromoCode = entry?.HavePromoCode;
     this.updateComponent.PromoCode = entry?.PromoCode;
