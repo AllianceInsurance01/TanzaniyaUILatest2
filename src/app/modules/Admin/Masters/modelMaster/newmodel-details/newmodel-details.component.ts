@@ -23,6 +23,7 @@ export class NewmodelDetailsComponent implements OnInit {
   insuranceId: string;
   productId: string;stateList:any[]=[];
   countryList: any[]=[];
+  FuelList:any[]=[];
 
   activeMenu:any='Model';insuranceName:any;
   ModelDetails: Model;
@@ -53,6 +54,7 @@ export class NewmodelDetailsComponent implements OnInit {
     this.branchValue= modelObj.BranchCode;
     this.getModelList();
     this.getBranchList();
+    this.getfuellist();
 
   }
   ngOnInit(): void {
@@ -84,6 +86,20 @@ export class NewmodelDetailsComponent implements OnInit {
  this.ModelDetails.CoreRefNo=null;
       if(this.ModelDetails?.Status==null)  this.ModelDetails.Status = 'Y';
     }
+  }
+  getfuellist(){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId
+    }
+    let urlLink = `${this.CommonApiUrl}dropdown/fueltype`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+      if(data.Result){
+              this.FuelList=data.Result;
+      }
+    },
+    (err) => { },
+  );
   }
   onRedirect(value){
     if(value=='Product') this.router.navigate(['/Admin/companyList/companyConfigure'])

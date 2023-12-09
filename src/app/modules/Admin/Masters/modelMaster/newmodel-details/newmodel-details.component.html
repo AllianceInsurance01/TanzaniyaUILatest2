@@ -239,9 +239,11 @@
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="input-control-container">
                     <label class="input-form-label">Veh Fuel type<span class="text-required">*</span></label>
-                    <div class="input-form-box">
+                    <ng-select class="input-form-select" appendTo="body" [items]="FuelList" [(ngModel)]="ModelDetails.VehFueltype" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                    <!-- <div class="input-form-box">
                         <input type="text" class="input-form-control without-icon" maxlength="20" [(ngModel)]="ModelDetails.VehFueltype">
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="col-12 col-md-4 col-lg-4">
