@@ -20,9 +20,27 @@
                 <td [ngClass]="{'foo': i === element.length - 1,'foo1':i >element.length - 1}" mat-cell *matCellDef="let element;let j = dataIndex;">
                     
                     <ng-container *ngIf="!col.config; else hasConfig">
-                        {{ element[col.key]}}
+                        <ng-container *ngIf="col.key!='Status' && col.key!='CoverStatus'">
+                            {{ element[col.key]}}
+                        </ng-container>
+                        <ng-container *ngIf="col.key=='Status' || col.key=='CoverStatus'">
+
+                            <span *ngIf="element[col.key]=='Y'">Active</span>
+                            <span *ngIf="element[col.key]=='RP'">Referral Pending</span>
+                            <span *ngIf="element[col.key]=='RR'">Referral Rejected</span>
+                            <span *ngIf="element[col.key]=='RA'">Referral Approved</span>
+                            <span *ngIf="element[col.key]=='RE'">Referral ReQuote</span>
+                            <span *ngIf="element[col.key]=='R'">Referral</span>
+                            <span *ngIf="element[col.key]=='P'">Pending</span>
+                            <span *ngIf="element[col.key]=='E'">Endorsement</span>
+                            <span *ngIf="element[col.key]=='D'">Removed</span>
+                            <span *ngIf="element[col.key]=='N'">DeActive</span>
+                            <span *ngIf="element[col.key]=='PE'" style="color:#b8860b">Pending</span>
+                            <span *ngIf="element[col.key]=='CO'" style="color:green;">Completed</span>
+                            <span *ngIf="element[col.key]=='CA'" style="color:red;">Cancelled</span>
+                        </ng-container>
                     </ng-container>
-    
+                    
                     <ng-template #hasConfig>
                         <ng-container *ngIf="col.config.isView">
                             <button class="circle btn btn-warning btn-sm" *ngIf="element.QuoteNo!=null" (click)="onView.emit(element)">
