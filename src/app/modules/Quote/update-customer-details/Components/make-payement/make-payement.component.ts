@@ -437,7 +437,7 @@ export class MakePayementComponent implements OnInit {
             this.emiPeriod = this.quoteDetails.InstallmentPeriod;
             this.emiMonth = this.quoteDetails.InstallmentMonth;
             console.log("Total",this.totalPremium)
-            if(this.loadingSection && this.quoteDetails?.policyNo!=null && this.quoteDetails?.policyNo!=''){
+            if(this.quoteDetails?.policyNo!=null && this.quoteDetails?.policyNo!=''){
               this.paymentDetails = {
                 "QuoteNo": this.quoteNo,
                 "PolicyNo": this.quoteDetails?.policyNo,

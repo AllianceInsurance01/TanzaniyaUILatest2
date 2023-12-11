@@ -298,7 +298,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection && (sourceCodeDesc=='agent' || sourceCodeDesc=='broker' || sourceCodeDesc=='direct' || sourceCodeDesc=='bank' || sourceCodeDesc=='Broker' || sourceCodeDesc=='whatsapp')">
+                            <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection && (sourceCodeDesc=='agent' || sourceCodeDesc=='Agent' || sourceCodeDesc=='broker' || sourceCodeDesc=='direct' || sourceCodeDesc=='Direct' || sourceCodeDesc=='bank' || sourceCodeDesc=='Bank' || sourceCodeDesc=='Broker' || sourceCodeDesc=='whatsapp' || sourceCodeDesc=='Whatsapp')">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Source Code</label><span class="text-danger">*</span>
                                     <ng-container *ngIf="sourceCodeDesc!='broker' && sourceCodeDesc!='Broker'">
@@ -317,7 +317,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection && brokerCode && (sourceCodeDesc=='agent' || sourceCodeDesc=='broker' || sourceCodeDesc=='direct' || sourceCodeDesc=='bank' || sourceCodeDesc=='Broker' || sourceCodeDesc=='whatsapp')">
+                            <div class="col-12 col-md-3 col-lg-3" *ngIf="issuerSection && brokerCode && (sourceCodeDesc=='agent' || sourceCodeDesc=='Agent' || sourceCodeDesc=='broker' || sourceCodeDesc=='direct' || sourceCodeDesc=='Direct' || sourceCodeDesc=='bank' || sourceCodeDesc=='Bank' || sourceCodeDesc=='Broker' || sourceCodeDesc=='whatsapp' || sourceCodeDesc=='Whatsapp')">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Broker Branch</label><span class="text-danger">*</span>
                                     <ng-select class="input-form-select" appendTo="body" [(ngModel)]="brokerBranchCode"  [disabled]="endorsementSection || finalizeYN=='Y'" [items]="brokerBranchList" (change)="onBrokerBranchChange()" bindValue="Code" bindLabel="CodeDesc">
