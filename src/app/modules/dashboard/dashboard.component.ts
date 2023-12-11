@@ -11,6 +11,7 @@ import {
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
 import { ApexChart, ApexNonAxisChartSeries, ApexResponsive, ChartComponent } from 'ng-apexcharts';
+import Swal from 'sweetalert2';
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
   chart: ApexChart;
@@ -936,6 +937,107 @@ export class DashboardComponent implements OnInit {
     this.policyLimit = String(Number(this.policyLimit)-1);
       this.policyPageNo = this.policyPageNo-1;
     this.getPolicyList(element,'direct');
+  }
+  onGetEndorsements(rowData){
+    sessionStorage.setItem('customerReferenceNo',rowData.CustomerReferenceNo);
+    sessionStorage.setItem('quoteReferenceNo',rowData.RequestReferenceNo);
+    sessionStorage.setItem('quoteNo',rowData.QuoteNo);
+    sessionStorage.setItem('endorsePolicyNo',rowData.OriginalPolicyNo);
+    sessionStorage.setItem('Pagefrom','endorsement');
+    sessionStorage.setItem('brokercodeendorsement',this.brokerCode1);
+    this.router.navigate(['Home/policies/Endorsements']);
+  }
+  onGetSchedule(rowData){
+    let ReqObj = {
+      "QuoteNo":rowData.QuoteNo
+    }
+    let urlLink = `${this.CommonApiUrl}pdf/policyform`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data?.Result?.PdfOutFile){
+            this.downloadMyFile(data.Result.PdfOutFile);
+        }
+        else{
+          Swal.fire({
+            title: '<strong>Schedule Pdf</strong>',
+            icon: 'error',
+            html:
+              `No Pdf Generated For this Policy`,
+            //showCloseButton: true,
+            //focusConfirm: false,
+            showCancelButton: false,
+
+            //confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Cancel',
+          })
+        }
+      },
+      (err) => { },
+    );
+  }
+  downloadMyFile(data) {
+    const link = document.createElement('a');
+    link.setAttribute('target', '_blank');
+    link.setAttribute('href', data);
+    link.setAttribute('download', 'Schedule');
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+  onCreditdownload(rowData){
+    console.log('KKKKKKKKKKK',rowData.QuoteNo);
+    let urlLink = `${this.CommonApiUrl}pdf/creditNote?quoteNo=${rowData.QuoteNo}`
+
+    this.sharedService.onGetMethodSync(urlLink).subscribe(
+      (data: any) => {
+        console.log(data);
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', data?.Result.PdfOutFile);
+        link.setAttribute('download','Creditpdf');
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    },
+      (err) => { },
+    );
+  }
+  onDebitdownload(rowData){
+    console.log('KKKKKKKKKKK',rowData.QuoteNo);
+    let urlLink = `${this.CommonApiUrl}pdf/taxInvoice?quoteNo=${rowData.QuoteNo}`
+
+    this.sharedService.onGetMethodSync(urlLink).subscribe(
+      (data: any) => {
+        console.log(data);
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('href', data?.Result.PdfOutFile);
+        link.setAttribute('download','DebitPdf');
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    },
+      (err) => { },
+    );
+  }
+  onViews(rowData){
+    let ReqObj={
+      "Search":"",
+      "SearchValue":rowData.QuoteNo,
+      "QuoteNo":rowData.QuoteNo,
+      "RequestReferenceNo":rowData.RequestReferenceNo,
+      "ProductId":this.productId,
+      "pageFrom": 'policy',
+      "CustomerName": rowData.ClientName,
+      "ProductName":rowData.ProductName,
+      "PolicyNo":rowData.PolicyNo,
+      "Currency":rowData.Currency,
+      "EmiYn":rowData?.EmiYn
+    }
+    sessionStorage.setItem('editCustomer',JSON.stringify(ReqObj));
+    this.router.navigate(['/Home/MotorDocument']);
   }
   getReferralPendingList(element,entryType){
     if(element==null) this.rpQuoteData=[];
