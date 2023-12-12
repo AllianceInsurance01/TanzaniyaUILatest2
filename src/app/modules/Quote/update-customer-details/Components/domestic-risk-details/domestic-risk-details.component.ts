@@ -4147,6 +4147,9 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
         SectionId='47';
       }
     }
+    if(this.productId=='26'){
+      SectionId='3';
+    }
     let ReqObj={
       "CompanyId":this.insuranceId,
       "ProductId":this.productId,
@@ -4183,7 +4186,7 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
               if(data){
                 let res = data?.Result;
                 if(res.Status=='S'){
-                  if(this.productId=='3'){
+                  if(this.productId=='3' || this.productId=='26'){
                     this.getValidRecordDetailsAllRisk()
                   }
                   else{
@@ -4346,7 +4349,7 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
               if(data){
                 let res = data?.Result;
                 if(res){
-                  if(this.productId==3 && res?.SuccessRecords.length!=0){
+                  if(this.productId==3 || this.productId=='26' && res?.SuccessRecords.length!=0){
                     let items = this.sectionDetails.find((ele) => ele.SectionId == 3);
                     if(this.uploadrisk)
                     {
