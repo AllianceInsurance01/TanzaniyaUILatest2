@@ -3381,6 +3381,7 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
           this.getTotalSICost('building');
         }
         else {
+          this.AddNew();
           // this.building = [
           //   {
           //     "BuildingAddress": null,
@@ -3912,6 +3913,7 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
              this.getTotalSICost('content');
            }
            else{
+            this.ContentAdd();
             // this.Cotentrisk = [{
             //   "ItemId":null,
             //   "RiskId":null,
@@ -4719,6 +4721,7 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
            
           }
           else {
+            this.PersonalAdd();
             // this.PersonalAssistantList = [
             //   {
             //     "Dob": null,
@@ -4850,6 +4853,7 @@ this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
                  this.getTotalSICost('AllRisk');
                }
                else{
+                this.AllAdd();
                 // this.risk=[
                 //   {
                 // "ItemId":null,
