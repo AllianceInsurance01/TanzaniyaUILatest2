@@ -49,6 +49,7 @@ export class ProductData {
 	backorderLimit: number = 0
 	backordered = false
 	image?: string = ''
+	occupationdesc:any = '';
 	id: string = '';PinCode:any=null;
   maxDate: "2022-09-25"
   /*const currentYear = new Date().getFullYear();
