@@ -1491,7 +1491,13 @@ export class PersonalQuoteDetailsComponent implements OnInit {
       }
      
       if(sections.some(ele=>(ele=='47' || ele=='74') && this.insuranceId=='100004')){
-         let contentData = new HouseHoldContentsss();
+        let contentData
+        if(this.productId!='24'){
+          contentData = new HouseHoldContentsss();
+        }
+        else{
+          contentData = new HouseHoldContents();
+        }
         this.fields[0].fieldGroup = this.fields[0].fieldGroup.concat([contentData?.fields]);
       }
       if(sections.some(ele=>(ele=='54'))){

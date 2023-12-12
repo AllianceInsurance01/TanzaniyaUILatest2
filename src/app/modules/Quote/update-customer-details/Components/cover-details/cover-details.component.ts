@@ -31,14 +31,14 @@ export class CoverDetailsComponent implements OnInit {
     this.innerColumnHeader =  [
       { key: 'SubCoverDesc', display: 'SubCover Name' },
       { key: 'SumInsured', display: 'Sum Insured' },
-      { key: 'Excess', display: 'Excess' },
+      { key: 'ExcessAmt', display: 'Excess' },
 
     ];
    }
 
   ngOnInit(): void {
  console.log('BBBBBB',this.data);
-    this.benefitList = this.data.benefitList;
+    this.benefitList = [this.data.benefitList];
   }
   onInnerData(rowData){
     rowData['MotorList'] = rowData.SubCoverDetails;

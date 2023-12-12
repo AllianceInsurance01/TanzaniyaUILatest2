@@ -1663,8 +1663,8 @@ export class CustomerDetailsComponent implements OnInit {
       else{
         this.currencyCode= this.currencyList[0]?.Code;
         this.exchangeRate =this.currencyList[0]?.ExchangeRate;
-        this.minCurrencyRate = this.currencyList[0].MinRate;
-        this.maxCurrencyRate = this.currencyList[0].MaxRate;
+        this.minCurrencyRate = this.currencyList[0]?.MinRate;
+        this.maxCurrencyRate = this.currencyList[0]?.MaxRate;
         this.updateComponent.CurrencyCode = this.currencyCode;
         this.updateComponent.exchangeRate = this.exchangeRate;
       }

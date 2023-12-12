@@ -311,7 +311,9 @@ export class TravelQuoteDetailsComponent implements OnInit {
       "PlanTypeId": this.TravelForm.controls['PlanTypeId'].value,
       //"PolicyTypeId":this.TravelForm.controls[''].value,
       //"PolicyTypeId":this.TravelForm.controls['PlanTypeId'].value,
-      "PolicyTypeId": this.TravelForm.controls['SectionId'].value
+      "PolicyTypeId": this.TravelForm.controls['SectionId'].value,
+      "InsuranceId": this.insuranceId,
+      "ProductId": this.productId
     }
     let urlLink = `${this.motorApiUrl}api/gettravelpolicytype`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
