@@ -1544,7 +1544,7 @@ export class CustomerDetailsComponent implements OnInit {
             else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
             else this.issuerSection = false
             this.travelDetails = customerDatas;
-            this.Code= customerDatas.SourceType;
+            this.Code= customerDatas.SourceTypeId;
             this.updateComponent.sourceType = this.Code;
             this.branchValue = customerDatas.BranchCode;
             this.brokerBranchCode = customerDatas.BrokerBranchCode;
