@@ -451,7 +451,7 @@ export class PlanTypeBenefitsListComponent {
         "ProductId": this.productId,
         "BranchCode": "99999"
     }
-    let urlLink = `${this.ApiUrl1}TravelPolicyType/getalltravelpolicytype`;
+    let urlLink = `${this.ApiUrl1}master/getallpolicytypesubcover`;
     //let urlLink = `${this.ApiUrl1}TravelPolicyType/getalltravelpolicytype`;
      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
        (data: any) => {

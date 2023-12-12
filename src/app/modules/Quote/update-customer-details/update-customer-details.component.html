@@ -283,7 +283,7 @@
                         <p class="smalldevices">Cover Details</p>
                         <p class="smaldevicestepper"> 2 </p>
                     </div>
-                     <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: activeStep !='Motor-stepper'  && activeStep !='Excess-stepper' && activeStep !='Vehicle-stepper' && activeStep !='Customer-stepper' && activeStep !='Travel-stepper'}"
+                     <div class="order-tracking" [class.tracking-first-width]="vehicleDetailSection" [class.tracking-second-width]="!vehicleDetailSection" [ngClass]="{completed: checkRouting('passengerDetails')}"
                         (click)="ontap('/Travel/customerDetails/premium-details')">
                         <span class="is-complete"></span>
                         <p class="smalldevices">Passenger Details</p>
