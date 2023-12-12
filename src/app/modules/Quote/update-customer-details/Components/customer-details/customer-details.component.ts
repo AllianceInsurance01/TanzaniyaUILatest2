@@ -104,6 +104,7 @@ export class CustomerDetailsComponent implements OnInit {
   customerMobileNoError: boolean;
   customerReferenceNo: any;
   finalizeYN: any='N';
+  sourceCodeDesc: null;
   constructor(private router:Router,private sharedService: SharedService,private datePipe:DatePipe,
     private updateComponent:UpdateCustomerDetailsComponent) {
       
@@ -975,7 +976,7 @@ export class CustomerDetailsComponent implements OnInit {
               this.HavePromoCode=entry?.Havepromocode;
               if(entry.BuildingOwnerYn!=null && entry?.BuildingOwnerYn!='') this.buildingOwnerYN = entry?.BuildingOwnerYn;
               this.PromoCode=entry?.Promocode;
-              if(entry.SourceType!=null) this.Code = entry?.SourceType;
+              if(entry.SourceTypeId!=null) this.Code = entry?.SourceTypeId;
               
               this.updateComponent.sourceType = this.Code;
               this.branchValue = entry?.BranchCode;
@@ -1079,7 +1080,7 @@ export class CustomerDetailsComponent implements OnInit {
       "BranchCode": this.branchCode
     }
     //let urlLink = `${this.CommonApiUrl}dropdown/sourcetype`;
-    let urlLink = `${this.CommonApiUrl}dropdown/premiasourcetypes`; 
+    let urlLink = `${this.CommonApiUrl}dropdown/getsourcetype`; 
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         console.log(data);
@@ -1156,8 +1157,13 @@ export class CustomerDetailsComponent implements OnInit {
     );
   }
   onSourceTypeChange(type){
+    this.sourceCodeDesc = null;
+    if(this.Code!=null && this.Code!='' && this.Code!=undefined){
+      let entry = this.productList.find(ele=>ele.Code==this.Code);
+      if(entry) this.sourceCodeDesc = entry?.CodeDesc;
+    }
     let ReqObj = {
-      "SourceType": this.Code,
+      "SourceType": this.sourceCodeDesc,
       "BranchCode":  this.branchValue,
       "InsuranceId": this.insuranceId,
       "SearchValue": "",
@@ -1168,6 +1174,7 @@ export class CustomerDetailsComponent implements OnInit {
       (data: any) => {
           //this.branchList = data.Result;
           this.updateComponent.sourceType = this.Code;
+          this.updateComponent.sourceTypeDesc = this.sourceCodeDesc;
           this.brokerList = data.Result;
           //if(this.Code=='Agent') this.executiveSection = true;
           if(type=='change'){
@@ -1192,7 +1199,7 @@ export class CustomerDetailsComponent implements OnInit {
                 this.updateComponent.brokerLoginId = this.brokerLoginId;
                 this.updateComponent.brokerCode = this.brokerCode;
               }
-              if(this.Code=='broker' || this.Code=='direct' || this.Code=='agent' || this.Code == 'bank' || this.Code=='Broker' || this.Code == 'Agent' || this.Code =='Direct' || this.Code == 'Bank' || this.Code == 'whatsapp'){
+              if(this.sourceCodeDesc=='broker' || this.sourceCodeDesc=='direct' || this.sourceCodeDesc=='agent' || this.sourceCodeDesc == 'bank' || this.sourceCodeDesc=='Broker' || this.sourceCodeDesc == 'Agent' || this.sourceCodeDesc =='Direct' || this.sourceCodeDesc == 'Bank' || this.sourceCodeDesc == 'whatsapp' || this.sourceCodeDesc == 'Whatsapp'){
                 if(type=='change'){
                   this.updateComponent.CustomerCode = null;
                   this.updateComponent.CustomerName = null;
@@ -1311,7 +1318,7 @@ export class CustomerDetailsComponent implements OnInit {
         if(this.userType=='issuer'){branch = this.brokerBranchCode;}
         else branch = this.branchValue
         let ReqObj = {
-          "SourceType": this.Code,
+          "SourceType": this.sourceCodeDesc,
           "BranchCode":  branch,
           "InsuranceId": this.insuranceId,
           "SearchValue":code
@@ -1444,7 +1451,7 @@ export class CustomerDetailsComponent implements OnInit {
     if(this.issuerSection){
       this.Code = entry.SourceType;
       
-      if(this.Code=='Premia Agent' || this.Code=='Premia Broker' || this.Code=='Premia Direct'){
+      if(this.sourceCodeDesc=='Premia Agent' || this.sourceCodeDesc=='Premia Broker' || this.sourceCodeDesc=='Premia Direct'){
         this.customerCode = entry.CustomerCode;
         this.customerName = entry.CustomerName;
       }
@@ -1495,7 +1502,7 @@ export class CustomerDetailsComponent implements OnInit {
     }
     this.HavePromoCode = entry?.HavePromoCode;
     this.PromoCode = entry?.PromoCode;
-    if(entry.SourceType!=null) this.Code = entry?.SourceType;
+    if(entry.SourceTypeId!=null) this.Code = entry?.SourceTypeId;
     this.customerCode = entry?.CustomerCode;
     this.branchValue = entry.BranchCode;
     this.brokerCode = entry.BrokerCode;
@@ -1537,7 +1544,7 @@ export class CustomerDetailsComponent implements OnInit {
             else if(this.userType!='Broker' && this.userType!='User'){ this.issuerSection = true;this.adminSection=false; }
             else this.issuerSection = false
             this.travelDetails = customerDatas;
-            this.Code= customerDatas.SourceType;
+            this.Code= customerDatas.SourceTypeId;
             this.updateComponent.sourceType = this.Code;
             this.branchValue = customerDatas.BranchCode;
             this.brokerBranchCode = customerDatas.BrokerBranchCode;
@@ -1646,11 +1653,21 @@ export class CustomerDetailsComponent implements OnInit {
   onCurrencyChange(type){
     if(this.currencyCode!=null && this.currencyCode!=''){
       let currencyData = this.currencyList.find(ele=>ele.Code==this.currencyCode);
-      this.exchangeRate = currencyData?.ExchangeRate;
-      this.minCurrencyRate = currencyData?.MinRate;
-      this.maxCurrencyRate = currencyData?.MaxRate;
-      this.updateComponent.CurrencyCode = this.currencyCode;
-      this.updateComponent.exchangeRate = this.exchangeRate;
+      if(currencyData){
+        this.exchangeRate = currencyData?.ExchangeRate;
+        this.minCurrencyRate = currencyData?.MinRate;
+        this.maxCurrencyRate = currencyData?.MaxRate;
+        this.updateComponent.CurrencyCode = this.currencyCode;
+        this.updateComponent.exchangeRate = this.exchangeRate;
+      }
+      else{
+        this.currencyCode= this.currencyList[0]?.Code;
+        this.exchangeRate =this.currencyList[0]?.ExchangeRate;
+        this.minCurrencyRate = this.currencyList[0].MinRate;
+        this.maxCurrencyRate = this.currencyList[0].MaxRate;
+        this.updateComponent.CurrencyCode = this.currencyCode;
+        this.updateComponent.exchangeRate = this.exchangeRate;
+      }
     }
     console.log('CCCCCCCC',this.currencyCode)
 
@@ -1914,7 +1931,7 @@ export class CustomerDetailsComponent implements OnInit {
         this.branchValueError = false;
           if(this.Code!='' && this.Code!=undefined && this.Code!=null){
             this.sourceCodeError = false;
-            if(this.Code=='Premia Agent' || this.Code=='Premia Broker' || this.Code=='Premia Direct'){
+            if(this.sourceCodeDesc=='Premia Agent' || this.sourceCodeDesc=='Premia Broker' || this.sourceCodeDesc=='Premia Direct'){
               if(this.customerName!='' && this.customerName!=undefined && this.customerName!=null){
                 this.brokerCode = null;
               this.brokerBranchCode = null;
@@ -2140,7 +2157,6 @@ export class CustomerDetailsComponent implements OnInit {
                       console.log("Form Validated 22")
                       if(this.minCurrencyRate!=null && this.minCurrencyRate!=undefined)
                       if(Number(this.exchangeRate) >= Number(this.minCurrencyRate) && Number(this.exchangeRate) <= Number(this.maxCurrencyRate)){
-                        alert('Exchange Validated')
                         this.exchangeMaxError = false;this.exchangeMinError = false;
                         if(this.HavePromoCode!='' && this.HavePromoCode!=undefined && this.HavePromoCode!=null){
                           this.promoYNError = false;
@@ -2730,7 +2746,7 @@ export class CustomerDetailsComponent implements OnInit {
         "BrokerCode": this.brokerCode,
         "BuildingOwnerYn": this.buildingOwnerYN,
         "Createdby": this.loginId,
-        "SourceType":sourcecode,//this.Code
+        "SourceTypeId":sourcecode,//this.Code
         "Currency": this.currencyCode,
         "CustomerReferenceNo": this.customerDetails?.CustomerReferenceNo,
         "CustomerCode": this.customerCode,

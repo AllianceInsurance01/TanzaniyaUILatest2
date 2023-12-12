@@ -292,7 +292,7 @@ omit_special_char(event)
             let chassisNo = sessionStorage.getItem('editVehicleDetails');
             if(chassisNo){
               this.editSection = true;
-              this.getVehicleDetails('',chassisNo,'edit');
+              this.getVehicleDetails('',chassisNo,'edit',null,null,null);
             }
             else{ this.editSection = false}
         }
@@ -633,7 +633,7 @@ omit_special_char(event)
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         if(data.Result){
-              this.getVehicleDetails(this.regNo,this.chassisNo,'save');
+              this.getVehicleDetails(this.regNo,this.chassisNo,'save',this.bodyTypeValue,this.usageValue,this.engineCapacity);
 
         }
         else  if(data.ErrorMessage.length!=0){
@@ -659,7 +659,7 @@ omit_special_char(event)
       (err) => { },
     );
   }
-  getVehicleDetails(regNo,chassisNo,type){
+  getVehicleDetails(regNo,chassisNo,type,modelDesc,usageDesc,engCapacity){
     let ReqObj = {
       "ReqChassisNumber": chassisNo,
       "ReqRegNumber": regNo,
@@ -680,6 +680,11 @@ omit_special_char(event)
           sessionStorage.removeItem('vehicleLength')
           let vehicles = JSON.parse(sessionStorage.getItem('vehicleDetailsList'));
           if(vehicles){
+            if(modelDesc!=null){
+              vehicleDetails['TiraBodyType'] = modelDesc;
+              vehicleDetails['TiraMotorUsage'] = usageDesc;
+              vehicleDetails['EngineCapacity'] = engCapacity;
+            }
             vehicleDetails['Currency'] = this.updateComponent.CurrencyCode;
             vehicleDetails['ExchangeRate'] = this.updateComponent.exchangeRate;
             if(this.updateComponent.policyStartDate){
@@ -699,6 +704,11 @@ omit_special_char(event)
             sessionStorage.setItem('vehicleDetailsList',JSON.stringify(vehicles));
          }
           else{ 
+            if(modelDesc!=null){
+              vehicleDetails['TiraBodyType'] = modelDesc;
+              vehicleDetails['TiraMotorUsage'] = usageDesc;
+              vehicleDetails['EngineCapacity'] = engCapacity;
+            }
             vehicleDetails['Currency'] = this.updateComponent.CurrencyCode;
             vehicleDetails['ExchangeRate'] = this.updateComponent.exchangeRate;
             if(this.updateComponent.policyStartDate){

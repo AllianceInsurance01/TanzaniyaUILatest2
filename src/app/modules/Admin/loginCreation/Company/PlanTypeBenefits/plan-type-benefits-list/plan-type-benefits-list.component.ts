@@ -442,7 +442,7 @@ export class PlanTypeBenefitsListComponent {
       this.EffectiveDateStart = element.EffectiveStartdate;
       if(element?.EffectiveStartdate!=null && element?.EffectiveStartdate!=''){ this.coverEffectiveDate = this.onDateFormatInEdit(element?.EffectiveStartdate); }
     }
-    
+    element['MotorList'] = [];
     let ReqObj = {
         "PolicyTypeId": this.sectionValue,
         "PlanTypeId": this.planTypeValue,

@@ -449,6 +449,7 @@ export class MakePayementComponent implements OnInit {
               this.policySection = true;
               this.successSection = false;
               this.loadingSection = false;
+              this.updateComponent.policySection = true;
               this.updateTiraDetails();
             }
             else{
@@ -513,6 +514,7 @@ export class MakePayementComponent implements OnInit {
             this.policyNo = data?.Result?.PolicyNo;
             this.policySection = true;
             this.successSection = false;
+            this.updateComponent.policySection = true;
             this.updateTiraDetails();
           }
           else{
@@ -697,6 +699,7 @@ export class MakePayementComponent implements OnInit {
                   "PolicyNo": this.endorsePolicyNo
                 }
                 this.policySection = true;
+                this.updateComponent.policySection = true;
                 this.updateTiraDetails();
                 
           }
@@ -1212,9 +1215,16 @@ export class MakePayementComponent implements OnInit {
     let chequeDate = "";let amount=this.totalPremium;
    
     if(this.IsChargeOrRefund=='REFUND'){
-      this.Menu='2';
-      this.activeMenu = '2';
-      amount = this.totalPremium
+      if(this.quoteDetails?.PrevPaymentType!=null && this.quoteDetails?.PrevPaymentType!=undefined && this.quoteDetails?.PrevPaymentType=='3'){
+        this.Menu = this.quoteDetails?.PrevPaymentType;
+        this.activeMenu = this.Menu;
+        amount = this.totalPremium
+      }
+      else{
+        this.Menu='2';
+        this.activeMenu = '2';
+        amount = this.totalPremium
+      }
     }
     else{this.iBanNo = null;this.accNo=null;
       if(this.payAmount==undefined) amount = null;
@@ -1272,6 +1282,7 @@ export class MakePayementComponent implements OnInit {
               this.paymentDetails = data.Result;
               this.policyNo = data?.Result?.PolicyNo;
               this.policySection = true;
+              this.updateComponent.policySection = true;
             this.updateTiraDetails();
             }
             else{
@@ -1293,6 +1304,7 @@ export class MakePayementComponent implements OnInit {
                 this.paymentDetails = data.Result;
                 this.policyNo = data?.Result?.PolicyNo;
                 this.policySection = true;
+                this.updateComponent.policySection = true;
                 this.updateTiraDetails();
               }
              
@@ -1323,6 +1335,7 @@ export class MakePayementComponent implements OnInit {
     (data: any) => {
       if(data?.Result){
         this.policySection = true;
+        this.updateComponent.policySection = true;
           this.stickerNo = data?.Result?.StickerNumber;
           this.CoverNoteNo = data?.Result?.CoverNoteNo;
       } 

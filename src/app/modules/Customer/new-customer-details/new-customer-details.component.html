@@ -92,7 +92,7 @@
                 <div [ngClass]="productItem.IdType != 2 ? 'customFieldWidth2':'customFieldWidth'">
                     <div class="headinglbels">Identity Type<span class="star">*</span></div> 
                     <div class="mt-1">
-                    <ng-select class="custom" appendTo="body" [items]="policyHolderTypeList" [disabled]="checkDisableFields('IdType')" [(ngModel)]="productItem.PolicyHolderTypeid" bindValue="Code" bindLabel="CodeDesc">
+                    <ng-select class="custom" appendTo="body" [items]="policyHolderTypeList" style="max-width: 380px;" [disabled]="checkDisableFields('IdType')" [(ngModel)]="productItem.PolicyHolderTypeid" bindValue="Code" bindLabel="CodeDesc">
                     </ng-select>
                     </div>
                 </div>
@@ -248,7 +248,7 @@
                 <div class="col-12 mt-1">
                     <div class="headinglbels">Identity Type<span class="star">*</span></div> 
                     <div class="mt-1">
-                        <ng-select class="custom" appendTo="body" [items]="policyHolderTypeList"  [(ngModel)]="productItem.PolicyHolderTypeid" [disabled]="checkDisableFields('IdType')"   bindValue="Code" bindLabel="CodeDesc">
+                        <ng-select class="custom" appendTo="body" [items]="policyHolderTypeList"   [(ngModel)]="productItem.PolicyHolderTypeid" [disabled]="checkDisableFields('IdType')"   bindValue="Code" bindLabel="CodeDesc">
                         </ng-select>
                     </div>
                 </div>

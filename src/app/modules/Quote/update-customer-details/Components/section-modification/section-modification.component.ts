@@ -385,7 +385,7 @@ getIndustryList() {
         "BrokerCode": this.brokerCode,
         "BuildingOwnerYn": this.BuildingOwnerYn,
         "Createdby": this.loginId,
-        "SourceType": this.sourceType,
+        "SourceTypeId": this.sourceType,
         "Currency": this.commonDetails[0].Currency,
         "CustomerReferenceNo": sessionStorage.getItem('customerReferenceNo'),
         "CustomerCode": this.customerCode,
