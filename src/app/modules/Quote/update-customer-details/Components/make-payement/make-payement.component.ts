@@ -1215,7 +1215,7 @@ export class MakePayementComponent implements OnInit {
     let chequeDate = "";let amount=this.totalPremium;
    
     if(this.IsChargeOrRefund=='REFUND'){
-      if(this.quoteDetails?.PrevPaymentType!=null && this.quoteDetails?.PrevPaymentType!=undefined){
+      if(this.quoteDetails?.PrevPaymentType!=null && this.quoteDetails?.PrevPaymentType!=undefined && this.quoteDetails?.PrevPaymentType=='3'){
         this.Menu = this.quoteDetails?.PrevPaymentType;
         this.activeMenu = this.Menu;
         amount = this.totalPremium

@@ -1653,11 +1653,21 @@ export class CustomerDetailsComponent implements OnInit {
   onCurrencyChange(type){
     if(this.currencyCode!=null && this.currencyCode!=''){
       let currencyData = this.currencyList.find(ele=>ele.Code==this.currencyCode);
-      this.exchangeRate = currencyData?.ExchangeRate;
-      this.minCurrencyRate = currencyData?.MinRate;
-      this.maxCurrencyRate = currencyData?.MaxRate;
-      this.updateComponent.CurrencyCode = this.currencyCode;
-      this.updateComponent.exchangeRate = this.exchangeRate;
+      if(currencyData){
+        this.exchangeRate = currencyData?.ExchangeRate;
+        this.minCurrencyRate = currencyData?.MinRate;
+        this.maxCurrencyRate = currencyData?.MaxRate;
+        this.updateComponent.CurrencyCode = this.currencyCode;
+        this.updateComponent.exchangeRate = this.exchangeRate;
+      }
+      else{
+        this.currencyCode= this.currencyList[0]?.Code;
+        this.exchangeRate =this.currencyList[0]?.ExchangeRate;
+        this.minCurrencyRate = this.currencyList[0].MinRate;
+        this.maxCurrencyRate = this.currencyList[0].MaxRate;
+        this.updateComponent.CurrencyCode = this.currencyCode;
+        this.updateComponent.exchangeRate = this.exchangeRate;
+      }
     }
     console.log('CCCCCCCC',this.currencyCode)
 
