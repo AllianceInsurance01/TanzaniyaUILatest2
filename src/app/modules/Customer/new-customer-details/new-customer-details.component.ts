@@ -135,7 +135,7 @@ export class NewCustomerDetailsComponent {
 	omit_special_char(event){   
 		var k;  
 		k = event.charCode;  //         k = event.keyCode;  (Both can be used)
-		return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || (k >= 48 && k <= 57)); 
+		return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || (k >= 48 && k <= 57) || k == 47); 
 	}
   setPolicyType(value){
 	if(this.endorsementSection && !this.checkDisableFields('IdType')){
@@ -437,6 +437,7 @@ export class NewCustomerDetailsComponent {
 					if(this.productItem.CityName==null) this.productItem.CityName = '';
 					this.productItem.Clientstatus = customerDetails.Clientstatus;
 					this.productItem.EmailId = customerDetails.Email1;
+					this.productItem.occupationdesc = customerDetails?.OtherOccupation;
 					if(customerDetails.Nationality!=null){
 						this.productItem.Country = customerDetails.Nationality;
 					}
@@ -561,6 +562,7 @@ export class NewCustomerDetailsComponent {
 			"MobileNo3": null,
 			"Nationality": data.Country,
 			"Occupation": data?.Occupation,
+			"OtherOccupation":data?.occupationdesc,
 			"Placeofbirth": "Chennai",
 			"PolicyHolderType": data.IdType,
 			"PolicyHolderTypeid": data?.PolicyHolderTypeid,
