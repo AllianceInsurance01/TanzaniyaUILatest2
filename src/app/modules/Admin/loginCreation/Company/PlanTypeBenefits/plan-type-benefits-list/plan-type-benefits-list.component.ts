@@ -442,7 +442,7 @@ export class PlanTypeBenefitsListComponent {
       this.EffectiveDateStart = element.EffectiveStartdate;
       if(element?.EffectiveStartdate!=null && element?.EffectiveStartdate!=''){ this.coverEffectiveDate = this.onDateFormatInEdit(element?.EffectiveStartdate); }
     }
-    
+    element['MotorList'] = [];
     let ReqObj = {
         "PolicyTypeId": this.sectionValue,
         "PlanTypeId": this.planTypeValue,
@@ -451,7 +451,7 @@ export class PlanTypeBenefitsListComponent {
         "ProductId": this.productId,
         "BranchCode": "99999"
     }
-    let urlLink = `${this.ApiUrl1}master/getallpolicytypesubcover`;
+    let urlLink = `${this.ApiUrl1}TravelPolicyType/getalltravelpolicytype`;
     //let urlLink = `${this.ApiUrl1}TravelPolicyType/getalltravelpolicytype`;
      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
        (data: any) => {
