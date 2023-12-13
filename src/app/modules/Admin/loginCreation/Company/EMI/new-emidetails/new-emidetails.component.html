@@ -122,7 +122,8 @@
                     <div class="input-control-container">
                         <label class="input-form-label">Interest Percent<span class="text-required">*</span></label>
                         <div class="input-form-box">
-                            <input type="text" class="input-form-control without-icon" min="0"  (keypress)="keyPressNumbers($event)" [(ngModel)]="emiDetails.InterestPercent" maxlength="100">
+                            <input type="text" class="input-form-control without-icon" min="0" [(ngModel)]="emiDetails.InterestPercent" maxlength="100">
+                            <!--(keypress)="keyPressNumbers($event)"-->
                         </div>
                     </div>
                 </div>

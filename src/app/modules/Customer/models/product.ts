@@ -50,6 +50,7 @@ export class ProductData {
 	backordered = false
 	image?: string = ''
 	occupationdesc:any = '';
+	districtcode:any='';
 	id: string = '';PinCode:any=null;
   maxDate: "2022-09-25"
   /*const currentYear = new Date().getFullYear();
