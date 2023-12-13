@@ -435,6 +435,7 @@ export class NewCustomerDetailsComponent {
 					this.productItem.BusinessType = customerDetails.BusinessType;
 					this.productItem.CityName = customerDetails.CityCode;
 					if(this.productItem.CityName==null) this.productItem.CityName = '';
+					this.productItem.districtcode = customerDetails.CityName;
 					this.productItem.Clientstatus = customerDetails.Clientstatus;
 					this.productItem.EmailId = customerDetails.Email1;
 					this.productItem.occupationdesc = customerDetails?.OtherOccupation;
@@ -507,7 +508,13 @@ export class NewCustomerDetailsComponent {
 		//  if(data.AppointmentDate!= undefined && data.AppointmentDate!=null && data.AppointmentDate!=''){
 		// 	appointmentDate = this.datePipe.transform(data.AppointmentDate, "dd/MM/yyyy");
 		//  }
-		if(data.CityName!=null && data.CityName!='') cityName = this.stateList.find(ele=>ele.Code==data.CityName)?.CodeDesc;
+		if(this.insuranceId!='100004'){
+			if(data.CityName!=null && data.CityName!='') cityName = this.stateList.find(ele=>ele.Code==data.CityName)?.CodeDesc;
+		}
+		else if(this.insuranceId=='100004'){
+			cityName=data?.districtcode;
+		}
+		
 		if(data.state!=null && data.state!='') stateName = this.regionList.find(ele=>ele.Code==data.state)?.CodeDesc;
 		if (data.dobOrRegDate != undefined && data.dobOrRegDate != null && data.dobOrRegDate != '') {
 			dobOrRegDate = this.datePipe.transform(data.dobOrRegDate, "dd/MM/yyyy");
