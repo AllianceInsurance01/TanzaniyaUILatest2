@@ -16,8 +16,6 @@ import { AuthService } from '../../Auth/auth.service';
 export class LoginService {
   public CryKey: any = 'MaaN';
   public Token: any;
-  public username = 'motor';
-  public password = 'motor123#';
   public menuList:any[]=[];
   constructor(
 
@@ -71,13 +69,13 @@ export class LoginService {
       .pipe(retry(1), catchError(this.handleError));
   }
   onPostMethodBasicSync(UrlLink: string, ReqObj: any): Observable<any[]> {
-    let headers = new HttpHeaders();
-    headers = headers.append('Authorization', 'Basic ' + window.btoa('ewayapi' + ':' + 'ewayapi123#'));
     return this.http
-      .post<any>(UrlLink, ReqObj, { headers: headers })
+      .post<any>(UrlLink, ReqObj)
       .pipe(retry(1), catchError(this.handleError));
   }
-
+  public getIPAddress(){  
+    return this.http.get("http://api.ipify.org/?format=json");  
+  } 
   onGetMethodSync(UrlLink: string): Observable<any[]> {
     let headers = new HttpHeaders();
     headers = headers.append('Authorization', 'Basic ' + this.getToken());

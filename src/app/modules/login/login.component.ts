@@ -47,8 +47,8 @@ export class LoginComponent {
   forget: boolean=false;
   temps:boolean=false;
   pa:any;
-  changePasswordSection: boolean;
-  passExpiredError: boolean;
+  changePasswordSection: boolean;username:any=null;
+  passExpiredError: boolean;emailId:any=null;
   constructor(private _formBuilder: FormBuilder, private service: HttpService,
     private loginService: LoginService, private SharedService: SharedService, private authService: AuthService,
     private router: Router,) {
@@ -85,6 +85,7 @@ export class LoginComponent {
   }
   ngOnInit(): void {
     this.onCreateFormControl();
+    
     //AOS.init();
 
   }
@@ -149,15 +150,17 @@ export class LoginComponent {
     this.loginForm.controls['username'].setValue('');
     this.loginForm.controls['password'].setValue('');
     this.ForgetForm.controls['LoginId'].setValue('');
+    this.emailId = null;
     //this.ForgetForm.controls['Email'].setValue('');
   }
 
   forgetSubmit(){
-    const urlLink = `${this.CommonApiUrl}basicauth/forgotpassword`;
+    const urlLink = `${this.CommonApiUrl}api/forgotpassword`;
     const formData = this.ForgetForm.value;
 
     const reqData = {
-   LoginId: formData.LoginId
+        EmailId: this.emailId,
+        LoginId: this.username
     };
 
     this.loginService.onPostMethodBasicSync(urlLink, reqData).subscribe(
@@ -169,14 +172,14 @@ export class LoginComponent {
             title: '<strong>Forget Password </strong>',
             icon: 'info',
             html:
-              `Temporary Password Notification Sent to Email`,
+              `Temporary Password Notification Sent to <span class='text-success'>${this.emailId}</span>`,
             //showCloseButton: true,
             //focusConfirm: false,
             showCancelButton: false,
 
             //confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            cancelButtonText: 'Cancel',
+            cancelButtonText: 'Okay',
           })
           this.ForgetForm.reset();
           //this.loginForm.reset();
@@ -186,7 +189,61 @@ export class LoginComponent {
          this.loginfirst = true;
           this.temps=true;
         }
+        if (res?.ErrorMessage && res?.ErrorMessage.length > 0 || res?.Result?.ErrorMessage && res?.Result?.ErrorMessage.length > 0) {
+          const errorList: any[] = res.ErrorMessage || res?.Result?.ErrorMessage;
+          let ulList:any='';
+          let entry:any[] =  errorList.filter(ele=>ele.Field=='SessionError')
+          for (let index = 0; index < errorList.length; index++) {
 
+            const element = errorList[index];
+             ulList +=`<li class="list-group-login-field">
+               <div style="color: darkgreen;">Field<span class="mx-2">:</span>${element?.Field}</div>
+               <div style="color: red;">Message<span class="mx-2">:</span>${element?.Message}</div>
+             </li>`
+          }
+          if(entry.length==0){
+              Swal.fire({
+              title: '<strong>Form Validation</strong>',
+              icon: 'info',
+              html:
+                `<ul class="list-group errorlist">
+                  ${ulList}
+              </ul>`,
+              showCloseButton: true,
+              focusConfirm: false,
+              confirmButtonText:
+                '<i class="fa fa-thumbs-down"></i> Errors!',
+              confirmButtonAriaLabel: 'Thumbs down, Errors!',
+            })
+          }
+          else {
+            console.log("entered multiiiiiiiiiiiiiiiiiiii");
+            Swal.fire({
+                title: '<strong>Session Error</strong>',
+                icon: 'info',
+                html:
+                  `<ul class="list-group errorlist">
+                  ${ulList}
+              </ul>`,
+                showCloseButton: true,
+                focusConfirm: false,
+                showCancelButton:true,
+
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Proceed Login!',
+              cancelButtonText: 'Cancel',
+            })
+            .then((result) => {
+              if (result.isConfirmed) {
+              // this.loginSection=false;
+              this.onLogin(reqData,'Y')
+            }
+
+            });
+
+          }
+        }
 
       },
       (err: any) => {
@@ -202,14 +259,14 @@ export class LoginComponent {
     let p=this.pa
     const formData = this.changeForm.value;
     if(formData.NewPassword!=formData.OldPassword){
-      const urlLink = `${this.CommonApiUrl}basicauth/changepassword`;
+      const urlLink = `${this.CommonApiUrl}api/changepassword`;
       const reqData = {
         "LoginId": formData.LoginId,
         "NewPassword": formData.NewPassword,
         "OldPassword": formData.OldPassword,
         "Type":this.pa
       };
-      this.SharedService.onPostMethodBasicSync(urlLink, reqData).subscribe(
+      this.loginService.onPostMethodBasicSync(urlLink, reqData).subscribe(
         (data: any) => {
           let res: any = data;
           console.log(data);
@@ -455,48 +512,48 @@ export class LoginComponent {
                    <div style="color: red;">Message<span class="mx-2">:</span>${element?.Message}</div>
                  </li>`
               }
-             if(entry.length==0){
-                Swal.fire({
-                 title: '<strong>Form Validation</strong>',
-                 icon: 'info',
-                 html:
-                   `<ul class="list-group errorlist">
-                    ${ulList}
-                 </ul>`,
-                 showCloseButton: true,
-                 focusConfirm: false,
-                 confirmButtonText:
-                   '<i class="fa fa-thumbs-down"></i> Errors!',
-                 confirmButtonAriaLabel: 'Thumbs down, Errors!',
-               })
-             }
-             else {
-               console.log("entered multiiiiiiiiiiiiiiiiiiii");
-               Swal.fire({
-                  title: '<strong>Session Error</strong>',
+              if(entry.length==0){
+                  Swal.fire({
+                  title: '<strong>Form Validation</strong>',
                   icon: 'info',
                   html:
                     `<ul class="list-group errorlist">
-                     ${ulList}
-                 </ul>`,
+                      ${ulList}
+                  </ul>`,
                   showCloseButton: true,
                   focusConfirm: false,
-                  showCancelButton:true,
-   
-                 confirmButtonColor: '#3085d6',
-                 cancelButtonColor: '#d33',
-                 confirmButtonText: 'Proceed Login!',
-                 cancelButtonText: 'Cancel',
-               })
-               .then((result) => {
-                 if (result.isConfirmed) {
-                 // this.loginSection=false;
-                 this.onLogin(reqData,'Y')
-               }
-   
-               });
-   
-             }
+                  confirmButtonText:
+                    '<i class="fa fa-thumbs-down"></i> Errors!',
+                  confirmButtonAriaLabel: 'Thumbs down, Errors!',
+                })
+              }
+              else {
+                console.log("entered multiiiiiiiiiiiiiiiiiiii");
+                Swal.fire({
+                    title: '<strong>Session Error</strong>',
+                    icon: 'info',
+                    html:
+                      `<ul class="list-group errorlist">
+                      ${ulList}
+                  </ul>`,
+                    showCloseButton: true,
+                    focusConfirm: false,
+                    showCancelButton:true,
+    
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Proceed Login!',
+                  cancelButtonText: 'Cancel',
+                })
+                .then((result) => {
+                  if (result.isConfirmed) {
+                  // this.loginSection=false;
+                  this.onLogin(reqData,'Y')
+                }
+    
+                });
+    
+              }
             }
           
          }
@@ -507,6 +564,7 @@ export class LoginComponent {
       },
     );
   }
+  
   async onB2CNavigate(){
       let urlLink = `${this.CommonApiUrl}authentication/doauth`
       let ReqObj = {

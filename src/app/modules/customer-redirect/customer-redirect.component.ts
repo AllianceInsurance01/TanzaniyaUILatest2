@@ -21,6 +21,7 @@ export class CustomerRedirectComponent {
   branchselection: boolean;codeList:any[]=[];
   branchList: any[]=[];
   branchValue: any;
+  ipAddress: any=null;
   constructor(private sharedService: SharedService,private authService: AuthService,private loginService: LoginService,
     private route:ActivatedRoute,private cookieService: CookieService,private router:Router) { 
 
@@ -43,22 +44,29 @@ export class CustomerRedirectComponent {
         this.getDecryptData();
       }
       else if(productId){
-        this.getGuestLogin(productId)
+        this.loginService.getIPAddress().subscribe((res:any)=>{  
+            this.ipAddress = res?.ip;
+            this.getGuestLogin(productId)
+        });
+        
       }
       else{
-        this.getGuestLogin(null)
+        this.loginService.getIPAddress().subscribe((res:any)=>{  
+          this.ipAddress = res?.ip;
+          this.getGuestLogin(null)
+        });
       }
     });
        
   }
   getGuestLogin(productId){
-    const urlLink = `${this.CommonApiUrl}authentication/login`;
+   
+    const urlLink = `${this.CommonApiUrl}authentication/byipaddress`;
     const reqData = {
-      "LoginId": 'Guest',
-      "Password": 'Admin@01',
-      "ReLoginKey": 'Y'
+      "UserType": "B2C",
+      "IpAddress": this.ipAddress
     };
-
+    
     this.loginService.onPostMethodSync(urlLink, reqData).subscribe(
       (data: any) => {
         let res: any = data;

@@ -58,6 +58,7 @@ export class B2cLoginComponent {
   otpValue: any=null;
   agencyCode: any;
   mobileCodeDesc: any=null;
+  ipAddress: any=null;
   constructor(private _formBuilder: FormBuilder, private service: HttpService,
     private loginService: LoginService, private SharedService: SharedService, private authService: AuthService,
     private router: Router,) {
@@ -66,15 +67,14 @@ export class B2cLoginComponent {
     this.service.ocQuoteMenu = false;
     this.service.navMenu = false;
     this.service.openCoverMenu = false;
-    this.getGuestLogin();
+    
     //this.getRegionList();
   }
   getGuestLogin(){
-    const urlLink = `${this.CommonApiUrl}authentication/login`;
+    const urlLink = `${this.CommonApiUrl}authentication/byipaddress`;
     const reqData = {
-      "LoginId": 'Guest',
-      "Password": 'Admin@01',
-      "ReLoginKey": 'Y'
+      "UserType": "B2C",
+      "IpAddress": this.ipAddress
     };
 
     this.loginService.onPostMethodSync(urlLink, reqData).subscribe(
@@ -170,6 +170,10 @@ export class B2cLoginComponent {
     this.router.navigate([this.menuActive]);
   }
   ngOnInit(): void {
+    this.loginService.getIPAddress().subscribe((res:any)=>{  
+      this.ipAddress = res?.ip;
+      this.getGuestLogin()
+    });
     this.onCreateFormControl();
     //AOS.init();
 
@@ -290,7 +294,7 @@ export class B2cLoginComponent {
         "OldPassword": formData.OldPassword,
         "Type":this.pa
       };
-      this.SharedService.onPostMethodBasicSync(urlLink, reqData).subscribe(
+      this.loginService.onPostMethodBasicSync(urlLink, reqData).subscribe(
         (data: any) => {
           let res: any = data;
           console.log(data);

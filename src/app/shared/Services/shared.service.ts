@@ -5,9 +5,8 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, map, retry, take } from 'rxjs/operators';
+import { catchError, retry } from 'rxjs/operators';
 import { AuthService } from '../../Auth/auth.service';
 
 @Injectable({
@@ -16,8 +15,6 @@ import { AuthService } from '../../Auth/auth.service';
 export class SharedService {
 
   public Token: any;
-  public username = 'motor';
-  public password = 'motor123#';
   private pageHeader: BehaviorSubject<any> = new BehaviorSubject<any>('');
   pageTitle = this.pageHeader.asObservable();
 
@@ -39,14 +36,6 @@ export class SharedService {
 
   onGetPageTitle(name: any) {
     this.pageHeader.next(name);
-  }
-
-  onPostMethodBasicSync(UrlLink: string, ReqObj: any): Observable<any[]> {
-    let headers = new HttpHeaders();
-    headers = headers.append('Authorization', 'Basic ' + window.btoa('ewayapi' + ':' + 'ewayapi123#'));
-    return this.http
-      .post<any>(UrlLink, ReqObj, { headers: headers })
-      .pipe(retry(1), catchError(this.handleError));
   }
   async onPostMethodUnAuthAsync(UrlLink: any, ReqObj: any): Promise<Observable<any[]>> {
     let headers = new HttpHeaders();
@@ -81,20 +70,6 @@ export class SharedService {
     let headers = new HttpHeaders();
     headers = headers.append('Authorization', 'Bearer ' + this.getToken());
     return this.http
-      .get<any>(UrlLink, { headers: headers })
-      .pipe(retry(1), catchError(this.handleError));
-  }
-  onGetMethodSyncBasicToken(UrlLink: string): Observable<any[]> {
-    let headers = new HttpHeaders();
-    headers = headers.append('Authorization', 'Basic ' + window.btoa(this.username + ':' + this.password));
-    return this.http
-      .get<any>(UrlLink, { headers: headers })
-      .pipe(retry(1), catchError(this.handleError));
-  }
-  async onGetMethodAsyncBasicToken(UrlLink: any): Promise<Observable<any[]>> {
-    let headers = new HttpHeaders();
-    headers = headers.append('Authorization', 'Basic ' + window.btoa(this.username + ':' + this.password));
-    return await this.http
       .get<any>(UrlLink, { headers: headers })
       .pipe(retry(1), catchError(this.handleError));
   }
