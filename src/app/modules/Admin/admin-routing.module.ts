@@ -7,6 +7,7 @@ import { ReferralApprovedComponent } from './ReferralCases/referral-approved/ref
 import { AdminComponent } from './admin.component';
 import { EndorsementFieldMasterComponent } from './Masters/endorsement-field-master/endorsement-field-master.component';
 import { ReferralRequoteComponent } from './ReferralCases/referral-requote/referral-requote.component';
+import { DataManipulationComponent } from './data-manipulation/data-manipulation.component';
 
 const routes: Routes = [
   {
@@ -342,6 +343,15 @@ const routes: Routes = [
       preload: true,
       title: "Referral ReQuote Quotes",
       breadcrumb: 'Referral ReQuote Quotes',
+    }
+  },
+  {
+    path: 'dataManipulation',
+    component: DataManipulationComponent,
+    data: {
+      preload: true,
+      title: "Data Manipulation",
+      breadcrumb: 'Data Manipulation',
     }
   },
 ];

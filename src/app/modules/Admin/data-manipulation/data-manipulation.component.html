@@ -1,0 +1,71 @@
+<div class="card">
+    <div class="card-header">
+        <div class="d-flex justify-content-between">
+            <div>
+                Data Manipulation
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row">
+            <div class="col-md-4 col-lg-4 col-12">
+                <div class="input-control-container">
+                    <label class="input-form-label">Insurance Company<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <ng-select class="input-form-select" appendTo="body" [items]="companyList" [(ngModel)]="companyValue" bindValue="Code" bindLabel="CodeDescription">
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    <div class="card-body p-1">
+            <div class="row">
+                <div class="col-sm-12 col-12 col-md-6 col-lg-6">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Query<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <textarea cols="80" rows="2" class="input-form-control without-icon" placeholder="Enter Your Query to check Data (Eg- SELECT * FROM ****)" [(ngModel)]="queryValue" maxlength="500"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-12 col-md-3 col-lg-3">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Password<span class="text-required">*</span></label>
+                        <div class="input-form-box">
+                            <input type="password" [(ngModel)]="password" class="input-form-control without-icon" maxlength="100">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-12 col-md-2 col-lg-2 mt-4" *ngIf="queryValue && password">
+                        <button class="btn btn-success" (click)="onSearchQuery()"> <i class="fa fa-search"></i>&nbsp; Search</button>
+                </div>
+            </div>
+            <ng-container *ngIf="showSection">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 customRow">
+                        <table class="table table-headerRow ">
+                            <thead>
+                                <tr>
+                                    <ng-container *ngFor="let obj of queryHeader">
+                                        <th class="tbl-header">{{obj.key}}</th>
+                                    </ng-container>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let row of queryData| paginate:{itemsPerPage: 5, currentPage:p} ;let i=index">
+                                    <ng-container *ngFor="let obj of queryHeader">
+                                        <td class="tbl-content" style="border: 0.5px solid black !important;">{{row[obj.key]}}</td>
+                                    </ng-container>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <!-- <app-grid-table [cols]="queryHeader" [data]="queryData" [filterValue]="filterValue" changeStatus="true"  (onStatus)="EditStatus($event)" (onEdit)="onEdit($event)" (onConfigure)="onConfigure($event)">
+                        </app-grid-table> -->
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <pagination-controls (pageChange)="p=$event"></pagination-controls>
+                    </div>
+                </div>
+            </ng-container>
+    </div>
+</div>

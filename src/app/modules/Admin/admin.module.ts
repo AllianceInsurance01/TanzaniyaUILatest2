@@ -16,6 +16,8 @@ import { ReferralRejectedComponent } from './ReferralCases/referral-rejected/ref
 import { ReferralRequoteComponent } from './ReferralCases/referral-requote/referral-requote.component';
 import { AdminComponent } from './admin.component';
 import { HttpClientModule } from '@angular/common/http';
+import { DataManipulationComponent } from './data-manipulation/data-manipulation.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -27,7 +29,8 @@ import { HttpClientModule } from '@angular/common/http';
     ReferralPendingComponent,
     ReferralApprovedComponent,
     ReferralRejectedComponent,
-    ReferralRequoteComponent
+    ReferralRequoteComponent,
+    DataManipulationComponent
   ],
   imports: [
     CommonModule,
@@ -40,6 +43,7 @@ import { HttpClientModule } from '@angular/common/http';
     MaterialModule,
     PipesModule,
     DigitOnlyModule,
+    NgxPaginationModule,
     HttpClientModule
   ],
   bootstrap: [],
