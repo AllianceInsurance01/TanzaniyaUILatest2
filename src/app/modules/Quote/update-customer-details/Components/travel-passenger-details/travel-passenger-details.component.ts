@@ -80,6 +80,13 @@ export class TravelPassengerDetailsComponent implements OnInit {
   employeeList:any[]=[];
   originalEmployeeList: any[]=[];
   loginType: any;
+  orgPolicyNo: string;
+  endorsementId: any;
+  enableFieldsList: any;
+  endorseEffectiveDate: any;
+  endorsePolicyNo: any;
+  endorseCategory: any;
+  endorsementName: any;
 
   constructor(private router:Router,private updateComponent:UpdateCustomerDetailsComponent,
     private datePipe:DatePipe,private sharedService: SharedService,) {
@@ -99,7 +106,22 @@ export class TravelPassengerDetailsComponent implements OnInit {
     if(this.userDetails.Result.LoginType) this.loginType = this.userDetails.Result.LoginType;
     let quoteRefNo = sessionStorage.getItem('quoteReferenceNo');
     if(quoteRefNo) this.requestReferenceNo = quoteRefNo;
-    
+    if (sessionStorage.getItem('endorsePolicyNo')) {
+      this.endorsementSection = true;
+      let endorseObj = JSON.parse(sessionStorage.getItem('endorseTypeId'))
+      if (endorseObj) {
+        this.orgPolicyNo = sessionStorage.getItem('endorsePolicyNo')
+        this.endorsementId = endorseObj.EndtTypeId;
+        this.enableFieldsList = endorseObj.FieldsAllowed;
+        this.endorseEffectiveDate = endorseObj?.EffectiveDate;
+        this.endorsePolicyNo = endorseObj?.PolicyNo;
+        this.endorseCategory = endorseObj.Category;
+        this.endorsementName = endorseObj?.EndtName;
+        // if(this.endorsementId!=42 && this.endorsementId!=842){
+        //     this.enableFieldName = this.enableFieldsList.some(ele=>ele=='InsuranceType');
+        // }
+      }
+    }
     this.searchList = [
       { "Code":"01","CodeDesc":"Chassis Number"},
       { "Code":"02","CodeDesc":"Register Number"},
@@ -118,7 +140,9 @@ export class TravelPassengerDetailsComponent implements OnInit {
         },
       }
     ];
-
+    let entry = null;
+    if(this.endorsementSection){ entry = { isEdit: true } }
+    else{ entry = { isEdit: true, isRemove: true, } }
     this.PassengerHeader =  [
       { key: 'PassengerFirstName', display: 'First Name' },
       { key: 'PassengerLastName', display: 'Last Name' },
@@ -129,8 +153,8 @@ export class TravelPassengerDetailsComponent implements OnInit {
         key: 'actions',
         display: 'Action',
         config: {
-          isEdit: true,
-          isRemove: true,
+          isEdit: !this.endorsementSection,
+          isRemove: !this.endorsementSection,
         },
       }
     ];

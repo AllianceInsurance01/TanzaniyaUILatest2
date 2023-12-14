@@ -23,8 +23,10 @@
             <div class="col-12 col-md-4 col-lg-4 col-xl-4">
                 <div class="input-control-container">
                     <label class="input-form-label">Destination Country</label>
-                    <ng-select class="input-form-select" appendTo="body" [items]="countryList" (change)="premiunDropdown(null,'change')" formControlName="SourceCountry" bindValue="Code" bindLabel="CodeDesc">
-                    </ng-select>
+                    <fieldset [disabled]="endorsementSection">
+                        <ng-select class="input-form-select" appendTo="body" [items]="countryList" (change)="premiunDropdown(null,'change')" formControlName="SourceCountry" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </fieldset>
                     <div class="input-form-error">
                     </div>
                 </div>
@@ -32,9 +34,11 @@
             <div class="col-12 col-md-4 col-lg-4 col-xl-4" *ngIf="TravelForm.controls.SourceCountry.value!='' && TravelForm.controls.SourceCountry.value!=null">
                 <div class="input-control-container">
                     <label class="input-form-label">Premium Plan</label><span class="text-danger">*</span>
+                    <fieldset [disabled]="endorsementSection">
+                        <ng-select class="input-form-select" appendTo="body" (change)="getPlanTypeList('change')" [items]="premiumList" formControlName="SectionId" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </fieldset>
                     
-                    <ng-select class="input-form-select" appendTo="body" (change)="getPlanTypeList('change')" [items]="premiumList" formControlName="SectionId" bindValue="Code" bindLabel="CodeDesc">
-                    </ng-select>
                     <div class="input-form-error">
                     </div>
                 </div>
@@ -43,8 +47,10 @@
                 <label class="customLabel spancommon span_font_size">Type Of Plan</label>
                     <ng-container *ngIf="TravelForm.controls.SectionId.value !='' && TravelForm.controls.SectionId.value !=null"> &nbsp;
                     <a style="text-decoration:underline;color: rgb(18, 174, 236);cursor: pointer;" (click)="viewplanBenifits()">View Plan Benefits</a></ng-container>
-                <ng-select class="input-form-select" appendTo="body" [items]="planTypeList" formControlName="PlanTypeId" bindValue="Code" bindLabel="CodeDesc">
-                </ng-select>
+                    <fieldset [disabled]="endorsementSection">
+                        <ng-select class="input-form-select" appendTo="body" [items]="planTypeList" formControlName="PlanTypeId" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </fieldset>
                 <!-- <div class="input-form-radio-box mt-1">
                     <div class="radio-toolbar" style="position: relative;top: 1rem;right: 0.8rem;">
                         <ng-container *ngFor="let type of planTypeList;let i=index">
@@ -80,7 +86,7 @@
                         <div class="input-control-container">
                             <label class="input-form-label">{{group.GroupDesc}}</label><br>
                             <div class="row mb-2">
-                                <div class="col-3 col-md-2 col-lg-2 col-xl-2 mr-2 mt-3">
+                                <div class="col-3 col-md-2 col-lg-2 col-xl-2 mr-2 mt-3" *ngIf="!endorsementSection">
                                     <button class="yes" *ngIf="group.GroupMembers!='0'" (click)="onchangeContents('sub',i)"><i class="fas fa-minus mx-1"></i></button>
                                 </div>
                                 <div class="col-3 col-md-5 col-lg-5 col-xl-5 p-0 mt-2">
@@ -88,7 +94,7 @@
                                         <h5><b> &nbsp;{{group.GroupMembers}}</b></h5>
                                     </div>
                                 </div>
-                                <div class="col-3 col-md-2 col-lg-2 col-xl-2 mt-3">
+                                <div class="col-3 col-md-2 col-lg-2 col-xl-2 mt-3" *ngIf="!endorsementSection">
                                     <button class="yes" (click)="onchangeContents('add',i)"><i class="fas fa-plus mx-1"></i></button>
                                 </div>
                             </div>
@@ -207,6 +213,7 @@
                 <div class="text-center my-2">
                     <button class="custom-btn btn-5 mr-2" *ngIf="loginType!='B2CFlow'" [routerLink]="['/Home/existingQuotes']" routerLinkActive="router-link-active" matRipple><<&nbsp;Back</button>&nbsp;
                     <button class="custom-btn btn-6 maan-button-data" matRipple (click)="onProceed()"><i class="fas fa-check"></i>&nbsp;Proceed</button>
+                    <!-- <button class="custom-btn btn-6 maan-button-data" *ngIf="endorsementSection" matRipple (click)="customRedirection()"><i class="fas fa-check"></i>&nbsp;Proceed</button> -->
                 </div>
             </div>
         </div>

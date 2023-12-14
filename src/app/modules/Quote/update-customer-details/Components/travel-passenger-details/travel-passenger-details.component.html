@@ -61,10 +61,10 @@
                         
                         <div class="col-md-12 col-lg-10 col-xl-10 col-12 offset-lg-1">
                         <div class="d-flex justify-content-between">
-                            <div class=" mt-2" *ngIf="!editSection">
+                            <div class=" mt-2" *ngIf="!editSection && !endorsementSection">
                                 <button class="btn btn-warning"  (click)="AddPassenger()">Add Passenger</button>
                             </div>
-                            <div class=" mt-2" *ngIf="!editSection && loginType!='B2CFlow' && loginType!='B2CFlow2'">
+                            <div class=" mt-2" *ngIf="!editSection && loginType!='B2CFlow' && loginType!='B2CFlow2' && !endorsementSection">
                                 <button class="btn btn-primary" (click)="UploadTravel()"><i class="fa fa-upload"></i>&nbsp;Upload</button>
                             </div>
                         </div>
@@ -423,7 +423,7 @@
         
         <div class="text-center mt-2" *ngIf="!editSection">
             <button class="custom-btn btn-5 maan-btn-red mx-2" matRipple [routerLink]="['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']" routerLinkActive="router-link-active" matRipple (click)="onGetBack()"><<&nbsp;Back</button>
-            <button class="custom-btn btn-8 mx-2" *ngIf="historyRecordsList.length!=0 && !enableEmployeeUploadSection" (click)="onFinalSavePassemgers('save')">Save & Proceed</button>
+            <button class="custom-btn btn-8 mx-2" *ngIf="historyRecordsList.length!=0 && !enableEmployeeUploadSection && !endorsementSection" (click)="onFinalSavePassemgers('save')">Save & Proceed</button>
             <button class="custom-btn btn-6 mx-2" *ngIf="historyRecordsList.length!=0 && !enableEmployeeUploadSection" (click)="onFinalSavePassemgers('proceed')">Proceed</button>
         </div>
     </div>

@@ -66,6 +66,19 @@ export class TravelQuoteDetailsComponent implements OnInit {
   customerPolicyTypeError: boolean;
   modifiedCustomer: boolean;
   customerReferenceNo: any;
+  endorsementDate: any=null;
+  endorsementEffectiveDate: any=null;
+  endorsementRemarks: any=null;
+  endorsementType: any=null;
+  endorsementTypeDesc: any=null;
+  endtCategoryDesc: any=null;
+  endtCount: any=null;
+  endtPrevQuoteNo: any=null;
+  endtPrevPolicyNo: any=null;
+  endtStatus: any=null;
+  isFinanceEndt: any=null;
+  orginalPolicyNo: any=null;
+  endorsementYn: any='N';
 
   constructor(private router: Router, private updateComponent: UpdateCustomerDetailsComponent,
     private sharedService: SharedService, private datePipe: DatePipe
@@ -93,7 +106,6 @@ export class TravelQuoteDetailsComponent implements OnInit {
         this.endorsePolicyNo = endorseObj?.PolicyNo;
         this.endorseCategory = endorseObj.Category;
         this.endorsementName = endorseObj?.EndtName;
-        console.log("Enable Obj in Vehicle", this.enableFieldsList, this.endorsementId)
         // if(this.endorsementId!=42 && this.endorsementId!=842){
         //     this.enableFieldName = this.enableFieldsList.some(ele=>ele=='InsuranceType');
         // }
@@ -157,6 +169,23 @@ export class TravelQuoteDetailsComponent implements OnInit {
     this.BelongingCountryId = customerDatas.CountryId;
     this.executiveValue = customerDatas?.AcExecutiveId;
     this.commissionValue = customerDatas?.CommissionType;
+    this.endorsementYn = customerDatas?.EndorsementYn;
+    if(this.endorsementSection){
+      if(customerDatas.EndorsementDate){
+        this.endorsementDate = customerDatas?.EndorsementDate;
+        this.endorsementEffectiveDate = customerDatas?.EndorsementEffectiveDate;
+        this.endorsementRemarks = customerDatas?.EndorsementRemarks;
+        this.endorsementType = customerDatas?.EndorsementType;
+        this.endorsementTypeDesc = customerDatas?.EndorsementTypeDesc;
+        this.endtCategoryDesc = customerDatas?.EndtCategoryDesc;
+        this.endtCount = customerDatas?.EndtCount;
+        this.endtPrevQuoteNo = customerDatas?.EndtPrevQuoteNo;
+        this.endtStatus = customerDatas?.EndtStatus;
+        this.endtPrevPolicyNo = customerDatas?.EndtPrevPolicyNo;
+        this.isFinanceEndt = customerDatas?.IsFinanceEndt;
+        this.orginalPolicyNo = customerDatas?.OrginalPolicyNo;
+      }
+    }
     this.TravelForm.controls['PlanTypeId'].setValue(customerDatas.PlanTypeId);
     this.TravelForm.controls['SourceCountry'].setValue(customerDatas.DestinationCountry);
     this.premiunDropdown(customerDatas.SectionId,'direct',);
@@ -822,7 +851,20 @@ export class TravelQuoteDetailsComponent implements OnInit {
       "TravelCoverDuration": noOfDays,
       "TravelEndDate": this.travelStartDate,
       "TravelStartDate": this.travelEndDate,
-      "GroupDetails": travelList
+      "GroupDetails": travelList,
+      "EndorsementYn": this.endorsementYn,
+        "EndorsementDate":this.endorsementDate,
+        "EndorsementEffectiveDate": this.endorsementEffectiveDate,
+        "EndorsementRemarks": this.endorsementRemarks,
+        "EndorsementType": this.endorsementType,
+        "EndorsementTypeDesc": this.endorsementTypeDesc,
+        "EndtCategoryDesc": this.endtCategoryDesc,
+        "EndtCount":this.endtCount,
+        "EndtPrevPolicyNo":this.endtPrevPolicyNo,
+        "EndtPrevQuoteNo": this.endtPrevQuoteNo,
+        "EndtStatus": this.endtStatus,
+        "IsFinanceEndt": this.isFinanceEndt,
+        "OrginalPolicyNo": this.orginalPolicyNo,
     }
     ReqObj['TravelStartDate'] = this.datePipe.transform(startDate, "dd/MM/yyyy");
     ReqObj['TravelEndDate'] = this.datePipe.transform(endDate, "dd/MM/yyyy");
@@ -930,7 +972,9 @@ export class TravelQuoteDetailsComponent implements OnInit {
 
   }
 
-
+  customRedirection(){
+    this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount']);
+  }
   getUWDetails() {
     let ReqObj = {
       "Limit": "0",
