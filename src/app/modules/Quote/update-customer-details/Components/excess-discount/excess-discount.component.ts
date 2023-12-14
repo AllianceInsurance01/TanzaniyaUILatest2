@@ -4562,18 +4562,14 @@ getMotorUsageList(vehicleValue){
         console.log(data);
         if(data.Result){
           this.viewList = data.Result;
-          console.log(' view Condition Value',this.viewList);
           if(this.viewList?.ClausesList){
             this.ClausesData = this.viewList?.ClausesList;
-            console.log('Claussssssssssss',this.ClausesData);
           }
           if(this.viewList?.ExclusionList){
             this.ExclusionData = this.viewList?.ExclusionList;
-            console.log('Exclusiooooooooon',this.ExclusionData);
           }
           if(this.viewList?.WarrantyList){
             this.WarrantyData = this.viewList?.WarrantyList;
-            console.log('Waraantyyyyy',this.WarrantyData);
           }
           this.WarrteData = this.viewList.WarrateList;
           if(this.userType=='Broker'){
@@ -4659,10 +4655,11 @@ getMotorUsageList(vehicleValue){
               { key: 'ExclusionId', display: 'Exclusion Id' },
               { key: 'ExclusionDesc', display: 'Exclusion Description' },
               { key:'Edit', display:'Edit',
-              config: {
-               Edit: true,
-               model:'Edit'
-             },}
+                config: {
+                Edit: true,
+                model:'Edit'
+                },
+              }
 
             ];
             this.ExclusionDataId.map(x=>({

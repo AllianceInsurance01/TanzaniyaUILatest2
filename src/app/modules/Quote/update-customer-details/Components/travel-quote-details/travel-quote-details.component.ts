@@ -194,6 +194,16 @@ export class TravelQuoteDetailsComponent implements OnInit {
     this.TravelForm.controls['SportsCoverYn'].setValue(customerDatas.SportsCoverYn);
     this.TravelForm.controls['TerrorismCoverYn'].setValue(customerDatas.TerrorismCoverYn);
     this.TravelForm.controls['CovidCoverYn'].setValue(customerDatas.CovidCoverYn);
+     if(this.endorsementSection){
+      this.TravelForm.controls['PlanTypeId'].disable();
+      this.TravelForm.controls['SourceCountry'].disable();
+      this.TravelForm.controls['HavePromoCode'].disable();
+      this.TravelForm.controls['PromoCode'].disable();
+      this.TravelForm.controls['SportsCoverYn'].disable();
+      this.TravelForm.controls['TerrorismCoverYn'].disable();
+      this.TravelForm.controls['CovidCoverYn'].disable();
+      this.TravelForm.controls['SectionId'].disable();
+     }
     let passengerDetails = customerDatas.GroupDetails;
     if (passengerDetails.length != 0) {
       for (let passenger of passengerDetails) {
@@ -814,6 +824,14 @@ export class TravelQuoteDetailsComponent implements OnInit {
       brokerCode = this.brokerCode;
       brokerBranchCode = this.brokerbranchCode
     }
+    this.TravelForm.controls['PlanTypeId'].enable();
+      this.TravelForm.controls['SourceCountry'].enable();
+      this.TravelForm.controls['HavePromoCode'].enable();
+      this.TravelForm.controls['PromoCode'].enable();
+      this.TravelForm.controls['SportsCoverYn'].enable();
+      this.TravelForm.controls['TerrorismCoverYn'].enable();
+      this.TravelForm.controls['CovidCoverYn'].enable();
+      this.TravelForm.controls['SectionId'].enable();
     let ReqObj = {
 
       "AcExecutiveId": acExecutiveId,
@@ -874,8 +892,14 @@ export class TravelQuoteDetailsComponent implements OnInit {
       (data: any) => {
         let res: any = data;
         if (data.ErrorMessage.length != 0) {
-          if (res.ErrorMessage) {
-          }
+          this.TravelForm.controls['PlanTypeId'].disable();
+          this.TravelForm.controls['SourceCountry'].disable();
+          this.TravelForm.controls['HavePromoCode'].disable();
+          this.TravelForm.controls['PromoCode'].disable();
+          this.TravelForm.controls['SportsCoverYn'].disable();
+          this.TravelForm.controls['TerrorismCoverYn'].disable();
+          this.TravelForm.controls['CovidCoverYn'].disable();
+          this.TravelForm.controls['SectionId'].disable();
         }
         else {
           let entry = data?.Result;
