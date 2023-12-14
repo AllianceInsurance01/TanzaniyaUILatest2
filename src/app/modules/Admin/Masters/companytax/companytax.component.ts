@@ -64,6 +64,10 @@ export class CompanyTaxListComponent implements OnInit {
         if(data.Result){
           // let obj = [{Code:"99999",CodeDesc:"ALL"}];
          this.TaxForList=data?.Result;
+         if(this.TaxFor==null || this.TaxFor==''){
+          this.TaxFor = 'NB';
+          this.getTaxDetails();
+        }
         //  if(!this.TaxFor){ this.TaxFor = "NB"; this.getTaxDetails();
         //  // this.getTaxFor(); this.getChangeorrefund();
         //   }

@@ -523,10 +523,7 @@ export class NewCustomerDetailsComponent {
 		if (this.productItem.IdType == '2') businessType = this.productItem.BusinessType;
 		console.log("Appointment Date", appointmentDate);
 		console.log('mobile code', this.productItem.MobileCode)
-
 		let codes = this.productItem.MobileCode
-
-
 		if (this.productItem.MobileCode != undefined && this.productItem.MobileCode != null && this.productItem.MobileCode != '') {
 			//let code = this.productItem
 			let code = this.mobileCodeList.find(ele => ele.Code == codes)
@@ -538,6 +535,14 @@ export class NewCustomerDetailsComponent {
 		if(data.vrngst=='' || data.vrngst== undefined || data.vrngst==null){data.vrngst=null};
 		if(this.loginType=='B2CFlow') data.Clientstatus = 'Y';
 		let type = null;
+		if(this.productId=='46' && (this.productItem?.PolicyHolderTypeid==null || this.productItem?.PolicyHolderTypeid=='' || this.productItem?.PolicyHolderTypeid==undefined)){
+		  	if(this.productItem.IdType==1 || this.productItem.IdType=='1'){ this.productItem.PolicyHolderTypeid = '3';}
+			else{this.productItem.PolicyHolderTypeid = '6';}
+			var minm = 1000000000; 
+    		var maxm = 9876543210; 
+			this.productItem.IdNumber = Math.floor(Math 
+				.random() * (maxm - minm + 1)) + minm; 
+		}
 		
 		let ReqObj = {
 			"BrokerBranchCode": this.brokerbranchCode,

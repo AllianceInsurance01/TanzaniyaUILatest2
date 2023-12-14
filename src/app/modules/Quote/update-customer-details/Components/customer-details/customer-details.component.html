@@ -126,7 +126,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-2">
+                            <div class="col-12 col-md-2" *ngIf="productId!='46'">
                                 <div class="input-control-container">
                                     <label class="input-form-label">ID Number</label>
                                     <div class="input-form-radio-box">
@@ -188,14 +188,14 @@
                                     </ng-select>
                                 </div>
                             </div> 
-                            <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="productId!='46'">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Identity Type</label><span class="text-danger">*</span>
                                     <ng-select class="input-form-select" appendTo="body" [items]="policyHolderTypeList"  [(ngModel)]="productItem.PolicyHolderTypeid" (change)="onCustomerFieldChange('PolicyTypeId');onChangePolicyHolderType()" bindValue="Code" bindLabel="CodeDesc">
                                     </ng-select>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-lg-4 col-xl-4">
+                            <div class="col-md-4 col-lg-4 col-xl-4" *ngIf="productId!='46'">
                                 <div class="input-control-container">
                                     <label class="input-form-label">ID Number</label><span class="text-danger">*</span>
                                     <div class="input-form-box">

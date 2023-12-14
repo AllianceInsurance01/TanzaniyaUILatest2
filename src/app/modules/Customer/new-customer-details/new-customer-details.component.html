@@ -57,14 +57,14 @@
         <div style="max-width: 130px;min-width: 130px;">
             <div class="headinglbels">Title <span class="star">*</span></div> 
             <div class="mt-1">
-            <ng-select class="custom" appendTo="body" [disabled]="checkDisableFields('Title')" [items]="titleList" (change)="onTitleChange()" [(ngModel)]="productItem.Title" bindValue="Code" bindLabel="CodeDesc">
+            <ng-select class="custom" appendTo="body" [disabled]="checkDisableFields('Title')"  [items]="titleList" (change)="onTitleChange()" [(ngModel)]="productItem.Title" bindValue="Code" bindLabel="CodeDesc">
             </ng-select>
             </div>
         </div>
         <div style="max-width: 230px;min-width: 230px;">
             <div class="headinglbels">Customer Name<span class="star">*</span></div> 
             <div class="mt-1">
-            <input type="text" maxlength="150" [disabled]="checkDisableFields('CustomerName')" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.ClientName">
+            <input type="text" maxlength="150" [disabled]="checkDisableFields('CustomerName')" placeholder="Enter Your Name" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.ClientName">
             </div>
         </div>
         <div style="max-width: 200px;min-width: 200px;">
@@ -75,11 +75,11 @@
             </div>
         </div>
             </div>
-            <div class="d-flex mt-3 justify-content-between">
+            <div class="d-flex mt-3 justify-content-between" *ngIf="productId!='46'">
                 <div style="max-width:200px;" *ngIf="productItem.Occupation=='99999'">
                     <div class="headinglbels">Occupation Description<span class="star">*</span></div> 
                     <div class="mt-1">
-                    <input type="text" maxlength="150" [disabled]="checkDisableFields('OccupationType')" class="layout"  [(ngModel)]="productItem.occupationdesc">
+                    <input type="text" maxlength="150" placeholder="Enter Other Occupation Detail" [disabled]="checkDisableFields('OccupationType')" class="layout"  [(ngModel)]="productItem.occupationdesc">
                     </div>
                 </div>
                 <div style="max-width: 130px;min-width: 130px;" *ngIf="productItem.IdType != 2"> 
@@ -89,7 +89,7 @@
                         </ng-select>
                     </div>
                 </div>
-                <div [ngClass]="productItem.IdType != 2 ? 'customFieldWidth2':'customFieldWidth'">
+                <div [ngClass]="productItem.IdType != 2 ? 'customFieldWidth2':'customFieldWidth'" >
                     <div class="headinglbels">Identity Type<span class="star">*</span></div> 
                     <div class="mt-1">
                     <ng-select class="custom" appendTo="body" [items]="policyHolderTypeList" style="max-width: 380px;" [disabled]="checkDisableFields('IdType')" [(ngModel)]="productItem.PolicyHolderTypeid" bindValue="Code" bindLabel="CodeDesc">
@@ -103,7 +103,7 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex mt-3 justify-content-between">
+            <div class="d-flex mt-3 justify-content-between" *ngIf="productId!='46'">
                 <div style="max-width: 200px;min-width: 200px;" *ngIf="productItem.Occupation=='99999'">
                     <div class="headinglbels">ID Number<span class="star">*</span></div> 
                     <div class="mt-1">
@@ -130,13 +130,54 @@
                     </div>
                     <div *ngIf="prmEmail.errors?.email" class="text-danger"> 
                         Please Enter Valid Email Id
-                </div> 
+                    </div> 
                 </div>
             </div>
-
+            
+            <div class="d-flex mt-3 justify-content-between" *ngIf="productId=='46'">
+                <div style="max-width: 130px;min-width: 130px;">
+                    <div class="headinglbels">Country Code <span class="star">*</span></div> 
+                    <div class="mt-1">
+                    <ng-select class="custom" appendTo="body"  [items]="mobileCodeList"  [disabled]="checkDisableFields('Country')"  [(ngModel)]="productItem.MobileCode" bindValue="Code" bindLabel="CodeDesc">
+                    </ng-select>
+                    </div>
+                </div>
+                <div style="max-width: 230px;min-width: 230px;">
+                    <div class="headinglbels">Mobile No<span class="star">*</span></div> 
+                    <div class="mt-1">
+                        <input type="text" maxlength="10" (keypress)="omit_special_char($event)" class="layout" placeholder="Enter Your Mobile No"  [disabled]="checkDisableFields('MobileNo')"  [(ngModel)]="productItem.MobileNo">
+                    </div>
+                </div>
+                <div style="max-width: 200px;min-width: 200px;"  *ngIf="productItem.Occupation!='99999'">
+                    <div class="headinglbels">Email ID</div> 
+                    <div class="mt-1">
+                        <input type="text" class="layout"  email [(ngModel)]="productItem.EmailId" placeholder="Enter Your Email Id"  [disabled]="checkDisableFields('Email')" #prmEmail="ngModel">
+                    </div>
+                    <div *ngIf="prmEmail.errors?.email" class="text-danger"> 
+                        Please Enter Valid Email Id
+                    </div> 
+                </div>
+                <div style="max-width: 200px;min-width: 200px;" *ngIf="productItem.Occupation=='99999'">
+                    <div class="headinglbels">Occupation Description<span class="star">*</span></div> 
+                    <div class="mt-1">
+                    <input type="text" maxlength="150" placeholder="Enter Other Occupation Detail" [disabled]="checkDisableFields('OccupationType')" class="layout"  [(ngModel)]="productItem.occupationdesc">
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex mt-3 justify-content-between" *ngIf="productId=='46' && productItem.IdType != 2">
+                <div style="max-width: 130px;min-width: 130px;" *ngIf="productItem.IdType != 2"> 
+                    <div class="headinglbels">Gender <span class="star">*</span></div> 
+                    <div class="mt-1">
+                        <ng-select class="custom" appendTo="body"  [items]="genderList"  [disabled]="checkDisableFields('Gender')"  [(ngModel)]="productItem.Gender" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                </div>
+                
+                
+            </div>
             <!----Newww-->
-            <div class="d-flex mt-3 justify-content-between">
-           <div style="max-width: 200px;min-width: 200px;" *ngIf="productItem.Occupation=='99999'">
+            <div class="d-flex mt-3 justify-content-between" *ngIf="productId!='46'">
+                <div style="max-width: 200px;min-width: 200px;" *ngIf="productItem.Occupation=='99999'">
                     <div class="headinglbels">Email ID</div> 
                     <div class="mt-1">
                         <input type="text" class="layout" email [(ngModel)]="productItem.EmailId"  [disabled]="checkDisableFields('Email')" #prmEmail="ngModel">
@@ -153,7 +194,7 @@
        <div class="row mt-3">
          <div class="col-6" >
            <div class="headinglbels" *ngIf="productItem.IdType == 2">Registration Date </div> 
-           <div class="headinglbels" *ngIf="productItem.IdType != 2">Date Of Birth</div> 
+           <div class="headinglbels" *ngIf="productItem.IdType != 2">Date Of Birth &nbsp;<span class="text-danger">*</span></div> 
            <ng-container *ngIf="productItem.IdType != 2">
                 <mat-form-field appearance="fill">
                     <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->
@@ -245,14 +286,14 @@
                     </ng-select>
                     </div>
                 </div>
-                <div class="col-12 mt-1">
+                <div class="col-12 mt-1" *ngIf="productId!='46'">
                     <div class="headinglbels">Identity Type<span class="star">*</span></div> 
                     <div class="mt-1">
                         <ng-select class="custom" appendTo="body" [items]="policyHolderTypeList"   [(ngModel)]="productItem.PolicyHolderTypeid" [disabled]="checkDisableFields('IdType')"   bindValue="Code" bindLabel="CodeDesc">
                         </ng-select>
                     </div>
                 </div>
-                <div class="col-12 mt-1">
+                <div class="col-12 mt-1" *ngIf="productId!='46'">
                     <div class="headinglbels">ID Number<span class="star">*</span></div> 
                     <div class="mt-1">
                         <input type="text" (keypress)="omit_special_char($event)" class="layout"  [(ngModel)]="productItem.IdNumber" [disabled]="checkDisableFields('IdNumber')"   maxlength="20">
@@ -287,7 +328,7 @@
             <div class="row mt-3">
               <div class="col-12" >
                 <div class="headinglbels" *ngIf="productItem.IdType == 2">Registration Date</div> 
-                <div class="headinglbels" *ngIf="productItem.IdType != 2">Date Of Birth</div> 
+                <div class="headinglbels" *ngIf="productItem.IdType != 2">Date Of Birth &nbsp;<span class="text-danger">*</span></div> 
                 <ng-container *ngIf="productItem.IdType != 2">
                     <mat-form-field appearance="fill">
                         <!-- <mat-label>Policy Start Date<span class="text-danger">*</span></mat-label> -->

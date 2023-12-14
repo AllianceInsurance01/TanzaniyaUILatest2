@@ -128,6 +128,11 @@ export class TaxDetailsComponent implements OnInit {
        (data: any) => {
          if(data.Result){
           this.TaxForList=data?.Result;
+          if(this.TaxFor==null || this.TaxFor==''){
+            this.TaxFor = 'NB';
+            this.getTaxDetails();
+          }
+         
          }
        },
        (err) => { },

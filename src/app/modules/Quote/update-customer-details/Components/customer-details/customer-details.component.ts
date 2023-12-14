@@ -392,7 +392,7 @@ export class CustomerDetailsComponent implements OnInit {
         this.productItem = new ProductData();
         this.productItem.Clientstatus = 'P';
         this.productItem.Gender = '';
-        this.productItem.PolicyHolderTypeid = '';
+        
         this.productItem.IdType = '1';
         this.updateComponent.CustomerType = this.productItem.IdType;
         this.productItem.PreferredNotification = '';
@@ -403,6 +403,16 @@ export class CustomerDetailsComponent implements OnInit {
         this.productItem.Occupation = '';
         this.productItem.BusinessType='';
         this.productItem.Title='';
+        if(this.productId!='46'){ this.productItem.PolicyHolderTypeid = '';}
+        else{
+          if(this.productItem.IdType==1 || this.productItem.IdType=='1'){ this.productItem.PolicyHolderTypeid = '3';this.updateComponent.PolicyHolderTypeid = '3';}
+			    else{this.productItem.PolicyHolderTypeid = '6';this.updateComponent.PolicyHolderTypeid = '6';}
+          var minm = 1000000000; 
+    		  var maxm = 9876543210; 
+          this.productItem.IdNumber = Math.floor(Math 
+            .random() * (maxm - minm + 1)) + minm; 
+          this.updateComponent.IdNumber = this.productItem.IdNumber;
+        }
         this.getPolicyIdTypeList(null);
     }
     

@@ -304,7 +304,7 @@ onCustomerSearch(){
 let app; let login;
   if(this.userType == 'Issuer'){
     app=this.loginId;
-    login="";
+    login=this.loginId;
   }
   else{
     app="1";
