@@ -101,8 +101,8 @@ export class UpdateCustomerDetailsComponent implements OnInit {
     }
     if(type=='motorDetails') return(this.checkRouting('customerDetails') && this.router.url!='/Home/existingQuotes/customerSelection/customerDetails/motor-details');
     if(type=='coverDetails') return (this.checkRouting('riskDetails') && this.router.url!='/Home/existingQuotes/customerSelection/customerDetails/excess-discount');
-    if(type=='additionalDetails') return (this.checkRouting('coverDetails') && this.router.url!='/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details');
-    if(type=='passengerDetails') return (this.checkRouting('coverDetails') && this.router.url!='/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details');
+    if(type=='additionalDetails') return (this.checkRouting('coverDetails') && this.router.url!='/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details');
+    if(type=='passengerDetails') return (this.checkRouting('coverDetails') && this.router.url!='/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details');
     if(type=='premiumDetails') return (this.checkRouting('additionalDetails') && this.router.url!='/Home/existingQuotes/customerSelection/customerDetails/premium-details' && this.router.url!='/Home/existingQuotes/customerSelection/customerDetails/travel-quote-details');
     if(type=='paymentDetails') return (this.checkRouting('premiumDetails') && this.policySection);
   }

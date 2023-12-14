@@ -2770,7 +2770,7 @@
                 </div>
             </div>
         </div>
-        <div class="maan-grid-item customPadding mt-2" *ngIf="(coverSection && (((!statusValue || checkManualReferral()) && !adminSection) || (statusValue && adminSection))) && ((!this.endorsementSection) || (this.endorsementSection && this.endorsementCategory=='Financial'))">
+        <div class="maan-grid-item customPadding mt-2" *ngIf="(coverSection && (((!statusValue || checkManualReferral()) && !adminSection) || (statusValue && adminSection ))) && ((!this.endorsementSection) || (this.endorsementSection && this.endorsementCategory=='Financial'))">
             
             <div class="maan-grid-item-title" style="margin: 0px !important;top:0rem;bottom: 0rem !important;padding-top: 9px !important;">
                 <div class="d-flex justify-content-between">
@@ -3169,12 +3169,12 @@
         <button class="custom-btn btn-5 mx-2" matRipple (click)="ongetBack()">
             <<&nbsp;Back</button>
             <button class="custom-btn btn-6 maan-button-data mx-2" matRipple
-                    *ngIf="!adminSection && userType=='Issuer' && statusValue == 'RA' && !otpSection" (click)="updateFinalizeYN('proceed')">Buy Policy</button>
+                    *ngIf="!adminSection && userType=='Issuer' && statusValue == 'RA' && !otpSection && !endorsementSection" (click)="updateFinalizeYN('proceed')">Buy Policy</button>
                 <button class="custom-btn btn-6 maan-button-data mx-2" matRipple
-                    *ngIf="!adminSection && userType!='Issuer' && statusValue == 'RA' && !otpSection" (click)="onFormSubmit()">Buy Policy</button>
+                    *ngIf="!adminSection && (userType!='Issuer'  || (userType=='Issuer' && subuserType=='low' && endorsementSection)) && (statusValue == 'RA' || (userType=='Issuer' && subuserType=='low' && endorsementSection)) && !otpSection" (click)="onFormSubmit()">Buy Policy</button>
                 <button class="custom-btn btn-6 maan-button-data mx-2" matRipple
-                    *ngIf="!adminSection && userType!='Issuer' && statusValue != 'RA' && !otpSection" (click)="onFormSubmit()">Buy Policy</button>
-                    <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="userType=='Issuer' && subuserType=='low'  && statusValue != 'RA'"
+                    *ngIf="!adminSection && (userType!='Issuer') && statusValue != 'RA' && !otpSection" (click)="onFormSubmit()">Buy Policy</button>
+                    <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="userType=='Issuer' && subuserType=='low'  && statusValue != 'RA' && !endorsementSection"
                     (click)="updateFinalizeYN('proceed')">Buy Policy</button>
                     <button class="custom-btn btn-6 maan-button-data mx-2" matRipple *ngIf="adminSection"
                     (click)="onUpdateFactor('')">Proceed</button>
