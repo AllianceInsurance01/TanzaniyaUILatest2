@@ -32,9 +32,9 @@ export class DataManipulationComponent {
     this.subUserType = sessionStorage.getItem('typeValue');
   }
   onSearchQuery(){
+    this.queryHeader = [];
       let ReqObj = {
-        "Query" : this.queryValue ,
-        "Password": this.password
+        "Query" : this.queryValue
       }
       let urlLink = `${this.ApiUrl1}reports/datamanipulation`;
       this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
