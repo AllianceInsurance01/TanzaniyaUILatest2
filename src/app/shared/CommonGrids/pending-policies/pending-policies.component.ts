@@ -30,12 +30,14 @@ export class PendingPoliciesComponent implements OnInit {
     this.agencyCode = this.userDetails.Result.OaCode;
     this.brokerbranchCode = this.userDetails.Result.BrokerBranchCode;
     this.branchCode = this.userDetails.Result.BranchCode;
+   
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails?.Result?.UserType;
     this.insuranceId = this.userDetails.Result.InsuranceId;
     if(this.userType!='Issuer')this.brokerCode = this.loginId;
-    this.brokerList = [{Code:'',CodeDesc:'ALL'}]
     sessionStorage.removeItem('loadingType');
+    sessionStorage.removeItem('firstLoad');
+    sessionStorage.removeItem('VechileDetails');
    }
 
   ngOnInit(): void {
@@ -162,6 +164,7 @@ export class PendingPoliciesComponent implements OnInit {
         bdmCode=this.brokerCode;
       }
       else{
+        loginId=entry.CodeDesc;
         bdmCode=null;
       }
       let ReqObj = {

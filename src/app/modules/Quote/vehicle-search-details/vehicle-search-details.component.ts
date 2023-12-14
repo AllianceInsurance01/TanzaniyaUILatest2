@@ -48,6 +48,7 @@ export class VehicleSearchDetailsComponent {
   endIndex: number;
   limit: any='0';
   quoteHeader: any[]=[];
+  sourceCodeDesc: null;
   constructor(private router:Router,private sharedService: SharedService) {
     this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
     this.loginId = this.userDetails.Result.LoginId;
@@ -113,7 +114,7 @@ export class VehicleSearchDetailsComponent {
       "BranchCode": this.branchCode
     }
     //let urlLink = `${this.CommonApiUrl}dropdown/sourcetype`;
-    let urlLink = `${this.CommonApiUrl}dropdown/premiasourcetypes`; 
+    let urlLink = `${this.CommonApiUrl}dropdown/getsourcetype`; 
     this.sharedService.onPostMethodSync(urlLink,ReqObj).subscribe(
       (data: any) => {
         console.log(data);
@@ -139,8 +140,13 @@ export class VehicleSearchDetailsComponent {
     );
   }
   onSourceTypeChange(type){
+    this.sourceCodeDesc = null;
+    if(this.Code!=null && this.Code!='' && this.Code!=undefined){
+      let entry = this.productList.find(ele=>ele.Code==this.Code);
+      if(entry) this.sourceCodeDesc = entry?.CodeDesc;
+    }
     let ReqObj = {
-      "SourceType": this.Code,
+      "SourceType": this.sourceCodeDesc,
       "BranchCode":  this.branchValue,
       "InsuranceId": this.insuranceId,
       "SearchValue": "",
@@ -166,7 +172,7 @@ export class VehicleSearchDetailsComponent {
                 console.log("Found Entries",this.brokerCode,entry,this.Code)
                 this.brokerLoginId = entry.Name; 
               }
-              if(this.Code=='broker' || this.Code=='direct' || this.Code=='agent' || this.Code == 'bank' || this.Code=='Broker' || this.Code == 'Agent' || this.Code =='Direct' || this.Code == 'Bank' || this.Code == 'whatsapp'){
+              if(this.sourceCodeDesc=='broker' || this.sourceCodeDesc=='direct' || this.sourceCodeDesc=='agent' || this.sourceCodeDesc == 'bank' || this.sourceCodeDesc=='Broker' || this.sourceCodeDesc == 'Agent' || this.sourceCodeDesc =='Direct' || this.sourceCodeDesc == 'Bank' || this.sourceCodeDesc == 'whatsapp'){
                 if(type=='change'){
                   
                 }
@@ -227,7 +233,7 @@ export class VehicleSearchDetailsComponent {
         if(this.userType=='issuer'){branch = this.brokerBranchCode;}
         else branch = this.branchValue
         let ReqObj = {
-          "SourceType": this.Code,
+          "SourceType": this.sourceCodeDesc,
           "BranchCode":  branch,
           "InsuranceId": this.insuranceId,
           "SearchValue":code
@@ -296,10 +302,10 @@ export class VehicleSearchDetailsComponent {
       let i=0;
           if(this.branchValue=='' || this.branchValue==null || this.branchValue==undefined){this.branchValueError=true;i+=1;}
           if(this.Code=='' || this.Code==null || this.Code==undefined){this.sourceCodeError=true;i+=1;}
-          if(this.Code=='Premia Agent' || this.Code=='Premia Broker' || this.Code=='Premia Direct'){
+          if(this.sourceCodeDesc=='Premia Agent' || this.sourceCodeDesc=='Premia Broker' || this.sourceCodeDesc=='Premia Direct'){
             if(this.customerCode=='' || this.customerCode==null || this.customerCode==undefined){alert('Error');this.customerCodeError=true;i+=1;}
           }
-          else if(this.Code=='agent' || this.Code=='broker' || this.Code=='direct' || this.Code=='bank' || this.Code=='Broker' || this.Code=='whatsapp'){
+          else if(this.sourceCodeDesc=='agent' || this.sourceCodeDesc=='broker' || this.sourceCodeDesc=='direct' || this.sourceCodeDesc=='bank' || this.sourceCodeDesc=='Broker' || this.sourceCodeDesc=='whatsapp'){
             if(this.brokerCode=='' || this.brokerCode==null || this.brokerCode==undefined){this.brokerCodeError=true;i+=1;}
             if(this.brokerBranchCode=='' || this.brokerBranchCode==null || this.brokerBranchCode==undefined){this.brokerBranchCodeError=true;i+=1;}
           }

@@ -30,12 +30,14 @@ export class CancelledPoliciesComponent implements OnInit {
     this.agencyCode = this.userDetails.Result.OaCode;
     this.brokerbranchCode = this.userDetails.Result.BrokerBranchCode;
     this.branchCode = this.userDetails.Result.BranchCode;
+   
     this.productId = this.userDetails.Result.ProductId;
     this.userType = this.userDetails?.Result?.UserType;
     this.insuranceId = this.userDetails.Result.InsuranceId;
-    this.brokerList = [{Code:'',CodeDesc:'ALL'}]
-    this.brokerCode = this.loginId;
+    if(this.userType!='Issuer')this.brokerCode = this.loginId;
     sessionStorage.removeItem('loadingType');
+    sessionStorage.removeItem('firstLoad');
+    sessionStorage.removeItem('VechileDetails');
    }
 
   ngOnInit(): void {
@@ -176,25 +178,26 @@ export class CancelledPoliciesComponent implements OnInit {
       console.log("Entry Received",entry) 
       if(entry.Type!='broker' && entry.Type!='Broker' && entry.Type!='Direct' && entry.Type!='direct' 
       && entry.Type!='Agent' && entry.Type!='agent' && entry.Type!='b2c' && entry.Type!='bank' && entry.Type!='whatsapp'){
-        loginId='';
+        loginId = '';
         bdmCode=this.brokerCode;
       }
       else{
+        loginId=entry.CodeDesc;
         bdmCode=null;
       }
       let ReqObj = {
-          "BrokerBranchCode": brokerbranchCode,
-          "BranchCode":this.branchCode,
-            "InsuranceId": this.insuranceId,
-            "LoginId":loginId,
-            "ApplicationId":appId,
-            "UserType":this.userType,
-            "SubUserType":sessionStorage.getItem('typeValue'),
-            "SourceType":"",
-            "BdmCode": bdmCode,
-            "ProductId":this.productId,
-            "Limit":this.limit,
-            "Offset": 60
+        "BrokerBranchCode": brokerbranchCode,
+        "BranchCode":this.branchCode,
+          "InsuranceId": this.insuranceId,
+          "LoginId":loginId,
+          "ApplicationId":appId,
+          "UserType":this.userType,
+          "SubUserType":sessionStorage.getItem('typeValue'),
+          "SourceType":"",
+          "BdmCode": bdmCode,
+          "ProductId":this.productId,
+          "Limit":this.limit,
+          "Offset": 60
       }
       let urlLink = `${this.CommonApiUrl}api/portfolio/cancelled`;
       this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
