@@ -301,6 +301,15 @@ const routes: Routes = [
 	  }
 	},
   {
+    path: 'errorMaster',
+    loadChildren: () => import('./Masters/ErrorModules/error-list.module').then(m => m.EmiListModule),
+    data: {
+      preload: true,
+      title: "Error Master",
+      breadcrumb: 'Error Master',
+    }
+  },
+  {
     path: 'uwreferralpendinglist',
     loadChildren: () => import('./underwriterQuestions/underwriter.module').then(m => m.UnderWriterModule),
     data: {
