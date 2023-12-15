@@ -11,7 +11,7 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-xl-6 card p-0" *ngIf="enableFinancialList">
+            <div class="col-lg-6 col-md-6 col-xl-6 card p-0">
                 <div class="card-header">
                     <div class="spancommon span_font_size">
                        Financial
@@ -112,9 +112,14 @@
                                 </div>
                             </ng-container> -->
                     </ng-container>
+                    <ng-container *ngIf="financialList.length==0">
+                        <div class="text-center">
+                            <span>No Endorsement Available</span>
+                        </div>
+                    </ng-container>
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-xl-6 card p-0" *ngIf="nonFinancialList.length!=0">
+            <div class="col-lg-6 col-md-6 col-xl-6 card p-0">
                 <div class="card-header">
                     Non-Financial
                 </div>

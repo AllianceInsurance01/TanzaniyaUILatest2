@@ -37,7 +37,7 @@ export class ElectronicEquipment{
                   key: 'ElectronicEquipSuminsured',
                   props: {
                     label: 'SumInsured',
-                    // disabled: this.checkDisable('IndemityPeriod'),
+                    disabled: this.checkDisable('SumInsured'),
                     required: true,
                     options: [
                     ],

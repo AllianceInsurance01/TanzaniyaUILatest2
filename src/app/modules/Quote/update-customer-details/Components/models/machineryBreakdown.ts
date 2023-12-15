@@ -61,7 +61,7 @@ export class MachineryBreakDown{
                                   key: 'PowerPlantSi',
                                     props: {
                                     label: `  `,
-                                    disabled: this.checkDisable('SumInsured'),
+                                    disabled: this.checkDisable('MachinerySi'),
                                   },
                                   templateOptions: {
                                     

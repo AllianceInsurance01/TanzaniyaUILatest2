@@ -86,10 +86,10 @@ export class IndustryListComponent implements OnInit {
       (data: any) => {
         console.log(data);
         if(data.Result){
-          let defaultObj = [{"Code":"99999","CodeDesc":"ALL"}]
+          let defaultObj = [{"Code":"","CodeDesc":"--SELECT--"}]
           this.insuranceList = defaultObj.concat(data.Result);
           if(this.insuranceId){this.getBranchList('direct');}
-          else{this.insuranceId='99999';this.getBranchList('direct');}
+          else if(this.insuranceList.length>1){this.insuranceId=this.insuranceList[1].Code;this.getBranchList('direct');}
         }
   
       },
@@ -146,7 +146,7 @@ getBranchList(type){
         console.log(data);
         if(data.Result){
        this.productList = data?.Result;
-        let obj =[{ProductId:"99999",ProductName:"ALL"}]
+        let obj =[{ProductId:"",ProductName:"--SELECT--"}]
         this.productList = obj.concat(data?.Result);
         this.getCatogery();
 
@@ -222,27 +222,31 @@ getBranchList(type){
   );
   }*/
   getExistingTinyUrl(){
-    let ReqObj = {
-      "BranchCode":this.branchValue,
-      "InsuranceId": this.insuranceId,
-      "ProductId":this.productValue,
-      "CategoryId":this.CategoryValue,
+    if(this.productValue!='' && this.productValue!=null && this.branchValue!='' && this.branchValue!=null && this.CategoryValue!='' && this.CategoryValue!=null){
+      this.tinyUrlData=[];
+      let ReqObj = {
+        "BranchCode":this.branchValue,
+        "InsuranceId": this.insuranceId,
+        "ProductId":this.productValue,
+        "CategoryId":this.CategoryValue,
+      }
+      let urlLink = `${this.CommonApiUrl}master/getallindustry`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+          console.log(data);
+          if(data.Result){
+              this.tinyUrlData = data?.Result;
+          }
+          if(this.CategoryValue!=undefined && this.CategoryValue!=null){
+            let docObj = {"Branch":this.branchValue,"Catogry":this.CategoryValue,"ProductValue":this.productValue};
+            sessionStorage.setItem('addcatObj',JSON.stringify(docObj));
+          }
+  
+        },
+        (err) => { },
+      );
     }
-    let urlLink = `${this.CommonApiUrl}master/getallindustry`;
-    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-      (data: any) => {
-        console.log(data);
-        if(data.Result){
-            this.tinyUrlData = data?.Result;
-        }
-        if(this.CategoryValue!=undefined && this.CategoryValue!=null){
-          let docObj = {"Branch":this.branchValue,"Catogry":this.CategoryValue,"ProductValue":this.productValue};
-          sessionStorage.setItem('addcatObj',JSON.stringify(docObj));
-        }
-
-      },
-      (err) => { },
-    );
+    
   }
   onEditSection(event){
     let ReqObj = {
