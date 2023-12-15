@@ -1,0 +1,67 @@
+<div class="vision-grid-item">
+    <div class="card">
+        <div class="card-header">Error Details</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 col-lg-4 col-xl-4 ml-3">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Product<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" disabled appendTo="body" [(ngModel)]="productId" [items]="productList" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-4 ml-3">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Module<span class="text-required">*</span></label>
+                        <ng-select class="input-form-select" disabled appendTo="body" [(ngModel)]="ModuleId" [items]="ModuleList" bindValue="Code" bindLabel="CodeDesc">
+                        </ng-select>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 col-xl-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">ErrorField<span class="text-required" style="color:red">*</span></label>
+                        <div class="input-form-box">
+                          <input type="text" class="input-form-control without-icon" [(ngModel)]="ErrorModelDetails.ErrorField">
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-5 col-xl-5">
+                <div class="input-control-container">
+                    <label class="input-form-label">Error Description<span class="text-required">*</span></label>
+                    <div class="input-form-box">
+                        <textarea type="text" cols="60" ros="3" [(ngModel)]="ErrorModelDetails.ErrorDesc" class="input-form-select"></textarea>
+                  </div>
+                </div>
+               </div>
+                <div class="col-12 col-md-3 col-lg-3">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Effective Date<span class="text-required" style="color:red">*</span></label>
+                        <mat-form-field appearance="fill">
+                            <input matInput [matDatepicker]="picker" [min]="minDate" [(ngModel)]="ErrorModelDetails.EffectiveDateStart">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+                 <div class="col-12 col-md-4 col-lg-4">
+                    <div class="input-control-container">
+                        <label class="input-form-label">Status<span class="text-required">*</span></label>
+                        <div class="input-form-radio-box">
+                            <div class="radio-toolbar">
+                                <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouseone" [(ngModel)]="ErrorModelDetails.Status" value="Y">
+                                <label for="orginwarehouse_Yes">Active</label>
+                                <input type="radio" id="orginwarehouse_No" name="originatingWarehouseone" [(ngModel)]="ErrorModelDetails.Status" value="N">
+                                <label for="orginwarehouse_No">DeActive</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="text-center mt-2">
+                <button class="btn btn-danger" (click)="ongetBack()">Back</button>
+                <button class="btn btn-success ml-2" (click)="onProceed()">Submit</button></div>
+        </div>
+</div>
+</div>
