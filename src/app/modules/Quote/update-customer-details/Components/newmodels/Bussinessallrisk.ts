@@ -49,7 +49,7 @@ export class BussinessAllRisk{
                   key: 'EquipmentSi',
                   props: {
                     label: 'SumInsured',
-                    // disabled: this.checkDisable('IndemityPeriod'),
+                     disabled: this.checkDisable('SumInsured'),
                     required: true,
                     options: [
                     ],

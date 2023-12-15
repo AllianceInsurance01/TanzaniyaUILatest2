@@ -321,70 +321,73 @@ export class PlanTypeBenefitsListComponent {
     );
   }
   getBenefitsList(element,entryType){
-    this.planTypeDesc = (this.planTypeList.find(ele=>ele.Code==this.planTypeValue))?.CodeDesc
+    if(this.planTypeValue!='' && this.sectionValue!='' && this.planTypeValue!=null && this.sectionValue!=null){
+      this.planTypeDesc = (this.planTypeList.find(ele=>ele.Code==this.planTypeValue))?.CodeDesc
     
-    this.benefitsList = [];
-      let ReqObj = {
-        "PlanTypeId": this.planTypeValue,
-        "PolicyTypeId": this.sectionValue,
-        "CompanyId": this.insuranceId,
-        "ProductId": this.productId,
-        "BranchCode":"99999",
-        "Status":"",
-        "Limit":this.limit,
-        "Offset": 60
-      }
-      let urlLink = `${this.ApiUrl1}TravelPolicyType/getalltravelpolicytype`;
-     //let urlLink = `${this.ApiUrl1}TravelPolicyType/getalltravelpolicytype`;
-      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
-        (data: any) => {
-          if(data.Result.TravelPolicyType.length!=0){
-            this.planTypeDesc = data?.Result?.TravelPolicyType[0].PlanTypeDesc;
-            this.policyTypeDesc = data?.Result?.TravelPolicyType[0].PolicyTypeDesc;
-            let obj = {
-              "planTypeId":this.planTypeValue,
-              "policyTypeId": this.sectionValue
-            }
-            sessionStorage.setItem('planBenefitsObj',JSON.stringify(obj))
-            this.totalQuoteRecords = data.Result?.TotalCount;
-            this.pageCount = 10;
-            if (entryType == 'change') {
-              this.quotePageNo = 1;
-              let startCount = 1, endCount = this.pageCount;
-              startCount = endCount + 1;
-                let quoteData = data.Result.TravelPolicyType;
-                this.benefitsList = data.Result.TravelPolicyType;
-                if (quoteData.length <= this.pageCount) {
-                  endCount = quoteData.length
-                }
-                else endCount = this.pageCount;
-              
-              this.startIndex = startCount; this.endIndex = endCount;
-            }
-            else {
-
-              let startCount = element.startCount, endCount = element.endCount;
-              this.pageCount = element.n;
-              startCount = endCount + 1;
-                this.benefitsList = data.Result.TravelPolicyType;
-                //this.quoteData = this.quoteData.concat(data.Result?.CustomerDetails);
-              if (this.totalQuoteRecords <= endCount + (element.n)) {
-                endCount = this.totalQuoteRecords
+      this.benefitsList = [];
+        let ReqObj = {
+          "PlanTypeId": this.planTypeValue,
+          "PolicyTypeId": this.sectionValue,
+          "CompanyId": this.insuranceId,
+          "ProductId": this.productId,
+          "BranchCode":"99999",
+          "Status":"",
+          "Limit":this.limit,
+          "Offset": 60
+        }
+        let urlLink = `${this.ApiUrl1}TravelPolicyType/getalltravelpolicytype`;
+       //let urlLink = `${this.ApiUrl1}TravelPolicyType/getalltravelpolicytype`;
+        this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+          (data: any) => {
+            if(data.Result.TravelPolicyType.length!=0){
+              this.planTypeDesc = data?.Result?.TravelPolicyType[0].PlanTypeDesc;
+              this.policyTypeDesc = data?.Result?.TravelPolicyType[0].PolicyTypeDesc;
+              let obj = {
+                "planTypeId":this.planTypeValue,
+                "policyTypeId": this.sectionValue
               }
-              else endCount = endCount + (element.n);
-              this.startIndex = startCount; this.endIndex = endCount;
+              sessionStorage.setItem('planBenefitsObj',JSON.stringify(obj))
+              this.totalQuoteRecords = data.Result?.TotalCount;
+              this.pageCount = 10;
+              if (entryType == 'change') {
+                this.quotePageNo = 1;
+                let startCount = 1, endCount = this.pageCount;
+                startCount = endCount + 1;
+                  let quoteData = data.Result.TravelPolicyType;
+                  this.benefitsList = data.Result.TravelPolicyType;
+                  if (quoteData.length <= this.pageCount) {
+                    endCount = quoteData.length
+                  }
+                  else endCount = this.pageCount;
+                
+                this.startIndex = startCount; this.endIndex = endCount;
+              }
+              else {
+  
+                let startCount = element.startCount, endCount = element.endCount;
+                this.pageCount = element.n;
+                startCount = endCount + 1;
+                  this.benefitsList = data.Result.TravelPolicyType;
+                  //this.quoteData = this.quoteData.concat(data.Result?.CustomerDetails);
+                if (this.totalQuoteRecords <= endCount + (element.n)) {
+                  endCount = this.totalQuoteRecords
+                }
+                else endCount = endCount + (element.n);
+                this.startIndex = startCount; this.endIndex = endCount;
+              }
+             
+             
+             
+              // this.dataSource = new MatTableDataSource(this.benefitsList);
+              // this.dataSource.sort = this.sort;
+              // this.dataSource.paginator = this.paginator;
             }
-           
-           
-           
-            // this.dataSource = new MatTableDataSource(this.benefitsList);
-            // this.dataSource.sort = this.sort;
-            // this.dataSource.paginator = this.paginator;
-          }
-          else{this.benefitsList=[]}
-        },
-        (err) => { },
-      );
+            else{this.benefitsList=[]}
+          },
+          (err) => { },
+        );
+    }
+    
   }
   onNextData(element){
     this.limit = String(Number(this.limit)+1);

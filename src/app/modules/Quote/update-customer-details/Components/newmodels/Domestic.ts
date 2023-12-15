@@ -36,7 +36,7 @@ export class Domestic{
                   key: 'BuildingsofClass1Construction',
                   props: {
                     label: 'Buildings of Class1 Construction',
-                    // disabled: this.checkDisable('IndemityPeriod'),
+                    disabled: this.checkDisable('BuildingSuminsured'),
                     required: true,
                     options: [
                     ],
@@ -52,7 +52,7 @@ export class Domestic{
     
                   props: {
                     label: `Contents`,
-                    // disabled: this.checkDisable('BuildingSuminsured'),
+                    disabled: this.checkDisable('BuildingSuminsured'),
                     required: true,
                     options: [
     
@@ -73,6 +73,7 @@ export class Domestic{
                   key: 'AllRiskExcludingCash',
                   templateOptions: {
                     label: 'All Risk - Excluding Cash , Jewellery and such Valuables',
+                    disabled: this.checkDisable('BuildingSuminsured'),
                     required: true,
                   },
                   validators: {
