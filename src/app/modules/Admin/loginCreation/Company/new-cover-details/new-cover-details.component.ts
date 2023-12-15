@@ -11,6 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 //import { SharedService } from 'src/app/shared/shared.service';
 @Component({
@@ -92,8 +93,9 @@ count: Number = 20;
   uploadRecordsList: any[]=[];
   uploadTranId: any=null;
   minSumInsured: any;
+  closeResult: string;
   //factorTypeLists:any[]=[];
-  constructor(private router:Router,private sharedService: SharedService,
+  constructor(private router:Router,private sharedService: SharedService,private modalService: NgbModal,
     private datePipe:DatePipe,private _changeDetectorRef: ChangeDetectorRef) {
       this.minDate = new Date();
       this.insuranceName = sessionStorage.getItem('insuranceConfigureName');
@@ -879,7 +881,7 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       );
     }
   }
-  onCheckFieldDetails(url){
+  onCheckFieldDetails(url,modal){
     if(url!=null){
       let ReqObj = {
       "InsuranceId":this.insuranceId,
@@ -897,13 +899,29 @@ this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
               { key: 'CodeDesc', display: 'Descripton' },
               { key: 'Status', display: 'Status' },
             ];
+            this.open(modal);
           }
         },
         (err) => { },
       );
     }
   }
-
+  open(content) {
+    this.modalService.open(content, { size: 'lg', backdrop: 'static',ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
   onSubCoverFactorTypeChange(){
     if(this.subCoverData.FactorTypeId != '' && this.subCoverData.FactorTypeId!= undefined){
       this.factorTypeList = [];

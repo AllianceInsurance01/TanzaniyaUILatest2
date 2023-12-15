@@ -583,16 +583,26 @@
                                     </ng-container>
                                 </div>
                                 <ng-container>
-                                    <ng-template #discountCard>
-                                        <div class="card" class="popover-card customTemplate">
+                                    <ng-template #discountCard let-modal>
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Factor Type Details</span></h4>
+                                            <button type="button" class="close" #excessModalClose aria-label="Close"
+                                                (click)="modal.dismiss('Cross click')">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <app-grid-table [cols]="columnHeader" [data]="customerDetail" >
+                                            </app-grid-table>
+                                        </div>
+                                        <!-- <div class="card" class="popover-card customTemplate">
                                             <div class="card-header" status="warning">
                                                 Factor Type Details!
                                             </div>
                                             <div class="card-body p-0">
-                                                    <app-grid-table [cols]="columnHeader" [data]="customerDetail" >
-                                                    </app-grid-table>
+                                                    
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </ng-template>
                                 </ng-container>
                                 <div class="row mt-5" *ngIf="calcType=='F' && factorValue && !coverUploadSection">
@@ -601,62 +611,62 @@
                                             <tr>
                                                 <th class="tbl-header" *ngIf="coverRangeFirst">{{rangeFirstName}}&nbsp;
                                                     <button type="button" *ngIf="rangeApiurl" class="btn btn-secondary btn-circle" [nbPopover]="discountCard"
-                                                        (click)="onCheckFieldDetails(rangeApiurl)">?
+                                                        (click)="onCheckFieldDetails(rangeApiurl,discountCard)">?
                                                     </button>
                                                 </th>
                                                 <th class="tbl-header" *ngIf="coverRangeFirst">{{rangeSecondName}}&nbsp;
                                                     <button type="button" *ngIf="rangeApiurl" class="btn btn-secondary btn-circle" [nbPopover]="discountCard"
-                                                    (click)="onCheckFieldDetails(rangeApiurl)">?
+                                                    (click)="onCheckFieldDetails(rangeApiurl,discountCard)">?
                                                     </button>
                                                 </th>
                                                 <th class="tbl-header" *ngIf="coverRangeSecond">{{rangeThirdName}}&nbsp;
                                                     <button type="button" *ngIf="rangeApiurl1"class="btn btn-secondary btn-circle" [nbPopover]="discountCard"
-                                                    (click)="onCheckFieldDetails(rangeApiurl1)">?
+                                                    (click)="onCheckFieldDetails(rangeApiurl1,discountCard)">?
                                                     </button>
                                                 </th>
                                                 <th class="tbl-header" *ngIf="coverRangeSecond">{{rangeFourthName}}&nbsp;&nbsp;
                                                     <button type="button" *ngIf="rangeApiurl1" class="btn btn-secondary btn-circle" [nbPopover]="discountCard"
-                                                    (click)="onCheckFieldDetails(rangeApiurl1)">?
+                                                    (click)="onCheckFieldDetails(rangeApiurl1,discountCard)">?
                                                     </button>
                                                 </th>
                                                 <th class="tbl-header" *ngIf="coverRangeThird">{{rangeFifthName}}&nbsp;
                                                     <button type="button" *ngIf="rangeApiurl2" class="btn btn-secondary btn-circle" [nbPopover]="discountCard"
-                                                    (click)="onCheckFieldDetails(rangeApiurl2)">?
+                                                    (click)="onCheckFieldDetails(rangeApiurl2,discountCard)">?
                                                     </button>
                                                 </th>
                                                 <th class="tbl-header" *ngIf="coverRangeThird">{{rangeSixthName}}&nbsp;
                                                     <button type="button" *ngIf="rangeApiurl2" class="btn btn-secondary btn-circle" [nbPopover]="discountCard"
-                                                    (click)="onCheckFieldDetails(rangeApiurl2)">?
+                                                    (click)="onCheckFieldDetails(rangeApiurl2,discountCard)">?
                                                     </button>
                                                 </th>
                                                 <th class="tbl-header" *ngIf="coverRangeFourth">{{rangeSeventhName}}&nbsp;
                                                     <button type="button" *ngIf="rangeApiurl3"class="btn btn-secondary btn-circle" [nbPopover]="discountCard"
-                                                    (click)="onCheckFieldDetails(rangeApiurl3)">?
+                                                    (click)="onCheckFieldDetails(rangeApiurl3,discountCard)">?
                                                     </button>
                                                 </th>
                                                 <th class="tbl-header" *ngIf="coverRangeFourth">{{rangeEigthName}}&nbsp;
                                                     <button type="button" *ngIf="rangeApiurl3" class="btn btn-secondary btn-circle" [nbPopover]="discountCard"
-                                                    (click)="onCheckFieldDetails(rangeApiurl3)">?
+                                                    (click)="onCheckFieldDetails(rangeApiurl3,discountCard)">?
                                                     </button>
                                                 </th>
                                                 <th class="tbl-header" *ngIf="coverDiscreteFirst">{{discreteFirstName}}&nbsp;
                                                     <button type="button" *ngIf="rangeApiurl4" class="btn btn-secondary btn-circle" [nbPopover]="discountCard"
-                                                    (click)="onCheckFieldDetails(rangeApiurl4)">?
+                                                    (click)="onCheckFieldDetails(rangeApiurl4,discountCard)">?
                                                     </button>
                                                 </th>
                                                 <th class="tbl-header" *ngIf="coverDiscreteSecond">{{discreteSecondName}}&nbsp;
                                                     <button type="button" *ngIf="rangeApiurl5" class="btn btn-secondary btn-circle" [nbPopover]="discountCard"
-                                                    (click)="onCheckFieldDetails(rangeApiurl5)">?
+                                                    (click)="onCheckFieldDetails(rangeApiurl5,discountCard)">?
                                                     </button>
                                                 </th>
                                                 <th class="tbl-header" *ngIf="coverDiscreteThird">{{discreteThirdName}}&nbsp;
                                                     <button type="button" *ngIf="rangeApiurl6" class="btn btn-secondary btn-circle" [nbPopover]="discountCard"
-                                                    (click)="onCheckFieldDetails(rangeApiurl6)">?
+                                                    (click)="onCheckFieldDetails(rangeApiurl6,discountCard)">?
                                                     </button>
                                                 </th>
                                                 <th class="tbl-header" *ngIf="coverDiscreteFourth">{{discreteFourthName}}&nbsp;
                                                     <button type="button" *ngIf="rangeApiurl7" class="btn btn-secondary btn-circle" [nbPopover]="discountCard"
-                                                    (click)="onCheckFieldDetails(rangeApiurl7)">?
+                                                    (click)="onCheckFieldDetails(rangeApiurl7,discountCard)">?
                                                     </button>
                                                 </th>
                                                 <th class="tbl-header">CalculationType</th>

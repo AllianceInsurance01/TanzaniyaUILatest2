@@ -306,10 +306,13 @@ export class PlanTypeBenefitsListComponent {
       (data: any) => {
         console.log(data);
         let obj = [{ Code: "", CodeDesc: "--SELECT--" }];
+       
         this.policyTypeDesc = (this.sectionList.find(ele=>ele.Code==this.sectionValue))?.CodeDesc
         this.planTypeList = obj.concat(data?.Result);
         if(this.planTypeValue!=null && this.planTypeValue!=''){
-          this.getBenefitsList(null,'change');
+          let entry = this.planTypeList.find(ele=>ele.Code==this.planTypeValue);
+          if(entry){this.getBenefitsList(null,'change');}
+          else{this.benefitsList = [];this.planTypeValue = '';}
         }
         else this.planTypeValue = '';
         //this.typeList = data.Result;

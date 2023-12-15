@@ -55,19 +55,15 @@
                             <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Input Table</label>
-                                    <div class="input-form-box">
                                         <ng-select class="input-form-select" appendTo="body" [(ngModel)]="ratingDetails.InputTable" (change)="onTableChange()" [items]="tableList" bindValue="Code" bindLabel="CodeDesc">
                                         </ng-select>
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
                                     <label class="input-form-label">Input Column</label>
-                                    <div class="input-form-box">
                                         <ng-select class="input-form-select" appendTo="body" [(ngModel)]="ratingDetails.InputColumn" [items]="columnList" bindValue="Code" bindLabel="CodeDesc">
                                         </ng-select>
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-4 col-lg-4">
@@ -111,8 +107,8 @@
                             </div>
                             <div class="col-12 col-md-4 col-lg-4">
                                 <div class="input-control-container">
+                                    <label class="input-form-label">Effective Date<span class="text-required">*</span></label>
                                     <mat-form-field appearance="fill">
-                                        <mat-label>Effective Date<span class="text-required">*</span></mat-label>
                                         <input matInput [matDatepicker]="picker" [min]="minDate" (dateChange)="onStartDateChange()" [(ngModel)]="ratingDetails.EffectiveDateStart">
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
