@@ -8,8 +8,6 @@ import { AdminComponent } from './admin.component';
 import { EndorsementFieldMasterComponent } from './Masters/endorsement-field-master/endorsement-field-master.component';
 import { ReferralRequoteComponent } from './ReferralCases/referral-requote/referral-requote.component';
 import { DataManipulationComponent } from './data-manipulation/data-manipulation.component';
-import { LMProductTypesComponent } from './loginCreation/Company/Lifemasters/LMProductType/producttype.component';
-import { LmTraffParamComponent } from './loginCreation/Company/Lifemasters/LMTraffParam/LmTraffParam.component';
 
 const routes: Routes = [
   {
@@ -79,15 +77,6 @@ const routes: Routes = [
       preload: true,
       title: "Country Master",
       breadcrumb: 'Country Master',
-    }
-  },
-  {
-    path: 'paymentstatus',
-    loadChildren: () => import('./PaymentStatus/paymentstatus.module').then(m => m.PaymentStatusModule),
-    data: {
-      preload: true,
-      title: "Payment Status",
-      breadcrumb: 'Payment Status',
     }
   },
   {
@@ -201,14 +190,6 @@ const routes: Routes = [
   {
 		path:'endorsementfieldDetails',
 		component:EndorsementFieldMasterComponent
-	},
-  {
-		path:'productTypeDetails',
-		component:LMProductTypesComponent
-	},
-  {
-		path:'LMTraffParam',
-		component:LmTraffParamComponent
 	},
   {
     path: 'warrantyMaster',
