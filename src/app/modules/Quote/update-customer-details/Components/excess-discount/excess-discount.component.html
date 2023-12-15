@@ -3624,16 +3624,16 @@
                         <tr>
                             <td>Excess</td>
                             <td style="text-align: center;">
-                                <ng-container *ngIf="(!adminSection && userType!='Issuer') || finalizeYN=='Y'">
+                                <ng-container *ngIf="((!adminSection && userType!='Issuer') || (endorsementSection) ) || finalizeYN=='Y'">
                                     <span class="spancommon span_font_size">{{excessPercent}}</span>
                                 </ng-container>
-                                <ng-container *ngIf="(adminSection || (userType=='Issuer' && finalizeYN!='Y'))">
+                                <ng-container *ngIf="(adminSection || (userType=='Issuer' && finalizeYN!='Y' && !endorsementSection))">
                                     <input type="text"  style="width: auto !important;max-width:150px;text-align:left !important"
                                         [(ngModel)]="excessPercent">
                                 </ng-container>
                             </td>
                             <td style="text-align: end;">
-                                <ng-container *ngIf="(!adminSection && userType!='Issuer') || finalizeYN=='Y'">
+                                <ng-container *ngIf="((!adminSection && userType!='Issuer') || (endorsementSection)) || finalizeYN=='Y'">
                                     <ng-container *ngIf="excessAmount==null || excessAmount=='0.0' || excessAmount=='0'">
                                             0
                                     </ng-container>
@@ -3641,7 +3641,7 @@
                                         <span class="spancommon span_font_size">{{excessAmount | commaseparator}}</span>
                                     </ng-container>
                                 </ng-container>
-                                <ng-container *ngIf="(adminSection || (userType=='Issuer' && finalizeYN!='Y'))">
+                                <ng-container *ngIf="(adminSection || (userType=='Issuer' && finalizeYN!='Y' && !endorsementSection))">
                                     <input type="text"  style="width: auto !important;max-width:150px;text-align:left !important"
                                         [(ngModel)]="excessAmount">
                                 </ng-container>
@@ -3653,9 +3653,9 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" *ngIf="(!adminSection && userType!='Issuer') || finalizeYN=='Y'"  (click)="modal.dismiss('Cross click')"
+        <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" *ngIf="((!adminSection && userType!='Issuer') || endorsementSection) || finalizeYN=='Y'"  (click)="modal.dismiss('Cross click')"
             style="margin-left:10px;">Close</button>
-        <button class="custom-btn btn-6 maan-button-data  mx-2" *ngIf="adminSection || (userType=='Issuer' && finalizeYN!='Y')" (click)="SaveLoadingDetails(modal)">Submit
+        <button class="custom-btn btn-6 maan-button-data  mx-2" *ngIf="adminSection || (userType=='Issuer' && finalizeYN!='Y' && !endorsementSection)" (click)="SaveLoadingDetails(modal)">Submit
         </button>
 
     </div>
@@ -3696,10 +3696,10 @@
                             <td style="max-width: 300px;">{{CoverName}}&nbsp;Premium</td>
                             <td>
                                     <ng-container *ngIf="calcType=='A'">
-                                        <ng-container *ngIf="(!adminSection && userType!='Issuer') || finalizeYN=='Y'">
+                                        <ng-container *ngIf="((!adminSection && userType!='Issuer') || endorsementSection ) || finalizeYN=='Y'">
                                             <span class="spancommon span_font_size">{{ratePercent}}</span>
                                         </ng-container>
-                                        <ng-container *ngIf="adminSection || (userType=='Issuer' && finalizeYN!='Y')">
+                                        <ng-container *ngIf="adminSection || (userType=='Issuer' && finalizeYN!='Y' && !endorsementSection)">
                                             <div class="input-group">
                                                 <input type="text" class="input-form-control without-icon" style="border-radius:5px;width: auto !important;max-width:80px;text-align:right !important"
                                                 [(ngModel)]="ratePercent">
@@ -3710,10 +3710,10 @@
                                         </ng-container>
                                     </ng-container>
                                     <ng-container *ngIf="calcType=='P'">
-                                        <ng-container *ngIf="(!adminSection && userType!='Issuer') || finalizeYN=='Y'">
+                                        <ng-container *ngIf="((!adminSection && userType!='Issuer') || endorsementSection) || finalizeYN=='Y'">
                                             <span class="spancommon span_font_size">{{ratePercent}}</span>
                                         </ng-container>
-                                        <ng-container *ngIf="adminSection || (userType=='Issuer' && finalizeYN!='Y')">
+                                        <ng-container *ngIf="adminSection || (userType=='Issuer' && finalizeYN!='Y' && !endorsementSection)">
                                             <div class="input-group">
                                                 <input type="text" class="input-form-control without-icon"  style="border-radius:5px;width: auto !important;max-width:80px;text-align:right !important"
                                                 [(ngModel)]="ratePercent">
@@ -3771,7 +3771,7 @@
                             <tr *ngFor="let loading of loadingList;let i=index">
                                 <td>{{loading.LoadingDesc}}</td>
                                 <td style="text-align: end;">
-                                    <ng-container *ngIf="(adminSection || (userType=='Issuer' && finalizeYN!='Y')) && loading.LoadingCalcType!='A'">
+                                    <ng-container *ngIf="(adminSection || ((userType=='Issuer' && finalizeYN!='Y' && !endorsementSection))) && loading.LoadingCalcType!='A'">
                                         <ng-container *ngIf="loading.LoadingCalcType!='P'">
                                             <ng-container *ngIf="loading.LoadingRate!=null">
                                                 <span class="spancommon span_font_size">0</span>
@@ -3783,7 +3783,7 @@
                                                 [(ngModel)]="loading['LoadingRate']" maxlength="5">
                                         </ng-container>
                                     </ng-container>
-                                    <ng-container *ngIf="((!adminSection && userType!='Issuer') || finalizeYN=='Y' ) && loading.LoadingCalcType!='A'">
+                                    <ng-container *ngIf="(((!adminSection && userType!='Issuer') || endorsementSection) || finalizeYN=='Y' ) && loading.LoadingCalcType!='A'">
                                         <ng-container *ngIf="loading.LoadingRate==null">
                                             0
                                         </ng-container>
@@ -3794,7 +3794,7 @@
                                     </ng-container>
                                 </td>
                                 <td style="text-align: end;">
-                                    <ng-container *ngIf="(adminSection  || (userType=='Issuer' && finalizeYN!='Y'))">
+                                    <ng-container *ngIf="(adminSection  || (userType=='Issuer' && finalizeYN!='Y' && !endorsementSection))">
                                         <ng-container *ngIf="loading.LoadingCalcType!='A'">
                                             <ng-container
                                                 *ngIf="loading.LoadingAmount==0 || loading.LoadingAmount==null">
@@ -3813,7 +3813,7 @@
                                         </ng-container>
 
                                     </ng-container>
-                                    <ng-container *ngIf="((!adminSection && userType!='Issuer') || finalizeYN=='Y')">
+                                    <ng-container *ngIf="(((!adminSection && userType!='Issuer') || endorsementSection) || finalizeYN=='Y')">
                                         <ng-container *ngIf="loading.LoadingAmount==0 || loading.LoadingAmount==null">
                                             0
                                         </ng-container>
@@ -3908,7 +3908,7 @@
                             <tr *ngFor="let loading of loadingList;let i=index">
                                 <td>{{loading.LoadingDesc}}</td>
                                 <td style="text-align: end;">
-                                    <ng-container *ngIf="(adminSection  || (userType=='Issuer' && finalizeYN!='Y')) && loading.LoadingCalcType!='A'">
+                                    <ng-container *ngIf="(adminSection  || (userType=='Issuer' && finalizeYN!='Y' && !endorsementSection)) && loading.LoadingCalcType!='A'">
                                         <ng-container *ngIf="loading.LoadingCalcType!='P'">
                                             <ng-container *ngIf="loading.LoadingRate!=null">
                                                 <span class="spancommon span_font_size">0</span>
@@ -3920,7 +3920,7 @@
                                                 [(ngModel)]="loading['LoadingRate']" maxlength="5">
                                         </ng-container>
                                     </ng-container>
-                                    <ng-container *ngIf="((!adminSection && userType!='Issuer') || finalizeYN=='Y') && loading.LoadingCalcType!='A'">
+                                    <ng-container *ngIf="(((!adminSection && userType!='Issuer') || endorsementSection) || finalizeYN=='Y') && loading.LoadingCalcType!='A'">
                                         <ng-container *ngIf="loading.LoadingRate==null">
                                             0
                                         </ng-container>
@@ -3931,7 +3931,7 @@
                                     </ng-container>
                                 </td>
                                 <td style="text-align: end;">
-                                    <ng-container *ngIf="(adminSection  || (userType=='Issuer' && finalizeYN!='Y'))">
+                                    <ng-container *ngIf="(adminSection  || (userType=='Issuer' && finalizeYN!='Y' && !endorsementSection))">
                                         <ng-container *ngIf="loading.LoadingCalcType!='A'">
                                             <ng-container
                                                 *ngIf="loading.LoadingAmount==0 || loading.LoadingAmount==null">
@@ -3950,7 +3950,7 @@
                                         </ng-container>
 
                                     </ng-container>
-                                    <ng-container *ngIf="((!adminSection && userType!='Issuer') || finalizeYN=='Y')">
+                                    <ng-container *ngIf="(((!adminSection && userType!='Issuer') || endorsementSection) || finalizeYN=='Y')">
                                         <ng-container *ngIf="loading.LoadingAmount==0 || loading.LoadingAmount==null">
                                             0
                                         </ng-container>
@@ -3978,9 +3978,9 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" *ngIf="(!adminSection && userType!='Issuer') || finalizeYN=='Y'" (click)="modal.dismiss('Cross click')"
+        <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" *ngIf="((!adminSection && userType!='Issuer') || endorsementSection) || finalizeYN=='Y'" (click)="modal.dismiss('Cross click')"
             style="margin-left:10px;">Close</button>
-        <button class="custom-btn btn-6 maan-button-data  mx-2" *ngIf="adminSection || (userType=='Issuer' && finalizeYN!='Y')" (click)="SaveLoadingDetails(modal)">Submit
+        <button class="custom-btn btn-6 maan-button-data  mx-2" *ngIf="adminSection || (userType=='Issuer' && finalizeYN!='Y' && !endorsementSection)" (click)="SaveLoadingDetails(modal)">Submit
         </button>
     </div>
 </ng-template>

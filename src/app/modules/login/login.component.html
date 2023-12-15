@@ -57,8 +57,7 @@
                             <!--<label for="chek" aria-hidden="true">Forget Password ?</label>-->
 
                             <div style="margin-top:100px;">
-                              <label for="chk" aria-hidden="true" (click)="Forget('foget','ForgotPassword');changepass('ForgotPassword')">Forgot
-                                Password ?</label>
+                              <label for="chk" aria-hidden="true" (click)="Forget('foget','ForgotPassword');changepass('ForgotPassword')">Forgot Password ?</label>
                         </div>
                         </form>
 
@@ -87,7 +86,7 @@
                     <div class="row">
                         <div class="col-12">
                                 <div class="input-control-container">
-                                    <label class="input-form-label">UserName</label>
+                                    <label class="input-form-label">UserName&nbsp;<span class="text-danger">*</span></label> 
                                     <div class="input-form-box">
                                         <input type="text" formControlName="LoginId" class="input-form-control without-icon"
                                             maxlength="20">
@@ -99,7 +98,7 @@
                         <div class="col-12">
                                 <div class="input-control-container"  >
                                     <label class="input-form-label" >Old
-                                        Password</label>
+                                        Password &nbsp;<span class="text-danger">*</span></label>
                                     <div class="input-form-box">
                                         <input type="password" formControlName="OldPassword"
                                             class="input-form-control without-icon" maxlength="20">
@@ -110,7 +109,7 @@
                     <div class="row mt-4" *ngIf="!pass">
                         <div class="col-12">
                             <div class="input-control-container" >
-                                <label class="input-form-label">Temporary Password</label>
+                                <label class="input-form-label">Temporary Password&nbsp;<span class="text-danger">*</span></label> 
                                 <div class="input-form-box">
                                     <input type="password" formControlName="OldPassword"
                                         class="input-form-control without-icon" maxlength="20">
@@ -121,7 +120,7 @@
                     <div class="row mt-4">
                         <div class="col-12">
                             <div class="input-control-container" >
-                                <label class="input-form-label">New Password</label>
+                                <label class="input-form-label">New Password&nbsp;<span class="text-danger">*</span></label>
                                 <div class="input-form-box">
                                     <input type="password" formControlName="NewPassword"
                                         class="input-form-control without-icon" maxlength="20">
@@ -148,20 +147,33 @@
               <div class="row">
                   <div class="col-12">
                       <div class="middle-line">
-                          <span>ForgetPassword</span>
+                          <span>Forgot Password</span>
                       </div>
                   </div>
               </div>
               
-                    <form [formGroup]="ForgetForm">
+                    <form>
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="input-control-container">
-                                    <label class="input-form-label">UserName</label>
+                                    <label class="input-form-label">Username&nbsp;<span class="text-danger">*</span></label>
                                     <div class="input-form-box">
-                                        <input type="text" formControlName="LoginId" class="input-form-control without-icon"
-                                            maxlength="20">
+                                        <input type="text" id="username" class="input-form-control without-icon"
+                                            [(ngModel)]="username" maxlength="50">
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-4">
+                                <div class="input-control-container">
+                                    <label class="input-form-label">Email Id&nbsp;<span class="text-danger">*</span></label>
+                                    <div class="input-form-box">
+                                        <input type="text" [(ngModel)]="emailId" class="input-form-control without-icon" 
+                                            maxlength="40">
+                                            
+                                    </div>
+                                    <!-- <div *ngIf="prmEmail.errors?.email" class="text-danger" style="margin-top: 20px !important;"> 
+                                        Please Enter Valid Email Id
+                                    </div>  -->
                                 </div>
                             </div>
                         </div>
@@ -177,7 +189,7 @@
                             <div class="col-12">
                                 <button type="button" class="custom-btn-cancel btn-1" style="position: relative;left: 4rem;"
                                 (click)="cancel(value_cancel)"><span>Cancel</span></button>
-                                <button type="button" class="custom-btn-submit btn-0" style="position: relative;left: 5rem;"
+                                <button type="button" class="custom-btn-submit btn-0" style="position: relative;left: 5rem;" [disabled]="emailId==null || emailId=='' || username==null || username==''"
                                     (click)="forgetSubmit()"><span>Submit</span></button>
                             </div>
                         </div>

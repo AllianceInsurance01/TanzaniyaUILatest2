@@ -69,6 +69,7 @@ export class EndorsementTypeDetailsComponent {
     sessionStorage.removeItem('homeCommonDetails')
     sessionStorage.removeItem('QuoteStatus');
     sessionStorage.removeItem('quoteNo')
+    
     this.policyNo = sessionStorage.getItem('endorsePolicyNo');
     this.productItem = new ProductData();
     let startDate = sessionStorage.getItem('endorseStartDate');
@@ -535,11 +536,13 @@ export class EndorsementTypeDetailsComponent {
             else if(this.productId=='16') this.getEmployersDetails(refNo,customerDatas,type,'money');
             else if(this.productId=='1') this.getEmployersDetails(refNo,customerDatas,type,'burglary');
             else if(this.productId=='6') this.getEmployersDetails(refNo,customerDatas,type,'fire');
+            else if(this.productId=='26') this.getEmployersDetails(refNo,customerDatas,type,'businessAllRisk')
         },
         (err) => { },
       );
 
   }
+  
   getEmployersDetails(refNo,customerData,type,name){
     let sectionId = null,urlLink = null,urlLink2=null;
     if(name=='employers'){sectionId = '45';urlLink = `${this.motorApiUrl}api/slide7/getempliablity`;urlLink2 = `${this.motorApiUrl}api/slide7/saveempliablity`;}
@@ -548,6 +551,7 @@ export class EndorsementTypeDetailsComponent {
     else if(name=='money'){sectionId = '42';urlLink = `${this.motorApiUrl}api/slide10/getmoneydetails`;urlLink2 = `${this.motorApiUrl}api/slide9/savemoneydetails`;}
     else if(name=='burglary'){sectionId = '52';urlLink = `${this.motorApiUrl}api/slide3/getburglaryandhouse`;urlLink2 = `${this.motorApiUrl}api/slide3/saveburglaryandhouse`;}
     else if(name=='fire'){sectionId = '40';urlLink = `${this.motorApiUrl}api/slide4/getfireandperils`;urlLink2 = `${this.motorApiUrl}api/slide4/savefireandperils`;}
+    else if(name=='businessAllRisk'){sectionId = '3';urlLink=`${this.motorApiUrl}api/slide2/getallriskdetails`;urlLink2 = `${this.motorApiUrl}api/slide2/saveallriskdetails`}
     let ReqObj = {
       "RequestReferenceNo": refNo,
       "RiskId": "1",
