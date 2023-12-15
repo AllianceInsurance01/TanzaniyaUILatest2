@@ -536,7 +536,8 @@ export class EndorsementTypeDetailsComponent {
             else if(this.productId=='16') this.getEmployersDetails(refNo,customerDatas,type,'money');
             else if(this.productId=='1') this.getEmployersDetails(refNo,customerDatas,type,'burglary');
             else if(this.productId=='6') this.getEmployersDetails(refNo,customerDatas,type,'fire');
-            else if(this.productId=='26') this.getEmployersDetails(refNo,customerDatas,type,'businessAllRisk')
+            else if(this.productId=='26') this.getEmployersDetails(refNo,customerDatas,type,'businessAllRisk');
+            else if(this.productId=='25') this.getEmployersDetails(refNo,customerDatas,type,'electronicequipment');
         },
         (err) => { },
       );
@@ -552,6 +553,7 @@ export class EndorsementTypeDetailsComponent {
     else if(name=='burglary'){sectionId = '52';urlLink = `${this.motorApiUrl}api/slide3/getburglaryandhouse`;urlLink2 = `${this.motorApiUrl}api/slide3/saveburglaryandhouse`;}
     else if(name=='fire'){sectionId = '40';urlLink = `${this.motorApiUrl}api/slide4/getfireandperils`;urlLink2 = `${this.motorApiUrl}api/slide4/savefireandperils`;}
     else if(name=='businessAllRisk'){sectionId = '3';urlLink=`${this.motorApiUrl}api/slide2/getallriskdetails`;urlLink2 = `${this.motorApiUrl}api/slide2/saveallriskdetails`}
+    else if(name=='electronicequipment'){if(this.productId=='25') sectionId='39'; else sectionId ='76';urlLink=`${this.motorApiUrl}api/slide6/getelectronicequip`;urlLink2 = `${this.motorApiUrl}api/slide2/saveallriskdetails`}
     let ReqObj = {
       "RequestReferenceNo": refNo,
       "RiskId": "1",
@@ -587,10 +589,93 @@ export class EndorsementTypeDetailsComponent {
             else if(this.productId=='16') this.saveMoneyDetails(customerDatas,refNo,customerData,type,name);
             else if(this.productId=='1') this.saveBurglaryDetails(customerDatas,refNo,customerData,type,name)
             else if(this.productId=='6') this.saveFireDetails(customerDatas,refNo,customerData,type,name)
+            else if(this.productId=='26') this.saveBusinessRiskDetails(customerDatas,refNo,customerData,type,name)
+            else if(this.productId=='25') this.saveElectronicEquipmentDetails(customerDatas,refNo,customerData,type,name)
         },
         (err) => { },
       );
 
+  }
+  saveElectronicEquipmentDetails(customerDatas,refNo,customerData,type,name){
+    let sectionId=null;
+    if(this.productId=='25') sectionId='39';
+    else sectionId = '76';
+    let ReqObj={
+      "CreatedBy": this.loginId,
+      "InsuranceId": this.insuranceId,
+      "ProductId": this.productId,
+      "RequestReferenceNo":refNo,
+      "RiskId": "1",
+      "SectionId": sectionId,
+      "ElecEquipSuminsured":customerDatas?.ElecEquipSuminsured,
+      "EndorsementDate": customerDatas.EndorsementDate,
+      "EndorsementEffectiveDate": customerDatas.EndorsementEffectiveDate,
+      "EndorsementRemarks": customerDatas.EndorsementRemarks,
+      "EndorsementType": customerDatas.EndorsementType,
+      "EndorsementTypeDesc": customerDatas.EndorsementTypeDesc,
+      "EndtCategoryDesc": customerDatas.EndtCategoryDesc,
+      "EndtCount": customerDatas.EndtCount,
+      "EndtPrevPolicyNo": customerDatas.EndtPrevPolicyNo,
+      "EndtPrevQuoteNo": customerDatas.EndtPrevQuoteNo,
+      "EndtStatus": customerDatas.EndtStatus,
+      "IsFinanceEndt": customerDatas.IsFinanceEndt,
+      "OrginalPolicyNo": customerDatas.OrginalPolicyNo,
+      "PolicyNo": customerDatas.PolicyNo
+    }
+    let urlLink = `${this.motorApiUrl}api/slide6/saveelectronicequip`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if (data?.Result) {
+          if(data.Result.length!=0){
+            this.requestReferenceNo = data?.Result[0]?.RequestReferenceNo;
+            this.onCalculate(data.Result,customerData,type);
+          }
+          
+        }
+    },
+    (err) => { },
+    );
+  }
+  saveBusinessRiskDetails(customerDatas,refNo,customerData,type,name){
+    let sectionId=null;
+  if(this.productId=='26') sectionId='3';
+  else sectionId = '69';
+    let ReqObj = {
+      "CreatedBy": this.loginId,
+      "InsuranceId": this.insuranceId,
+      "ProductId": this.productId,
+      "RequestReferenceNo":refNo,
+      "RiskId": "1",
+      "SectionId": sectionId,
+      "AllriskSumInsured": customerDatas?.AllriskSumInsured,
+      "EndorsementDate": customerDatas.EndorsementDate,
+      "EndorsementEffectiveDate": customerDatas.EndorsementEffectiveDate,
+      "EndorsementRemarks": customerDatas.EndorsementRemarks,
+      "EndorsementType": customerDatas.EndorsementType,
+      "EndorsementTypeDesc": customerDatas.EndorsementTypeDesc,
+      "EndtCategoryDesc": customerDatas.EndtCategoryDesc,
+      "EndtCount": customerDatas.EndtCount,
+      "EndtPrevPolicyNo": customerDatas.EndtPrevPolicyNo,
+      "EndtPrevQuoteNo": customerDatas.EndtPrevQuoteNo,
+      "EndtStatus": customerDatas.EndtStatus,
+      "IsFinanceEndt": customerDatas.IsFinanceEndt,
+      "OrginalPolicyNo": customerDatas.OrginalPolicyNo,
+      "PolicyNo": customerDatas.PolicyNo
+    }
+    if(this.productId=='26') ReqObj['EquipmentSi'] = customerDatas?.AllriskSumInsured
+    let urlLink = `${this.motorApiUrl}api/slide2/saveallriskdetails`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        if (data?.Result) {
+          if(data.Result.length!=0){
+            this.requestReferenceNo = data?.Result[0]?.RequestReferenceNo;
+            this.onCalculate(data.Result,customerData,type);
+          }
+          
+        }
+    },
+    (err) => { },
+    );
   }
   saveFireDetails(customerDatas,refNo,customerData,type,name){
     let ReqObj = {
