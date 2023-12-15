@@ -115,8 +115,9 @@ export class NewOccupationDetailsComponent implements OnInit {
             this.occupationId = occupation?.OccupationId;
             this.branchValue = occupation?.BranchCode;
             this.productId= occupation?.ProductId;
-            this.getOccupationDetails();
-           
+            if(this.occupationId){
+              this.getOccupationDetails();
+            }
             //this.getCategoryList();
           }
           else this.occupationId = null;

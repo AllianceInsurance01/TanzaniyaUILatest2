@@ -238,7 +238,7 @@ onSaveModel() {
   "RegulatoryCode":this.ModelDetails.RegulatoryCode,
   "Remarks": this.ModelDetails.Remarks,
   "RopBodyId": this.ModelDetails.RopBodyId,
-  "Status": "Y",
+  "Status": this.ModelDetails.Status,
   "TplRate": this.ModelDetails.TplRate,
   "UploadedBy": this.ModelDetails.UploadedBy,
   "VehCc": this.ModelDetails.VehCc,

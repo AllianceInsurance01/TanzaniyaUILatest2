@@ -347,6 +347,22 @@
                 </div>
             </div>
 
+            <div class="col-12 col-md-4 col-lg-4">
+              <div class="input-control-container">
+                  <label class="input-form-label">Status<span class="text-required">*</span></label>
+                  <div class="input-form-radio-box">
+                      <div class="radio-toolbar">
+                          <input id="orginwarehouse_Yes" type="radio" name="originatingWarehouse" [(ngModel)]="ModelDetails.Status" value="Y">
+                          <label for="orginwarehouse_Yes">Active</label>
+                          <input type="radio" id="orginwarehouse_No" name="originatingWarehouse" [(ngModel)]="ModelDetails.Status" value="N">
+                          <label for="orginwarehouse_No">DeActive</label>
+                          <input id="orginwarehouse_Pending" type="radio" name="originatingWarehouse" [(ngModel)]="ModelDetails.Status" value="R">
+                          <label for="orginwarehouse_Pending">Referral</label>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
 
         </div>
         <div class="row">
