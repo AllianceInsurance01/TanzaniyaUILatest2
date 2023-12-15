@@ -8,6 +8,8 @@ import { AdminComponent } from './admin.component';
 import { EndorsementFieldMasterComponent } from './Masters/endorsement-field-master/endorsement-field-master.component';
 import { ReferralRequoteComponent } from './ReferralCases/referral-requote/referral-requote.component';
 import { DataManipulationComponent } from './data-manipulation/data-manipulation.component';
+import { LMProductTypesComponent } from './loginCreation/Company/Lifemasters/LMProductType/producttype.component';
+import { LmTraffParamComponent } from './loginCreation/Company/Lifemasters/LMTraffParam/LmTraffParam.component';
 
 const routes: Routes = [
   {
@@ -24,15 +26,16 @@ const routes: Routes = [
       breadcrumb: 'Global Configuration',
     }
   },
-  {
-    path: 'premiaintegrationgrid',
-    loadChildren: () => import('./othersmenu/premia.module').then(m => m.PremiaIntegrationViewModule),
-    data: {
-      preload: true,
-      title: 'Premia',
-      breadcrumb:  'Premia',
-    }
-  },
+  // {
+  //   path: 'premiaintegrationgrid',
+  //   loadChildren: () => import('./othersmenu/premia.module').then(m => m.PremiaIntegrationViewModule),
+  //   data: {
+  //     preload: true,
+  //     title: 'Premia',
+  //     breadcrumb:  'Premia',
+  //   }
+  // },
+
   {
     path: 'brokersList',
     loadChildren: () => import('./loginCreation/broker/broker.module').then(m => m.BrokersModule),
@@ -76,6 +79,15 @@ const routes: Routes = [
       preload: true,
       title: "Country Master",
       breadcrumb: 'Country Master',
+    }
+  },
+  {
+    path: 'paymentstatus',
+    loadChildren: () => import('./PaymentStatus/paymentstatus.module').then(m => m.PaymentStatusModule),
+    data: {
+      preload: true,
+      title: "Payment Status",
+      breadcrumb: 'Payment Status',
     }
   },
   {
@@ -142,6 +154,15 @@ const routes: Routes = [
     }
   },
   {
+    path: 'errorMaster',
+    loadChildren: () => import('./Masters/ErrorModules/error-list.module').then(m => m.EmiListModule),
+    data: {
+      preload: true,
+      title: "Error Master",
+      breadcrumb: 'Error Master',
+    }
+  },
+  {
     path: 'lifepolicyterms',
     loadChildren: () => import('./Masters/LifePolicyTermsMaster/Lifepolicy-list/lifepolicy-list.module').then(m => m.LifepolicytermsModule),
     data: {
@@ -180,6 +201,14 @@ const routes: Routes = [
   {
 		path:'endorsementfieldDetails',
 		component:EndorsementFieldMasterComponent
+	},
+  {
+		path:'productTypeDetails',
+		component:LMProductTypesComponent
+	},
+  {
+		path:'LMTraffParam',
+		component:LmTraffParamComponent
 	},
   {
     path: 'warrantyMaster',
