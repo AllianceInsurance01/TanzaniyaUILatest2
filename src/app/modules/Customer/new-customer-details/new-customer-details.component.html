@@ -148,7 +148,7 @@
                         <input type="text" maxlength="10" (keypress)="omit_special_char($event)" class="layout" placeholder="Enter Your Mobile No"  [disabled]="checkDisableFields('MobileNo')"  [(ngModel)]="productItem.MobileNo">
                     </div>
                 </div>
-                <div style="max-width: 200px;min-width: 200px;"  *ngIf="productItem.Occupation!='99999'">
+                <div style="max-width: 200px;min-width: 200px;" *ngIf="productItem.Occupation!='99999'">
                     <div class="headinglbels">Email ID</div> 
                     <div class="mt-1">
                         <input type="text" class="layout"  email [(ngModel)]="productItem.EmailId" placeholder="Enter Your Email Id"  [disabled]="checkDisableFields('Email')" #prmEmail="ngModel">
@@ -157,6 +157,15 @@
                         Please Enter Valid Email Id
                     </div> 
                 </div>
+                <!-- <div style="max-width: 200px;min-width: 200px;"  *ngIf="productItem.Occupation=='99999'">
+                    <div class="headinglbels">Email ID</div> 
+                    <div class="mt-1">
+                        <input type="text" class="layout"  email [(ngModel)]="productItem.EmailId" placeholder="Enter Your Email Id"  [disabled]="checkDisableFields('Email')" #prmEmail="ngModel">
+                    </div>
+                    <div *ngIf="prmEmail.errors?.email" class="text-danger"> 
+                        Please Enter Valid Email Id
+                    </div> 
+                </div> -->
                 <div style="max-width: 200px;min-width: 200px;" *ngIf="productItem.Occupation=='99999'">
                     <div class="headinglbels">Occupation Description<span class="star">*</span></div> 
                     <div class="mt-1">
@@ -164,16 +173,25 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex mt-3 justify-content-between" *ngIf="productId=='46' && productItem.IdType != 2">
-                <div style="max-width: 130px;min-width: 130px;" *ngIf="productItem.IdType != 2"> 
+            <div class="row mt-3" *ngIf="productId=='46'"><!--d-flex mt-3 justify-content-between-->
+                <div class="col-12 col-lg-4 col-md-4" *ngIf="productItem.IdType != 2"> 
                     <div class="headinglbels">Gender <span class="star">*</span></div> 
                     <div class="mt-1">
                         <ng-select class="custom" appendTo="body"  [items]="genderList"  [disabled]="checkDisableFields('Gender')"  [(ngModel)]="productItem.Gender" bindValue="Code" bindLabel="CodeDesc">
                         </ng-select>
                     </div>
                 </div>
-                
-                
+                <!--style="max-width: 130px;min-width: 130px;"-->
+                <div class="col-12 col-lg-4 col-md-4" *ngIf="productItem.Occupation=='99999'">
+                    <!--style="max-width: 200px;min-width: 200px;"-->
+                    <div class="headinglbels">Email ID</div> 
+                    <div class="mt-1">
+                        <input type="text" class="layout"  email [(ngModel)]="productItem.EmailId" placeholder="Enter Your Email Id"  [disabled]="checkDisableFields('Email')" #prmEmail="ngModel">
+                    </div>
+                    <div *ngIf="prmEmail.errors?.email" class="text-danger"> 
+                        Please Enter Valid Email Id
+                    </div> 
+                </div>
             </div>
             <!----Newww-->
             <div class="d-flex mt-3 justify-content-between" *ngIf="productId!='46'">
