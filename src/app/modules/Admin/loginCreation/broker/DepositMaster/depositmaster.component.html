@@ -31,7 +31,7 @@
                       </div>
                     <div>
                         <ng-container *ngIf="branchDatas.length!=0">
-                            <app-grid-table [cols]="branchsHeader" [data]="branchDatas" [filterValue]="filterValue" (onEdit)="onEditData($event)">
+                            <app-grid-table [cols]="branchsHeader" [data]="branchDatas" [filterValue]="filterValue" (onViews)="onInfo($event,modals)" (onEdit)="onEditData($event)">
                             </app-grid-table>
                         </ng-container>
                         <ng-container *ngIf="branchDatas.length==0">
@@ -47,3 +47,114 @@
             </div>
         </div>
     </div>
+
+    <ng-template #modals let-modal>
+        <div class="modal-header" style="height: 48px;">
+            <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Payment Details</span></h4>
+            <div>
+                CBCNO:{{cbcmodal}} &nbsp;&nbsp; BrokerName:{{creat}}
+            </div>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div>
+                <ng-container><!--*ngFor="let c of viewDatas"-->
+                         <div><!--*ngIf="c.ChargableType=='C'"-->
+
+                            <table class="table table-headerRow styled-table" style="width:90% !important;margin:auto;text-align: center;">
+                                <tr>
+                                    <th class="tbl-header">Deposit No</th>
+                                    <th class="tbl-header">Quote No</th>
+                                    <th class="tbl-header">Deposit Type</th>
+                                    <th class="tbl-header" style="width:20px !important;">Amount
+                                        <tr style="width:20px !important;height:20px !important;">
+                                            <th>Refund</th>
+                                            <th>Chargable</th>
+                                        </tr>
+                                    </th>
+                                    <th class="tbl-header">Balance Amount</th>
+                                    <th class="tbl-header">EntryDate</th>
+                                </tr>
+                                <tr *ngFor="let row of viewDatas|paginate:{itemsPerPage: 5, currentPage:p,id: 'p'};let i = index"><!--|paginate:{itemsPerPage: 5, currentPage:p,id: 'p'}-->
+                                    <td class="tbl-content">
+                                        <div class="input-control-container">
+                                            <div class="input-form-box">
+                                                {{row.DepositNo}}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-control-container">
+                                            <div class="input-form-box">
+                                                {{row?.QuoteNo}}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-control-container">
+                                            <div class="input-form-box" >
+                                                
+                                               <span *ngIf="row.ChargableType =='R'">
+                                                        Refund
+                                               </span>
+                                               <span *ngIf="row.ChargableType =='C'">
+                                                Chargable
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                 
+                                    <td class="tbl-content">
+                                        <tr style="display: flex !important;align-items: end !important;border-bottom-width:0px solid !important;">
+                                            <td>
+                                                <div style="width:60px;">
+                                                    <span *ngIf="row.ChargableType=='R'">{{row.Premium}}</span>
+                                                </div>
+                                                
+                                            </td>
+            
+                                            <td>
+                                                <div style="width:60px;">
+                                                <span *ngIf="row.ChargableType=='C'">{{row.Premium}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- <div class="input-control-container">
+                                            <div class="input-form-box" style="display:flex;justify-content: flex-end !important;">
+                                                {{row.Premium}}
+                                            </div>
+                                        </div> -->
+                                    </td>
+                                    <td class="tbl-content">
+                                        <div class="input-control-container">
+                                            <div class="input-form-box">
+                                                {{row?.BalanceAmt}}
+                                            </div>
+                                        </div>
+                                    </td>
+            
+                                    <td class="tbl-content">
+                                        <div class="input-control-container">
+                                            <div class="input-form-box">
+                                                {{row.EntryDate}}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            
+                            </table>
+                         </div>
+                </ng-container>
+                              
+            </div>
+                                <div class="d-flex justify-content-end">
+                                    <pagination-controls (pageChange)="p=$event" id="p"></pagination-controls>
+                                  </div>
+        </div>
+        <div class="modal-footer">
+            <button class="custom-btn btn-5 col-lg-2 spancommon span_font_size" (click)="modal.dismiss('Cross click')">Close</button>
+        </div>
+      </ng-template>
