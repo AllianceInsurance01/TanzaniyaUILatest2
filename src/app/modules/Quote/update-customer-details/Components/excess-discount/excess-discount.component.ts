@@ -3795,8 +3795,8 @@ getMotorUsageList(vehicleValue){
 
   }
   finalFormSubmit(ReqObj){
-        let urlLink = `${this.CommonApiUrl}quote/buypolicy`;
-  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    let urlLink = `${this.CommonApiUrl}quote/buypolicy`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
     (data: any) => {
         if(data.Result){
           if(data?.Result.QuoteNo){
@@ -5089,7 +5089,6 @@ this.viewCondition(i);
 
     //let insert= this.jsonList.concat(this.json, this.Exclusion);
     let i=0;
-
     /*if (tempData.length != 0) {
       this.jsonList.forEach((item) => (item["Id"] = "6"));
       this.ExclusionList.forEach((item) => (item["Id"] = "4"));

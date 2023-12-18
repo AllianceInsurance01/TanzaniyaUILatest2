@@ -18,7 +18,7 @@ export class ExclusionListComponent implements OnInit {
   public CommonApiUrl1:any = this.AppConfig.CommonApiUrl;
   public ApiUrl1:any = this.AppConfig.ApiUrl1;
   public insuranceId:any;
-  public ExclusionData:any;
+  public ExclusionData:any[]=[];
   public branchList:any;branchValue:any;
   public userDetails: any;
   public sectionYn: any='N';
@@ -159,6 +159,7 @@ export class ExclusionListComponent implements OnInit {
     this.router.navigate(['/Admin/exclusionMaster/newExclusionDetails'])
   }
   getExistingExclusion(){
+    this.ExclusionData = [];
     if(this.sectionYn=='N'){
       //this.productValue="99999";
       this.sectionValue="99999"
@@ -209,6 +210,7 @@ export class ExclusionListComponent implements OnInit {
     }
   }
   getSectionList(){
+    this.sectionList =[];
     let ReqObj = {
       "InsuranceId":this.insuranceId,
       "ProductId":this.productValue,
@@ -233,7 +235,7 @@ export class ExclusionListComponent implements OnInit {
   );
   }
   getCompanyProductList(type){
-    if(type=='change'){this.ExclusionData=[];this.productValue=null;this.sectionYn='N';this.sectionValue=null;}
+    if(type=='change'){this.ExclusionData=[];this.sectionYn='N';this.sectionValue=null;}
     let ReqObj ={
       "InsuranceId":this.insuranceId,
       "Limit":"0",
@@ -251,9 +253,7 @@ export class ExclusionListComponent implements OnInit {
         // this.getSectionList();
         // this.getExistingExclusion() }
         if(this.productValue){
-          console.log('LLLLLLLLLL',this.sectionValue);
           this.getSectionList(); this.getExistingExclusion()  }
-        else{ this.productValue='99999'; this.getSectionList(); this.getExistingExclusion()  }
         }
 
       },

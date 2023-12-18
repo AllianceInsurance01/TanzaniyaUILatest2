@@ -51,9 +51,14 @@
     </div>-->
 
           </div>
-        <ng-container *ngIf="tinyUrlData">
+        <ng-container *ngIf="tinyUrlData.length!=0">
             <app-grid-table [cols]="columnHeader" changeStatus="true" (onStatus)="EditStatus($event)" [data]="tinyUrlData" [filterValue]="filterValue" (onEdit)="onEditSection($event)" (onConfigure)="onConfigure($event)">
             </app-grid-table>
+        </ng-container>
+        <ng-container *ngIf="tinyUrlData.length==0 && branchValue!='' && branchValue!=null && productValue!='' && productValue!=null && CategoryValue!='' && CategoryValue!=null">
+            <div class="text-center">
+                No Data Available
+            </div>
         </ng-container>
     </div>
 </div>

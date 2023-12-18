@@ -28,7 +28,7 @@
                         <label class="input-form-label">Branch<span class="text-required">*</span></label>
                         <ng-select class="input-form-select" appendTo="body" [items]="branchList"
                             [(ngModel)]="branchValue" bindValue="Code" bindLabel="CodeDesc"
-                            (change)="getCompanyProductList('change')">
+                            (change)="getSectionList();getExistingExclusion()">
                         </ng-select>
                     </div>
                 </div>
@@ -69,10 +69,15 @@
             </div>
         </div>
         <div>
-            <ng-container *ngIf="ExclusionData">
+            <ng-container *ngIf="ExclusionData.length!=0">
                 <app-grid-table [cols]="columnHeader" changeStatus="true" (OnStatus)="EditStatus($event)"
                     [data]="ExclusionData" [filterValue]="filterValue" (onEdit)="onEditSection($event)">
                 </app-grid-table>
+            </ng-container>
+            <ng-container *ngIf="ExclusionData.length==0 && branchValue!='' && branchValue!='' && productValue!='' && productValue!=null">
+                <div class="text-center">
+                    No Data Available
+                </div>
             </ng-container>
         </div>
     </div>

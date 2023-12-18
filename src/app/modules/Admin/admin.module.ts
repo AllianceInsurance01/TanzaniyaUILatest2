@@ -18,8 +18,6 @@ import { AdminComponent } from './admin.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DataManipulationComponent } from './data-manipulation/data-manipulation.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { LMProductTypesComponent } from './loginCreation/Company/Lifemasters/LMProductType/producttype.component';
-import { LmTraffParamComponent } from './loginCreation/Company/Lifemasters/LMTraffParam/LmTraffParam.component';
 
 
 
@@ -32,9 +30,7 @@ import { LmTraffParamComponent } from './loginCreation/Company/Lifemasters/LMTra
     ReferralApprovedComponent,
     ReferralRejectedComponent,
     ReferralRequoteComponent,
-    DataManipulationComponent,
-    LmTraffParamComponent,
-    LMProductTypesComponent
+    DataManipulationComponent
     ],
   imports: [
     CommonModule,
