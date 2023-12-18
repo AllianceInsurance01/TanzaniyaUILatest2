@@ -883,9 +883,11 @@ export class TravelQuoteDetailsComponent implements OnInit {
         "EndtStatus": this.endtStatus,
         "IsFinanceEndt": this.isFinanceEndt,
         "OrginalPolicyNo": this.orginalPolicyNo,
+        
     }
     ReqObj['TravelStartDate'] = this.datePipe.transform(startDate, "dd/MM/yyyy");
     ReqObj['TravelEndDate'] = this.datePipe.transform(endDate, "dd/MM/yyyy");
+    ReqObj['PolicyNo'] = this.endorsePolicyNo
     console.log("Received Obj",ReqObj)
     let urlLink = `${this.motorApiUrl}api/savetraveldetails`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
