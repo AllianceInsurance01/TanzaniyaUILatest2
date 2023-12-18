@@ -22,6 +22,7 @@ export class DepositAddNewComponent implements OnInit {
     accountNo:any;
     bamount: any;
     chargabletype: any;chequedate:Date;
+    refundDate:Date;
     chequeno: any;
     depositamt: any;
     depositno: any;
@@ -30,10 +31,13 @@ export class DepositAddNewComponent implements OnInit {
     micrno: any;
     reciptNo: any;
     referenceno: any;
-    p:Number=1;
+    p:Number=1;cbcnos:any;
     policyinsu: any;viewData:any;ChargableList:any[]=[];chequeDate:any;viewDatas:any[]=[];
   userType: any;
   subUserType: any;
+  creat: any;
+  cbcmodal: any;
+  max:Date;
   constructor(private router:Router,private sharedService: SharedService,private modalService: NgbModal,private datePipe:DatePipe) {
     let brokerObj = JSON.parse(sessionStorage.getItem('brokerConfigureDetails'));
     if(brokerObj){
@@ -45,6 +49,11 @@ export class DepositAddNewComponent implements OnInit {
       if(brokerObj.UserType) this.userType = brokerObj.UserType;
       if(brokerObj.SubUserType) this.subUserType = brokerObj.SubUserType;
     }
+    var d= new Date();
+    var year = d.getFullYear();
+    var month = d.getMonth();
+    var day = d.getDate();
+    this.max= new Date();
     this.brokerId = this.brokerLoginId;
     this.PaymentList = [{"Code":"1","CodeDesc":"Cash"},{"Code":"2","CodeDesc":"Cheque"}];
     
@@ -52,8 +61,9 @@ export class DepositAddNewComponent implements OnInit {
 
   ngOnInit(): void {
     this.CBCHeader = [
-        { key: 'CbcNo', display: 'CBC NO' },
+        // { key: 'CbcNo', display: 'CBC NO' },
         { key: 'DepositNo', display: 'Deposit No' },
+        { key: 'DepositType', display: 'Deposit Type' },
         { key: 'PaymentTypeDesc', display: 'Payment Type' },
         { key: 'PayeeName', display: 'Name' },
         { key:'EntryDate', display: 'Entry Date' },
@@ -65,13 +75,13 @@ export class DepositAddNewComponent implements OnInit {
                 isViews: true,
             },
           },
-          {
-          key: 'actions',
-          display: 'Action',
-          config: {
-            isinfos: true,
-          },
-        },
+        //   {
+        //   key: 'actions',
+        //   display: 'Action',
+        //   config: {
+        //     isinfos: true,
+        //   },
+        // },
 
       ];
     let DepositObj = JSON.parse(sessionStorage.getItem('CbcDetails'));
@@ -80,7 +90,7 @@ export class DepositAddNewComponent implements OnInit {
         this.getDetails();
      }
      this.paymentid='1';
-     this.deposiType="C";
+    //  this.deposiType="C";
 
   }
   getBackPage(){
@@ -98,6 +108,7 @@ export class DepositAddNewComponent implements OnInit {
         console.log(data);
         if(data.Message!='FAILED'){
           this.CbcDatas = data?.Result;
+          this.cbcnos=data?.Result[0].CbcNo;
           console.log('HHHHHHHHHHHHHHHHH',this.branchDatas);
         }
 
@@ -110,7 +121,11 @@ export class DepositAddNewComponent implements OnInit {
  
 
   onAddNewBranch(){
-    this.show=true;
+    this.chargabletype = null;this.chequeDate=null;this.chequeno=null;
+this.Premium=null;this.depositno=null;this.deposiType=null;
+this.micrno=null;this.payeeName=null;this.paymentid=null;
+this.reciptNo=null;this.refundDate=null;
+this.show=true;
     // let ReqObj ={
     //   "loginId": this.brokerLoginId,
     //   "brokerId": this.agencyCode,
@@ -149,6 +164,10 @@ export class DepositAddNewComponent implements OnInit {
     if(this.chequeDate!='' && this.chequeDate!=null && this.chequeDate!= undefined){
       chequeDate = this.datePipe.transform(this.chequeDate,'dd/MM/yyyy');
     }
+    let refunddate 
+    if(this.refundDate && this.refundDate!=null && this.refundDate!= undefined){
+      refunddate = this.datePipe.transform(this.refundDate,'dd/MM/yyyy');
+    }
     let ReqObj =  {
             "AccountNo": this.accountNo,
             "BalanceAmount": this.bamount,
@@ -174,6 +193,7 @@ export class DepositAddNewComponent implements OnInit {
             "Status":"",
             "VatAmount":this.VatAmount,
             "CompanyId": this.insuranceId,
+            "RefundDate":refunddate
   
       }
       let urlLink = `${this.CommonApiUrl}deposit/save/payment`;
@@ -194,6 +214,7 @@ export class DepositAddNewComponent implements OnInit {
           console.log(data);
           if(data.Result=='Insert/Update SuccessFully'){
             this.show=false;
+            this.getDetails();
             //this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerProductList']);
           }
           else if(data.ErrorMessage){
@@ -251,6 +272,8 @@ export class DepositAddNewComponent implements OnInit {
         console.log(data);
         if(data.Message!='FAILED'){
           this.viewDatas= data?.Result;
+          this.creat=data?.Result[0]?.BrokerName;
+          this.cbcmodal=data?.Result[0]?.CbcNo;
           console.log('HHHHHHHHHHHHHHHHH',this.viewDatas);
         }
       },

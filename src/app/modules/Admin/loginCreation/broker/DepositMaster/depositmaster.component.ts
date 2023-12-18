@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedService } from '../../../../../shared/shared.service';
 import * as Mydatas from '../../../../../app-config.json';
+import {NgbModule, NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-depositmaster',
   templateUrl: './depositmaster.component.html',
@@ -13,11 +14,12 @@ export class DepositMasterComponent implements OnInit {
   insuranceId:any;brokerLoginId:any;brokerCompanyYN:any;
   public AppConfig: any = (Mydatas as any).default;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
-  public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
+  public CommonApiUrl: any = this.AppConfig.CommonApiUrl;closeResult: string;
   branchData: any[]=[];branchHeader:any[]=[];agencyCode:any;branchsHeader:any[]=[];branchDatas:any[]=[];
   userType: any;
-  subUserType: any;
-  constructor(private router:Router,private sharedService: SharedService,) {
+  subUserType: any;viewDatas:any[]=[]; creat: any;
+  cbcmodal: any;
+  constructor(private router:Router,private sharedService: SharedService,private modalService: NgbModal) {
     let brokerObj = JSON.parse(sessionStorage.getItem('brokerConfigureDetails'));
     if(brokerObj){
       if(brokerObj.loginId) this.brokerLoginId = brokerObj.loginId;
@@ -39,7 +41,8 @@ export class DepositMasterComponent implements OnInit {
                     { key: 'BrokerName', display: 'Broker' },
                     { key: 'DepositAmount', display: 'Deposit Amount' },
                     { key: 'DepositUtilised', display: 'Utilised Amount' },
-                    { key: 'RefundAmt', display: 'Refund Amount' },
+                    {key:'PolicyRefundAmt',display:'Policy RefundAmt'},
+                    // { key: 'RefundAmt', display: 'Refund Amount' },
                     { key: 'Status', display: 'Status' },
                     {
                       key: 'actions',
@@ -48,7 +51,14 @@ export class DepositMasterComponent implements OnInit {
                         isEdit: true,
                       },
                     },
-            
+                    {
+                      key: 'edit',
+                      display: 'View',
+                      config: {
+                          isViews: true,
+                      },
+                    },
+                    
                   ];
    this.getBrokersBranchList();
   }
@@ -102,5 +112,42 @@ export class DepositMasterComponent implements OnInit {
     if(value=='Cover') this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerCoverList']);
     if(value=='Deposit') this.router.navigate(['/Admin/brokersList/newBrokerDetails/depositMasterList']);
     if(value=='paymentTypes') this.router.navigate(['/Admin/brokersList/newBrokerDetails/paymentTypesList']);
+  }
+
+  open(content) {
+    this.modalService.open(content, { size: 'lg', backdrop: 'static',ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
+
+  onInfo(row,modal){
+    this.open(modal);
+    let urlLink =`${this.CommonApiUrl}deposit/get/depositDetailById?cbcNo=${row.CbcNo}`
+    //let urlLink = `${this.CommonApiUrl}deposit/get/depositMasterById?cbcNo=${row.CbcNo}`
+    //`${this.CommonApiUrl}deposit/get/depositMasterById?cbcNo=${row.CbcNo}`;
+    this.sharedService.onGetMethodSync(urlLink).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data.Message!='FAILED'){
+          this.viewDatas= data?.Result;
+          this.creat=data?.Result[0]?.BrokerName;
+          this.cbcmodal=data?.Result[0]?.CbcNo;
+          console.log('HHHHHHHHHHHHHHHHH',this.viewDatas);
+        }
+      },
+      (err) => { },
+    );
+   
   }
 }
