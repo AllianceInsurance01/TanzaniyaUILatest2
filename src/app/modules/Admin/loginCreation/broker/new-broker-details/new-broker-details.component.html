@@ -9,15 +9,18 @@
                 <div class="input-control-container">
                     <label class="input-form-label">Customer Code<span class="text-danger">*</span></label>
                     <div class="input-form-box">
-                        <input id="CustomerInput" class="input-form-control without-icon" [(ngModel)]="customerCode" type="text" (keyup)="onGetCustomerList('change',$event.target.value)" autocomplete="off" placeholder="Search here" data-toggle="dropdown" /><br>
-                        <ul class="dropdown-menu dropdown-list-style CustomerInput" appendTo="body"   [ngClass]="{dropdownDisplay: showCustomerList, dropdownNotDisplay: !showCustomerList}">
+                        <span class="input-form-icon" style="cursor: pointer !important;background-color: #333b85 !important;color:#fff;left: 1px;float: right;border-radius: 6px;padding: 4px 8px;">
+                            <a style="cursor: pointer !important;" (click)="searchCustomer(customerModal)"><i class="fas fa-search"></i></a>
+                        </span>
+                        <input id="CustomerInput" class="input-form-control with-icon" [(ngModel)]="customerCode" type="text" placeholder="Enter Your Customer Code" /><br>
+                        <!-- <ul class="dropdown-menu dropdown-list-style CustomerInput" appendTo="body"   [ngClass]="{dropdownDisplay: showCustomerList, dropdownNotDisplay: !showCustomerList}">
                             <li *ngFor="let item of customerList" (click)="setCustomerValue(item.Code, item.Name,'change')">
                                 {{item.Code}} - {{ item.Name }}
                             </li>
                             <div class="text-center" *ngIf="customerList.length == 0">
                                 <p>Enter any code to Search...</p>
                             </div>
-                        </ul>
+                        </ul> -->
                     </div>
                 </div>
             </div>
@@ -25,7 +28,7 @@
                 <div class="input-control-container">
                     <label class="input-form-label">Name<span class="text-danger">*</span></label>
                     <div class="input-form-box">
-                        <input type="text" [(ngModel)]="userName" disabled class="input-form-control without-icon" maxlength="100">
+                        <input type="text" [(ngModel)]="userName" class="input-form-control without-icon" maxlength="100">
                     </div>
                 </div>
             </div>
@@ -555,3 +558,42 @@
         </div>
     </div>
 </div>
+
+<ng-template #customerModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">Customer Search</span></h4>
+        <button type="button" class="close" #discountModalClose aria-label="Close"
+            (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+            <div class="row">
+                <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-5">
+                    <div class="input-control-container">
+                        <div class="input-form-box">
+                            <input type="text" [(ngModel)]="searchValue" placeholder="Enter Your Customer Code/Name" (keyup)="onSearchCustomer('change',$event.target.value)" class="input-form-control without-icon" maxlength="100">
+                        </div>
+                        <div class="input-form-error" *ngIf="searchLengthSection">
+                            <div class="error-text text-danger">
+                                Enter Atleast 3 Digit / Character to Search
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ng-container *ngIf="searchList.length!=0">
+                <app-grid-table [cols]="searchHeader" [data]="searchList" [filterValue]="filterValue" (onSelectCustomer)="onSelectCustomer($event)">
+                </app-grid-table>
+            </ng-container>
+            <ng-container *ngIf="searchValue && searchList.length==0">
+                <div class="text-center">
+                    No Data Available
+                </div>
+            </ng-container>
+            <div class="text-end mt-2">
+                <button class="btn btn-danger" (click)="onClose(modal)">Close</button>&nbsp;
+                <button class="btn btn-success" *ngIf="sampleCustomerCode!=null" (click)="SaveCustomer(modal)">Proceed</button>
+            </div>
+    </div>
+</ng-template>

@@ -4,6 +4,7 @@ import { SharedService } from '../../../../../shared/shared.service';
 import * as Mydatas from '../../../../../app-config.json';
 //import { NbComponentStatus, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 import { DatePipe } from '@angular/common';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-new-brokerbranch-details',
@@ -21,6 +22,7 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
    CustomerNo:any;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl;
+  public motorApiUrl:any = this.AppConfig.MotorApiUrl;
   brokerCompanyYN: any;branchCode:any;address1:any;
   address2:any;emailId:any;mobileNo:any;subInsuranceId:any;
   effectiveDateStart:any;minDate:Date;remarks:any;
@@ -30,7 +32,10 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
   customerList:any[]=[];showCustomerList:boolean = false;customerCode:any;
   userType: any;
   subUserType: any;
-  constructor(private router:Router,private sharedService: SharedService,
+  searchLengthSection: boolean=false;
+  searchValue: null;
+  closeResult: string;
+  constructor(private router:Router,private sharedService: SharedService,private modalService: NgbModal,
     private datePipe:DatePipe,) {
     this.minDate = new Date();
     let userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
@@ -47,6 +52,7 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
       if(brokerObj.brokerCompanyYN) this.brokerCompanyYN = brokerObj.brokerCompanyYN;
       if(brokerObj.UserType) this.userType = brokerObj.UserType;
       if(brokerObj.SubUserType) this.subUserType = brokerObj.SubUserType;
+      if(brokerObj.CustomerCode) this.customerCode = brokerObj.SubUserType;
     }
     this.brokerId = this.brokerLoginId;
     this.getMainBranchList();
@@ -58,7 +64,26 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
     }
     else{
       this.branchCode = null;
+      if(this.customerCode){
+        this.getSalePointCode();
+      }
     }
+  }
+  getSalePointCode(){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId,
+      "PremiaCode": this.customerCode
+    }
+    let urlLink = `${this.motorApiUrl}api/getbrokertiracode`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+          if(data.Result){
+              this.SalePointCode = data.Result.Code;
+          }
+        },
+        (err) => { },
+      );
+
   }
   getEditBranchDetails(branchId){
     let ReqObj = {
@@ -165,6 +190,46 @@ export class NewBrokerbranchDetailsComponent implements OnInit {
       if(branch){
           this.branchName = branch.CodeDesc;
       }
+    }
+  }
+  searchCustomer(modal){
+    this.searchLengthSection = false;
+    this.searchValue = null;
+    this.open(modal)
+  }
+  onSearchCustomer(type,value){
+    if(value=='' || value==null || value==undefined || value.length<3){
+      this.searchLengthSection = true;
+    }
+    else{
+      this.searchLengthSection = false;
+      let ReqObj ={
+        "InsuranceId": this.insuranceId,
+        "SpCode": value
+      }
+      let urlLink = `${this.motorApiUrl}api/getbrokerspcode`;
+      this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+        (data: any) => {
+              console.log("Searched Data",data);
+        },
+        (err) => { },
+      ); 
+    }
+}
+  open(content) {
+    this.modalService.open(content, { size: 'lg', backdrop: 'static',ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
     }
   }
   getSubInsuranceList(){

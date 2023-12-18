@@ -104,7 +104,10 @@
                                 <div class="input-control-container">
                                     <label class="input-form-label">Sale PointCode<span class="text-danger">*</span></label>
                                     <div class="input-form-box">
-                                        <input type="text" [(ngModel)]="SalePointCode" class="input-form-control without-icon">
+                                        <span class="input-form-icon" style="cursor: pointer !important;background-color: #333b85 !important;color:#fff;left: 1px;float: right;border-radius: 6px;padding: 4px 8px;">
+                                            <a style="cursor: pointer !important;" (click)="searchCustomer(customerModal)"><i class="fas fa-search"></i></a>
+                                        </span>
+                                        <input type="text" [(ngModel)]="SalePointCode" class="input-form-control with-icon">
                                     </div>
                                 </div>
                             </div>
@@ -232,3 +235,29 @@
         </div>
     </div>
 </div>
+
+<ng-template #customerModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title"><span class="spancommon span_font_size">SalePoint Search</span></h4>
+        <button type="button" class="close" #discountModalClose aria-label="Close"
+            (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12 col-sm-4 col-md-5 col-lg-5 col-xl-5">
+                <div class="input-control-container">
+                    <div class="input-form-box">
+                        <input type="text" [(ngModel)]="searchValue" placeholder="Enter Your SalePoint Code/Name" (keyup)="onSearchCustomer('change',$event.target.value)" class="input-form-control without-icon" maxlength="100">
+                    </div>
+                    <div class="input-form-error" *ngIf="searchLengthSection">
+                        <div class="error-text text-danger">
+                            Enter Atleast 3 Digit / Character to Search
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

@@ -182,7 +182,8 @@ export class BrokerListComponent implements OnInit {
       "insuranceId": this.insuranceId,
       "brokerCompanyYN": brokerCompYN,
       "UserType": rowData.UserType,
-      "SubUserType": rowData.SubUserType
+      "SubUserType": rowData.SubUserType,
+      "CustomerCode": rowData.CustomerCode
     }
     sessionStorage.setItem('InsuranceId',this.insuranceId);
     sessionStorage.setItem('brokerConfigureDetails',JSON.stringify(entry));

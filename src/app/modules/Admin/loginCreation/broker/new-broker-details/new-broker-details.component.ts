@@ -7,6 +7,7 @@ import { BrokerDetails } from './BrokerDetails';
 import { DatePipe } from '@angular/common';
 import { Toaster } from 'ngx-toast-notifications';
 import Swal from 'sweetalert2';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-new-broker-details',
   templateUrl: './new-broker-details.component.html',
@@ -19,6 +20,7 @@ export class NewBrokerDetailsComponent implements OnInit {
   typeList: any[] = []; channelList: any[] = [];
   public AppConfig: any = (Mydatas as any).default; insuranceId: any;
   public ApiUrl1: any = this.AppConfig.ApiUrl1;
+  public motorApiUrl:any = this.AppConfig.MotorApiUrl;
   public CommonApiUrl: any = this.AppConfig.CommonApiUrl; companyList: any[] = [];
   countryList: any[] = []; countryValue: any; repassword: any = null;
   mobileCodeList: any[] = []; brokerDetails: BrokerDetails; commissionVatYN: any;
@@ -37,8 +39,14 @@ export class NewBrokerDetailsComponent implements OnInit {
   regulatoryCode: any=null;customerCode:any=null;
   customerList: any[]=[];changePasswordYN:any='N';
   showCustomerList: boolean=false;
-  cbcno: any=null;
-  constructor(private router: Router, private sharedService: SharedService,
+  cbcno: any=null;searchValue:any=null;
+  closeResult: string;
+  searchLengthSection: boolean;
+  searchList: any[]=[];
+  searchHeader: any[]=[];
+  sampleCustomerName: any=null;
+  sampleCustomerCode: any=null;
+  constructor(private router: Router, private sharedService: SharedService,private modalService: NgbModal,
     private datePipe: DatePipe) {
     this.minDate = new Date();
     this.brokerDetails = new BrokerDetails();
@@ -46,13 +54,11 @@ export class NewBrokerDetailsComponent implements OnInit {
     if (userDetails) {
       this.loginId = userDetails?.Result?.LoginId;
       this.branchCode = userDetails?.Result?.BranchCode;
-
       // this.insuranceId = userDetails?.Result.LoginBranchDetails[0].InsuranceId;
     }
     this.subUser = sessionStorage.getItem('typeValue');
     // this.loginInformation = this.brokerDetails?.LoginInformation;
     // this.personalInformation = this.brokerDetails?.PersonalInformation;
-    console.log("Entered Broker Detailsssssssssss")
     this.getChannelList();
   }
 
@@ -280,7 +286,6 @@ export class NewBrokerDetailsComponent implements OnInit {
           this.whatsAppNo = PersonalInformation?.WhatsappNo;
           this.vatRegNo = PersonalInformation?.VatRegNo;
           this.countryCode = PersonalInformation.CountryCode;
-          console.log('ttttttttt', this.countryCode);
           this.cityCode = PersonalInformation?.CityName;
           this.stateCode = PersonalInformation?.StateCode;
           this.onCountryChange('direct');
@@ -292,6 +297,91 @@ export class NewBrokerDetailsComponent implements OnInit {
       },
       (err) => { },
     );
+  }
+  searchCustomer(modal){
+    this.searchLengthSection = false;
+    this.searchValue = null;
+    this.open(modal)
+  }
+  onSearchCustomer(type,value){
+    this.searchList =[];
+      if(value=='' || value==null || value==undefined || value.length<3){
+        this.searchLengthSection = true;
+      }
+      else{
+        this.searchLengthSection = false;
+        let ReqObj ={
+          "BranchCode": null,
+          "InsuranceId": this.insuranceId,
+          "SearchValue": value,
+          "SourceType":this.subUserType
+        }
+        let urlLink = `${this.ApiUrl1}api/search/premiabrokercustomercode`;
+        this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+          (data: any) => {
+                console.log("Searched Data",data);
+                this.searchHeader = [
+                  {
+                    key: 'actions',
+                    display: 'Select',
+                    config: {
+                      select: true,
+                    },
+                  },
+                  { key: 'CustomerCode', display: 'Customer Code' },
+                  { key: 'CustomerName', display: 'Customer Name' },
+                ]
+                this.searchList = data.Result;
+          },
+          (err) => { },
+        ); 
+      }
+  }
+  onSelectCustomer(rowData){
+    this.sampleCustomerCode = rowData.CustomerCode;
+    this.sampleCustomerName = rowData.CustomerName;
+  }
+  SaveCustomer(modal){
+      this.customerCode = this.sampleCustomerCode;
+      this.userName = this.sampleCustomerName;
+      modal.dismiss('Cross click');
+      this.getTiraNo();
+  }
+  getTiraNo(){
+    let ReqObj = {
+      "InsuranceId": this.insuranceId,
+      "PremiaCode": this.customerCode
+    }
+    let urlLink = `${this.motorApiUrl}api/getbrokertiracode`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+          if(data.Result){
+            this.regulatoryCode = data.Result.Code;
+          }
+      },
+      (err) => { },
+    ); 
+  }
+  open(content) {
+    this.modalService.open(content, { size: 'lg', backdrop: 'static',ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
+  onClose(modal){
+    this.searchValue=null;this.searchList=[];
+    this.sampleCustomerCode=null;this.sampleCustomerName=null;
+    modal.dismiss('Cross click');
   }
   onDateFormatInEdit(date) {
     if (date) {
@@ -551,7 +641,8 @@ export class NewBrokerDetailsComponent implements OnInit {
             "insuranceId": this.insuranceId,
             "brokerCompanyYN": this.brokerCompanyYn,
             "UserType": "Broker",
-            "SubUserType": this.subUserType
+            "SubUserType": this.subUserType,
+            "CustomerCode": this.customerCode
           }
           sessionStorage.setItem('brokerConfigureDetails', JSON.stringify(entry));
           this.router.navigate(['/Admin/brokersList/newBrokerDetails/brokerBranchList']);
