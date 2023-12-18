@@ -2359,7 +2359,15 @@ getTransportedByList(){
             this.transaportList[i].value = this.transaportList[i]['Code'];
             delete this.transaportList[i].CodeDesc;
             if (i == this.transaportList.length - 1) {
-              this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].props.options = defaultObj.concat(this.transaportList);
+              let fields = this.fields[0].fieldGroup;
+              for(let field of fields){
+                if(field.props.label=='Goods in Transit'){
+                  let defaultObj = [{ 'label': '-Select-', 'value': null }]
+                  console.log("Goods Fields",field)
+                  field.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[1].fieldGroup[1].props.options = defaultObj.concat(this.transaportList);
+                }
+              }
+              //this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].props.options = defaultObj.concat(this.transaportList);
             }
           }
         }
@@ -2384,7 +2392,14 @@ getTransportList(){
             this.modeTransportList[i].value = this.modeTransportList[i]['Code'];
             delete this.modeTransportList[i].CodeDesc;
             if (i == this.modeTransportList.length - 1) {
-              this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[1].fieldGroup[1].props.options = defaultObj.concat(this.modeTransportList);
+              let fields = this.fields[0].fieldGroup;
+                    for(let field of fields){
+                      if(field.props.label=='Goods in Transit'){
+                        let defaultObj = [{ 'label': '-Select-', 'value': null }]
+                        console.log("Goods Fields",field)
+                        field.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[0].fieldGroup[1].props.options = defaultObj.concat(this.modeTransportList);
+                      }
+                    }
             }
           }
         }
@@ -2409,7 +2424,15 @@ getgeographicalLimit(){
             this.geographicalList[i].value = this.geographicalList[i]['Code'];
             delete this.geographicalList[i].CodeDesc;
             if (i == this.geographicalList.length - 1) {
-              this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[2].fieldGroup[1].props.options = defaultObj.concat(this.geographicalList);
+              let fields = this.fields[0].fieldGroup;
+                    for(let field of fields){
+                      if(field.props.label=='Goods in Transit'){
+                        let defaultObj = [{ 'label': '-Select-', 'value': null }]
+                        console.log("Goods Fields",field)
+                        field.fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[2].fieldGroup[1].props.options = defaultObj.concat(this.geographicalList);
+                      }
+                    }
+              //this.fields[0].fieldGroup[0].fieldGroup[0].fieldGroup[0].fieldGroup[1].fieldGroup[2].fieldGroup[1].props.options = defaultObj.concat(this.geographicalList);
             }
           }
         }

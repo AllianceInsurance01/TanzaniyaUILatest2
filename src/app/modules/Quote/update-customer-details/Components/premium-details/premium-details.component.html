@@ -878,7 +878,7 @@
                                             <th scope="col" class="border_radius"><span class="spancommon">S.No</span></th>
                                             <th scope="col"><span class="spancommon">FileName</span></th>
                                             <th scope="col" *ngIf="productId!='5' && productId!='4' && productId!='43' && productId!='46'"><span class="spancommon">Location</span></th>
-                                            <th scope="col" *ngIf="productId!='43'"><span class="spancommon">Section</span></th>
+                                            <th scope="col" *ngIf="productId!='43'  && productId!='4'"><span class="spancommon">Section</span></th>
                                             <th scope="col">
                                                 <span class="spancommon">
                                                     <ng-container *ngIf="productId=='5' || productId=='46'">Registration Number</ng-container>
@@ -900,7 +900,7 @@
                                                 <ng-select class="input-form-select" [disabled]="document.locationList.length==1" appendTo="body" (change)="onChangeLocationType(document,i)" [(ngModel)]="document.locationId" [items]="document.locationList" bindValue="LocationId" bindLabel="LocationName">
                                                 </ng-select>
                                             </td>
-                                            <td *ngIf="productId!='43'">
+                                            <td *ngIf="productId!='43' && productId!='4'">
                                                 <ng-select class="input-form-select" appendTo="body" [(ngModel)]="document.sectionId" (change)="onChangeSectionType(document,i)" [items]="document.sectionList" bindValue="SectionId" bindLabel="SectionName">
                                                 </ng-select>
                                             </td>
