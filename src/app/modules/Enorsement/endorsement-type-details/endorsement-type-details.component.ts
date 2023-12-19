@@ -396,7 +396,18 @@ export class EndorsementTypeDetailsComponent {
   onCreateEndorse(EndtType){
     let effDate='';
     effDate = this.datePipe.transform(this.effectiveDate, "dd/MM/yyyy");
-    this.endorseEffectiveDate = effDate
+    this.endorseEffectiveDate = effDate;
+    let appId = "1", loginId = "",brokerbranchCode="";
+    let createdBy = this.loginId;
+    if (this.userType != 'Issuer') {
+      this.brokerCode = this.agencyCode;
+      appId = "1"; loginId = this.loginId;
+    }
+    else {
+      appId = this.loginId;
+      loginId = ""
+      brokerbranchCode = null;
+    }
     let ReqObj = {
       "PolicyNo": sessionStorage.getItem('endorsePolicyNo'),
       "CompanyId": this.insuranceId,   
@@ -404,7 +415,11 @@ export class EndorsementTypeDetailsComponent {
       "BranchCode":this.branchCode,
       "EndtType":EndtType,
       "EndtRemarks":this.remarks,
-      "EndtEffectiveDate": effDate
+      "EndtEffectiveDate": effDate,
+      "ApplicationId": appId,
+      "UserType": this.userType,
+      "SubUserType": this.subuserType,
+      "LoginId": loginId
     }
     let urlLink = `${this.CommonApiUrl}endorsment/create`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
@@ -495,7 +510,6 @@ export class EndorsementTypeDetailsComponent {
             
           }
           else if(this.selectedEndorsement.EndorsementCategory==1){
-            console.log('Enodorsement Ids',this.selectedEndorsement.EndtType);
             if(this.quoteNo) sessionStorage.setItem('quoteNo',this.quoteNo);
             else sessionStorage.setItem('quoteNo',res.quoteNo);
             // if(this.productId == '3' && this.selectedEndorsement.EndtType == '54'){

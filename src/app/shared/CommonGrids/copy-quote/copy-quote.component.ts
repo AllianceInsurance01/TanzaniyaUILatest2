@@ -182,16 +182,26 @@ export class CopyQuoteComponent implements OnInit {
     }
     if(this.searchValue){
       this.customerData = [];
+      let appId = "1", loginId = "",brokerbranchCode="";
+      let createdBy = this.loginId;
+      if (this.userType != 'Issuer') {
+        appId = "1"; loginId = this.loginId;
+      }
+      else {
+        appId = this.loginId;
+        loginId = ""
+        brokerbranchCode = null;
+      }
       let ReqObj = {
         "SearchKey":this.search,
         "SearchValue": this.searchValue,
-        "LoginId": this.loginId,
+        "LoginId": loginId,
         "InsuranceId":this.insuranceId,
         "BranchCode":this.branchCode,
         //"BrokerBranchCode":this.brokerbranchCode,
         "ProductId":this.productId,
         "UserType":this.userType,
-        "ApplicationId":"1"
+        "ApplicationId":appId
 
       }
       let urlLink = `${this.CommonApiUrl}api/searchmotordata`;
