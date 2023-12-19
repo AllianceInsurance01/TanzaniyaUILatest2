@@ -134,7 +134,7 @@ export class PremiumDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCommonDocTypeList();
-    this.getUploadedDocList(null,-1);
+    this.getUploadedDocList(null,-1,null);
     if(this.quoteRefNo){
       this.getEditQuoteDetails();
       this.getLocationWiseList();
@@ -588,7 +588,7 @@ export class PremiumDetailsComponent implements OnInit {
       vehicle['docList'] = [];
       vehicle['uploadedList']=[];
       this.getDocTypeList(vehicle,i);
-      this.getUploadedDocList(vehicle,null);
+      this.getUploadedDocList(vehicle,null,null);
       i+=1;
       if(i==this.vehicleList.length){
         console.log("Final Doc List",this.vehicleList);
@@ -658,7 +658,7 @@ export class PremiumDetailsComponent implements OnInit {
       (err) => { },
     );
   }
-  getUploadedDocList(vehicleData:any,index:any){
+  getUploadedDocList(vehicleData:any,index:any,reqObj:any){
     let ReqObj = {
       "QuoteNo":  this.quoteNo
     }
@@ -669,12 +669,59 @@ export class PremiumDetailsComponent implements OnInit {
             this.uploadedDocList = data?.Result?.CommmonDocument;
             this.uploadedDocList = this.uploadedDocList.filter(ele=>ele.DocumentId!='23');
             this.uploadedIndividualList = data?.Result?.InduvidualDocument;
-            console.log('Indivjual documents',this.uploadedIndividualList);
+              let entry = this.uploadedIndividualList.find(ele=>ele.DocumentId=='17');
+              if(entry){
+                this.checkMandatoryDocument(entry);
+              }
           }
         },
         (err) => { },
       );
   }
+checkMandatoryDocument(doc){
+  let ReqObj = {
+    "FilePath":doc?.FilePathOriginal,
+    "Value": doc?.Id
+  }
+  let urlLink = `${this.CommonApiUrl}document/uploadOcr`;
+  this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+    (data: any) => {
+        if(data.Result!=null){
+            if(data.Result.Result==false){
+              let ulList:any='';
+              const element = data.Result;
+							ulList +=`<li class="list-group-login-field">
+								<div style="color: red;">Data Found In Image<span class="mx-2">:</span>${element?.Text}</div>
+							</li>`
+              Swal.fire({
+                title: '<strong>Invalid Document</strong>',
+                icon: 'info',
+                html:
+                  `<ul class="list-group errorlist">
+                      ${ulList}
+                    </ul><br>
+                  <span class="text-center">Do You Like to Delete it?</span>
+                  `,
+                    
+                showCloseButton: false,
+                //focusConfirm: false,
+                //showCancelButton:true,
+               //confirmButtonColor: '#3085d6',
+               cancelButtonColor: '#d33',
+               confirmButtonText: 'Yes, Delete it',
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  this.onDeleteListDocProceed(null,doc);
+                }
+              });
+            }
+        }
+    });
+}
+onDeleteDocumentss(rowData){
+       console.log('Uploadded Lists',this.uploadedIndividualList);
+       
+}
 onDeleteListDocument(vehIndex,rowData){
   Swal.fire({
     title: '<strong>Delete!</strong>',
@@ -697,7 +744,9 @@ onDeleteListDocument(vehIndex,rowData){
   });
 }
 onDeleteListDocProceed(vehIndex,rowData){
-  let entry = this.vehicleList[vehIndex];
+  if(vehIndex){
+    let entry = this.vehicleList[vehIndex];
+  } 
   let ReqObj = {
       "Id": rowData.Id,
       "QuoteNo": this.quoteNo,
@@ -737,7 +786,7 @@ onDeleteListDocProceed(vehIndex,rowData){
             //   "Delete",
             //   "Document Deleted Successfully",
             //   config);
-              this.getUploadedDocList(null,null);
+              this.getUploadedDocList(null,null,null);
           }
         },
         (err) => { },
@@ -872,7 +921,7 @@ toggle(index: number) {
                 i+=1;
                 if(i==docList.length){
                   this.uploadDocList = [];
-                  this.getUploadedDocList(null,-1);
+                  this.getUploadedDocList(null,-1,null);
                 }
               }
             },
@@ -943,8 +992,10 @@ toggle(index: number) {
                   i+=1;
                   if(i==docList.length){
                     this.uploadListDoc = [];
-                    console.log("FInal List",this.vehicleList)
-                    this.getUploadedDocList(null,null);
+                    if(this.productId=='4' && ReqObj?.DocumentId=='17'){
+                      this.getUploadedDocList(null,null,ReqObj);
+                    }
+                    else this.getUploadedDocList(null,null,null);
                   }
                 }
               },
@@ -1008,20 +1059,8 @@ toggle(index: number) {
                 this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
               }
     }
-    else if(this.productId=='5' || this.productId=='32' || this.productId=='39' || this.productId=='14' || this.productId=='15' || this.productId=='19' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId =='21' || this.productId =='26' || this.productId =='25'|| this.productId=='42' || this.productId=='43' || this.productId=='13' || this.productId=='27'){
-    //   console.log('JJJJJJJJJJ',this.Riskdetails);
-    //   let entry=this.Riskdetails.filter(ele => ele.AcccessoriesSumInsured!=0)
-    //   if(entry.length!=0){
-    //     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
-    //   }
-    //   else{
-    //     this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
-    //   }
-    // }
-    // else{
-    //   this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
-    // }
-          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
+    else if(this.productId=='5' || this.productId=='32' || this.productId=='39' || this.productId=='14' || this.productId=='15' || this.productId=='19' || this.productId=='1' || this.productId=='6' || this.productId=='16' || this.productId =='21' || this.productId =='26' || this.productId =='25' || this.productId =='24' || this.productId=='42' || this.productId=='43' || this.productId=='13' || this.productId=='27'){
+        this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/domestic-risk-details']);
     }
     else{
          this.router.navigate(['/Home/existingQuotes/customerSelection/customerDetails/excess-discount'])
@@ -1556,7 +1595,7 @@ toggle(index: number) {
               //   "Delete",
               //   "Document Deleted Successfully",
               //   config);
-                this.getUploadedDocList(null,-1);
+                this.getUploadedDocList(null,-1,null);
             }
           },
           (err) => { },
