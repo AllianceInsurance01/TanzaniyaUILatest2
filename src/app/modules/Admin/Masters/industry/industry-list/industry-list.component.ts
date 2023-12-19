@@ -140,13 +140,13 @@ getBranchList(type){
       "Limit":"0",
       "Offset":"100000"
     }
-    let urlLink = `${this.ApiUrl1}master/getallcompanyproducts`;
+    let urlLink = `${this.ApiUrl1}master/dropdown/companyproducts`;
     this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
       (data: any) => {
         console.log(data);
         if(data.Result){
        this.productList = data?.Result;
-        let obj =[{ProductId:"",ProductName:"--SELECT--"}]
+        let obj =[{Code:"",CodeDesc:"--SELECT--"}]
         this.productList = obj.concat(data?.Result);
         this.getCatogery();
 

@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-12 col-md-12 col-lg-12">
                 <ng-container *ngIf="quoteData.length!=0">
-                    <app-commodity-table [cols]="quoteHeader" [data]="quoteData" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousData($event)" (onLoadNextData)="onNextData($event)" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onAdd)="onInnerData($event)" (onView)="onViews($event)" (onReject)="onRejects($event,mymodal)" (onMail)="onMail($event,mymail)"
+                    <app-commodity-table [cols]="quoteHeader" [data]="quoteData" [start]="startIndex" [pageCount]="pageCount" [end]="endIndex" [pageNo]="quotePageNo" [totalQuoteRecords]="totalQuoteRecords" (onLoadPreviousData)="onPreviousData($event)" (onBrokerQuotation)="onBrokerQuotation($event)" (onQuoteSchedule)="onQuoteSchedule($event)" (onLoadNextData)="onNextData($event)" [innerCols]="innerColumnHeader" [innerData]="innerTableData" (onEdit)="onEditQuotes($event)" (onAdd)="onInnerData($event)" (onView)="onViews($event)" (onReject)="onRejects($event,mymodal)" (onMail)="onMail($event,mymail)"
                     (onSms)="onSms($event,mysms)" (onFollowup)="onFollowup($event)">
                     </app-commodity-table>
                 </ng-container>

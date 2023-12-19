@@ -66,6 +66,8 @@ export class CommodityTableComponent implements OnInit {
    @Output('onResPath') onResPath = new EventEmitter();
    @Output('onDeleteCoverRow') onDeleteCoverRow = new EventEmitter();
    @Output('onSubCoverEdit') onSubCoverEdit = new EventEmitter();
+   @Output('onBrokerQuotation') onBrokerQuotation = new EventEmitter();
+   @Output('onQuoteSchedule') onQuoteSchedule = new EventEmitter();
   public dataSource: any;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) private paginator!: MatPaginator;
@@ -77,13 +79,19 @@ export class CommodityTableComponent implements OnInit {
   selectedIndex: any=null;
   pageEvent: PageEvent;
   endCount: any=null;
-  startCount: any=null;
-  nextSection: boolean=false;
+  startCount: any=null;productId:any=null;
+  nextSection: boolean=false;brokerbranchCode:any=null;
+  userDetails: any;loginId:any=null;agencyCode:any=null;
   constructor(
     private router: Router,
     private _formBuilder: FormBuilder,
     private modalService: NgbModal,
   ) {
+    this.userDetails = JSON.parse(sessionStorage.getItem('Userdetails'));
+    this.loginId = this.userDetails.Result.LoginId;
+    this.agencyCode = this.userDetails.Result.OaCode;
+    this.brokerbranchCode = this.userDetails.Result.BrokerBranchCode;
+    this.productId = this.userDetails.Result.ProductId;
   }
 
   ngOnInit(): void {

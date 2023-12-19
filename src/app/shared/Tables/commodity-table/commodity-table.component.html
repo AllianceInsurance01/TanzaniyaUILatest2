@@ -170,6 +170,8 @@
                                 <i class="fas fa-cog"></i>
                             </button>
                             <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="onBrokerQuotation.emit(element)" *ngIf="productId=='5' && element?.QuoteNo!=null" ><i class="fa fa-file"></i>&nbsp;Broker Quotation</button>
+                                <button mat-menu-item (click)="onQuoteSchedule.emit(element)" *ngIf="productId=='5' && element?.QuoteNo!=null" ><i class="fa fa-file"></i>&nbsp;Schedule</button>
                                 <button mat-menu-item (click)="onMail.emit(element)"><i class="fa fa-envelope"></i>&nbsp;Mail</button>
                                 <button mat-menu-item (click)="onSms.emit(element)"><i class="fas fa-sms" style="font-size:22px;color:lightcoral"></i>&nbsp;SMS</button>
                                 <button mat-menu-item (click)="onFollowup.emit(element)"><i class="fa-solid fa-user"></i>&nbsp;FollowUp</button>

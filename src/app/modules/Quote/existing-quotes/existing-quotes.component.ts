@@ -5,6 +5,7 @@ import { SharedService } from '../../../shared/shared.service';
 import {NgbModule, NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {MatTabsModule} from '@angular/material/tabs';
 import { formatDate } from '@angular/common';
+import Swal from 'sweetalert2';
 declare var $:any;
 
 @Component({
@@ -301,6 +302,7 @@ export class ExistingQuotesComponent implements OnInit {
     // }
     
   }
+  
   getBrokerList(){
     let appId = "1",loginId="",brokerbranchCode="";
     if(this.userType!='Issuer'){
@@ -456,6 +458,76 @@ export class ExistingQuotesComponent implements OnInit {
           },
           (err) => { },
         );
+  }
+  onQuoteSchedule(rowData){
+    let ReqObj = {
+      "QuoteNo":rowData.QuoteNo
+    }
+    let urlLink = `${this.CommonApiUrl}pdf/policyform`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data?.Result?.PdfOutFile){
+            this.downloadMyFile(data.Result.PdfOutFile);
+        }
+        else{
+          Swal.fire({
+            title: '<strong>Schedule Pdf</strong>',
+            icon: 'error',
+            html:
+              `No Pdf Generated For this Policy`,
+            //showCloseButton: true,
+            //focusConfirm: false,
+            showCancelButton: false,
+
+            //confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Cancel',
+          })
+        }
+      },
+      (err) => { },
+    );
+  }
+  onBrokerQuotation(rowData){
+    let ReqObj = {
+      "QuoteNo":rowData.QuoteNo,
+      "BrokerQuoteYn": 'Y'
+    }
+    let urlLink = `${this.CommonApiUrl}pdf/policyform`;
+    this.sharedService.onPostMethodSync(urlLink, ReqObj).subscribe(
+      (data: any) => {
+        console.log(data);
+        if(data?.Result?.PdfOutFile){
+            this.downloadMyFile(data.Result.PdfOutFile);
+        }
+        else{
+          Swal.fire({
+            title: '<strong>Schedule Pdf</strong>',
+            icon: 'error',
+            html:
+              `No Pdf Generated For this Policy`,
+            //showCloseButton: true,
+            //focusConfirm: false,
+            showCancelButton: false,
+
+            //confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Cancel',
+          })
+        }
+      },
+      (err) => { },
+    );
+  }
+  downloadMyFile(data) {
+    const link = document.createElement('a');
+    link.setAttribute('target', '_blank');
+    link.setAttribute('href', data);
+    link.setAttribute('download', 'Schedule');
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
   }
   onEditQuotes(rowData){
     sessionStorage.removeItem('vehicleDetailsList');
